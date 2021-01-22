@@ -41,4 +41,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s public -d \$web --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }}
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}"
