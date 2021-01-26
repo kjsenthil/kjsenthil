@@ -32,6 +32,10 @@ jobs:
         run: |
           npm install
           npm install -g gatsby-cli
+          yarn install
+
+      - name: Run unit tests
+        run: yarn test
 
       - name: Build with Gatsby
         run: gatsby build
