@@ -1,0 +1,48 @@
+name: Deploy to Azure Static Web
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hybrid-frontend
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install -g gatsby-cli
+          yarn install
+
+      - name: Run unit tests
+        run: yarn test
+
+      - name: Build with Gatsby
+        run: gatsby build
+
+      - name: Publish app
+        uses: Azure/cli@v1.0.0
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}"
