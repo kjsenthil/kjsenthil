@@ -1,0 +1,5 @@
+{
+  "name": "assets-api-plugin",
+  "version": "1.0.0",
+  "description": "A plugin to source data from the BestInvest assets API"
+}
