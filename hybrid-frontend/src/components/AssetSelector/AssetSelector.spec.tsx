@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import AssetSelector from './AssetSelector';
 
-const assets = [
+const mockAssets = [
   {
     node: {
       id: "84a5646e-d693-58cc-b3f6-301e32837995",
@@ -31,10 +31,9 @@ const assets = [
 
 describe('AssetSelector', () => {
   test('Lists the available assets', () => {
-    render(<AssetSelector assets={assets} />);
+    render(<AssetSelector assets={mockAssets} />);
 
-    const numberOfAssets = assets.length;
-    expect(screen.getAllByRole('listitem')).toHaveLength(numberOfAssets);
+    expect(screen.getAllByRole('listitem')).toHaveLength(mockAssets.length);
   });
 });
 
