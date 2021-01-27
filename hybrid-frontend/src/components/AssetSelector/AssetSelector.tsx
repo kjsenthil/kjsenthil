@@ -16,7 +16,7 @@ interface AssetSelectorProps {
 const AssetSelector: React.FC<AssetSelectorProps> = ({ assets }) => (
   <>
     <h2>List of available funds</h2>
-    <ul>
+    <ul data-testid="asset-selector-list">
       {
         assets.map(({ node: { category, id, investmentCodeName, sedol } }) =>
           <li key={id}>{sedol} - {investmentCodeName} - {category}</li>
