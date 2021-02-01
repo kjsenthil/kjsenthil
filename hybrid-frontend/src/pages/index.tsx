@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
-import AssetSelector, { Asset } from '../components/AssetSelector/AssetSelector';
+import Typography from '@material-ui/core/Typography';
+import AssetSelector, { Asset } from '../components/AssetSelector';
+import Layout from '../components/Layout';
+import { Grid } from '@material-ui/core';
 
 interface AssetResponse {
   allAsset: {
@@ -27,12 +30,15 @@ const AVAILABLE_ASSETS_QUERY = graphql`
 
 const IndexPage = () => {
   const data: AssetResponse = useStaticQuery(AVAILABLE_ASSETS_QUERY);
+  const [selectedAsset, setSelectedAsset] = useState('');
 
   return (
-    <div>
-      <h1 data-testid="home-title">Digital Hybrid Demo</h1>
-      {data.allAsset.edges && <AssetSelector assets={data.allAsset.edges} />}
-    </div>
+    <Layout>
+      <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">Digital Hybrid Demo</Typography>
+      <Grid xs={12} sm={6}>
+        {data.allAsset.edges && <AssetSelector assets={data.allAsset.edges} onChange={(newAsset) => setSelectedAsset(newAsset)} value={selectedAsset} />}
+      </Grid>
+    </Layout>
   );
 };
 

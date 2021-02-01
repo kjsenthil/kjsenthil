@@ -17,9 +17,15 @@
     "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/styles": "^4.11.3",
+    "babel-plugin-styled-components": "^1.12.0",
     "gatsby": "^2.26.1",
+    "gatsby-plugin-material-ui": "^2.1.10",
+    "gatsby-plugin-styled-components": "^3.9.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@testing-library/cypress": "^7.0.3",
@@ -29,6 +35,7 @@
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.7",
     "@types/testing-library__cypress": "^5.0.8",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "babel-jest": "^26.6.3",

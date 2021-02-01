@@ -1,4 +1,9 @@
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import React from 'react';
+import styled from 'styled-components';
 
 export type Asset = {
   category: string;
@@ -11,19 +16,34 @@ interface AssetSelectorProps {
   assets: {
     node: Asset;
   }[]
+  onChange: (newValue: string) => void;
+  value: Asset['sedol'];
 }
 
-const AssetSelector: React.FC<AssetSelectorProps> = ({ assets }) => (
-  <>
-    <h2>List of available funds</h2>
-    <ul data-testid="asset-selector-list">
-      {
-        assets.map(({ node: { category, id, investmentCodeName, sedol } }) =>
-          <li key={id}>{sedol} - {investmentCodeName} - {category}</li>
-        )
-      }
-    </ul>
-  </>
-);
+const StyledFormControl = styled(FormControl)`
+  min-width: 100%;
+`;
+
+const AssetSelector: React.FC<AssetSelectorProps> = ({ assets, onChange, value }) => {
+  const defaultValue = value || assets.length && assets[0].node.sedol;
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
+    const newValue = event.target.value as string;
+    onChange(newValue);
+  };
+
+  return (
+    <StyledFormControl>
+      <InputLabel id="asset-selector-label">Select a fund</InputLabel>
+      <Select data-testid="asset-selector-list"
+        defaultValue={defaultValue}
+        labelId="asset-selector-label"
+        onChange={handleChange}
+        value={value}>
+        {assets.map(({ node: { category, id, sedol } }) => <MenuItem key={id} value={sedol}>{category}</MenuItem>)}
+      </Select>
+    </StyledFormControl>
+  );
+};
 
 export default AssetSelector;

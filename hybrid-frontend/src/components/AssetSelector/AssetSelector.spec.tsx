@@ -30,10 +30,9 @@ const mockAssets = [
 ];
 
 describe('AssetSelector', () => {
-  test('Lists the available assets', () => {
-    render(<AssetSelector assets={mockAssets} />);
-
-    expect(screen.getAllByRole('listitem')).toHaveLength(mockAssets.length);
+  test('Renders the asset selector', async () => {
+    render(<AssetSelector assets={mockAssets} onChange={() => { }} value="BYX8KL9" />);
+    expect(await screen.findByTestId('asset-selector-list')).toBeInTheDocument();
   });
 });
 
