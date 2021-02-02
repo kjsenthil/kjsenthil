@@ -43,13 +43,13 @@ jobs:
       - name: Run unit tests
         run: yarn test
 
-      - name: Build with Gatsby
-        run: gatsby build
-
       - name: Run E2E UI tests
         run: |
           npx cypress install
           yarn test:e2e:ci
+
+      - name: Build with Gatsby
+        run: gatsby build
 
       - name: Setup storage account and enable static website hosting
         uses: azure/powershell@v1
