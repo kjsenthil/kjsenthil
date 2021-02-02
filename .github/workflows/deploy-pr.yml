@@ -58,7 +58,7 @@ jobs:
             $StorageAccountName = "digitalhybridspike2"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
-            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName) -eq $null) {
+            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "Storage account doesnt exists, creating new storage account"
               New-AzureRmStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2
               Write-Host "New storage account created, enabling static website hosting"
