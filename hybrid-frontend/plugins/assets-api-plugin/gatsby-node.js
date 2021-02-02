@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 
-const API_BASE_URL = "https://online.bestinvest.co.uk/api/Assets";
+const API_BASE_URL =
+  'https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets';
 const ASSET_NODE_TYPE = `Asset`;
 
 // print a success message if the plugin loads
