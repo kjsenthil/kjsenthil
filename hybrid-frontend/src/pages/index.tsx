@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 import AssetSelector, { Asset } from '../components/AssetSelector';
 import Layout from '../components/Layout';
-import { Grid } from '@material-ui/core';
 import { AssetData, getAssetDetail } from '../api/getAssetDetail';
 import AssetDetails from '../components/AssetDetails/AssetDetails';
 
@@ -45,7 +45,13 @@ const IndexPage = () => {
     <Layout>
       <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">Digital Hybrid Demo</Typography>
       <Grid item xs={12} sm={8}>
-        {data.allAsset.edges && <AssetSelector assets={data.allAsset.edges} onChange={(newAsset) => onAssetChange(newAsset)} value={selectedAsset} />}
+        {data.allAsset.edges && (
+          <AssetSelector
+            assets={data.allAsset.edges}
+            onChange={(newAsset) => onAssetChange(newAsset)}
+            value={selectedAsset}
+          />
+        )}
         {assetDetails && <AssetDetails data={assetDetails} />}
       </Grid>
     </Layout>

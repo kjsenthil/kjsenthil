@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { AssetData } from '../../api/getAssetDetail';
 import Grid from '@material-ui/core/Grid';
+import { AssetData } from '../../api/getAssetDetail';
 
 interface AssetDetailsProps {
   data: AssetData;
@@ -18,7 +18,11 @@ const StyledCheckIcon = styled(CheckCircleIcon)`
   padding-right: .25rem;
 `;
 
-const AssetDetails: React.FC<AssetDetailsProps> = ({ data: { assetName, isaEligible, sippEligible, unitType } }) => {
+const AssetDetails: React.FC<AssetDetailsProps> = ({
+  data: {
+    assetName, isaEligible, sippEligible, unitType,
+  },
+}) => {
   const unitTypeText = unitType === 'Acc' ? 'Accumulation' : 'Income';
 
   return (
@@ -27,14 +31,16 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({ data: { assetName, isaEligi
       <Typography variant="body2" color="textSecondary" component="div">
         {unitTypeText}
         {isaEligible && (
-        <Grid container direction="row" alignItems="center">
-          <StyledCheckIcon color="primary" /> ISA Eligible
-      </Grid>
+          <Grid container direction="row" alignItems="center">
+            <StyledCheckIcon color="primary" />
+            ISA Eligible
+          </Grid>
         )}
         {sippEligible && (
-        <Grid container direction="row" alignItems="center">
-            <StyledCheckIcon color="primary" /> SIPP Eligible
-        </Grid>
+          <Grid container direction="row" alignItems="center">
+            <StyledCheckIcon color="primary" />
+            SIPP Eligible
+          </Grid>
         )}
       </Typography>
     </StyledPaper>
