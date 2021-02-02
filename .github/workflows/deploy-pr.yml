@@ -23,6 +23,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      #Get Branch Name on a Pull request
+      - name: Get Branch Name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
+        id: extract_branch_name
+
       - name: Login to Azure
         uses: Azure/login@v1
         with:
@@ -50,7 +56,7 @@ jobs:
         with:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
-            $StorageAccountName = "digitalhybridspike-${GITHUB_HEAD_REF}"
+            $StorageAccountName = "digitalhybridspike2"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
@@ -72,4 +78,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "digitalhybridspike-${GITHUB_HEAD_REF}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "digitalhybridspike2"
