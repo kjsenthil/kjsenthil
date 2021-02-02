@@ -23,10 +23,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Get Branch Name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch_name
+
       - name: Login to Azure
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
 
       - name: Install dependencies
         run: |
@@ -44,9 +50,30 @@ jobs:
           npx cypress install
           yarn test:e2e:ci
 
+      - name: Setup storage account and enable static website hosting
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $StorageAccountName = "digitalhybridspike2"
+            $IndexDocumentName = "index.html"
+            $ErrorDocumentName = "error.html"
+            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName) -eq $null) {
+              Write-Host "Storage account doesnt exists, creating new storage account"
+              New-AzureRmStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2
+              Write-Host "New storage account created, enabling static website hosting"
+              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $ctx = $storageAccount.Context
+              Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
+              Write-Host "Enabled static website hosting for ${{ steps.extract_branch_name.outputs.branch }}"
+            } else {
+              Write-Host "Storage account exists, deploy website"
+            }
+          azPSVersion: "latest"
+
       - name: Publish app
         uses: Azure/cli@v1.0.0
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "digitalhybridspike2"
