@@ -23,9 +23,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      #Get Branch Name on a Pull request
       - name: Get Branch Name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "::set-env branch=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
         id: extract_branch_name
 
       - name: Login to Azure
@@ -65,7 +66,8 @@ jobs:
               $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
               $ctx = $storageAccount.Context
               Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-              Write-Host "Enabled static website hosting for $storageAccount.PrimaryEndpoints.Web on branch ${{ steps.extract_branch_name.outputs.branch }}"
+              Write-Host "Enabled static website hosting on branch ${{ steps.extract_branch_name.outputs.branch }}"
+              Write-Output $storageAccount.PrimaryEndpoints.Web
             } else {
               Write-Host "Storage account exists, deploy website"
             }
