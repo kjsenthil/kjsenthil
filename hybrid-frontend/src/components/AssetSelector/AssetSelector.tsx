@@ -15,7 +15,7 @@ export type Asset = {
 interface AssetSelectorProps {
   assets: {
     node: Asset;
-  }[]
+  }[];
   onChange: (newValue: string) => void;
   value: Asset['sedol'];
 }
@@ -44,7 +44,9 @@ const AssetSelector: React.FC<AssetSelectorProps> = ({ assets, onChange, value }
         value={value}
       >
         {assets.map(({ node: { category, id, sedol } }) => (
-          <MenuItem key={id} value={sedol}>{category}</MenuItem>
+          <MenuItem key={id} value={sedol}>
+            {category}
+          </MenuItem>
         ))}
       </Select>
     </StyledFormControl>

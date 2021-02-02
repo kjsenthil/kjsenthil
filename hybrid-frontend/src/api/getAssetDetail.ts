@@ -22,9 +22,7 @@ export interface AssetData {
   groupName: string;
 }
 
-export const getAssetDetail = async (
-  sedol: string,
-): Promise<AssetData | undefined> => {
+export const getAssetDetail = async (sedol: string): Promise<AssetData | undefined> => {
   const response = await fetch(`${API_BASE_URL}/assetdetail/${sedol}`);
 
   if (!response.ok) {

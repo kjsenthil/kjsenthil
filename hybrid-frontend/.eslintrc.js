@@ -3,9 +3,9 @@ module.exports = {
   parserOptions: {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
-    sourceType: "module",
+    sourceType: 'module',
   },
   rules: {
-    "react/prop-types": "off"
-  }
+    'react/prop-types': 0,
+  },
 };

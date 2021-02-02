@@ -11,8 +11,8 @@ interface AssetResponse {
   allAsset: {
     edges: {
       node: Asset;
-    }[]
-  }
+    }[];
+  };
 }
 
 const AVAILABLE_ASSETS_QUERY = graphql`
@@ -43,7 +43,9 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">Digital Hybrid Demo</Typography>
+      <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">
+        Digital Hybrid Demo
+      </Typography>
       <Grid item xs={12} sm={8}>
         {data.allAsset.edges && (
           <AssetSelector

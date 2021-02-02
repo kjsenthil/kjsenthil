@@ -11,11 +11,11 @@ interface AssetDetailsProps {
 }
 
 const StyledPaper = styled(Paper)`
-  padding: .5rem;
+  padding: 0.5rem;
 `;
 
 const StyledCheckIcon = styled(CheckCircleIcon)`
-  padding-right: .25rem;
+  padding-right: 0.25rem;
 `;
 
 const AssetDetails: React.FC<AssetDetailsProps> = ({
@@ -27,7 +27,9 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({
 
   return (
     <StyledPaper>
-      <Typography variant="h5" component="h2" gutterBottom>{assetName}</Typography>
+      <Typography variant="h5" component="h2" gutterBottom>
+        {assetName}
+      </Typography>
       <Typography variant="body2" color="textSecondary" component="div">
         {unitTypeText}
         {isaEligible && (

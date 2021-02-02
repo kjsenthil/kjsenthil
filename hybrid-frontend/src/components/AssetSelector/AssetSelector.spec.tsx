@@ -31,7 +31,7 @@ const mockAssets = [
 
 describe('AssetSelector', () => {
   test('Renders the asset selector', async () => {
-    render(<AssetSelector assets={mockAssets} onChange={() => { }} value="BYX8KL9" />);
+    render(<AssetSelector assets={mockAssets} onChange={() => {}} value="BYX8KL9" />);
     expect(await screen.findByTestId('asset-selector-list')).toBeInTheDocument();
   });
 });
