@@ -26,7 +26,7 @@ jobs:
       #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
       - name: Get Branch Name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF} | tr -d '- _' | awk '{print tolower(substr( $0, 1, 7))}'"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF} | tr -d '- _' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
       - name: Login to Azure
