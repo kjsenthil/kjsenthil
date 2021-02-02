@@ -26,7 +26,7 @@ jobs:
       #Get Branch Name on a Pull request
       - name: Get Branch Name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF} | awk '{print tolower($0)}')"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF} | awk '{print tolower($0)}' | cut -c 1-17)"
         id: extract_branch_name
 
       - name: Login to Azure
@@ -56,7 +56,7 @@ jobs:
         with:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
-            $StorageAccountName = "digitalhybridspike2"
+            $StorageAccountName = "dh-${{ steps.extract_branch_name.outputs.branch }}"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
@@ -66,10 +66,12 @@ jobs:
               $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
               $ctx = $storageAccount.Context
               Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-              Write-Host "Enabled static website hosting on branch ${{ steps.extract_branch_name.outputs.branch }}"
+              Write-Host "Enabled static website hosting"
               Write-Output $storageAccount.PrimaryEndpoints.Web
             } else {
+              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
               Write-Host "Storage account exists, deploy website"
+              Write-Output $storageAccount.PrimaryEndpoints.Web
             }
           azPSVersion: "latest"
 
@@ -78,4 +80,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "digitalhybridspike2"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "dh-${{ steps.extract_branch_name.outputs.branch }}"
