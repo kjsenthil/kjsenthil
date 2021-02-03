@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   deploy_staging:
-
+    name: "Deploy Staging environment"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -48,6 +48,6 @@ jobs:
 
             } else {
               Write-Host "Confirm $StorageAccountName storage account exists, deleting PR environment"
-              Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName -Force
             }
           azPSVersion: "latest"
