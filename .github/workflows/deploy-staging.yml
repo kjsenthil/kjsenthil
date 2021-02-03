@@ -31,7 +31,6 @@ jobs:
         id: extract_branch_name
 
       - name: Get Branch Name 2
-        shell: bash
         run: |
           raw=$(git branch -r --contains ${{ github.ref }})
           branch=${raw/origin\/}
