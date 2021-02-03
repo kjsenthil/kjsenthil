@@ -19,9 +19,7 @@ const StyledCheckIcon = styled(CheckCircleIcon)`
 `;
 
 const AssetDetails: React.FC<AssetDetailsProps> = ({
-  data: {
-    assetName, isaEligible, sippEligible, unitType,
-  },
+  data: { assetName, isaEligible, sippEligible, unitType },
 }) => {
   const unitTypeText = unitType === 'Acc' ? 'Accumulation' : 'Income';
 
