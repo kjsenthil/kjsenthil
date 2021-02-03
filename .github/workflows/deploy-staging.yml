@@ -30,12 +30,16 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${{ github.event.pull_request.head.ref }} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
-      - name: Get Branch Name 2
-        run: |
-          raw=$(git branch -r --contains ${{ github.ref }})
-          branch=${raw/origin\/}
-          echo "##[set-output name=branch-subset;]$(echo $branch | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-        id: extract_branch_name_2
+      - uses: nelonoel/branch-name@v1
+      # Use branch name for whatever purpose
+      - run: echo ${BRANCH_NAME}
+
+#      - name: Get Branch Name 2
+#        run: |
+#          raw=$(git branch -r --contains ${{ github.ref }})
+#          branch=${raw/origin\/}
+#          echo "##[set-output name=branch-subset;]$(echo $branch | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+#        id: extract_branch_name_2
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -49,7 +53,7 @@ jobs:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name_2.outputs.branch-subset }}"
-            Write-Host " branchname2 ${{ steps.extract_branch_name_2.outputs.branch-subset }}"
+            Write-Host " branchname2 ${{ steps.extract_branch_name.outputs.branch-subset }}"
             Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
             Write-Host " github.base_ref ${{ github.base_ref }}"
             Write-Host " github.ref ${{ github.ref }}" //returns refs/heads/master
