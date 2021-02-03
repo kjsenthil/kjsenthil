@@ -30,6 +30,13 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${{ github.event.pull_request.head.ref }} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
+      - name: Get Branch Name 2
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw##*/}
+          echo "BRANCH=$branch" >> $GITHUB_ENV
+        - run: echo ${{ env.BRANCH }}
+
       - name: Login to Azure
         uses: Azure/login@v1
         with:
@@ -44,9 +51,10 @@ jobs:
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
             Write-Host " github.base_ref ${{ github.base_ref }}"
-            Write-Host " github.ref ${{ github.ref }}"
+            Write-Host " github.ref ${{ github.ref }}" //returns refs/heads/master
             Write-Host " github.event.pull_request.title ${{ github.event.pull_request.title }}"
             Write-Host " GITHUB_REF ${GITHUB_REF}"
+            Write-Host " github.sha ${{ github.sha }}"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "$StorageAccountName Storage account doesnt exists, no action required"
 
