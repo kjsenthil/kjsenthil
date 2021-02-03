@@ -93,19 +93,26 @@ jobs:
             }
 
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
-              Write-Host "Storage account doesnt exists, creating new storage account"
+              Write-Host "[1] Storage account doesnt exists, creating new storage account"
+
               New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
-              Write-Host "New storage account created, enabling static website hosting"
+              Write-Host "[2] New storage account created named $StorageAccountName, enabling static website hosting"
+
+              Write-Host "[3] Enabling static website hosting"
               $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
               $ctx = $storageAccount.Context
               Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-              Write-Host "Enabled static website hosting, deploying website"
+
+              Write-Host "[4] Deploying website"
               Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
+
             } else {
-              Write-Host "Storage account exists, deploying website"
+              Write-Host "[1] Storage account $StorageAccountName already exists, not required to create storage account"
+              Write-Host "[2]  Deploying website"
               Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
             }
 
             $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+            Write-Host "[FINISH]  Website deployed - see below url"
             Write-Output $storageAccount.PrimaryEndpoints.Web
           azPSVersion: "latest"
