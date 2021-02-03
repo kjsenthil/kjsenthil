@@ -31,11 +31,12 @@ jobs:
         id: extract_branch_name
 
       - name: Get Branch Name 2
+        shell: bash
         run: |
           raw=$(git branch -r --contains ${{ github.ref }})
-          branch=${raw##*/}
-          echo "BRANCH=$branch" >> $GITHUB_ENV
-        - run: echo ${{ env.BRANCH }}
+          branch=${raw/origin\/}
+          echo "##[set-output name=branch-subset;]$(echo $branch | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+        id: extract_branch_name_2
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -48,7 +49,8 @@ jobs:
         with:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
-            $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
+            $StorageAccountName = "dighybpr${{ steps.extract_branch_name_2.outputs.branch-subset }}"
+            Write-Host " branchname2 ${{ steps.extract_branch_name_2.outputs.branch-subset }}"
             Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
             Write-Host " github.base_ref ${{ github.base_ref }}"
             Write-Host " github.ref ${{ github.ref }}" //returns refs/heads/master
