@@ -1,0 +1,53 @@
+name: "Deploy to staging"
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy_staging:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hybrid-frontend
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
+      - name: Get Branch Name
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_REF#refs/heads/} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+        id: extract_branch_name
+
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Delete PR storage account
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
+
+            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
+              Write-Host "$StorageAccountName Storage account doesnt exists, creating new storage account"
+
+            } else {
+              Write-Host "Confirm $StorageAccountName storage account exists, deleting PR environment"
+              Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+            }
+          azPSVersion: "latest"
