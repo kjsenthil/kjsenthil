@@ -26,8 +26,8 @@ jobs:
       - name: Get Branch Name
         shell: bash
         run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_REF#refs/heads/} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
+          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
       - name: Login to Azure
@@ -44,7 +44,7 @@ jobs:
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
 
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
-              Write-Host "$StorageAccountName Storage account doesnt exists, creating new storage account"
+              Write-Host "$StorageAccountName Storage account doesnt exists, no action required"
 
             } else {
               Write-Host "Confirm $StorageAccountName storage account exists, deleting PR environment"
