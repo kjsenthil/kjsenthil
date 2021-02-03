@@ -30,10 +30,6 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${{ github.event.pull_request.head.ref }} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
-      - uses: nelonoel/branch-name@v1
-      # Use branch name for whatever purpose
-      - run: echo ${BRANCH_NAME}
-
 #      - name: Get Branch Name 2
 #        run: |
 #          raw=$(git branch -r --contains ${{ github.ref }})
