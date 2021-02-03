@@ -22,7 +22,7 @@ const mockAsset: AssetData = {
   sector: 'UNDEFINED',
   sectorCode: null,
   groupName: 'Fund',
-}
+};
 
 describe('AssetDetails', () => {
   test('Renders the asset details', async () => {

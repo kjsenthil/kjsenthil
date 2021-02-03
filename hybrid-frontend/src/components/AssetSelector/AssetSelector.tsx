@@ -15,7 +15,7 @@ export type Asset = {
 interface AssetSelectorProps {
   assets: {
     node: Asset;
-  }[]
+  }[];
   onChange: (newValue: string) => void;
   value: Asset['sedol'];
 }
@@ -26,7 +26,7 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const AssetSelector: React.FC<AssetSelectorProps> = ({ assets, onChange, value }) => {
-  const defaultValue = value || assets.length && assets[0].node.sedol;
+  const defaultValue = value || (assets.length && assets[0].node.sedol);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
     const newValue = event.target.value as string;
@@ -36,12 +36,18 @@ const AssetSelector: React.FC<AssetSelectorProps> = ({ assets, onChange, value }
   return (
     <StyledFormControl>
       <InputLabel id="asset-selector-label">Select a fund</InputLabel>
-      <Select data-testid="asset-selector-list"
+      <Select
+        data-testid="asset-selector-list"
         defaultValue={defaultValue}
         labelId="asset-selector-label"
         onChange={handleChange}
-        value={value}>
-        {assets.map(({ node: { category, id, sedol } }) => <MenuItem key={id} value={sedol}>{category}</MenuItem>)}
+        value={value}
+      >
+        {assets.map(({ node: { category, id, sedol } }) => (
+          <MenuItem key={id} value={sedol}>
+            {category}
+          </MenuItem>
+        ))}
       </Select>
     </StyledFormControl>
   );
