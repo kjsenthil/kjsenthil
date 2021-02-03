@@ -26,8 +26,8 @@ jobs:
       - name: Get Branch Name
         shell: bash
         run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+          echo "##[set-output name=branch;]$(echo ${{ github.event.pull_request.head.ref }})"
+          echo "##[set-output name=branch-subset;]$(echo ${{ github.event.pull_request.head.ref }} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
       - name: Login to Azure
@@ -42,7 +42,11 @@ jobs:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
-
+            Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
+            Write-Host " github.base_ref ${{ github.base_ref }}"
+            Write-Host " github.ref ${{ github.ref }}"
+            Write-Host " github.event.pull_request.title ${{ github.event.pull_request.title }}"
+            Write-Host " GITHUB_REF ${GITHUB_REF}"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "$StorageAccountName Storage account doesnt exists, no action required"
 
