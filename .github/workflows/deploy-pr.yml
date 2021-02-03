@@ -61,7 +61,7 @@ jobs:
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
-            $sourceFileRootDirectory = $GITHUB_WORKSPACE/hybrid-frontend/public
+            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
             $ContainerName = "$web"
 
             function Upload-FileToAzureStorageContainer {
