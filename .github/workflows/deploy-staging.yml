@@ -44,9 +44,10 @@ jobs:
             $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
             Write-Host " github.base_ref ${{ github.base_ref }}"
-            Write-Host " github.ref ${{ github.ref }}"
+            Write-Host " github.ref ${{ github.ref }}" //returns refs/heads/master
             Write-Host " github.event.pull_request.title ${{ github.event.pull_request.title }}"
             Write-Host " GITHUB_REF ${GITHUB_REF}"
+            Write-Host " github.sha ${{ github.sha }}"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "$StorageAccountName Storage account doesnt exists, no action required"
 
