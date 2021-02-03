@@ -108,10 +108,3 @@ jobs:
             $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
             Write-Output $storageAccount.PrimaryEndpoints.Web
           azPSVersion: "latest"
-
-#      - name: Publish app
-#        uses: Azure/cli@v1.0.0
-#        with:
-#          azcliversion: latest
-#          inlineScript: |
-#            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
