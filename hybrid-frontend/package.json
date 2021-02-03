@@ -6,6 +6,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/{.,**}/*.{js,ts,tsx,md,json}'; yarn lint:fix",
+    "format:check": "prettier --check 'src/{.,**}/*.{js,ts,tsx,md,json}'",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "start": "yarn develop",

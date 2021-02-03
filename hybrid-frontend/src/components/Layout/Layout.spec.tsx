@@ -7,7 +7,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div data-testid="some-child-element" />
-      </Layout>,
+      </Layout>
     );
     expect(await screen.findByTestId('some-child-element')).toBeInTheDocument();
   });
