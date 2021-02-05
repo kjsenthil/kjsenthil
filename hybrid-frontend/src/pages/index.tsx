@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
-import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import AssetSelector, { Asset } from '../components/AssetSelector';
 import Layout from '../components/Layout';
 import { AssetData, getAssetDetail } from '../api/getAssetDetail';
-import AssetDetails from '../components/AssetDetails/AssetDetails';
+import AssetDetails from '../components/AssetDetails';
+import HeaderMenu from '../components/HeaderMenu';
+import HomeFeatureCards from '../components/HomeFeatureCards';
 
 interface AssetResponse {
   allAsset: {
@@ -43,10 +44,8 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">
-        Digital Hybrid Demo
-      </Typography>
-      <Grid item xs={12} sm={8}>
+      <HeaderMenu />
+      <Grid item xs={12}>
         {data.allAsset.edges && (
           <AssetSelector
             assets={data.allAsset.edges}
@@ -55,6 +54,7 @@ const IndexPage = () => {
           />
         )}
         {assetDetails && <AssetDetails data={assetDetails} />}
+        <HomeFeatureCards />
       </Grid>
     </Layout>
   );
