@@ -51,8 +51,8 @@ jobs:
           yarn format:check
           yarn lint
 
-      - name: Run unit tests
-        run: yarn test
+      - name: Run unit tests and code coverage
+        run: yarn test:coverage
 
       - name: Run E2E UI tests
         run: |
