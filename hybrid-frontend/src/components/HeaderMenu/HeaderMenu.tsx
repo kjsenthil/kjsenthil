@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 const HeaderMenu: React.FC = () => {
   const classes = useStyles();
   return (
-    <AppBar position="static">
+    <AppBar position="static" data-testid="header-menu">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           Bestinvest

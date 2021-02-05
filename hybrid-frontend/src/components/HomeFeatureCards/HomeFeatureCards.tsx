@@ -49,16 +49,16 @@ interface FeatureImageResponse {
 const HomeFeatureCards = () => {
   const data: FeatureImageResponse = useStaticQuery(homeFeatureImagesQuery);
   return (
-    <Grid container>
+    <Grid container data-testid="home-feature-cards">
       <Grid container justify="space-evenly" alignItems="center" item xs={12}>
         <Grid item xs={4}>
-          <Img fluid={data.thumbnail1.childImageSharp.fluid} />
+          <Img fluid={data.thumbnail1.childImageSharp.fluid} alt="Beach huts" />
         </Grid>
         <Grid item xs={4}>
-          <Img fluid={data.thumbnail2.childImageSharp.fluid} />
+          <Img fluid={data.thumbnail2.childImageSharp.fluid} alt="Pineapple in a field" />
         </Grid>
         <Grid item xs={4}>
-          <Img fluid={data.thumbnail3.childImageSharp.fluid} />
+          <Img fluid={data.thumbnail3.childImageSharp.fluid} alt="Donuts in a box" />
         </Grid>
       </Grid>
     </Grid>
