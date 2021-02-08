@@ -124,3 +124,62 @@ jobs:
             Write-Host "[FINISH]  Website deployed - see below url"
             Write-Output $storageAccount.PrimaryEndpoints.Web
           azPSVersion: "latest"
+
+  # azure_plan_terraform:
+  #   name: "Plan Terraform staging environment"
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./terraform
+  #   env:
+  #     ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+  #     ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+  #     ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+  #     ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+  #     TF_INPUT: false
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Setup Terraform (Azure)
+  #       uses: hashicorp/setup-terraform@v1
+  #       with:
+  #         terraform_version: 0.12.20
+
+  #     - name: Terraform Init
+  #       id: init
+  #       run: terraform init
+
+  #     - name: Terraform Validate
+  #       id: validate
+  #       run: terraform validate -no-color
+
+  #     - name: Terraform Format
+  #       id: fmt
+  #       run: terraform fmt -check
+
+  #     - name: Terraform Plan
+  #       id: plan
+  #       run: terraform plan -no-color
+
+  #     - uses: actions/github-script@0.9.0
+  #       if: ${{ always() }}
+  #       env:
+  #         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         script: |
+  #           const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+  #           #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+  #           #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+  #           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+  #           <details><summary>Show Plan</summary>
+  #           \`\`\`${process.env.PLAN}\`\`\`
+  #           </details>
+  #           *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+  #           github.issues.createComment({
+  #             issue_number: context.issue.number,
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             body: output
+  #           })
