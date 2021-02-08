@@ -91,7 +91,7 @@ jobs:
             $PrStorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
-            $gitsha = ${{github.sha}}
+            $gitsha = "${{github.sha}}"
             $WebContainerName = "$web"
 
             function Create-AzureStorageContainer {
