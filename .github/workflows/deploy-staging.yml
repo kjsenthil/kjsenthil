@@ -136,11 +136,11 @@ jobs:
               Write-Host "[2] Create container named $gitsha in artifact storage account $ArtifactStorageAccountName"
               Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $gitsha
 
-              Write-Host "[3] Deploying PR Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $PrStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $WebContainerName -DstStorageAccountName $ArtifactStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $gitsha
+              # Write-Host "[3] Deploying PR Gatsby build to artifact storage account $ArtifactStorageAccountName"
+              # Copy-FilesToAzureStorageContainer -SrcStorageAccountName $PrStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $WebContainerName -DstStorageAccountName $ArtifactStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $gitsha
 
-              Write-Host "[4] Deploying Gatsby build to staging storage account $StagingStorageAccountName"
-              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+              # Write-Host "[4] Deploying Gatsby build to staging storage account $StagingStorageAccountName"
+              # Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
 
               Write-Host "[5] Deleting PR environment"
               Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $PrStorageAccountName -Force
