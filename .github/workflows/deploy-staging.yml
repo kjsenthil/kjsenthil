@@ -38,7 +38,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
 
-      - name: Delete PR storage account
+      - name: Delete PR storage account (PR Closed)
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false
         uses: azure/powershell@v1
         with:
           inlineScript: |
@@ -49,6 +50,24 @@ jobs:
 
             } else {
               Write-Host "Confirm $StorageAccountName storage account exists, deleting PR environment"
+              Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName -Force
+            }
+          azPSVersion: "latest"
+      
+      - name: Deploy PR environment to staging
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
+            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
+              Write-Host "[Finish] $StorageAccountName Storage account doesnt exists, no action required"
+
+            } else {
+              Write-Host "[1] Confirm $StorageAccountName storage account exists, deploying PR environment to staging"
+
+              Write-Host "[2] Deleting PR environment"
               Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName -Force
             }
           azPSVersion: "latest"

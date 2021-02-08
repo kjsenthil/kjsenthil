@@ -100,7 +100,7 @@ jobs:
               Write-Host "[1] Storage account doesnt exists, creating new storage account"
 
               New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
-              Write-Host "[2] New storage account created named $StorageAccountName, enabling static website hosting"
+              Write-Host "[2] New storage account created named $StorageAccountName"
 
               Write-Host "[3] Enabling static website hosting"
               $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
