@@ -89,6 +89,7 @@ jobs:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
             $PrStorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
+            $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
             $gitsha = ${{github.sha}}
             $WebContainerName = "$web"
@@ -138,7 +139,10 @@ jobs:
               Write-Host "[3] Deploying PR Gatsby build to artifact storage account $ArtifactStorageAccountName"
               Copy-FilesToAzureStorageContainer -SrcStorageAccountName $PrStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $WebContainerName -DstStorageAccountName $ArtifactStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $gitsha
 
-              Write-Host "[4] Deleting PR environment"
+              Write-Host "[4] Deploying Gatsby build to staging storage account $StagingStorageAccountName"
+              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+
+              Write-Host "[5] Deleting PR environment"
               Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $PrStorageAccountName -Force
             }
           azPSVersion: "latest"
