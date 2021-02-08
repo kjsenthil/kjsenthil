@@ -1,8 +1,10 @@
 name: "Deploy to staging"
 on:
-  push:
+  pull_request:
     branches:
       - master
+    types:
+      - closed
 jobs:
   deploy_staging:
     name: "Deploy Staging environment"
@@ -26,16 +28,9 @@ jobs:
       - name: Get Branch Name
         shell: bash
         run: |
-          echo "##[set-output name=branch;]$(echo ${{ github.event.pull_request.head.ref }})"
-          echo "##[set-output name=branch-subset;]$(echo ${{ github.event.pull_request.head.ref }} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
+          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
-
-#      - name: Get Branch Name 2
-#        run: |
-#          raw=$(git branch -r --contains ${{ github.ref }})
-#          branch=${raw/origin\/}
-#          echo "##[set-output name=branch-subset;]$(echo $branch | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-#        id: extract_branch_name_2
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -48,14 +43,7 @@ jobs:
         with:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
-            $StorageAccountName = "dighybpr${{ steps.extract_branch_name_2.outputs.branch-subset }}"
-            Write-Host " branchname2 ${{ steps.extract_branch_name.outputs.branch-subset }}"
-            Write-Host " github.event.pull_request.head.ref ${{ github.event.pull_request.head.ref }}"
-            Write-Host " github.base_ref ${{ github.base_ref }}"
-            Write-Host " github.ref ${{ github.ref }}" //returns refs/heads/master
-            Write-Host " github.event.pull_request.title ${{ github.event.pull_request.title }}"
-            Write-Host " GITHUB_REF ${GITHUB_REF}"
-            Write-Host " github.sha ${{ github.sha }}"
+            $StorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "$StorageAccountName Storage account doesnt exists, no action required"
 
