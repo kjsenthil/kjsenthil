@@ -92,42 +92,64 @@ jobs:
             $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
             $gitsha = "${{github.sha}}"
-            $WebContainerName = "$web"
+            $WebContainerName = '$web'
 
             function Create-AzureStorageContainer {
-            [cmdletbinding()]
-            param(
-                $StorageAccountName,
-                $StorageAccountRG,
-                $ContainerName
-            )
-            $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-            $Context  = $StorageAccount.Context
-            New-AzStorageContainer -Context $Context -Name $ContainerName
+              [cmdletbinding()]
+              param(
+                  $StorageAccountName,
+                  $StorageAccountRG,
+                  $ContainerName
+              )
+              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $Context  = $StorageAccount.Context
+              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+                Write-Host "Storage container doesnt exists, creating container named $ContainerName"
+                New-AzStorageContainer -Context $Context -Name $ContainerName
+              } else {
+              Write-Host "Storage container exists"
+              }
             }
 
             function Copy-FilesToAzureStorageContainer {
-            [cmdletbinding()]
-            param(
-                $SrcStorageAccountName,
-                $SrcStorageAccountRG,
-                $SrcContainerName,
-                $DstStorageAccountName,
-                $DstStorageAccountRG,
-                $DstContainerName,
-                $Force
-            )
-            $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
-            $SrcContext  = $SrcStorageAccount.Context
+              [cmdletbinding()]
+              param(
+                  $SrcStorageAccountName,
+                  $SrcStorageAccountRG,
+                  $SrcContainerName,
+                  $DstStorageAccountName,
+                  $DstStorageAccountRG,
+                  $DstContainerName,
+                  $Force
+              )
+              $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
+              $SrcContext  = $SrcStorageAccount.Context
 
-            $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
-            $DstContext  = $DstStorageAccount.Context
+              $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
+              $DstContext  = $DstStorageAccount.Context
 
-            $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName
-            $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
+              $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName
+              $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
             }
 
-            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $PrStorageAccountName -ErrorAction Ignore) -eq $null) {
+            function Remove-AzureStorageBlobs {
+              [cmdletbinding()]
+              param(
+                  $StorageAccountName,
+                  $StorageAccountRG,
+                  $ContainerName
+              )
+              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $Context  = $StorageAccount.Context
+              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+                  Write-Host "[Error] Storage container doesnt exists"
+              } else {
+                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
+                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
+              }
+            }
+
+            if($null -eq $(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $PrStorageAccountName -ErrorAction Ignore)) {
               Write-Host "[Finish] $PrStorageAccountName Storage account doesnt exists, no action required"
 
             } else {
@@ -136,13 +158,20 @@ jobs:
               Write-Host "[2] Create container named $gitsha in artifact storage account $ArtifactStorageAccountName"
               Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $gitsha
 
-              # Write-Host "[3] Deploying PR Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              # Copy-FilesToAzureStorageContainer -SrcStorageAccountName $PrStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $WebContainerName -DstStorageAccountName $ArtifactStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $gitsha
+              Write-Host "[3] Deploying PR Gatsby build to artifact storage account $ArtifactStorageAccountName"
+              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $PrStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $WebContainerName -DstStorageAccountName $ArtifactStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $gitsha
 
-              # Write-Host "[4] Deploying Gatsby build to staging storage account $StagingStorageAccountName"
-              # Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+              Write-Host "[4] flushing storage account name $StagingStorageAccountName"
+              Remove-AzureStorageBlobs -StorageAccountName $StagingStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $WebContainerName
 
-              Write-Host "[5] Deleting PR environment"
+              Write-Host "[5] Deploying Gatsby build to staging storage account $StagingStorageAccountName"
+              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+
+              Write-Host "[6] Deleting PR environment"
               Remove-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $PrStorageAccountName -Force
+
+              $StagingStorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StagingStorageAccountName
+              Write-Host "[FINISH]  Staging Website deployed - see below url"
+              Write-Output $StagingStorageAccount.PrimaryEndpoints.Web
             }
           azPSVersion: "latest"

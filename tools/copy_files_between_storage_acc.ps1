@@ -36,8 +36,30 @@ function Create-AzureStorageContainer {
     )
     $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
     $Context  = $StorageAccount.Context
-    New-AzStorageContainer -Context $Context -Name $ContainerName
+    if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+        Write-Host "Storage container doesnt exists, creating container named $ContainerName"
+        New-AzStorageContainer -Context $Context -Name $ContainerName
+    } else {
+        Write-Host "Storage container exists"
+    }
+}
+function Remove-AzureStorageBlobs {
+    [cmdletbinding()]
+    param(
+        $StorageAccountName,
+        $StorageAccountRG,
+        $ContainerName
+    )
+$StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+$Context  = $StorageAccount.Context
+if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+    Write-Host "[Error] Storage container doesnt exists"
+} else {
+    Write-Host "Storage container exists, deleting all Files in container $ContainerName"
+    (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
+}
 }
 
-#Create-AzureStorageContainer -StorageAccountName $DstStorageAccountName -StorageAccountRG $DstStorageAccountRG -ContainerName test03
-#Copy-FilesToAzureStorageContainer -SrcStorageAccountName $SrcStorageAccountName -SrcStorageAccountRG $SrcStorageAccountRG -SrcContainerName $SrcContainerName -DstStorageAccountName $DstStorageAccountName -DstStorageAccountRG $DstStorageAccountRG -DstContainerName $DstContainerName
+#Remove-AzureStorageBlobs -StorageAccountName $DstStorageAccountName -StorageAccountRG $DstStorageAccountRG -ContainerName $DstContainerName
+#Create-AzureStorageContainer -StorageAccountName $DstStorageAccountName -StorageAccountRG $DstStorageAccountRG -ContainerName $ContainerTestName
+#Copy-FilesToAzureStorageContainer -SrcStorageAccountName $SrcStorageAccountName -SrcStorageAccountRG $SrcStorageAccountRG -SrcContainerName $SrcContainerName -DstStorageAccountName $DstStorageAccountName -DstStorageAccountRG $DstStorageAccountRG -DstContainerName $ContainerTestName
