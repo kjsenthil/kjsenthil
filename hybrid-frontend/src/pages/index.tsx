@@ -1,59 +1,32 @@
-import React, { useState } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
-import { Grid } from '@material-ui/core';
-import AssetSelector, { Asset } from '../components/AssetSelector';
+import React from 'react';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Layout from '../components/Layout';
-import { AssetData, getAssetDetail } from '../api/getAssetDetail';
-import AssetDetails from '../components/AssetDetails';
 import HeaderMenu from '../components/HeaderMenu';
 import HomeFeatureCards from '../components/HomeFeatureCards';
+import SimulationForm from '../components/SimulationForm/SimulationForm';
 
-interface AssetResponse {
-  allAsset: {
-    edges: {
-      node: Asset;
-    }[];
-  };
-}
-
-const AVAILABLE_ASSETS_QUERY = graphql`
-  query {
-    allAsset {
-      edges {
-        node {
-          id
-          category
-          investmentCodeName
-          sedol
-        }
-      }
-    }
-  }
-`;
+const useStyles = makeStyles(() => ({
+  gridItem: {
+    margin: '2rem 0',
+  },
+}));
 
 const IndexPage = () => {
-  const data: AssetResponse = useStaticQuery(AVAILABLE_ASSETS_QUERY);
-  const [selectedAsset, setSelectedAsset] = useState('');
-  const [assetDetails, setAssetDetails] = useState<AssetData | undefined>(undefined);
-
-  const onAssetChange = async (assetSedol: string) => {
-    setSelectedAsset(assetSedol);
-    const details = await getAssetDetail(assetSedol);
-    setAssetDetails(details);
-  };
+  const classes = useStyles();
 
   return (
     <Layout>
       <HeaderMenu />
+      <Grid container spacing={3}>
+        <Grid className={classes.gridItem} item xs={12} sm={8}>
+          <Typography>Stocks &amp; Shares ISA</Typography>
+          <Typography>Bring tomorrow forwards</Typography>
+        </Grid>
+        <Grid className={classes.gridItem} item xs={12} sm={4}>
+          <SimulationForm />
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
-        {data.allAsset.edges && (
-          <AssetSelector
-            assets={data.allAsset.edges}
-            onChange={(newAsset) => onAssetChange(newAsset)}
-            value={selectedAsset}
-          />
-        )}
-        {assetDetails && <AssetDetails data={assetDetails} />}
         <HomeFeatureCards />
       </Grid>
     </Layout>
