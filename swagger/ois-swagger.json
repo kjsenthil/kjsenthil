@@ -1,0 +1,1049 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "My API",
+      "version": "v1"
+    },
+    "paths": {
+      "/api/assets": {
+        "get": {
+          "tags": [
+            "Asset"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/assets/{assetId}": {
+        "get": {
+          "tags": [
+            "Asset"
+          ],
+          "summary": "Returns the asset details for a given asset.",
+          "description": "Sample request:\r\n    GET\r\n    /api/assets/4258.",
+          "parameters": [
+            {
+              "name": "assetId",
+              "in": "path",
+              "description": "The asset id.",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AssetDetail"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/assets/discrete-csv": {
+        "get": {
+          "tags": [
+            "Asset"
+          ],
+          "summary": "Returns discrete performance csv data for given asset(s).",
+          "description": "Sample request:\r\n    GET\r\n    /api/assets/assets/discrete-csv?filter[id]=3671,13432,13863.",
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/assets/cumulative-csv": {
+        "get": {
+          "tags": [
+            "Asset"
+          ],
+          "summary": "Returns cumulative performance csv data for given asset(s).",
+          "description": "Sample request:\r\n    GET\r\n    /api/assets/assets/cumulative-csv?filter[id]=3671,13432,13863.",
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/assets/statistics-csv": {
+        "get": {
+          "tags": [
+            "Asset"
+          ],
+          "summary": "Returns statistics csv data for given asset(s).",
+          "description": "Sample request:\r\n    GET\r\n    /api/assets/assets/statistics-csv?filter[id]=3671,13432,13863.",
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/countries": {
+        "get": {
+          "tags": [
+            "Country"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Country"
+                    }
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Country"
+                    }
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Country"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/countries/{id}": {
+        "get": {
+          "tags": [
+            "Country"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/payment/{id}": {
+        "get": {
+          "tags": [
+            "Payment"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/payment": {
+        "post": {
+          "tags": [
+            "Payment"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RbsTransactionInsertRequestDtoRequestPayload"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RbsTransactionInsertRequestDtoRequestPayload"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RbsTransactionInsertRequestDtoRequestPayload"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            },
+            "201": {
+              "description": "Success"
+            },
+            "204": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/audit-payment-request": {
+        "post": {
+          "tags": [
+            "Payment"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPaymentInsertRequestDtoRequestPayload"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPaymentInsertRequestDtoRequestPayload"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPaymentInsertRequestDtoRequestPayload"
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Success"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "DiscretePerformance": {
+          "type": "object",
+          "properties": {
+            "currentAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusOneAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusOneRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusTwoAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusTwoRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusThreeAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusThreeRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusFourAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "currentMinusFourRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "CumulativePerformance": {
+          "type": "object",
+          "properties": {
+            "absoluteThreeYears": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "relativeThreeYears": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "absoluteFiveYears": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "relativeFiveYears": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AssetPerformance": {
+          "type": "object",
+          "properties": {
+            "discrete": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/DiscretePerformance"
+                }
+              ],
+              "nullable": true
+            },
+            "cumulative": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CumulativePerformance"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "Statistics": {
+          "type": "object",
+          "properties": {
+            "volatilityAbsolute": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "volatilityRelative": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "correlationBenchmark": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            },
+            "correlationUKEquity": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AssetDetail": {
+          "type": "object",
+          "properties": {
+            "assetId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "sedol": {
+              "type": "string",
+              "nullable": true
+            },
+            "isin": {
+              "type": "string",
+              "nullable": true
+            },
+            "fundName": {
+              "type": "string",
+              "nullable": true
+            },
+            "slug": {
+              "type": "string",
+              "nullable": true
+            },
+            "assetPerformance": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AssetPerformance"
+                }
+              ],
+              "nullable": true
+            },
+            "statistics": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Statistics"
+                }
+              ],
+              "nullable": true
+            },
+            "id": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProblemDetails": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "nullable": true
+            },
+            "title": {
+              "type": "string",
+              "nullable": true
+            },
+            "status": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "detail": {
+              "type": "string",
+              "nullable": true
+            },
+            "instance": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "Country": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "id": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "TransactionDataInsertRequestDto": {
+          "type": "object",
+          "properties": {
+            "contactId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "accountNumber": {
+              "type": "string",
+              "nullable": true
+            },
+            "accountId": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "RbsTransactionInsertRequestDto": {
+          "type": "object",
+          "properties": {
+            "basketId": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "orderTotal": {
+              "type": "number",
+              "format": "double"
+            },
+            "orderType": {
+              "type": "string",
+              "nullable": true
+            },
+            "productTypeText": {
+              "type": "string",
+              "nullable": true
+            },
+            "paymentGatewayTransactionId": {
+              "type": "string",
+              "nullable": true
+            },
+            "checkoutBasketId": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "transactionData": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/TransactionDataInsertRequestDto"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "RbsTransactionInsertRequestDtoRequestData": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "nullable": true
+            },
+            "id": {
+              "type": "string",
+              "nullable": true
+            },
+            "attributes": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/RbsTransactionInsertRequestDto"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "RbsTransactionInsertRequestDtoRequestPayload": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/RbsTransactionInsertRequestDtoRequestData"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AuditPaymentInsertRequestDto": {
+          "type": "object",
+          "properties": {
+            "payLoad": {
+              "type": "string",
+              "nullable": true
+            },
+            "webCorrelationId": {
+              "type": "string",
+              "nullable": true
+            },
+            "updatedBy": {
+              "type": "string",
+              "nullable": true
+            },
+            "clientNumber": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AuditPaymentInsertRequestDtoRequestData": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "nullable": true
+            },
+            "id": {
+              "type": "string",
+              "nullable": true
+            },
+            "attributes": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AuditPaymentInsertRequestDto"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AuditPaymentInsertRequestDtoRequestPayload": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AuditPaymentInsertRequestDtoRequestData"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }

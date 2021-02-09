@@ -71,7 +71,7 @@ jobs:
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
-            $ContainerName = "$web"
+            $ContainerName = '$web'
             $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
             function Upload-FileToAzureStorageContainer {
               [cmdletbinding()]
@@ -100,6 +100,23 @@ jobs:
               }
             }
 
+            function Remove-AzureStorageBlobs {
+              [cmdletbinding()]
+              param(
+                  $StorageAccountName,
+                  $StorageAccountRG,
+                  $ContainerName
+              )
+              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $Context  = $StorageAccount.Context
+              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+                  Write-Host "[Error] Storage container doesnt exists"
+              } else {
+                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
+                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
+              }
+            }
+
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "[1] Storage account doesnt exists, creating new storage account"
 
@@ -116,7 +133,11 @@ jobs:
 
             } else {
               Write-Host "[1] Storage account $StorageAccountName already exists, not required to create storage account"
-              Write-Host "[2]  Deploying website"
+              
+              Write-Host "[2] flushing storage account name $StorageAccountName"
+              Remove-AzureStorageBlobs -StorageAccountName $StorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ContainerName
+              
+              Write-Host "[3]  Deploying website"
               Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
             }
 
