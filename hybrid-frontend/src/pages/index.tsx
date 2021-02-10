@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Layout from '../components/Layout';
 import HeaderMenu from '../components/HeaderMenu';
 import HomeFeatureCards from '../components/HomeFeatureCards';
-import SimulationForm from '../components/SimulationForm/SimulationForm';
+import SimulationForm, { SimulationFormData } from '../components/SimulationForm/SimulationForm';
+import { getProjections, ProjectionResponse } from '../api/getProjection';
 
 const useStyles = makeStyles(() => ({
   gridItem: {
@@ -13,6 +14,12 @@ const useStyles = makeStyles(() => ({
 
 const IndexPage = () => {
   const classes = useStyles();
+  const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
+
+  const onFormSubmit = async (formValues: SimulationFormData) => {
+    const projectionsResponse = await getProjections(formValues);
+    setProjections(projectionsResponse);
+  };
 
   return (
     <Layout>
@@ -20,10 +27,11 @@ const IndexPage = () => {
       <Grid container spacing={3}>
         <Grid className={classes.gridItem} item xs={12} sm={8}>
           <Typography>Stocks &amp; Shares ISA</Typography>
-          <Typography>Bring tomorrow forwards</Typography>
+          <Typography gutterBottom>Bring tomorrow forwards</Typography>
+          <pre>{JSON.stringify(projections, null, 2)}</pre>
         </Grid>
         <Grid className={classes.gridItem} item xs={12} sm={4}>
-          <SimulationForm />
+          <SimulationForm onSubmit={onFormSubmit} />
         </Grid>
       </Grid>
       <Grid item xs={12}>

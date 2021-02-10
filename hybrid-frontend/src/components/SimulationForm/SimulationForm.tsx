@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import SliderWithInput from '../SliderWithInput';
 
-const SimulationForm = () => {
+export interface SimulationFormData {
+  monthlyInvestment: number;
+  upfrontInvestment: number;
+  investmentPeriod: number;
+}
+
+interface SimulationFormProps {
+  onSubmit: (formValues: SimulationFormData) => void;
+}
+
+const SimulationForm: React.FC<SimulationFormProps> = ({ onSubmit }) => {
   const [inputs, setInputs] = useState({
     monthlyInvestment: 20,
     upfrontInvestment: 200,
-    timeHorizon: 5,
+    investmentPeriod: 5,
   });
 
   const handleSliderChange = (name: string, newValue: number) => {
@@ -39,12 +49,12 @@ const SimulationForm = () => {
         label="Time horizon"
         min={0}
         max={50}
-        name="timeHorizon"
+        name="investmentPeriod"
         onChange={handleSliderChange}
         step={1}
-        value={inputs.timeHorizon}
+        value={inputs.investmentPeriod}
       />
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={() => onSubmit(inputs)}>
         Update
       </Button>
     </>
