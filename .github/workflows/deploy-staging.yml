@@ -129,7 +129,8 @@ jobs:
               $DstContext  = $DstStorageAccount.Context
 
               $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName
-              $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
+              $destBlob = $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
+              $destBlob | Get-AzStorageBlobCopyState -WaitForComplete
             }
 
             function Remove-AzureStorageBlobs {
