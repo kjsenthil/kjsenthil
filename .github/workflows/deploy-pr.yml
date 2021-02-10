@@ -69,6 +69,7 @@ jobs:
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
             $ContainerName = '$web'
             $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
+           
             function Upload-FileToAzureStorageContainer {
               [cmdletbinding()]
               param(

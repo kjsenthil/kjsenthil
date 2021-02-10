@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:8000",
+  "baseUrl": "https://dighybprghi25cl.z6.web.core.windows.net",
   "integrationFolder": "cypress/e2e",
   "fixturesFolder": false,
   "chromeWebSecurity": false,
