@@ -22,7 +22,7 @@ describe('SliderWithInput', () => {
     beforeEach(async () => {
       /* eslint-disable react/jsx-props-no-spreading */
       render(<SliderWithInput {...defaultProps} />);
-      inputField = await screen.findByTestId(defaultProps.inputDataTestId) as HTMLInputElement;
+      inputField = (await screen.findByTestId(defaultProps.inputDataTestId)) as HTMLInputElement;
     });
 
     test('Renders the slider', async () => {
