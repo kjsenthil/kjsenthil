@@ -149,12 +149,6 @@ jobs:
           echo "PR Website URL: $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv)"
         id: web_url
 
-      - name: Cypress run with env
-        uses: cypress-io/github-action@v2
-        env:
-          CYPRESS_host: ${{ steps.web_url.outputs.website_url }}
-          CYPRESS_port: 443
-
   # azure_plan_terraform:
   #   name: "Plan Terraform staging environment"
   #   runs-on: ubuntu-latest
