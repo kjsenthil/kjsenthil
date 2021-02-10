@@ -35,12 +35,6 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
-      - name: Login to Azure
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
-
       - name: Install dependencies
         run: |
           npm install -g gatsby-cli
@@ -62,6 +56,12 @@ jobs:
       - name: Build with Gatsby
         run: gatsby build
 
+      - name: Login to Azure with Az Powershell
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
       - name: Setup storage account and deploy static website
         uses: azure/powershell@v1
         with:
@@ -73,6 +73,7 @@ jobs:
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
             $ContainerName = '$web'
             $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
+           
             function Upload-FileToAzureStorageContainer {
               [cmdletbinding()]
               param(
@@ -145,6 +146,13 @@ jobs:
             Write-Host "[FINISH]  Website deployed - see below url"
             Write-Output $storageAccount.PrimaryEndpoints.Web
           azPSVersion: "latest"
+      
+      - name: Get PR Website URL
+        shell: bash
+        run: |
+          echo "##[set-output name=website_url;]$(echo $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv))"
+          echo "PR Website URL: $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv)"
+        id: web_url
 
   # azure_plan_terraform:
   #   name: "Plan Terraform staging environment"
