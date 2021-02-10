@@ -16,6 +16,7 @@ const SimulationForm = () => {
   return (
     <>
       <SliderWithInput
+        isCurrency
         label="Upfront investment"
         min={0}
         max={20000}
@@ -25,6 +26,7 @@ const SimulationForm = () => {
         value={inputs.upfrontInvestment}
       />
       <SliderWithInput
+        isCurrency
         label="Monthly investment"
         min={0}
         max={2500}

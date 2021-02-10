@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Input, Slider, Typography } from '@material-ui/core';
+import { Grid, Input, InputAdornment, Slider, Typography } from '@material-ui/core';
 
 interface SliderWithInputProps {
   label: string;
@@ -9,10 +9,14 @@ interface SliderWithInputProps {
   onChange: (name: string, newValue: number) => void;
   step: number;
   value: number;
+  inputDataTestId?: string;
+  isCurrency?: boolean;
   onBlur?: () => void;
 }
 
 const SliderWithInput: React.FC<SliderWithInputProps> = ({
+  inputDataTestId = '',
+  isCurrency = false,
   label,
   max,
   min,
@@ -35,14 +39,6 @@ const SliderWithInput: React.FC<SliderWithInputProps> = ({
     onChange(event.target.name, newValue);
   };
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (value < min) {
-      onChange(event.target.name, min);
-    } else if (value > max) {
-      onChange(event.target.name, max);
-    }
-  };
-
   return (
     <>
       <Grid container spacing={2} alignItems="center">
@@ -53,16 +49,16 @@ const SliderWithInput: React.FC<SliderWithInputProps> = ({
           <Input
             value={value}
             onChange={handleInputChange}
-            onBlur={handleBlur}
             inputProps={{
               'aria-labelledby': 'input-slider',
-              'data-testid': 'slider-with-input',
+              'data-testid': inputDataTestId,
               max,
               min,
               name,
               step,
               type: 'number',
             }}
+            startAdornment={isCurrency ? <InputAdornment position="start">£</InputAdornment> : null}
           />
         </Grid>
       </Grid>
