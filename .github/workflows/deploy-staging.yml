@@ -176,3 +176,16 @@ jobs:
               Write-Output $StagingStorageAccount.PrimaryEndpoints.Web
             }
           azPSVersion: "latest"
+
+          
+      - name: Deploy to production environment to staging
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $ProductionStorageAccountName = "digitalhybridprod"
+            $ArtifactStorageAccountName = "digitalhybridartifact"
+            $gitsha = "${{github.sha}}"
+            $WebContainerName = '$web'
+          azPSVersion: "latest"
