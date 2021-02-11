@@ -15,10 +15,10 @@ const useStyles = makeStyles(() => ({
 const HeaderMenu: React.FC = () => {
   const classes = useStyles();
   return (
-    <AppBar position="static" data-testid="header-menu">
+    <AppBar elevation={0} position="static" data-testid="header-menu">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          Bestinvest
+          Digital Hybrid
         </Typography>
         <Button className={classes.loginButton} color="inherit">
           Log in

@@ -5,6 +5,7 @@ import HeaderMenu from '../components/HeaderMenu';
 import HomeFeatureCards from '../components/HomeFeatureCards';
 import SimulationForm, { SimulationFormData } from '../components/SimulationForm/SimulationForm';
 import { getProjections, ProjectionResponse } from '../api/getProjection';
+import ProjectionsChart from '../components/ProjectionsChart/ProjectionsChart';
 
 const useStyles = makeStyles(() => ({
   gridItem: {
@@ -28,7 +29,7 @@ const IndexPage = () => {
         <Grid className={classes.gridItem} item xs={12} sm={8}>
           <Typography>Stocks &amp; Shares ISA</Typography>
           <Typography gutterBottom>Bring tomorrow forwards</Typography>
-          <pre>{JSON.stringify(projections, null, 2)}</pre>
+          {projections && <ProjectionsChart projections={projections.projections} />}
         </Grid>
         <Grid className={classes.gridItem} item xs={12} sm={4}>
           <SimulationForm onSubmit={onFormSubmit} />
