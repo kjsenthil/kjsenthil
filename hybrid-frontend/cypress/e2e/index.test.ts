@@ -1,4 +1,4 @@
-const APP_HEADING_TEXT = 'Bestinvest';
+const APP_HEADING_TEXT = 'Digital Hybrid';
 
 describe('Index page', () => {
   before(() => {
