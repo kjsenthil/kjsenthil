@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import Layout from '../components/Layout';
 import HeaderMenu from '../components/HeaderMenu';
 import HomeFeatureCards from '../components/HomeFeatureCards';
 import SimulationForm, { SimulationFormData } from '../components/SimulationForm/SimulationForm';
 import { getProjections, ProjectionResponse } from '../api/getProjection';
+import ProjectionsChart from '../components/ProjectionsChart';
+import ProjectionsGrid from '../components/ProjectionsGrid';
 
 const useStyles = makeStyles(() => ({
   gridItem: {
@@ -26,9 +28,12 @@ const IndexPage = () => {
       <HeaderMenu />
       <Grid container spacing={3}>
         <Grid className={classes.gridItem} item xs={12} sm={8}>
-          <Typography>Stocks &amp; Shares ISA</Typography>
-          <Typography gutterBottom>Bring tomorrow forwards</Typography>
-          <pre>{JSON.stringify(projections, null, 2)}</pre>
+          {projections && (
+            <>
+              <ProjectionsGrid projections={projections.projections} />
+              <ProjectionsChart projections={projections.projections} />
+            </>
+          )}
         </Grid>
         <Grid className={classes.gridItem} item xs={12} sm={4}>
           <SimulationForm onSubmit={onFormSubmit} />

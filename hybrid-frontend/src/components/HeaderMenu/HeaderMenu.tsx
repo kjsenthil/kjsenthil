@@ -14,12 +14,23 @@ const useStyles = makeStyles(() => ({
 
 const HeaderMenu: React.FC = () => {
   const classes = useStyles();
+
+  // prettier-ignore
+  const environment = process.env.GATSBY_ACTIVE_ENV ? (
+    <Typography variant="subtitle1" className={classes.title}>
+      [
+      {process.env.GATSBY_ACTIVE_ENV}
+      ]
+    </Typography>
+  ) : null;
+
   return (
-    <AppBar position="static" data-testid="header-menu">
+    <AppBar elevation={0} position="static" data-testid="header-menu">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          Bestinvest
+          Digital Hybrid
         </Typography>
+        {environment}
         <Button className={classes.loginButton} color="inherit">
           Log in
         </Button>

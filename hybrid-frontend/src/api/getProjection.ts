@@ -4,19 +4,19 @@ import { SimulationFormData } from '../components/SimulationForm/SimulationForm'
 const API_BASE_URL = 'https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets';
 
 interface ProjectionRequest {
+  investmentPeriod: number;
   monthlyInvestment: number;
   riskModel: string;
   sedolCode: string;
-  investmentPeriod: number;
   upfrontInvestment: number;
 }
 
-interface ProjectionYear {
-  year: number;
+export interface ProjectionYear {
+  actual: number;
+  high: number;
   low: number;
   medium: number;
-  high: number;
-  actual: number;
+  year: number;
 }
 
 export interface ProjectionResponse {
@@ -24,13 +24,11 @@ export interface ProjectionResponse {
   projections: ProjectionYear[];
 }
 
-export const getProjections = async (
-  data: SimulationFormData
-): Promise<ProjectionResponse | undefined> => {
+export const getProjections = async (data: SimulationFormData): Promise<ProjectionResponse> => {
   const requestData: ProjectionRequest = {
     ...data,
-    riskModel: 'TAA5',
-    sedolCode: 'BYX8KR5',
+    riskModel: 'TAA6',
+    sedolCode: 'BYX8KW0',
   };
 
   const response = await fetch(`${API_BASE_URL}/projections`, {
