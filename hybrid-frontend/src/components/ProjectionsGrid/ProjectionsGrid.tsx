@@ -14,22 +14,22 @@ const useStyles = makeStyles(() => ({
   contribution: {
     backgroundColor: '#f5f5f5 !important',
     borderTop: '1px dashed #ccc',
-    padding: '.3rem !important',
+    padding: '0.3rem !important',
   },
   underperform: {
     backgroundColor: '#f5f5f5 !important',
     borderTop: '1px solid #f00',
-    padding: '.3rem !important',
+    padding: '0.3rem !important',
   },
   projected: {
     backgroundColor: '#f5f5f5 !important',
     borderTop: '1px solid #0085c2',
-    padding: '.3rem !important',
+    padding: '0.3rem !important',
   },
   overperforms: {
     backgroundColor: '#f5f5f5 !important',
     borderTop: '1px solid #70bc13',
-    padding: '.3rem !important',
+    padding: '0.3rem !important',
   },
   type: {
     fontSize: '0.8rem !important',
@@ -48,7 +48,11 @@ const ProjectionsGrid: React.FC<ProjectionsGridProps> = ({ projections }) => {
   const gridValues = projections[projections.length - 1];
 
   // TODO: move this helper to a utils file
-  const getFormattedGbp = (value: number): string => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
+  const getFormattedGbp = (value: number): string => {
+    const currency = 'GBP';
+
+    return new Intl.NumberFormat('en-GB', { style: 'currency', currency }).format(value);
+  };
 
   return (
     <Grid container justify="center" className={classes.root} spacing={1}>
