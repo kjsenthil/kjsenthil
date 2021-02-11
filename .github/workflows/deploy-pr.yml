@@ -1,4 +1,4 @@
-name: Deploy to Azure Static Web
+name: Deploy to PR environment
 
 on:
   pull_request:
