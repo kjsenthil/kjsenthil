@@ -27,8 +27,8 @@ export interface ProjectionResponse {
 export const getProjections = async (data: SimulationFormData): Promise<ProjectionResponse> => {
   const requestData: ProjectionRequest = {
     ...data,
-    riskModel: 'TAA5',
-    sedolCode: 'BYX8KR5',
+    riskModel: 'TAA6',
+    sedolCode: 'BYX8KW0',
   };
 
   const response = await fetch(`${API_BASE_URL}/projections`, {
