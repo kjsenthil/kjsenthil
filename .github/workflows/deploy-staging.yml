@@ -176,3 +176,11 @@ jobs:
               Write-Output $StagingStorageAccount.PrimaryEndpoints.Web
             }
           azPSVersion: "latest"
+
+      - name: E2E testing of Staging Environment
+        run: |
+          echo "Placeholder run E2E tests here against staging"
+
+      - name: Deploy to Production Environment
+        run: |
+          echo "Placeholder to deploy to production"
