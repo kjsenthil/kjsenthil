@@ -11,6 +11,7 @@ interface AssetDetailsProps {
 }
 
 const StyledPaper = styled(Paper)`
+  margin-bottom: 2rem;
   padding: 0.5rem;
 `;
 

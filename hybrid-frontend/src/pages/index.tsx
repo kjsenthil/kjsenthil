@@ -1,60 +1,41 @@
 import React, { useState } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
-import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
-import AssetSelector, { Asset } from '../components/AssetSelector';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Layout from '../components/Layout';
-import { AssetData, getAssetDetail } from '../api/getAssetDetail';
-import AssetDetails from '../components/AssetDetails/AssetDetails';
+import HeaderMenu from '../components/HeaderMenu';
+import HomeFeatureCards from '../components/HomeFeatureCards';
+import SimulationForm, { SimulationFormData } from '../components/SimulationForm/SimulationForm';
+import { getProjections, ProjectionResponse } from '../api/getProjection';
 
-interface AssetResponse {
-  allAsset: {
-    edges: {
-      node: Asset;
-    }[];
-  };
-}
-
-const AVAILABLE_ASSETS_QUERY = graphql`
-  query {
-    allAsset {
-      edges {
-        node {
-          id
-          category
-          investmentCodeName
-          sedol
-        }
-      }
-    }
-  }
-`;
+const useStyles = makeStyles(() => ({
+  gridItem: {
+    margin: '2rem 0',
+  },
+}));
 
 const IndexPage = () => {
-  const data: AssetResponse = useStaticQuery(AVAILABLE_ASSETS_QUERY);
-  const [selectedAsset, setSelectedAsset] = useState('');
-  const [assetDetails, setAssetDetails] = useState<AssetData | undefined>(undefined);
+  const classes = useStyles();
+  const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
 
-  const onAssetChange = async (assetSedol: string) => {
-    setSelectedAsset(assetSedol);
-    const details = await getAssetDetail(assetSedol);
-    setAssetDetails(details);
+  const onFormSubmit = async (formValues: SimulationFormData) => {
+    const projectionsResponse = await getProjections(formValues);
+    setProjections(projectionsResponse);
   };
 
   return (
     <Layout>
-      <Typography variant="h2" component="h1" gutterBottom data-testid="home-title">
-        Digital Hybrid Demo
-      </Typography>
-      <Grid item xs={12} sm={8}>
-        {data.allAsset.edges && (
-          <AssetSelector
-            assets={data.allAsset.edges}
-            onChange={(newAsset) => onAssetChange(newAsset)}
-            value={selectedAsset}
-          />
-        )}
-        {assetDetails && <AssetDetails data={assetDetails} />}
+      <HeaderMenu />
+      <Grid container spacing={3}>
+        <Grid className={classes.gridItem} item xs={12} sm={8}>
+          <Typography>Stocks &amp; Shares ISA</Typography>
+          <Typography gutterBottom>Bring tomorrow forwards</Typography>
+          <pre>{JSON.stringify(projections, null, 2)}</pre>
+        </Grid>
+        <Grid className={classes.gridItem} item xs={12} sm={4}>
+          <SimulationForm onSubmit={onFormSubmit} />
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <HomeFeatureCards />
       </Grid>
     </Layout>
   );

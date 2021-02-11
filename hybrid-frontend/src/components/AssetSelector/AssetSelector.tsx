@@ -21,7 +21,7 @@ interface AssetSelectorProps {
 }
 
 const StyledFormControl = styled(FormControl)`
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem;
   min-width: 100%;
 `;
 
