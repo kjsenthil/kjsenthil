@@ -12,6 +12,7 @@ const ProjectionsChart: React.FC<ProjectionsChartProps> = ({ projections }) => {
   const lowData = projections.map((projection) => projection.low);
   const mediumData = projections.map((projection) => projection.medium);
   const highData = projections.map((projection) => projection.high);
+  const contributionsData = projections.map((projection) => projection.actual);
 
   const options: ChartOptions = {
     elements: {
@@ -82,6 +83,17 @@ const ProjectionsChart: React.FC<ProjectionsChartProps> = ({ projections }) => {
         borderColor: '#70bc13',
         borderWidth: 1,
         data: highData,
+      },
+      {
+        legend: {
+          display: false,
+        },
+        label: 'Contributions',
+        fill: false,
+        borderColor: '#7a7a7a',
+        borderDash: [10, 10],
+        borderWidth: 1,
+        data: contributionsData,
       },
     ],
   };
