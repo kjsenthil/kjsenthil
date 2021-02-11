@@ -177,15 +177,10 @@ jobs:
             }
           azPSVersion: "latest"
 
-          
-      - name: Deploy to production environment to staging
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            $StorageAccountRG = "digital-hybrid-resources"
-            $ProductionStorageAccountName = "digitalhybridprod"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $gitsha = "${{github.sha}}"
-            $WebContainerName = '$web'
-          azPSVersion: "latest"
+      - name: E2E testing of Staging Environment
+        run: |
+          echo "Placeholder run E2E tests here against staging"
+
+      - name: Deploy to Production Environment
+        run: |
+          echo "Placeholder to deploy to production"
