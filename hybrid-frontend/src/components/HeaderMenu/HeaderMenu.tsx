@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles(() => ({
+  appBar: {
+    marginBottom: '2rem',
+  },
   loginButton: {
     textTransform: 'none',
   },
@@ -25,7 +28,7 @@ const HeaderMenu: React.FC = () => {
   ) : null;
 
   return (
-    <AppBar elevation={0} position="static" data-testid="header-menu">
+    <AppBar className={classes.appBar} elevation={0} position="static" data-testid="header-menu">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           Digital Hybrid
