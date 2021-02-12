@@ -9,8 +9,15 @@ import ProjectionsChart from '../components/ProjectionsChart';
 import ProjectionsGrid from '../components/ProjectionsGrid';
 
 const useStyles = makeStyles(() => ({
-  gridItem: {
-    margin: '2rem 0',
+  gridContainer: {
+    marginBottom: '2rem',
+  },
+  leftGridItem: {
+    paddingLeft: '36px !important',
+    paddingRight: '36px !important',
+  },
+  rightGridItem: {
+    paddingRight: '36px !important',
   },
 }));
 
@@ -26,8 +33,8 @@ const IndexPage = () => {
   return (
     <Layout>
       <HeaderMenu />
-      <Grid container spacing={3}>
-        <Grid className={classes.gridItem} item xs={12} sm={8}>
+      <Grid container spacing={3} className={classes.gridContainer}>
+        <Grid className={classes.leftGridItem} item xs={12} sm={8}>
           {projections && (
             <>
               <ProjectionsGrid projections={projections.projections} />
@@ -35,7 +42,7 @@ const IndexPage = () => {
             </>
           )}
         </Grid>
-        <Grid className={classes.gridItem} item xs={12} sm={4}>
+        <Grid className={classes.rightGridItem} item xs={12} sm={4}>
           <SimulationForm onSubmit={onFormSubmit} />
         </Grid>
       </Grid>
