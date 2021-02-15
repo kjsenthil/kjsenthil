@@ -178,7 +178,9 @@ jobs:
           azPSVersion: "latest"
 
       - name: E2E testing of Staging Environment
-        run: CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
+        run: |
+          npx cypress install
+          CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
 
       - name: Deploy to Production Environment
         run: |
