@@ -60,6 +60,12 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
+      - name: Install dependencies
+        run: |
+          npm install -g gatsby-cli
+          yarn install --frozen-lockfile
+          npx cypress install
+
       - name: Login to Azure
         uses: Azure/login@v1
         with:
@@ -179,7 +185,6 @@ jobs:
 
       - name: E2E testing of Staging Environment
         run: |
-          yarn add cypress --dev
           CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
 
       - name: Deploy to Production Environment

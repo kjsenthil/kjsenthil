@@ -56,10 +56,6 @@ jobs:
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=Demo gatsby build
 
-      - name: E2E testing of Staging Environment
-        run: |
-          CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
-
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
         with:
