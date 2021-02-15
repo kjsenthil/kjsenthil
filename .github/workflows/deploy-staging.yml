@@ -65,6 +65,16 @@ jobs:
           npm install -g gatsby-cli
           yarn install --frozen-lockfile
           npx cypress install
+    
+      - name: Build with Gatsby (Staging)
+        run: |
+          GATSBY_ACTIVE_ENV=Staging gatsby build
+          mv ${{ github.workspace }}/hybrid-frontend/public staging/
+
+      - name: Build with Gatsby (Production)
+        run: |
+          GATSBY_ACTIVE_ENV=Production gatsby build
+          mv ${{ github.workspace }}/hybrid-frontend/public production/
 
       - name: Login to Azure
         uses: Azure/login@v1

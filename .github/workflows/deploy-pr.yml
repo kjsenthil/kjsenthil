@@ -53,12 +53,6 @@ jobs:
           npx cypress install
           yarn test:e2e:ci
 
-      - name: Build with Gatsby (staging)
-        run: |
-          GATSBY_ACTIVE_ENV=Staging gatsby build
-          mv ${{ github.workspace }}/hybrid-frontend/public staging/
-          ls -la ${{ github.workspace }}/hybrid-frontend/staging/
-
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=Demo gatsby build
 
