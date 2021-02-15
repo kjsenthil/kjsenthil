@@ -179,7 +179,7 @@ jobs:
 
       - name: E2E testing of Staging Environment
         run: |
-          npx cypress install
+          yarn add cypress --dev
           CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
 
       - name: Deploy to Production Environment
