@@ -1,4 +1,4 @@
-$StorageAccountName = "dighybprghi3bas"
+$StorageAccountName = "digitalhybridartifact"
 $sourceFileRootDirectory = "<insert_file_location>"
 $ContainerName = "$web"
 $StorageAccountRG = "digital-hybrid-resources"
@@ -11,6 +11,7 @@ function Upload-FileToAzureStorageContainer {
         $ContainerName,
         $StorageAccountRG,
         $sourceFileRootDirectory,
+        $TargetDirectory = "",
         $Force
     )
 
@@ -23,7 +24,7 @@ function Upload-FileToAzureStorageContainer {
         $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
 
         foreach ($x in $filesToUpload) {
-            $targetPath = ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
+            $targetPath =  $TargetDirectory + ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
 
             Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
             Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
@@ -31,4 +32,4 @@ function Upload-FileToAzureStorageContainer {
     }
 }
 
-#Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
+#Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "staging/" -Verbose
