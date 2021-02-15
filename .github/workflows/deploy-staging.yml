@@ -194,7 +194,6 @@ jobs:
         with:
           inlineScript: |
             $StorageAccountRG = "digital-hybrid-resources"
-            $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
             $gitsha = "${{github.sha}}"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/cypress/videos"
@@ -234,7 +233,7 @@ jobs:
 
             } else {
               Write-Host "[1] Confirm $StagingStorageAccountName storage account exists, uploading testing artifacts to storage account"
-              Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "staging/videos/" -Verbose
+              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "staging/videos/" -Verbose
             }
           azPSVersion: "latest"
 
