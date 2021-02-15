@@ -178,8 +178,7 @@ jobs:
           azPSVersion: "latest"
 
       - name: E2E testing of Staging Environment
-        run: |
-          echo "Placeholder run E2E tests here against staging"
+        run: CYPRESS_BASE_URL=https://digitalhybridmanual.z6.web.core.windows.net/ yarn cy:run
 
       - name: Deploy to Production Environment
         run: |
