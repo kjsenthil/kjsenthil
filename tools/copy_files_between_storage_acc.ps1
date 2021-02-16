@@ -4,7 +4,9 @@ $SrcContainerName = "src"
 
 $DstStorageAccountName = "digitalhybridmanual"
 $DstStorageAccountRG = "digital-hybrid-resources" 
-$DstContainerName = "dest"
+$DstContainerName = "test03"
+
+$SrcFolderName = "test/"
 
 function Copy-FilesToAzureStorageContainer {
     [cmdletbinding()]
@@ -15,6 +17,7 @@ function Copy-FilesToAzureStorageContainer {
         $DstStorageAccountName,
         $DstStorageAccountRG,
         $DstContainerName,
+        $SrcFolderName = "",
         $Force
     )
     $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
@@ -23,7 +26,7 @@ function Copy-FilesToAzureStorageContainer {
     $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
     $DstContext  = $DstStorageAccount.Context
 
-    $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName
+    $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName -Prefix $SrcFolderName
     $destBlob = $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
     $destBlob | Get-AzStorageBlobCopyState -WaitForComplete
 }
@@ -61,6 +64,14 @@ if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -Er
 }
 }
 
+
+if(($null -eq $(Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -Name $SrcStorageAccountName -ErrorAction Ignore)) -or ($null -eq $(Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -Name $DstStorageAccountName -ErrorAction Ignore))) {
+    Write-Host "[Finish] Storage account doesnt exists"
+
+  } else {
+    Write-Host "[Finish] Storage account exists"
+  }
+
 #Remove-AzureStorageBlobs -StorageAccountName $DstStorageAccountName -StorageAccountRG $DstStorageAccountRG -ContainerName $DstContainerName
 #Create-AzureStorageContainer -StorageAccountName $DstStorageAccountName -StorageAccountRG $DstStorageAccountRG -ContainerName $ContainerTestName
-#Copy-FilesToAzureStorageContainer -SrcStorageAccountName $SrcStorageAccountName -SrcStorageAccountRG $SrcStorageAccountRG -SrcContainerName $SrcContainerName -DstStorageAccountName $DstStorageAccountName -DstStorageAccountRG $DstStorageAccountRG -DstContainerName $DstContainerName
+#Copy-FilesToAzureStorageContainer -SrcStorageAccountName $SrcStorageAccountName -SrcStorageAccountRG $SrcStorageAccountRG -SrcContainerName $SrcContainerName -SrcFolderName $SrcFolderName -DstStorageAccountName $DstStorageAccountName -DstStorageAccountRG $DstStorageAccountRG -DstContainerName $DstContainerName
