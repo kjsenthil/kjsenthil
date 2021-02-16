@@ -277,7 +277,7 @@ jobs:
       #       }
       #     azPSVersion: "latest"
 
-          - name: Deploying Staging Environment
+      - name: Deploying Staging Environment
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         uses: azure/powershell@v1
         with:
