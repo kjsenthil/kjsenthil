@@ -75,12 +75,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           />
         </Grid>
 
-        <Button
-          data-testid="login"
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
+        <Button data-testid="login" variant="contained" color="primary" type="submit">
           Log in
         </Button>
       </form>

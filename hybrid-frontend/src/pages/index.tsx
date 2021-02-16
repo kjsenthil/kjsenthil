@@ -7,6 +7,9 @@ import SimulationForm, { SimulationFormData } from '../components/SimulationForm
 import { getProjections, ProjectionResponse } from '../api/getProjection';
 import ProjectionsChart from '../components/ProjectionsChart';
 import ProjectionsGrid from '../components/ProjectionsGrid';
+import LoginForm from '../components/LoginForm';
+import { LoginFormData } from '../components/LoginForm/LoginForm';
+import login from '../api/postLogin';
 
 const useStyles = makeStyles(() => ({
   gridContainer: {
@@ -30,6 +33,10 @@ const IndexPage = () => {
     setProjections(projectionsResponse);
   };
 
+  const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
+    await login(loginFormValues);
+  };
+
   return (
     <Layout>
       <HeaderMenu />
@@ -43,6 +50,7 @@ const IndexPage = () => {
           )}
         </Grid>
         <Grid className={classes.rightGridItem} item xs={12} sm={4}>
+          <LoginForm onSubmit={onLoginFormSubmit} />
           <SimulationForm onSubmit={onFormSubmit} />
         </Grid>
       </Grid>
