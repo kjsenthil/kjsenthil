@@ -113,6 +113,7 @@ jobs:
             $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
             $StagingArtifactContainer = "staging-${{github.sha}}"
+            $TestingArtifactContainer = "testing-${{github.sha}}"
             $ProdArtifactContainer = "prod-${{github.sha}}"
             $gitsha = "${{github.sha}}"
             $WebContainerName = '$web'
@@ -174,16 +175,19 @@ jobs:
             } else {
               Write-Host "[1] Confirm $ArtifactStorageAccountName storage account exists"
               
-              Write-Host "[2] Create container named $StagingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
+              Write-Host "[2] Create container named $TestingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
+              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $TestingArtifactContainer
+
+              Write-Host "[3] Create container named $StagingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
               Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $StagingArtifactContainer
 
-              Write-Host "[3] Deploying Staging Gatsby build to artifact storage account $ArtifactStorageAccountName"
+              Write-Host "[4] Deploying Staging Gatsby build to artifact storage account $ArtifactStorageAccountName"
               Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $StagingArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $StagingSourceFileRootDirectory -Verbose
 
-              Write-Host "[4] Create container named $ProdArtifactContainer in artifact storage account $ArtifactStorageAccountName"
+              Write-Host "[5] Create container named $ProdArtifactContainer in artifact storage account $ArtifactStorageAccountName"
               Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ProdArtifactContainer
 
-              Write-Host "[5] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
+              Write-Host "[6] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
               # Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $ProdArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -Verbose
 
               Write-Host "[FINISH]  Build artifacts stored in container $StagingArtifactContainer and $ProdArtifactContainer of storage account $ArtifactStorageAccountName"
@@ -377,6 +381,7 @@ jobs:
             $StorageAccountRG = "digital-hybrid-resources"
             $ArtifactStorageAccountName = "digitalhybridartifact"
             $gitsha = "${{github.sha}}"
+            $TestingArtifactContainer = "testing-${{github.sha}}"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/cypress/videos"
 
             function Upload-FileToAzureStorageContainer {
@@ -413,8 +418,8 @@ jobs:
               Write-Host "[Error] $ArtifactStorageAccountName Storage account doesnt exists - Can not find Artifact Storage account"
 
             } else {
-              Write-Host "[1] Confirm $StagingStorageAccountName storage account exists, uploading testing artifacts to storage account"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "tests/videos/" -Verbose
+              Write-Host "[1] Confirm $StagingStorageAccountName storage account exists, uploading testing artifacts to storage account in container $TestingArtifactContainer"
+              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $TestingArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "tests/videos/" -Verbose
             }
           azPSVersion: "latest"
 
