@@ -71,12 +71,15 @@ jobs:
         run: |
           GATSBY_ACTIVE_ENV=Staging gatsby build
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
+          ls -la staging/
 
       - name: Build with Gatsby (Production)
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         run: |
           GATSBY_ACTIVE_ENV=Production gatsby build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
+          ls -la
+          ls -la production/
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -176,7 +179,7 @@ jobs:
               Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $StagingSourceFileRootDirectory -TargetDirectory "staging/" -Verbose
 
               Write-Host "[4] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -TargetDirectory "Production/" -Verbose
+              # Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -TargetDirectory "production/" -Verbose
 
               Write-Host "[FINISH]  Build artifacts stored in container $gitsha of storage account $ArtifactStorageAccountName"
             }
