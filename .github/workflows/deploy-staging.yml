@@ -112,6 +112,8 @@ jobs:
             $PrStorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
+            $StagingArtifactContainer = "staging-${{github.sha}}"
+            $ProdArtifactContainer = "prod-${{github.sha}}"
             $gitsha = "${{github.sha}}"
             $WebContainerName = '$web'
             $StagingSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/staging"
@@ -172,16 +174,19 @@ jobs:
             } else {
               Write-Host "[1] Confirm $ArtifactStorageAccountName storage account exists"
               
-              Write-Host "[2] Create container named $gitsha in artifact storage account $ArtifactStorageAccountName"
-              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $gitsha
+              Write-Host "[2] Create container named $StagingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
+              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $StagingArtifactContainer
 
               Write-Host "[3] Deploying Staging Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $StagingSourceFileRootDirectory -TargetDirectory "staging/" -Verbose
+              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $StagingArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $StagingSourceFileRootDirectory -Verbose
 
-              Write-Host "[4] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              # Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $gitsha -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -TargetDirectory "production/" -Verbose
+              Write-Host "[4] Create container named $ProdArtifactContainer in artifact storage account $ArtifactStorageAccountName"
+              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ProdArtifactContainer
 
-              Write-Host "[FINISH]  Build artifacts stored in container $gitsha of storage account $ArtifactStorageAccountName"
+              Write-Host "[5] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
+              # Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $ProdArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -Verbose
+
+              Write-Host "[FINISH]  Build artifacts stored in container $StagingArtifactContainer and $ProdArtifactContainer of storage account $ArtifactStorageAccountName"
             }
           azPSVersion: "latest"
       
@@ -289,6 +294,7 @@ jobs:
             $PrStorageAccountName = "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}"
             $StagingStorageAccountName = "digitalhybridmanual"
             $ArtifactStorageAccountName = "digitalhybridartifact"
+            $StagingArtifactContainer = "staging-${{github.sha}}"
             $gitsha = "${{github.sha}}"
             $WebContainerName = '$web'
 
@@ -342,7 +348,7 @@ jobs:
               Remove-AzureStorageBlobs -StorageAccountName $StagingStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $WebContainerName
 
               Write-Host "[3] Deploying Gatsby build to staging storage account $StagingStorageAccountName from stored artifact"
-              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $gitsha -SrcFolderName "staging/" -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $StagingArtifactContainer -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
               
               if($null -eq $(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $PrStorageAccountName -ErrorAction Ignore)) {
               Write-Host "[Error] $PrStorageAccountName Storage account doesnt exists, no action required"
