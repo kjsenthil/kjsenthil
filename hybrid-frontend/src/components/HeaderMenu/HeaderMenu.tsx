@@ -1,14 +1,11 @@
 import React from 'react';
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles(() => ({
   appBar: {
     marginBottom: '2rem',
-  },
-  loginButton: {
-    textTransform: 'none',
   },
   title: {
     flexGrow: 1,
@@ -34,9 +31,6 @@ const HeaderMenu: React.FC = () => {
           Digital Hybrid
         </Typography>
         {environment}
-        <Button className={classes.loginButton} color="inherit">
-          Log in
-        </Button>
         <IconButton edge="end" color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
