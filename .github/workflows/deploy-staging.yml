@@ -328,7 +328,73 @@ jobs:
             }
           azPSVersion: "latest"
 
-      - name: Deploy to Production Environment
+      - name: Deploying Production Environment
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-        run: |
-          echo "Placeholder to deploy to production"
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $ProdStorageAccountName = "digitalhybridprod "
+            $ArtifactStorageAccountName = "digitalhybridartifact"
+            $ProdArtifactContainer = "prod-${{github.sha}}"
+            $gitsha = "${{github.sha}}"
+            $WebContainerName = '$web'
+
+            function Copy-FilesToAzureStorageContainer {
+              [cmdletbinding()]
+              param(
+                  $SrcStorageAccountName,
+                  $SrcStorageAccountRG,
+                  $SrcContainerName,
+                  $DstStorageAccountName,
+                  $DstStorageAccountRG,
+                  $DstContainerName,
+                  $SrcFolderName = "",
+                  $Force
+              )
+              $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
+              $SrcContext  = $SrcStorageAccount.Context
+
+              $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
+              $DstContext  = $DstStorageAccount.Context
+
+              $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName -Prefix $SrcFolderName
+              $destBlob = $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force 
+              $destBlob | Get-AzStorageBlobCopyState -WaitForComplete
+            }
+
+            function Remove-AzureStorageBlobs {
+              [cmdletbinding()]
+              param(
+                  $StorageAccountName,
+                  $StorageAccountRG,
+                  $ContainerName
+              )
+              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $Context  = $StorageAccount.Context
+              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+                  Write-Host "[Error] Storage container doesnt exists"
+              } else {
+                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
+                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
+              }
+            }
+
+            if(($null -eq $(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $ProdStorageAccountName -ErrorAction Ignore)) -or ($null -eq $(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore))) {
+              Write-Host "[Error] $ProdStorageAccountName or $ArtifactStorageAccountName Storage account doesnt exists, can not progress with deployment"
+
+            } else {
+              Write-Host "[1] Confirm $ProdStorageAccountName and $ArtifactStorageAccountName storage account exists"
+
+              #TODO this will cause a small amount of downtime will need to move to a zero downtime deployment pattern
+              Write-Host "[2] flushing storage account named $ProdStorageAccountName"
+              Remove-AzureStorageBlobs -StorageAccountName $ProdStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $WebContainerName
+
+              Write-Host "[3] Deploying Gatsby build to production storage account $ProdStorageAccountName from stored artifact"
+              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $StorageAccountRG -SrcContainerName $ProdArtifactContainer -DstStorageAccountName $ProdStorageAccountName -DstStorageAccountRG $StorageAccountRG -DstContainerName $WebContainerName
+
+              $ProdStorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $ProdStorageAccountName
+              Write-Host "[FINISH]  Production Website deployed - see below url"
+              Write-Output $ProdStorageAccount.PrimaryEndpoints.Web
+            }
+          azPSVersion: "latest"
