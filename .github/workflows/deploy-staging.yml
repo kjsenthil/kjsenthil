@@ -188,7 +188,9 @@ jobs:
               Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ProdArtifactContainer
 
               Write-Host "[6] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $ProdArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -Verbose
+              Write-Host "[Log] source prod directory $ProductionSourceFileRootDirectory"
+             # TODO: this is uploading the whole home directory, need to fix
+             # Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $ProdArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $ProductionSourceFileRootDirectory -Verbose
 
               Write-Host "[FINISH]  Build artifacts stored in container $StagingArtifactContainer and $ProdArtifactContainer of storage account $ArtifactStorageAccountName"
             }
