@@ -5,6 +5,7 @@ module.exports = {
     '!src/api/*.{ts,tsx}',
     '!src/**/*.stories.tsx',
   ],
+  coverageReporters: ['json-summary', 'text', 'lcov'],
   coverageThreshold: {
     global: {
       branches: 60,
