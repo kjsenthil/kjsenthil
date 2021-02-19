@@ -1,11 +1,11 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import SliderWithInput from './SliderWithInput';
+import SliderWithInput, { SliderWithInputProps } from './SliderWithInput';
 
 describe('SliderWithInput', () => {
-  const defaultProps = {
-    defaultValue: 0,
-    inputDataTestId: 'slider-input-field',
+  const inputDataTestId = 'slider-input-field';
+  const defaultProps: SliderWithInputProps = {
+    inputDataTestId,
     label: 'Upfront investment',
     max: 20000,
     min: 0,
@@ -22,12 +22,12 @@ describe('SliderWithInput', () => {
     beforeEach(async () => {
       /* eslint-disable react/jsx-props-no-spreading */
       render(<SliderWithInput {...defaultProps} />);
-      inputField = (await screen.findByTestId(defaultProps.inputDataTestId)) as HTMLInputElement;
+      inputField = (await screen.findByTestId(inputDataTestId)) as HTMLInputElement;
     });
 
     test('Renders the slider', async () => {
       expect(await screen.findByRole('slider')).toBeInTheDocument();
-      expect(await screen.findByTestId(defaultProps.inputDataTestId)).toBeInTheDocument();
+      expect(await screen.findByTestId(inputDataTestId)).toBeInTheDocument();
       expect(screen.queryByText('£')).toBeNull();
     });
 
