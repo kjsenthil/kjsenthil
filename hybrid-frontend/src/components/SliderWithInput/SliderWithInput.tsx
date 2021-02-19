@@ -1,14 +1,14 @@
 import React from 'react';
 import { Grid, Input, InputAdornment, makeStyles, Slider, Typography } from '@material-ui/core';
 
-interface SliderWithInputProps {
+export interface SliderWithInputProps {
   label: string;
   max: number;
   min: number;
   name: string;
   onChange: (name: string, newValue: number | '') => void;
   step: number;
-  value: number;
+  value: number | '';
   inputDataTestId?: string;
   isCurrency?: boolean;
   onBlur?: () => void;
