@@ -81,6 +81,9 @@ jobs:
           ls -la
           ls -la production/
 
+      - name: Build Storybook
+        run: yarn build-storybook
+
       - name: Login to Azure
         uses: Azure/login@v1
         with:

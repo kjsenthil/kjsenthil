@@ -71,3 +71,6 @@ yarn-error.log
 # cypress videos directories
 cypress/videos/
 cypress/screenshots/
+
+# Storybook build
+storybook-static
