@@ -56,6 +56,9 @@ jobs:
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=Demo gatsby build
 
+      - name: Build Storybook
+        run: yarn build-storybook
+
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
         with:
