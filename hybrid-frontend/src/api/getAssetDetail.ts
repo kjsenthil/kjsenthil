@@ -1,6 +1,3 @@
-// TODO: move this to env file that can be shared with gatsby-node.js
-const API_BASE_URL = 'https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets';
-
 export interface AssetData {
   assetName: string;
   investmentCodeName: string;
@@ -23,7 +20,7 @@ export interface AssetData {
 }
 
 export const getAssetDetail = async (sedol: string): Promise<AssetData | undefined> => {
-  const response = await fetch(`${API_BASE_URL}/assetdetail/${sedol}`);
+  const response = await fetch(`${process.env.ASSETS_API_BASE_URL}/assetdetail/${sedol}`);
 
   if (!response.ok) {
     return Promise.reject(new Error('Unable to fetch asset details'));

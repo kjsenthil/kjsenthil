@@ -1,7 +1,5 @@
 import { LoginFormData } from '../components/LoginForm/LoginForm';
 
-const LOGIN_URL = 'https://tbigroupuat2.xplan.iress.co.uk/home/tfaprelogin';
-
 export default async (values: LoginFormData): Promise<any> => {
   const payload = {
     userid: values.username,
@@ -9,7 +7,7 @@ export default async (values: LoginFormData): Promise<any> => {
     rolename: 'User',
   };
 
-  const response = await fetch(LOGIN_URL, {
+  const response = await fetch(`${process.env.XPLAN_BASE_URL}/home/tfaprelogin`, {
     body: JSON.stringify(payload),
     method: 'POST',
   });

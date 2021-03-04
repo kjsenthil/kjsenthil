@@ -1,5 +1,9 @@
 {
   "name": "assets-api-plugin",
   "version": "1.0.0",
-  "description": "A plugin to source data from the BestInvest assets API"
+  "description": "A plugin to source data from the BestInvest assets API",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1"
+  }
 }

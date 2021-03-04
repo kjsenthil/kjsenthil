@@ -20,6 +20,12 @@
 
 Install dependencies with ```yarn install```
 
+### Configure app settings
+
+Copy the `.env.example` file as `.env.development`, and edit it to configure the environment variables read by the app.
+
+    cp .env.example .env.development
+
 ---
 
 ## Development

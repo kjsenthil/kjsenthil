@@ -48,13 +48,19 @@ jobs:
       - name: Run unit tests and code coverage
         run: yarn test:coverage
 
+      - name: Create PR env file
+        run: |
+          touch .env.pr
+          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
+
       - name: Run E2E UI tests
         run: |
           npx cypress install
-          yarn test:e2e:ci
+          GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=Demo gatsby build
+        run: GATSBY_ACTIVE_ENV=pr gatsby build
 
       - name: Build Storybook
         run: yarn build-storybook
