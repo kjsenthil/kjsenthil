@@ -65,18 +65,30 @@ jobs:
           npm install -g gatsby-cli
           yarn install --frozen-lockfile
           npx cypress install
+
+      - name: Create Staging env file
+        run: |
+          touch .env.staging
+          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.staging
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
     
       - name: Build with Gatsby (Staging)
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         run: |
-          GATSBY_ACTIVE_ENV=Staging gatsby build
+          GATSBY_ACTIVE_ENV=staging gatsby build
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
           ls -la staging/
+
+      - name: Create Production env file
+        run: |
+          touch .env.production
+          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.production
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.production
 
       - name: Build with Gatsby (Production)
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         run: |
-          GATSBY_ACTIVE_ENV=Production gatsby build
+          GATSBY_ACTIVE_ENV=production gatsby build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
           ls -la
           ls -la production/
