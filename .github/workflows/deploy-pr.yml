@@ -126,6 +126,12 @@ jobs:
         working-directory: ./terraform/env/dev/pr
         run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
+    outputs:
+      frontend_storage_account_nane: ${{ steps.get-frontend-storage-account-name.outputs.frontend-storage-account-name }}
+      resource_group_name: ${{ steps.get-resource-group-name.outputs.resource-group-name }}
+      api_endpoints: ${{ steps.get-api-endpoints.outputs.api-endpoints }}
+      website_endpoint: ${{ steps.get-website-endpoint.outputs.website-endpoint }}
+
   # Deploys frontend pr contents
   deploy_pr_frontend:
     name: "Deploy PR environment"
@@ -198,8 +204,8 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            $StorageAccountRG = "${{ steps.get-resource-group-name.outputs.resource-group-name }}"
-            $StorageAccountName = "${{ steps.get-frontend-storage-account-name.outputs.frontend-storage-account-name }}"
+            $StorageAccountRG = "${{ needs.deploy_pr_terraform.outputs.resource_group_name }}"
+            $StorageAccountName = "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
@@ -287,5 +293,6 @@ jobs:
         run: |
           echo "##[set-output name=website_url;]$(echo $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv))"
           echo "PR Website URL: $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv)"
-          echo "Website Endpoint: ${{ steps.extract_branch_name.outputs.get-website-endpoint }}"
+          echo "Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
+          echo "API Endpoints: ${{ needs.deploy_pr_terraform.outputs.api_endpoints }}"
         id: web_url
