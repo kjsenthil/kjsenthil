@@ -13,3 +13,19 @@ output "staging_apia_path" {
 output "endpoints" {
   value = local.endpoints
 }
+
+output "frontend_storage_account_name" {
+  value       = azurerm_storage_account.front_end_storage_account.name
+  description = "Name of the storage account hosting the front end."
+}
+
+
+output "frontend_web_endpoint" {
+  value       = azurerm_storage_account.front_end_storage_account.primary_web_endpoint
+  description = "Web enpoint for the front end."
+}
+
+output "resource_group_name" {
+  value       = format("%s-%s-rg", local.environment, local.rg_name)
+  description = "The name of the Staging environments resource group."
+}
