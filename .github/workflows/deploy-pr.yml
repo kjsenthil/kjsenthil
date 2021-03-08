@@ -198,8 +198,8 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            $StorageAccountRG = "${{ steps.extract_branch_name.outputs.get-resource-group-name }}"
-            $StorageAccountName = "${{ steps.extract_branch_name.outputs.get-frontend-storage-account-name}}"
+            $StorageAccountRG = "${{ steps.get-resource-group-name.outputs.resource-group-name }}"
+            $StorageAccountName = "${{ steps.get-frontend-storage-account-name.outputs.frontend-storage-account-name }}"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
