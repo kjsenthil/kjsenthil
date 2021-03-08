@@ -274,7 +274,7 @@ jobs:
           #   $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
           #   Write-Host "[FINISH]  Website deployed - see below url"
           #   Write-Output $storageAccount.PrimaryEndpoints.Web
-          # azPSVersion: "latest"
+          azPSVersion: "latest"
 
       - name: Get PR Website URL
         shell: bash
