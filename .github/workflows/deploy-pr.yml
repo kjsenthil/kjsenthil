@@ -204,8 +204,8 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            $StorageAccountRG = ${{ needs.deploy_pr_terraform.outputs.resource_group_name }}
-            $StorageAccountName = ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}
+            $StorageAccountRG = '${{ needs.deploy_pr_terraform.outputs.resource_group_name }}'
+            $StorageAccountName = '${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}'
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
