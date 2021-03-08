@@ -14,4 +14,5 @@ data "azurerm_api_management_api" "pr_apia" {
   api_management_name = data.terraform_remote_state.dev_apim.outputs.dev_apim_name
   resource_group_name = data.terraform_remote_state.dev_apim.outputs.dev_apim_rg
   revision            = "1"
+  depends_on = [module.dev_apima]
 }
