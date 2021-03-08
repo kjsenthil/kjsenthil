@@ -127,7 +127,7 @@ jobs:
         run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
     outputs:
-      frontend_storage_account_nane: ${{ steps.get-frontend-storage-account-name.outputs.frontend-storage-account-name }}
+      frontend_storage_account_name: ${{ steps.get-frontend-storage-account-name.outputs.frontend-storage-account-name }}
       resource_group_name: ${{ steps.get-resource-group-name.outputs.resource-group-name }}
       api_endpoints: ${{ steps.get-api-endpoints.outputs.api-endpoints }}
       website_endpoint: ${{ steps.get-website-endpoint.outputs.website-endpoint }}
@@ -204,20 +204,13 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            $StorageAccountRG = ${{ needs.deploy_pr_terraform.outputs.resource_group_name }}
-            $StorageAccountRG1 = '${{ needs.deploy_pr_terraform.outputs.resource_group_name }}'
-            $StorageAccountName = ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}
-            $StorageAccountName1 = "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
+            $StorageAccountRG = "${{ needs.deploy_pr_terraform.outputs.resource_group_name }}"
+            $StorageAccountName = "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
             $IndexDocumentName = "index.html"
             $ErrorDocumentName = "error.html"
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
             $ContainerName = '$web'
             # $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
-
-            Write-Host "storageAccountRG = $StorageAccountRG"
-            Write-Host "storageAccountName = $storageAccountName"
-            Write-Host "storageAccountName1 = $storageAccountName1"
-            Write-Host "StorageAccountRG1 = $StorageAccountRG1"
 
 
             function Upload-FileToAzureStorageContainer {
