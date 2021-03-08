@@ -1,12 +1,113 @@
-name: Deploy to PR environment
+name: Deploy terraform and frontend to PR environment
+# Deployment order: Terraform -> Frontend
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-  deploy_pr:
+  # Deploys terraform APIM.
+  deploy_apim_terraform:
+    name: "Deploy APIM"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/env/dev/apim
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform (Azure)
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.5
+
+      - name: Terraform Init
+        id: apim-init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: apim-validate
+        run: terraform validate -no-color
+
+      - name: Terraform Format
+        id: apim-fmt
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        id: apim-plan
+        run: terraform plan -no-color
+
+      - name: Terraform Apply
+        id: apim-apply
+        run: terraform apply -auto-approve
+
+  # Deploys terraform PR contents.
+  deploy_pr_terraform:
+    name: "Deploy PR"
+    needs: deploy_apim_terraform
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/env/dev/pr
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Get Branch Name
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
+          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
+        id: extract_branch_name
+
+      - name: Setup Terraform (Azure)
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.5
+
+      - name: Terraform Init
+        id: pr-init
+        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ steps.extract_branch_name.outputs.branch-subset }}/terraform.tfstate"
+
+      - name: Terraform Validate
+        id: pr-validate
+        run: terraform validate -no-color
+
+      - name: Terraform Format
+        id: pr-fmt
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        id: pr-plan
+        run: terraform plan -no-color
+        env:
+          TF_VAR_environment_prefix: ${{ steps.extract_branch_name.outputs.branch-subset }}
+
+      - name: Terraform Apply
+        id: pr-apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_environment_prefix: ${{ steps.extract_branch_name.outputs.branch-subset }}
+
+  # Deploys frontend pr contents
+  deploy_pr_frontend:
     name: "Deploy PR environment"
+    needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -82,7 +183,7 @@ jobs:
             $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
             $ContainerName = '$web'
             $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
-           
+
             function Upload-FileToAzureStorageContainer {
               [cmdletbinding()]
               param(
@@ -155,69 +256,10 @@ jobs:
             Write-Host "[FINISH]  Website deployed - see below url"
             Write-Output $storageAccount.PrimaryEndpoints.Web
           azPSVersion: "latest"
-      
+
       - name: Get PR Website URL
         shell: bash
         run: |
           echo "##[set-output name=website_url;]$(echo $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv))"
           echo "PR Website URL: $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv)"
         id: web_url
-
-  # azure_plan_terraform:
-  #   name: "Plan Terraform staging environment"
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./terraform
-  #   env:
-  #     ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
-  #     ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
-  #     ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
-  #     ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
-  #     TF_INPUT: false
-
-  #   steps:
-  #     - uses: actions/checkout@v2
-
-  #     - name: Setup Terraform (Azure)
-  #       uses: hashicorp/setup-terraform@v1
-  #       with:
-  #         terraform_version: 0.12.20
-
-  #     - name: Terraform Init
-  #       id: init
-  #       run: terraform init
-
-  #     - name: Terraform Validate
-  #       id: validate
-  #       run: terraform validate -no-color
-
-  #     - name: Terraform Format
-  #       id: fmt
-  #       run: terraform fmt -check
-
-  #     - name: Terraform Plan
-  #       id: plan
-  #       run: terraform plan -no-color
-
-  #     - uses: actions/github-script@0.9.0
-  #       if: ${{ always() }}
-  #       env:
-  #         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-  #       with:
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-  #         script: |
-  #           const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-  #           #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-  #           #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
-  #           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-  #           <details><summary>Show Plan</summary>
-  #           \`\`\`${process.env.PLAN}\`\`\`
-  #           </details>
-  #           *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: output
-  #           })

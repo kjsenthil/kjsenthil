@@ -1,0 +1,37 @@
+<policies>
+  <inbound>
+    <base />
+    <set-backend-service base-url="${values.backend_url}" />
+    <cors>
+      <allowed-origins>
+        <origin>*</origin>
+      </allowed-origins>
+      <allowed-methods>
+      %{ for method in values.methods }
+        %{ if method == "POST" }
+          <method>GET</method>
+          <method>${method}</method>
+        %{ else }
+          <method>${method}</method>
+        %{ endif ~}
+      %{ endfor ~}
+      </allowed-methods>
+      %{ if values.insert_headers }
+      <allowed-headers>
+        <header>content-type</header>
+        <header>origin</header>
+        <header>onlineapitoken</header>
+      </allowed-headers>
+      %{ endif ~}
+    </cors>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies >

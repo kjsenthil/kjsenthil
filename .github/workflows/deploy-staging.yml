@@ -6,34 +6,34 @@ on:
     types:
       - closed
 jobs:
-# ToDo: deploy infra
-#   apply_staging_terraform:
-#     name: "Deploy Staging environment"
-#     runs-on: ubuntu-latest
-#     defaults:
-#       run:
-#         working-directory: ./terraform
-#     env:
-#       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
-#       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
-#       ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
-#       ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
-#       TF_INPUT: false
+  # ToDo: deploy infra
+  #   apply_staging_terraform:
+  #     name: "Deploy Staging environment"
+  #     runs-on: ubuntu-latest
+  #     defaults:
+  #       run:
+  #         working-directory: ./terraform
+  #     env:
+  #       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+  #       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+  #       ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+  #       ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+  #       TF_INPUT: false
 
-#     steps:
-#       - uses: actions/checkout@v2
+  #     steps:
+  #       - uses: actions/checkout@v2
 
-#       - name: Setup Terraform (Azure)
-#         uses: hashicorp/setup-terraform@v1
-#         with:
-#           terraform_version: 0.12.20
+  #       - name: Setup Terraform (Azure)
+  #         uses: hashicorp/setup-terraform@v1
+  #         with:
+  #           terraform_version: 0.12.20
 
-#       - name: Terraform Init (Azure)
-#         run: terraform init
+  #       - name: Terraform Init (Azure)
+  #         run: terraform init
 
-#       - name: Terraform Apply (Azure)
-#         run: terraform apply -auto-approve
- 
+  #       - name: Terraform Apply (Azure)
+  #         run: terraform apply -auto-approve
+
   deploy_staging:
     name: "Deploy Staging website"
     runs-on: ubuntu-latest
@@ -71,7 +71,7 @@ jobs:
           touch .env.staging
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.staging
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
-    
+
       - name: Build with Gatsby (Staging)
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
         run: |

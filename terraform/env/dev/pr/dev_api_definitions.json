@@ -1,0 +1,54 @@
+{
+    "DevAPIDefinitions": [
+        {
+            "operation_id": "get-risk-profile-questions",
+            "display_name": "Get Risk Profile Questions",
+            "method": "GET",
+            "url_template": "\/OxfordRisk\/questions",
+            "description": "This will return all questions used to profile a customer.",
+            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
+            "has_template_parameter": false,
+            "insert_headers": false
+        },
+        {
+            "operation_id": "get-standing-data",
+            "display_name": "Get Standing Data",
+            "method": "GET",
+            "url_template": "\/Assets\/readymade\/standingdata",
+            "description": "This will return the ready made portfolio sedol number for each of the risk profiles (i.e. Defensive, Balanaced, Growth etc)",
+            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
+            "has_template_parameter": false,
+            "insert_headers": false
+        },
+        {
+            "operation_id": "get-asset-details",
+            "display_name": "Get Asset details",
+            "method": "GET",
+            "url_template": "\/Assets\/assetdetail\/{sedol}",
+            "description": "This will return the asset details based on sedol number.",
+            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
+            "has_template_parameter": true,
+            "insert_headers": false
+        },
+        {
+            "operation_id": "get-asset-allocation-breakdown",
+            "display_name": "Get Asset Allocation Breakdown",
+            "method": "GET",
+            "url_template": "\/Assets\/assetallocation\/{sedol}",
+            "description": "This will return the asset allocation breakdown based on sedol number.",
+            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
+            "has_template_parameter": true,
+            "insert_headers": false
+        },
+        {
+            "operation_id": "post-projections",
+            "display_name": "Ports Projections",
+            "method": "POST",
+            "url_template": "\/Assets\/projections",
+            "description": "This returns the projection of fund performance over 5 years.",
+            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
+            "has_template_parameter": false,
+            "insert_headers": true
+        }
+    ]
+}
