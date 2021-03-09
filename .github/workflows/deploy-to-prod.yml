@@ -32,6 +32,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.5
+          terraform_wrapper: false
 
       - name: Terraform Init
         id: staging-init
@@ -284,6 +285,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.5
+          terraform_wrapper: false
 
       - name: Terraform Init
         id: prod-init
