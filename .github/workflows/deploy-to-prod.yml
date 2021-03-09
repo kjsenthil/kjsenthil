@@ -32,6 +32,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.5
+          terraform_wrapper: false
 
       - name: Terraform Init
         id: staging-init
@@ -56,18 +57,22 @@ jobs:
       # Outputs
       - name: Get Frontend Storage Account Name
         id: get-frontend-storage-account-name
+        working-directory: ./terraform/env/staging
         run: echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
 
       - name: Get API Endpoints
         id: get-api-endpoints
+        working-directory: ./terraform/env/staging
         run: echo "::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )"
 
       - name: Get Resource Group Name
         id: get-resource-group-name
+        working-directory: ./terraform/env/staging
         run: echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )"
 
       - name: Get Website Endpoint
         id: get-website-endpoint
+        working-directory: ./terraform/env/staging
         run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
     outputs:
@@ -216,7 +221,7 @@ jobs:
   # Destroy the PR environment in DEV.
   destroy_pr_dev_env:
     name: "Clean up PR deployment in DEV environment"
-    needs: deploy_staging_terraform
+    needs: [deploy_staging_terraform, deploy_staging_frontend]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -280,6 +285,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.5
+          terraform_wrapper: false
 
       - name: Terraform Init
         id: prod-init
@@ -304,18 +310,22 @@ jobs:
       # Outputs
       - name: Get Frontend Storage Account Name
         id: get-frontend-storage-account-name
+        working-directory: ./terraform/env/prod
         run: echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
 
       - name: Get API Endpoints
         id: get-api-endpoints
+        working-directory: ./terraform/env/prod
         run: echo "::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )"
 
       - name: Get Resource Group Name
         id: get-resource-group-name
+        working-directory: ./terraform/env/prod
         run: echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )"
 
       - name: Get Website Endpoint
         id: get-website-endpoint
+        working-directory: ./terraform/env/prod
         run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
     outputs:
