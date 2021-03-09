@@ -447,7 +447,7 @@ jobs:
       - name: Terraform Apply
         id: prod-apply
         run: terraform apply -auto-approve
-      # TODO: these steps can be consolidated into one step
+      # TODO: these steps can be consolidated into one step 
       # Outputs
       - name: Get Frontend Storage Account Name
         id: get-frontend-storage-account-name
