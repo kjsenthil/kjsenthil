@@ -447,7 +447,7 @@ jobs:
       - name: Terraform Apply
         id: prod-apply
         run: terraform apply -auto-approve
-      # TODO: these steps can be consolidated into one step
+      # TODO: these steps can be consolidated into one step 
       # Outputs
       - name: Get Frontend Storage Account Name
         id: get-frontend-storage-account-name
@@ -487,14 +487,6 @@ jobs:
         deploy_production_terraform,
       ]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - name: Login to Azure
         uses: Azure/login@v1
