@@ -180,6 +180,7 @@ jobs:
       - name: Create PR env file
         run: |
           touch .env.pr
+          echo "ASSETS_API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
 
@@ -292,8 +293,5 @@ jobs:
       - name: Get PR Website URL
         shell: bash
         run: |
-          echo "##[set-output name=website_url;]$(echo $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv))"
-          echo "PR Website URL: $(az storage account show -n "dighybpr${{ steps.extract_branch_name.outputs.branch-subset }}" -g "digital-hybrid-resources" --query "primaryEndpoints.web" --output tsv)"
-          echo "Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
-          echo "API Endpoints: ${{ needs.deploy_pr_terraform.outputs.api_endpoints }}"
+          echo "PR Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
         id: web_url

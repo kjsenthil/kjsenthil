@@ -111,27 +111,15 @@ jobs:
           npm install -g gatsby-cli
           yarn install --frozen-lockfile
 
-      - name: Run linting and formatting
+      - name: Create Staging env file
         run: |
-          yarn format:check
-          yarn lint
-
-      - name: Run unit tests and code coverage
-        run: yarn test:coverage
-
-      - name: Create PR env file
-        run: |
-          touch .env.pr
-          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
-
-      - name: Run E2E UI tests
-        run: |
-          npx cypress install
-          GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
+          touch .env.staging
+          echo "API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}" >> .env.staging
+          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.staging
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=pr gatsby build
+        run: GATSBY_ACTIVE_ENV=staging gatsby build
 
       - name: Build Storybook
         run: yarn build-storybook
@@ -216,6 +204,62 @@ jobs:
             $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
             Write-Host "[FINISH]  Website deployed - see below url"
             Write-Output $storageAccount.PrimaryEndpoints.Web
+          azPSVersion: "latest"
+
+      # Run E2E test on the Staging env
+      - name: E2E testing of Staging Environment
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        run: |
+          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn cy:run
+
+      - name: Upload test artifacts for staging
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "digital-hybrid-resources"
+            $ArtifactStorageAccountName = "digitalhybridartifact"
+            $gitsha = "${{github.sha}}"
+            $TestingArtifactContainer = "testing-${{github.sha}}"
+            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/cypress/videos"
+
+            function Upload-FileToAzureStorageContainer {
+              [cmdletbinding()]
+              param(
+                $StorageAccountName,
+                $ContainerName,
+                $StorageAccountRG,
+                $sourceFileRootDirectory,
+                $TargetDirectory = "",
+                $Force
+              )
+
+              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $ctx = $storageAccount.Context
+              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
+
+              $container.CloudBlobContainer.Uri.AbsoluteUri
+              if ($container) {
+                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
+
+                foreach ($x in $filesToUpload) {
+                  $targetPath = $TargetDirectory + ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
+
+                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
+                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
+                }
+              }
+              $DestinationURL = $container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $TargetDirectory
+              Write-Host "[Finish] Artifacts uploaded to $DestinationURL "
+            }
+
+            if($null -eq $(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore)) {
+              Write-Host "[Error] $ArtifactStorageAccountName Storage account doesnt exists - Can not find Artifact Storage account"
+
+            } else {
+              Write-Host "[1] Confirm $StagingStorageAccountName storage account exists, uploading testing artifacts to storage account in container $TestingArtifactContainer"
+              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $TestingArtifactContainer -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "tests/videos/" -Verbose
+            }
           azPSVersion: "latest"
 
   # Destroy the PR environment in DEV.
@@ -378,27 +422,15 @@ jobs:
           npm install -g gatsby-cli
           yarn install --frozen-lockfile
 
-      - name: Run linting and formatting
+      - name: Create Prod env file
         run: |
-          yarn format:check
-          yarn lint
-
-      - name: Run unit tests and code coverage
-        run: yarn test:coverage
-
-      - name: Create PR env file
-        run: |
-          touch .env.pr
-          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
-
-      - name: Run E2E UI tests
-        run: |
-          npx cypress install
-          GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
+          touch .env.prod
+          echo "ASSETS_API_BASE_URL=${{ needs.deploy_production_terraform.outputs.api_endpoints }}" >> .env.prod
+          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.prod
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.prod
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=pr gatsby build
+        run: GATSBY_ACTIVE_ENV=prod gatsby build
 
       - name: Build Storybook
         run: yarn build-storybook
