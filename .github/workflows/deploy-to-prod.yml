@@ -487,14 +487,6 @@ jobs:
         deploy_production_terraform,
       ]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - name: Login to Azure
         uses: Azure/login@v1
