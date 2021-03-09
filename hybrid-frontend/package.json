@@ -2,6 +2,9 @@
   "name": "hybrid-frontend",
   "private": true,
   "description": "A Gatsby demo for the Digital Hybrid project",
+  "engines": {
+    "node": "^12.21.0"
+  },
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
