@@ -4,6 +4,7 @@ resource "azurerm_api_management_api" "api" {
   api_management_name   = var.api_management_name
   revision              = var.revision
   display_name          = format("%s-%s", var.environment_prefix, var.display_name)
+  #TODO: path needs to be different for PR environment to avoid clash
   path                  = var.path
   protocols             = var.protocols
   subscription_required = var.subscription_required
