@@ -295,3 +295,85 @@ jobs:
         run: |
           echo "PR Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
         id: web_url
+
+  # Terraform plan for Staging
+  plan_staging:
+    name: "Terraform plan for Staging environment"
+    needs: deploy_pr_terraform
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/env/staging
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform (Azure)
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.5
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        id: staging-init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: staging-validate
+        run: terraform validate -no-color
+
+      - name: Terraform Format
+        id: staging-fmt
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        id: staging-plan
+        run: terraform plan -no-color
+
+  # Terraform plan for Prod
+  plan_prod:
+    name: "Terraform plan for Prod environment"
+    needs: [deploy_pr_terraform, plan_staging]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/env/prod
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform (Azure)
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.5
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        id: prod-init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: prod-validate
+        run: terraform validate -no-color
+
+      - name: Terraform Format
+        id: prod-fmt
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        id: prod-plan
+        run: terraform plan -no-color
