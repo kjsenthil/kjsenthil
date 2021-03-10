@@ -4,4 +4,5 @@ locals {
   rg_name     = "digital-hybrid-backend"
   location    = "West Europe"
   apima_name  = "digital-hybrid-api"
+  path        = "digitalhybrid"
 }

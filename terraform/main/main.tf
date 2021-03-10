@@ -14,5 +14,6 @@ module "apima" {
   environment_prefix  = var.environment_prefix
   resource_group_name = var.rg_name
   api_management_name = var.apim_name
+  path                = var.path
   depends_on          = [module.apim]
 }

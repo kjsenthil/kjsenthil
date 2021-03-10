@@ -4,8 +4,8 @@
 
 ## Build status
 
-![Deploy to PR environment](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20to%20PR%20environment/badge.svg)
-![Staging Environment Deployment](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20to%20staging/badge.svg)
+![Deploy PR in DEV](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20terraform%20and%20frontend%20to%20PR%20environment/badge.svg)
+![Deploy to Production](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20all%20the%20way%20to%20the%20PRODUCTION%20environment/badge.svg)
 
 ## Test coverage
 
