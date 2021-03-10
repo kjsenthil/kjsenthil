@@ -29,3 +29,8 @@ variable "rg_name" {
   description = "The name of the resource group in which resources are created."
   type        = string
 }
+
+variable "path" {
+  type        = string
+  description = "The path name for the APIMA"
+}

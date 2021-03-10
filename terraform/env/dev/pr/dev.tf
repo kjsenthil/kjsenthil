@@ -6,6 +6,7 @@ module "dev_apima" {
   environment_prefix = var.environment_prefix
   apim_name          = format("%s-%s-mgmt", local.environment, local.apim_name)
   rg_name            = format("%s-%s-rg", local.environment, local.rg_name)
+  path               = format("%s%s", var.environment_prefix, local.path)
 }
 
 

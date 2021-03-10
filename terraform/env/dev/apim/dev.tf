@@ -11,4 +11,5 @@ module "dev_apim" {
   environment_prefix = "TESTING" # Not used within this module.
   rg_name            = azurerm_resource_group.dev_resource_group.name
   apim_name          = format("%s-%s-mgmt", local.environment, local.apim_name)
+  path               = format("%s%s", local.environment, local.path)
 }
