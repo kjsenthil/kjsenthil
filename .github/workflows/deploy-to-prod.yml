@@ -113,7 +113,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g gatsby-cli
-          yarn install --frozen-lockfile
+          yarn install --immutable
           npx cypress install
       #TODO: make the API URL dynamic
       - name: Create Staging env file

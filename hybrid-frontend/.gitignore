@@ -65,10 +65,14 @@ public
 
 # Yarn
 yarn-error.log
-.pnp/
-.pnp.js
-# Yarn Integrity file
 .yarn-integrity
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # cypress videos directories
 cypress/videos/

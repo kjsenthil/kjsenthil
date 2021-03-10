@@ -3,7 +3,8 @@
   "private": true,
   "description": "A Gatsby demo for the Digital Hybrid project",
   "engines": {
-    "node": "^12.21.0"
+    "node": "^12.21.0",
+    "yarn": "^2.4.0"
   },
   "scripts": {
     "build": "gatsby build",
