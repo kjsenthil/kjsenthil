@@ -25,7 +25,7 @@ export interface LoginFormData {
   username: string;
 }
 
-interface LoginFormProps {
+export interface LoginFormProps {
   onSubmit: (inputs: LoginFormData) => void;
 }
 
