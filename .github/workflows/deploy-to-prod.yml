@@ -1,6 +1,8 @@
 name: "Deploy all the way to the PRODUCTION environment"
-# Execution order : deploy_staging_terraform -> deploy_staging_frontend -> destroy_pr_dev_env ->
-#                   deploy_production_terraform -> deploy_production_frontend -> output_website_urls
+# Execution order : deploy_staging_terraform -> deploy_staging_frontend -> deploy_production_terraform ->
+#                   deploy_production_frontend -> output_website_urls
+#                   destroy_pr_dev_env >> runs in parallel
+
 on:
   pull_request:
     branches:
