@@ -1,4 +1,5 @@
 import { SimulationFormData } from '../components/SimulationForm/SimulationForm';
+import ENDPOINTS from './endpoints';
 
 interface ProjectionRequest {
   investmentPeriod: number;
@@ -28,7 +29,7 @@ export const getProjections = async (data: SimulationFormData): Promise<Projecti
     sedolCode: 'BYX8KW0',
   };
 
-  const response = await fetch(`${process.env.ASSETS_API_BASE_URL}/projections`, {
+  const response = await fetch(ENDPOINTS['post-projections'], {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,3 +1,5 @@
+import ENDPOINTS from './endpoints';
+
 export interface AssetData {
   assetName: string;
   investmentCodeName: string;
@@ -20,7 +22,9 @@ export interface AssetData {
 }
 
 export const getAssetDetail = async (sedol: string): Promise<AssetData | undefined> => {
-  const response = await fetch(`${process.env.ASSETS_API_BASE_URL}/assetdetail/${sedol}`);
+  // the endpoint URL will include a {sedol} placeholder for the SEDOL
+  const endpoint = ENDPOINTS['get-asset-details'].replace(/\{sedol\}/, sedol);
+  const response = await fetch(endpoint);
 
   if (!response.ok) {
     return Promise.reject(new Error('Unable to fetch asset details'));
