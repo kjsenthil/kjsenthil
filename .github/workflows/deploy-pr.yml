@@ -131,7 +131,7 @@ jobs:
         working-directory: ./terraform/env/dev/pr
         run: |
           echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
-          echo "::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )"
+          echo "::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )"
           echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )"
           echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
