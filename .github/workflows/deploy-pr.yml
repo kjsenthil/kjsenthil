@@ -51,7 +51,7 @@ jobs:
 
   # Deploys terraform PR contents.
   deploy_pr_terraform:
-    name: "Deploy PR"
+    name: "Deploy backend PR environment."
     needs: deploy_apim_terraform
     runs-on: ubuntu-latest
     defaults:
@@ -134,7 +134,7 @@ jobs:
 
   # Deploys frontend pr contents
   deploy_pr_frontend:
-    name: "Deploy PR environment"
+    name: "Deploy frontend PR environment"
     needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
@@ -299,7 +299,7 @@ jobs:
   # Terraform plan for Staging
   plan_staging:
     name: "Terraform plan for Staging environment"
-    needs: deploy_pr_terraform
+    needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -340,7 +340,7 @@ jobs:
   # Terraform plan for Prod
   plan_prod:
     name: "Terraform plan for Prod environment"
-    needs: [deploy_pr_terraform, plan_staging]
+    needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
       run:

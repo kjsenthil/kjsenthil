@@ -11,7 +11,7 @@ module "staging_main" {
   environment_prefix = local.environment
   rg_name            = azurerm_resource_group.staging_resource_group.name
   apim_name          = format("%s-%s-mgmt", local.environment, local.apim_name)
-  path               = format("%s%s", local.environment, local.path)
+  path               = local.path
 }
 
 # The API operation deployed in Staging.
