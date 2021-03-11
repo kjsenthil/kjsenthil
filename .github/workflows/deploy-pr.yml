@@ -136,7 +136,7 @@ jobs:
           echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
 
     outputs:
-      frontend_storage_account_name: ${{ steps.get-terraform-outputs-account-name.outputs.frontend-storage-account-name }}
+      frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       resource_group_name: ${{ steps.get-terraform-outputs.outputs.resource-group-name }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
@@ -189,7 +189,7 @@ jobs:
       - name: Create PR env file
         run: |
           touch .env.pr
-          echo "ASSETS_API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
+          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
 
