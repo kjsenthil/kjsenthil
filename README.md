@@ -18,7 +18,8 @@
 
 ## Getting started
 
-Install dependencies with ```yarn install```
+Install dependencies with ```yarn install```  
+(Yarn v2 is required)
 
 ### Configure app settings
 

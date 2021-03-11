@@ -167,7 +167,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g gatsby-cli
-          yarn install --frozen-lockfile
+          yarn install --immutable
 
       - name: Run linting and formatting
         run: |
