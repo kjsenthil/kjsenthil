@@ -83,7 +83,6 @@ jobs:
 
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
-    if: github.event.pull_request.merged == true
     name: "Deploy frontend in Staging environment"
     needs: [deploy_staging_terraform]
     runs-on: ubuntu-latest
@@ -362,7 +361,6 @@ jobs:
   # Destroy the PR environment in DEV.
   destroy_pr_dev_env:
     name: "Clean up PR deployment in DEV environment"
-    needs: [deploy_staging_terraform, deploy_staging_frontend]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -404,9 +402,7 @@ jobs:
   # Deploy Production backend (Terraform)
   deploy_production_terraform:
     name: "Deploy Production Backend"
-    needs:
-      [deploy_staging_terraform, deploy_staging_frontend, destroy_pr_dev_env]
-    if: github.event.pull_request.merged == true && ${{ success() }}
+    needs: [deploy_staging_terraform, deploy_staging_frontend]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -447,7 +443,7 @@ jobs:
       - name: Terraform Apply
         id: prod-apply
         run: terraform apply -auto-approve
-      # TODO: these steps can be consolidated into one step 
+      # TODO: these steps can be consolidated into one step
       # Outputs
       - name: Get Frontend Storage Account Name
         id: get-frontend-storage-account-name
@@ -477,13 +473,11 @@ jobs:
 
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
-    if: github.event.pull_request.merged == true && ${{ success() }}
     name: "Deploy frontend in Production environment"
     needs:
       [
         deploy_staging_terraform,
         deploy_staging_frontend,
-        destroy_pr_dev_env,
         deploy_production_terraform,
       ]
     runs-on: ubuntu-latest
