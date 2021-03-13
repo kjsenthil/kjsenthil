@@ -164,8 +164,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
         run: |
           npm install -g gatsby-cli
           yarn add
