@@ -197,7 +197,7 @@ jobs:
           GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=pr gatsby build
+        run: GATSBY_ACTIVE_ENV=pr yarn build
 
       - name: Build Storybook
         run: yarn build-storybook
