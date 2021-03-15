@@ -111,7 +111,6 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
-      - name: Cache Yarn Modules
       - uses: actions/cache@v2
         id: yarn-cache
         with:
@@ -120,7 +119,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Cache Node Modules
       - uses: actions/cache@v2
         id: node-modules-cache
         with:
