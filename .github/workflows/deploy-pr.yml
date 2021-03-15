@@ -196,6 +196,7 @@ jobs:
           echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
+          cat .env.pr
 
       - name: Run E2E UI tests
         run: |
