@@ -111,10 +111,29 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
+      - name: Cache Yarn Modules
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Cache Node Modules
+      - uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
       - name: Install dependencies
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
         run: |
           npm install -g gatsby-cli
-          yarn install --immutable
+          yarn add
           npx cypress install
       #TODO: make the API URL dynamic
       - name: Create Staging env file
@@ -125,7 +144,7 @@ jobs:
 
       - name: Build with Gatsby (Staging)
         run: |
-          GATSBY_ACTIVE_ENV=staging gatsby build
+          GATSBY_ACTIVE_ENV=staging yarn build
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
           ls -la staging/
       #TODO: make the API URL dynamic
@@ -137,7 +156,7 @@ jobs:
 
       - name: Build with Gatsby (Production)
         run: |
-          GATSBY_ACTIVE_ENV=production gatsby build
+          GATSBY_ACTIVE_ENV=production yarn build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
           ls -la
           ls -la production/
