@@ -113,12 +113,16 @@ jobs:
           echo "::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )"
           echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )"
           echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
+          echo "::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )"
+          echo "::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )"
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       resource_group_name: ${{ steps.get-terraform-outputs.outputs.resource-group-name }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
+      storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook_web_endpoint }}
 
   # Deploys frontend pr contents
   deploy_pr_frontend:
@@ -386,3 +390,145 @@ jobs:
       - name: Terraform Plan
         id: prod-plan
         run: terraform plan -no-color
+
+  # Deploys storybook.
+  deploy_storybook_pr:
+    name: "Deploy Storybook"
+    needs: [deploy_pr_terraform]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hybrid-frontend
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: |
+          yarn add
+
+      - name: Build Storybook
+        run: yarn build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+
+      - name: Login to Azure with Az Powershell
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Setup storage account and deploy static website
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $StorageAccountRG = "${{ needs.deploy_pr_terraform.outputs.resource_group_name }}"
+            $StorageAccountName = "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
+            $IndexDocumentName = "index.html"
+            $ErrorDocumentName = "error.html"
+            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/storybook-content"
+            $ContainerName = '$web'
+            # $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
+
+
+            function Upload-FileToAzureStorageContainer {
+              [cmdletbinding()]
+              param(
+                $StorageAccountName,
+                $ContainerName,
+                $StorageAccountRG,
+                $sourceFileRootDirectory,
+                $Force
+              )
+
+              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $ctx = $storageAccount.Context
+              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
+
+              $container.CloudBlobContainer.Uri.AbsoluteUri
+              if ($container) {
+                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
+
+                foreach ($x in $filesToUpload) {
+                  $targetPath = ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
+
+                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
+                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
+                }
+              }
+            }
+
+            function Remove-AzureStorageBlobs {
+              [cmdletbinding()]
+              param(
+                  $StorageAccountName,
+                  $StorageAccountRG,
+                  $ContainerName
+              )
+              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              $Context  = $StorageAccount.Context
+              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
+                  Write-Host "[Error] Storage container doesnt exists"
+              } else {
+                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
+                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
+              }
+            }
+
+            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
+              Write-Host "[Error] Storage account doesnt exist"
+               Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
+              # Write-Host "[1] Storage account doesnt exists, creating new storage account"
+             
+
+              # New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
+              # Write-Host "[2] New storage account created named $StorageAccountName"
+
+              # Write-Host "[3] Enabling static website hosting"
+              # $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+              # $ctx = $storageAccount.Context
+              # Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
+
+              # Write-Host "[4] Deploying website"
+              # Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
+
+            } else {
+              Write-Host "[1] Confirm storage account $StorageAccountName exists"
+              
+              Write-Host "[2] flushing storage account name $StorageAccountName"
+              Remove-AzureStorageBlobs -StorageAccountName $StorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ContainerName
+              
+              Write-Host "[3]  Deploying website"
+              Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
+            }
+
+            $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
+            Write-Host "[FINISH]  Website deployed - see below url"
+            Write-Output $storageAccount.PrimaryEndpoints.Web
+          azPSVersion: "latest"
+
+      - name: Get PR Website and Storybook URL
+        shell: bash
+        run: |
+          echo "PR Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
+          echo "Storybook Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}"
+        id: web_storybook_url
