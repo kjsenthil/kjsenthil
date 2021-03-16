@@ -110,25 +110,11 @@ jobs:
         working-directory: ./terraform/env/dev/pr
         run: |
           echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
-          echo ::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )
+          echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
           echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )"
           echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
           echo "::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )"
           echo "::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )"
-
-      - name: Get Terraform Outputs
-        shell: bash
-        id: get-terraform-outputs-bash
-        working-directory: ./terraform/env/dev/pr
-        run: |
-          echo ::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )
-
-      - name: Show Terraform Outputs
-        shell: bash
-        id: show-tf-output
-        working-directory: ./terraform/env/dev/pr
-        run: |
-          echo "${{ steps.get-terraform-outputs-bash.outputs.api-endpoints }}"
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
@@ -137,8 +123,6 @@ jobs:
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
-      endpoints_bash: ${{ steps.get-terraform-outputs-bash.outputs.api-endpoints }}
-      endpoints_bash2: '"{\"get-asset-allocation-breakdown\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/assetallocation/{sedol}\",\"get-asset-details\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/assetdetail/{sedol}\",\"get-risk-profile-questions\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/OxfordRisk/questions\",\"get-standing-data\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/readymade/standingdata\",\"post-projections\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/projections\"}"'
 
   # Deploys frontend pr contents
   deploy_pr_frontend:
@@ -154,12 +138,6 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - name: Show Terraform Outputs - in frontend
-        run: |
-          echo "${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}"
-          echo "${{ needs.deploy_pr_terraform.outputs.endpoints_bash2 }}"
-          echo ${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}
-
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -215,12 +193,10 @@ jobs:
       - name: Create PR env file
         run: |
           touch .env.pr
-          touch .env.dev
-          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}" >> .env.dev
+          echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
           cat .env.pr
-          cat .env.dev
 
       - name: Run E2E UI tests
         run: |
