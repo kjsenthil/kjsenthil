@@ -55,28 +55,8 @@ jobs:
       - name: Terraform Apply
         id: staging-apply
         run: terraform apply -auto-approve
-      # TODO: these steps can be consolidated into one step
+
       # Outputs
-      # - name: Get Frontend Storage Account Name
-      #   id: get-frontend-storage-account-name
-      #   working-directory: ./terraform/env/staging
-      #   run: echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
-
-      # - name: Get API Endpoints
-      #   id: get-api-endpoints
-      #   working-directory: ./terraform/env/staging
-      #   run: echo "::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )"
-
-      # - name: Get Resource Group Name
-      #   id: get-resource-group-name
-      #   working-directory: ./terraform/env/staging
-      #   run: echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )"
-
-      # - name: Get Website Endpoint
-      #   id: get-website-endpoint
-      #   working-directory: ./terraform/env/staging
-      #   run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
-
       - name: Get Terraform Outputs
         id: get-terraform-outputs
         working-directory: ./terraform/env/staging
@@ -120,28 +100,7 @@ jobs:
           echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
         id: extract_branch_name
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-prod-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-prod-
-
-      - uses: actions/cache@v2
-        id: node-modules-cache
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-prod-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-modules-prod-
-
       - name: Install dependencies
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
         run: |
           npm install -g gatsby-cli
           yarn add
@@ -463,28 +422,8 @@ jobs:
       - name: Terraform Apply
         id: prod-apply
         run: terraform apply -auto-approve
-      # TODO: these steps can be consolidated into one step
+
       # Outputs
-      # - name: Get Frontend Storage Account Name
-      #   id: get-frontend-storage-account-name
-      #   working-directory: ./terraform/env/prod
-      #   run: echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
-
-      # - name: Get API Endpoints
-      #   id: get-api-endpoints
-      #   working-directory: ./terraform/env/prod
-      #   run: echo "::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )"
-
-      # - name: Get Resource Group Name
-      #   id: get-resource-group-name
-      #   working-directory: ./terraform/env/prod
-      #   run: echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )"
-
-      # - name: Get Website Endpoint
-      #   id: get-website-endpoint
-      #   working-directory: ./terraform/env/prod
-      #   run: echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
-
       - name: Get Terraform Outputs
         id: get-terraform-outputs
         working-directory: ./terraform/env/prod

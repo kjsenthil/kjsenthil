@@ -83,3 +83,75 @@ resource "azurerm_storage_account" "front_end_storage_account" {
     type = "SystemAssigned"
   }
 }
+
+
+# Storage account for storybook
+resource "azurerm_storage_account" "storybook_storage_account" {
+  name                      = format("%s%s", "dighybsbpr", var.environment_prefix)
+  resource_group_name       = format("%s-%s-rg", local.environment, local.rg_name)
+  location                  = local.location
+  account_kind              = "StorageV2"
+  account_tier              = "Standard"
+  account_replication_type  = "GRS"
+  enable_https_traffic_only = true
+
+  dynamic "static_website" {
+    for_each = local.if_storybook_enabled
+    content {
+      index_document = "index.html"
+    }
+  }
+
+  blob_properties {
+    cors_rule {
+      allowed_methods    = ["GET", "HEAD", "POST", "OPTIONS", "PUT"]
+      allowed_origins    = ["*"]
+      allowed_headers    = ["*"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 60 * 60 * 24 * 2
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+
+# The API operation to get Endpoints
+resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
+  operation_id        = "get-endpoints"
+  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
+  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  display_name        = "get-endpoints"
+  method              = "GET"
+  url_template        = "/endpoints"
+  description         = "Returns a JSON object with all the API endpoints."
+
+  response {
+    status_code = 200
+    representation {
+      content_type = "application/json"
+      sample       = local.endpoints
+    }
+  }
+  depends_on = [module.dev_apima, azurerm_api_management_api_operation.api_operation]
+}
+
+
+# The API operation policy For the endpoints API. Deployed with every PR.
+resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_policy" {
+  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
+  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  operation_id        = "get-endpoints"
+  xml_content         = <<XML
+                          <policies>
+                            <inbound>
+                              <mock-response status-code="200" content-type="application/json"/>
+                            </inbound>
+                          </policies>
+                          XML
+  depends_on          = [azurerm_api_management_api_operation.endpoints_api_operation]
+}

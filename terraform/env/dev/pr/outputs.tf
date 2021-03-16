@@ -45,3 +45,13 @@ output "frontend_web_endpoint" {
   value       = azurerm_storage_account.front_end_storage_account.primary_web_endpoint
   description = "Web enpoint for the front end."
 }
+
+output "storybook_storage_account_name" {
+  value       = azurerm_storage_account.storybook_storage_account.name
+  description = "Name of the storage account hosting the storybook."
+}
+
+output "storybook_web_endpoint" {
+  value       = azurerm_storage_account.storybook_storage_account.primary_web_endpoint
+  description = "Web enpoint for the storybook."
+}
