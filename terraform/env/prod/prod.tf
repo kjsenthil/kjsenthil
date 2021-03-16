@@ -85,3 +85,35 @@ resource "azurerm_storage_account" "front_end_storage_account" {
     type = "SystemAssigned"
   }
 }
+
+# Storage account for storybook
+resource "azurerm_storage_account" "storybook_storage_account" {
+  name                      = format("%s%s", "dighybsb", local.environment)
+  resource_group_name       = format("%s-%s-rg", local.environment, local.rg_name)
+  location                  = local.location
+  account_kind              = "StorageV2"
+  account_tier              = "Standard"
+  account_replication_type  = "GRS"
+  enable_https_traffic_only = true
+
+  dynamic "static_website" {
+    for_each = local.if_storybook_enabled
+    content {
+      index_document = "index.html"
+    }
+  }
+
+  blob_properties {
+    cors_rule {
+      allowed_methods    = ["GET", "HEAD", "POST", "OPTIONS", "PUT"]
+      allowed_origins    = ["*"]
+      allowed_headers    = ["*"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 60 * 60 * 24 * 2
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+}
