@@ -133,7 +133,7 @@ resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
     status_code = 200
     representation {
       content_type = "application/json"
-      sample = local.endpoints
+      sample       = local.endpoints
     }
   }
   depends_on = [module.dev_apima, azurerm_api_management_api_operation.api_operation]
