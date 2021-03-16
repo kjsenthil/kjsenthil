@@ -138,6 +138,7 @@ jobs:
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
       endpoints_bash: ${{ steps.get-terraform-outputs-bash.outputs.api-endpoints }}
+      endpoints_bash2: '"{\"get-asset-allocation-breakdown\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/assetallocation/{sedol}\",\"get-asset-details\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/assetdetail/{sedol}\",\"get-risk-profile-questions\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/OxfordRisk/questions\",\"get-standing-data\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/readymade/standingdata\",\"post-projections\":\"https://dev1-digital-hybrid-mgmt.azure-api.net/deploysdigitalhybrid/Assets/projections\"}"'
 
   # Deploys frontend pr contents
   deploy_pr_frontend:
@@ -154,10 +155,10 @@ jobs:
 
     steps:
       - name: Show Terraform Outputs - in frontend
-        shell: bash
-        id: show-tf-output-frontend
         run: |
           echo "${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}"
+          echo "${{ needs.deploy_pr_terraform.outputs.endpoints_bash2 }}"
+          echo ${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}
 
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
