@@ -116,3 +116,42 @@ resource "azurerm_storage_account" "storybook_storage_account" {
     type = "SystemAssigned"
   }
 }
+
+
+# The API operation to get Endpoints
+resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
+  operation_id        = "get-endpoints"
+  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
+  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  display_name        = "get-endpoints"
+  method              = "GET"
+  url_template        = "/endpoints"
+  description         = "Returns a JSON object with all the API endpoints."
+
+  response {
+    status_code = 200
+    representation {
+      content_type = "application/json"
+      sample = local.endpoints
+    }
+  }
+  depends_on = [module.dev_apima, azurerm_api_management_api_operation.api_operation]
+}
+
+
+# The API operation policy For the endpoints API. Deployed with every PR.
+resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_policy" {
+  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
+  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  operation_id        = "get-endpoints"
+  xml_content         = <<XML
+                          <policies>
+                            <inbound>
+                              <mock-response status-code="200" content-type="application/json"/>
+                            </inbound>
+                          </policies>
+                          XML
+  depends_on          = [azurerm_api_management_api_operation.endpoints_api_operation]
+}

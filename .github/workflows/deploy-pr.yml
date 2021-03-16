@@ -110,7 +110,7 @@ jobs:
         working-directory: ./terraform/env/dev/pr
         run: |
           echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
-          echo "::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )"
+          echo ::set-output name=api-endpoints::$( terraform output -json | jq .endpoints.value )
           echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )"
           echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
           echo "::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )"
@@ -193,7 +193,7 @@ jobs:
       - name: Create PR env file
         run: |
           touch .env.pr
-          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
+          echo ::set-output name=API_ENDPOINTS::${{ needs.deploy_pr_terraform.outputs.api_endpoints }} >> .env.pr
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
           cat .env.pr
