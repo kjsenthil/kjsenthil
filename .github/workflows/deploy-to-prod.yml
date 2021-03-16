@@ -466,7 +466,7 @@ jobs:
           touch .env.production
           echo 'API_ENDPOINTS=${{ needs.deploy_production_terraform.outputs.api_endpoints }}' >> .env.production
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.production
-          cat env.production
+          cat .env.production
 
       - name: Build with Gatsby (Production)
         run: |
