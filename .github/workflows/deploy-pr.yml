@@ -109,12 +109,12 @@ jobs:
         id: get-terraform-outputs
         working-directory: ./terraform/env/dev/pr
         run: |
-          echo "::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )"
+          echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
-          echo "::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )"
-          echo "::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )"
-          echo "::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )"
-          echo "::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )"
+          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .dev_apim_rg.value )
+          echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
+          echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
@@ -146,7 +146,7 @@ jobs:
 
       - name: Increase file watchers for Gatsby
         shell: bash
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p # INvestigating this needed!
 
       #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
       - name: Get Branch Name
@@ -205,9 +205,6 @@ jobs:
 
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=pr yarn build
-
-      - name: Build Storybook
-        run: yarn build-storybook
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
