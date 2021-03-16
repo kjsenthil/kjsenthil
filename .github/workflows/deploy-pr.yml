@@ -271,20 +271,7 @@ jobs:
 
             if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
               Write-Host "[Error] Storage account doesnt exist"
-               Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
-              # Write-Host "[1] Storage account doesnt exists, creating new storage account"
-             
-
-              # New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
-              # Write-Host "[2] New storage account created named $StorageAccountName"
-
-              # Write-Host "[3] Enabling static website hosting"
-              # $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              # $ctx = $storageAccount.Context
-              # Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-
-              # Write-Host "[4] Deploying website"
-              # Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
+              Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
 
             } else {
               Write-Host "[1] Confirm storage account $StorageAccountName exists"
