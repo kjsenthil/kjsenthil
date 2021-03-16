@@ -208,10 +208,12 @@ jobs:
       - name: Create PR env file
         run: |
           touch .env.pr
-          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}" >> .env.pr
+          touch .env.dev
+          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.endpoints_bash }}" >> .env.dev
           echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
           cat .env.pr
+          cat .env.dev
 
       - name: Run E2E UI tests
         run: |
