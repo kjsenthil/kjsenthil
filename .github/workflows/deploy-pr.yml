@@ -130,13 +130,6 @@ jobs:
         run: |
           echo "${{ steps.get-terraform-outputs-bash.outputs.api-endpoints }}"
 
-      - name: Show Terraform Outputs
-        shell: bash
-        id: show-tf-output
-        working-directory: ./terraform/env/dev/pr
-        run: |
-          echo "${{ steps.get-terraform-outputs-bash.outputs.api-endpoints }}"
-
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       resource_group_name: ${{ steps.get-terraform-outputs.outputs.resource-group-name }}
