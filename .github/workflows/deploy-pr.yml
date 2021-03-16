@@ -188,10 +188,10 @@ jobs:
 
       - name: Create PR env file
         run: |
-          touch .env.pr
-          echo "API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}" >> .env.pr
-          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
+          touch .env.pr          
+          echo 'API_ENDPOINTS={"get-asset-allocation-breakdown":"https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets/assetallocation/{sedol}","get-asset-details":"https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets/assetdetail/{sedol}","get-risk-profile-questions":"https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid/OxfordRisk/questions","get-standing-data":"https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets/readymade/standingdata","post-projections":"https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets/projections"}' >> .env.pr
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
+          cat .env.pr
 
       - name: Run E2E UI tests
         run: |
