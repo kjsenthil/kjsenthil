@@ -460,6 +460,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      
+      - name: Install dependencies
+        run: |
+          npm install -g gatsby-cli
+          yarn add
 
       - name: Create Production env file
         run: |
@@ -472,7 +477,6 @@ jobs:
         run: |
           GATSBY_ACTIVE_ENV=production yarn build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
-          ls -la
           ls -la production/
 
 
