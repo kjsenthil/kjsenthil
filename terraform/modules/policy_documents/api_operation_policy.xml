@@ -1,28 +1,52 @@
 <policies>
   <inbound>
     <base />
-    <set-backend-service base-url="${values.backend_url}" />
-    <cors>
-      <allowed-origins>
-        <origin>*</origin>
-      </allowed-origins>
-      <allowed-methods>
-      %{ for method in values.methods }
-        %{ if method == "POST" }
-          <method>GET</method>
-          <method>${method}</method>
-        %{ else }
-          <method>${method}</method>
-        %{ endif ~}
+    
+    %{ if config.backend_url != ""}
+      <set-backend-service base-url="${config.backend_url}" />
+    %{ endif ~}
+
+    %{ if config.headers != ""}
+      %{ for header_type, header_value in config.headers }
+      <set-header name="${ header_type }" exists-action="append">
+        <value>${ header_value }</value>
+      </set-header>
       %{ endfor ~}
-      </allowed-methods>
-      %{ if values.insert_headers }
-      <allowed-headers>
-        <header>content-type</header>
-        <header>origin</header>
-        <header>onlineapitoken</header>
-      </allowed-headers>
+    %{ endif ~}
+
+    <cors>
+      %{ if config.cors_allowed_origins != "" }
+        <allowed-origins>
+          %{ for origin in config.cors_allowed_origins }
+            <origin>${ origin }</origin>
+          %{ endfor ~}
+        </allowed-origins>
       %{ endif ~}
+
+      %{ if config.cors_allowed_methods != "" }
+        <allowed-methods>
+          %{ for method in config.cors_allowed_methods }
+            <method>${ method }</method>
+          %{ endfor ~}
+      </allowed-methods>
+      %{ endif ~}
+
+      %{ if config.cors_allowed_headers != "" }
+        <allowed-headers>
+          %{ for header in config.cors_allowed_headers }
+            <header>${ header }</header>
+          %{ endfor ~}
+        </allowed-headers>
+      %{ endif ~}
+
+      %{ if config.cors_exposed_headers != "" }
+        <expose-headers>
+          %{ for header in config.cors_exposed_headers }
+            <header>${ header }</header>
+          %{ endfor ~}
+        </expose-headers>
+      %{ endif ~}
+
     </cors>
   </inbound>
   <backend>
