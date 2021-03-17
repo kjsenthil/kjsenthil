@@ -119,9 +119,6 @@ jobs:
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
           ls -la staging/
 
-      - name: Build Storybook
-        run: yarn build-storybook
-
       - name: Login to Azure
         uses: Azure/login@v1
         with:
@@ -437,7 +434,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      
+
       - name: Install dependencies
         run: |
           npm install -g gatsby-cli

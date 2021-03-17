@@ -167,6 +167,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+            yarn-
 
       - uses: actions/cache@v2
         id: node-modules-cache
@@ -175,6 +176,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
+            modules-
 
       - name: Install dependencies
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
@@ -407,6 +409,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+            yarn-
 
       - uses: actions/cache@v2
         id: node-modules-cache
@@ -415,6 +418,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
+            modules-
 
       - name: Install dependencies
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true' }}
