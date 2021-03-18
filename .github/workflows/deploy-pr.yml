@@ -214,8 +214,8 @@ jobs:
       uses: azure/CLI@v1
       with:
         azcliversion: latest
-        inlineScript: |
-	        az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}" --source '$web'
+        inlineScript: | 
+          az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}" --source '$web'
           az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
 
       - name: Get PR Website URL
