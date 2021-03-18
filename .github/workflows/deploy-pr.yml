@@ -129,9 +129,6 @@ jobs:
     name: "Deploy frontend PR environment"
     needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
@@ -139,6 +136,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -146,6 +144,7 @@ jobs:
 
       - name: Increase file watchers for Gatsby
         shell: bash
+        working-directory: ./hybrid-frontend
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p # INvestigating this needed!
 
       #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
@@ -383,9 +382,6 @@ jobs:
     name: "Deploy Storybook"
     needs: [deploy_pr_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
@@ -393,6 +389,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
