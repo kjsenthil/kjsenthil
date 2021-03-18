@@ -116,18 +116,6 @@ jobs:
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
-
-
-
-
-
-
-
-
-
-
-
-
   # Deploys frontend pr contents
   deploy_pr_frontend:
     name: "Deploy frontend PR environment"
@@ -208,23 +196,6 @@ jobs:
         run: |
           npx cypress install
           GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=pr yarn frontend build
