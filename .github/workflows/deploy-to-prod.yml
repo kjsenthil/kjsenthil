@@ -115,7 +115,7 @@ jobs:
 
       - name: Build with Gatsby (Staging)
         run: |
-          GATSBY_ACTIVE_ENV=staging yarn build
+          GATSBY_ACTIVE_ENV=staging yarn frontend build
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
           ls -la staging/
 
@@ -261,7 +261,7 @@ jobs:
 
       - name: E2E testing of Staging Environment
         run: |
-          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn cy:run
+          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn frontend cy:run
       - name: Upload test artifacts for staging
         uses: azure/powershell@v1
         with:
@@ -449,7 +449,7 @@ jobs:
 
       - name: Build with Gatsby (Production)
         run: |
-          GATSBY_ACTIVE_ENV=production yarn build
+          GATSBY_ACTIVE_ENV=production yarn frontend build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
           ls -la production/
 
@@ -619,7 +619,7 @@ jobs:
           yarn add
 
       - name: Build Storybook
-        run: yarn build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1

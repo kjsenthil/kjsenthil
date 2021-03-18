@@ -186,11 +186,11 @@ jobs:
 
       - name: Run linting and formatting
         run: |
-          yarn format:check
-          yarn lint
+          yarn frontend format:check
+          yarn frontend lint
 
       - name: Run unit tests and code coverage
-        run: yarn test:coverage
+        run: yarn frontend test:coverage
 
       - name: Create PR env file
         run: |
@@ -203,10 +203,10 @@ jobs:
       - name: Run E2E UI tests
         run: |
           npx cypress install
-          GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
+          GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=pr yarn build
+        run: GATSBY_ACTIVE_ENV=pr yarn frontend build
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
@@ -426,7 +426,7 @@ jobs:
           yarn add
 
       - name: Build Storybook
-        run: yarn build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
