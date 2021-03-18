@@ -37,14 +37,6 @@ jobs:
         id: apim-validate
         run: terraform validate -no-color
 
-      - name: Terraform Format
-        id: apim-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: apim-plan
-        run: terraform plan -no-color
-
       - name: Terraform Apply
         id: apim-apply
         run: terraform apply -auto-approve
@@ -124,6 +116,18 @@ jobs:
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
+
+
+
+
+
+
+
+
+
+
+
+
   # Deploys frontend pr contents
   deploy_pr_frontend:
     name: "Deploy frontend PR environment"
@@ -192,6 +196,7 @@ jobs:
         run: yarn frontend test:coverage
 
       - name: Create PR env file
+        working-directory: ./hybrid-frontend
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
@@ -203,6 +208,23 @@ jobs:
         run: |
           npx cypress install
           GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       - name: Build with Gatsby
         run: GATSBY_ACTIVE_ENV=pr yarn frontend build
