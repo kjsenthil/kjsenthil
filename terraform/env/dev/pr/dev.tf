@@ -27,9 +27,9 @@ resource "azurerm_api_management_api_operation" "api_operation" {
   }
 
   dynamic "template_parameter" {
-    for_each = each.value.has_template_parameter ? [1] : []
+    for_each = each.value.has_template_parameter ? toset(split(", ", each.value.parameter_name)) : []
     content {
-      name     = each.value.parameter_name
+      name     = template_parameter.key
       required = true
       type     = "string"
     }

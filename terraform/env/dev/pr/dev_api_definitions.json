@@ -193,6 +193,28 @@
                     "Content-Type": "application\/json"
                 }
             }
+        },
+        {
+            "operation_id": "link-goal-to-objective",
+            "display_name": "Link goal to objective",
+            "method": "POST",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entityid}/goals/{list_obj_index}/objective_link",
+            "description": "This lets the user to link a Goal to an Objective.",
+            "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+            "has_template_parameter": true,
+            "parameter_name": "entityid, list_obj_index",
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "POST",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
         }
     ]
 }
