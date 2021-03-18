@@ -114,8 +114,6 @@ jobs:
       - name: Build with Gatsby (Staging)
         run: |
           GATSBY_ACTIVE_ENV=staging yarn frontend build
-          mv ${{ github.workspace }}/hybrid-frontend/public staging/
-          ls -la staging/
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -134,7 +132,7 @@ jobs:
             $ProdArtifactContainer = "prod-${{github.sha}}"
             $gitsha = "${{github.sha}}"
             $WebContainerName = '$web'
-            $StagingSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/staging"
+            $StagingSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
 
             function Create-AzureStorageContainer {
               [cmdletbinding()]
@@ -446,8 +444,6 @@ jobs:
       - name: Build with Gatsby (Production)
         run: |
           GATSBY_ACTIVE_ENV=production yarn frontend build
-          mv ${{ github.workspace }}/hybrid-frontend/public production/
-          ls -la production/
 
       - name: Login to Azure
         uses: Azure/login@v1
@@ -464,7 +460,7 @@ jobs:
             $ProdArtifactContainer = "prod-${{github.sha}}"
             $gitsha = "${{github.sha}}"
             $WebContainerName = '$web'
-            $ProdSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/production"
+            $ProdSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
 
             function Create-AzureStorageContainer {
               [cmdletbinding()]
