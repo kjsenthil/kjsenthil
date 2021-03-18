@@ -29,7 +29,7 @@ resource "azurerm_api_management_api_operation" "api_operation" {
   dynamic "template_parameter" {
     for_each = each.value.has_template_parameter ? [1] : []
     content {
-      name     = "sedol"
+      name     = each.value.parameter_name
       required = true
       type     = "string"
     }
