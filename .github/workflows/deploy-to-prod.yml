@@ -77,9 +77,6 @@ jobs:
     name: "Deploy frontend in Staging environment"
     needs: [deploy_staging_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
@@ -107,6 +104,7 @@ jobs:
           npx cypress install
       #TODO: make the API URL dynamic
       - name: Create Staging env file
+        working-directory: ./hybrid-frontend
         run: |
           touch .env.staging
           echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.staging
@@ -115,7 +113,7 @@ jobs:
 
       - name: Build with Gatsby (Staging)
         run: |
-          GATSBY_ACTIVE_ENV=staging yarn build
+          GATSBY_ACTIVE_ENV=staging yarn frontend build
           mv ${{ github.workspace }}/hybrid-frontend/public staging/
           ls -la staging/
 
@@ -261,7 +259,7 @@ jobs:
 
       - name: E2E testing of Staging Environment
         run: |
-          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn cy:run
+          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn frontend cy:run
       - name: Upload test artifacts for staging
         uses: azure/powershell@v1
         with:
@@ -419,9 +417,6 @@ jobs:
         deploy_staging_frontend,
         deploy_production_terraform,
       ]
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
@@ -441,6 +436,7 @@ jobs:
           yarn add
 
       - name: Create Production env file
+        working-directory: ./hybrid-frontend
         run: |
           touch .env.production
           echo 'API_ENDPOINTS=${{ needs.deploy_production_terraform.outputs.api_endpoints }}' >> .env.production
@@ -449,7 +445,7 @@ jobs:
 
       - name: Build with Gatsby (Production)
         run: |
-          GATSBY_ACTIVE_ENV=production yarn build
+          GATSBY_ACTIVE_ENV=production yarn frontend build
           mv ${{ github.workspace }}/hybrid-frontend/public production/
           ls -la production/
 
@@ -599,9 +595,6 @@ jobs:
     name: "Deploy Storybook"
     needs: [deploy_production_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
@@ -619,7 +612,7 @@ jobs:
           yarn add
 
       - name: Build Storybook
-        run: yarn build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
