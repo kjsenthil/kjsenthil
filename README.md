@@ -30,30 +30,67 @@ Copy the `.env.example` file as `.env.development`, and edit it to configure the
 ---
 
 ## Development
+To allow co-locating all of our code together, we are employing a mono-repo approach via [Yarn 2 workspaces](https://yarnpkg.com/features/workspaces). This allows us to configure each code base individually but retain a central location for running builds/packages and housing shared dependencies.
 
-### `yarn develop`
+:warning: All `yarn` commands should be run at the root of the repository
 
-Builds and runs the app in development mode.  
+### Using Yarn workspaces
+To run a specific command in one of the yarn workspaces, you will need to use the following syntax:
+```
+$ yarn workspace <workspace-name> <script-name>
+$ yarn workspace hybrid-frontend build
+```
+To save your fingers, shortcuts have been provided for all currently available workspaces:
+1. Front-end
+    1. `yarn frontend <script-name>`
+    1. `yarn fe <script-name>`
+
+Equally, you can run a command for all workspaces with the following syntax:
+```
+$ yarn workspaces foreach run <script-name>
+$ yarn workspaces foreach run build
+```
+This will run the script for each workspace that script is found in.
+
+Once again, some commonly used `foreach` scripts have been provided as shortcuts. All the below will run the script in every workspace:
+
+|Type|Description|command|
+|----|-----------|-------|
+|Format|Runs formatting commands|`yarn all:format`|
+|Build|Runs build commands|`yarn all:build`|
+|Build|Creates zip packages for workspaces, where required|`yarn all:build:zip`|
+|Test|Runs test commands|`yarn all:test`|
+|Test|Runs E2E test commands|`yarn all:test:e2e`|
+
+### Key Yarn commands
+#### `yarn install`
+Runs install for all `package.json` files in this repo. First run will be long!
+
+#### `yarn all:build`
+Runs `build` for all workspaces.
+
+Front end - builds the app for production to the `build` folder.
+
+#### `yarn frontend develop`
+
+Builds and runs the front end app in development mode.  
 Open [http://localhost:8000/](http://localhost:8000/) to view it in the browser.
 
-### `yarn storybook`
+#### `yarn frontend storybook`
 
 Launches [Storybook](https://storybook.js.org/).  
 Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
 
-### `yarn test`
+#### `yarn all:test`
+Runs tests for all workspaces.
 
-Launches the unit test runner.
-See the section about [testing React components with Gatsby](https://www.gatsbyjs.com/docs/how-to/testing/testing-react-components/) for more information.
+For front-end, this will launch the unit test runner - see [testing React components with Gatsby](https://www.gatsbyjs.com/docs/how-to/testing/testing-react-components/) for more information.
 
-### `yarn test:e2e`
+#### `yarn all:test:e2e`
 
 Launches the [Cypress](https://www.cypress.io/) test runner for end-to-end UI tests.
 
-### `yarn format`
+#### `yarn all:format`
+Runs `format` for all workspaces. 
 
-Checks and fixes [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) errors.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.
+Front end - checks and fixes [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) errors.

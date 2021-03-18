@@ -29,3 +29,13 @@ output "resource_group_name" {
   value       = format("%s-%s-rg", local.environment, local.rg_name)
   description = "The name of the Staging environments resource group."
 }
+
+output "storybook_storage_account_name" {
+  value       = azurerm_storage_account.storybook_storage_account.name
+  description = "Name of the storage account hosting the storybook."
+}
+
+output "storybook_web_endpoint" {
+  value       = azurerm_storage_account.storybook_storage_account.primary_web_endpoint
+  description = "Web enpoint for the storybook."
+}

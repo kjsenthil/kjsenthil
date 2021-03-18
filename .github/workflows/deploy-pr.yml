@@ -37,14 +37,6 @@ jobs:
         id: apim-validate
         run: terraform validate -no-color
 
-      - name: Terraform Format
-        id: apim-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: apim-plan
-        run: terraform plan -no-color
-
       - name: Terraform Apply
         id: apim-apply
         run: terraform apply -auto-approve
@@ -129,16 +121,14 @@ jobs:
     name: "Deploy frontend PR environment"
     needs: [deploy_apim_terraform, deploy_pr_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -146,6 +136,7 @@ jobs:
 
       - name: Increase file watchers for Gatsby
         shell: bash
+        working-directory: ./hybrid-frontend
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p # INvestigating this needed!
 
       #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
@@ -167,6 +158,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+            yarn-
 
       - uses: actions/cache@v2
         id: node-modules-cache
@@ -175,6 +167,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
+            modules-
 
       - name: Install dependencies
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
@@ -184,13 +177,14 @@ jobs:
 
       - name: Run linting and formatting
         run: |
-          yarn format:check
-          yarn lint
+          yarn frontend format:check
+          yarn frontend lint
 
       - name: Run unit tests and code coverage
-        run: yarn test:coverage
+        run: yarn frontend test:coverage
 
       - name: Create PR env file
+        working-directory: ./hybrid-frontend
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
@@ -201,13 +195,13 @@ jobs:
       - name: Run E2E UI tests
         run: |
           npx cypress install
-          GATSBY_ACTIVE_ENV=pr yarn test:e2e:ci
+          GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
 
       - name: Build with Gatsby
-        run: GATSBY_ACTIVE_ENV=pr yarn build
-      
-      - name: Login to Azure CLI
-        uses: azure/login@v1
+        run: GATSBY_ACTIVE_ENV=pr yarn frontend build
+
+      - name: Login to Azure with Az CLI
+        uses: Azure/login@v1
         with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -312,16 +306,14 @@ jobs:
     name: "Deploy Storybook"
     needs: [deploy_pr_terraform]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hybrid-frontend
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -338,6 +330,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+            yarn-
 
       - uses: actions/cache@v2
         id: node-modules-cache
@@ -346,6 +339,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
+            modules-
 
       - name: Install dependencies
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true' }}
@@ -353,7 +347,7 @@ jobs:
           yarn add
 
       - name: Build Storybook
-        run: yarn build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
 
       - name: Login to Azure with Az Powershell
         uses: Azure/login@v1
