@@ -124,3 +124,21 @@ resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_
                           XML
   depends_on          = [azurerm_api_management_api_operation.endpoints_api_operation]
 }
+
+resource "azurerm_application_insights" "app-insights" {
+  name                = format("%s-%s", local.environment, local.apim_name)
+  location            = local.location
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
+  application_type    = "other"
+}
+
+resource "azurerm_api_management_logger" "apim_logger" {
+  name                = format("%s-%s-apim-logger", local.environment, local.apim_name)
+  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
+
+  application_insights {
+    instrumentation_key = azurerm_application_insights.app-insights.instrumentation_key
+  }
+  depends_on = [module.staging_main]
+}
