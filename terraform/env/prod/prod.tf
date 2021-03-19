@@ -31,9 +31,9 @@ resource "azurerm_api_management_api_operation" "api_operation" {
   }
 
   dynamic "template_parameter" {
-    for_each = each.value.has_template_parameter ? [1] : []
+    for_each = each.value.path_params.has_params ? toset(split(", ", each.value.path_params.param_names)) : []
     content {
-      name     = "sedol"
+      name     = template_parameter.key
       required = true
       type     = "string"
     }
@@ -140,7 +140,7 @@ resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
 }
 
 
-# The API operation policy For the endpoints API. Deployed with every PR.
+# The API operation policy For the endpoints API.
 resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_policy" {
   api_name            = format("%s-%s", local.environment, local.apima_name)
   api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)

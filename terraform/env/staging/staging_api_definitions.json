@@ -6,8 +6,9 @@
             "method": "GET",
             "url_template": "\/OxfordRisk\/questions",
             "description": "This will return all questions used to profile a customer.",
-            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
-            "has_template_parameter": false,
+            "path_params": {
+                "has_params": false
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -27,8 +28,9 @@
             "method": "GET",
             "url_template": "\/Assets\/readymade\/standingdata",
             "description": "This will return the ready made portfolio sedol number for each of the risk profiles (i.e. Defensive, Balanaced, Growth etc)",
-            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
-            "has_template_parameter": false,
+            "path_params": {
+                "has_params": false
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -48,8 +50,10 @@
             "method": "GET",
             "url_template": "\/Assets\/assetdetail\/{sedol}",
             "description": "This will return the asset details based on sedol number.",
-            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
-            "has_template_parameter": true,
+            "path_params": {
+                "has_params": true,
+                "param_names": "sedol"
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -69,8 +73,10 @@
             "method": "GET",
             "url_template": "\/Assets\/assetallocation\/{sedol}",
             "description": "This will return the asset allocation breakdown based on sedol number.",
-            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
-            "has_template_parameter": true,
+            "path_params": {
+                "has_params": true,
+                "param_names": "sedol"
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -90,8 +96,9 @@
             "method": "POST",
             "url_template": "\/Assets\/projections",
             "description": "This returns the projection of fund performance over 5 years.",
-            "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/",
-            "has_template_parameter": false,
+            "path_params": {
+                "has_params": false
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -111,8 +118,9 @@
             "method": "POST",
             "url_template": "\/touch\/web_login",
             "description": "This lets the user login to Xplan and get a session token.",
-            "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
-            "has_template_parameter": false,
+            "path_params": {
+                "has_params": false
+            },
             "policy": {
                 "cors": {
                     "allowed_origins": "*",
@@ -123,6 +131,98 @@
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
                 "set_header": {
                     "Content-Type": "application\/x-www-form-urlencoded; charset=UTF-8"
+                }
+            }
+        },
+        {
+            "operation_id": "create-goal-less-fields",
+            "display_name": "Create goal (less fields)",
+            "method": "POST",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entityid}\/goals",
+            "description": "This lets the user to create a goal. This endpoint requires less fields compared to other create goal endpoint.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entityid"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "POST",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
+        },
+        {
+            "operation_id": "create-goal-additional-fields",
+            "display_name": "Create goal (additional fields)",
+            "method": "POST",
+            "url_template": "\/resourceful\/entity\/client\/{entityid}\/goals",
+            "description": "This lets the user to create a goal. This endpoint requires additional fields compared to other create goal endpoint.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entityid"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "POST",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
+        },
+        {
+            "operation_id": "create-objective",
+            "display_name": "Create Objective",
+            "method": "POST",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entityid}/objectives",
+            "description": "This lets the user to create an Objective.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entityid"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "POST",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
+        },
+        {
+            "operation_id": "link-goal-to-objective",
+            "display_name": "Link goal to objective",
+            "method": "POST",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entityid}/goals/{list_obj_index}/objective_link",
+            "description": "This lets the user to link a Goal to an Objective.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entityid, list_obj_index"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "POST",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
                 }
             }
         }
