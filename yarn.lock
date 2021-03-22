@@ -4134,6 +4134,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/react-hooks@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@testing-library/react-hooks@npm:5.1.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@types/react": ">=16.9.0"
+    "@types/react-dom": ">=16.9.0"
+    "@types/react-test-renderer": ">=16.9.0"
+    filter-console: ^0.1.1
+    react-error-boundary: ^3.1.0
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+    react-test-renderer: ">=16.9.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-test-renderer:
+      optional: true
+  checksum: 9c03fa569c52597f833fc7a8e63774fec54ac0b8ce62bf5b02c1178add36189f7ada0c923c6cd696a04184468b71a62a0b217c42498fc19764e10cc0e49df57d
+  languageName: node
+  linkType: hard
+
 "@testing-library/react@npm:^11.2.3":
   version: 11.2.5
   resolution: "@testing-library/react@npm:11.2.5"
@@ -4642,7 +4665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.0":
+"@types/react-dom@npm:>=16.9.0, @types/react-dom@npm:^17.0.0":
   version: 17.0.2
   resolution: "@types/react-dom@npm:17.0.2"
   dependencies:
@@ -4660,6 +4683,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-test-renderer@npm:>=16.9.0":
+  version: 17.0.1
+  resolution: "@types/react-test-renderer@npm:17.0.1"
+  dependencies:
+    "@types/react": "*"
+  checksum: bd3f8c6c2ae23f270b465106ae81c7e72dc97b64f83b980239bd45a69dcc9f41aada4183f16634320e8d02cede942e46258366a596dbefaae558abad236f4ab6
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.2.0":
   version: 4.4.1
   resolution: "@types/react-transition-group@npm:4.4.1"
@@ -4669,7 +4701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.0":
+"@types/react@npm:*, @types/react@npm:>=16.9.0, @types/react@npm:^17.0.0":
   version: 17.0.3
   resolution: "@types/react@npm:17.0.3"
   dependencies:
@@ -11729,6 +11761,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filter-console@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "filter-console@npm:0.1.1"
+  checksum: f9def51f7ece9c9c469f78e1551ce33dfde02fd32bd70a6fbe8da4a9377ebb65a2a4fc6196ebf8e6ea8668a5465bde7fe3459101d1042e73bb9e3e1eb3f22fb6
+  languageName: node
+  linkType: hard
+
 "filter-obj@npm:^1.1.0":
   version: 1.1.0
   resolution: "filter-obj@npm:1.1.0"
@@ -14041,6 +14080,7 @@ fsevents@^1.2.7:
     "@testing-library/cypress": ^7.0.3
     "@testing-library/jest-dom": ^5.11.9
     "@testing-library/react": ^11.2.3
+    "@testing-library/react-hooks": ^5.1.0
     "@types/chart.js": ^2.9.30
     "@types/jest": ^26.0.20
     "@types/node": ^14.14.22
@@ -20751,6 +20791,17 @@ fsevents@^1.2.7:
     react: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1
     react-dom: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1
   checksum: 38e9e094ff98f2d68a37b53524a64047848a42f4f552a4399b39473f75ca62ff88e92b5cf6c8f9bf8be6368407284119b8f31a3a97bb9b793a457bccb8c4fa6c
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:^3.1.0":
+  version: 3.1.1
+  resolution: "react-error-boundary@npm:3.1.1"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 8860975e5ab2cf85c50713a18cabadd862b8d9ac694f53fdff7d2f51ec92fec2a7ea839b1379cad7ad3fec8f49122dd4e4a2fc7b0fc5776671acff860dbad691
   languageName: node
   linkType: hard
 

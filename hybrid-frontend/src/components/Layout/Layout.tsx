@@ -1,20 +1,25 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import { CircularProgress, Container } from '@material-ui/core';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import theme from '../../material-ui/theme';
+import useGlobalContext from '../../hooks/GlobalContextHooks/useGlobalContext';
+import useExDataLoading from '../../hooks/GlobalContextHooks/useExDataLoading';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { isLoading } = useGlobalContext();
+  useExDataLoading();
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        {isLoading && <CircularProgress />}
         {children}
-      </Grid>
-    </Grid>
-  </ThemeProvider>
-);
+      </Container>
+    </ThemeProvider>
+  );
+};
 
 export default Layout;
