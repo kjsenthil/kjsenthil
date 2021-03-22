@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -26,10 +27,12 @@ export interface LoginFormData {
 }
 
 export interface LoginFormProps {
-  onSubmit: (inputs: LoginFormData) => void;
+  errorMessage: string;
+  successMessage: string;
+  onSubmit: (inputs: LoginFormData) => Promise<void>;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ errorMessage, successMessage, onSubmit }) => {
   const classes = useStyles();
 
   const [inputs, setInputs] = useState({
@@ -44,9 +47,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     setInputs((currentInputs) => ({ ...currentInputs, [name]: event.target.value }));
   };
 
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(inputs);
+    await onSubmit(inputs);
   };
 
   return (
@@ -56,6 +59,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       </Typography>
       <form className={classes.form} onSubmit={onFormSubmit}>
         <Grid className={classes.loginTextField} item>
+          {successMessage.length > 0 && <Alert severity="success">{successMessage}</Alert>}
+          {errorMessage.length > 0 && <Alert severity="error">{errorMessage}</Alert>}
           <TextField
             label="Username"
             InputProps={{ id: 'username' }}

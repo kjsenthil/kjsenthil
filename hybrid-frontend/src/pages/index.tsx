@@ -27,6 +27,13 @@ const useStyles = makeStyles(() => ({
 const IndexPage = () => {
   const classes = useStyles();
   const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
+  const [loginMessages, setLoginMessages] = useState<{
+    error: string;
+    success: string;
+  }>({
+    error: '',
+    success: '',
+  });
 
   const onFormSubmit = async (formValues: SimulationFormData) => {
     const projectionsResponse = await getProjections(formValues);
@@ -34,7 +41,18 @@ const IndexPage = () => {
   };
 
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
-    await login(loginFormValues);
+    try {
+      await login(loginFormValues);
+      setLoginMessages({
+        error: '',
+        success: 'Log in successful',
+      });
+    } catch (e) {
+      setLoginMessages({
+        error: e.message,
+        success: '',
+      });
+    }
   };
 
   return (
@@ -50,7 +68,11 @@ const IndexPage = () => {
           )}
         </Grid>
         <Grid className={classes.rightGridItem} item xs={12} sm={4}>
-          <LoginForm onSubmit={onLoginFormSubmit} />
+          <LoginForm
+            errorMessage={loginMessages.error}
+            onSubmit={onLoginFormSubmit}
+            successMessage={loginMessages.success}
+          />
           <SimulationForm onSubmit={onFormSubmit} />
         </Grid>
       </Grid>
