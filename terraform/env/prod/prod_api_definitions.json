@@ -225,6 +225,52 @@
                     "Content-Type": "application\/json"
                 }
             }
+        },
+        {
+            "operation_id": "update-goal",
+            "display_name": "Update Goal",
+            "method": "PATCH",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entityid}\/goals\/{list_obj_index}",
+            "description": "This lets the user to update an already existing goal.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entityid, list_obj_index"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "PATCH",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
+        },
+        {
+            "operation_id": "update-objective",
+            "display_name": "Update Objective",
+            "method": "PATCH",
+            "url_template": "\/resourceful\/entity\/client-v4\/{entity_id}\/objectives\/{list_obj_index}",
+            "description": "This lets the user to update an already existing objective.",
+            "path_params": {
+                "has_params": true,
+                "param_names": "entity_id, list_obj_index"
+            },
+            "policy": {
+                "cors": {
+                    "allowed_origins": "*",
+                    "methods": "PATCH",
+                    "headers": "Content-Type, Origin, X-Xplan-App-Id, Cookie",
+                    "expose_headers": "Set-Cookie"
+                },
+                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/",
+                "set_header": {
+                    "Content-Type": "application\/json"
+                }
+            }
         }
     ]
 }
