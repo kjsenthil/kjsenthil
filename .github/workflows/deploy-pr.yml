@@ -1,18 +1,83 @@
-name: Deploy terraform and frontend to PR environment
+name: "Deploy terraform and frontend to PR environment"
 # Deployment order: Terraform -> Frontend
 
-on:
-  pull_request:
-    branches: [master]
+# TODO:
+  # Output linting, testing reports and relevant links to PR
+  # Update checkout action to latest version
+
+on: pull_request
 
 jobs:
+  build_cache:
+    name: "Build caches"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repo"
+        uses: actions/checkout@v2
+
+      - name: "Set cache metadata"
+        id: cache-meta
+        run: |
+          echo "::set-output name=key::${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          echo "::set-output name=yarn-path::$(yarn config get cacheFolder)"
+          echo "::set-output name=modules-path::**/node_modules"
+
+      - name: "Check for existing yarn cache"
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Check for existing node modules cache"
+        uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Install dependencies"
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
+        run: yarn install
+
+    outputs:
+      key: ${{ steps.cache-meta.outputs.key }}
+      yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
+      modules-path: ${{ steps.cache-meta.outputs.modules-path }}
+
+  derive_environment_prefix:
+    name: "Derive environment prefix"
+    runs-on: ubuntu-latest
+    steps:
+      # Use the first 7 chars of the hash of the branch name
+      - name: "Derive environment prefix"
+        id: derive-prefix
+        shell: bash
+        run: echo "::set-output name=sha-subset::$(echo ${{ github.head_ref }} | md5sum | awk '{print tolower(substr( $0, 1, 7))}')"
+
+      - name: "Print output"
+        shell: bash
+        run: |
+          echo ${{ github.head_ref }}
+          echo ${{ steps.derive-prefix.outputs.sha-subset }}
+
+    outputs:
+      prefix: ${{ steps.derive-prefix.outputs.sha-subset }}
+
+  # TODO can we skip fast here? i.e can we skip the step execution by detecting that APIM already exists?
   # Deploys terraform APIM.
   deploy_apim_terraform:
     name: "Deploy APIM"
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./terraform/env/dev/apim
+
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
@@ -43,12 +108,14 @@ jobs:
 
   # Deploys terraform PR contents.
   deploy_pr_terraform:
-    name: "Deploy backend PR environment."
-    needs: deploy_apim_terraform
+    name: "Deploy Terraform resources for PR environment."
+    needs: [deploy_apim_terraform, derive_environment_prefix]
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./terraform/env/dev/pr
+
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
@@ -57,47 +124,30 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout Repo"
         uses: actions/checkout@v2
 
-      - name: Get Branch Name
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-        id: extract_branch_name
-
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
           terraform_wrapper: false
 
-      - name: Terraform Init
+      - name: "Terraform Init"
         id: pr-init
-        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ steps.extract_branch_name.outputs.branch-subset }}/terraform.tfstate"
+        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
 
-      - name: Terraform Validate
+      - name: "Terraform Validate"
         id: pr-validate
         run: terraform validate -no-color
 
-      - name: Terraform Format
-        id: pr-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: pr-plan
-        run: terraform plan -no-color
-        env:
-          TF_VAR_environment_prefix: ${{ steps.extract_branch_name.outputs.branch-subset }}
-
-      - name: Terraform Apply
+      - name: "Terraform Apply"
         id: pr-apply
         run: terraform apply -auto-approve
         env:
-          TF_VAR_environment_prefix: ${{ steps.extract_branch_name.outputs.branch-subset }}
+          TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
 
-      - name: Get Terraform Outputs
+      - name: "Get Terraform Outputs"
         id: get-terraform-outputs
         working-directory: ./terraform/env/dev/pr
         run: |
@@ -116,113 +166,185 @@ jobs:
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
-  # Deploys frontend pr contents
-  deploy_pr_frontend:
-    name: "Deploy frontend PR environment"
-    needs: [deploy_apim_terraform, deploy_pr_terraform]
+  linting:
+    name: "Linting"
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
+    needs: build_cache
     steps:
-      - uses: actions/checkout@v1
+      - name: "Checkout Repo"
+        uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      - name: Increase file watchers for Gatsby
-        shell: bash
-        working-directory: ./hybrid-frontend
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p # INvestigating this needed!
-
-      #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
-      - name: Get Branch Name
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-        id: extract_branch_name
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-            yarn-
 
-      - uses: actions/cache@v2
-        id: node-modules-cache
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
-            modules-
 
-      - name: Install dependencies
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
-        run: |
-          npm install -g gatsby-cli
-          yarn add
+      - name: "Run formatting"
+        run: yarn frontend format:check
 
-      - name: Run linting and formatting
-        run: |
-          yarn frontend format:check
-          yarn frontend lint
+      - name: "Run linting"
+        run: yarn frontend lint
 
-      - name: Run unit tests and code coverage
+  unit_test:
+    name: "Unit test"
+    runs-on: ubuntu-latest
+    needs: build_cache
+    steps:
+      - name: "Checkout Repo"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Run unit tests and code coverage"
         run: yarn frontend test:coverage
 
-      - name: Create PR env file
+  end_to_end_test:
+    name: "E2E test"
+    runs-on: ubuntu-latest
+    needs: [build_cache, deploy_pr_terraform]
+    steps:
+      - name: "Checkout Repo"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Install Cypress binary"
+        run: npx cypress install
+
+      - name: "Create PR env file"
         working-directory: ./hybrid-frontend
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
-          echo "ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets" >> .env.pr
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.pr
+          echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
+          echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
           cat .env.pr
 
-      - name: Run E2E UI tests
-        run: |
-          npx cypress install
-          GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
+      # Gatsby can run over the default number of file watchers so we need to up this value
+      - name: "Increase file watchers for Gatsby"
+        shell: bash
+        working-directory: ./hybrid-frontend
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Build with Gatsby
+      - name: "Run E2E UI tests"
+        run: GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
+
+  # Deploys frontend pr contents
+  deploy_pr_frontend:
+    name: "Build & Deploy Gatsby to PR environment"
+    needs: [deploy_pr_terraform, build_cache, linting, unit_test, end_to_end_test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Create PR env file"
+        working-directory: ./hybrid-frontend
+        run: |
+          touch .env.pr
+          echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
+          echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
+          echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
+          cat .env.pr
+
+      - name: "Gatsby build"
         run: GATSBY_ACTIVE_ENV=pr yarn frontend build
 
-      - name: Login to Azure with Az CLI
+      - name: "Login to Azure with Az CLI"
         uses: Azure/login@v1
         with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Upload PR frontend to blob storage
+      - name: "Deploy PR frontend as static website"
         uses: azure/CLI@v1
         with:
           azcliversion: latest
-          inlineScript: | 
+          inlineScript: |
             az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
 
-      - name: Get PR Website URL
-        shell: bash
-        run: |
-          echo "PR Website Endpoint: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}"
-        id: web_url
+    outputs:
+      url: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}
 
-  # Terraform plan for Staging
   plan_staging:
-    name: "Terraform plan for Staging environment"
-    needs: [deploy_apim_terraform, deploy_pr_terraform]
+    name: "Terraform plan Staging"
+    needs: [deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -235,35 +357,28 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
-          terraform_wrapper: false
 
-      - name: Terraform Init
-        id: staging-init
+      - name: "Terraform Init"
         run: terraform init
 
-      - name: Terraform Validate
-        id: staging-validate
-        run: terraform validate -no-color
-
-      - name: Terraform Format
-        id: staging-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: staging-plan
+      - name: "Terraform Plan"
+        id: plan
         run: terraform plan -no-color
 
-  # Terraform plan for Prod
+    outputs:
+      plan_outcome: ${{ steps.plan.outcome }}
+      plan: ${{ steps.plan.outputs.stdout }}
+
   plan_prod:
-    name: "Terraform plan for Prod environment"
-    needs: [deploy_apim_terraform, deploy_pr_terraform]
+    name: "Terraform plan Prod"
+    needs: [deploy_pr_terraform]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -276,176 +391,144 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
-          terraform_wrapper: false
 
-      - name: Terraform Init
-        id: prod-init
+      - name: "Terraform Init"
         run: terraform init
 
-      - name: Terraform Validate
-        id: prod-validate
-        run: terraform validate -no-color
-
-      - name: Terraform Format
-        id: prod-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: prod-plan
+      - name: "Terraform Plan"
+        id: plan
         run: terraform plan -no-color
 
+    outputs:
+      plan_outcome: ${{ steps.plan.outcome }}
+      plan: ${{ steps.plan.outputs.stdout }}
+
+
+  # TODO Can we trigger this job only when changes have been made to relevant paths? We shouldn't need to deploy a storybook if no components are altered?
+  # TODO I think we should deploy the storybook container here, as then we can control it better.
   # Deploys storybook.
-  deploy_storybook_pr:
+  deploy_storybook:
     name: "Deploy Storybook"
-    needs: [deploy_pr_terraform]
+    needs: [build_cache, deploy_pr_terraform]
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-      - uses: actions/checkout@v1
+      - name: "Checkout"
+        uses: actions/checkout@v1
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-            yarn-
 
-      - uses: actions/cache@v2
-        id: node-modules-cache
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
-            modules-
 
-      - name: Install dependencies
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true' }}
-        run: |
-          yarn add
+      - name: "Build Storybook"
+        run: yarn frontend build-storybook -o "./storybook-static"
 
-      - name: Build Storybook
-        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+      - name: "List Storybook dir contents"
+        run: ls -lrt ${{ github.workspace }}/hybrid-frontend/storybook-static
 
-      - name: Login to Azure with Az Powershell
+      - name: "Login to Azure with Az CLI"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
 
-      - name: Setup storage account and deploy static website
-        uses: azure/powershell@v1
+      - name: "Deploy Storybook as static website"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $StorageAccountRG = "${{ needs.deploy_pr_terraform.outputs.resource_group_name }}"
-            $StorageAccountName = "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
-            $IndexDocumentName = "index.html"
-            $ErrorDocumentName = "error.html"
-            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/storybook-content"
-            $ContainerName = '$web'
-            # $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
+            az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --source '$web'
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
+
+    outputs:
+        url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}
+
+  publish_results:
+    name: "Publish results to PR"
+    needs: [linting, unit_test, end_to_end_test, deploy_pr_frontend, deploy_storybook, plan_staging, plan_prod]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Comment on PR"
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const output = `
+            ### Lint & Testing results
+            #### Linting Results \`TODO\`
+            #### Unit Test Results \`TODO\`
+            #### E2E Test Results \`TODO\`
+
+            ### Review URLs
+            #### Storybook \`${{ needs.deploy_storybook.outputs.url }}\`
+            #### Webpage \`${{ needs.deploy_pr_frontend.outputs.url }}\`
+
+            ### Terraform plan - Staging
+            #### Outcome \`${{ needs.plan_staging.outputs.plan_outcome }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_staging.outputs.plan }}\`\`\`
+
+            </details>
+
+            ### Terraform plan - Prod
+            #### Outcome \`${{ needs.plan_prod.outputs.plan_outcome }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_prod.outputs.plan }}\`\`\`
+
+            </details>
+            `;
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
 
 
-            function Upload-FileToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                $StorageAccountName,
-                $ContainerName,
-                $StorageAccountRG,
-                $sourceFileRootDirectory,
-                $Force
-              )
-
-              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $ctx = $storageAccount.Context
-              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-
-              $container.CloudBlobContainer.Uri.AbsoluteUri
-              if ($container) {
-                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
-
-                foreach ($x in $filesToUpload) {
-                  $targetPath = ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
-
-                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
-                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
-                }
-              }
-            }
-
-            function Remove-AzureStorageBlobs {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                  Write-Host "[Error] Storage container doesnt exists"
-              } else {
-                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
-                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
-              }
-            }
-
-            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
-              Write-Host "[Error] Storage account doesnt exist"
-               Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
-              # Write-Host "[1] Storage account doesnt exists, creating new storage account"
-             
-
-              # New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
-              # Write-Host "[2] New storage account created named $StorageAccountName"
-
-              # Write-Host "[3] Enabling static website hosting"
-              # $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              # $ctx = $storageAccount.Context
-              # Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-
-              # Write-Host "[4] Deploying website"
-              # Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
-
-            } else {
-              Write-Host "[1] Confirm storage account $StorageAccountName exists"
-              
-              Write-Host "[2] flushing storage account name $StorageAccountName"
-              Remove-AzureStorageBlobs -StorageAccountName $StorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ContainerName
-              
-              Write-Host "[3]  Deploying website"
-              Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
-            }
-
-            $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-            Write-Host "[FINISH]  Website deployed - see below url"
-            Write-Output $storageAccount.PrimaryEndpoints.Web
-          azPSVersion: "latest"
-
-      - name: Get PR Storybook URL
-        shell: bash
-        run: |
-          echo "Storybook PR Endpoint: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}"
-        id: storybook_url
+#    github-token: ${{ secrets.GITHUB_TOKEN }}
+#    script: |
+#      const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+#      #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+#      #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+#      #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+#
+#      <details><summary>Show Plan</summary>
+#
+#      \`\`\`${process.env.PLAN}\`\`\`
+#
+#      </details>
+#
+#      *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+#
+#      github.issues.createComment({
+#        issue_number: context.issue.number,
+#        owner: context.repo.owner,
+#        repo: context.repo.repo,
+#        body: output
+#      })

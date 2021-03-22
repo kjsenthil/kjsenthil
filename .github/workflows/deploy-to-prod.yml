@@ -3,6 +3,7 @@ name: "Deploy all the way to the PRODUCTION environment"
 #                   deploy_production_frontend -> output_website_urls
 #                   destroy_pr_dev_env >> runs in parallel
 
+# TODO make this trigger on pushes to master (to save cache) and protect master branch
 on:
   pull_request:
     branches:
