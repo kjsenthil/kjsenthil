@@ -1,25 +1,60 @@
-name: "Deploy all the way to the PRODUCTION environment"
-# Execution order : deploy_staging_terraform -> deploy_staging_frontend -> deploy_production_terraform ->
-#                   deploy_production_frontend -> output_website_urls
-#                   destroy_pr_dev_env >> runs in parallel
+name: "Deploy to production"
 
-# TODO make this trigger on pushes to master (to save cache) and protect master branch
 on:
-  pull_request:
+  push:
     branches:
       - master
-    types:
-      - closed
 
 jobs:
+  build_cache:
+    name: "Build caches"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Set cache metadata"
+        id: cache-meta
+        run: |
+          echo "::set-output name=key::${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          echo "::set-output name=yarn-path::$(yarn config get cacheFolder)"
+          echo "::set-output name=modules-path::**/node_modules"
+
+      - name: "Check for existing yarn cache"
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Check for existing node modules cache"
+        uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Install missing dependencies"
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
+        run: yarn install
+
+    outputs:
+      key: ${{ steps.cache-meta.outputs.key }}
+      yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
+      modules-path: ${{ steps.cache-meta.outputs.modules-path }}
+
   # Deploys Staging backend (Terraform).
   deploy_staging_terraform:
-    name: "Deploy Staging Backend"
-    if: github.event.pull_request.merged == true
+    name: "Deploy staging backend"
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./terraform/env/staging
+
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
@@ -28,39 +63,24 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
           terraform_wrapper: false
 
-      - name: Terraform Init
-        id: staging-init
+      - name: "Terraform Init"
         run: terraform init
 
-      - name: Terraform Validate
-        id: staging-validate
-        run: terraform validate -no-color
-
-      - name: Terraform Format
-        id: staging-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: staging-plan
-        run: terraform plan -no-color
-
-      - name: Terraform Apply
-        id: staging-apply
+      - name: "Terraform Apply"
         run: terraform apply -auto-approve
 
       # Outputs
-      - name: Get Terraform Outputs
-        id: get-terraform-outputs
-        working-directory: ./terraform/env/staging
+      - name: "Get Terraform Outputs"
+        id: tf-outputs
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
@@ -68,43 +88,43 @@ jobs:
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
 
     outputs:
-      frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
-      resource_group_name: ${{ steps.get-terraform-outputs.outputs.resource-group-name }}
-      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
-      website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      frontend_storage_account_name: ${{ steps.tf-outputs.outputs.frontend-storage-account-name }}
+      resource_group_name: ${{ steps.tf-outputs.outputs.resource-group-name }}
+      api_endpoints: ${{ steps.tf-outputs.outputs.api-endpoints }}
+      website_endpoint: ${{ steps.tf-outputs.outputs.website-endpoint }}
 
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
-    name: "Deploy frontend in Staging environment"
-    needs: [deploy_staging_terraform]
+    name: "Deploy staging front end"
+    needs: [build_cache, deploy_staging_terraform]
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      #Get Branch Name on a Pull request, lowercase, 7 char long without dashes
-      - name: Get Branch Name
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-        id: extract_branch_name
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        run: |
-          npm install -g gatsby-cli
-          yarn add
-          npx cypress install
-      #TODO: make the API URL dynamic
-      - name: Create Staging env file
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Create env file"
         working-directory: ./hybrid-frontend
         run: |
           touch .env.staging
@@ -112,240 +132,85 @@ jobs:
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
           cat .env.staging
 
-      - name: Build with Gatsby (Staging)
-        run: |
-          GATSBY_ACTIVE_ENV=staging yarn frontend build
+      - name: "Gatsby Build"
+        run: GATSBY_ACTIVE_ENV=staging yarn frontend build
 
-      - name: Login to Azure
+      - name: "Login to Azure with Az CLI"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
 
-      - name: Upload Staging Build Artifacts
-        uses: azure/powershell@v1
+      # TODO check timings of uploads and parelellise if necessary
+      - name: "Upload build artifacts"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $ArtifactStorageAccountRG = "digital-hybrid-resources"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $StagingArtifactContainer = "staging-${{github.sha}}"
-            $TestingArtifactContainer = "testing-${{github.sha}}"
-            $ProdArtifactContainer = "prod-${{github.sha}}"
-            $gitsha = "${{github.sha}}"
-            $WebContainerName = '$web'
-            $StagingSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "staging-${{github.sha}}" --account-name "digitalhybridartifact"
 
-            function Create-AzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                Write-Host "Storage container doesnt exists, creating container named $ContainerName"
-                New-AzStorageContainer -Context $Context -Name $ContainerName
-              } else {
-              Write-Host "Storage container exists"
-              }
-            }
-            function Upload-FileToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                $StorageAccountName,
-                $ContainerName,
-                $StorageAccountRG,
-                $sourceFileRootDirectory,
-                $TargetDirectory = "",
-                $Force
-              )
-              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $ctx = $storageAccount.Context
-              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-              $container.CloudBlobContainer.Uri.AbsoluteUri
-              if ($container) {
-                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
-                foreach ($x in $filesToUpload) {
-                  $targetPath = $TargetDirectory + ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
-                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
-                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
-                }
-              }
-              $DestinationURL = $container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $TargetDirectory
-              Write-Host "[Finish] Artifacts uploaded to $DestinationURL "
-            }
-            if($null -eq $(Get-AzStorageAccount -ResourceGroupName $ArtifactStorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore)) {
-              Write-Host "[Error] $ArtifactStorageAccountName Storage account doesnt exists, unable to upload build artifacts"
-              Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
-
-            } else {
-              Write-Host "[1] Confirm $ArtifactStorageAccountName storage account exists"
-              Write-Host "[2] Create container named $TestingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
-              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $ArtifactStorageAccountRG -ContainerName $TestingArtifactContainer
-              Write-Host "[3] Create container named $StagingArtifactContainer in artifact storage account $ArtifactStorageAccountName"
-              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $ArtifactStorageAccountRG -ContainerName $StagingArtifactContainer
-              Write-Host "[4] Deploying Staging Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $StagingArtifactContainer -StorageAccountRG $ArtifactStorageAccountRG -sourceFileRootDirectory $StagingSourceFileRootDirectory -Verbose
-              Write-Host "[5] Create container named $ProdArtifactContainer in artifact storage account $ArtifactStorageAccountName"
-              Create-AzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -StorageAccountRG $ArtifactStorageAccountRG -ContainerName $ProdArtifactContainer
-
-              Write-Host "[FINISH]  Staging build artifacts stored in container $StagingArtifactContainer of storage account $ArtifactStorageAccountName"
-            }
-          azPSVersion: "latest"
-
-      - name: Deploying Staging Environment
-        uses: azure/powershell@v1
+      - name: "Deploy Gatsby static website"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $ArtifactStorageAccountRG = "digital-hybrid-resources"
-            $StagingStorageAccountRG = "${{ needs.deploy_staging_terraform.outputs.resource_group_name }}"
-            $StagingStorageAccountName = "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $StagingArtifactContainer = "staging-${{github.sha}}"
-            $gitsha = "${{github.sha}}"
-            $WebContainerName = '$web'
-            function Copy-FilesToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                  $SrcStorageAccountName,
-                  $SrcStorageAccountRG,
-                  $SrcContainerName,
-                  $DstStorageAccountName,
-                  $DstStorageAccountRG,
-                  $DstContainerName,
-                  $SrcFolderName = "",
-                  $Force
-              )
-              $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
-              $SrcContext  = $SrcStorageAccount.Context
-              $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
-              $DstContext  = $DstStorageAccount.Context
-              $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName -Prefix $SrcFolderName
-              $destBlob = $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force
-              $destBlob | Get-AzStorageBlobCopyState -WaitForComplete
-            }
-            function Remove-AzureStorageBlobs {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                  Write-Host "[Error] Storage container doesnt exists"
-              } else {
-                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
-                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
-              }
-            }
-            if(($null -eq $(Get-AzStorageAccount -ResourceGroupName $StagingStorageAccountRG -Name $StagingStorageAccountName -ErrorAction Ignore)) -or ($null -eq $(Get-AzStorageAccount -ResourceGroupName $ArtifactStorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore))) {
-              Write-Host "[Error] $StagingStorageAccountName or $ArtifactStorageAccountName Storage account doesnt exists, can not progress with deployment"
-            } else {
-              Write-Host "[1] Confirm $StagingStorageAccountName and $ArtifactStorageAccountName storage account exists"
-              Write-Host "[2] flushing storage account named $StagingStorageAccountName"
-              Remove-AzureStorageBlobs -StorageAccountName $StagingStorageAccountName -StorageAccountRG $StagingStorageAccountRG -ContainerName $WebContainerName
-              Write-Host "[3] Deploying Gatsby build to staging storage account $StagingStorageAccountName from stored artifact"
-              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $ArtifactStorageAccountRG -SrcContainerName $StagingArtifactContainer -DstStorageAccountName $StagingStorageAccountName -DstStorageAccountRG $StagingStorageAccountRG -DstContainerName $WebContainerName
-              $StagingStorageAccount = Get-AzStorageAccount -ResourceGroupName $stagingStorageAccountRG -AccountName $StagingStorageAccountName
-              Write-Host "[FINISH]  Staging Website deployed - see below url"
-              Write-Output $StagingStorageAccount.PrimaryEndpoints.Web
-            }
-          azPSVersion: "latest"
+            az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
-      - name: E2E testing of Staging Environment
-        run: |
-          CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn frontend cy:run
-      - name: Upload test artifacts for staging
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            $ArtifactStorageAccountRG = "digital-hybrid-resources"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $gitsha = "${{github.sha}}"
-            $TestingArtifactContainer = "testing-${{github.sha}}"
-            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/cypress/videos"
-            function Upload-FileToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                $StorageAccountName,
-                $ContainerName,
-                $StorageAccountRG,
-                $sourceFileRootDirectory,
-                $TargetDirectory = "",
-                $Force
-              )
-              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $ctx = $storageAccount.Context
-              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-              $container.CloudBlobContainer.Uri.AbsoluteUri
-              if ($container) {
-                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
-                foreach ($x in $filesToUpload) {
-                  $targetPath = $TargetDirectory + ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
-                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
-                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
-                }
-              }
-              $DestinationURL = $container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $TargetDirectory
-              Write-Host "[Finish] Artifacts uploaded to $DestinationURL "
-            }
-            if($null -eq $(Get-AzStorageAccount -ResourceGroupName $ArtifactStorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore)) {
-              Write-Host "[Error] $ArtifactStorageAccountName Storage account doesnt exists - Can not find Artifact Storage account"
-            } else {
-              Write-Host "[1] Confirm $StagingStorageAccountName storage account exists, uploading testing artifacts to storage account in container $TestingArtifactContainer"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $TestingArtifactContainer -StorageAccountRG $ArtifactStorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -TargetDirectory "tests/videos/" -Verbose
-            }
-          azPSVersion: "latest"
-
-  # Destroy the PR environment in DEV.
-  destroy_pr_dev_env:
-    name: "Clean up PR deployment in DEV environment"
+  end_to_end_test_staging:
+    name: "E2E test (Staging)"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./terraform/env/dev/pr
-
-    env:
-      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
-      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
-      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
-      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
-      TF_INPUT: false
-
+    needs: [build_cache, deploy_staging_frontend]
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Get Branch Name
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF})"
-          echo "##[set-output name=branch-subset;]$(echo ${GITHUB_HEAD_REF} | tr -d ' -' | awk '{print tolower(substr( $0, 1, 7))}')"
-        id: extract_branch_name
-
-      - name: Setup Terraform (Azure)
-        uses: hashicorp/setup-terraform@v1
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
         with:
-          terraform_version: 0.14.7
+          node-version: 14.x
 
-      - name: Terraform Init
-        id: dev-init
-        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ steps.extract_branch_name.outputs.branch-subset }}/terraform.tfstate"
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Terraform Destroy
-        id: dev-destroy
-        run: terraform destroy -auto-approve
-        env:
-          TF_VAR_environment_prefix: ${{ steps.extract_branch_name.outputs.branch-subset }}
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Install Cypress binary"
+        run: npx cypress install
+
+      - name: "Create env file"
+        working-directory: ./hybrid-frontend
+        run: |
+          touch .env.staging
+          echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.staging
+          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
+          cat .env.staging
+
+      - name: "E2E test"
+        run: CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn frontend cy:run
+
+      - name: "Upload test artifacts"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
+
 
   # Deploy Production backend (Terraform)
   deploy_production_terraform:
-    name: "Deploy Production Backend"
-    needs: [deploy_staging_terraform, deploy_staging_frontend]
+    name: "Deploy production backend"
+    needs: [end_to_end_test_staging]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -358,38 +223,26 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
           terraform_wrapper: false
 
-      - name: Terraform Init
-        id: prod-init
+      - name: "Terraform Init"
+        id: init
         run: terraform init
 
-      - name: Terraform Validate
-        id: prod-validate
-        run: terraform validate -no-color
-
-      - name: Terraform Format
-        id: prod-fmt
-        run: terraform fmt -check
-
-      - name: Terraform Plan
-        id: prod-plan
-        run: terraform plan -no-color
-
-      - name: Terraform Apply
-        id: prod-apply
+      - name: "Terraform Apply"
+        id: apply
         run: terraform apply -auto-approve
 
       # Outputs
-      - name: Get Terraform Outputs
-        id: get-terraform-outputs
+      - name: "Get Terraform Outputs"
+        id: tf-outputs
         working-directory: ./terraform/env/prod
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
@@ -400,41 +253,45 @@ jobs:
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
 
     outputs:
-      frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
-      resource_group_name: ${{ steps.get-terraform-outputs.outputs.resource-group-name }}
-      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
-      website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
-      storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
-      storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
+      frontend_storage_account_name: ${{ steps.tf-outputs.outputs.frontend-storage-account-name }}
+      resource_group_name: ${{ steps.tf-outputs.outputs.resource-group-name }}
+      api_endpoints: ${{ steps.tf-outputs.outputs.api-endpoints }}
+      website_endpoint: ${{ steps.tf-outputs.outputs.website-endpoint }}
+      storybook_storage_account_name: ${{ steps.tf-outputs.outputs.storybook-storage-account-name }}
+      storybook_web_endpoint: ${{ steps.tf-outputs.outputs.storybook-web-endpoint }}
 
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
-    name: "Deploy frontend in Production environment"
-    needs:
-      [
-        deploy_staging_terraform,
-        deploy_staging_frontend,
-        deploy_production_terraform,
-      ]
-
-    strategy:
-      matrix:
-        node-version: [14.x]
+    name: "Deploy production front end"
+    needs: [deploy_production_terraform]
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      - name: Install dependencies
-        run: |
-          npm install -g gatsby-cli
-          yarn add
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Create Production env file
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Create env file"
         working-directory: ./hybrid-frontend
         run: |
           touch .env.production
@@ -442,150 +299,29 @@ jobs:
           echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.production
           cat .env.production
 
-      - name: Build with Gatsby (Production)
-        run: |
-          GATSBY_ACTIVE_ENV=production yarn frontend build
+      - name: "Gatsby build"
+        run: GATSBY_ACTIVE_ENV=production yarn frontend build
 
-      - name: Login to Azure
+      - name: "Login to Azure with Az CLI"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
 
-      - name: Upload Production Build Artifacts
-        uses: azure/powershell@v1
+      # TODO check timings of uploads and parelellise if necessary
+      - name: "Upload build artifacts"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $ArtifactStorageAccountRG = "digital-hybrid-resources"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $ProdArtifactContainer = "prod-${{github.sha}}"
-            $gitsha = "${{github.sha}}"
-            $WebContainerName = '$web'
-            $ProdSourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/public"
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "prod-${{github.sha}}" --account-name "digitalhybridartifact"
 
-            function Create-AzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                Write-Host "Storage container doesnt exists, creating container named $ContainerName"
-                New-AzStorageContainer -Context $Context -Name $ContainerName
-              } else {
-              Write-Host "Storage container exists"
-              }
-            }
-
-            function Upload-FileToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                $StorageAccountName,
-                $ContainerName,
-                $StorageAccountRG,
-                $sourceFileRootDirectory,
-                $TargetDirectory = "",
-                $Force
-              )
-
-              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $ctx = $storageAccount.Context
-              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-
-              $container.CloudBlobContainer.Uri.AbsoluteUri
-              if ($container) {
-                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
-
-                foreach ($x in $filesToUpload) {
-                  $targetPath = $TargetDirectory + ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
-
-                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
-                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
-                }
-              }
-              $DestinationURL = $container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $TargetDirectory
-              Write-Host "[Finish] Artifacts uploaded to $DestinationURL "
-            }
-
-
-            if($null -eq $(Get-AzStorageAccount -ResourceGroupName $ArtifactStorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore)) {
-              Write-Host "[Error] $ArtifactStorageAccountName Storage account doesnt exists, unable to upload build artifacts"
-
-            } else {
-              Write-Host "[1] Confirm $ArtifactStorageAccountName storage account exists"
-
-              Write-Host "[2] Deploying Production Gatsby build to artifact storage account $ArtifactStorageAccountName"
-              Upload-FileToAzureStorageContainer -StorageAccountName $ArtifactStorageAccountName -ContainerName $ProdArtifactContainer -StorageAccountRG $ArtifactStorageAccountRG -sourceFileRootDirectory $ProdSourceFileRootDirectory -Verbose
-
-
-              Write-Host "[FINISH]  Build artifacts stored in container $StagingArtifactContainer and $ProdArtifactContainer of storage account $ArtifactStorageAccountName"
-            }
-          azPSVersion: "latest"
-
-      - name: Deploying Production Environment
-        uses: azure/powershell@v1
+      - name: "Deploy frontend as static website"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $ProdStorageAccountRG = "${{ needs.deploy_production_terraform.outputs.resource_group_name }}"
-            $ProdStorageAccountName = "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
-            $ArtifactStorageAccountRG = "digital-hybrid-resources"
-            $ArtifactStorageAccountName = "digitalhybridartifact"
-            $ProdArtifactContainer = "prod-${{github.sha}}"
-            $gitsha = "${{github.sha}}"
-            $WebContainerName = '$web'
-            function Copy-FilesToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                  $SrcStorageAccountName,
-                  $SrcStorageAccountRG,
-                  $SrcContainerName,
-                  $DstStorageAccountName,
-                  $DstStorageAccountRG,
-                  $DstContainerName,
-                  $SrcFolderName = "",
-                  $Force
-              )
-              $SrcStorageAccount = Get-AzStorageAccount -ResourceGroupName $SrcStorageAccountRG -AccountName $SrcStorageAccountName
-              $SrcContext  = $SrcStorageAccount.Context
-              $DstStorageAccount = Get-AzStorageAccount -ResourceGroupName $DstStorageAccountRG -AccountName $DstStorageAccountName
-              $DstContext  = $DstStorageAccount.Context
-              $blobs = Get-AzStorageBlob -Context $SrcContext -Container $SrcContainerName -Prefix $SrcFolderName
-              $destBlob = $blobs | Start-AzStorageBlobCopy -Context $SrcContext -DestContext $DstContext -DestContainer $DstContainerName -Force:$Force
-              $destBlob | Get-AzStorageBlobCopyState -WaitForComplete
-            }
-            function Remove-AzureStorageBlobs {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                  Write-Host "[Error] Storage container doesnt exists"
-              } else {
-                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
-                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
-              }
-            }
-            if(($null -eq $(Get-AzStorageAccount -ResourceGroupName $ProdStorageAccountRG -Name $ProdStorageAccountName -ErrorAction Ignore)) -or ($null -eq $(Get-AzStorageAccount -ResourceGroupName $ArtifactStorageAccountRG -Name $ArtifactStorageAccountName -ErrorAction Ignore))) {
-              Write-Host "[Error] $ProdStorageAccountName or $ArtifactStorageAccountName Storage account doesnt exists, can not progress with deployment"
-            } else {
-              Write-Host "[1] Confirm $ProdStorageAccountName and $ArtifactStorageAccountName storage account exists"
-              #TODO this will cause a small amount of downtime will need to move to a zero downtime deployment pattern
-              Write-Host "[2] flushing storage account named $ProdStorageAccountName"
-              Remove-AzureStorageBlobs -StorageAccountName $ProdStorageAccountName -StorageAccountRG $ProdStorageAccountRG -ContainerName $WebContainerName
-              Write-Host "[3] Deploying Gatsby build to production storage account $ProdStorageAccountName from stored artifact"
-              Copy-FilesToAzureStorageContainer -SrcStorageAccountName $ArtifactStorageAccountName -SrcStorageAccountRG $ArtifactStorageAccountRG -SrcContainerName $ProdArtifactContainer -DstStorageAccountName $ProdStorageAccountName -DstStorageAccountRG $ProdStorageAccountRG -DstContainerName $WebContainerName
-              $ProdStorageAccount = Get-AzStorageAccount -ResourceGroupName $ProdStorageAccountRG -AccountName $ProdStorageAccountName
-              Write-Host "[FINISH]  Production Website deployed - see below url"
-              Write-Output $ProdStorageAccount.PrimaryEndpoints.Web
-            }
-          azPSVersion: "latest"
+            az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}" --source '$web'
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
 
   # Deploys storybook.
   deploy_storybook_pr:
@@ -593,128 +329,55 @@ jobs:
     needs: [deploy_production_terraform]
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      - name: Install dependencies
-        run: |
-          yarn add
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Build Storybook
-        run: yarn frontend build-storybook -o "${{ github.workspace }}/hybrid-frontend/storybook-content"
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
 
-      - name: Login to Azure with Az Powershell
+      - name: "Build Storybook"
+        run: yarn frontend build-storybook -o "./storybook-static"
+
+      - name: "Login to Azure with Az CLI"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
 
-      - name: Setup storage account and deploy static website
-        uses: azure/powershell@v1
+      - name: "Deploy Storybook as static website"
+        uses: azure/CLI@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            $StorageAccountRG = "${{ needs.deploy_production_terraform.outputs.resource_group_name }}"
-            $StorageAccountName = "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
-            $IndexDocumentName = "index.html"
-            $ErrorDocumentName = "error.html"
-            $sourceFileRootDirectory = "${{ github.workspace }}/hybrid-frontend/storybook-content"
-            $ContainerName = '$web'
-            # $tags = @{"branch"="${{ steps.extract_branch_name.outputs.branch }}"}
-
-
-            function Upload-FileToAzureStorageContainer {
-              [cmdletbinding()]
-              param(
-                $StorageAccountName,
-                $ContainerName,
-                $StorageAccountRG,
-                $sourceFileRootDirectory,
-                $Force
-              )
-
-              $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $ctx = $storageAccount.Context
-              $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-
-              $container.CloudBlobContainer.Uri.AbsoluteUri
-              if ($container) {
-                $filesToUpload = Get-ChildItem $sourceFileRootDirectory -Recurse -File
-
-                foreach ($x in $filesToUpload) {
-                  $targetPath = ($x.fullname.Substring($sourceFileRootDirectory.Length + 1)).Replace("\", "/")
-
-                  Write-Verbose "Uploading $("\" + $x.fullname.Substring($sourceFileRootDirectory.Length + 1)) to $($container.CloudBlobContainer.Uri.AbsoluteUri + "/" + $targetPath)"
-                  Set-AzStorageBlobContent -File $x.fullname -Container $container.Name -Blob $targetPath -Context $ctx -Properties @{"ContentType" = "text/html"} -Force:$Force | Out-Null
-                }
-              }
-            }
-
-            function Remove-AzureStorageBlobs {
-              [cmdletbinding()]
-              param(
-                  $StorageAccountName,
-                  $StorageAccountRG,
-                  $ContainerName
-              )
-              $StorageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              $Context  = $StorageAccount.Context
-              if($null -eq $(Get-AzStorageContainer -Name $ContainerName -Context $Context -ErrorAction Ignore)) {
-                  Write-Host "[Error] Storage container doesnt exists"
-              } else {
-                  Write-Host "Storage container exists, deleting all Files in container $ContainerName"
-                  (Get-AzStorageBlob -Container $ContainerName -Context $Context | Remove-AzStorageBlob -Force) 1> $null
-              }
-            }
-
-            if($(Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName -ErrorAction Ignore) -eq $null) {
-              Write-Host "[Error] Storage account doesnt exist"
-               Write-Error 'The Storage Account does not exist.' -ErrorAction Stop
-              # Write-Host "[1] Storage account doesnt exists, creating new storage account"
-             
-
-              # New-AzStorageAccount -Location "West Europe" -Name $StorageAccountName -ResourceGroupName $StorageAccountRG -SkuName Standard_GRS -Kind StorageV2 -Tag $tags
-              # Write-Host "[2] New storage account created named $StorageAccountName"
-
-              # Write-Host "[3] Enabling static website hosting"
-              # $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-              # $ctx = $storageAccount.Context
-              # Enable-AzStorageStaticWebsite -Context $ctx -IndexDocument $IndexDocumentName -ErrorDocument404Path $ErrorDocumentName
-
-              # Write-Host "[4] Deploying website"
-              # Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
-
-            } else {
-              Write-Host "[1] Confirm storage account $StorageAccountName exists"
-              
-              Write-Host "[2] flushing storage account name $StorageAccountName"
-              Remove-AzureStorageBlobs -StorageAccountName $StorageAccountName -StorageAccountRG $StorageAccountRG -ContainerName $ContainerName
-              
-              Write-Host "[3]  Deploying website"
-              Upload-FileToAzureStorageContainer -StorageAccountName $StorageAccountName -ContainerName $ContainerName -StorageAccountRG $StorageAccountRG -sourceFileRootDirectory $sourceFileRootDirectory -Verbose
-            }
-
-            $storageAccount = Get-AzStorageAccount -ResourceGroupName $StorageAccountRG -AccountName $StorageAccountName
-            Write-Host "[FINISH]  Website deployed - see below url"
-            Write-Output $storageAccount.PrimaryEndpoints.Web
-          azPSVersion: "latest"
+            az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
+            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
   output_website_urls:
-    name: "Staging and Production website urls."
+    name: "Output website urls"
     needs: [deploy_staging_terraform, deploy_production_terraform]
     runs-on: ubuntu-latest
     steps:
-      - name: Get staging and Production website urls
+      - name: "Get website urls"
         shell: bash
         run: |
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
-        id: web_urls

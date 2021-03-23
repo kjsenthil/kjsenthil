@@ -1,9 +1,4 @@
 name: "Deploy terraform and frontend to PR environment"
-# Deployment order: Terraform -> Frontend
-
-# TODO:
-  # Output linting, testing reports and relevant links to PR
-  # Update checkout action to latest version
 
 on: pull_request
 
@@ -12,7 +7,7 @@ jobs:
     name: "Build caches"
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout Repo"
+      - name: "Checkout"
         uses: actions/checkout@v2
 
       - name: "Set cache metadata"
@@ -40,7 +35,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
 
-      - name: "Install dependencies"
+      - name: "Install missing dependencies"
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
         run: yarn install
 
@@ -59,16 +54,9 @@ jobs:
         shell: bash
         run: echo "::set-output name=sha-subset::$(echo ${{ github.head_ref }} | md5sum | awk '{print tolower(substr( $0, 1, 7))}')"
 
-      - name: "Print output"
-        shell: bash
-        run: |
-          echo ${{ github.head_ref }}
-          echo ${{ steps.derive-prefix.outputs.sha-subset }}
-
     outputs:
       prefix: ${{ steps.derive-prefix.outputs.sha-subset }}
 
-  # TODO can we skip fast here? i.e can we skip the step execution by detecting that APIM already exists?
   # Deploys terraform APIM.
   deploy_apim_terraform:
     name: "Deploy APIM"
@@ -86,29 +74,29 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: Checkout Repo
+      - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: Setup Terraform (Azure)
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.7
 
-      - name: Terraform Init
+      - name: "Terraform Init"
         id: apim-init
         run: terraform init
 
-      - name: Terraform Validate
+      - name: "Terraform Validate"
         id: apim-validate
         run: terraform validate -no-color
 
-      - name: Terraform Apply
+      - name: "Terraform Apply"
         id: apim-apply
         run: terraform apply -auto-approve
 
   # Deploys terraform PR contents.
   deploy_pr_terraform:
-    name: "Deploy Terraform resources for PR environment."
+    name: "Deploy Terraform"
     needs: [deploy_apim_terraform, derive_environment_prefix]
     runs-on: ubuntu-latest
 
@@ -124,7 +112,7 @@ jobs:
       TF_INPUT: false
 
     steps:
-      - name: "Checkout Repo"
+      - name: "Checkout"
         uses: actions/checkout@v2
 
       - name: "Setup Terraform"
@@ -171,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_cache
     steps:
-      - name: "Checkout Repo"
+      - name: "Checkout"
         uses: actions/checkout@v2
 
       - name: "Use Node.js 14.x"
@@ -206,7 +194,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_cache
     steps:
-      - name: "Checkout Repo"
+      - name: "Checkout"
         uses: actions/checkout@v2
 
       - name: "Use Node.js 14.x"
@@ -238,7 +226,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_cache, deploy_pr_terraform]
     steps:
-      - name: "Checkout Repo"
+      - name: "Checkout"
         uses: actions/checkout@v2
 
       - name: "Use Node.js 14.x"
@@ -285,7 +273,7 @@ jobs:
 
   # Deploys frontend pr contents
   deploy_pr_frontend:
-    name: "Build & Deploy Gatsby to PR environment"
+    name: "Build & Deploy Gatsby"
     needs: [deploy_pr_terraform, build_cache, linting, unit_test, end_to_end_test]
     runs-on: ubuntu-latest
 
@@ -326,12 +314,12 @@ jobs:
       - name: "Gatsby build"
         run: GATSBY_ACTIVE_ENV=pr yarn frontend build
 
-      - name: "Login to Azure with Az CLI"
+      - name: "Login to Azure"
         uses: Azure/login@v1
         with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: "Deploy PR frontend as static website"
+      - name: "Deploy Gatsby static website"
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -411,17 +399,16 @@ jobs:
       plan: ${{ steps.plan.outputs.stdout }}
 
 
-  # TODO Can we trigger this job only when changes have been made to relevant paths? We shouldn't need to deploy a storybook if no components are altered?
-  # TODO I think we should deploy the storybook container here, as then we can control it better.
+  # TODO Deploy the storybook container here via terraform
   # Deploys storybook.
   deploy_storybook:
-    name: "Deploy Storybook"
+    name: "Build & deploy Storybook"
     needs: [build_cache, deploy_pr_terraform]
     runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: "Use Node.js 14.x"
         uses: actions/setup-node@v1
@@ -447,10 +434,7 @@ jobs:
       - name: "Build Storybook"
         run: yarn frontend build-storybook -o "./storybook-static"
 
-      - name: "List Storybook dir contents"
-        run: ls -lrt ${{ github.workspace }}/hybrid-frontend/storybook-static
-
-      - name: "Login to Azure with Az CLI"
+      - name: "Login to Azure"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -467,7 +451,7 @@ jobs:
         url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}
 
   publish_results:
-    name: "Publish results to PR"
+    name: "Publish results"
     needs: [linting, unit_test, end_to_end_test, deploy_pr_frontend, deploy_storybook, plan_staging, plan_prod]
     runs-on: ubuntu-latest
 
@@ -477,25 +461,25 @@ jobs:
         with:
           script: |
             const output = `
-            ### Lint & Testing results
-            #### Linting Results \`TODO\`
-            #### Unit Test Results \`TODO\`
-            #### E2E Test Results \`TODO\`
+            #### Lint & Testing results
+            **Linting Results:** \`TODO\`
+            **Unit Test Results:** \`TODO\`
+            **E2E Test Results:** \`TODO\`
 
-            ### Review URLs
-            #### Storybook \`${{ needs.deploy_storybook.outputs.url }}\`
-            #### Webpage \`${{ needs.deploy_pr_frontend.outputs.url }}\`
+            #### Review URLs
+            **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
+            **Webpage:** \`${{ needs.deploy_pr_frontend.outputs.url }}\`
 
-            ### Terraform plan - Staging
-            #### Outcome \`${{ needs.plan_staging.outputs.plan_outcome }}\`
+            #### Terraform plan - Staging
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome }}\`
             <details><summary>Show Plan</summary>
 
             \`\`\`${{ needs.plan_staging.outputs.plan }}\`\`\`
 
             </details>
 
-            ### Terraform plan - Prod
-            #### Outcome \`${{ needs.plan_prod.outputs.plan_outcome }}\`
+            #### Terraform plan - Prod
+            **Outcome** \`${{ needs.plan_prod.outputs.plan_outcome }}\`
             <details><summary>Show Plan</summary>
 
             \`\`\`${{ needs.plan_prod.outputs.plan }}\`\`\`
@@ -509,26 +493,3 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-
-
-#    github-token: ${{ secrets.GITHUB_TOKEN }}
-#    script: |
-#      const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-#      #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-#      #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
-#      #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-#
-#      <details><summary>Show Plan</summary>
-#
-#      \`\`\`${process.env.PLAN}\`\`\`
-#
-#      </details>
-#
-#      *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-#
-#      github.issues.createComment({
-#        issue_number: context.issue.number,
-#        owner: context.repo.owner,
-#        repo: context.repo.repo,
-#        body: output
-#      })

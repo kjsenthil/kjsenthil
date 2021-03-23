@@ -1,0 +1,54 @@
+name: "Destroy PR environment"
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
+jobs:
+  derive_environment_prefix:
+    name: "Derive environment prefix"
+    needs: derive_environment_prefix
+    runs-on: ubuntu-latest
+    steps:
+      # Use the first 7 chars of the hash of the branch name
+      - name: "Derive environment prefix"
+        id: derive-prefix
+        shell: bash
+        run: echo "::set-output name=sha-subset::$(echo ${{ github.head_ref }} | md5sum | awk '{print tolower(substr( $0, 1, 7))}')"
+
+    outputs:
+      prefix: ${{ steps.derive-prefix.outputs.sha-subset }}
+
+  destroy_pr_dev_env:
+    name: "Clean up PR deployment"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/env/dev/pr
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
+
+      - name: "Terraform Destroy"
+        run: terraform destroy -auto-approve
+        env:
+          TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
