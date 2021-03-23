@@ -201,13 +201,17 @@ jobs:
       - name: "E2E test"
         run: CYPRESS_BASE_URL="${{ needs.deploy_staging_terraform.outputs.website_endpoint }}" yarn frontend cy:run
 
+      - name: "Create test artifact container"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: az storage container create --name "testing-${{github.sha}}" --account-name "digitalhybridartifact"
+
       - name: "Upload test artifacts"
         uses: azure/CLI@v1
         with:
           azcliversion: latest
-          inlineScript: |
-            az storage container create --name "testing-${{github.sha}}" --account-name "digitalhybridartifact"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
+          inlineScript: az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
 
 
   # Deploy Production backend (Terraform)
