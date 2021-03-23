@@ -16,7 +16,7 @@ export default async (values: LoginFormData): Promise<void> => {
   });
 
   if (!response.ok) {
-    return Promise.reject(new Error('Login failed'));
+    return Promise.reject(new Error('Log in failed'));
   }
 
   // no response - a session cookie will be set

@@ -20,7 +20,7 @@ const Template: Story<SliderWithInputProps> = (args) => {
   );
 };
 
-const defaultArgs = {
+const defaultArgs: SliderWithInputProps = {
   label: 'Upfront investment',
   max: 20000,
   min: 0,
