@@ -146,6 +146,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name "staging-${{github.sha}}" --account-name "digitalhybridartifact"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "staging-${{github.sha}}" --account-name "digitalhybridartifact"
 
       - name: "Deploy Gatsby static website"
@@ -153,6 +154,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name '$web' --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
@@ -204,6 +206,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name "testing-${{github.sha}}" --account-name "digitalhybridartifact"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
 
 
@@ -313,6 +316,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name "prod-${{github.sha}}" --account-name "digitalhybridartifact"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "prod-${{github.sha}}" --account-name "digitalhybridartifact"
 
       - name: "Deploy frontend as static website"
@@ -320,6 +324,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
 
@@ -367,6 +372,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
