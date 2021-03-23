@@ -146,7 +146,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "staging-${{github.sha}}" --account-name "digitalhybridartifact"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "staging-${{github.sha}}" --account-name "digitalhybridartifact"
 
       - name: "Deploy Gatsby static website"
         uses: azure/CLI@v1
@@ -154,7 +154,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
   end_to_end_test_staging:
     name: "E2E test (Staging)"
@@ -204,7 +204,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
 
 
   # Deploy Production backend (Terraform)
@@ -313,7 +313,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "prod-${{github.sha}}" --account-name "digitalhybridartifact"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "prod-${{github.sha}}" --account-name "digitalhybridartifact"
 
       - name: "Deploy frontend as static website"
         uses: azure/CLI@v1
@@ -321,7 +321,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
 
   # Deploys storybook.
   deploy_storybook_pr:
@@ -368,7 +368,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s ${{ github.workspace }}/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
   output_website_urls:
     name: "Output website urls"
