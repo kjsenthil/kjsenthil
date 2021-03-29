@@ -12610,6 +12610,18 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"gatsby-transformer-json@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "gatsby-transformer-json@npm:3.1.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    bluebird: ^3.7.2
+  peerDependencies:
+    gatsby: ^3.0.0-next.0
+  checksum: 7d100e283e8810660592c8c7e755030fe9d6cea578d10c813266821803d746e42ed2762330f77a15de1d8db8df201773b495dd51600d564eda2180680baf345d
+  languageName: node
+  linkType: hard
+
 "gatsby-transformer-sharp@npm:^2.12.0":
   version: 2.12.1
   resolution: "gatsby-transformer-sharp@npm:2.12.1"
@@ -14134,6 +14146,7 @@ fsevents@^1.2.7:
     gatsby-plugin-sharp: ^2.14.0
     gatsby-plugin-styled-components: ^3.9.0
     gatsby-source-filesystem: ^2.11.0
+    gatsby-transformer-json: ^3.1.0
     gatsby-transformer-sharp: ^2.12.0
     husky: ^4.3.8
     jest: ^26.6.3
