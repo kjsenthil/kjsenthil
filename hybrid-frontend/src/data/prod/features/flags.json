@@ -1,4 +1,10 @@
-{
-  "featureA": true,
-  "featureB": false
-}
+[
+  {
+    "name": "featureA",
+    "isEnabled": true
+  },
+  {
+    "name": "featureB",
+    "isEnabled": false
+  }
+]
