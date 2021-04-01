@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'gatsby';
+
 import { Grid, makeStyles } from '@material-ui/core';
-import Layout from '../components/Layout';
 import HeaderMenu from '../components/HeaderMenu';
 import HomeFeatureCards from '../components/HomeFeatureCards';
 import SimulationForm, { SimulationFormData } from '../components/SimulationForm/SimulationForm';
@@ -56,7 +57,7 @@ const IndexPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <HeaderMenu />
       <Grid container spacing={3} className={classes.gridContainer}>
         <Grid className={classes.leftGridItem} item xs={12} sm={8}>
@@ -79,7 +80,10 @@ const IndexPage = () => {
       <Grid item xs={12}>
         <HomeFeatureCards />
       </Grid>
-    </Layout>
+      <Grid item xs={12}>
+        <Link to="/gmvp/login">Goto GMVP</Link>
+      </Grid>
+    </>
   );
 };
 

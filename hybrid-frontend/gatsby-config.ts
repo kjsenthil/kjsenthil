@@ -18,6 +18,10 @@ export default {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-create-client-paths',
+      options: { prefixes: ['/gmvp/*'] },
+    },
     'gatsby-plugin-styled-components',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

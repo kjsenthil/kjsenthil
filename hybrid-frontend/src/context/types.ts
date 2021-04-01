@@ -9,6 +9,8 @@ export interface ExampleData {
 export interface GlobalDataType {
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isLoggedIn: boolean;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface GlobalProviderProps {

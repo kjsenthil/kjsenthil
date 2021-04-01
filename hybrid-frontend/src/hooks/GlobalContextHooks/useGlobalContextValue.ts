@@ -3,13 +3,16 @@ import { GlobalDataType } from '../../context/types';
 
 function useGlobalContextValue(): GlobalDataType {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return useMemo(
     () => ({
       isLoading,
       setIsLoading,
+      isLoggedIn,
+      setIsLoggedIn,
     }),
-    [isLoading, setIsLoading]
+    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn]
   );
 }
 

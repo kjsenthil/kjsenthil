@@ -5,6 +5,8 @@ import useGlobalContextValue from '../hooks/GlobalContextHooks/useGlobalContextV
 export const globalDataContextDefaultValue: GlobalDataType = {
   isLoading: false,
   setIsLoading: () => true,
+  isLoggedIn: false,
+  setIsLoggedIn: () => true,
 };
 
 export const GlobalContext = createContext<GlobalDataType>(globalDataContextDefaultValue);
