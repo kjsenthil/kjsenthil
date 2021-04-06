@@ -1,0 +1,40 @@
+name: Upload workflow metrics to Influx DB
+
+on:
+  workflow_run:
+    workflows: ["*"]
+    types:
+      - completed
+
+jobs:
+  get-job-object:
+    name: "Get latest run"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Get latest run"
+        uses: octokit/request-action@v2.x
+        id: get-latest-run
+        with:
+          route: GET /repos/{repo}/actions/runs/{job_id}/jobs
+          repo: ${{ github.repository }}
+          job_id: ${{ github.event.workflow_run.id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    outputs:
+      job-data: ${{ steps.get-latest-run.outputs.data }}
+
+  upload-job-metric-to-influxdb:
+    name: "Upload to InfluxDB"
+    runs-on: ubuntu-latest
+    needs: [get-job-object]
+    steps:
+      - name: "Upload to InfluxDB"
+        uses: crederauk/workflow-metrics@v1.0.0
+        with:
+          name: ${{ github.event.workflow_run.name }}
+          url: ${{ secrets.INFLUX_DB_URL }}
+          organisation: digital-hybrid
+          bucket: workflow-runs
+          token: ${{ secrets.INFLUX_DB_TOKEN }}
+          data: ${{ needs.get-job-object.outputs.job-data }}
