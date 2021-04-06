@@ -24,12 +24,12 @@ describe('GoalSelection', () => {
     ${Goals.UNIVERSITY}
   `('Calls onSubmit with the selected goal ', ({ goal }) => {
     const goalText = screen.getByText(goal);
-    expect(goalText.getAttribute('class')).toContain('MuiPaper-elevation3');
+    expect(goalText.closest('div')?.getAttribute('class')).toContain('MuiPaper-elevation3');
     fireEvent.click(goalText);
 
     fireEvent.click(screen.getByText('Select'));
 
-    expect(goalText.getAttribute('class')).toContain('MuiPaper-elevation1');
+    expect(goalText.closest('div')?.getAttribute('class')).toContain('MuiPaper-elevation1');
     expect(onSubmit).toBeCalledTimes(1);
     expect(onSubmit).toBeCalledWith(goal);
   });

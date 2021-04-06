@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import AccountTypeSelection, { AccountTypeSelectProps } from './AccountTypeSelection';
 
 export default {
-  title: 'Digital Hybrid/Select Account Type',
+  title: 'Digital Hybrid/Account Type Selection',
   component: AccountTypeSelection,
   // TODO:
   argTypes: {

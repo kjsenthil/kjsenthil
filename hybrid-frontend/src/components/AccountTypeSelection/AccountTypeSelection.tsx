@@ -54,7 +54,7 @@ const AccountTypeSelection = ({ onSubmit }: AccountTypeSelectProps) => {
 
       {/* ISA */}
 
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <AccountTypeCard
           isSelected={selectedAccountType === AccountType.ISA}
           handleCardClick={() => setSelectedAccountType(AccountType.ISA)}
@@ -69,7 +69,7 @@ const AccountTypeSelection = ({ onSubmit }: AccountTypeSelectProps) => {
 
       {/* GIA */}
 
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <AccountTypeCard
           isSelected={selectedAccountType === AccountType.GIA}
           handleCardClick={() => setSelectedAccountType(AccountType.GIA)}

@@ -5,7 +5,7 @@ import GoalSelection, { GoalSelectionProps } from './GoalSelection';
 import { Goals } from '../../constants';
 
 export default {
-  title: 'Digital Hybrid/Select a Goal',
+  title: 'Digital Hybrid/Goal Selection',
   component: GoalSelection,
   argTypes: { onSubmit: { action: 'submitted' } },
 } as Meta;

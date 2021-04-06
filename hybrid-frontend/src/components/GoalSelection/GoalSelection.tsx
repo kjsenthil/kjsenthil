@@ -18,7 +18,9 @@ const GoalBox: React.FC<GoalBoxProps> = ({ setGoal, goal, selectedGoal }) => {
         className={useStyles({ isSelected }).goalBox}
         elevation={isSelected ? 1 : ELEVATION}
       >
-        {goal}
+        <Typography variant="h6" align="center">
+          {goal}
+        </Typography>
       </Paper>
     </Grid>
   );
@@ -40,7 +42,7 @@ const GoalSelection: React.FC<GoalSelectionProps> = ({ onSubmit }) => {
 
   return (
     <Grid className={classes.container} container spacing={3}>
-      <Typography className={classes.title} variant="subtitle1">
+      <Typography className={classes.title} variant="h4">
         Select a Goal
       </Typography>
       <Grid className={classes.container} container item xs={12} sm={12}>
@@ -58,6 +60,7 @@ const GoalSelection: React.FC<GoalSelectionProps> = ({ onSubmit }) => {
           variant="contained"
           color="primary"
           onClick={handleSubmit}
+          disabled={!goal}
         >
           Select
         </Button>
