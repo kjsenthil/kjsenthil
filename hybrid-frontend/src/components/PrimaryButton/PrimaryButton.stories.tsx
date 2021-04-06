@@ -7,12 +7,7 @@ export default {
   component: PrimaryButton,
 } as Meta;
 
-const Template: Story<PrimaryButtonProps> = (args) => (
-  <PrimaryButton
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...args}
-  />
-);
+const Template: Story<PrimaryButtonProps> = (args) => <PrimaryButton {...args} />;
 
 const defaultArgs: PrimaryButtonProps = {
   label: 'Some label',

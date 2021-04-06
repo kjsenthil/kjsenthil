@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { graphql, useStaticQuery } from 'gatsby';
 import { FeatureFlag } from './types';
 

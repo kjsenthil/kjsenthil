@@ -44,7 +44,6 @@ const defaultProps: ProjectionsGridProps = {
 
 describe('ProjectionsGrid', () => {
   test('Renders the grid without error', async () => {
-    /* eslint-disable react/jsx-props-no-spreading */
     expect(() => render(<ProjectionsGrid {...defaultProps} />)).not.toThrow();
   });
 });

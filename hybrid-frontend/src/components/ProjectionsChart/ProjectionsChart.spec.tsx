@@ -48,7 +48,6 @@ const defaultProps: ProjectionsChartProps = {
 
 describe('ProjectionsChart', () => {
   test('Renders the chart without error', async () => {
-    /* eslint-disable react/jsx-props-no-spreading */
     expect(() => render(<ProjectionsChart {...defaultProps} />)).not.toThrow();
   });
 });

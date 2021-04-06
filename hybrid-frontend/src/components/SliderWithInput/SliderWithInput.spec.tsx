@@ -20,7 +20,6 @@ describe('SliderWithInput', () => {
 
   describe('Handles render and onChange events', () => {
     beforeEach(async () => {
-      /* eslint-disable react/jsx-props-no-spreading */
       render(<SliderWithInput {...defaultProps} />);
       inputField = (await screen.findByTestId(inputDataTestId)) as HTMLInputElement;
     });
@@ -44,7 +43,6 @@ describe('SliderWithInput', () => {
 
   describe('Handles different data formats', () => {
     test('Renders a currency symbol prefix', async () => {
-      /* eslint-disable react/jsx-props-no-spreading */
       render(<SliderWithInput {...defaultProps} isCurrency />);
       expect(await screen.findByText('£')).toBeInTheDocument();
     });

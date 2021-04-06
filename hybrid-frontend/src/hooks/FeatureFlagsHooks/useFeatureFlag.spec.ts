@@ -1,6 +1,6 @@
 import { useStaticQuery } from 'gatsby';
 import { useFeatureFlag, FeatureFlag } from '.';
-import FeatureFlags from '../../config/featureFlags';
+import { FeatureFlags } from '../../constants';
 
 const mockFeatureFlags: Array<FeatureFlag> = [
   {

@@ -6,7 +6,6 @@ export interface PrimaryButtonProps extends ButtonProps {
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({ label, ...props }) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <Button variant="contained" color="primary" {...props}>
     {label}
   </Button>

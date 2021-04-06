@@ -8,12 +8,7 @@ export default {
   argTypes: { onSubmit: { action: 'submitted' } },
 } as Meta;
 
-const Template: Story<LoginFormProps> = (args) => (
-  <LoginForm
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...args}
-  />
-);
+const Template: Story<LoginFormProps> = (args) => <LoginForm {...args} />;
 
 const defaultArgs: LoginFormProps = {
   errorMessage: '',

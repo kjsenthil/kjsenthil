@@ -11,12 +11,7 @@ const Template: Story<SliderWithInputProps> = (args) => {
   const [value, setValue] = useState<number | ''>(0);
 
   return (
-    <SliderWithInput
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...args}
-      onChange={(_name, newValue) => setValue(newValue)}
-      value={value}
-    />
+    <SliderWithInput {...args} onChange={(_name, newValue) => setValue(newValue)} value={value} />
   );
 };
 

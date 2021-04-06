@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb-typescript'],
+  extends: ['airbnb-typescript', 'prettier'],
   parserOptions: {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
@@ -15,5 +15,6 @@ module.exports = {
     '@typescript-eslint/comma-dangle': 0,
     'object-curly-newline': 0,
     'react/prop-types': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

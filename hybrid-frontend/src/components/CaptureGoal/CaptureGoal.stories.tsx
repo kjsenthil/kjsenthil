@@ -8,11 +8,6 @@ export default {
   argTypes: { onSubmit: { action: 'submitted' } },
 } as Meta;
 
-const Template: Story<CaptureGoalProps> = (args) => (
-  <CaptureGoal
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...args}
-  />
-);
+const Template: Story<CaptureGoalProps> = (args) => <CaptureGoal {...args} />;
 
 export const Default = Template.bind({});

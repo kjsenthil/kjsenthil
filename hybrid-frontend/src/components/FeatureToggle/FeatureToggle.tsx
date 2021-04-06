@@ -2,7 +2,7 @@
  * A wrapper component that determines whether a component should be rendered or not based on
  * feature flags information.
  */
-
+/* eslint-disable no-console */
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useFeatureFlag } from '../../hooks/FeatureFlagsHooks';
