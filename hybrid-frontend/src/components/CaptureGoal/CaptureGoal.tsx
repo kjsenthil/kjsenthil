@@ -9,6 +9,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
+import useGlobalContext from '../../hooks/GlobalContextHooks/useGlobalContext';
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -57,8 +58,11 @@ const CaptureGoal: React.FC<CaptureGoalProps> = ({ onSubmit }) => {
     }
   };
 
+  const { setGoalCapture } = useGlobalContext();
+
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setGoalCapture(inputs);
     onSubmit(inputs);
   };
 

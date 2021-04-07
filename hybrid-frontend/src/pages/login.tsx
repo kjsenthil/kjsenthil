@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
+import { Grid, Typography } from '@material-ui/core';
 import LoginForm from '../components/LoginForm';
 import { LoginFormData } from '../components/LoginForm/LoginForm';
 import login from '../api/postLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
-import { handleLoginSession } from '../services/auth';
+import { handleLoginSession, logoutSession } from '../services/auth';
 
 interface LoginPageProps {
   path: string;
@@ -19,6 +20,10 @@ const LoginPage = ({ path }: LoginPageProps) => {
     error: '',
     success: '',
   });
+
+  useEffect(() => {
+    logoutSession(() => console.log('logged out'));
+  }, []);
 
   const { setIsLoggedIn } = useGlobalContext();
 
@@ -47,13 +52,19 @@ const LoginPage = ({ path }: LoginPageProps) => {
   };
 
   return (
-    <>
-      <LoginForm
-        onSubmit={onLoginFormSubmit}
-        errorMessage={loginMessages.error}
-        successMessage={loginMessages.success}
-      />
-    </>
+    <Grid container justify="center">
+      <Grid item xs={6}>
+        <Typography variant="h4" gutterBottom>
+          Login Page
+        </Typography>
+
+        <LoginForm
+          onSubmit={onLoginFormSubmit}
+          errorMessage={loginMessages.error}
+          successMessage={loginMessages.success}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

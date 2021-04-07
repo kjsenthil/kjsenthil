@@ -1,19 +1,18 @@
-import { Typography } from '@material-ui/core';
-import { Link } from 'gatsby';
+import { Grid } from '@material-ui/core';
+import { navigate } from 'gatsby';
 import React from 'react';
+import AccountTypeSelection from '../../AccountTypeSelection';
 import HeaderMenu from '../../HeaderMenu';
 
 const SelectAccountsPage = () => (
   <>
     <HeaderMenu />
 
-    <Typography variant="h2" gutterBottom>
-      SelectAccountsPage
-    </Typography>
-
-    <Link to="/gmvp/login">Back to Login</Link>
-
-    <Link to="/gmvp/goals">Goto Goal</Link>
+    <Grid container justify="center">
+      <Grid item xs={6}>
+        <AccountTypeSelection onSubmit={() => navigate('/gmvp/goals')} />
+      </Grid>
+    </Grid>
   </>
 );
 

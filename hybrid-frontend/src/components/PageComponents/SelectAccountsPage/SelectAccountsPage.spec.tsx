@@ -8,8 +8,6 @@ describe('SelectAccountsPage', () => {
   });
 
   test('SelectAccountsPage titles has been successfully rendered', () => {
-    expect(screen.getByText('SelectAccountsPage')).toBeInTheDocument();
-    expect(screen.getByText('Back to Login')).toBeInTheDocument();
-    expect(screen.getByText('Goto Goal')).toBeInTheDocument();
+    expect(screen.getByText('SELECT AN ACCOUNT TYPE')).toBeInTheDocument();
   });
 });

@@ -31,8 +31,6 @@ describe('SimulationPage', () => {
     const SimulationPage = (await import('./SimulationPage')).default;
     render(<SimulationPage />);
 
-    expect(screen.getByText('SimulationPage')).toBeInTheDocument();
-    expect(screen.getByText('Back to Inputs')).toBeInTheDocument();
-    expect(screen.getByText('Back to Login')).toBeInTheDocument();
+    expect(screen.getByText('Simulation Page')).toBeInTheDocument();
   });
 });

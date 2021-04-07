@@ -1,5 +1,5 @@
 import React, { createContext, FC, ReactNode } from 'react';
-import { GlobalDataType, GlobalProviderProps } from './types';
+import { GlobalDataType, GlobalProviderProps, GoalCaptureType } from './types';
 import useGlobalContextValue from '../hooks/GlobalContextHooks/useGlobalContextValue';
 
 export const globalDataContextDefaultValue: GlobalDataType = {
@@ -7,6 +7,8 @@ export const globalDataContextDefaultValue: GlobalDataType = {
   setIsLoading: () => true,
   isLoggedIn: false,
   setIsLoggedIn: () => true,
+  goalCapture: {} as GoalCaptureType,
+  setGoalCapture: () => {},
 };
 
 export const GlobalContext = createContext<GlobalDataType>(globalDataContextDefaultValue);
