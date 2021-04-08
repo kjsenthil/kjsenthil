@@ -10,9 +10,8 @@ data "terraform_remote_state" "dev_apim" {
 }
 
 data "azurerm_api_management_api" "pr_apia" {
-  name                = format("%s-%s", var.environment_prefix, local.apima_name)
-  api_management_name = data.terraform_remote_state.dev_apim.outputs.dev_apim_name
-  resource_group_name = data.terraform_remote_state.dev_apim.outputs.dev_apim_rg
+  name                = azurerm_api_management_api.api.name
+  api_management_name = local.apim_name
+  resource_group_name = local.rg_name
   revision            = "1"
-  depends_on          = [module.dev_apima]
 }

@@ -1,72 +1,67 @@
-module "dev_apima" {
-  source             = "../../../main"
-  is_apim            = false
-  is_apima           = true
-  environment        = local.environment
-  environment_prefix = var.environment_prefix
-  apim_name          = format("%s-%s-mgmt", local.environment, local.apim_name)
-  rg_name            = format("%s-%s-rg", local.environment, local.rg_name)
-  path               = format("%s%s", var.environment_prefix, local.path)
+resource "azurerm_api_management_api" "api" {
+  name                  = local.apima_name
+  resource_group_name   = local.rg_name
+  api_management_name   = local.apim_name
+  revision              = 1
+  display_name          = format("%s-digital-hybrid-API", local.environment_prefix)
+  path                  = local.path
+  protocols             = ["https"]
+  subscription_required = false
+  description           = format("%s digital hybrid api", local.environment_prefix)
 }
 
 
 # The API operation deployed on every PR.
 resource "azurerm_api_management_api_operation" "api_operation" {
   for_each            = local.api_definitions
-  operation_id        = each.value.operation_id
-  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
-  display_name        = each.value.display_name
-  method              = each.value.method
-  url_template        = each.value.url_template
-  description         = each.value.description
+  operation_id        = lookup(each.value, "operation_id", null)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management_api.api.api_management_name
+  resource_group_name = azurerm_api_management_api.api.resource_group_name
+  display_name        = lookup(each.value, "display_name", null)
+  method              = lookup(each.value.policy.cors, "method", null)
+  url_template        = lookup(each.value, "url_template", null)
+  description         = lookup(each.value, "description", null)
 
   response {
     status_code = 200
   }
 
   dynamic "template_parameter" {
-    for_each = each.value.path_params.has_params ? toset(split(", ", each.value.path_params.param_names)) : []
+    for_each = length(lookup(each.value, "path_params", [])) > 0 ? toset(lookup(each.value, "path_params", [])) : []
     content {
       name     = template_parameter.key
       required = true
       type     = "string"
     }
   }
-
-  depends_on = [module.dev_apima]
 }
 
 
 # The API operation policy For the API. Deployed with every PR.
 resource "azurerm_api_management_api_operation_policy" "api_operation_policy" {
   for_each            = local.api_definitions
-  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
-  operation_id        = each.value.operation_id
-  xml_content         = templatefile(abspath(format("%s/../../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = each.value.policy.backend_url, cors_allowed_methods = split(", ", each.value.policy.cors.methods), cors_allowed_headers = split(", ", each.value.policy.cors.headers), cors_exposed_headers = split(", ", each.value.policy.cors.expose_headers), cors_allowed_origins = split(", ", each.value.policy.cors.allowed_origins), headers = each.value.policy.set_header } })
-  depends_on          = [module.dev_apima, azurerm_api_management_api_operation.api_operation]
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management_api.api.api_management_name
+  resource_group_name = azurerm_api_management_api.api.resource_group_name
+  operation_id        = lookup(each.value, "operation_id", null)
+  xml_content         = templatefile(abspath(format("%s/../../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = lookup(each.value.policy, "backend_url", null), cors_allowed_method = lookup(each.value.policy.cors, "method", null), cors_allowed_headers = lookup(each.value.policy.cors, "headers", null), cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null), cors_allowed_origins = lookup(each.value.policy.cors, "allowed_origins", null), headers = lookup(each.value.policy, "set_header", null) } })
+  depends_on          = [azurerm_api_management_api_operation.api_operation]
 }
 
-
-# Storage account for front-end
+# Storage account for Digital Hybrid front-end. Deployed on every PR.
 resource "azurerm_storage_account" "front_end_storage_account" {
   name                      = format("%s%s", "dighybpr", var.environment_prefix)
-  resource_group_name       = format("%s-%s-rg", local.environment, local.rg_name)
+  resource_group_name       = local.rg_name
   location                  = local.location
   account_kind              = "StorageV2"
   account_tier              = "Standard"
   account_replication_type  = "GRS"
   enable_https_traffic_only = true
 
-  dynamic "static_website" {
-    for_each = local.if_static_website_enabled
-    content {
-      index_document     = "index.html"
-      error_404_document = "error.html"
-    }
+  static_website {
+    index_document     = "index.html"
+    error_404_document = "error.html"
   }
 
   blob_properties {
@@ -85,21 +80,18 @@ resource "azurerm_storage_account" "front_end_storage_account" {
 }
 
 
-# Storage account for storybook
+# Storage account for dev storybook. Deployed on every PR.
 resource "azurerm_storage_account" "storybook_storage_account" {
   name                      = format("%s%s", "dighybsbpr", var.environment_prefix)
-  resource_group_name       = format("%s-%s-rg", local.environment, local.rg_name)
+  resource_group_name       = local.rg_name
   location                  = local.location
   account_kind              = "StorageV2"
   account_tier              = "Standard"
   account_replication_type  = "GRS"
   enable_https_traffic_only = true
 
-  dynamic "static_website" {
-    for_each = local.if_storybook_enabled
-    content {
-      index_document = "index.html"
-    }
+  static_website {
+    index_document = "index.html"
   }
 
   blob_properties {
@@ -121,9 +113,9 @@ resource "azurerm_storage_account" "storybook_storage_account" {
 # The API operation to get Endpoints
 resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
   operation_id        = "get-endpoints"
-  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management_api.api.api_management_name
+  resource_group_name = azurerm_api_management_api.api.resource_group_name
   display_name        = "get-endpoints"
   method              = "GET"
   url_template        = "/endpoints"
@@ -136,16 +128,16 @@ resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
       sample       = local.endpoints
     }
   }
-  depends_on = [module.dev_apima, azurerm_api_management_api_operation.api_operation]
+  depends_on = [azurerm_api_management_api_operation.api_operation]
 }
 
 
 # The API operation policy For the endpoints API. Deployed with every PR.
 resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_policy" {
-  api_name            = format("%s-%s", var.environment_prefix, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
-  operation_id        = "get-endpoints"
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management_api.api.api_management_name
+  resource_group_name = azurerm_api_management_api.api.resource_group_name
+  operation_id        = azurerm_api_management_api_operation.endpoints_api_operation.operation_id
   xml_content         = <<XML
                           <policies>
                             <inbound>
@@ -153,5 +145,4 @@ resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_
                             </inbound>
                           </policies>
                           XML
-  depends_on          = [azurerm_api_management_api_operation.endpoints_api_operation]
 }

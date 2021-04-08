@@ -17,21 +17,21 @@ module "staging_main" {
 # The API operation deployed in Staging.
 resource "azurerm_api_management_api_operation" "api_operation" {
   for_each            = local.api_definitions
-  operation_id        = each.value.operation_id
+  operation_id        = lookup(each.value, "operation_id", null)
   api_name            = format("%s-%s", local.environment, local.apima_name)
   api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
   resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
-  display_name        = each.value.display_name
-  method              = each.value.method
-  url_template        = each.value.url_template
-  description         = each.value.description
+  display_name        = lookup(each.value, "display_name", null)
+  method              = lookup(each.value.policy.cors, "method", null)
+  url_template        = lookup(each.value, "url_template", null)
+  description         = lookup(each.value, "description", null)
 
   response {
     status_code = 200
   }
 
   dynamic "template_parameter" {
-    for_each = each.value.path_params.has_params ? toset(split(", ", each.value.path_params.param_names)) : []
+    for_each = length(lookup(each.value, "path_params", [])) > 0 ? toset(lookup(each.value, "path_params", [])) : []
     content {
       name     = template_parameter.key
       required = true
@@ -48,8 +48,8 @@ resource "azurerm_api_management_api_operation_policy" "api_operation_policy" {
   api_name            = format("%s-%s", local.environment, local.apima_name)
   api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
   resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
-  operation_id        = each.value.operation_id
-  xml_content         = templatefile(abspath(format("%s/../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = each.value.policy.backend_url, cors_allowed_methods = split(", ", each.value.policy.cors.methods), cors_allowed_headers = split(", ", each.value.policy.cors.headers), cors_exposed_headers = split(", ", each.value.policy.cors.expose_headers), cors_allowed_origins = split(", ", each.value.policy.cors.allowed_origins), headers = each.value.policy.set_header } })
+  operation_id        = lookup(each.value, "operation_id", null)
+  xml_content         = templatefile(abspath(format("%s/../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = lookup(each.value.policy, "backend_url", null), cors_allowed_method = lookup(each.value.policy.cors, "method", null), cors_allowed_headers = lookup(each.value.policy.cors, "headers", null), cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null), cors_allowed_origins = lookup(each.value.policy.cors, "allowed_origins", null), headers = lookup(each.value.policy, "set_header", null) } })
   depends_on          = [module.staging_main, azurerm_api_management_api_operation.api_operation]
 }
 

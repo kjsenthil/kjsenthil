@@ -6,7 +6,7 @@
       <set-backend-service base-url="${config.backend_url}" />
     %{ endif ~}
 
-    %{ if config.headers != ""}
+    %{ if config.headers != null}
       %{ for header_type, header_value in config.headers }
       <set-header name="${ header_type }" exists-action="append">
         <value>${ header_value }</value>
@@ -15,7 +15,7 @@
     %{ endif ~}
 
     <cors>
-      %{ if config.cors_allowed_origins != "" }
+      %{ if config.cors_allowed_origins != null }
         <allowed-origins>
           %{ for origin in config.cors_allowed_origins }
             <origin>${ origin }</origin>
@@ -23,15 +23,13 @@
         </allowed-origins>
       %{ endif ~}
 
-      %{ if config.cors_allowed_methods != "" }
+      %{ if config.cors_allowed_method != null }
         <allowed-methods>
-          %{ for method in config.cors_allowed_methods }
-            <method>${ method }</method>
-          %{ endfor ~}
+          <method>${ config.cors_allowed_method }</method>
       </allowed-methods>
       %{ endif ~}
 
-      %{ if config.cors_allowed_headers != "" }
+      %{ if config.cors_allowed_headers != null }
         <allowed-headers>
           %{ for header in config.cors_allowed_headers }
             <header>${ header }</header>
@@ -39,11 +37,11 @@
         </allowed-headers>
       %{ endif ~}
 
-      %{ if config.cors_exposed_headers != "" }
+      %{ if config.cors_exposed_headers != null }
         <expose-headers>
-          %{ for header in config.cors_exposed_headers }
-            <header>${ header }</header>
-          %{ endfor ~}
+
+            <header>${ config.cors_exposed_headers }</header>
+
         </expose-headers>
       %{ endif ~}
 
