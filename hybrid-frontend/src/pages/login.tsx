@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
 import { Grid, Typography } from '@material-ui/core';
-import LoginForm from '../components/LoginForm';
-import { LoginFormData } from '../components/LoginForm/LoginForm';
+import LoginForm from '../components/organisms/LoginForm';
+import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import login from '../api/postLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 import { handleLoginSession, logoutSession } from '../services/auth';
@@ -22,6 +22,7 @@ const LoginPage = ({ path }: LoginPageProps) => {
   });
 
   useEffect(() => {
+    /* eslint-disable-next-line no-console */
     logoutSession(() => console.log('logged out'));
   }, []);
 

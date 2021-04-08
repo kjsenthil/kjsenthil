@@ -1,11 +1,11 @@
 import React from 'react';
 import { Router } from '@reach/router';
 import LoginPage from './login';
-import PrivateRoute from '../components/PageComponents/PrivateRoute';
-import SelectAccountsPage from '../components/PageComponents/SelectAccountsPage/SelectAccountsPage';
-import SelectGoalsPage from '../components/PageComponents/SelectGoalsPage/SelectGoalsPage';
-import SelectInputsPage from '../components/PageComponents/SelectInputsPage/SelectInputsPage';
-import SimulationPage from '../components/PageComponents/SimulationPage/SimulationPage';
+import PrivateRoute from '../components/pages/PrivateRoute';
+import SelectAccountsPage from '../components/pages/SelectAccountsPage/SelectAccountsPage';
+import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
+import SelectInputsPage from '../components/pages/SelectInputsPage/SelectInputsPage';
+import SimulationPage from '../components/pages/SimulationPage/SimulationPage';
 
 const App = () => (
   <Router basepath="/gmvp">

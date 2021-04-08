@@ -1,4 +1,4 @@
-import { SimulationFormData } from '../components/SimulationForm/SimulationForm';
+import { SimulationFormData } from '../components/organisms/SimulationForm/SimulationForm';
 import ENDPOINTS from './endpoints';
 
 interface ProjectionRequest {

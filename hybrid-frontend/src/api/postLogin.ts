@@ -1,4 +1,4 @@
-import { LoginFormData } from '../components/LoginForm/LoginForm';
+import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import ENDPOINTS from './endpoints';
 
 export default async (values: LoginFormData): Promise<void> => {

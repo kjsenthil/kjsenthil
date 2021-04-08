@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { action } from '@storybook/addon-actions';
-import theme from '../src/material-ui/theme';
+import theme from '../src/themes/mui';
 
 /**
  * Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
@@ -10,7 +10,7 @@ import theme from '../src/material-ui/theme';
  */
 global.___loader = {
   enqueue: () => {},
-  hovering: () => {},
+  hovering: () => {}
 };
 
 // Prevents "__BASE_PATH__ is not defined" error inside Storybook.
@@ -26,7 +26,7 @@ window.___navigate = (pathname) => {
 };
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
+  actions: { argTypesRegex: '^on[A-Z].*' }
 };
 
 // Global decorator to make Material UI theme available to all components
@@ -35,5 +35,5 @@ export const decorators = [
     <ThemeProvider theme={theme}>
       <Story />
     </ThemeProvider>
-  ),
+  )
 ];
