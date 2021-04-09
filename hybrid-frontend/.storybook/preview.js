@@ -1,5 +1,6 @@
 import React from 'react';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import { ThemeProvider } from 'styled-components';
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import { action } from '@storybook/addon-actions';
 import theme from '../src/themes/mui';
 
@@ -32,8 +33,12 @@ export const parameters = {
 // Global decorator to make Material UI theme available to all components
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <Story />
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </StylesProvider>
   )
 ];
