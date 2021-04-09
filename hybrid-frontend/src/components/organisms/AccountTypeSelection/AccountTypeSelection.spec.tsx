@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { renderWithTheme, fireEvent, screen } from '../../../../test-utils/testing-library'; // should be fixed by moving this part out into a separate namespaced package
 import AccountTypeSelection from './AccountTypeSelection';
 import { AccountType } from '../../../constants';
 
@@ -9,7 +9,7 @@ describe('AccountTypeSelection', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    render(<AccountTypeSelection onSubmit={mockOnSubmit} />);
+    renderWithTheme(<AccountTypeSelection onSubmit={mockOnSubmit} />);
   });
 
   test("The submit button can't be clicked if no account types are selected", () => {

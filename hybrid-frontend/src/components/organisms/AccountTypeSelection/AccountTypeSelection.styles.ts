@@ -1,15 +1,12 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import styled from 'styled-components';
+import { CardContent } from '../../atoms';
 
 export const ELEVATION = 3;
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    accountTypeCardContent: {
-      // By default the last child of MUI's <CardContent /> has a 3x spacing
-      // padding bottom. We ensure the padding is consistent with this.
-      '&:last-child': {
-        paddingBottom: theme.spacing(2),
-      },
-    },
-  })
-);
+export const AccountTypeCardContent = styled(CardContent)`
+  ${({ theme }) => `
+  &:last-child {
+    padding-bottom: ${theme.spacing(2)}px;
+  }
+`}
+`;

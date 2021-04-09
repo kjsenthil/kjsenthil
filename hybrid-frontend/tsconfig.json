@@ -18,6 +18,14 @@
     "strict": true,
     "target": "es5"
   },
-  "include": ["plugins", "src", "gatsby-config.ts", "gatsby-node.ts", "gatsby-browser.tsx", "gatsby-ssr.tsx"],
+  "include": [
+    "plugins",
+    "src",
+    "test-utils",
+    "gatsby-config.ts",
+    "gatsby-node.ts",
+    "gatsby-browser.tsx",
+    "gatsby-ssr.tsx"
+  ],
   "exclude": ["node_modules", "public", ".cache"]
 }

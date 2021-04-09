@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
-import { Grid, Typography } from '@material-ui/core';
-import LoginForm from '../components/organisms/LoginForm';
+import { Grid, Typography } from '../components/atoms';
+import { LoginForm } from '../components/organisms';
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import login from '../api/postLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';

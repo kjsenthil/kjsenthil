@@ -1,5 +1,5 @@
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { Card, CardContent, Grid, Typography } from '../../atoms';
 import { getProjections, ProjectionResponse } from '../../../api/getProjection';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 import {

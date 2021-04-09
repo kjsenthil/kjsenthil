@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Box, Card, CardActionArea, CardContent, Grid, Typography } from '@material-ui/core';
-import { PrimaryButton } from '../../atoms';
+import { Box, Card, CardActionArea, Grid, Typography, PrimaryButton } from '../../atoms';
 import { AccountType } from '../../../constants';
-import { ELEVATION, useStyles } from './AccountTypeSelection.styles';
+import { AccountTypeCardContent, ELEVATION } from './AccountTypeSelection.styles';
 
 interface AccountTypeCardProps {
   isSelected: boolean;
@@ -17,8 +16,6 @@ export interface AccountTypeSelectProps {
 }
 
 const AccountTypeCard = ({ isSelected, handleCardClick, children }: AccountTypeCardProps) => {
-  const classes = useStyles();
-
   const cardElevation = isSelected ? 1 : ELEVATION;
 
   return (
@@ -26,7 +23,7 @@ const AccountTypeCard = ({ isSelected, handleCardClick, children }: AccountTypeC
       <CardActionArea onClick={handleCardClick}>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <CardContent className={classes.accountTypeCardContent}>{children}</CardContent>
+            <AccountTypeCardContent>{children}</AccountTypeCardContent>
           </Grid>
         </Grid>
       </CardActionArea>

@@ -1,5 +1,7 @@
 import React from 'react';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import { ThemeProvider } from 'styled-components';
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
+
 import { CircularProgress, Container } from '../../atoms';
 import theme from '../../../themes/mui';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
@@ -13,12 +15,19 @@ const Layout = ({ children }: LayoutProps) => {
   const { isLoading } = useGlobalContext();
   useExDataLoading();
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        {isLoading && <CircularProgress />}
-        {children}
-      </Container>
-    </ThemeProvider>
+    // to maintain styled-components as the priority that overrides MUI's themes
+    // MUI classes must be injested in <head> first, then styled-components
+    // https://material-ui.com/guides/interoperability/#styled-components
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <Container>
+            {isLoading && <CircularProgress />}
+            {children}
+          </Container>
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </StylesProvider>
   );
 };
 
