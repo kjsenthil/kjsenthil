@@ -224,7 +224,7 @@ jobs:
   end_to_end_test:
     name: "E2E test"
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_pr_terraform]
+    needs: [build_cache, linting, unit_test, deploy_pr_terraform]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -272,9 +272,9 @@ jobs:
         run: GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
 
   # Deploys frontend pr contents
-  deploy_pr_frontend:
+  deploy_gatsby:
     name: "Build & Deploy Gatsby"
-    needs: [deploy_pr_terraform, build_cache, linting, unit_test, end_to_end_test]
+    needs: [deploy_pr_terraform, build_cache, linting, unit_test]
     runs-on: ubuntu-latest
 
     steps:
@@ -452,7 +452,7 @@ jobs:
 
   publish_results:
     name: "Publish results"
-    needs: [linting, unit_test, end_to_end_test, deploy_pr_frontend, deploy_storybook, plan_staging, plan_prod]
+    needs: [linting, unit_test, end_to_end_test, deploy_gatsby, deploy_storybook, plan_staging, plan_prod]
     runs-on: ubuntu-latest
 
     steps:
@@ -468,7 +468,7 @@ jobs:
 
             #### Review URLs
             **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
-            **Webpage:** \`${{ needs.deploy_pr_frontend.outputs.url }}\`
+            **Webpage:** \`${{ needs.deploy_gatsby.outputs.url }}\`
 
             #### Terraform plan - Staging
             **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome }}\`
