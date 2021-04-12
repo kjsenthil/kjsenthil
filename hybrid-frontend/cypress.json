@@ -3,5 +3,13 @@
   "integrationFolder": "cypress/e2e",
   "fixturesFolder": false,
   "chromeWebSecurity": false,
-  "defaultCommandTimeout": 10000
+  "defaultCommandTimeout": 10000,
+  "reporter": "cypress-mochawesome-reporter",
+  "reporterOptions": {
+    "reportDir": "cypress/report",
+    "charts": true,
+    "reportTitle": "Digital-Hybrid PR Cypress report.",
+    "reportPageTitle": "PR Cypress report.",
+    "code": true
+  }
 }

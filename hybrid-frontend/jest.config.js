@@ -1,3 +1,5 @@
+let path = require('path');
+
 module.exports = {
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
@@ -26,4 +28,14 @@ module.exports = {
     '^.+\\.[jt]sx?$': '<rootDir>/test-utils/jest-preprocess.js',
   },
   transformIgnorePatterns: ['node_modules/(?!(gatsby)/)'],
+
+  "reporters": [
+    "default",
+    ["../node_modules/jest-html-reporter", {
+      "includeFailureMsg": true,
+      "includeSuiteFailure": true,
+      "outputPath": path.resolve(__dirname, "./jesttestreport/index.html")
+    }]
+  ]
+
 };

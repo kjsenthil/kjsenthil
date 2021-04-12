@@ -42,6 +42,9 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+jesttestreport
+eslintreport
+report
 
 # nyc test coverage
 .nyc_output
@@ -91,3 +94,4 @@ public
 
 # Storybook build
 storybook-static
+

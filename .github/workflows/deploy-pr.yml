@@ -154,10 +154,27 @@ jobs:
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
+  clear_storybook_storage_account:
+    name: "Clear storybook storage account"
+    runs-on: ubuntu-latest
+    needs: deploy_pr_terraform
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Clear storybook storage account"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --source '$web'
+
   linting:
     name: "Linting"
     runs-on: ubuntu-latest
-    needs: build_cache
+    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -189,10 +206,24 @@ jobs:
       - name: "Run linting"
         run: yarn frontend lint
 
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Eslint Report"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/eslintreport -d "\$web/eslint" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+
   unit_test:
     name: "Unit test"
     runs-on: ubuntu-latest
-    needs: build_cache
+    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
+    env:
+      JEST_HTML_REPORTER_PAGE_TITLE: Jest Test Summary for branch ${{ github.head_ref }}
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -221,10 +252,30 @@ jobs:
       - name: "Run unit tests and code coverage"
         run: yarn frontend test:coverage
 
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Jest Reports"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+
   end_to_end_test:
     name: "E2E test"
     runs-on: ubuntu-latest
-    needs: [build_cache, linting, unit_test, deploy_pr_terraform]
+    needs:
+      [
+        build_cache,
+        linting,
+        unit_test,
+        deploy_pr_terraform,
+        clear_storybook_storage_account,
+      ]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -268,8 +319,25 @@ jobs:
         working-directory: ./hybrid-frontend
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: "Install mochawesome"
+        shell: bash
+        working-directory: ./hybrid-frontend
+        run: npm install --save cypress-mochawesome-reporter
+
       - name: "Run E2E UI tests"
         run: GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
+
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Cypress Report"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/report -d "\$web/cypress" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -317,7 +385,7 @@ jobs:
       - name: "Login to Azure"
         uses: Azure/login@v1
         with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: "Deploy Gatsby static website"
         uses: azure/CLI@v1
@@ -398,12 +466,11 @@ jobs:
       plan_outcome: ${{ steps.plan.outcome }}
       plan: ${{ steps.plan.outputs.stdout }}
 
-
   # TODO Deploy the storybook container here via terraform
   # Deploys storybook.
   deploy_storybook:
     name: "Build & deploy Storybook"
-    needs: [build_cache, deploy_pr_terraform]
+    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
     runs-on: ubuntu-latest
 
     steps:
@@ -444,15 +511,23 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
 
     outputs:
-        url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}
+      url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}
 
   publish_results:
     name: "Publish results"
-    needs: [linting, unit_test, end_to_end_test, deploy_gatsby, deploy_storybook, plan_staging, plan_prod]
+    needs:
+      [
+        linting,
+        unit_test,
+        end_to_end_test,
+        deploy_gatsby,
+        deploy_storybook,
+        plan_staging,
+        plan_prod,
+      ]
     runs-on: ubuntu-latest
 
     steps:
@@ -462,9 +537,10 @@ jobs:
           script: |
             const output = `
             #### Lint & Testing results
-            **Linting Results:** \`TODO\`
-            **Unit Test Results:** \`TODO\`
-            **E2E Test Results:** \`TODO\`
+            **Linting Results:** \`${{ needs.deploy_storybook.outputs.url }}eslint/index.html\`
+            **Unit Test Coverage Report:** \`${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html\`
+            **Unit Test Report:** \`${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html\`
+            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}cypress/index.html\`
 
             #### Review URLs
             **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
