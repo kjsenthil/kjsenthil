@@ -7,9 +7,9 @@
     %{ endif ~}
 
     %{ if config.headers != null}
-      %{ for header_type, header_value in config.headers }
-      <set-header name="${ header_type }" exists-action="append">
-        <value>${ header_value }</value>
+      %{ for setheader in config.headers  }
+      <set-header name="${setheader.name}" exists-action="${setheader.exists_action}">
+        <value>${ setheader.value }</value>
       </set-header>
       %{ endfor ~}
     %{ endif ~}

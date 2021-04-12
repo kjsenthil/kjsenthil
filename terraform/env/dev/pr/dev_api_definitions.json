@@ -125,6 +125,19 @@
                         "Cookie"
                     ]
                 },
+                "set_header": [
+                    { "name": "Content-Type", "exists_action": "override", "value": "application/json" },
+                    {
+                      "name": "Origin",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    },
+                    {
+                      "name": "Referer",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    }
+                  ],
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
             }
         },
@@ -173,6 +186,19 @@
                         "Cookie"
                     ]
                 },
+                "set_header": [
+                    { "name": "Content-Type", "exists_action": "override", "value": "application/json" },
+                    {
+                      "name": "Origin",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    },
+                    {
+                      "name": "Referer",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    }
+                  ],
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
             }
         },
@@ -198,6 +224,19 @@
                         "Cookie"
                     ]
                 },
+                "set_header": [
+                    { "name": "Content-Type", "exists_action": "override", "value": "application/json" },
+                    {
+                      "name": "Origin",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    },
+                    {
+                      "name": "Referer",
+                      "exists_action": "override",
+                      "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                    }
+                  ],
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
             }
         },
