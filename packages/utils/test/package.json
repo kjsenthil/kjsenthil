@@ -1,0 +1,18 @@
+{
+  "name": "@tsw/test-util",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "scripts": {
+    "format": "yarn g:format --write 'src/{.,**}/*.{js,ts,tsx,md,json}'; yarn lint:fix",
+    "format:check": "yarn g:format --check 'src/{.,**}/*.{js,ts,tsx,md,json}'",
+    "lint": "mkdir -p eslintreport && yarn g:lint --format html > eslintreport/index.html",
+    "lint:fix": "yarn g:lint --fix",
+    "typecheck": "yarn g:typecheck"
+  },
+  "dependencies": {
+    "@testing-library/react": "^11.2.6",
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@typescript-eslint/eslint-plugin": "^4.22.0"
+  }
+}

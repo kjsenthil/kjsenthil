@@ -200,11 +200,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
 
+      - name: "Run typecheck"
+        run: yarn all:typecheck
+
       - name: "Run formatting"
-        run: yarn frontend format:check
+        run: yarn all:format
 
       - name: "Run linting"
-        run: yarn frontend lint
+        run: yarn all:lint
 
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -216,7 +219,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/eslintreport -d "\$web/eslint" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/eslintreport -d "\$web/eslint" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
 
   unit_test:
     name: "Unit test"
@@ -262,8 +265,8 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
 
   end_to_end_test:
     name: "E2E test"
@@ -305,7 +308,7 @@ jobs:
         run: npx cypress install
 
       - name: "Create PR env file"
-        working-directory: ./hybrid-frontend
+        working-directory: ./packages/hybrid-frontend
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
@@ -316,12 +319,11 @@ jobs:
       # Gatsby can run over the default number of file watchers so we need to up this value
       - name: "Increase file watchers for Gatsby"
         shell: bash
-        working-directory: ./hybrid-frontend
+        working-directory: ./packages/hybrid-frontend
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
       - name: "Install mochawesome"
         shell: bash
-        working-directory: ./hybrid-frontend
+        working-directory: ./packages/hybrid-frontend
         run: npm install --save cypress-mochawesome-reporter
 
       - name: "Run E2E UI tests"
@@ -337,7 +339,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/cypress/report -d "\$web/cypress" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/report -d "\$web/cypress" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -371,7 +373,7 @@ jobs:
             ${{ runner.os }}-modules-
 
       - name: "Create PR env file"
-        working-directory: ./hybrid-frontend
+        working-directory: ./packages/hybrid-frontend
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
@@ -393,7 +395,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }}"
 
     outputs:
       url: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }}
@@ -511,7 +513,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
 
     outputs:
       url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}

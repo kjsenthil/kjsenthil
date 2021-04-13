@@ -1,0 +1,14 @@
+{
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {},
+  "include": [
+    "plugins",
+    "src",
+    "test-utils",
+    "gatsby-config.ts",
+    "gatsby-node.ts",
+    "gatsby-browser.tsx",
+    "gatsby-ssr.tsx"
+  ],
+  "exclude": ["node_modules", "public", ".cache"]
+}

@@ -38,7 +38,7 @@ To allow co-locating all of our code together, we are employing a mono-repo appr
 To run a specific command in one of the yarn workspaces, you will need to use the following syntax:
 ```
 $ yarn workspace <workspace-name> <script-name>
-$ yarn workspace hybrid-frontend build
+$ yarn workspace @tsw/hybrid-frontend build
 ```
 To save your fingers, shortcuts have been provided for all currently available workspaces:
 1. Front-end

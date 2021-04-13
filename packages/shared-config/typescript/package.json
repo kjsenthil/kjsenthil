@@ -1,0 +1,10 @@
+{
+  "name": "@tsw/typescript-config",
+  "version": "1.0.0",
+  "scripts": {
+    "g:typecheck": "cd $INIT_CWD && tsc --noEmit"
+  },
+  "dependencies": {
+    "typescript": "^4.2.4"
+  }
+}
