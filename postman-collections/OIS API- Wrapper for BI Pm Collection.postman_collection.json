@@ -1,0 +1,1361 @@
+{
+	"info": {
+		"_postman_id": "5ce871ee-a30d-4d1f-bc3a-c9450fc76b31",
+		"name": "OIS API/ Wrapper for BI PM Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "countries",
+			"item": [
+				{
+					"name": "/api/countries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/countries",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"countries"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"name\": \"elit irure eiusmod in laboris\",\n  \"id\": \"esse quis aliquip labor\"\n },\n {\n  \"name\": \"voluptate Duis officia\",\n  \"id\": \"Excepteur\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "/api/countries/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/countries/:id",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"countries",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"name\": \"magna non proident\",\n \"id\": \"sed mollit id\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/countries/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "/api/payment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/payment",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/api/payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/payment",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"type\": \"Excepteur pariatur\",\n        \"id\": \"ad q\",\n        \"attributes\": {\n            \"basketId\": 90458951,\n            \"orderTotal\": -48064767.311274536,\n            \"orderType\": \"labore consectetur laborum\",\n            \"productTypeText\": \"incididunt enim est aliquip\",\n            \"paymentGatewayTransactionId\": \"aliqua in\",\n            \"checkoutBasketId\": -13294478,\n            \"transactionData\": {\n                \"contactId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountNumber\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"accountId\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n            }\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/payment/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/payment/:id",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "22069177",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/payment/:id",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"payment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "assets",
+			"item": [
+				{
+					"name": "/api/assets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/assets?Filter[id]=3773,3777,3824,4234,11673,12671,12913,13167,15125,16338,18251",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "Filter[id]",
+									"value": "3773,3777,3824,4234,11673,12671,12913,13167,15125,16338,18251"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"assetId\": 58208456,\n \"sedol\": \"ea incididunt occaecat sed\",\n \"isin\": \"tempor in ea mollit\",\n \"fundName\": \"eu anim\",\n \"slug\": \"et dolor irure enim\",\n \"assetPerformance\": {\n  \"discrete\": {\n   \"currentAbsolute\": 59424414.47011793,\n   \"currentRelative\": -3067084.549754679,\n   \"currentMinusOneAbsolute\": 69029174.70637268,\n   \"currentMinusOneRelative\": 67011256.10672575,\n   \"currentMinusTwoAbsolute\": -74228714.93063936,\n   \"currentMinusTwoRelative\": -53591934.00433857,\n   \"currentMinusThreeAbsolute\": 28145740.658776835,\n   \"currentMinusThreeRelative\": -65453009.6870237,\n   \"currentMinusFourAbsolute\": -29308131.307209924,\n   \"currentMinusFourRelative\": -38673941.55754216\n  },\n  \"cumulative\": {\n   \"absoluteThreeYears\": -92448426.8341502,\n   \"relativeThreeYears\": -49314865.74566728,\n   \"absoluteFiveYears\": -83403458.86413357,\n   \"relativeFiveYears\": -733049.7784665078\n  }\n },\n \"statistics\": {\n  \"volatilityAbsolute\": -87527804.21235697,\n  \"volatilityRelative\": -22019619.873813763,\n  \"correlationBenchmark\": 5116984.619615465,\n  \"correlationUKEquity\": -59249494.60208655\n },\n \"id\": \"voluptate pariatur mollit\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Returns the asset details for a given asset.",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/assets/:assetId",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								":assetId"
+							],
+							"variable": [
+								{
+									"key": "assetId",
+									"value": "22069177",
+									"description": "(Required) The asset id."
+								}
+							]
+						},
+						"description": "Sample request:\r\n    GET\r\n    /api/assets/4258."
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/:assetId",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										":assetId"
+									],
+									"variable": [
+										{
+											"key": "assetId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/:assetId",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										":assetId"
+									],
+									"variable": [
+										{
+											"key": "assetId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"assetId\": 58208456,\n \"sedol\": \"ea incididunt occaecat sed\",\n \"isin\": \"tempor in ea mollit\",\n \"fundName\": \"eu anim\",\n \"slug\": \"et dolor irure enim\",\n \"assetPerformance\": {\n  \"discrete\": {\n   \"currentAbsolute\": 59424414.47011793,\n   \"currentRelative\": -3067084.549754679,\n   \"currentMinusOneAbsolute\": 69029174.70637268,\n   \"currentMinusOneRelative\": 67011256.10672575,\n   \"currentMinusTwoAbsolute\": -74228714.93063936,\n   \"currentMinusTwoRelative\": -53591934.00433857,\n   \"currentMinusThreeAbsolute\": 28145740.658776835,\n   \"currentMinusThreeRelative\": -65453009.6870237,\n   \"currentMinusFourAbsolute\": -29308131.307209924,\n   \"currentMinusFourRelative\": -38673941.55754216\n  },\n  \"cumulative\": {\n   \"absoluteThreeYears\": -92448426.8341502,\n   \"relativeThreeYears\": -49314865.74566728,\n   \"absoluteFiveYears\": -83403458.86413357,\n   \"relativeFiveYears\": -733049.7784665078\n  }\n },\n \"statistics\": {\n  \"volatilityAbsolute\": -87527804.21235697,\n  \"volatilityRelative\": -22019619.873813763,\n  \"correlationBenchmark\": 5116984.619615465,\n  \"correlationUKEquity\": -59249494.60208655\n },\n \"id\": \"voluptate pariatur mollit\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/:assetId",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										":assetId"
+									],
+									"variable": [
+										{
+											"key": "assetId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Returns discrete performance csv data for given asset(s).",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/assets/discrete-csv",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								"discrete-csv"
+							]
+						},
+						"description": "Sample request:\r\n    GET\r\n    /api/assets/assets/discrete-csv?filter[id]=3671,13432,13863."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/discrete-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"discrete-csv"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/discrete-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"discrete-csv"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/discrete-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"discrete-csv"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Returns cumulative performance csv data for given asset(s).",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/assets/cumulative-csv",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								"cumulative-csv"
+							]
+						},
+						"description": "Sample request:\r\n    GET\r\n    /api/assets/assets/cumulative-csv?filter[id]=3671,13432,13863."
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/cumulative-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"cumulative-csv"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/cumulative-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"cumulative-csv"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/cumulative-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"cumulative-csv"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Returns statistics csv data for given asset(s).",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/assets/statistics-csv",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								"statistics-csv"
+							]
+						},
+						"description": "Sample request:\r\n    GET\r\n    /api/assets/assets/statistics-csv?filter[id]=3671,13432,13863."
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/statistics-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"statistics-csv"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/statistics-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"statistics-csv"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{oisApi.baseUrl}}/api/assets/statistics-csv",
+									"host": [
+										"{{oisApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets",
+										"statistics-csv"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/api/audit-payment-request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"elit culpa est ad\",\n        \"id\": \"pariatu\",\n        \"attributes\": {\n            \"payLoad\": \"proident aliqua quis\",\n            \"webCorrelationId\": \"do culpa\",\n            \"updatedBy\": \"minim in\",\n            \"clientNumber\": \"sint proident in\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{oisApi.baseUrl}}/api/audit-payment-request",
+					"host": [
+						"{{oisApi.baseUrl}}"
+					],
+					"path": [
+						"api",
+						"audit-payment-request"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"elit culpa est ad\",\n        \"id\": \"pariatu\",\n        \"attributes\": {\n            \"payLoad\": \"proident aliqua quis\",\n            \"webCorrelationId\": \"do culpa\",\n            \"updatedBy\": \"minim in\",\n            \"clientNumber\": \"sint proident in\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/audit-payment-request",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"audit-payment-request"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"elit fugiat aliquip aliqua\",\n \"title\": \"ipsum pariatur\",\n \"status\": 9180179,\n \"detail\": \"voluptate laboris ad eiusmod no\",\n \"instance\": \"velit culpa\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"elit culpa est ad\",\n        \"id\": \"pariatu\",\n        \"attributes\": {\n            \"payLoad\": \"proident aliqua quis\",\n            \"webCorrelationId\": \"do culpa\",\n            \"updatedBy\": \"minim in\",\n            \"clientNumber\": \"sint proident in\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{oisApi.baseUrl}}/api/audit-payment-request",
+							"host": [
+								"{{oisApi.baseUrl}}"
+							],
+							"path": [
+								"api",
+								"audit-payment-request"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{oisApi.accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

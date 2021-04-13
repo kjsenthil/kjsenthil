@@ -1,0 +1,704 @@
+{
+	"info": {
+		"_postman_id": "8611998f-1e9c-49a7-8d3f-5a0c3ed17a21",
+		"name": "Authentication API PM Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Could retrieve the twoStepAuthCode from response\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property('data');\r",
+							"    pm.expect(jsonData.data).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data).to.have.a.property('attributes');\r",
+							"    pm.expect(jsonData.data.attributes).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('twoStepAuthCode');\r",
+							"    pm.expect(jsonData.data.attributes.twoStepAuthCode).to.be.not.empty;\r",
+							"\r",
+							"    pm.environment.set(\"twoStepAuthCode\", jsonData.data.attributes.twoStepAuthCode);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"password\": \"{{IdentityAPI.password}}\",\n            \"username\": \"{{IdentityAPI.username}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{IdentityAPI.baseUrl}}/api/login",
+					"host": [
+						"{{IdentityAPI.baseUrl}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/api/pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Could retrieve the accessToken from response\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property('data');\r",
+							"    pm.expect(jsonData.data).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data).to.have.a.property('attributes');\r",
+							"    pm.expect(jsonData.data.attributes).to.be.not.empty;\r",
+							"\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('contactId');\r",
+							"    pm.expect(jsonData.data.attributes.contactId).not.to.be.null;\r",
+							"    pm.environment.set(\"myAccounts.contactId\", jsonData.data.attributes.contactId);\r",
+							"\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('tokens');\r",
+							"    pm.expect(jsonData.data.attributes.tokens).to.have.lengthOf.at.least(2);\r",
+							"    //Get  MyAccountsApi access token \r",
+							"    const myAccountsApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"MyAccountsApi\");\r",
+							"    pm.expect(myAccountsApiToken.accessToken).to.be.not.empty;\r",
+							"    pm.environment.set(\"myAccounts.accessToken\", myAccountsApiToken.accessToken);\r",
+							"    //Get  OisApi access token \r",
+							"    const oisApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"OisApi\");\r",
+							"    pm.expect(oisApiToken.accessToken).to.be.not.empty;\r",
+							"    pm.environment.set(\"oisApi.accessToken\", oisApiToken.accessToken);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"pin\": [\n                {\n                    \"position\": 2,\n                    \"value\": 2\n                },\n                {\n                    \"position\": 4,\n                    \"value\": 4\n                },\n                {\n                    \"position\": 6,\n                    \"value\": 6\n                }                \n            ],\n            \"twoStepAuthCode\": \"{{twoStepAuthCode}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{IdentityAPI.baseUrl}}/api/pin",
+					"host": [
+						"{{IdentityAPI.baseUrl}}"
+					],
+					"path": [
+						"api",
+						"pin"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "/api/sso-cookie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{IdentityAPI.baseUrl}}/api/sso-cookie",
+					"host": [
+						"{{IdentityAPI.baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sso-cookie"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/sso-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sso-cookie"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/sso-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sso-cookie"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/sso-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sso-cookie"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/sso-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sso-cookie"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/api/token-cookie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{IdentityAPI.baseUrl}}/api/token-cookie",
+					"host": [
+						"{{IdentityAPI.baseUrl}}"
+					],
+					"path": [
+						"api",
+						"token-cookie"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/token-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"token-cookie"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/token-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"token-cookie"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/token-cookie",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"token-cookie"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/api/refresh-token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{IdentityAPIbaseUrl}}/api/refresh-token",
+					"host": [
+						"{{IdentityAPIbaseUrl}}"
+					],
+					"path": [
+						"api",
+						"refresh-token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiClientId",
+			"value": "myaccounts-spa"
+		}
+	]
+}
