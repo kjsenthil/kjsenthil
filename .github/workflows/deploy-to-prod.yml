@@ -190,6 +190,11 @@ jobs:
       - name: "Install Cypress binary"
         run: npx cypress install
 
+      - name: "Install mochawesome"
+        shell: bash
+        working-directory: ./hybrid-frontend
+        run: npm install --save cypress-mochawesome-reporter
+
       - name: "Create env file"
         working-directory: ./hybrid-frontend
         run: |
