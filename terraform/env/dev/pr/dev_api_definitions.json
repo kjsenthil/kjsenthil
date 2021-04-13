@@ -289,6 +289,42 @@
                 },
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
             }
-        }
+        },
+        {
+            "operation_id": "identity-login",
+            "display_name": "Identity Login",
+            "url_template": "\/login",
+            "description": "This lets the user login to Identity API.",
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "POST",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
+            }
+        },
+        {
+            "operation_id": "identity-pin",
+            "display_name": "Identity PIN(Two Factor Auth)",
+            "url_template": "\/pin",
+            "description": "This lets the user to enter PIN for two factor authentication",
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "POST",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
+            }
+        }      
     ]
 }
