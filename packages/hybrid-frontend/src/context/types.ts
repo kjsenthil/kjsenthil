@@ -15,6 +15,8 @@ export interface GlobalDataType {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   goalCapture: GoalCaptureType;
   setGoalCapture: Dispatch<SetStateAction<GoalCaptureType>>;
+  entityId: string;
+  setEntityId: Dispatch<SetStateAction<string>>;
 }
 
 export interface GlobalProviderProps {

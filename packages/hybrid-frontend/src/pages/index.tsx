@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import styled from 'styled-components';
 import { Grid, Spacer } from '../components/atoms';
 import {
@@ -9,13 +9,13 @@ import {
   ProjectionsChart,
   SimulationForm,
 } from '../components/organisms';
+import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import {
   getProjections,
   ProjectionResponse,
   CustomProjectionRequestData,
 } from '../api/getProjection';
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import login from '../api/postLogin';
+import login from '../api/postXPlanLogin';
 
 import { MyAccountLayout } from '../components/templates';
 
@@ -45,6 +45,7 @@ const IndexPage = () => {
         error: '',
         success: 'Log in successful',
       });
+      navigate('/goal');
     } catch (e) {
       setLoginMessages({
         error: e.message,

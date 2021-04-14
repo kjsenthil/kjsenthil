@@ -9,6 +9,8 @@ export const globalDataContextDefaultValue: GlobalDataType = {
   setIsLoggedIn: () => true,
   goalCapture: {} as GoalCaptureType,
   setGoalCapture: () => {},
+  entityId: '',
+  setEntityId: () => {},
 };
 
 export const GlobalContext = createContext<GlobalDataType>(globalDataContextDefaultValue);

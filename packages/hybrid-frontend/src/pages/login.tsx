@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
-import { Grid, Typography } from '../components/atoms';
+import { Grid, Typography, Box, TextField } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import login from '../api/postLogin';
+import login from '../api/postXPlanLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 import { handleLoginSession, logoutSession } from '../services/auth';
 
@@ -26,11 +26,11 @@ const LoginPage = ({ path }: LoginPageProps) => {
     logoutSession(() => console.log('logged out'));
   }, []);
 
-  const { setIsLoggedIn } = useGlobalContext();
+  const { setIsLoggedIn, entityId, setEntityId } = useGlobalContext();
 
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
     try {
-      await login(loginFormValues); // TODO response
+      await login(loginFormValues);
 
       setIsLoggedIn(true);
 
@@ -52,6 +52,8 @@ const LoginPage = ({ path }: LoginPageProps) => {
     }
   };
 
+  const onEntityHandler = (evt: ChangeEvent<HTMLInputElement>) => setEntityId(evt.target.value);
+
   return (
     <Grid container justify="center">
       <Grid item xs={6}>
@@ -64,6 +66,10 @@ const LoginPage = ({ path }: LoginPageProps) => {
           errorMessage={loginMessages.error}
           successMessage={loginMessages.success}
         />
+
+        <Box m={1}>
+          <TextField label="Entity ID" type="number" value={entityId} onChange={onEntityHandler} />
+        </Box>
       </Grid>
     </Grid>
   );
