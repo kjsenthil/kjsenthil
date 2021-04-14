@@ -103,7 +103,7 @@
                     { 
                         "name": "Set-Cookie",
                         "exists_action": "override",
-                        "value": "\"@{var cookie = context.Response.Headers.GetValueOrDefault(\"Set-Cookie\",\"\"); return cookie.Replace(\"httponly;\", \"httponly;SameSite=None;\");}\""
+                        "value": "@{var cookie = context.Response.Headers.GetValueOrDefault(\"Set-Cookie\",\"\"); return cookie.Replace(\"httponly;\", \"httponly;SameSite=None;\");}"
                     } 
                   ],
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
