@@ -91,9 +91,7 @@
             "description": "This lets the user login to Xplan and get a session token.",
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
+                    "allow-credentials" :"true",
                     "method": "POST",
                     "expose_headers": "Set-Cookie",
                     "headers": [
@@ -101,6 +99,13 @@
                         "Origin"
                     ]
                 },
+                "outbound_headers" : [
+                    { 
+                        "name": "Set-Cookie",
+                        "exists_action": "override",
+                        "value": "\"@{var cookie = context.Response.Headers.GetValueOrDefault(\"Set-Cookie\",\"\"); return cookie.Replace(\"httponly;\", \"httponly;SameSite=None;\");}\""
+                    } 
+                  ],
                 "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
             }
         },
@@ -114,9 +119,7 @@
             ],
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
+                    "allow-credentials" :"true",
                     "method": "POST",
                     "headers": [
                         "Content-Type",

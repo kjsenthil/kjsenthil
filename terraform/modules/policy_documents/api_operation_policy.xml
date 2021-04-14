@@ -5,17 +5,13 @@
     %{ if config.backend_url != ""}
       <set-backend-service base-url="${config.backend_url}" />
     %{ endif ~}
+    %{ if config.allow-credentials != null}
+    <cors allow-credentials="${config.allow-credentials}">
+     %{ else ~}
+     <cors>
+     %{ endif ~}
 
-    %{ if config.headers != null}
-      %{ for setheader in config.headers  }
-      <set-header name="${setheader.name}" exists-action="${setheader.exists_action}">
-        <value>${ setheader.value }</value>
-      </set-header>
-      %{ endfor ~}
-    %{ endif ~}
-
-    <cors>
-      %{ if config.cors_allowed_origins != null }
+     %{ if config.cors_allowed_origins != null }
         <allowed-origins>
           %{ for origin in config.cors_allowed_origins }
             <origin>${ origin }</origin>
@@ -46,11 +42,27 @@
       %{ endif ~}
 
     </cors>
+
+    %{ if config.headers != null}
+      %{ for setheader in config.headers  }
+      <set-header name="${setheader.name}" exists-action="${setheader.exists_action}">
+        <value>${ setheader.value }</value>
+      </set-header>
+      %{ endfor ~}
+    %{ endif ~}
+
   </inbound>
   <backend>
     <base />
   </backend>
   <outbound>
+    %{ if config.outbound_headers != null}
+      %{ for setheader in config.outbound_headers  }
+      <set-header name="${setheader.name}" exists-action="${setheader.exists_action}">
+        <value>${ setheader.value }</value>
+      </set-header>
+      %{ endfor ~}
+    %{ endif ~}  
     <base />
   </outbound>
   <on-error>
