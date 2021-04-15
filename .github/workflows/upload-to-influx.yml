@@ -30,7 +30,7 @@ jobs:
     needs: [get-job-object]
     steps:
       - name: "Upload to InfluxDB"
-        uses: crederauk/workflow-metrics@v1.0.0
+        uses: crederauk/workflow-metrics@DH-138-test-durations
         with:
           name: ${{ github.event.workflow_run.name }}
           url: ${{ secrets.INFLUX_DB_URL }}
