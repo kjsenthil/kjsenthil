@@ -2,7 +2,7 @@
   "extends": "@tsw/typescript-config/base.json",
   "compilerOptions": {},
   "include": [
-    "plugins",
+    "public",
     "src",
     "test-utils",
     "gatsby-config.ts",

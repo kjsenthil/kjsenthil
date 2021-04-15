@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "src/index.tsx",
   "scripts": {
-    "format": "yarn g:format --write 'src/{.,**}/*.{js,ts,tsx,md,json}'; yarn lint:fix",
-    "format:check": "yarn g:format --check 'src/{.,**}/*.{js,ts,tsx,md,json}'",
-    "lint": "mkdir -p eslintreport && yarn g:lint --format html > eslintreport/index.html",
-    "lint:fix": "yarn g:lint --fix",
-    "typecheck": "yarn g:typecheck"
+    "format": "yarn g:format --write src/**/*.{js,ts,tsx,md,json}; yarn lint:fix",
+    "lint": "mkdir -p eslintreport && yarn lint:check --format html > eslintreport/index.html",
+    "lint:check": "yarn g:lint src/**/*.{js,ts,tsx}",
+    "lint:fix": "yarn lint:check --fix",
+    "typecheck": "yarn g:typecheck",
+    "typecheck:watch": "yarn typecheck -w --pretty"
   },
   "dependencies": {
     "@testing-library/react": "^11.2.6",

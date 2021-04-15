@@ -9,10 +9,10 @@
 
 ## Test coverage
 
-![Test coverage: lines](./hybrid-frontend/badges/badge-lines.svg)
-![Test coverage: functions](./hybrid-frontend/badges/badge-functions.svg)
-![Test coverage: branches](./hybrid-frontend/badges/badge-branches.svg)
-![Test coverage: statements](./hybrid-frontend/badges/badge-statements.svg)
+![Test coverage: lines](./badges/badge-lines.svg)
+![Test coverage: functions](./badges/badge-functions.svg)
+![Test coverage: branches](./badges/badge-branches.svg)
+![Test coverage: statements](./badges/badge-statements.svg)
 
 ---
 

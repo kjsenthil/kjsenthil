@@ -14,7 +14,7 @@ describe('AccountTypeSelection', () => {
 
   test("The submit button can't be clicked if no account types are selected", () => {
     const submitButton = screen.getByRole('button', {
-      name: 'SELECT',
+      name: 'Select',
     });
 
     expect(submitButton).toBeDisabled();
@@ -31,7 +31,7 @@ describe('AccountTypeSelection', () => {
     const isaClickableComponent = screen.getByText('ISA');
     const giaClickableComponent = screen.getByText('GIA');
     const submitButton = screen.getByRole('button', {
-      name: 'SELECT',
+      name: 'Select',
     });
 
     // Select the ISA card

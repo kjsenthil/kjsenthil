@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { CircularProgress, Container } from '../../atoms';
 import theme from '../../../themes/mui';
@@ -21,6 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
     <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Container>
             {isLoading && <CircularProgress />}
             {children}

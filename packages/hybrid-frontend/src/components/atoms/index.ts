@@ -1,12 +1,11 @@
 /* custom atoms */
-export { default as PrimaryButton } from './PrimaryButton';
+export { default as Button } from './Button';
 export { default as Spacer } from './Spacer';
 
 /* material-ui atoms */
 export {
   AppBar,
   Box,
-  Button,
   Card,
   CircularProgress,
   CardActionArea,

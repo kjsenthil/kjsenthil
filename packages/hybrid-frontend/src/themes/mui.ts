@@ -1,7 +1,37 @@
 import { createMuiTheme, colors } from '@material-ui/core';
+/* eslint-disable-next-line import/no-extraneous-dependencies */
+import * as CSS from 'csstype';
 import { digitalHybridColors } from './colors';
 
+import Fonts from '../assets/fonts';
+
+type FontWeight = 'normal' | 'bold' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
+const FONT_NAME = 'FSElliot';
+
+const createFontFace = (
+  fontName: string,
+  font: Buffer,
+  fontWeight: FontWeight
+): CSS.AtRule.FontFace => ({
+  fontFamily: fontName,
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  fontDisplay: 'swap',
+  fontWeight,
+  src: `local('${fontName}'),
+      url(${font}) format('openType')
+    `,
+});
+
+const fsElliot = createFontFace(FONT_NAME, Fonts.FSElliot, 'normal');
+const fsElliotBold = createFontFace(FONT_NAME, Fonts.FSElliotBold, 'bold');
+const fsElliotHeavy = createFontFace(FONT_NAME, Fonts.FSElliotHeavy, 900);
+
 const digitalHybridTheme = createMuiTheme({
+  typography: {
+    fontFamily: ['FSElliot', 'Roboto'].join(','),
+  },
   palette: {
     background: {
       default: colors.common.white,
@@ -19,8 +49,7 @@ const digitalHybridTheme = createMuiTheme({
       light: digitalHybridColors.blue.light1,
       dark: digitalHybridColors.blue.dark1,
     },
-
-    teal: {
+    tertiary: {
       ...digitalHybridColors.teal,
       light: digitalHybridColors.teal.light1,
       dark: digitalHybridColors.teal.dark1,
@@ -33,6 +62,7 @@ const digitalHybridTheme = createMuiTheme({
     success: {
       main: digitalHybridColors.success.main,
     },
+
     error: {
       main: digitalHybridColors.error.main,
     },
@@ -40,6 +70,14 @@ const digitalHybridTheme = createMuiTheme({
     text: {
       primary: colors.blueGrey[900],
       secondary: colors.blueGrey[600],
+    },
+  },
+
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [fsElliot, fsElliotBold, fsElliotHeavy],
+      },
     },
   },
 });

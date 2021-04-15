@@ -1,9 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { action } from '@storybook/addon-actions';
 import theme from '../src/themes/mui';
-
+import { GlobalStyle } from '../src/components/particles';
 /**
  * Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
  * This global object isn't set in storybook context, requiring you to override it
@@ -33,12 +34,15 @@ export const parameters = {
 // Global decorator to make Material UI theme available to all components
 export const decorators = [
   (Story) => (
-    <StylesProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          <Story />
-        </ThemeProvider>
-      </MuiThemeProvider>
-    </StylesProvider>
+    <>
+      <StylesProvider injectFirst>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Story />
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </StylesProvider>
+    </>
   )
 ];

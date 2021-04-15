@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Card, CardActionArea, Grid, Typography, PrimaryButton } from '../../atoms';
+import { Box, Card, CardActionArea, Grid, Typography, Button } from '../../atoms';
 import { AccountType } from '../../../constants';
 import { AccountTypeCardContent, ELEVATION } from './AccountTypeSelection.styles';
 
@@ -73,13 +73,10 @@ const AccountTypeSelection = ({ onSubmit }: AccountTypeSelectProps) => {
         </AccountTypeCard>
       </Grid>
 
-      <Grid item xs={12}>
-        <PrimaryButton
-          fullWidth
-          label="SELECT"
-          onClick={handleSubmit}
-          disabled={!selectedAccountType}
-        />
+      <Grid container item xs={12}>
+        <Button fullWidth onClick={handleSubmit} disabled={!selectedAccountType}>
+          Select
+        </Button>
       </Grid>
     </Grid>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Grid, Typography } from '../../atoms';
+import { Button, Grid, Typography } from '../../atoms';
 import { Goals } from '../../../constants';
-import { SelectButton, GoalBox, ELEVATION } from './GoalSelection.styles';
+import { GoalBox, ELEVATION } from './GoalSelection.styles';
 
 interface GoalBoxProps {
   goal: Goals;
@@ -50,15 +50,16 @@ const GoalSelection: React.FC<GoalSelectionProps> = ({ onSubmit }) => {
         <GoalTile goal={Goals.UNIVERSITY} selectedGoal={goal} setGoal={setGoal} />
       </Grid>
       <Grid container item xs={12}>
-        <SelectButton
+        <Button
           data-testid="select"
           variant="contained"
           color="primary"
+          fullWidth
           onClick={handleSubmit}
           disabled={!goal}
         >
           Select
-        </SelectButton>
+        </Button>
       </Grid>
     </Grid>
   );

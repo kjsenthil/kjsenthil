@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import PrimaryButton from './PrimaryButton';
+import Button from './Button';
 
-describe('PrimaryButton', () => {
+describe('button', () => {
   test('Renders a primary button', () => {
     const testLabel = 'Some label';
-    render(<PrimaryButton label={testLabel} />);
+    render(<Button>{testLabel}</Button>);
     expect(screen.getByText(testLabel)).toBeInTheDocument();
   });
 });

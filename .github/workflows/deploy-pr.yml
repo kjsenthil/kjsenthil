@@ -172,7 +172,7 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --source '$web'
 
   linting:
-    name: "Linting"
+    name: "Checks"
     runs-on: ubuntu-latest
     needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
     steps:
@@ -202,9 +202,6 @@ jobs:
 
       - name: "Run typecheck"
         run: yarn all:typecheck
-
-      - name: "Run formatting"
-        run: yarn all:format
 
       - name: "Run linting"
         run: yarn all:lint

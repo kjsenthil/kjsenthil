@@ -17,12 +17,12 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface Palette {
-    teal: SimplePaletteColorOptions;
+    tertiary: SimplePaletteColorOptions;
     gold: SimplePaletteColorOptions;
   }
 
   interface PaletteOptions {
-    teal: SimplePaletteColorOptions;
+    tertiary: SimplePaletteColorOptions;
     gold: SimplePaletteColorOptions;
   }
 }
