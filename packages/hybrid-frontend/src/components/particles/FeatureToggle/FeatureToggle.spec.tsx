@@ -1,6 +1,6 @@
 // eslint-disable no-console
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import FeatureToggle from '.';
 import { useFeatureFlag } from '../../../hooks/FeatureFlagsHooks';
 
@@ -14,7 +14,7 @@ describe('FeatureToggle', () => {
   test('The enabled feature renders the new version and does not render the old version', () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(true);
 
-    render(
+    renderWithTheme(
       <FeatureToggle name="FeatureA" fallback={<div>Enabled feature - Old</div>}>
         <div>Enabled feature - New</div>
       </FeatureToggle>
@@ -27,7 +27,7 @@ describe('FeatureToggle', () => {
   test('The disabled feature renders the old version and does not render the new version', () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(false);
 
-    render(
+    renderWithTheme(
       <FeatureToggle name="FeatureB" fallback={<div>Disabled feature - Old</div>}>
         <div>Disabled feature - New</div>
       </FeatureToggle>
@@ -46,7 +46,7 @@ describe('FeatureToggle', () => {
       throw new Error();
     });
 
-    render(
+    renderWithTheme(
       <FeatureToggle name="FeatureC" fallback={<div>Enabled feature - Old</div>}>
         <div>Enabled feature - New</div>
       </FeatureToggle>

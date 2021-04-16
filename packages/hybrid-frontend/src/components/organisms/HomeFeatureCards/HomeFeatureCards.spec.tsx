@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Gatsby from 'gatsby';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import HomeFeatureCards from './HomeFeatureCards';
 
 const mockChildImageSharp = {
@@ -22,7 +22,7 @@ describe('HomeFeatureCards', () => {
       thumbnail2: mockChildImageSharp,
       thumbnail3: mockChildImageSharp,
     }));
-    render(<HomeFeatureCards />);
+    renderWithTheme(<HomeFeatureCards />);
     expect(await screen.findByTestId('home-feature-cards')).toBeInTheDocument();
     expect(await screen.findByAltText('Beach huts')).toBeInTheDocument();
     expect(await screen.findByAltText('Pineapple in a field')).toBeInTheDocument();

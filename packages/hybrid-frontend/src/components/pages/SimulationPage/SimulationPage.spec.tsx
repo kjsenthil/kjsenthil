@@ -1,7 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 
 const mockProjectResponse = {
   contributions: 74000.0,
@@ -29,7 +29,7 @@ describe('SimulationPage', () => {
 
     // Needed to ensure the function under /endpoint.ts gets loaded first before import
     const SimulationPage = (await import('./SimulationPage')).default;
-    render(<SimulationPage />);
+    renderWithTheme(<SimulationPage />);
 
     expect(screen.getByText('Simulation Page')).toBeInTheDocument();
   });

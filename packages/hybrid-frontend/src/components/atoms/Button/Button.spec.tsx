@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import Button from './Button';
 
-describe('button', () => {
-  test('Renders a primary button', () => {
+describe('Button', () => {
+  test('Renders a button with passed children', () => {
     const testLabel = 'Some label';
-    render(<Button>{testLabel}</Button>);
+    renderWithTheme(<Button>{testLabel}</Button>);
     expect(screen.getByText(testLabel)).toBeInTheDocument();
   });
 });

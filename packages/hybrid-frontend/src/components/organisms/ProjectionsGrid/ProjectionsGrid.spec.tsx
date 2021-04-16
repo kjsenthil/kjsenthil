@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderWithTheme } from '@tsw/test-util';
 import ProjectionsGrid, { ProjectionsGridProps } from './ProjectionsGrid';
 
 const defaultProps: ProjectionsGridProps = {
@@ -44,6 +44,6 @@ const defaultProps: ProjectionsGridProps = {
 
 describe('ProjectionsGrid', () => {
   test('Renders the grid without error', async () => {
-    expect(() => render(<ProjectionsGrid {...defaultProps} />)).not.toThrow();
+    expect(() => renderWithTheme(<ProjectionsGrid {...defaultProps} />)).not.toThrow();
   });
 });

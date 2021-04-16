@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
+
 import SliderWithInput, { SliderWithInputProps } from './SliderWithInput';
 
 describe('SliderWithInput', () => {
@@ -20,7 +21,7 @@ describe('SliderWithInput', () => {
 
   describe('Handles render and onChange events', () => {
     beforeEach(async () => {
-      render(<SliderWithInput {...defaultProps} />);
+      renderWithTheme(<SliderWithInput {...defaultProps} />);
       inputField = (await screen.findByTestId(inputDataTestId)) as HTMLInputElement;
     });
 
@@ -43,7 +44,7 @@ describe('SliderWithInput', () => {
 
   describe('Handles different data formats', () => {
     test('Renders a currency symbol prefix', async () => {
-      render(<SliderWithInput {...defaultProps} isCurrency />);
+      renderWithTheme(<SliderWithInput {...defaultProps} isCurrency />);
       expect(await screen.findByText('£')).toBeInTheDocument();
     });
   });

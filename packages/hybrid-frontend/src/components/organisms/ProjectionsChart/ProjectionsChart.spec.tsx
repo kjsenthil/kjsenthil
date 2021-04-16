@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderWithTheme } from '@tsw/test-util';
 import ProjectionsChart, { ProjectionsChartProps } from './ProjectionsChart';
 
 jest.mock('react-chartjs-2', () => ({
@@ -48,6 +48,6 @@ const defaultProps: ProjectionsChartProps = {
 
 describe('ProjectionsChart', () => {
   test('Renders the chart without error', async () => {
-    expect(() => render(<ProjectionsChart {...defaultProps} />)).not.toThrow();
+    expect(() => renderWithTheme(<ProjectionsChart {...defaultProps} />)).not.toThrow();
   });
 });

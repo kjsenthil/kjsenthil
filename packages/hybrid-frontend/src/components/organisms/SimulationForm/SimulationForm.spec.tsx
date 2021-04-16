@@ -1,12 +1,12 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import SimulatonForm from './SimulationForm';
 
 describe('SimulatonForm', () => {
   const onSubmit = jest.fn();
 
   beforeEach(() => {
-    render(<SimulatonForm onSubmit={onSubmit} />);
+    renderWithTheme(<SimulatonForm onSubmit={onSubmit} />);
   });
 
   test('Renders the form', async () => {

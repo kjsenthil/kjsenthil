@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import CaptureGoal from './CaptureGoal';
 
 describe('CaptureGoal', () => {
@@ -11,7 +11,7 @@ describe('CaptureGoal', () => {
   let riskAppetiteField: HTMLElement;
 
   beforeEach(() => {
-    render(<CaptureGoal onSubmit={onSubmit} />);
+    renderWithTheme(<CaptureGoal onSubmit={onSubmit} />);
 
     targetAmountField = screen.getByLabelText('Target Amount');
     targetYearField = screen.getByLabelText('Target Year');

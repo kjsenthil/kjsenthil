@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import MyAccountLayout from './MyAccountLayout';
 
 describe('MyAccountLayout', () => {
   test('Renders with child elements', async () => {
-    render(
+    renderWithTheme(
       <MyAccountLayout>
         <div data-testid="some-child-element" />
       </MyAccountLayout>

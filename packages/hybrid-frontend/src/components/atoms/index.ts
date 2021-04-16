@@ -1,5 +1,12 @@
 /* custom atoms */
-export { default as Button } from './Button';
+import Button, { ButtonProps } from './Button';
+
+export { default as Icon } from './Icon';
+
+export type { ButtonProps };
+
+export { Button };
+
 export { default as Spacer } from './Spacer';
 
 /* material-ui atoms */

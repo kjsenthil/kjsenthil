@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import React from 'react';
 import SelectGoalsPage from './SelectGoalsPage';
 
 describe('SelectGoalsPage', () => {
   beforeEach(() => {
-    render(<SelectGoalsPage />);
+    renderWithTheme(<SelectGoalsPage />);
   });
 
   test('SelectGoalsPage titles has been successfully rendered', () => {

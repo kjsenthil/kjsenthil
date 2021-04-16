@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import GoalSelection from './GoalSelection';
 import { Goals } from '../../../constants';
 
@@ -8,7 +8,7 @@ describe('GoalSelection', () => {
   const onSubmit = jest.fn();
 
   beforeEach(() => {
-    render(<GoalSelection onSubmit={onSubmit} />);
+    renderWithTheme(<GoalSelection onSubmit={onSubmit} />);
   });
 
   test('Does not call onSubmit if no goal was selected', () => {

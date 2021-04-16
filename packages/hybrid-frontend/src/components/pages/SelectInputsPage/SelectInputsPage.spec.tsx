@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import React from 'react';
 
 const mockGoals = {
@@ -91,7 +91,7 @@ describe('SelectInputsPage', () => {
 
     // Needed to ensure the function under /endpoint.ts gets loaded first before import
     const SelectInputsPage = (await import('./SelectInputsPage')).default;
-    render(<SelectInputsPage />);
+    renderWithTheme(<SelectInputsPage />);
 
     expect(screen.getByLabelText('Target Amount')).toBeInTheDocument();
     expect(screen.getByLabelText('Target Year')).toBeInTheDocument();

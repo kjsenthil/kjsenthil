@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import Layout from './Layout';
 
 describe('Layout', () => {
   test('Renders with child elements', async () => {
-    render(
+    renderWithTheme(
       <Layout>
         <div data-testid="some-child-element" />
       </Layout>

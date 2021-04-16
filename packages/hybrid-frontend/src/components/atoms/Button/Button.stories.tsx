@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import Icon from '../Icon';
 import Button, { ButtonProps } from './Button';
 
 export default {
@@ -11,7 +11,7 @@ export default {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'primary', 'secondary', 'tertiary'],
+      options: [undefined, 'gradient', 'primary', 'secondary', 'tertiary'],
     },
     variant: {
       control: {
@@ -40,14 +40,20 @@ const defaultArgs: ButtonProps = {
   children: 'Button',
   color: 'primary',
   variant: 'contained',
-  small: undefined,
 };
 
 export const Default = Template.bind({});
 Default.args = defaultArgs;
 
-export const ButtonIconOnly = Template.bind({});
-ButtonIconOnly.args = {
+export const DropdownButton = Template.bind({});
+DropdownButton.args = {
   ...defaultArgs,
-  children: <KeyboardArrowDownIcon />,
+  children: <Icon name="arrowHeadDown" />,
+};
+
+export const ButtonWithIcon = Template.bind({});
+ButtonWithIcon.args = {
+  ...defaultArgs,
+  children: 'Button',
+  startIcon: <Icon name="account" fontSize="inherit" />,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
+
 import AssetDetails from './AssetDetails';
 import { AssetData } from '../../../api/getAssetDetail';
 
@@ -26,7 +27,7 @@ const mockAsset: AssetData = {
 
 describe('AssetDetails', () => {
   test('Renders the asset details', async () => {
-    render(<AssetDetails data={mockAsset} />);
+    renderWithTheme(<AssetDetails data={mockAsset} />);
     expect(await screen.findByText(mockAsset.assetName)).toBeInTheDocument();
     expect(await screen.findByText('ISA Eligible')).toBeInTheDocument();
     expect(await screen.findByText('SIPP Eligible')).toBeInTheDocument();

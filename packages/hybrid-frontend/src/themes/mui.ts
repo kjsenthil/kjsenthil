@@ -77,6 +77,12 @@ const digitalHybridTheme = createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         '@font-face': [fsElliot, fsElliotBold, fsElliotHeavy],
+        html: {
+          letterSpacing: '0.29px',
+        },
+        button: {
+          letterSpacing: '0.29px',
+        },
       },
     },
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import LoginForm from './LoginForm';
 
 describe('LoginForm', () => {
@@ -8,7 +8,7 @@ describe('LoginForm', () => {
   let passwordField: HTMLElement;
 
   beforeEach(() => {
-    render(<LoginForm onSubmit={onSubmit} errorMessage="" successMessage="" />);
+    renderWithTheme(<LoginForm onSubmit={onSubmit} errorMessage="" successMessage="" />);
     usernameField = screen.getByLabelText('Username');
     passwordField = screen.getByLabelText('Password');
   });
@@ -37,13 +37,17 @@ describe('LoginForm', () => {
 
   test('Renders an error message', () => {
     const errorMessage = 'Some error message';
-    render(<LoginForm onSubmit={onSubmit} errorMessage={errorMessage} successMessage="" />);
+    renderWithTheme(
+      <LoginForm onSubmit={onSubmit} errorMessage={errorMessage} successMessage="" />
+    );
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 
   test('Renders a success message', () => {
     const successMessage = 'Some success message';
-    render(<LoginForm onSubmit={onSubmit} errorMessage="" successMessage={successMessage} />);
+    renderWithTheme(
+      <LoginForm onSubmit={onSubmit} errorMessage="" successMessage={successMessage} />
+    );
     expect(screen.getByText(successMessage)).toBeInTheDocument();
   });
 });
