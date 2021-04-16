@@ -1,9 +1,11 @@
-import { entityIDParse, postApiHeader } from './apiConstants';
+import { entityIDParse, goalIDParse, postApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
-export default async (objIndex: string, entityId: string) => {
+export default async (goalIndex: string, objIndex: string, entityId: string) => {
   const newLinkPayload = { objective_obj_index: objIndex };
-  const linkGoalObjUrl = ENDPOINTS['link-goal-to-objective']?.replace(entityIDParse, entityId);
+  const linkGoalObjUrl = ENDPOINTS['link-goal-to-objective']
+    ?.replace(entityIDParse, entityId)
+    .replace(goalIDParse, goalIndex);
 
   const linkResponse = await fetch(linkGoalObjUrl, {
     method: 'POST',

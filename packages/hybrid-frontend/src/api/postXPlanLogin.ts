@@ -1,7 +1,10 @@
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import { loginPayload, loginURL } from './apiConstants';
+import { loginPayload, xPlanBaseUrl } from './apiConstants';
+import ENDPOINTS from './endpoints';
 
 export default async (values: LoginFormData): Promise<void> => {
+  const loginURL = ENDPOINTS['login-to-xplan'] || `${xPlanBaseUrl}/resourceful/site`;
+
   const payload = loginPayload
     .replace(/\{username\}/, values.username)
     .replace(/\{password\}/, values.password);

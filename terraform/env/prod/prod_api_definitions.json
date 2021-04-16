@@ -178,9 +178,7 @@
             ],
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
+                    "allow-credentials" :"true",
                     "method": "POST",
                     "headers": [
                         "Content-Type",
@@ -216,9 +214,7 @@
             ],
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
+                    "allow-credentials" :"true",
                     "method": "POST",
                     "headers": [
                         "Content-Type",

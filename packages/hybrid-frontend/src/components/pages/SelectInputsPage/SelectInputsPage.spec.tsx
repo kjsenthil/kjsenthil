@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-const mockInputsPage = {
+const mockGoals = {
   fields: {
     status: '2',
     category: 5,
@@ -55,14 +55,38 @@ const mockInputsPage = {
   index: 1790049124,
 };
 
-jest.mock('../../../api/postGoalCreation');
+const mockObjective = {
+  fields: {
+    owner: 'client',
+    description: 'Goal Objective 25',
+    capture_date: {
+      _val: '2021-02-19',
+      _type: 'Date',
+    },
+  },
+  allow_associates: false,
+  allow_multiple_account_associates: false,
+  index: 2513359,
+};
+
+const mockLink = {
+  list_obj_name: 'goals',
+  entity_id: 6359375,
+  linked_obj_index: 2513359,
+  linked_obj_name: 'objectives',
+  list_obj_index: 443512677,
+};
 
 describe('SelectInputsPage', () => {
   test('SelectInputsPage titles has been successfully rendered', async () => {
-    const mockInputs = jest.fn().mockResolvedValueOnce(mockInputsPage);
-
     jest.doMock('../../../api/postGoalCreation', () => ({
-      postGoalCreation: mockInputs,
+      postGoalCreation: mockGoals,
+    }));
+    jest.doMock('../../../api/postObjectiveCreation', () => ({
+      postObjectiveCreation: mockObjective,
+    }));
+    jest.doMock('../../../api/postLinkGoalObjective', () => ({
+      postLinkGoalObjective: mockLink,
     }));
 
     // Needed to ensure the function under /endpoint.ts gets loaded first before import

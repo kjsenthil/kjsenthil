@@ -1,8 +1,8 @@
-import { objectivePayLoad, entityIDParse, postApiHeader } from './apiConstants';
+import { entityIDParse, postApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
 export default async (formValues: Object, entityId: string) => {
-  const newObjectivePayload = { ...objectivePayLoad, ...formValues };
+  const newObjectivePayload = { ...formValues };
   const objectiveUrl = ENDPOINTS['create-objective']?.replace(entityIDParse, entityId);
 
   const objectiveResponse = await fetch(objectiveUrl, {

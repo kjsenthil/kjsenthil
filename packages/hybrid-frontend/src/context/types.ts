@@ -17,8 +17,16 @@ export interface GlobalDataType {
   setGoalCapture: Dispatch<SetStateAction<GoalCaptureType>>;
   entityId: string;
   setEntityId: Dispatch<SetStateAction<string>>;
+  goalDetails: GoalDetails;
+  setGoalDetails: Dispatch<SetStateAction<GoalDetails>>;
 }
 
 export interface GlobalProviderProps {
   children: ReactNode;
+}
+
+export interface GoalDetails {
+  id?: string;
+  name?: string;
+  description?: string;
 }

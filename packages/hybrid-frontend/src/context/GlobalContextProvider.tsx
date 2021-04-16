@@ -11,6 +11,8 @@ export const globalDataContextDefaultValue: GlobalDataType = {
   setGoalCapture: () => {},
   entityId: '',
   setEntityId: () => {},
+  goalDetails: {},
+  setGoalDetails: () => {},
 };
 
 export const GlobalContext = createContext<GlobalDataType>(globalDataContextDefaultValue);

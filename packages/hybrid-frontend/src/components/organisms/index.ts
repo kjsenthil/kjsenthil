@@ -8,3 +8,4 @@ export { default as HomeFeatureCards } from './HomeFeatureCards';
 export { default as GoalSelection } from './GoalSelection';
 export { default as AccountTypeSelection } from './AccountTypeSelection';
 export { default as SimulationForm } from './SimulationForm';
+export { default as StatusComponent } from './StatusComponent';

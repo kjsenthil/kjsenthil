@@ -27,7 +27,7 @@ const GoalTile: React.FC<GoalBoxProps> = ({ setGoal, goal, selectedGoal }) => {
 };
 
 export interface GoalSelectionProps {
-  onSubmit: (goal: Goals) => Promise<void>;
+  onSubmit: (goal: Goals) => void;
 }
 
 const GoalSelection: React.FC<GoalSelectionProps> = ({ onSubmit }) => {

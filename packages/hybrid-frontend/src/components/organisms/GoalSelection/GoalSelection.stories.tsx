@@ -18,7 +18,7 @@ const Template: Story<GoalSelectionProps> = (args) => (
 
 const defaultArgs: GoalSelectionProps = {
   onSubmit: (goal: Goals) =>
-    new Promise((resolve) => {
+    new Promise<void>((resolve) => {
       // eslint-disable-next-line no-alert
       alert(`You have selected ${goal}`);
       resolve();

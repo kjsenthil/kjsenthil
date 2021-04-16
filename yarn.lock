@@ -4484,7 +4484,6 @@ __metadata:
     babel-preset-react-app: ^10.0.0
     chart.js: ^2.9.4
     concurrently: ^6.0.2
-    csstype: ^3.0.7
     cypress: ^6.3.0
     cypress-mochawesome-reporter: ^2.0.1
     gatsby: ^2.26.1
@@ -9265,7 +9264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2, csstype@npm:^3.0.7":
+"csstype@npm:^3.0.2":
   version: 3.0.7
   resolution: "csstype@npm:3.0.7"
   checksum: 76d542d719cd6bca7c491e6425a28873f76b0f4cf602b626a9fee105806446be4fab2191c5d18a045aea412bb3d5dcb5cab9414328080c672671433b786746f5
