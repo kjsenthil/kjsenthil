@@ -3,24 +3,35 @@ resource "azurerm_resource_group" "staging_resource_group" {
   location = local.location
 }
 
-module "staging_main" {
-  source             = "../../main"
-  is_apim            = true
-  is_apima           = true
-  environment        = local.environment
-  environment_prefix = local.environment
-  rg_name            = azurerm_resource_group.staging_resource_group.name
-  apim_name          = format("%s-%s-mgmt", local.environment, local.apim_name)
-  path               = local.path
+resource "azurerm_api_management" "apim" {
+  name                = format("%s-%s-mgmt", local.environment, local.apim_name)
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
+  location            = local.location
+  publisher_name      = "digitalhybrid"
+  publisher_email     = "digitalhybrid@credera.co.uk"
+  sku_name            = "Developer_1"
 }
+
+resource "azurerm_api_management_api" "api" {
+  name                  = format("%s-digital-hybrid-api", local.environment)
+  resource_group_name   = azurerm_resource_group.staging_resource_group.name
+  api_management_name   = azurerm_api_management.apim.name
+  revision              = 1
+  display_name          = format("%s-digital-hybrid-API", local.environment)
+  path                  = local.path
+  protocols             = ["https"]
+  subscription_required = false
+  description           = format("%s digital hybrid api", local.environment)
+}
+
 
 # The API operation deployed in Staging.
 resource "azurerm_api_management_api_operation" "api_operation" {
   for_each            = local.api_definitions
   operation_id        = lookup(each.value, "operation_id", null)
-  api_name            = format("%s-%s", local.environment, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
   display_name        = lookup(each.value, "display_name", null)
   method              = lookup(each.value.policy.cors, "method", null)
   url_template        = lookup(each.value, "url_template", null)
@@ -38,26 +49,24 @@ resource "azurerm_api_management_api_operation" "api_operation" {
       type     = "string"
     }
   }
-
-  depends_on = [module.staging_main]
 }
 
 # The API operation policy For the API. Deployed in Staging.
 resource "azurerm_api_management_api_operation_policy" "api_operation_policy" {
   for_each            = local.api_definitions
-  api_name            = format("%s-%s", local.environment, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
   operation_id        = lookup(each.value, "operation_id", null)
-  xml_content         = templatefile(abspath(format("%s/../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = lookup(each.value.policy, "backend_url", null), cors_allowed_method = lookup(each.value.policy.cors, "method", null), cors_allowed_headers = lookup(each.value.policy.cors, "headers", null), cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null), cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []),[azurerm_storage_account.front_end_storage_account.primary_web_endpoint]) , allow-credentials = lookup(each.value.policy.cors, "allow-credentials", false), headers = lookup(each.value.policy, "set_header", null), outbound_headers = lookup(each.value.policy, "outbound_headers", null) } })
-  depends_on          = [module.staging_main, azurerm_api_management_api_operation.api_operation]
+  xml_content         = templatefile(abspath(format("%s/../../modules/policy_documents/api_operation_policy.xml", path.module)), { config = { backend_url = lookup(each.value.policy, "backend_url", null), cors_allowed_method = lookup(each.value.policy.cors, "method", null), cors_allowed_headers = lookup(each.value.policy.cors, "headers", null), cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null), cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [azurerm_storage_account.front_end_storage_account.primary_web_endpoint]), allow-credentials = lookup(each.value.policy.cors, "allow-credentials", false), headers = lookup(each.value.policy, "set_header", null), outbound_headers = lookup(each.value.policy, "outbound_headers", null) } })
+  depends_on          = [azurerm_api_management_api_operation.api_operation]
 }
 
 
 # Storage account for front-end
 resource "azurerm_storage_account" "front_end_storage_account" {
   name                      = format("%s%s", "dighybpr", local.environment)
-  resource_group_name       = format("%s-%s-rg", local.environment, local.rg_name)
+  resource_group_name       = azurerm_resource_group.staging_resource_group.name
   location                  = local.location
   account_kind              = "StorageV2"
   account_tier              = "Standard"
@@ -90,9 +99,9 @@ resource "azurerm_storage_account" "front_end_storage_account" {
 # The API operation to get Endpoints
 resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
   operation_id        = "get-endpoints"
-  api_name            = format("%s-%s", local.environment, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
   display_name        = "get-endpoints"
   method              = "GET"
   url_template        = "/endpoints"
@@ -105,15 +114,15 @@ resource "azurerm_api_management_api_operation" "endpoints_api_operation" {
       sample       = local.endpoints
     }
   }
-  depends_on = [module.staging_main, azurerm_api_management_api_operation.api_operation]
+  depends_on = [azurerm_api_management_api_operation.api_operation]
 }
 
 
 # The API operation policy For the endpoints API.
 resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_policy" {
-  api_name            = format("%s-%s", local.environment, local.apima_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
-  resource_group_name = format("%s-%s-rg", local.environment, local.rg_name)
+  api_name            = azurerm_api_management_api.api.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.staging_resource_group.name
   operation_id        = "get-endpoints"
   xml_content         = <<XML
                           <policies>
@@ -134,11 +143,10 @@ resource "azurerm_application_insights" "app-insights" {
 
 resource "azurerm_api_management_logger" "apim_logger" {
   name                = format("%s-%s-apim-logger", local.environment, local.apim_name)
-  api_management_name = format("%s-%s-mgmt", local.environment, local.apim_name)
+  api_management_name = azurerm_api_management.apim.name
   resource_group_name = azurerm_resource_group.staging_resource_group.name
 
   application_insights {
     instrumentation_key = azurerm_application_insights.app-insights.instrumentation_key
   }
-  depends_on = [module.staging_main]
 }
