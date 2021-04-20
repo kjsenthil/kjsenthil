@@ -16,3 +16,5 @@ export enum FeatureFlags {
 }
 
 export { mockProjectionResponse } from './storybook';
+
+export const TEALIUM_ENVIRONMENT = process.env.GATSBY_ACTIVE_ENV === 'production' ? 'prod' : 'dev';

@@ -6,6 +6,7 @@ import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import login from '../api/postXPlanLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 import { handleLoginSession, logoutSession } from '../services/auth';
+import { trackLink } from '../services/tracking';
 
 interface LoginPageProps {
   path: string;
@@ -39,6 +40,13 @@ const LoginPage = ({ path }: LoginPageProps) => {
       setLoginMessages({
         error: '',
         success: 'Log in successful',
+      });
+
+      trackLink({
+        event_category: 'Account',
+        event_action: 'Account_Login',
+        event_label: 'Logged-in successfully',
+        event_value: 1,
       });
 
       navigate('/gmvp/accounts');
