@@ -90,6 +90,10 @@ jobs:
         id: apim-validate
         run: terraform validate -no-color
 
+      - name: "Terraform Plan"
+        id: plan
+        run: terraform plan -no-color
+
       - name: "Terraform Apply"
         id: apim-apply
         run: terraform apply -auto-approve

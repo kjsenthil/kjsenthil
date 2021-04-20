@@ -10,6 +10,9 @@ resource "azurerm_api_management" "apim" {
   publisher_name      = "digitalhybrid"
   publisher_email     = "digitalhybrid@credera.co.uk"
   sku_name            = "Developer_1"
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_api_management_api" "api" {
