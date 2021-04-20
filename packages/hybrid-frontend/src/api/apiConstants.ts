@@ -1,4 +1,4 @@
-import { CaptureGoalData } from '../components/organisms/CaptureGoal/CaptureGoal';
+import { CaptureGoalData } from '../types';
 
 // API Config
 export const xPlanBaseUrl = 'https://tbigroupuat2.xplan.iress.co.uk';
@@ -24,6 +24,8 @@ const currDateMonth = `${`0${currDate.getMonth() + 1}`.slice(-2)}-${`0${currDate
   -2
 )}`;
 
+// Goals
+
 const goalsHardCodedPayloadValues = {
   status: '2', // E.g from 4 options - Goal is unfulfilled
   category: 5, // Investment category (dependent on retirements vs savings)
@@ -36,7 +38,7 @@ const goalsHardCodedPayloadValues = {
 export const goalsPayLoad = (goalName: string = 'Create goal MVP', inputs: CaptureGoalData) => ({
   fields: {
     ...goalsHardCodedPayloadValues,
-    description: `${goalName}Goal created on${currDateFormat}`,
+    description: `${goalName} Goal created on ${currDateFormat}`,
     capture_date: {
       _val: currDateFormat,
       _type: 'Date',
@@ -87,6 +89,10 @@ export const objectivePayLoad = (goalName: string = 'Create objective MVP') => (
       _type: 'Date',
     },
     owner: 'client',
-    description: `${goalName}Objective Created on${currDateFormat}`,
+    description: `${goalName} Objective Created on ${currDateFormat}`,
   },
 });
+
+// Projections
+
+export const projectionsFixedParams = { riskModel: 'TAA6', sedolCode: 'BYX8KW0' };

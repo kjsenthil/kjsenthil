@@ -1,7 +1,7 @@
 import React from 'react';
+import { ProjectionYear } from '../../../types';
 import { Grid } from '../../atoms';
 import { ProjectionWidget, ProjectionType, ProjectionValue } from './ProjectionGrid.styles';
-import { ProjectionYear } from '../../../api/getProjection';
 
 export interface ProjectionsGridProps {
   projections: ProjectionYear[];

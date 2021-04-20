@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Grid, Typography } from '../../atoms';
-import {
-  CustomProjectionRequestData,
-  getProjections,
-  ProjectionResponse,
-} from '../../../api/getProjection';
+import getProjections from '../../../api/getProjection';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 import { HeaderMenu, ProjectionsChart, ProjectionsGrid, SimulationForm } from '../../organisms';
+import { ProjectionResponse, CustomProjectionRequestData } from '../../../types';
 
 const SimulationPage = () => {
   const { goalCapture } = useGlobalContext();
@@ -18,10 +15,11 @@ const SimulationPage = () => {
     setProjections(projectionsResponse);
   };
 
-  useEffect(() => {
-    /* eslint-disable-next-line no-console */
-    console.log('Captured goal inputs in state', goalCapture);
-  }, [goalCapture]);
+  const goalValsFromState = {
+    monthlyInvestment: goalCapture.monthlyInvestment,
+    upfrontInvestment: goalCapture.upfrontInvestment,
+    investmentPeriod: 30,
+  };
 
   return (
     <>
@@ -43,7 +41,7 @@ const SimulationPage = () => {
               )}
             </Grid>
             <Grid item xs={12} sm={4}>
-              <SimulationForm onSubmit={onFormSubmit} />
+              <SimulationForm onSubmit={onFormSubmit} projInputStateVals={goalValsFromState} />
             </Grid>
           </Grid>
         </CardContent>

@@ -5,10 +5,10 @@ import postLinkGoalObjective from '../../../api/postLinkGoalObjective';
 import postObjectiveCreation from '../../../api/postObjectiveCreation';
 
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
+import { CaptureGoalData } from '../../../types';
 import { Grid, Card, CardContent, Typography } from '../../atoms';
 import { Alert } from '../../molecules';
 import { CaptureGoal, StatusComponent } from '../../organisms';
-import { CaptureGoalData } from '../../organisms/CaptureGoal/CaptureGoal';
 import { MyAccountLayout } from '../../templates';
 
 const SelectInputsPage = () => {

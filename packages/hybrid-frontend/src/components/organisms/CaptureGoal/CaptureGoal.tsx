@@ -10,31 +10,26 @@ import {
   TextField,
 } from '../../atoms';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
+import { CaptureGoalData } from '../../../types';
 
 const StyledFormControl = styled(FormControl)`
   width: 100%;
 `;
 
-export interface CaptureGoalData {
-  targetAmount: number;
-  targetYear: number;
-  upfrontInvestment: number;
-  monthlyInvestment: number;
-  riskAppetite: string;
-}
-
 export interface CaptureGoalProps {
   onSubmit: (formValues: CaptureGoalData) => void;
 }
 
+const defaultCaptureGoalInputValues: CaptureGoalData = {
+  targetAmount: 0,
+  targetYear: 2021,
+  upfrontInvestment: 0,
+  monthlyInvestment: 0,
+  riskAppetite: 'cautious',
+};
+
 const CaptureGoal: React.FC<CaptureGoalProps> = ({ onSubmit }) => {
-  const [inputs, setInputs] = useState({
-    targetAmount: 0,
-    targetYear: 2021,
-    upfrontInvestment: 0,
-    monthlyInvestment: 0,
-    riskAppetite: 'cautious',
-  });
+  const [inputs, setInputs] = useState(defaultCaptureGoalInputValues);
 
   const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

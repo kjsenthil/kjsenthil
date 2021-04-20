@@ -1,20 +1,13 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-
-export interface ExampleData {
-  id: number;
-  title: string;
-  body: string;
-}
-
-export type GoalCaptureType = Record<string, unknown>;
+import { CaptureGoalData, GoalDetails } from '../types';
 
 export interface GlobalDataType {
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  goalCapture: GoalCaptureType;
-  setGoalCapture: Dispatch<SetStateAction<GoalCaptureType>>;
+  goalCapture: CaptureGoalData;
+  setGoalCapture: Dispatch<SetStateAction<CaptureGoalData>>;
   entityId: string;
   setEntityId: Dispatch<SetStateAction<string>>;
   goalDetails: GoalDetails;
@@ -23,10 +16,4 @@ export interface GlobalDataType {
 
 export interface GlobalProviderProps {
   children: ReactNode;
-}
-
-export interface GoalDetails {
-  id?: string;
-  name?: string;
-  description?: string;
 }

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
-import { ProjectionYear } from '../../../api/getProjection';
+import { ProjectionYear } from '../../../types';
 
 export interface ProjectionsChartProps {
   projections: ProjectionYear[];
 }
 
 const ProjectionsChart: React.FC<ProjectionsChartProps> = ({ projections }) => {
-  const yearLabels = projections.map((projection) => projection.year);
-  const lowData = projections.map((projection) => projection.low);
-  const mediumData = projections.map((projection) => projection.medium);
-  const highData = projections.map((projection) => projection.high);
-  const contributionsData = projections.map((projection) => projection.actual);
+  const yearLabels = projections?.map((projection) => projection.year);
+  const lowData = projections?.map((projection) => projection.low);
+  const mediumData = projections?.map((projection) => projection.medium);
+  const highData = projections?.map((projection) => projection.high);
+  const contributionsData = projections?.map((projection) => projection.actual);
 
   const options: ChartOptions = {
     elements: {

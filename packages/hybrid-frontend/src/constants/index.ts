@@ -14,3 +14,5 @@ export enum FeatureFlags {
   FEATURE_A = 'featureA',
   FEATURE_B = 'featureB',
 }
+
+export { mockProjectionResponse } from './storybook';

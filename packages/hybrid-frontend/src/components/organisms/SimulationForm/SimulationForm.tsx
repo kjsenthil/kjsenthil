@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { CustomProjectionRequestData } from '../../../api/getProjection';
+import { CustomProjectionRequestData } from '../../../types';
 import { Button } from '../../atoms';
 import SliderWithInput from '../../molecules/SliderWithInput';
 
 export interface SimulationFormProps {
+  projInputStateVals?: CustomProjectionRequestData;
   onSubmit: (formValues: CustomProjectionRequestData) => void;
 }
 
-const SimulationForm: React.FC<SimulationFormProps> = ({ onSubmit }) => {
-  const [inputs, setInputs] = useState({
-    monthlyInvestment: 200,
-    upfrontInvestment: 2000,
-    investmentPeriod: 30,
-  });
+const projInputDefaultValues = {
+  monthlyInvestment: 200,
+  upfrontInvestment: 2000,
+  investmentPeriod: 30,
+};
+
+const SimulationForm = ({
+  onSubmit,
+  projInputStateVals = projInputDefaultValues,
+}: SimulationFormProps) => {
+  const [inputs, setInputs] = useState(projInputStateVals);
 
   const handleSliderChange = (name: string, newValue: number | '') => {
     setInputs((currentInputs) => ({ ...currentInputs, [name]: newValue }));
