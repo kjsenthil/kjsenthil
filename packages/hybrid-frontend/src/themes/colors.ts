@@ -31,6 +31,14 @@ export const digitalHybridColors: CustomColors = {
     dark2: '#00585e',
   },
 
+  grey: {
+    main: '#aeaabf',
+    light1: '#dddaed',
+    light2: '#eeedfc',
+    dark1: '#6a6775',
+    dark2: '#393840',
+  },
+
   white: { main: '#ffffff' },
   gold: { main: '#ebb300' },
   success: { main: '#3dd598' },

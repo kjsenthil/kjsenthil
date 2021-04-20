@@ -18,11 +18,13 @@ declare module '@material-ui/core/styles/createPalette' {
 
   interface Palette {
     tertiary: SimplePaletteColorOptions;
+    grey: SimplePaletteColorOptions;
     gold: SimplePaletteColorOptions;
   }
 
   interface PaletteOptions {
     tertiary: SimplePaletteColorOptions;
+    grey: SimplePaletteColorOptions;
     gold: SimplePaletteColorOptions;
   }
 }

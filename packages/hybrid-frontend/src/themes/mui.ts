@@ -54,7 +54,14 @@ const digitalHybridTheme = createMuiTheme({
       light: digitalHybridColors.teal.light1,
       dark: digitalHybridColors.teal.dark1,
     },
-
+    grey: {
+      ...digitalHybridColors.grey,
+      100: digitalHybridColors.grey.light2,
+      200: digitalHybridColors.grey.light1,
+      300: digitalHybridColors.grey.main,
+      400: digitalHybridColors.grey.dark1,
+      500: digitalHybridColors.grey.dark2,
+    },
     gold: {
       main: digitalHybridColors.gold.main,
     },
