@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import StatusComponent from './StatusComponent';
 
 describe('StatusComponent', () => {
@@ -8,7 +8,7 @@ describe('StatusComponent', () => {
     const goalStatusMessage = 'Test goalStatusMessage';
     const objStatusMessage = 'Test objStatusMessage';
     const linkStatusMessage = 'Test linkStatusMessage';
-    render(
+    renderWithTheme(
       <StatusComponent
         entityId={entityId}
         goalStatusMessage={goalStatusMessage}

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Grid, TextField, Typography, Spacer } from '../../atoms';
 import { Alert } from '../../molecules';
 
-const Title = styled((props) => <Typography variant="subtitle1" {...props} />)`
+const Title = styled((props) => <Typography variant="sh1" {...props} />)`
   color: #7b7b7b;
   text-transform: uppercase;
 `;

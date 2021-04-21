@@ -8,6 +8,10 @@ export type { ButtonProps };
 export { Button };
 
 export { default as Spacer } from './Spacer';
+export { default as Switcher } from './Switcher';
+export { default as Radio } from './Radio';
+export { default as Checkbox } from './Checkbox';
+export { default as Typography } from './Typography';
 
 /* material-ui atoms */
 export {
@@ -25,7 +29,8 @@ export {
   InputAdornment,
   FormControl,
   MenuItem,
-  Typography,
+  RadioGroup,
+  FormControlLabel,
   Paper,
   Select,
   Slider,

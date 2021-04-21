@@ -51,7 +51,7 @@ const AccountTypeSelection = ({ onSubmit }: AccountTypeSelectProps) => {
           handleCardClick={() => setSelectedAccountType(AccountType.ISA)}
         >
           <Box height="100%" display="flex" alignItems="center" justifyContent="center">
-            <Typography variant="h6" align="center">
+            <Typography variant="h5" align="center">
               ISA
             </Typography>
           </Box>
@@ -66,7 +66,7 @@ const AccountTypeSelection = ({ onSubmit }: AccountTypeSelectProps) => {
           handleCardClick={() => setSelectedAccountType(AccountType.GIA)}
         >
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Typography variant="h6" align="center">
+            <Typography variant="h5" align="center">
               GIA
             </Typography>
           </Box>

@@ -19,7 +19,7 @@ const HeaderMenu: React.FC = () => {
 
   // prettier-ignore
   const environment = process.env.GATSBY_ACTIVE_ENV ? (
-    <Typography variant="subtitle1">
+    <Typography variant="sh1" color='white'>
       [
       {process.env.GATSBY_ACTIVE_ENV}
       ]
@@ -30,7 +30,9 @@ const HeaderMenu: React.FC = () => {
     <>
       <AppBar elevation={0} position="static" data-testid="header-menu">
         <MenuToolBar>
-          <Typography variant="h6">Digital Hybrid</Typography>
+          <Typography variant="h5" color="white">
+            Digital Hybrid
+          </Typography>
           {environment}
           <div>
             <Button onClick={logoutHandler}>Logout</Button>

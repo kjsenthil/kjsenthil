@@ -26,7 +26,7 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({
       <Typography variant="h5" component="h2" gutterBottom>
         {assetName}
       </Typography>
-      <Typography variant="body2" color="textSecondary" component="div">
+      <Typography variant="b2" color="secondary" component="div">
         {unitTypeText}
         {isaEligible && (
           <Grid container direction="row" alignItems="center">

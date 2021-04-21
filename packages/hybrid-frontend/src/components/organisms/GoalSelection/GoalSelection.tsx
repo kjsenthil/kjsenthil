@@ -18,7 +18,7 @@ const GoalTile: React.FC<GoalBoxProps> = ({ setGoal, goal, selectedGoal }) => {
         isSelected={isSelected}
         elevation={isSelected ? 1 : ELEVATION}
       >
-        <Typography variant="h6" align="center">
+        <Typography variant="h5" align="center">
           {goal}
         </Typography>
       </GoalBox>

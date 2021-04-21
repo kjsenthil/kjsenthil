@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Grid, Input, InputAdornment, Slider, Typography } from '../../atoms';
 
 export interface SliderWithInputProps {
@@ -14,10 +13,6 @@ export interface SliderWithInputProps {
   isCurrency?: boolean;
   onBlur?: () => void;
 }
-
-const Label = styled(Typography)`
-  color: #7a7a7a;
-`;
 
 const SliderWithInput: React.FC<SliderWithInputProps> = ({
   inputDataTestId = '',
@@ -48,7 +43,7 @@ const SliderWithInput: React.FC<SliderWithInputProps> = ({
     <>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={6}>
-          <Label id="input-slider">{label}</Label>
+          <Typography id="input-slider">{label}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Input
