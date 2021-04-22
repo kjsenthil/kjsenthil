@@ -631,7 +631,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to DH website - Production",
-                      "url": ''${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
