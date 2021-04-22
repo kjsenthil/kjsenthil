@@ -536,7 +536,7 @@ jobs:
                       "text": '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   Output Website URLs' : '${{ needs.output_website_urls.result }}' === 'failure' ? ':heavy-cross-mark:   Output Website URLs' : ':heavy-minus-sign:   Output Website URLs'
                     }
                   },
-                                    {
+                  {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
