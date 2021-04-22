@@ -568,3 +568,370 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
+
+  post-to-slack:
+    if: always()
+    name: "Post to Slack"
+    needs:
+      [
+        build_cache,
+        derive_environment_prefix,
+        deploy_apim_terraform,
+        deploy_pr_terraform,
+        clear_storybook_storage_account,
+        plan_staging,
+        plan_prod,
+        linting,
+        unit_test,
+        deploy_storybook,
+        end_to_end_test,
+        deploy_gatsby,
+        publish_results,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Get current timestamp"
+        id: get-current-timestamp
+        run: |
+          echo ::set-output name=current-timestamp::$( date +%s )
+
+      - name: "Post to slack"
+        uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEV }}
+        with:
+          status: custom
+          custom_payload: |
+            {
+              attachments: [{
+                "color": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? '#009933' : '#cc0000',
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "emoji": true
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Workflow Name* : ${{ github.workflow }}"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Deployment initiated by*:"
+                      },
+                      {
+                        "type": "image",
+                        "image_url": "https://github.com/${{ github.actor }}.png?size=40",
+                        "alt_text": "Authors Avatar"
+                      },
+                      {
+                        "type": "plain_text",
+                        "text": "${{ github.actor }}",
+                        "emoji": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":merge:   *Branch Name*: <https://github.com/${{ github.repository }}/tree/${{ github.head_ref }}|${{ github.head_ref }}>"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":arrow_right:   *Branch Prefix*: ${{ needs.derive_environment_prefix.outputs.prefix }}"
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Job Conclusions for this workflow run.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.build_cache.result }}' === 'success' ? ':heavy-check-mark:   Build Cache' : '${{ needs.build_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Build Cache' : ':heavy-minus-sign:   Build Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.derive_environment_prefix.result }}' === 'success' ? ':heavy-check-mark:   Derive Environment Prefix' : '${{ needs.derive_environment_prefix.result }}' === 'failure' ? ':heavy-cross-mark:   Derive Environment Prefix' : ':heavy-minus-sign:   Derive Environment Prefix'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy APIM' : '${{ needs.deploy_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy APIM' : ':heavy-minus-sign:   Deploy APIM'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy PR environment' : '${{ needs.deploy_pr_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy PR environment' : ':heavy-minus-sign:   Deploy PR environment'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.clear_storybook_storage_account.result }}' === 'success' ? ':heavy-check-mark:   Clear Storybook Storage Account' : '${{ needs.clear_storybook_storage_account.result }}' === 'failure' ? ':heavy-cross-mark:   Clear Storybook Storage Account' : ':heavy-minus-sign:   Clear Storybook Storage Account'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.plan_staging.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Staging' : '${{ needs.plan_staging.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Staging' : ':heavy-minus-sign:   Terraform Plan - Staging'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.plan_prod.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Production' : '${{ needs.plan_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Production' : ':heavy-minus-sign:   Terraform Plan - Production'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.end_to_end_test.result }}' === 'success' ? ':heavy-check-mark:   E2E Tests' : '${{ needs.end_to_end_test.result }}' === 'failure' ? ':heavy-cross-mark:   E2E Tests' : ':heavy-minus-sign:   E2E Tests'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   Publish Results to PR' : '${{ needs.publish_results.result }}' === 'failure' ? ':heavy-cross-mark:   Publish Results to PR' : ':heavy-minus-sign:   Publish Results to PR'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ job.status }}' === 'success' ? ':heavy-check-mark:   Post to Slack' : '${{ job.status }}' === 'failure' ? ':heavy-cross-mark:   Post to Slack' : ':heavy-minus-sign:   Post to Slack'
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Useful links for this workflow run.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":hammer_and_wrench:   Workflow run for this deployment"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Workflow run",
+                        "emoji": true
+                      },
+                      "value": "Link to this run instance",
+                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":page_facing_up:   Cypress Coverage report"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Cypress coverage report",
+                        "emoji": true
+                      },
+                      "value": "Link to Cypress report",
+                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}cypress/index.html' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":page_facing_up:   Jest Coverage report"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Jest coverage report",
+                        "emoji": true
+                      },
+                      "value": "Link to Jest coverage report",
+                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":page_facing_up:   Jest test report"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Jest test report",
+                        "emoji": true
+                      },
+                      "value": "Link to Jest test report",
+                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":page_facing_up:   ESlint report"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "eslint report",
+                        "emoji": true
+                      },
+                      "value": "Link to ESlint report",
+                      "url": '${{ needs.linting.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}eslint/index.html' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Storybook and Website links for this workflow run.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":jigsaw:   Storybook"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View storybook",
+                        "emoji": true
+                      },
+                      "value": "Link to Storybook website",
+                      "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":globe_with_meridians:   Digital-Hybrid website"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View website",
+                        "emoji": true
+                      },
+                      "value": "Link to DH website",
+                      "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_gatsby.outputs.url }}' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": ":airplane_arriving: *<!date^${{ steps.get-current-timestamp.outputs.current-timestamp }}^Posted on {date_long} at {time_secs}|Date and Time of this message when it was posted.>*"
+                      }
+                    ]
+                  }
+                ]
+              }]
+            }

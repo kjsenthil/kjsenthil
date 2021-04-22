@@ -214,7 +214,6 @@ jobs:
             az storage container create --name "testing-${{github.sha}}" --account-name "digitalhybridartifact"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
 
-
   # Deploy Production backend (Terraform)
   deploy_production_terraform:
     name: "Deploy production backend"
@@ -392,3 +391,262 @@ jobs:
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
+
+  post-to-slack:
+    if: always()
+    name: "Post to Slack"
+    needs:
+      [
+        build_cache,
+        deploy_staging_terraform,
+        deploy_staging_frontend,
+        end_to_end_test_staging,
+        deploy_production_terraform,
+        deploy_production_frontend,
+        deploy_storybook_pr,
+        output_website_urls,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Get current timestamp"
+        id: get-current-timestamp
+        run: |
+          echo ::set-output name=current-timestamp::$( date +%s )
+
+      - name: "Post to slack"
+        uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_PROD }}
+        with:
+          status: custom
+          custom_payload: |
+            {
+              attachments: [{
+                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "emoji": true
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Workflow Name* : ${{ github.workflow }}"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Deployment initiated by*:"
+                      },
+                      {
+                        "type": "image",
+                        "image_url": "https://github.com/${{ github.actor }}.png?size=40",
+                        "alt_text": "Authors Avatar"
+                      },
+                      {
+                        "type": "plain_text",
+                        "text": "${{ github.actor }}",
+                        "emoji": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Job Conclusions for this workflow run.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.build_cache.result }}' === 'success' ? ':heavy-check-mark:   Build Cache' : '${{ needs.build_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Build Cache' : ':heavy-minus-sign:   Build Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_staging_terraform.result }}' === 'success' ? ':heavy-check-mark:   Terraform - Deploy Staging Environment' : '${{ needs.deploy_staging_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform - Deploy Staging Environment' : ':heavy-minus-sign:   Terraform - Deploy Staging Environment'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_staging_frontend.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Frontend' : '${{ needs.deploy_staging_frontend.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Frontend' : ':heavy-minus-sign:   Deploy Staging Frontend'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.end_to_end_test_staging.result }}' === 'success' ? ':heavy-check-mark:   E2E Tests - Staging' : '${{ needs.end_to_end_test_staging.result }}' === 'failure' ? ':heavy-cross-mark:   E2E Tests - Staging' : ':heavy-minus-sign:   E2E Tests - Staging'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_production_terraform.result }}' === 'success' ? ':heavy-check-mark:   Terraform - Deploy Production Environment' : '${{ needs.deploy_production_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform - Deploy Production Environment' : ':heavy-minus-sign:   Terraform - Deploy Production Environment'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_production_frontend.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Frontend' : '${{ needs.deploy_production_frontend.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Frontend' : ':heavy-minus-sign:   Deploy Production Frontend'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_storybook_pr.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook - Production' : '${{ needs.deploy_storybook_pr.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook - Production' : ':heavy-minus-sign:   Build &amp; Deploy Storybook - Production'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   Output Website URLs' : '${{ needs.output_website_urls.result }}' === 'failure' ? ':heavy-cross-mark:   Output Website URLs' : ':heavy-minus-sign:   Output Website URLs'
+                    }
+                  },
+                                    {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ job.status }}' === 'success' ? ':heavy-check-mark:   Post to Slack' : '${{ job.status }}' === 'failure' ? ':heavy-cross-mark:   Post to Slack' : ':heavy-minus-sign:   Post to Slack'
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Useful link for this workflow run.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":hammer_and_wrench:   Workflow run for this deployment"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Workflow run",
+                        "emoji": true
+                      },
+                      "value": "Link to this run instance",
+                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Storybook and Website links for Staging and Production environments.*"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":jigsaw:   Storybook"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View storybook",
+                        "emoji": true
+                      },
+                      "value": "Link to Storybook website",
+                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":globe_with_meridians:   Digital-Hybrid website - Staging"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View website - Staging",
+                        "emoji": true
+                      },
+                      "value": "Link to DH website - Staging",
+                      "url": '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' ? '${{ needs.deploy_staging_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":globe_with_meridians:   Digital-Hybrid website - Production"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View website - Production",
+                        "emoji": true
+                      },
+                      "value": "Link to DH website - Production",
+                      "url": ''${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "divider"
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": ":airplane_arriving: *<!date^${{ steps.get-current-timestamp.outputs.current-timestamp }}^Posted on {date_long} at {time_secs}|Date and Time of this message when it was posted.>*"
+                      }
+                    ]
+                  }
+                ]
+              }]
+            }
