@@ -322,10 +322,6 @@ jobs:
         shell: bash
         working-directory: ./packages/hybrid-frontend
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - name: "Install mochawesome"
-        shell: bash
-        working-directory: ./packages/hybrid-frontend
-        run: npm install --save cypress-mochawesome-reporter
 
       - name: "Run E2E UI tests"
         run: GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
