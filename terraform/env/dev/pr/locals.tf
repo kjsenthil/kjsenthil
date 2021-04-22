@@ -12,4 +12,13 @@ locals {
   path               = format("%sdigitalhybrid", local.environment_prefix)
   rg_name            = data.terraform_remote_state.dev_apim.outputs.dev_apim_rg
   apima_name         = format("%s-digital-hybrid-api", var.environment_prefix)
+  default_tags = {
+    "Cost Code"          = "cost_code_placeholder"
+    "Department"         = "FS"
+    "Project"            = "Digital-Hybrid"
+    "Owner"              = "owner_placeholder"
+    "terraform"          = "true"
+    "environment"        = local.environment
+    "environment_prefix" = local.environment_prefix
+  }
 }

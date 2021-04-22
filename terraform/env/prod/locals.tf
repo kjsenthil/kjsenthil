@@ -14,4 +14,12 @@ locals {
   if_static_website_enabled   = var.enable_static_website ? [{}] : []
   if_storybook_enabled        = var.enable_storybook ? [{}] : []
   path                        = "digitalhybrid"
+  default_tags = {
+    "Cost Code"   = "cost_code_placeholder"
+    "Department"  = "FS"
+    "Project"     = "Digital-Hybrid"
+    "Owner"       = "owner_placeholder"
+    "terraform"   = "true"
+    "environment" = local.environment
+  }
 }

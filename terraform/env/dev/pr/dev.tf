@@ -58,6 +58,7 @@ resource "azurerm_storage_account" "front_end_storage_account" {
   account_tier              = "Standard"
   account_replication_type  = "GRS"
   enable_https_traffic_only = true
+  tags                      = local.default_tags
 
   static_website {
     index_document     = "index.html"
@@ -89,6 +90,7 @@ resource "azurerm_storage_account" "storybook_storage_account" {
   account_tier              = "Standard"
   account_replication_type  = "GRS"
   enable_https_traffic_only = true
+  tags                      = local.default_tags
 
   static_website {
     index_document = "index.html"

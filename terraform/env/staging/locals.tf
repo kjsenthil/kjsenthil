@@ -13,4 +13,12 @@ locals {
   endpoints                   = jsonencode(zipmap(values(azurerm_api_management_api_operation.api_operation).*.operation_id, formatlist("%s%s", format("%s/%s", data.azurerm_api_management.staging_apim.gateway_url, data.azurerm_api_management_api.staging_apia.path), values(azurerm_api_management_api_operation.api_operation).*.url_template)))
   if_static_website_enabled   = var.enable_static_website ? [{}] : []
   path                        = "digitalhybrid"
+  default_tags = {
+    "Cost Code"   = "cost_code_placeholder"
+    "Department"  = "FS"
+    "Project"     = "Digital-Hybrid"
+    "Owner"       = "owner_placeholder"
+    "terraform"   = "true"
+    "environment" = local.environment
+  }
 }

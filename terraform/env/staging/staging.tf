@@ -1,6 +1,7 @@
 resource "azurerm_resource_group" "staging_resource_group" {
   name     = format("%s-%s-rg", local.environment, local.rg_name)
   location = local.location
+  tags     = local.default_tags
 }
 
 resource "azurerm_api_management" "apim" {
@@ -10,6 +11,7 @@ resource "azurerm_api_management" "apim" {
   publisher_name      = "digitalhybrid"
   publisher_email     = "digitalhybrid@credera.co.uk"
   sku_name            = "Developer_1"
+  tags                = local.default_tags
   lifecycle {
     prevent_destroy = true
   }
@@ -75,6 +77,7 @@ resource "azurerm_storage_account" "front_end_storage_account" {
   account_tier              = "Standard"
   account_replication_type  = "GRS"
   enable_https_traffic_only = true
+  tags                      = local.default_tags
 
   dynamic "static_website" {
     for_each = local.if_static_website_enabled
@@ -142,6 +145,7 @@ resource "azurerm_application_insights" "app-insights" {
   location            = local.location
   resource_group_name = azurerm_resource_group.staging_resource_group.name
   application_type    = "other"
+  tags                = local.default_tags
 }
 
 resource "azurerm_api_management_logger" "apim_logger" {
