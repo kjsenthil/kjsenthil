@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
+import { trackLink } from '@tsw/tracking-util';
 import { Grid, Typography, Box, TextField } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import login from '../api/postXPlanLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 import { handleLoginSession, logoutSession } from '../services/auth';
-import { trackLink } from '../services/tracking';
 
 interface LoginPageProps {
   path: string;
@@ -43,10 +43,10 @@ const LoginPage = ({ path }: LoginPageProps) => {
       });
 
       trackLink({
-        event_category: 'Account',
-        event_action: 'Account_Login',
-        event_label: 'Logged-in successfully',
-        event_value: 1,
+        eventCategory: 'Account',
+        eventAction: 'Account_Login',
+        eventLabel: 'Logged-in successfully',
+        eventValue: 1,
       });
 
       navigate('/gmvp/accounts');

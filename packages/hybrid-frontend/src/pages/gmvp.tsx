@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Router, useLocation } from '@reach/router';
+import { trackPageView } from '@tsw/tracking-util';
 import LoginPage from './login';
 import PrivateRoute from '../components/pages/PrivateRoute/PrivateRoute';
 import SelectAccountsPage from '../components/pages/SelectAccountsPage/SelectAccountsPage';
 import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
 import SelectInputsPage from '../components/pages/SelectInputsPage/SelectInputsPage';
 import SimulationPage from '../components/pages/SimulationPage/SimulationPage';
-import { trackPageView } from '../services/tracking';
 
 const App = () => {
   const location = useLocation();

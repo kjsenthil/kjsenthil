@@ -8,8 +8,7 @@
     "gatsby-config.ts",
     "gatsby-node.ts",
     "gatsby-browser.tsx",
-    "gatsby-ssr.tsx",
-    "typings/window.d.ts"
+    "gatsby-ssr.tsx"
   ],
   "exclude": ["node_modules", "public", ".cache"]
 }

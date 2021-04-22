@@ -1,0 +1,11 @@
+{
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {},
+  "include": [
+    "src",
+    "test-utils"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -6,7 +6,8 @@
     "packages/hybrid-frontend",
     "packages/shared-config/typescript",
     "packages/shared-config/eslint",
-    "packages/utils/test"
+    "packages/utils/test",
+    "packages/utils/tracking"
   ],
   "scripts": {
     "all:format": "yarn workspaces foreach -ptv run format",

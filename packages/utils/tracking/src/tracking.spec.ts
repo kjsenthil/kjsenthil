@@ -24,13 +24,19 @@ describe('trackLink', () => {
     }));
 
     const mockEvent = {
+      eventType: 'some type',
+      eventCategory: 'some category',
+    };
+
+    const snakeCaseMockEvent = {
       event_type: 'some type',
       event_category: 'some category',
     };
+
     trackLink(mockEvent);
 
     expect(mockLink).toBeCalledTimes(1);
-    expect(mockLink).toBeCalledWith(mockEvent);
+    expect(mockLink).toBeCalledWith(snakeCaseMockEvent);
   });
 
   it('does not error when window.utag is not available', () => {
@@ -42,8 +48,8 @@ describe('trackLink', () => {
     }));
 
     const mockEvent = {
-      event_type: 'some type',
-      event_category: 'some category',
+      eventType: 'some type',
+      eventCategory: 'some category',
     };
 
     expect(() => trackLink(mockEvent)).not.toThrow();

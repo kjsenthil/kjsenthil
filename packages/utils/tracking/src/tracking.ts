@@ -1,3 +1,5 @@
+import snakecaseKeys from 'snakecase-keys';
+
 /**
  * Generate a page name for view events using the location pathname by:
  * 1. removing leading and trailing backslash characters
@@ -15,7 +17,7 @@ export const getPageCategory = (pathname: string): string =>
 
 export const trackLink = (event: Record<string, unknown>): void => {
   if (window.utag && typeof window.utag.link === 'function') {
-    window.utag.link({ ...event });
+    window.utag.link({ ...snakecaseKeys(event) });
   }
 };
 

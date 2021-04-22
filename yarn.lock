@@ -4480,6 +4480,7 @@ __metadata:
     "@testing-library/user-event": ^13.1.5
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
     "@tsw/test-util": "workspace:packages/utils/test"
+    "@tsw/tracking-util": "workspace:packages/utils/tracking"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
     "@types/chart.js": ^2.9.30
     "@types/jest": ^26.0.20
@@ -4530,6 +4531,20 @@ __metadata:
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
     "@typescript-eslint/eslint-plugin": ^4.22.0
+  languageName: unknown
+  linkType: soft
+
+"@tsw/tracking-util@workspace:packages/utils/tracking":
+  version: 0.0.0-use.local
+  resolution: "@tsw/tracking-util@workspace:packages/utils/tracking"
+  dependencies:
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@typescript-eslint/eslint-plugin": ^4.22.0
+    babel-jest: ^26.6.3
+    jest: ^26.6.3
+    jest-html-reporter: ^3.3.0
+    snakecase-keys: ^3.2.1
   languageName: unknown
   linkType: soft
 
@@ -17735,7 +17750,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"map-obj@npm:^4.0.0":
+"map-obj@npm:^4.0.0, map-obj@npm:^4.1.0":
   version: 4.2.1
   resolution: "map-obj@npm:4.2.1"
   checksum: 59c2f09ffccf8878cdb67dc46d0dd73a55bcfb27c20afc2fb87250ac95f2b19e3187c8de887c40f41b96b0200aac3dfdbc31759615cb666b35864a307885c896
@@ -23484,6 +23499,16 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"snakecase-keys@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "snakecase-keys@npm:3.2.1"
+  dependencies:
+    map-obj: ^4.1.0
+    to-snake-case: ^1.0.0
+  checksum: 568f45e31532c4c857d01886a01fd7fa4d25b64f3274f8337a77803c1827013e96f669617bd8c2dae17d83026ce824426ae3a17ecfb9a6eeea77a3b0325bf936
+  languageName: node
+  linkType: hard
+
 "snapdragon-node@npm:^2.0.1":
   version: 2.1.1
   resolution: "snapdragon-node@npm:2.1.1"
@@ -24991,6 +25016,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"to-no-case@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "to-no-case@npm:1.0.2"
+  checksum: 7aa8962a71897a7086d3e35f3fa4f0377a4c1cb7a77c6cd6bdc0f2778f3e08cf8008dd35f3c60322e5f358c961f5a6691fbb125b68a644b83eebb233b23c5b76
+  languageName: node
+  linkType: hard
+
 "to-object-path@npm:^0.3.0":
   version: 0.3.0
   resolution: "to-object-path@npm:0.3.0"
@@ -25042,6 +25074,24 @@ resolve@^2.0.0-next.3:
     regex-not: ^1.0.2
     safe-regex: ^1.1.0
   checksum: ed733fdff8970628ef2d425564d1331a812e57cbb6ab7675c970046b2b792cbf2386c8292e45bb201bf85ca71a7708e3e1ffb979f5cd089ad4a82a12df75939b
+  languageName: node
+  linkType: hard
+
+"to-snake-case@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "to-snake-case@npm:1.0.0"
+  dependencies:
+    to-space-case: ^1.0.0
+  checksum: 6502f1dc1d804ccf957ec1422bad551b0dc0f2c03a30a3b47b4aeee70abf10ecbdf86984f4ebc8a0a5f233e658bc3f02d8615ee049ebe8c16e882eb6d4c01923
+  languageName: node
+  linkType: hard
+
+"to-space-case@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "to-space-case@npm:1.0.0"
+  dependencies:
+    to-no-case: ^1.0.0
+  checksum: e83f61676ec329b9d661f6561b648b3ed951ee75f3d32cbdf5b187d271782159cdba7dfbc5b40a50d314e6eeb143d7eca575b63874a285dffc2e5e607e92d151
   languageName: node
   linkType: hard
 
