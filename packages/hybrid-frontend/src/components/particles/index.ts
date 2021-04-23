@@ -1,2 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 export { default as FeatureToggle } from './FeatureToggle';
+export { default as AnimateToggle } from './AnimateToggle';
+
+/** Material UI Particles */
+export { default as ClickAwayListener } from '@material-ui/core/ClickAwayListener';
