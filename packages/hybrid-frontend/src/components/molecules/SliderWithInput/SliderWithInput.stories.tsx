@@ -7,8 +7,8 @@ export default {
   component: SliderWithInput,
 } as Meta;
 
-const Template: Story<SliderWithInputProps> = (args) => {
-  const [value, setValue] = useState<number | ''>(0);
+const Template: Story<SliderWithInputProps> = ({ value: defaultValue, ...args }) => {
+  const [value, setValue] = useState(defaultValue);
 
   return (
     <SliderWithInput {...args} onChange={(_name, newValue) => setValue(newValue)} value={value} />

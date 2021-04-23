@@ -3,10 +3,10 @@ import { renderWithTheme, screen } from '@tsw/test-util';
 import Typogrpahy, { Variant } from './Typography';
 
 describe('Typogrpahy', () => {
-  test('Renders a button with passed children', () => {
-    const testLabel = 'Some label';
-    renderWithTheme(<Typogrpahy>{testLabel}</Typogrpahy>);
-    expect(screen.getByText(testLabel)).toBeInTheDocument();
+  const text = 'Some label';
+  test('Renders the passed text', () => {
+    renderWithTheme(<Typogrpahy>{text}</Typogrpahy>);
+    expect(screen.getByText(text)).toBeInTheDocument();
   });
 
   it.each`
@@ -26,8 +26,7 @@ describe('Typogrpahy', () => {
   `(
     'maps variant $variant to component $component',
     ({ variant, component }: { variant: Variant; component: string }) => {
-      const testLabel = 'Some label';
-      renderWithTheme(<Typogrpahy variant={variant}>{testLabel}</Typogrpahy>);
+      renderWithTheme(<Typogrpahy variant={variant}>{text}</Typogrpahy>);
       expect(document.getElementsByTagName(component)[0]).toBeInTheDocument();
     }
   );

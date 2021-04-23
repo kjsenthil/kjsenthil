@@ -12,6 +12,7 @@ export { default as Switcher } from './Switcher';
 export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Typography } from './Typography';
+export { default as Slider } from './Slider';
 
 /* material-ui atoms */
 export {
@@ -33,7 +34,6 @@ export {
   FormControlLabel,
   Paper,
   Select,
-  Slider,
   TextField,
   Toolbar,
 } from '@material-ui/core';

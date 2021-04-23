@@ -23,7 +23,6 @@ const StyledTextField = styled(MUITextField)`
           transform: translate(-8px, -12px) scale(0.75);
           color: ${palette.primary.main};
         }
-
       }
 
       label, input {
