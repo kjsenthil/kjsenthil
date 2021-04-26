@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GlobalDataType } from '../../context/types';
-import { CaptureGoalData, GoalDetails } from '../../types';
+import { CaptureGoalData, GoalDetails, TokenItem } from '../../types';
 
 function useGlobalContextValue(): GlobalDataType {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -9,6 +9,9 @@ function useGlobalContextValue(): GlobalDataType {
   const [entityId, setEntityId] = useState<string>('');
   const [goalDetails, setGoalDetails] = useState<GoalDetails>({});
   const [goalCapture, setGoalCapture] = useState<CaptureGoalData>({} as CaptureGoalData);
+  const [twoStepAuthCode, setTwoStepAuthCode] = useState<string>('');
+  const [accessTokens, setAccessTokens] = useState<TokenItem[]>([]);
+  const [contactId, setContactId] = useState<string>('');
 
   return {
     isLoading,
@@ -21,6 +24,12 @@ function useGlobalContextValue(): GlobalDataType {
     setEntityId,
     goalDetails,
     setGoalDetails,
+    twoStepAuthCode,
+    setTwoStepAuthCode,
+    accessTokens,
+    setAccessTokens,
+    contactId,
+    setContactId,
   };
 }
 

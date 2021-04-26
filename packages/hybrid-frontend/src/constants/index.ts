@@ -18,3 +18,21 @@ export enum FeatureFlags {
 export { mockProjectionResponse } from './storybook';
 
 export const TEALIUM_ENVIRONMENT = process.env.GATSBY_ACTIVE_ENV === 'production' ? 'prod' : 'dev';
+
+export const sessionTokenValue = 'HYBRID-LOGIN-SESSION';
+export const xplanSessionTokenValue = 'XPLAN-HYBRID-LOGIN-SESSION';
+
+export const initStatePins = [
+  {
+    position: 2,
+    value: 2,
+  },
+  {
+    position: 4,
+    value: 4,
+  },
+  {
+    position: 6,
+    value: 6,
+  },
+];

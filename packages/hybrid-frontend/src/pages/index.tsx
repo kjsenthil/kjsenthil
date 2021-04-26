@@ -75,8 +75,15 @@ const IndexPage = () => {
       <Grid item xs={12}>
         <HomeFeatureCards />
       </Grid>
+
       <Grid item xs={12}>
-        <Link to="/gmvp/login">Goto GMVP</Link>
+        <Link to="/gmvp/xplogin">Goto GMVP</Link>
+      </Grid>
+
+      <Spacer y={4} />
+
+      <Grid item xs={12}>
+        <Link to="/dacn/login">Goto DACN</Link>
       </Grid>
     </MyAccountLayout>
   );

@@ -14,6 +14,12 @@ export const globalDataContextDefaultValue: GlobalDataType = {
   setEntityId: () => {},
   goalDetails: {},
   setGoalDetails: () => {},
+  twoStepAuthCode: '',
+  setTwoStepAuthCode: () => {},
+  accessTokens: [],
+  setAccessTokens: () => {},
+  contactId: '',
+  setContactId: () => {},
 };
 
 export const GlobalContext = createContext<GlobalDataType>(globalDataContextDefaultValue);

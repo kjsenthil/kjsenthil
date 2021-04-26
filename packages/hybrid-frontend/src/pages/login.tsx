@@ -1,12 +1,15 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
-import { trackLink } from '@tsw/tracking-util';
-import { Grid, Typography, Box, TextField } from '../components/atoms';
+import React, { useState } from 'react';
+import postLogin from '../api/postLogin';
+import postPin from '../api/postPin';
+import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import login from '../api/postXPlanLogin';
+import PinLogin from '../components/organisms/PinLogin';
+import { sessionTokenValue } from '../constants';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
-import { handleLoginSession, logoutSession } from '../services/auth';
+import { handleLoginSession } from '../services/auth/auth';
+import { PinLoginItem } from '../types';
 
 interface LoginPageProps {
   path: string;
@@ -22,37 +25,29 @@ const LoginPage = ({ path }: LoginPageProps) => {
     success: '',
   });
 
-  useEffect(() => {
-    /* eslint-disable-next-line no-console */
-    logoutSession(() => console.log('logged out'));
-  }, []);
+  const [pinloginMessages, setpinLoginMessages] = useState<{
+    error: string;
+    success: string;
+  }>({
+    error: '',
+    success: '',
+  });
 
-  const { setIsLoggedIn, entityId, setEntityId } = useGlobalContext();
+  const { twoStepAuthCode, setTwoStepAuthCode, setAccessTokens, setContactId } = useGlobalContext();
 
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
     try {
-      await login(loginFormValues);
+      const resp = await postLogin(loginFormValues);
 
-      setIsLoggedIn(true);
+      const twoStepVal = resp.data.attributes.twoStepAuthCode;
 
-      handleLoginSession('HYBRID-LOGIN-SESSION');
+      setTwoStepAuthCode(twoStepVal);
 
       setLoginMessages({
         error: '',
         success: 'Log in successful',
       });
-
-      trackLink({
-        eventCategory: 'Account',
-        eventAction: 'Account_Login',
-        eventLabel: 'Logged-in successfully',
-        eventValue: 1,
-      });
-
-      navigate('/gmvp/accounts');
     } catch (e) {
-      setIsLoggedIn(false);
-
       setLoginMessages({
         error: e.message,
         success: '',
@@ -60,11 +55,35 @@ const LoginPage = ({ path }: LoginPageProps) => {
     }
   };
 
-  const onEntityHandler = (evt: ChangeEvent<HTMLInputElement>) => setEntityId(evt.target.value);
+  const onPinSubmit = async (pinFormValues: PinLoginItem[]) => {
+    try {
+      const pinResp = await postPin(pinFormValues, twoStepAuthCode);
+
+      handleLoginSession(sessionTokenValue);
+
+      const { contactId } = pinResp.data.attributes;
+      setContactId(contactId);
+
+      const accessTokens = pinResp.data.attributes.tokens;
+      setAccessTokens(accessTokens);
+
+      setpinLoginMessages({
+        error: '',
+        success: 'Pin Log in successful',
+      });
+
+      navigate('/dacn/dash');
+    } catch (e) {
+      setpinLoginMessages({
+        error: e.message,
+        success: '',
+      });
+    }
+  };
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={6}>
+    <Grid container alignItems="center" spacing={3}>
+      <Grid item sm={6}>
         <Typography variant="h4" gutterBottom>
           Login Page
         </Typography>
@@ -74,11 +93,21 @@ const LoginPage = ({ path }: LoginPageProps) => {
           errorMessage={loginMessages.error}
           successMessage={loginMessages.success}
         />
-
-        <Box m={1}>
-          <TextField label="Entity ID" type="number" value={entityId} onChange={onEntityHandler} />
-        </Box>
       </Grid>
+
+      {twoStepAuthCode && (
+        <Grid item sm={6}>
+          <Typography variant="h4" gutterBottom>
+            Pin Login
+          </Typography>
+
+          <PinLogin
+            onPinSubmit={onPinSubmit}
+            errorMessage={pinloginMessages.error}
+            successMessage={pinloginMessages.success}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 };

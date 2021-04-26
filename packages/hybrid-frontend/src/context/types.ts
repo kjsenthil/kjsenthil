@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { CaptureGoalData, GoalDetails } from '../types';
+import { CaptureGoalData, GoalDetails, TokenItem } from '../types';
 
 export interface GlobalDataType {
   isLoading: boolean;
@@ -12,6 +12,12 @@ export interface GlobalDataType {
   setEntityId: Dispatch<SetStateAction<string>>;
   goalDetails: GoalDetails;
   setGoalDetails: Dispatch<SetStateAction<GoalDetails>>;
+  twoStepAuthCode: string;
+  setTwoStepAuthCode: Dispatch<SetStateAction<string>>;
+  accessTokens: TokenItem[];
+  setAccessTokens: Dispatch<SetStateAction<TokenItem[]>>;
+  contactId: string;
+  setContactId: Dispatch<SetStateAction<string>>;
 }
 
 export interface GlobalProviderProps {

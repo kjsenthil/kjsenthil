@@ -1,17 +1,17 @@
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import { loginPayload, xPlanBaseUrl } from './apiConstants';
+import { xplanloginPayload, xPlanBaseUrl } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
 export default async (values: LoginFormData): Promise<void> => {
   const loginURL = ENDPOINTS['login-to-xplan'] || `${xPlanBaseUrl}/resourceful/site`;
 
-  const payload = loginPayload
+  const payload = xplanloginPayload
     .replace(/\{username\}/, values.username)
     .replace(/\{password\}/, values.password);
 
   const response = await fetch(loginURL, {
     method: 'POST',
-    // headers: postApiHeader, // TODO: replace with JSON when the API can support it
+    // headers: xplanPostApiHeader, // TODO: replace with JSON when the API can support it
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     credentials: 'include', // needed based on the APIM changes
     body: payload,

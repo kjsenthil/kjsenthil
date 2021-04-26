@@ -20,7 +20,7 @@ export default {
     },
     {
       resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: ['/gmvp/*'] },
+      options: { prefixes: ['/gmvp/*', '/dacn/*'] },
     },
     'gatsby-plugin-styled-components',
     'gatsby-plugin-sharp',

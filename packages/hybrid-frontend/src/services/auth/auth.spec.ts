@@ -1,4 +1,5 @@
-import { handleLoginSession, isLoggedInSession, logoutSession } from './auth';
+import { sessionTokenValue } from '../../constants';
+import { isLoggedInSession, handleLoginSession, logoutSession } from './auth';
 
 describe('auth', () => {
   test('Initial isLoggedInSession', () => {
@@ -7,7 +8,7 @@ describe('auth', () => {
   });
 
   test('Check login after hybrid session is set', () => {
-    handleLoginSession('HYBRID-LOGIN-SESSION');
+    handleLoginSession(sessionTokenValue);
     const initLogin = isLoggedInSession();
 
     expect(initLogin).toBeTruthy();

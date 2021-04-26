@@ -1,4 +1,4 @@
-import { entityIDParse, postApiHeader } from './apiConstants';
+import { entityIDParse, xplanPostApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
 export default async (formValues: Object, entityId: string) => {
@@ -7,7 +7,7 @@ export default async (formValues: Object, entityId: string) => {
 
   const objectiveResponse = await fetch(objectiveUrl, {
     method: 'POST',
-    headers: postApiHeader,
+    headers: xplanPostApiHeader,
     credentials: 'include', // needed based on the APIM changes
     body: JSON.stringify(newObjectivePayload),
   });

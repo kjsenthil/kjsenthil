@@ -27,9 +27,15 @@ export interface LoginFormProps {
   errorMessage: string;
   successMessage: string;
   onSubmit: (inputs: LoginFormData) => Promise<void>;
+  title?: string;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ errorMessage, successMessage, onSubmit }) => {
+const LoginForm = ({
+  errorMessage,
+  successMessage,
+  onSubmit,
+  title = 'Log In',
+}: LoginFormProps) => {
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -49,11 +55,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ errorMessage, successMessage, onS
 
   return (
     <>
-      <Title>Log In</Title>
+      <Title>{title}</Title>
       <Form onSubmit={onFormSubmit}>
-        {successMessage.length > 0 && <Alert severity="success">{successMessage}</Alert>}
-        {errorMessage.length > 0 && <Alert severity="error">{errorMessage}</Alert>}
-
         <TextFieldContainer>
           <TextField
             label="Username"
@@ -77,6 +80,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ errorMessage, successMessage, onS
         <Button data-testid="login" variant="contained" color="primary" type="submit">
           Log in
         </Button>
+        <Spacer y={2} />
+        {successMessage.length > 0 && <Alert severity="success">{successMessage}</Alert>}
+        {errorMessage.length > 0 && <Alert severity="error">{errorMessage}</Alert>}
       </Form>
     </>
   );

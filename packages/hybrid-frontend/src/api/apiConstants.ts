@@ -2,11 +2,17 @@ import { CaptureGoalData } from '../types';
 
 // API Config
 export const xPlanBaseUrl = 'https://tbigroupuat2.xplan.iress.co.uk';
+export const APIMBaseUrl = 'https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid';
 
 export const XplanAppID = '65wshs01RpizdxEwCh6G';
+export const xplanPostApiHeader = {
+  'X-Xplan-App-Id': XplanAppID,
+  'Content-Type': 'application/json',
+};
+
+export const myAccountsAPIClientId = 'myaccounts-spa';
 
 export const postApiHeader = {
-  'X-Xplan-App-Id': XplanAppID,
   'Content-Type': 'application/json',
 };
 
@@ -15,7 +21,7 @@ export const entityIDParse = /\{entity-id\}/;
 export const goalIDParse = /\{objective-index\}/;
 
 // Login
-export const loginPayload =
+export const xplanloginPayload =
   'username={username}&password={password}&loginmode=client&force=1&domain=coa&site_type=full';
 
 const currDate = new Date();

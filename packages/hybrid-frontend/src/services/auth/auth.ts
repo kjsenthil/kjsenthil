@@ -1,3 +1,5 @@
+import { sessionTokenValue } from '../../constants';
+
 /* eslint-disable implicit-arrow-linebreak */
 export const isBrowser = () => typeof window !== 'undefined';
 
@@ -20,7 +22,7 @@ export const handleLoginSession = (hybridLoginSession: string) => {
 
 export const isLoggedInSession = () => {
   const hsession = getHybridLoginSession();
-  return hsession === 'HYBRID-LOGIN-SESSION';
+  return hsession === sessionTokenValue;
 };
 
 export const logoutSession = (callback: () => void) => {
