@@ -296,6 +296,9 @@
             "description": "This lets the user login to Identity API.",
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "POST",
                     "headers": [
                         "Content-Type"
@@ -311,6 +314,9 @@
             "description": "This lets the user to enter PIN for two factor authentication",
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "POST",
                     "headers": [
                         "Content-Type"
@@ -323,9 +329,12 @@
             "operation_id": "identity-refresh-token",
             "display_name": "Refresh Token",
             "url_template": "\/refresh-token",
-            "description": "This lets the user to enter PIN for two factor authentication",
+            "description": "This refreshes the generated idenity token",
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "POST",
                     "headers": [
                         "Content-Type"
@@ -344,6 +353,9 @@
             ],            
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "GET",
                     "headers": [
                         "Content-Type"
@@ -363,6 +375,9 @@
             ],            
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
 					"method": "GET",
                     "headers": [
                         "Content-Type"
@@ -382,6 +397,9 @@
             ],            
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "GET",
                     "headers": [
                         "Content-Type"
@@ -398,6 +416,9 @@
             "description": "This lets the user to investment summary for all given accounts ",
             "policy": {
                 "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
                     "method": "GET",
                     "headers": [
                         "Content-Type"

@@ -1,10 +1,8 @@
 import { PinLoginItem } from '../types';
-import { APIMBaseUrl, myAccountsAPIClientId, postApiHeader } from './apiConstants';
+import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
 export default async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => {
-  const apimBaseUrl = ENDPOINTS['apim-base-url'] || APIMBaseUrl;
-
   const payload = {
     data: {
       attributes: {
@@ -15,7 +13,7 @@ export default async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => 
     },
   };
 
-  const response = await fetch(`${apimBaseUrl}/pin`, {
+  const response = await fetch(ENDPOINTS['identity-pin'], {
     method: 'POST',
     headers: postApiHeader,
     body: JSON.stringify(payload),

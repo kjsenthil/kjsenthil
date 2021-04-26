@@ -2,7 +2,6 @@ import { CaptureGoalData } from '../types';
 
 // API Config
 export const xPlanBaseUrl = 'https://tbigroupuat2.xplan.iress.co.uk';
-export const APIMBaseUrl = 'https://staging-digital-hybrid-mgmt.azure-api.net/digitalhybrid';
 
 export const XplanAppID = '65wshs01RpizdxEwCh6G';
 export const xplanPostApiHeader = {

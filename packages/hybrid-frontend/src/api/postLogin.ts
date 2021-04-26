@@ -1,10 +1,8 @@
 import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
-import { APIMBaseUrl, myAccountsAPIClientId, postApiHeader } from './apiConstants';
+import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
 export default async (values: LoginFormData) => {
-  const apimBaseUrl = ENDPOINTS['apim-base-url'] || APIMBaseUrl;
-
   const payload = {
     data: {
       attributes: {
@@ -15,7 +13,7 @@ export default async (values: LoginFormData) => {
     },
   };
 
-  const response = await fetch(`${apimBaseUrl}/login`, {
+  const response = await fetch(ENDPOINTS['identity-login'], {
     method: 'POST',
     headers: postApiHeader,
     body: JSON.stringify(payload),
