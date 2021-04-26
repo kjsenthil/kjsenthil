@@ -1,0 +1,996 @@
+{
+	"info": {
+		"_postman_id": "e0169ad8-dd34-40f0-a022-0e82d095ff1b",
+		"name": "Digital Hybrid API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "myaccount",
+			"item": [
+				{
+					"name": "/myaccount/clients/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the accounts from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('Data');\r",
+									"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+									"    pm.expect(jsonData).to.have.a.property('Included');\r",
+									"    pm.expect(jsonData.Included).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Included).to.have.lengthOf.at.least(1);\r",
+									"    let accountids = _.map(jsonData.Included, (accs) => accs.Attributes.AccountId);\r",
+									"    pm.environment.set(\"myAccounts.accountIds\", accountids);\r",
+									"    pm.environment.set(\"myAccounts.firstAccountId\", accountids.toString().split(',')[0])\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/clients/:id?include=accounts",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"clients",
+								":id"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "accounts"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.contactId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/clients/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"clients",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/clients/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"clients",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/clients/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"clients",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/performance-contact/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-contact/:id?include=contributions",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"performance-contact",
+								":id"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "contributions"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.contactId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/investment-summary-account/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/investment-summary-account/:id",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"investment-summary-account",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.firstAccountId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/myaccount/investment-summary-account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/investment-summary-account?filter[id]={{myAccounts.accountIds}}",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"investment-summary-account"
+							],
+							"query": [
+								{
+									"key": "filter[id]",
+									"value": "{{myAccounts.accountIds}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{myAccounts.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Could retrieve the twoStepAuthCode from response\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property('data');\r",
+							"    pm.expect(jsonData.data).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data).to.have.a.property('attributes');\r",
+							"    pm.expect(jsonData.data.attributes).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('twoStepAuthCode');\r",
+							"    pm.expect(jsonData.data.attributes.twoStepAuthCode).to.be.not.empty;\r",
+							"\r",
+							"    pm.environment.set(\"twoStepAuthCode\", jsonData.data.attributes.twoStepAuthCode);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"password\": \"{{IdentityAPI.password}}\",\n            \"username\": \"{{IdentityAPI.username}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/login",
+					"host": [
+						"{{digitalHybrid.baseUrl}}"
+					],
+					"path": [
+						"{{apiPath}}",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "/pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Could retrieve the accessToken from response\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property('data');\r",
+							"    pm.expect(jsonData.data).to.be.not.empty;\r",
+							"    pm.expect(jsonData.data).to.have.a.property('attributes');\r",
+							"    pm.expect(jsonData.data.attributes).to.be.not.empty;\r",
+							"\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('contactId');\r",
+							"    pm.expect(jsonData.data.attributes.contactId).not.to.be.null;\r",
+							"    pm.environment.set(\"myAccounts.contactId\", jsonData.data.attributes.contactId);\r",
+							"\r",
+							"    pm.expect(jsonData.data.attributes).to.have.a.property('tokens');\r",
+							"    pm.expect(jsonData.data.attributes.tokens).to.have.lengthOf.at.least(2);\r",
+							"    //Get  MyAccountsApi access token \r",
+							"    const myAccountsApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"MyAccountsApi\");\r",
+							"    \r",
+							"    pm.expect(myAccountsApiToken.accessToken).to.be.not.empty;\r",
+							"    pm.environment.set(\"myAccounts.accessToken\", myAccountsApiToken.accessToken);\r",
+							"    //Get  OisApi access token \r",
+							"    const oisApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"OisApi\");\r",
+							"    pm.expect(oisApiToken.accessToken).to.be.not.empty;\r",
+							"    pm.environment.set(\"oisApi.accessToken\", oisApiToken.accessToken);\r",
+							"    //store whole token  object\r",
+							"    let tokensResponse = jsonData.data.attributes.tokens\r",
+							"    pm.environment.set(\"tokens\", JSON.stringify(tokensResponse));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"pin\": [\n                {\n                    \"position\": 2,\n                    \"value\": 2\n                },\n                {\n                    \"position\": 4,\n                    \"value\": 4\n                },\n                {\n                    \"position\": 6,\n                    \"value\": 6\n                }                \n            ],\n            \"twoStepAuthCode\": \"{{twoStepAuthCode}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/pin",
+					"host": [
+						"{{digitalHybrid.baseUrl}}"
+					],
+					"path": [
+						"{{apiPath}}",
+						"pin"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/refresh-token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"refresh-token\",\n        \"id\": null,\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"tokens\": {{tokens}}\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/refresh-token",
+					"host": [
+						"{{digitalHybrid.baseUrl}}"
+					],
+					"path": [
+						"{{apiPath}}",
+						"refresh-token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"sint aliqua\",\n        \"id\": \"enim do culpa ea\",\n        \"attributes\": {\n            \"apiClientId\": \"cupidatat eu veniam\",\n            \"tokens\": [\n                {\n                    \"application\": \"mollit in et esse reprehenderit\",\n                    \"accessToken\": \"nisi labore\",\n                    \"refreshToken\": \"nostrud\",\n                    \"sessionId\": \"sit non nulla\"\n                },\n                {\n                    \"application\": \"voluptate eu\",\n                    \"accessToken\": \"irure amet\",\n                    \"refreshToken\": \"proident\",\n                    \"sessionId\": \"ipsum sed\"\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"refresh-token"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiPath",
+			"value": "digitalhybrid"
+		},
+		{
+			"key": "apiClientId",
+			"value": "myaccounts-spa"
+		}
+	]
+}

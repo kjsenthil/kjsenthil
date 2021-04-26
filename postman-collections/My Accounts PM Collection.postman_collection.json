@@ -711,7 +711,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "30574922",
+													"value": "{{myAccounts.firstAccountId}}",
 													"description": "(Required) "
 												}
 											]
@@ -2621,6 +2621,54 @@
 							"item": [
 								{
 									"name": "/api/clients/:id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function() {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Could retrieve the accounts from response\", function() {\r",
+													"    pm.response.to.be.json;\r",
+													"    const jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.a.property('Data');\r",
+													"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+													"    pm.expect(jsonData).to.have.a.property('Included');\r",
+													"    pm.expect(jsonData.Included).to.be.not.empty;\r",
+													"    pm.expect(jsonData.Included).to.have.lengthOf.at.least(1);\r",
+													"    let accountids = _.map(jsonData.Included, (accs) => accs.Attributes.AccountId);\r",
+													"    pm.environment.set(\"myAccounts.accountIds\", accountids);\r",
+													"    pm.environment.set(\"myAccounts.firstAccountId\", accountids.toString().split(',')[0])\r",
+													"    \r",
+													"    //get SIPP account \r",
+													"    let bestInvestSippAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"SIPP\");\r",
+													"    if(bestInvestSippAccount != null){\r",
+													"        let bestInvestSippAccountId = bestInvestSippAccount.Attributes.AccountId;\r",
+													"        pm.environment.set(\"myAccounts.SippAccountId\", bestInvestSippAccount.Attributes.AccountId);\r",
+													"    }\r",
+													"\r",
+													"    //get GIA account\r",
+													"    let bestInvestGiaAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"GIA\");\r",
+													"    if(bestInvestGiaAccount != null){\r",
+													"        let bestInvestGiaAccountId = bestInvestGiaAccount.Attributes.AccountId;\r",
+													"        pm.environment.set(\"myAccounts.GiaAccountId\", bestInvestGiaAccountId);\r",
+													"    }\r",
+													"\r",
+													"    //get ISA account\r",
+													"    let bestInvestIsaAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"ISA\");\r",
+													"    if(bestInvestIsaAccount != null){\r",
+													"        let bestInvestIsaAccountId = bestInvestIsaAccount.Attributes.AccountId;\r",
+													"        pm.environment.set(\"myAccounts.IsaAccountId\", bestInvestIsaAccountId);\r",
+													"    }\r",
+													"\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "GET",
 										"header": [],
@@ -4818,13 +4866,19 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account?filter[id]={{myAccounts.accountIds}}",
 									"host": [
 										"{{myAccounts.baseUrl}}"
 									],
 									"path": [
 										"api",
 										"investment-summary-account"
+									],
+									"query": [
+										{
+											"key": "filter[id]",
+											"value": "{{myAccounts.accountIds}}"
+										}
 									]
 								}
 							},
@@ -4905,7 +4959,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "am",
+											"value": "{{myAccounts.firstAccountId}}",
 											"description": "(Required) "
 										}
 									]
@@ -7256,7 +7310,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "am",
+									"value": "{{myAccounts.IsaAccountId}}",
 									"description": "(Required) "
 								}
 							]
@@ -8574,7 +8628,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "am",
+									"value": "{{myAccounts.IsaAccountId}}",
 									"description": "(Required) "
 								}
 							]
@@ -9744,7 +9798,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+							"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id?include=contributions",
 							"host": [
 								"{{myAccounts.baseUrl}}"
 							],
@@ -9753,10 +9807,16 @@
 								"performance-contact",
 								":id"
 							],
+							"query": [
+								{
+									"key": "include",
+									"value": "contributions"
+								}
+							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "am",
+									"value": "{{myAccounts.contactId}}",
 									"description": "(Required) "
 								}
 							]

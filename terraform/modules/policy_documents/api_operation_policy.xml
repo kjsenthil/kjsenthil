@@ -48,6 +48,10 @@
       %{ endfor ~}
     %{ endif ~}
 
+     %{ if config.rewrite_url != null  && config.rewrite_url != ""}
+        <rewrite-uri template="${ config.rewrite_url }"/>
+      %{ endif ~}
+
   </inbound>
   <backend>
     <base />

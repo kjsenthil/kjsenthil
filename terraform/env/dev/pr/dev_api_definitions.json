@@ -296,9 +296,6 @@
             "description": "This lets the user login to Identity API.",
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
                     "method": "POST",
                     "headers": [
                         "Content-Type"
@@ -314,9 +311,6 @@
             "description": "This lets the user to enter PIN for two factor authentication",
             "policy": {
                 "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
                     "method": "POST",
                     "headers": [
                         "Content-Type"
@@ -324,6 +318,94 @@
                 },
                 "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
             }
-        }      
+        },    
+        {
+            "operation_id": "identity-refresh-token",
+            "display_name": "Refresh Token",
+            "url_template": "\/refresh-token",
+            "description": "This lets the user to enter PIN for two factor authentication",
+            "policy": {
+                "cors": {
+                    "method": "POST",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
+            }
+        },
+        {
+            "operation_id": "myaccount-clients",
+            "display_name": "Myaccount get clients details",
+            "url_template": "\/myaccount\/clients\/{id}",
+            "description": "This lets the user to get client details",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
+                "rewrite_url": "\/api\/clients/{id}"
+            }
+        },
+        {
+            "operation_id": "myaccount-performance-contact",
+            "display_name": "Myaccount get clients details",
+            "url_template": "\/myaccount\/performance-contact\/{id}",
+            "description": "This lets the user to get performance",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
+                "rewrite_url": "\/api\/performance-contact/{id}"
+            }
+        },
+        {
+            "operation_id": "myaccount-investment-summary-account",
+            "display_name": "Myaccount investment summary account",
+            "url_template": "\/myaccount\/investment-summary-account\/{id}",
+            "description": "This lets the user to investment summary for given account",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
+                "rewrite_url": "\/api\/investment-summary-account/{id}"
+            }
+        },
+        {
+            "operation_id": "myaccount-investment-summary-accounts",
+            "display_name": "Myaccount investment summary for accounts",
+            "url_template": "\/myaccount\/investment-summary-account",
+            "description": "This lets the user to investment summary for all given accounts ",
+            "policy": {
+                "cors": {
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type"
+                    ]
+                },
+                "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
+                "rewrite_url": "\/api\/investment-summary-account"
+            }
+        }                        
     ]
 }
