@@ -19,6 +19,7 @@ export {
   AppBar,
   Box,
   Card,
+  colors,
   CircularProgress,
   CardActionArea,
   CardContent,
@@ -36,7 +37,14 @@ export {
   Select,
   TextField,
   Toolbar,
+  useTheme,
+  makeStyles,
+  createStyles,
+  ThemeProvider,
 } from '@material-ui/core';
+
+/* material-ui atoms - types */
+export type { Theme } from '@material-ui/core';
 
 // At some point we might need to create an Icon wrapper as an atom
 // that dynamically imports each icon by a given name like <Icon name"menu" />
