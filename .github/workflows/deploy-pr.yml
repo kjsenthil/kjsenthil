@@ -104,10 +104,6 @@ jobs:
     needs: [deploy_apim_terraform, derive_environment_prefix]
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./terraform/env/dev/pr
-
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
@@ -119,6 +115,13 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
+#      Example of how we will zip function apps ready for deployment by Terraform
+#      - name: "Zip function apps"
+#        id: zip_function_apps
+#        run: |
+#          zip -j -r ${EXAMPLE_FUNCTION_APP_PATH} function_apps/example1/*
+#          zip -j -r ${EXAMPLE_2_FUNCTION_APP_PATH} function_apps/example2/*
+
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
         with:
@@ -127,14 +130,17 @@ jobs:
 
       - name: "Terraform Init"
         id: pr-init
+        working-directory: ./terraform/env/dev/pr
         run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
 
       - name: "Terraform Validate"
         id: pr-validate
+        working-directory: ./terraform/env/dev/pr
         run: terraform validate -no-color
 
       - name: "Terraform Apply"
         id: pr-apply
+        working-directory: ./terraform/env/dev/pr
         run: terraform apply -auto-approve
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}

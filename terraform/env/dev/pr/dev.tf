@@ -148,3 +148,30 @@ resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_
                           </policies>
                           XML
 }
+
+resource "azurerm_app_service_plan" "asp" {
+  name                = "${var.environment_prefix}${local.environment}"
+  resource_group_name = local.rg_name
+  location            = local.location
+  kind                = "FunctionApp"
+
+  sku {
+    tier = "Dynamic"
+    size = "Y1"
+  }
+}
+
+# Example implementation for deploying a function app.
+//module "function_app_example" {
+//  source = "../../../modules/function_app"
+//
+//  resource_group_name = local.rg_name
+//  location            = local.location
+//  app_service_plan_id = azurerm_app_service_plan.asp.id
+//
+//  name          = "${var.environment_prefix}${local.environment}example"
+//  app_code_path = var.enable_static_website
+//  os_type       = null
+//
+//  tags = local.default_tags
+//}
