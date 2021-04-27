@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Grid, TextField, Typography, Spacer } from '../../atoms';
-import { Alert } from '../../molecules';
-
-const Title = styled((props) => <Typography variant="sh1" {...props} />)`
-  color: #7b7b7b;
-  text-transform: uppercase;
-`;
+import { Button, Typography, Spacer } from '../../atoms';
+import { FormInput, Alert } from '../../molecules';
 
 const Form = styled.form`
   border: 2px solid #ccc;
   border-radius: 5px;
   padding: 1rem;
-`;
-
-const TextFieldContainer = styled((props) => <Grid item {...props} />)`
-  margin: 0 0 1rem;
 `;
 
 export interface LoginFormData {
@@ -30,12 +21,7 @@ export interface LoginFormProps {
   title?: string;
 }
 
-const LoginForm = ({
-  errorMessage,
-  successMessage,
-  onSubmit,
-  title = 'Log In',
-}: LoginFormProps) => {
+const LoginForm = ({ errorMessage, successMessage, onSubmit, title }: LoginFormProps) => {
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -55,28 +41,24 @@ const LoginForm = ({
 
   return (
     <>
-      <Title>{title}</Title>
+      {title && <Typography variant="h4">{title}</Typography>}
+      <Spacer y={2} />
       <Form onSubmit={onFormSubmit}>
-        <TextFieldContainer>
-          <TextField
-            label="Username"
-            InputProps={{ id: 'username' }}
-            InputLabelProps={{ htmlFor: 'username' }}
-            onChange={handleChange('username')}
-            value={inputs.username}
-          />
-        </TextFieldContainer>
-        <TextFieldContainer>
-          <TextField
-            label="Password"
-            InputProps={{ id: 'password' }}
-            InputLabelProps={{ htmlFor: 'password' }}
-            onChange={handleChange('password')}
-            type="password"
-            value={inputs.password}
-          />
-        </TextFieldContainer>
-        <Spacer y={2} />
+        <FormInput
+          label="Username"
+          name="username"
+          value={inputs.username}
+          onChange={handleChange('username')}
+        />
+        <Spacer y={1} />
+        <FormInput
+          label="Password"
+          name="password"
+          onChange={handleChange('password')}
+          value={inputs.password}
+          type="password"
+        />
+        <Spacer y={3} />
         <Button data-testid="login" variant="contained" color="primary" type="submit">
           Log in
         </Button>

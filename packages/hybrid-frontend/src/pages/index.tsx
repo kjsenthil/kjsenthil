@@ -67,6 +67,7 @@ const IndexPage = () => {
             errorMessage={loginMessages.error}
             onSubmit={onLoginFormSubmit}
             successMessage={loginMessages.success}
+            title="Login"
           />
           <Spacer y={4} />
           <SimulationForm onSubmit={onFormSubmit} />

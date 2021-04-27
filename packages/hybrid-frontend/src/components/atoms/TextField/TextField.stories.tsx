@@ -11,6 +11,7 @@ export default {
 const Template: Story<TextFieldProps> = (args) => <TextField {...args} />;
 
 export const Default = Template.bind({});
+
 Default.args = {
-  label: 'Text',
+  placeholder: 'Text',
 };

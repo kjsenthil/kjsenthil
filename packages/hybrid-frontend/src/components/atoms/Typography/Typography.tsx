@@ -6,7 +6,7 @@ import {
 import styled from 'styled-components';
 import { Palette } from '@material-ui/core/styles/createPalette';
 
-export type Color = 'primary' | 'secondary' | 'white' | 'black' | 'grey';
+export type Color = 'primary' | 'secondary' | 'white' | 'black' | 'grey' | 'error';
 export type ColorShade = 'main' | 'light1' | 'light2' | 'dark1' | 'dark2';
 export type Variant =
   | 'h1'
@@ -38,7 +38,7 @@ const determineColor = (
   if (['black', 'white'].includes(color)) {
     return palette.common[color];
   }
-  if (['primary', 'secondary', 'grey'].includes(color)) {
+  if (['primary', 'secondary', 'grey', 'error'].includes(color)) {
     return palette[color][colorShade || 'main'];
   }
   if (['b1', 'b2', 'b3'].includes(variant)) {
@@ -57,8 +57,8 @@ const sizes = {
   sh2: { fontSize: 16, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'bold' },
   sh3: { fontSize: 14, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'bold' },
   sh4: { fontSize: 12, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'bold' },
-  b1: { fontSize: 24, lineHeight: 24, letterSpacing: 0.5, fontWeight: 'normal' },
-  b2: { fontSize: 14, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
+  b1: { fontSize: 24, lineHeight: 28, letterSpacing: 0.5, fontWeight: 'normal' },
+  b2: { fontSize: 14, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'normal' },
   b3: { fontSize: 12, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
 };
 

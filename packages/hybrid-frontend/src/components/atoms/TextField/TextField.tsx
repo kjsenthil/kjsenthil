@@ -1,65 +1,59 @@
 import React from 'react';
-import { TextField as MUITextField, TextFieldProps as MUITextFieldProps } from '@material-ui/core';
+import { InputBase as MUIInputBase, InputProps as MUIInputProps } from '@material-ui/core';
 import styled from 'styled-components';
 
-const StyledTextField = styled(MUITextField)`
+const StyledTextField = styled(({ hasError, ...props }) => <MUIInputBase {...props} />)`
   ${({
+    hasError,
     theme: {
       palette,
       typography: { pxToRem },
     },
   }) => `
-      width: ${pxToRem(182)};
-      height: ${pxToRem(64)};
-      border: none;
-
-      label {
-        &.MuiInputLabel-formControl {
-          top: 5px;
-          left: 12px;
-        }
-
-        &.Mui-focused, &.MuiInputLabel-shrink {
-          transform: translate(-8px, -12px) scale(0.75);
-          color: ${palette.primary.main};
-        }
+      &.MuiInputAdornment-root {
+        margin: 0 ${pxToRem(12)};
       }
 
-      label, input {
-        font-size: ${pxToRem(16)};
-        font-weight: bold;
-        line-height: 1.25;
-        letter-spacing: ${pxToRem(0.29)};
-      }
+      &.MuiInputBase-root {
+        border: none;
+        .MuiInputBase-input {
+          width: ${pxToRem(182)};
+          height: ${pxToRem(48)};
 
-      input {
-        padding: ${pxToRem(12)};
-        border-radius: 4px;
-        border: solid 2px ${palette.grey.light2};
-        &::placeholder {
-          opacity: 1;
-          color: ${palette.grey.main};
+          padding: 0;
+          padding-left: ${pxToRem(12)};
+
+          box-sizing: inherit;
+          font-size: ${pxToRem(16)};
+          font-weight: bold;
+          line-height: 1.25;
+          letter-spacing: ${pxToRem(0.29)};
+          border-radius: 4px;
+          border: ${
+            hasError ? `1px solid ${palette.error.main}` : `2px solid ${palette.grey.light2}`
+          };
+
+          &::placeholder {
+            opacity: 1;
+            color: ${palette.grey.main};
+          }
         }
-        &:focus {
-          border: 1px solid ${palette.primary.main};
-          color: ${palette.primary.main};
+
+        &.Mui-focused {
+          .MuiInputBase-input {
+            border: 1px solid ${hasError ? palette.error.main : palette.primary.main};
+            color: ${palette.primary.main};
+          }
         }
       }
     `}
 `;
 
-export interface TextFieldProps extends Omit<MUITextFieldProps, 'color'> {}
+export interface TextFieldProps extends Omit<MUIInputProps, 'color'> {
+  hasError?: boolean;
+}
 
-const TextField = ({ InputProps = {}, placeholder, ...props }: TextFieldProps) => (
-  <StyledTextField
-    {...props}
-    placeholder={placeholder}
-    InputProps={{
-      disableUnderline: true,
-      placeholder: placeholder || props.label || '',
-      ...InputProps,
-    }}
-  />
+const TextField = ({ hasError, ...props }: TextFieldProps) => (
+  <StyledTextField {...props} hasError={!!hasError} />
 );
-
 export default TextField;

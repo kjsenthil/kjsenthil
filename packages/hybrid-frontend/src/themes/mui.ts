@@ -32,6 +32,7 @@ const digitalHybridTheme = createMuiTheme({
   typography: {
     fontFamily: ['FSElliot', 'Roboto'].join(','),
   },
+
   palette: {
     background: {
       default: colors.common.white,
@@ -49,11 +50,13 @@ const digitalHybridTheme = createMuiTheme({
       light: digitalHybridColors.blue.light1,
       dark: digitalHybridColors.blue.dark1,
     },
+
     tertiary: {
       ...digitalHybridColors.teal,
       light: digitalHybridColors.teal.light1,
       dark: digitalHybridColors.teal.dark1,
     },
+
     grey: {
       ...digitalHybridColors.grey,
       100: digitalHybridColors.grey.light2,
@@ -62,6 +65,7 @@ const digitalHybridTheme = createMuiTheme({
       400: digitalHybridColors.grey.dark1,
       500: digitalHybridColors.grey.dark2,
     },
+
     gold: {
       main: digitalHybridColors.gold.main,
     },

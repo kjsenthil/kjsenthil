@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import ButtonWithDropdown, { ButtonWithDropdownProps } from './ButtonWithDropdown';
 
 export default {
-  title: 'Digital Hybrid/Molecules/Button WithDropdown',
+  title: 'Digital Hybrid/Molecules/Button With Dropdown',
   component: ButtonWithDropdown,
   argTypes: {
     color: {
