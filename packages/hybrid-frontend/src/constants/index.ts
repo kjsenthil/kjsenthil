@@ -36,3 +36,10 @@ export const initStatePins = [
     value: 6,
   },
 ];
+
+export const UnauthorizedText = '401 Unauthorized';
+
+export enum ApiAppName {
+  myAccounts = 'MyAccountsApi',
+  ois = 'OisApi',
+}

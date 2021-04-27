@@ -358,7 +358,9 @@
                     ],
                     "method": "GET",
                     "headers": [
-                        "Content-Type"
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
                     ]
                 },
                 "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
@@ -380,7 +382,9 @@
                     ],
                     "method": "GET",
                     "headers": [
-                        "Content-Type"
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
                     ]
                 },
                 "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
@@ -402,7 +406,9 @@
                     ],
                     "method": "GET",
                     "headers": [
-                        "Content-Type"
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
                     ]
                 },
                 "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
@@ -421,7 +427,9 @@
                     ],
                     "method": "GET",
                     "headers": [
-                        "Content-Type"
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
                     ]
                 },
                 "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
