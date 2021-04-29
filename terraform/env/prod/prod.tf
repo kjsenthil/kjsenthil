@@ -191,7 +191,7 @@ resource "azurerm_api_management_logger" "apim_logger" {
 
 resource "azurerm_app_service_plan" "api_functions" {
   name                = local.environment
-  resource_group_name = local.rg_name
+  resource_group_name = azurerm_resource_group.prod_resource_group.name
   location            = local.location
   kind                = "FunctionApp"
   reserved = true
@@ -206,7 +206,7 @@ resource "azurerm_app_service_plan" "api_functions" {
 module "function_app_projections" {
   source = "../../modules/function_app_node"
 
-  resource_group_name = local.rg_name
+  resource_group_name = azurerm_resource_group.prod_resource_group.name
   location            = local.location
   app_service_plan_id = azurerm_app_service_plan.api_functions.id
 
