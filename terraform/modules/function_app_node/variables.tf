@@ -28,6 +28,11 @@ variable "os_type" {
   description = "`linux` for Linux derivatives, or an `null` for Windows"
 }
 
+variable "node_version" {
+  type        = string
+  description = "Version of node to run. Run `az webapp list-runtimes --linux` to get possible versions"
+}
+
 variable "tags" {
   description = "Tags to apply to resources created by this module"
   default     = {}

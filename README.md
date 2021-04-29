@@ -61,13 +61,16 @@ This will run the script for each workspace that script is found in.
 
 Once again, some commonly used `foreach` scripts have been provided as shortcuts. All the below will run the script in every workspace:
 
-| Type   | Description                                         | command              |
-| ------ | --------------------------------------------------- | -------------------- |
-| Format | Runs formatting commands                            | `yarn all:format`    |
-| Build  | Runs build commands                                 | `yarn all:build`     |
-| Build  | Creates zip packages for workspaces, where required | `yarn all:build:zip` |
-| Test   | Runs test commands                                  | `yarn all:test`      |
-| Test   | Runs E2E test commands                              | `yarn all:test:e2e`  |
+| Type         | Description                                         | command                 |
+| ------------ | --------------------------------------------------- | ----------------------- |
+| Format       | Runs formatting commands                            | `yarn all:format`       |
+| Build        | Runs build commands                                 | `yarn all:build`        |
+| Build        | Creates zip packages for workspaces, where required | `yarn all:build:zip`    |
+| Test         | Runs test commands                                  | `yarn all:test`         |
+| Test         | Runs E2E test commands                              | `yarn all:test:e2e`     |
+| Function App | Builds all function apps                            | `yarn all:fa:build`     |
+| Function App | Builds and zips all function apps                   | `yarn all:fa:build:zip` |
+| Function App | Copies function app zips to common folder           | `yarn all:fa:copy-zip` |
 
 ### Key Yarn commands
 

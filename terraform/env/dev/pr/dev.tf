@@ -149,11 +149,12 @@ resource "azurerm_api_management_api_operation_policy" "endpoints_api_operation_
                           XML
 }
 
-resource "azurerm_app_service_plan" "asp" {
+resource "azurerm_app_service_plan" "api_functions" {
   name                = "${var.environment_prefix}${local.environment}"
   resource_group_name = local.rg_name
   location            = local.location
   kind                = "FunctionApp"
+  reserved = true
 
   sku {
     tier = "Dynamic"
@@ -162,16 +163,17 @@ resource "azurerm_app_service_plan" "asp" {
 }
 
 # Example implementation for deploying a function app.
-//module "function_app_example" {
-//  source = "../../../modules/function_app"
-//
-//  resource_group_name = local.rg_name
-//  location            = local.location
-//  app_service_plan_id = azurerm_app_service_plan.asp.id
-//
-//  name          = "${var.environment_prefix}${local.environment}example"
-//  app_code_path = var.enable_static_website
-//  os_type       = null
-//
-//  tags = local.default_tags
-//}
+module "function_app_projections" {
+  source = "../../../modules/function_app_node"
+
+  resource_group_name = local.rg_name
+  location            = local.location
+  app_service_plan_id = azurerm_app_service_plan.api_functions.id
+
+  name          = "${var.environment_prefix}${local.environment}projections"
+  app_code_path = var.projections_function_app_code_path
+  os_type       = "linux"
+  node_version  = "12.9"
+
+  tags = local.default_tags
+}

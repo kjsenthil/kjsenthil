@@ -92,3 +92,6 @@ public
 # Storybook build
 storybook-static
 
+# Function app dists
+packages/function-apps/**/dist
+function-app-zips/

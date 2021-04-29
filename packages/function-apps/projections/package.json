@@ -1,0 +1,24 @@
+{
+  "name": "@tsw/function-app-projections",
+  "version": "1.0.0",
+  "description": "Function app containing APIs to support projections functionality in Digital Hybrid",
+  "scripts": {
+    "build": "tsc",
+    "build:zip": "yarn build && copyfiles ./host.json ./dist && cd dist && bestzip projections.zip *",
+    "copy-zip": "copyfiles -f ./dist/projections.zip ../../../function-app-zips/",
+    "prestart": "yarn build",
+    "start": "func start",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@azure/functions": "1.2.3",
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
+    "@tsw/test-util": "workspace:packages/utils/test",
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "azure-functions-core-tools": "^2.7.3188",
+    "babel-jest": "^26.6.3",
+    "bestzip": "^2.2.0",
+    "copyfiles": "^2.4.1",
+    "jest": "^26.6.3"
+  }
+}

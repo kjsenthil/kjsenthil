@@ -1,0 +1,13 @@
+{
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noEmit": false,
+    "outDir": "dist/portfolio-asset-allocation"
+  },
+  "files": [
+    "portfolio-asset-allocation/index.ts",
+    "portfolio-asset-allocation/function.json"
+  ]
+}

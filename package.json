@@ -7,7 +7,8 @@
     "packages/shared-config/typescript",
     "packages/shared-config/eslint",
     "packages/utils/test",
-    "packages/utils/tracking"
+    "packages/utils/tracking",
+    "packages/function-apps/projections"
   ],
   "scripts": {
     "all:format": "yarn workspaces foreach -ptv run format",
@@ -17,6 +18,9 @@
     "all:lint": "yarn workspaces foreach -ptv run lint",
     "all:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "all:test:e2e": "yarn workspaces foreach -ptv run test:e2e",
+    "all:fa:build": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build",
+    "all:fa:build:zip": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build:zip",
+    "all:fa:copy-zip": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run copy-zip",
     "clean": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;",
     "frontend": "yarn workspace @tsw/hybrid-frontend",
     "fe": "yarn workspace @tsw/hybrid-frontend"

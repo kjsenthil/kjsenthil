@@ -47,9 +47,52 @@ jobs:
       yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
       modules-path: ${{ steps.cache-meta.outputs.modules-path }}
 
+  package_function_apps:
+    name: "Package Function Apps"
+    needs: [build_cache]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Create function app zips"
+        run: yarn all:fa:build:zip
+
+      - name: "Collect function apps"
+        run: |
+          mkdir -p ./function-app-zips
+          yarn all:fa:copy-zip
+
+      - name: "Upload function app packages"
+        uses: actions/upload-artifact@v2
+        with:
+          name: function-app-zips
+          path: function-app-zips
+          if-no-files-found: error
+
+    outputs:
+      artifact-name: "function-app-zips"
+
   # Deploys Staging backend (Terraform).
   deploy_staging_terraform:
     name: "Deploy staging backend"
+    needs: [package_function_apps]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -65,6 +108,12 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
+
+      - name: "Download function app zips"
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ needs.package_function_apps.outputs.artifact-name }}
+          path: ./terraform/env/staging/zips
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
@@ -158,6 +207,7 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
+
   end_to_end_test_staging:
     name: "E2E test (Staging)"
     runs-on: ubuntu-latest
@@ -217,7 +267,7 @@ jobs:
   # Deploy Production backend (Terraform)
   deploy_production_terraform:
     name: "Deploy production backend"
-    needs: [end_to_end_test_staging]
+    needs: [end_to_end_test_staging, package_function_apps]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -232,6 +282,12 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
+
+      - name: "Download function app zips"
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ needs.package_function_apps.outputs.artifact-name }}
+          path: ./terraform/env/prod/zips
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
@@ -380,6 +436,7 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
+
   output_website_urls:
     name: "Output website urls"
     needs: [deploy_staging_terraform, deploy_production_terraform]
@@ -391,6 +448,7 @@ jobs:
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
+
 
   post-to-slack:
     if: always()

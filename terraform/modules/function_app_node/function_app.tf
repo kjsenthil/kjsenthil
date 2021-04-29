@@ -18,5 +18,9 @@ resource "azurerm_function_app" "this" {
     HASH                           = base64encode(filesha256(var.app_code_path))
   }
 
+  site_config {
+    linux_fx_version = "NODE|${var.node_version}"
+  }
+  
   tags = var.tags
 }
