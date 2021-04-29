@@ -9,12 +9,12 @@ import {
   ProjectionsChart,
   SimulationForm,
 } from '../components/organisms';
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import getProjections from '../api/getProjection';
 import login from '../api/postXPlanLogin';
 
 import { MyAccountLayout } from '../components/templates';
 import { ProjectionResponse, CustomProjectionRequestData } from '../types';
+import { LoginFormData } from '../services/auth/types';
 
 const Container = styled((props) => <Grid container spacing={3} {...props} />)`
   padding: 16px;

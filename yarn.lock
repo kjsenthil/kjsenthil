@@ -4548,6 +4548,8 @@ __metadata:
     d3-format: ^2.0.0
     d3-shape: ^2.1.0
     d3-time-format: ^3.0.0
+    dotenv: ^8.2.0
+    env-var: ^7.0.0
     gatsby: ^2.26.1
     gatsby-image: ^2.11.0
     gatsby-plugin-create-client-paths: ^3.2.0
@@ -11226,6 +11228,13 @@ __metadata:
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 9579868bc73526de31682625d89aa08c83f3c87850218f9251f953bf4242428a1020e75cb201ca16b42f2874c3ca175ffc8aa47a88423b546711b7dbf86f79a8
+  languageName: node
+  linkType: hard
+
+"env-var@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "env-var@npm:7.0.0"
+  checksum: 95461d5e73c8e600a7a48e602c421f74abbe05f39450196bc486f254d51375173e5302247d248bd2f1f2634e5533460337cea860fbf1760ce26216647508a852
   languageName: node
   linkType: hard
 

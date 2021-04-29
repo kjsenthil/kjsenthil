@@ -4,11 +4,11 @@ import postLogin from '../api/postLogin';
 import postPin from '../api/postPin';
 import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import PinLogin from '../components/organisms/PinLogin';
 import { sessionTokenValue } from '../constants';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 import { handleLoginSession } from '../services/auth/auth';
+import { LoginFormData } from '../services/auth/types';
 import { PinLoginItem } from '../types';
 
 interface LoginPageProps {

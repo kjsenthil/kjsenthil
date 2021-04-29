@@ -32,6 +32,7 @@ const DashPage = () => {
         );
 
         const data = await getMyAcnClient(myaccountsAccessToken?.accessToken, contactId);
+        /* eslint-disable-next-line no-console */
         console.log(`getMyAcnClient resp`, data);
       } catch (error) {
         checkAndRefreshToken(error);

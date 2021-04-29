@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { LoginFormData } from '../../../services/auth/types';
 import { Button, Typography, Spacer } from '../../atoms';
 import { FormInput, Alert } from '../../molecules';
 
@@ -8,11 +9,6 @@ const Form = styled.form`
   border-radius: 5px;
   padding: 1rem;
 `;
-
-export interface LoginFormData {
-  password: string;
-  username: string;
-}
 
 export interface LoginFormProps {
   errorMessage: string;

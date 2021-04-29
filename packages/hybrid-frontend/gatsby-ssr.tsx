@@ -5,7 +5,10 @@ import { TEALIUM_ENVIRONMENT } from './src/constants';
 
 export const onRenderBody = ({ setPreBodyComponents }) => {
   setPreBodyComponents([
-    <script async src={`//tags.tiqcdn.com/utag/tilneygroup/digital-hybrid-project/${TEALIUM_ENVIRONMENT}/utag.js`} />
+    <script
+      async
+      src={`//tags.tiqcdn.com/utag/tilneygroup/digital-hybrid-project/${TEALIUM_ENVIRONMENT}/utag.js`}
+    />,
   ]);
 };
 

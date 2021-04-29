@@ -52,6 +52,8 @@
     "d3-format": "^2.0.0",
     "d3-shape": "^2.1.0",
     "d3-time-format": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "env-var": "^7.0.0",
     "gatsby": "^2.26.1",
     "gatsby-image": "^2.11.0",
     "gatsby-plugin-create-client-paths": "^3.2.0",

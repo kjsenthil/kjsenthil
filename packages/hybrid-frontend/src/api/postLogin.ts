@@ -1,4 +1,4 @@
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
+import { LoginFormData } from '../services/auth/types';
 import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
 import ENDPOINTS from './endpoints';
 

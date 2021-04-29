@@ -3,12 +3,12 @@ import { navigate } from 'gatsby';
 import { trackLink } from '@tsw/tracking-util';
 import { Grid, Typography, Box, TextField } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
 import login from '../api/postXPlanLogin';
 import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
 
 import { xplanSessionTokenValue } from '../constants';
 import { xplanlogoutSession, handleXplanLoginSession } from '../services/xplanAuth/xplanAuth';
+import { LoginFormData } from '../services/auth/types';
 
 interface LoginPageProps {
   path: string;

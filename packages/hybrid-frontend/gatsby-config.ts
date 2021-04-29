@@ -1,12 +1,6 @@
-import dotenv from 'dotenv';
+import { ACTIVE_ENV } from './src/config';
 
-const activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || 'development';
-
-dotenv.config({
-  path: `.env.${activeEnv}`,
-});
-
-const env = activeEnv === 'production' ? 'prod' : 'dev';
+const env = ACTIVE_ENV === 'production' ? 'prod' : 'dev';
 
 export default {
   plugins: [

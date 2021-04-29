@@ -12,9 +12,9 @@ import { CaptureGoal, StatusComponent } from '../../organisms';
 import { MyAccountLayout } from '../../templates';
 
 const SelectInputsPage = () => {
-  const [goalStatusMessage, setgoalStatusMessage] = useState<string>('');
-  const [objStatusMessage, setobjStatusMessage] = useState<string>('');
-  const [linkStatusMessage, setlinkStatusMessage] = useState<string>('');
+  const [goalStatusMessage, setGoalStatusMessage] = useState<string>('');
+  const [objStatusMessage, setObjStatusMessage] = useState<string>('');
+  const [linkStatusMessage, setLinkStatusMessage] = useState<string>('');
 
   const { entityId, goalDetails } = useGlobalContext();
 
@@ -23,57 +23,59 @@ const SelectInputsPage = () => {
     let objResp: any = null;
     let linkResp: any = null;
 
-    const createGoalPayload = goalsPayLoad(goalDetails.name, inputs);
-
-    const createObjectivePayload = objectivePayLoad(goalDetails.name);
-
     try {
+      const createGoalPayload = goalsPayLoad(goalDetails.name, inputs);
       goalResp = await postGoalCreation(createGoalPayload, entityId);
       if (goalResp) {
-        setgoalStatusMessage(
+        setGoalStatusMessage(
           `Successfully created goal 
           with description ${goalResp?.fields?.description} 
           and goal index ID: ${goalResp?.index}`
         );
       } else {
-        setgoalStatusMessage(`Error creating goal`);
+        setGoalStatusMessage(`Error creating goal`);
+        return;
       }
     } catch (error) {
-      setgoalStatusMessage(`Error creating goal: ${error}`);
+      setGoalStatusMessage(`Error creating goal: ${error}`);
+      return;
     }
 
     try {
+      const createObjectivePayload = objectivePayLoad(goalDetails.name);
       objResp = await postObjectiveCreation(createObjectivePayload, entityId);
       if (objResp) {
-        setobjStatusMessage(
+        setObjStatusMessage(
           `Successfully created objective 
            with description ${objResp?.fields?.description} 
            and obj index ID: ${objResp?.index}`
         );
       } else {
-        setobjStatusMessage(`Error creating objective`);
+        setObjStatusMessage(`Error creating objective`);
+        return;
       }
     } catch (error) {
-      setobjStatusMessage(`Error creating objective: ${error}`);
+      setObjStatusMessage(`Error creating objective: ${error}`);
+      return;
     }
 
     try {
       linkResp = await postLinkGoalObjective(goalResp?.index, objResp?.index, entityId);
       if (linkResp) {
-        setlinkStatusMessage(
+        setLinkStatusMessage(
           `Successfully linked 
           goal ID: ${goalResp?.index} to 
           objective ID: ${objResp?.index}`
         );
       } else {
-        setlinkStatusMessage(
+        setLinkStatusMessage(
           `Error linking  
           goal ID: ${goalResp?.index} to 
           objective ID: ${objResp?.index}`
         );
       }
     } catch (error) {
-      setlinkStatusMessage(
+      setLinkStatusMessage(
         `Error linking 
         goal ID: ${goalResp?.index} to 
         objective ID: ${objResp?.index}: ${error}`

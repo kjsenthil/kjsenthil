@@ -1,4 +1,4 @@
-import { LoginFormData } from '../components/organisms/LoginForm/LoginForm';
+import { LoginFormData } from '../services/auth/types';
 import { xplanloginPayload, xPlanBaseUrl } from './apiConstants';
 import ENDPOINTS from './endpoints';
 
