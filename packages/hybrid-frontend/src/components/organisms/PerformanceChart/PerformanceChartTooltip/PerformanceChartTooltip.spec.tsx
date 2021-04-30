@@ -3,17 +3,19 @@ import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChartTooltip from './PerformanceChartTooltip';
 
 describe('PerformanceChartTooltip', () => {
-  const date = new Date(2020, 0, 1);
-  const performance = 1000.123;
-  const contribution = 2500.456;
+  const testCases: [Date, string][] = [
+    [new Date(2020, 0, 1), '1 Jan 2020'],
+    [new Date(), 'Today'],
+  ];
 
-  test('The tooltip renders', () => {
-    renderWithTheme(
-      <PerformanceChartTooltip date={date} performance={performance} contribution={contribution} />
-    );
+  test.each<[Date, string]>(testCases)(
+    'The tooltip renders correctly when date is %p',
+    (date, expected: string) => {
+      renderWithTheme(<PerformanceChartTooltip date={date} />);
 
-    expect(screen.getByText('January 2020', { exact: false })).toBeVisible();
-    expect(screen.getByText('£1,000.12')).toBeVisible();
-    expect(screen.getByText('£2,500.46')).toBeVisible();
-  });
+      expect(screen.getByText(expected, { exact: false })).toBeVisible();
+    }
+  );
+
+  test('The tooltip renders', () => {});
 });

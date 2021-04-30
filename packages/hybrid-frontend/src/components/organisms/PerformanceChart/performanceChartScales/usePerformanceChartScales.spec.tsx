@@ -25,6 +25,7 @@ describe('usePerformanceChartScales', () => {
       },
     };
     const maxValueBuffer = 0;
+    const minValueBuffer = 0;
 
     const { result } = renderHook(
       () =>
@@ -34,6 +35,7 @@ describe('usePerformanceChartScales', () => {
           minValue,
           maxValue,
           maxValueBuffer,
+          minValueBuffer,
           chartDimension,
         }),
       { wrapper }

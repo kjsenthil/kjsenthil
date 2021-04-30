@@ -1,69 +1,38 @@
 import * as React from 'react';
-import { Box, Typography } from '../../../atoms';
-import { formatCurrency, formatDate } from '../performanceChartFormat/performanceChartFormat';
-import {
-  DetailsContainer,
-  TooltipCard,
-  TooltipCardContent,
-  TooltipContainer,
-  TooltipTriangle,
-} from './PerformanceChartTooltip.styles';
+import styled from 'styled-components';
+import { Typography, Theme } from '../../../atoms';
+import { formatDate } from '../performanceChartFormat/performanceChartFormat';
 
 export interface PerformanceChartTooltipProps {
   date: Date;
-  performance: number;
-  contribution: number;
 }
 
-export default function PerformanceChartTooltip({
-  date,
-  performance,
-  contribution,
-}: PerformanceChartTooltipProps) {
+const TooltipContainer = styled.div`
+  ${({ theme }: { theme: Theme }) => `
+    position: relative;
+    display: inline-flex;
+
+    padding: ${theme.spacing(0.75)}px ${theme.spacing(1.25)}px;
+    border-radius: 4px;
+    background-color: ${theme.palette.grey['100']};
+
+    /* This only makes sense in the context of the performance chart. It 
+       re-centers the tooltip on the mouse's position */
+    transform: translate(-50%, 0);
+    
+    text-align: center;
+    white-space: nowrap;
+  `}
+`;
+
+export default function PerformanceChartTooltip({ date }: PerformanceChartTooltipProps) {
+  const dateStr = formatDate(date);
+
   return (
     <TooltipContainer>
-      <TooltipCard variant="outlined" elevation={0}>
-        <TooltipCardContent>
-          {/* Date */}
-
-          <Typography variant="sh4" color="primary">
-            {formatDate(date)}
-          </Typography>
-
-          {/* Details */}
-
-          <DetailsContainer>
-            {/* Column #1 */}
-
-            <Box display="flex" flexDirection="column">
-              <Typography variant="sh4" color="primary">
-                • Total:
-              </Typography>
-              <div>
-                <Typography variant="sh4" color="primary" colorShade="light2" display="inline">
-                  •{' '}
-                </Typography>
-                <Typography variant="sh4" display="inline">
-                  Contributed:
-                </Typography>
-              </div>
-            </Box>
-
-            {/* Column #2 */}
-
-            <Box display="flex" flexDirection="column">
-              <Typography variant="sh4" color="primary" align="right">
-                {formatCurrency(performance)}
-              </Typography>
-              <Typography color="grey" variant="sh4" align="right">
-                {formatCurrency(contribution)}
-              </Typography>
-            </Box>
-          </DetailsContainer>
-        </TooltipCardContent>
-      </TooltipCard>
-
-      <TooltipTriangle />
+      <Typography variant="sh4" color="primary" colorShade="dark2">
+        {dateStr.toUpperCase()}
+      </Typography>
     </TooltipContainer>
   );
 }

@@ -57,6 +57,12 @@ export const d3TimeFormatter: Record<D3TimeFormatterType, (d: Date) => string> =
 
 const DEFAULT_LOCALE = 'en-GB';
 
+function isDateToday(date: Date): boolean {
+  const today = new Date();
+
+  return today.toLocaleDateString() === date.toLocaleDateString();
+}
+
 export function formatDate(
   date: Date,
   { locale, opts }: { locale: string; opts?: Intl.DateTimeFormatOptions } = {
@@ -65,8 +71,11 @@ export function formatDate(
 ): string {
   if (date === null || date === undefined) return '';
 
+  if (isDateToday(date)) return 'Today';
+
   return date.toLocaleString(locale, {
-    month: 'long',
+    day: 'numeric',
+    month: 'short',
     year: 'numeric',
     ...opts,
   });

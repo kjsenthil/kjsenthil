@@ -2,14 +2,15 @@ import * as React from 'react';
 import { withParentSize } from '@visx/responsive';
 import { AreaClosed, Bar, Circle, Line, LinePath } from '@visx/shape';
 import { LinearGradient } from '@visx/gradient';
-import { GridColumns, GridRows } from '@visx/grid';
+import { GridRows } from '@visx/grid';
 import { curveNatural } from '@visx/curve';
 import { Group } from '@visx/group';
 import {
   WithParentSizeProps,
   WithParentSizeProvidedProps,
 } from '@visx/responsive/lib/enhancers/withParentSize';
-import { Box } from '../../atoms';
+import styled from 'styled-components';
+import { Theme } from '../../atoms';
 import usePerformanceChartScales from './performanceChartScales/usePerformanceChartScales';
 import { useContributionsData, usePerformanceData } from './data/data';
 import { usePerformanceChartStyles } from './performanceChartStyles/performanceChartStyles';
@@ -17,12 +18,15 @@ import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartT
 import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformanceChartTooltip';
 import { getTimeSeriesMinMax, timeSeriesDateAccessor, timeSeriesValueAccessor } from './data/utils';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './PerformanceChartAxes';
+import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/PerformanceChartSummaryPanel';
+import PerformanceChartPeriodSelection from './PerformanceChartPeriodSelection/PerformanceChartPeriodSelection';
 
-export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {}
+export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
+  includePeriodSelection?: boolean;
+}
 
 // ---------- Utilities ---------- //
 
-const MemoizedGridColumns = React.memo(GridColumns);
 const MemoizedGridRows = React.memo(GridRows);
 
 const MemoizedAreaClosed = React.memo(AreaClosed);
@@ -30,7 +34,24 @@ const MemoizedLinePath = React.memo(LinePath);
 
 // ---------- Components ---------- //
 
-function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
+const Container = styled.div`
+  ${({ theme }: { theme: Theme }) => `
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacing(4)}px;
+  `}
+`;
+
+const ControlPanelContainer = styled.div`
+  ${({ theme }: { theme: Theme }) => `
+    display: flex;
+    justify-content: space-between;
+    gap: ${theme.spacing(2)}px;
+  `}
+`;
+
+function PerformanceChart({ parentWidth = 0, includePeriodSelection }: PerformanceChartProps) {
   // ----- Stylings ----- //
 
   const chartStyles = usePerformanceChartStyles();
@@ -39,6 +60,8 @@ function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
 
   const performanceData = usePerformanceData();
   const contributionsData = useContributionsData();
+
+  const hasData = performanceData.length > 0 && contributionsData.length > 0;
 
   // ----- Chart scales & bounds ----- //
 
@@ -104,8 +127,60 @@ function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
     yScale,
   });
 
+  // When the chart is not hovered on, we show the tooltip and indicator at the
+  // last (latest) data point
+
+  // When the chart is not hovered on, we show the tooltip and indicator at the
+  // last (latest) data point
+
+  let lastPerformanceDataPoint;
+  let lastContributionsDataPoint;
+  let defaultTooltipLeft = 0;
+  let defaultTooltipTop = 0;
+  let defaultTooltipData;
+
+  if (hasData) {
+    lastPerformanceDataPoint = performanceData[performanceData.length - 1];
+    lastContributionsDataPoint = contributionsData[contributionsData.length - 1];
+
+    defaultTooltipLeft = chartInnerWidth;
+    defaultTooltipTop = yScale(timeSeriesValueAccessor(lastPerformanceDataPoint));
+    defaultTooltipData = {
+      performance: lastPerformanceDataPoint,
+      contribution: lastContributionsDataPoint,
+      contributionIndicatorPosY: yScale(timeSeriesValueAccessor(lastContributionsDataPoint)),
+    };
+  }
+
+  // ----- Summary panel ----- //
+
+  let totalPerformance = 0;
+  let totalContributions = 0;
+
+  if (tooltipData) {
+    totalPerformance = tooltipData.performance.value;
+    totalContributions = tooltipData.contribution.value;
+  } else if (hasData) {
+    totalPerformance = lastPerformanceDataPoint.value;
+    totalContributions = lastContributionsDataPoint.value;
+  }
+
+  const totalReturn = totalPerformance - totalContributions;
+  const totalReturnPct =
+    totalPerformance && totalContributions ? totalPerformance / totalContributions - 1 : 0;
+
   return (
-    <Box position="relative">
+    <Container>
+      <ControlPanelContainer>
+        <PerformanceChartSummaryPanel
+          totalPerformance={totalPerformance}
+          totalContributions={totalContributions}
+          totalReturn={totalReturn}
+          totalReturnPct={totalReturnPct}
+        />
+        {includePeriodSelection && <PerformanceChartPeriodSelection />}
+      </ControlPanelContainer>
+
       <svg
         data-testid="performance-chart-svg"
         ref={containerRef}
@@ -180,17 +255,6 @@ function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
 
           {/* ***** Grids ***** */}
 
-          <MemoizedGridColumns
-            scale={xScale}
-            width={chartDimension.width - chartDimension.margin.left - chartDimension.margin.right}
-            height={chartInnerHeight}
-            numTicks={6}
-            stroke={chartStyles.STROKE_COLOR.GRID}
-            strokeWidth={chartStyles.STROKE_WIDTH.GRID}
-            strokeDasharray={chartStyles.STROKE_DASHARRAY.GRID}
-            strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
-            pointerEvents="none"
-          />
           <MemoizedGridRows
             scale={yScale}
             left={chartDimension.margin.left}
@@ -206,34 +270,41 @@ function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
 
           {/* ***** Line & dot indicators ***** */}
 
-          {tooltipData && performanceData.length > 0 && contributionsData.length > 0 && (
+          {hasData && (
             <Group>
               <Line
-                from={{ x: tooltipLeft, y: tooltipTop }}
+                from={{
+                  x: tooltipData ? tooltipLeft : defaultTooltipLeft,
+                  y: tooltipData ? tooltipTop : defaultTooltipTop,
+                }}
                 to={{
-                  x: tooltipLeft,
-                  y: chartInnerHeight,
+                  x: tooltipData ? tooltipLeft : defaultTooltipLeft,
+                  y: chartInnerHeight - chartDimension.margin.top,
                 }}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
-                strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+                strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}
                 pointerEvents="none"
               />
               <Circle
-                cx={tooltipLeft}
-                cy={tooltipTop}
+                cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
+                cy={tooltipData ? tooltipTop : defaultTooltipTop}
                 r={chartStyles.RADIUS.INDICATOR}
                 fill={chartStyles.FILL.INDICATOR}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
-                strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+                strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_CIRCLE}
                 pointerEvents="none"
               />
               <Circle
-                cx={tooltipLeft}
-                cy={tooltipData.contributionIndicatorPosY}
+                cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
+                cy={
+                  tooltipData
+                    ? tooltipData.contributionIndicatorPosY
+                    : defaultTooltipData.contributionIndicatorPosY
+                }
                 r={chartStyles.RADIUS.INDICATOR}
                 fill={chartStyles.FILL.INDICATOR}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
-                strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+                strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_CIRCLE}
                 pointerEvents="none"
               />
             </Group>
@@ -241,28 +312,26 @@ function PerformanceChart({ parentWidth = 0 }: PerformanceChartProps) {
 
           {/* Tooltip */}
 
-          {tooltipOpen &&
-            tooltipData &&
-            performanceData.length > 0 &&
-            contributionsData.length > 0 && (
-              <TooltipInPortal
-                key={Math.random()}
-                top={tooltipTop}
-                left={tooltipLeft}
-                style={tooltipStyles}
-                offsetLeft={chartDimension.margin.left}
-                offsetTop={-100}
-              >
-                <PerformanceChartTooltip
-                  date={tooltipData.performance.date}
-                  performance={tooltipData.performance.value}
-                  contribution={tooltipData.contribution.value}
-                />
-              </TooltipInPortal>
-            )}
+          {hasData && (
+            <TooltipInPortal
+              key={Math.random()}
+              top={chartInnerHeight + 6}
+              left={tooltipOpen && tooltipData ? tooltipLeft : defaultTooltipLeft}
+              style={tooltipStyles}
+              offsetLeft={chartDimension.margin.left}
+            >
+              <PerformanceChartTooltip
+                date={
+                  tooltipOpen && tooltipData
+                    ? tooltipData.performance.date
+                    : defaultTooltipData.performance.date
+                }
+              />
+            </TooltipInPortal>
+          )}
         </Group>
       </svg>
-    </Box>
+    </Container>
   );
 }
 

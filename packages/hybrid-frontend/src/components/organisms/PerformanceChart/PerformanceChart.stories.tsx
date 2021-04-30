@@ -15,7 +15,7 @@ const Template: Story<PerformanceChartProps> = (args) => (
   <PerformanceDataContextProvider>
     <div
       style={{
-        paddingTop: 100,
+        padding: 10,
       }}
     >
       <PerformanceChart {...args} />
@@ -23,7 +23,9 @@ const Template: Story<PerformanceChartProps> = (args) => (
   </PerformanceDataContextProvider>
 );
 
-const defaultArgs: PerformanceChartProps = {};
+const defaultArgs: PerformanceChartProps = {
+  includePeriodSelection: true,
+};
 
 export const Default = Template.bind({});
 Default.args = defaultArgs;

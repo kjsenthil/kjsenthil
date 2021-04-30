@@ -1,3 +1,4 @@
+import * as React from 'react';
 import styled from 'styled-components';
 import { Theme } from '../../../atoms';
 
@@ -18,32 +19,42 @@ export const SectionContainer = styled.div`
 
 export const Divider = styled.div`
   ${({ theme }: { theme: Theme }) => `
-    width: 3px;
+    width: ${theme.typography.pxToRem(3)};
     border-radius: 1.5px;
     background-color: ${theme.palette.grey['100']};
   `}
 `;
 
-export const LabelIndicator = styled.div`
-  width: 10px;
-  height: 12px;
-  border-radius: 6px;
-  border-style: solid;
-  border-width: 2px;
-`;
-
-export const PerformanceLabelIndicator = styled(LabelIndicator)`
+export const PerformanceLabelIndicator = styled.div`
   ${({ theme }: { theme: Theme }) => `
-    border-color: ${theme.palette.primary.main};
+    width: ${theme.typography.pxToRem(18)};
+    height: ${theme.typography.pxToRem(3)};
+    border-radius: 1.5px;
     background-color: ${theme.palette.primary.main};
   `}
 `;
 
-export const ContributionsLabelIndicator = styled(LabelIndicator)`
+const ContributionsLabelIndicatorGreySquare = styled.div`
   ${({ theme }: { theme: Theme }) => `
-    border-color: ${theme.palette.primary.light1}
+    width: ${theme.typography.pxToRem(5)};
+    height: ${theme.typography.pxToRem(3)};
+    border-radius: 1.5px;
+    background-color: ${theme.palette.grey['300']};
   `}
 `;
+
+const ContributionsLabelIndicatorContainer = styled.div`
+  display: flex;
+  gap: 1px;
+`;
+
+export const ContributionsLabelIndicator = () => (
+  <ContributionsLabelIndicatorContainer>
+    <ContributionsLabelIndicatorGreySquare />
+    <ContributionsLabelIndicatorGreySquare />
+    <ContributionsLabelIndicatorGreySquare />
+  </ContributionsLabelIndicatorContainer>
+);
 
 export const PerformancePercentage = styled.div`
   ${({ theme }: { theme: Theme }) => `

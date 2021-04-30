@@ -76,7 +76,7 @@ export function usePerformanceChartStyles() {
 
     STROKE_COLOR: {
       GRID: grey['200'],
-      INDICATOR: primary.dark1,
+      INDICATOR: grey['400'],
       PERFORMANCE_GRAPH: primary.main,
       CONTRIBUTION_GRAPH: grey['300'],
     },
@@ -92,6 +92,8 @@ export function usePerformanceChartStyles() {
 
     STROKE_WIDTH: {
       GRID: 2,
+      INDICATOR_CIRCLE: 1,
+      INDICATOR_LINE: 2,
       PERFORMANCE_GRAPH: 4,
       CONTRIBUTION_GRAPH: 2,
     },
@@ -101,7 +103,7 @@ export function usePerformanceChartStyles() {
     },
 
     RADIUS: {
-      INDICATOR: 4,
+      INDICATOR: 5,
     },
   };
 }

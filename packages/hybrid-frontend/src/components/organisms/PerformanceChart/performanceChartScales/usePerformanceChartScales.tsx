@@ -20,9 +20,13 @@ export interface GetScalesProps {
   // e.g. passing 0.1 (10%) will result in the chart's highest point being 10%
   // higher than the underlying data's highest point
   maxValueBuffer?: number;
+
+  // Same principles as above, but applied to the minimum value
+  minValueBuffer?: number;
 }
 
 const DEFAULT_MAX_VALUE_BUFFER = 0.1;
+const DEFAULT_MIN_VALUE_BUFFER = 0.1;
 
 export default function usePerformanceChartScales({
   minDate,
@@ -30,6 +34,7 @@ export default function usePerformanceChartScales({
   maxValue,
   minValue,
   maxValueBuffer = DEFAULT_MAX_VALUE_BUFFER,
+  minValueBuffer = DEFAULT_MIN_VALUE_BUFFER,
   chartDimension,
 }: GetScalesProps) {
   const {
@@ -53,7 +58,7 @@ export default function usePerformanceChartScales({
     () =>
       scaleLinear({
         domain: [minValue, maxValue * (1 + maxValueBuffer)],
-        range: [innerHeight, margin.top],
+        range: [innerHeight * (1 - minValueBuffer), margin.top],
 
         nice: true,
       }),
