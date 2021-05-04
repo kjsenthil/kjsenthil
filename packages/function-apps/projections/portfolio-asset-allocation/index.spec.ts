@@ -10,12 +10,16 @@ describe("Calculate portfolio asset allocation", () => {
 
     test("Equity less than 0 returns error", () => {
         const testAccount = createAccount("test", 500, -1)
-        expect(equityValue(testAccount)).toThrow(/Equity percentage must be between 0 and 100/)
+        expect(() => {
+            equityValue(testAccount)
+        }).toThrow(/Equity percentage must be between 0 and 100/)
     });
 
     test("Equity more than 100 returns error", () => {
         const testAccount = createAccount("test", 500, 100.5)
-        expect(equityValue(testAccount)).toThrow(/Equity percentage must be between 0 and 100/)
+        expect(() => {
+            equityValue(testAccount)
+        }).toThrow(/Equity percentage must be between 0 and 100/)
     });
 
     test("Calculates equity value for a portfolio - 1 account", () => {

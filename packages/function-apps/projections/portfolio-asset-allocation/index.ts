@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 
-const main: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+const assetAllocationMain: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     const inputAccounts: Accounts = req.body
 
     let returnBody = {}
@@ -60,4 +60,4 @@ function calculatePortfolioEquityPercentage(inputAccounts: Accounts): number {
     return (totalEquityValue / totalPortfolioValue) * 100
 }
 
-export { main, calculatePortfolioEquityPercentage, equityValue }
+export { assetAllocationMain, calculatePortfolioEquityPercentage, equityValue }

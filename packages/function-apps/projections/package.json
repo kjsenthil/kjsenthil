@@ -1,13 +1,12 @@
 {
   "name": "@tsw/function-app-projections",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Function app containing APIs to support projections functionality in Digital Hybrid",
   "scripts": {
     "build": "tsc",
     "build:zip": "yarn build && copyfiles ./host.json ./dist && cd dist && bestzip projections.zip *",
     "copy-zip": "copyfiles -f ./dist/projections.zip ../../../function-app-zips/",
-    "prestart": "yarn build",
-    "start": "func start",
+    "start": "yarn build && func start",
     "test": "jest"
   },
   "devDependencies": {

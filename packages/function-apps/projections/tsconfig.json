@@ -4,10 +4,12 @@
     "module": "commonjs",
     "target": "es6",
     "noEmit": false,
-    "outDir": "dist/portfolio-asset-allocation"
+    "outDir": "dist"
   },
   "files": [
     "portfolio-asset-allocation/index.ts",
-    "portfolio-asset-allocation/function.json"
+    "portfolio-asset-allocation/function.json",
+    "portfolio-risk-profile/index.ts",
+    "portfolio-risk-profile/function.json"
   ]
 }

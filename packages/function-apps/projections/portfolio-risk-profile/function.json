@@ -13,5 +13,5 @@
     }
   ],
   "scriptFile": "./index.js",
-  "entryPoint": "assetAllocationMain"
+  "entryPoint": "riskProfileMain"
 }
