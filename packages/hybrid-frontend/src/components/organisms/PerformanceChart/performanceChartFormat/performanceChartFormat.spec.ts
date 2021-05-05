@@ -41,10 +41,17 @@ describe('performanceChartFormat', () => {
 
   test('The normal date formatter works as expected', () => {
     const locale = 'en-GB';
+
     const date = new Date(2020, 0, 1);
     const dateToday = new Date();
 
-    expect(formatDate(date, { locale })).toBe('1 Jan 2020');
+    const formattedDate = date.toLocaleString(locale, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+
+    expect(formatDate(date, { locale })).toBe(formattedDate);
     expect(formatDate(dateToday, { locale })).toBe('Today');
   });
 
