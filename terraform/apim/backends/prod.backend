@@ -1,0 +1,4 @@
+resource_group_name = "rg-ukw-prod-tfstates-dh"
+storage_account_name = "stukwtswprodtfstatesdh"
+container_name = "prodtfstate"
+key = "apim/terraform.tfstate"

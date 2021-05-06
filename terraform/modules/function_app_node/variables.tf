@@ -13,6 +13,11 @@ variable "name" {
   description = "Name of the function app to be deployed"
 }
 
+variable "storage_account_prefix" {
+  type        = string
+  description = "Prefix to append to the start of the function app storage account"
+}
+
 variable "app_code_path" {
   type        = string
   description = "Local path to function app zip code"

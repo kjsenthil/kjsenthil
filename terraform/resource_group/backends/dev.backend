@@ -1,0 +1,4 @@
+resource_group_name = "rg-ukw-dev-tfstates-dh"
+storage_account_name = "stukwtswdevtfstatesdh"
+container_name = "devtfstate"
+key = "rg/terraform.tfstate"

@@ -1,6 +1,6 @@
 // Random string to use for the function app storage account
 resource "random_string" "this" {
-  length  = 24
+  length  = 8
   upper   = false
   lower   = true
   number  = true
@@ -9,7 +9,7 @@ resource "random_string" "this" {
 
 // Storage account for function app to store code in
 resource "azurerm_storage_account" "this" {
-  name                = random_string.this.result
+  name                = "${var.storage_account_prefix}${random_string.this.result}"
   resource_group_name = var.resource_group_name
   location            = var.location
 

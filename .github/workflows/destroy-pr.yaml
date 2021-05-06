@@ -28,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./terraform/env/dev/pr
+        working-directory: ./terraform/infra
 
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
@@ -47,7 +47,7 @@ jobs:
           terraform_version: 0.14.7
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="key=digital-hybrid-backend/dev/${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
+        run: terraform init -backend-config="./backends/pr.backend" -backend-config="key=${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
 
       - name: "Terraform Destroy"
         run: terraform destroy -auto-approve

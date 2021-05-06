@@ -90,13 +90,113 @@ jobs:
       artifact-name: "function-app-zips"
 
   # Deploys Staging backend (Terraform).
-  deploy_staging_terraform:
-    name: "Deploy staging backend"
-    needs: [package_function_apps]
+  deploy_staging_rg_terraform:
+    name: "Deploy Staging Resource Group"
     runs-on: ubuntu-latest
+
     defaults:
       run:
-        working-directory: ./terraform/env/staging
+        working-directory: ./terraform/resource_group
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/staging.backend"
+
+      - name: "Terraform Validate"
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        id: rg-plan
+        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
+
+      - name: "Terraform Apply"
+        run: terraform apply -var-file="./var-files/staging.tfvars" -auto-approve
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .name.value )
+
+    outputs:
+      resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
+
+  # Deploys terraform APIM.
+  deploy_staging_apim_terraform:
+    name: "Deploy Staging APIM"
+    needs: [deploy_staging_rg_terraform]
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/apim
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/staging.backend"
+
+      - name: "Terraform Validate"
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
+
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve -var-file="./var-files/staging.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
+
+    outputs:
+      apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
+
+  # Deploys terraform PR contents.
+  deploy_staging_terraform:
+    name: "Deploy Staging Infrastructure."
+    needs:
+      [
+        deploy_staging_rg_terraform,
+        deploy_staging_apim_terraform,
+        package_function_apps,
+      ]
+    runs-on: ubuntu-latest
 
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
@@ -113,7 +213,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ needs.package_function_apps.outputs.artifact-name }}
-          path: ./terraform/env/staging/zips
+          path: ./terraform/infra/zips
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
@@ -122,25 +222,47 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init
+        id: pr-init
+        working-directory: ./terraform/infra
+        run: terraform init -backend-config="./backends/staging.backend"
+
+      - name: "Terraform Validate"
+        id: pr-validate
+        working-directory: ./terraform/infra
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        id: plan
+        working-directory: ./terraform/infra
+        run: terraform plan -var-file="./var-files/staging.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve
+        id: pr-apply
+        working-directory: ./terraform/infra
+        run: terraform apply -var-file="./var-files/staging.tfvars" -auto-approve
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
 
-      # Outputs
       - name: "Get Terraform Outputs"
-        id: tf-outputs
+        id: get-terraform-outputs
+        working-directory: ./terraform/infra
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
+          echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
 
     outputs:
-      frontend_storage_account_name: ${{ steps.tf-outputs.outputs.frontend-storage-account-name }}
-      resource_group_name: ${{ steps.tf-outputs.outputs.resource-group-name }}
-      api_endpoints: ${{ steps.tf-outputs.outputs.api-endpoints }}
-      website_endpoint: ${{ steps.tf-outputs.outputs.website-endpoint }}
+      frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
+      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
+      website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
+      storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
@@ -207,7 +329,6 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
-
   end_to_end_test_staging:
     name: "E2E test (Staging)"
     runs-on: ubuntu-latest
@@ -265,13 +386,116 @@ jobs:
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
 
   # Deploy Production backend (Terraform)
-  deploy_production_terraform:
-    name: "Deploy production backend"
-    needs: [end_to_end_test_staging, package_function_apps]
+  deploy_production_rg_terraform:
+    name: "Deploy prod Resource Group"
+    needs: "end_to_end_test_staging"
     runs-on: ubuntu-latest
+
     defaults:
       run:
-        working-directory: ./terraform/env/prod
+        working-directory: ./terraform/resource_group
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/prod.backend"
+
+      - name: "Terraform Validate"
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        id: rg-plan
+        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
+
+      - name: "Terraform Apply"
+        run: terraform apply -var-file="./var-files/prod.tfvars" -auto-approve
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .name.value )
+
+    outputs:
+      resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
+
+  # Deploys terraform APIM.
+  deploy_production_apim_terraform:
+    name: "Deploy prod APIM"
+    needs: [end_to_end_test_staging, deploy_production_rg_terraform]
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/apim
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/prod.backend"
+
+      - name: "Terraform Validate"
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
+
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve -var-file="./var-files/prod.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
+
+    outputs:
+      apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
+
+  # Deploys terraform PR contents.
+  deploy_production_terraform:
+    name: "Deploy prod infrastructure."
+    needs:
+      [
+        deploy_production_rg_terraform,
+        deploy_production_apim_terraform,
+        end_to_end_test_staging,
+        package_function_apps,
+      ]
+    runs-on: ubuntu-latest
+
     env:
       ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
       ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
@@ -287,7 +511,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ needs.package_function_apps.outputs.artifact-name }}
-          path: ./terraform/env/prod/zips
+          path: ./terraform/infra/zips
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v1
@@ -296,32 +520,47 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        id: init
-        run: terraform init
+        id: pr-init
+        working-directory: ./terraform/infra
+        run: terraform init -backend-config="./backends/prod.backend"
+
+      - name: "Terraform Validate"
+        id: pr-validate
+        working-directory: ./terraform/infra
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        id: plan
+        working-directory: ./terraform/infra
+        run: terraform plan -var-file="./var-files/prod.tfvars"
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
 
       - name: "Terraform Apply"
-        id: apply
-        run: terraform apply -auto-approve
+        id: pr-apply
+        working-directory: ./terraform/infra
+        run: terraform apply -var-file="./var-files/prod.tfvars" -auto-approve
+        env:
+          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
 
-      # Outputs
       - name: "Get Terraform Outputs"
-        id: tf-outputs
-        working-directory: ./terraform/env/prod
+        id: get-terraform-outputs
+        working-directory: ./terraform/infra
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
 
     outputs:
-      frontend_storage_account_name: ${{ steps.tf-outputs.outputs.frontend-storage-account-name }}
-      resource_group_name: ${{ steps.tf-outputs.outputs.resource-group-name }}
-      api_endpoints: ${{ steps.tf-outputs.outputs.api-endpoints }}
-      website_endpoint: ${{ steps.tf-outputs.outputs.website-endpoint }}
-      storybook_storage_account_name: ${{ steps.tf-outputs.outputs.storybook-storage-account-name }}
-      storybook_web_endpoint: ${{ steps.tf-outputs.outputs.storybook-web-endpoint }}
+      frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
+      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
+      website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
+      storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
 
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
@@ -436,7 +675,6 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
-
   output_website_urls:
     name: "Output website urls"
     needs: [deploy_staging_terraform, deploy_production_terraform]
@@ -448,7 +686,6 @@ jobs:
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
-
 
   post-to-slack:
     if: always()
