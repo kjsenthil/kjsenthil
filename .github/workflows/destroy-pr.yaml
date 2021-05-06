@@ -50,7 +50,7 @@ jobs:
         run: terraform init -backend-config="./backends/pr.backend" -backend-config="key=${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
 
       - name: "Terraform Destroy"
-        run: terraform destroy -auto-approve
+        run: terraform destroy -auto-approve -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
           TF_VAR_resource_group_name: rg-ukw-dev-tfstates-dh
