@@ -786,7 +786,28 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_staging_terraform.result }}' === 'success' ? ':heavy-check-mark:   Terraform - Deploy Staging Environment' : '${{ needs.deploy_staging_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform - Deploy Staging Environment' : ':heavy-minus-sign:   Terraform - Deploy Staging Environment'
+                      "text": '${{ needs.package_function_apps.result }}' === 'success' ? ':heavy-check-mark:   Package Function Apps' : '${{ needs.package_function_apps.result }}' === 'failure' ? ':heavy-cross-mark:   Package Function Apps' : ':heavy-minus-sign:   Package Function Apps'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_staging_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Resource Group' : '${{ needs.deploy_staging_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Resource Group' : ':heavy-minus-sign:   Deploy Staging Resource Group'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_staging_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging APIM' : '${{ needs.deploy_staging_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging APIM' : ':heavy-minus-sign:   Deploy Staging APIM'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_staging_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Infrastructure' : '${{ needs.deploy_staging_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Infrastructure' : ':heavy-minus-sign:   Deploy Staging Infrastructure'
                     }
                   },
                   {
@@ -807,7 +828,21 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_production_terraform.result }}' === 'success' ? ':heavy-check-mark:   Terraform - Deploy Production Environment' : '${{ needs.deploy_production_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform - Deploy Production Environment' : ':heavy-minus-sign:   Terraform - Deploy Production Environment'
+                      "text": '${{ needs.deploy_production_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Resource Group' : '${{ needs.deploy_production_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Resource Group' : ':heavy-minus-sign:   Deploy Production Resource Group'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_production_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production APIM' : '${{ needs.deploy_production_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production APIM' : ':heavy-minus-sign:   Deploy Production APIM'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_production_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Infrastructure' : '${{ needs.deploy_production_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Infrastructure' : ':heavy-minus-sign:   Deploy Production Infrastructure'
                     }
                   },
                   {

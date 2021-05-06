@@ -551,7 +551,7 @@ jobs:
         run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
-          TF_VAR_resource_group_name: rg-ukw-staging-tfstates-dh
+          TF_VAR_resource_group_name: rg-uks-staging-digital-hybrid
           TF_VAR_apim_name: apim-uks-staging-digital-hybrid
 
     outputs:
@@ -595,7 +595,7 @@ jobs:
         run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
-          TF_VAR_resource_group_name: rg-ukw-prod-tfstates-dh
+          TF_VAR_resource_group_name: rg-uks-prod-digital-hybrid
           TF_VAR_apim_name: apim-uks-prod-digital-hybrid
 
     outputs:
@@ -831,6 +831,20 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
+                      "text": '${{ needs.package_function_apps.result }}' === 'success' ? ':heavy-check-mark:   Package Function Apps' : '${{ needs.package_function_apps.result }}' === 'failure' ? ':heavy-cross-mark:   Package Function Apps' : ':heavy-minus-sign:   Package Function Apps'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Resource Group' : '${{ needs.deploy_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Resource Group' : ':heavy-minus-sign:   Deploy Resource Group'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
                       "text": '${{ needs.deploy_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy APIM' : '${{ needs.deploy_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy APIM' : ':heavy-minus-sign:   Deploy APIM'
                     }
                   },
@@ -838,7 +852,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy PR environment' : '${{ needs.deploy_pr_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy PR environment' : ':heavy-minus-sign:   Deploy PR environment'
+                      "text": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy PR Infrastructure' : '${{ needs.deploy_pr_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy PR Infrastructure' : ':heavy-minus-sign:   Deploy PR Infrastructure'
                     }
                   },
                   {
