@@ -53,3 +53,5 @@ jobs:
         run: terraform destroy -auto-approve
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
+          TF_VAR_resource_group_name: rg-ukw-dev-tfstates-dh
+          TF_VAR_apim_name: apim-uks-dev-digital-hybrid
