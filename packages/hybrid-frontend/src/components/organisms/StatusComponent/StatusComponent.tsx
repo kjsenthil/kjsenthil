@@ -46,7 +46,7 @@ const StatusComponent = ({
           </Typography>
         )}
 
-        <Link to="/gmvp/sim">Goto Projections</Link>
+        <Link to="/my-account/sim">Goto Projections</Link>
       </CardContent>
     </Card>
   </Box>

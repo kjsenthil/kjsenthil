@@ -11,8 +11,8 @@ const Form = styled.form`
 `;
 
 export interface LoginFormProps {
-  errorMessage: string;
-  successMessage: string;
+  errorMessage?: string;
+  successMessage?: string;
   onSubmit: (inputs: LoginFormData) => Promise<void>;
   title?: string;
 }
@@ -59,8 +59,8 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit, title }: LoginFormP
           Log in
         </Button>
         <Spacer y={2} />
-        {successMessage.length > 0 && <Alert severity="success">{successMessage}</Alert>}
-        {errorMessage.length > 0 && <Alert severity="error">{errorMessage}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Form>
     </>
   );

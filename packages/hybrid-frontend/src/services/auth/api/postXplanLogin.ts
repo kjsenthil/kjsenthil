@@ -1,9 +1,9 @@
-import { LoginFormData } from '../services/auth/types';
-import { xplanloginPayload, xPlanBaseUrl } from './apiConstants';
-import ENDPOINTS from './endpoints';
+import { LoginFormData } from '../types';
+import { xplanloginPayload, xPlanBaseUrl } from '../../../api/apiConstants';
+import { API_ENDPOINTS } from '../../../config';
 
 export default async (values: LoginFormData): Promise<void> => {
-  const loginURL = ENDPOINTS['login-to-xplan'] || `${xPlanBaseUrl}/resourceful/site`;
+  const loginURL = API_ENDPOINTS['login-to-xplan'] || `${xPlanBaseUrl}/resourceful/site`;
 
   const payload = xplanloginPayload
     .replace(/\{username\}/, values.username)

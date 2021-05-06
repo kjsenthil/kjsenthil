@@ -1,3 +1,4 @@
+export { default as PrivateRoute } from './PrivateRoute';
 export { default as FeatureToggle } from './FeatureToggle';
 export { default as AnimateToggle } from './AnimateToggle';
 export { default as FormInputWrapper } from './FormInputWrapper';

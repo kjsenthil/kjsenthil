@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'gatsby';
+import React, { useState, useEffect } from 'react';
+import { navigate, Link } from 'gatsby';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Spacer } from '../components/atoms';
 import {
   HomeFeatureCards,
@@ -10,25 +11,23 @@ import {
   SimulationForm,
 } from '../components/organisms';
 import getProjections from '../api/getProjection';
-import login from '../api/postXPlanLogin';
 
 import { MyAccountLayout } from '../components/templates';
 import { ProjectionResponse, CustomProjectionRequestData } from '../types';
-import { LoginFormData } from '../services/auth/types';
+import { LoginFormData } from '../services/auth';
+import { xplanLogin } from '../services/auth/reducers/authSlice';
+import { RootState } from '../store';
 
 const Container = styled((props) => <Grid container spacing={3} {...props} />)`
   padding: 16px;
 `;
 
 const IndexPage = () => {
+  const { isXplanLoggedIn, xplanLoginError } = useSelector((state: RootState) => state.auth);
+
+  const dispatch = useDispatch();
+
   const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
-  const [loginMessages, setLoginMessages] = useState<{
-    error: string;
-    success: string;
-  }>({
-    error: '',
-    success: '',
-  });
 
   const onFormSubmit = async (formValues: CustomProjectionRequestData): Promise<void> => {
     const projectionsResponse = await getProjections(formValues);
@@ -36,19 +35,14 @@ const IndexPage = () => {
   };
 
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
-    try {
-      await login(loginFormValues);
-      setLoginMessages({
-        error: '',
-        success: 'Log in successful',
-      });
-    } catch (e) {
-      setLoginMessages({
-        error: e.message,
-        success: '',
-      });
-    }
+    dispatch(xplanLogin(loginFormValues));
   };
+
+  useEffect(() => {
+    if (isXplanLoggedIn) {
+      navigate('/my-account/accounts');
+    }
+  }, [isXplanLoggedIn]);
 
   return (
     <MyAccountLayout stretch>
@@ -63,12 +57,7 @@ const IndexPage = () => {
           )}
         </Grid>
         <Grid item xs={12} sm={4}>
-          <LoginForm
-            errorMessage={loginMessages.error}
-            onSubmit={onLoginFormSubmit}
-            successMessage={loginMessages.success}
-            title="Login"
-          />
+          <LoginForm onSubmit={onLoginFormSubmit} errorMessage={xplanLoginError} title="Login" />
           <Spacer y={4} />
           <SimulationForm onSubmit={onFormSubmit} />
         </Grid>
@@ -78,13 +67,13 @@ const IndexPage = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <Link to="/gmvp/xplogin">Goto GMVP</Link>
+        <Link to="/my-account/xplogin">Goto XPlan Login</Link>
       </Grid>
 
       <Spacer y={4} />
 
       <Grid item xs={12}>
-        <Link to="/dacn/login">Goto DACN</Link>
+        <Link to="/my-account/login">Goto Login</Link>
       </Grid>
     </MyAccountLayout>
   );

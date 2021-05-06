@@ -36,15 +36,3 @@ export interface ProjectionResponse {
 }
 
 export type CustomProjectionRequestData = Omit<ProjectionRequest, 'riskModel' | 'sedolCode'>;
-
-export interface PinLoginItem {
-  position: number;
-  value: number;
-}
-
-export interface TokenItem {
-  application: string;
-  accessToken: string;
-  refreshToken: string;
-  sessionId: string;
-}

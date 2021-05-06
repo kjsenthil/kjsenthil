@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { initStatePins } from '../../../constants';
-import { PinLoginItem } from '../../../types';
+import { PinLoginItem } from '../../../services/auth';
 import { Button, Card, CardContent, Grid, Spacer, TextField } from '../../atoms';
 import { Alert } from '../../molecules';
 
 export interface PinLoginProps {
-  errorMessage: string;
-  successMessage: string;
+  errorMessage?: string;
+  successMessage?: string;
   onPinSubmit: (inputs: PinLoginItem[]) => Promise<void>;
 }
 
@@ -51,8 +51,8 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
           </Grid>
         </form>
         <Spacer y={2} />
-        {successMessage.length > 0 && <Alert severity="success">{successMessage}</Alert>}
-        {errorMessage.length > 0 && <Alert severity="error">{errorMessage}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </CardContent>
     </Card>
   );

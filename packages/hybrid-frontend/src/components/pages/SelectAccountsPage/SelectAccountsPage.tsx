@@ -5,7 +5,7 @@ import { MyAccountLayout } from '../../templates';
 
 const SelectAccountsPage = () => (
   <MyAccountLayout pageTitle="Select an account type">
-    <AccountTypeSelection onSubmit={() => navigate('/gmvp/goals')} />
+    <AccountTypeSelection onSubmit={() => navigate('/my-account/goals')} />
   </MyAccountLayout>
 );
 

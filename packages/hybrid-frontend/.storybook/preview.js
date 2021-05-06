@@ -1,10 +1,13 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { Provider } from 'react-redux';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { action } from '@storybook/addon-actions';
 import theme from '../src/themes/mui';
 import { GlobalStyle } from '../src/components/particles';
+import store from '../src/store';
+
 /**
  * Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
  * This global object isn't set in storybook context, requiring you to override it
@@ -12,7 +15,7 @@ import { GlobalStyle } from '../src/components/particles';
  */
 global.___loader = {
   enqueue: () => {},
-  hovering: () => {}
+  hovering: () => {},
 };
 
 // Prevents "__BASE_PATH__ is not defined" error inside Storybook.
@@ -28,13 +31,13 @@ window.___navigate = (pathname) => {
 };
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' }
+  actions: { argTypesRegex: '^on[A-Z].*' },
 };
 
 // Global decorator to make Material UI theme available to all components
 export const decorators = [
   (Story) => (
-    <>
+    <Provider store={store}>
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>
@@ -43,6 +46,6 @@ export const decorators = [
           </ThemeProvider>
         </MuiThemeProvider>
       </StylesProvider>
-    </>
-  )
+    </Provider>
+  ),
 ];

@@ -1,41 +1,32 @@
 import { navigate } from 'gatsby';
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import getMyAcnClient from '../../../api/getMyAcnClient';
-import postRefreshToken from '../../../api/postRefreshToken';
 import { ApiAppName, UnauthorizedText } from '../../../constants';
-import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
-import { logoutSession } from '../../../services/auth/auth';
 import { Typography } from '../../atoms';
+import { RootState } from '../../../store';
+import { logoutSession, setShouldRefreshTokens } from '../../../services/auth';
 
 const DashPage = () => {
-  const { contactId, accessTokens, setAccessTokens } = useGlobalContext();
+  const { contactId, accessTokens } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkAndRefreshToken = async (parentError) => {
-      if (accessTokens && parentError.message === UnauthorizedText) {
-        try {
-          const data = await postRefreshToken(accessTokens);
-          const newToken = data.Data.Attributes.NewTokens;
-          setAccessTokens(newToken);
-        } catch (error) {
-          logoutSession(() => navigate('dacn/login'));
-        }
-      } else {
-        logoutSession(() => navigate('dacn/login'));
-      }
-    };
-
     const fetchData = async () => {
       try {
         const myaccountsAccessToken = accessTokens?.find(
           (tokenItem) => tokenItem.application === ApiAppName.myAccounts
         );
 
-        const data = await getMyAcnClient(myaccountsAccessToken?.accessToken, contactId);
+        const data = await getMyAcnClient(myaccountsAccessToken?.accessToken, contactId as string);
         /* eslint-disable-next-line no-console */
         console.log(`getMyAcnClient resp`, data);
       } catch (error) {
-        checkAndRefreshToken(error);
+        if (accessTokens.length && error.message === UnauthorizedText) {
+          dispatch(setShouldRefreshTokens());
+        } else {
+          logoutSession(() => navigate('/my-account/login'));
+        }
       }
     };
 

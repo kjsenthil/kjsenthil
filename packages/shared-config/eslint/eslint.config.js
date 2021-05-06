@@ -6,6 +6,7 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
+    'no-param-reassign': 0,
     'prettier/prettier': ['error'],
     'comma-dangle': 'off',
     'import/no-extraneous-dependencies': [

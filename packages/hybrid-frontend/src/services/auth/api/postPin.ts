@@ -1,6 +1,6 @@
+import { myAccountsAPIClientId, postApiHeader } from '../../../api/apiConstants';
+import { API_ENDPOINTS } from '../../../config';
 import { PinLoginItem } from '../types';
-import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
-import ENDPOINTS from './endpoints';
 
 export default async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => {
   const payload = {
@@ -13,7 +13,7 @@ export default async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => 
     },
   };
 
-  const response = await fetch(ENDPOINTS['identity-pin'], {
+  const response = await fetch(API_ENDPOINTS['identity-pin'], {
     method: 'POST',
     headers: postApiHeader,
     body: JSON.stringify(payload),

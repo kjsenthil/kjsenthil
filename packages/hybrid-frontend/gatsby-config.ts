@@ -14,7 +14,7 @@ export default {
     },
     {
       resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: ['/gmvp/*', '/dacn/*'] },
+      options: { prefixes: ['/my-account/*'] },
     },
     'gatsby-plugin-styled-components',
     'gatsby-plugin-sharp',

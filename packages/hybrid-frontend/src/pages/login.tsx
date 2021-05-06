@@ -1,84 +1,40 @@
-import { navigate } from 'gatsby';
-import React, { useState } from 'react';
-import postLogin from '../api/postLogin';
-import postPin from '../api/postPin';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from '@reach/router';
 import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import PinLogin from '../components/organisms/PinLogin';
-import { sessionTokenValue } from '../constants';
-import useGlobalContext from '../hooks/GlobalContextHooks/useGlobalContext';
-import { handleLoginSession } from '../services/auth/auth';
-import { LoginFormData } from '../services/auth/types';
-import { PinLoginItem } from '../types';
+import { credLogin, pinLogin } from '../services/auth/reducers/authSlice';
+import { RootState } from '../store';
+import { LoginFormData, PinLoginItem } from '../services/auth/types';
 
 interface LoginPageProps {
   path: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LoginPage = ({ path }: LoginPageProps) => {
-  const [loginMessages, setLoginMessages] = useState<{
-    error: string;
-    success: string;
-  }>({
-    error: '',
-    success: '',
-  });
+const LoginPage = (_: LoginPageProps) => {
+  const {
+    status,
+    isCredLoggedIn,
+    twoStepAuthCode,
+    isPinLoggedIn,
+    credLoginError,
+    pinLoginError,
+  } = useSelector((state: RootState) => state.auth);
 
-  const [pinloginMessages, setpinLoginMessages] = useState<{
-    error: string;
-    success: string;
-  }>({
-    error: '',
-    success: '',
-  });
+  if (isPinLoggedIn) {
+    return <Redirect to="/my-account/dash" />;
+  }
 
-  const { twoStepAuthCode, setTwoStepAuthCode, setAccessTokens, setContactId } = useGlobalContext();
+  const dispatch = useDispatch();
 
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
-    try {
-      const resp = await postLogin(loginFormValues);
-
-      const twoStepVal = resp.data.attributes.twoStepAuthCode;
-
-      setTwoStepAuthCode(twoStepVal);
-
-      setLoginMessages({
-        error: '',
-        success: 'Log in successful',
-      });
-    } catch (e) {
-      setLoginMessages({
-        error: e.message,
-        success: '',
-      });
-    }
+    dispatch(credLogin(loginFormValues));
   };
 
   const onPinSubmit = async (pinFormValues: PinLoginItem[]) => {
-    try {
-      const pinResp = await postPin(pinFormValues, twoStepAuthCode);
-
-      handleLoginSession(sessionTokenValue);
-
-      const { contactId } = pinResp.data.attributes;
-      setContactId(contactId);
-
-      const accessTokens = pinResp.data.attributes.tokens;
-      setAccessTokens(accessTokens);
-
-      setpinLoginMessages({
-        error: '',
-        success: 'Pin Log in successful',
-      });
-
-      navigate('/dacn/dash');
-    } catch (e) {
-      setpinLoginMessages({
-        error: e.message,
-        success: '',
-      });
-    }
+    dispatch(pinLogin(pinFormValues));
   };
 
   return (
@@ -90,8 +46,8 @@ const LoginPage = ({ path }: LoginPageProps) => {
 
         <LoginForm
           onSubmit={onLoginFormSubmit}
-          errorMessage={loginMessages.error}
-          successMessage={loginMessages.success}
+          errorMessage={status === 'error' ? credLoginError : undefined}
+          successMessage={isCredLoggedIn ? 'Success' : undefined}
         />
       </Grid>
 
@@ -103,8 +59,7 @@ const LoginPage = ({ path }: LoginPageProps) => {
 
           <PinLogin
             onPinSubmit={onPinSubmit}
-            errorMessage={pinloginMessages.error}
-            successMessage={pinloginMessages.success}
+            errorMessage={status === 'error' ? pinLoginError : undefined}
           />
         </Grid>
       )}

@@ -1,6 +1,6 @@
 import { TokenItem } from '../types';
-import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
-import ENDPOINTS from './endpoints';
+import { myAccountsAPIClientId, postApiHeader } from '../../../api/apiConstants';
+import { API_ENDPOINTS } from '../../../config';
 
 export default async (prevTokens: TokenItem[]) => {
   const payload = {
@@ -14,7 +14,7 @@ export default async (prevTokens: TokenItem[]) => {
     },
   };
 
-  const response = await fetch(ENDPOINTS['identity-refresh-token'], {
+  const response = await fetch(API_ENDPOINTS['identity-refresh-token'], {
     method: 'POST',
     headers: postApiHeader,
     body: JSON.stringify(payload),

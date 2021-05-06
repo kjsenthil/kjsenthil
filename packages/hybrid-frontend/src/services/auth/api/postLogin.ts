@@ -1,6 +1,6 @@
-import { LoginFormData } from '../services/auth/types';
-import { myAccountsAPIClientId, postApiHeader } from './apiConstants';
-import ENDPOINTS from './endpoints';
+import { LoginFormData } from '../types';
+import { myAccountsAPIClientId, postApiHeader } from '../../../api/apiConstants';
+import { API_ENDPOINTS } from '../../../config';
 
 export default async (values: LoginFormData) => {
   const payload = {
@@ -13,7 +13,7 @@ export default async (values: LoginFormData) => {
     },
   };
 
-  const response = await fetch(ENDPOINTS['identity-login'], {
+  const response = await fetch(API_ENDPOINTS['identity-login'], {
     method: 'POST',
     headers: postApiHeader,
     body: JSON.stringify(payload),

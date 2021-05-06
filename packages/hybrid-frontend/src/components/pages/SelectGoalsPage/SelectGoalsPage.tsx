@@ -13,7 +13,7 @@ const SelectGoalsPage = () => {
     setGoalDetails({
       name: goal,
     });
-    navigate('/gmvp/inputs');
+    navigate('/my-account/inputs');
   };
 
   return (
