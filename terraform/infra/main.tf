@@ -39,7 +39,7 @@ module "api_management_policy" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [module.static_website_storage_account.primary_web_endpoint]),
+      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.static_website_storage_account.primary_web_endpoint]),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),

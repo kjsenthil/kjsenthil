@@ -240,7 +240,7 @@ jobs:
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
-          TF_VAR_apim_subnet_id : ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_id }}
+          TF_VAR_apim_subnet_id : ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_id }}
 
       - name: "Terraform Apply"
         id: pr-apply
