@@ -29,6 +29,11 @@ variable "name" {
   description = "The name of the APIM."
 }
 
+variable "external_subnet_id" {
+  type        = string
+  description = "ID of the subnet to use for external traffic to this APIM instance"
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}

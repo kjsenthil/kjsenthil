@@ -6,7 +6,13 @@ resource "azurerm_api_management" "api" {
   publisher_email     = var.publisher_email
   sku_name            = var.api_management_sku_name
   tags                = merge(map("tf_module_path", "./terraform/modules/api_management"), var.tags)
+
+  virtual_network_type = "External"
+  virtual_network_configuration {
+    subnet_id = var.external_subnet_id
+  }
+
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }

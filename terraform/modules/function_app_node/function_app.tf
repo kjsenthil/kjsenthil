@@ -18,8 +18,29 @@ resource "azurerm_function_app" "this" {
     HASH                     = base64encode(filesha256(var.app_code_path))
   }
 
+  auth_settings {
+    enabled = false
+  }
+
   site_config {
     linux_fx_version = "NODE|${var.node_version}"
+
+    // Allow inbound traffic from the APIM VNet
+    ip_restriction {
+      name                      = "Allow traffic from subnet"
+      virtual_network_subnet_id = var.subnet_id
+      action                    = "Allow"
+      priority                  = 1
+    }
+    // Implicit deny all is created for us
+
+    // Deny all access to the Function app deployment endpoint
+    scm_ip_restriction {
+      name       = "Deny all access"
+      ip_address = "0.0.0.0/0"
+      action     = "Deny"
+      priority   = 1
+    }
   }
 
   tags = var.tags

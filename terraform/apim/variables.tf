@@ -24,3 +24,8 @@ variable "location" {
   type        = string
   description = "Azure location to deploy resources into. Must be either 'uksouth' or 'ukwest'"
 }
+
+variable "vnet_cidr" {
+  type        = string
+  description = "CIDR block to assign to the APIM VNet"
+}

@@ -5,11 +5,18 @@ locals {
   }
   short_location = lookup(local.location_map, lower(replace(var.location, "/\\s/", "")))
 
-  endpoints = jsonencode(zipmap(values(module.api_operation).*.operation_id, formatlist("%s%s", format("%s/%s", data.azurerm_api_management.apim.gateway_url, module.apima.path), values(module.api_operation).*.url_template)))
+  endpoints = jsonencode(zipmap(values(module.api_operation).*.operation_id, formatlist("%s%s", "${data.azurerm_api_management.apim.gateway_url}/${module.apima.path}", values(module.api_operation).*.url_template)))
   api_definitions = {
     for k, v in
-    tomap(jsondecode(file(format("%s/%s", path.module, "api_definitions.json"))))["api_definitions"] :
+    tomap(jsondecode(file("${path.module}/api_definitions.json")))["api_definitions"] :
     v["operation_id"] => v
+  }
+
+  api_backends = {
+    bestinvest_api           = "https://online.bestinvest.co.uk/api/"
+    bestinvest_auth          = "https://identityapi.demo2.bestinvest.co.uk/api/"
+    xplan                    = "https://tbigroupuat2.xplan.iress.co.uk/"
+    projections_function_app = "https://${module.function_app_projections.url}/api/"
   }
 
   default_tags = {

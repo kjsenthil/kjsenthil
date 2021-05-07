@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e0169ad8-dd34-40f0-a022-0e82d095ff1b",
+		"_postman_id": "2bdb6168-41dc-434c-9875-87092d22922d",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -30,6 +30,28 @@
 									"    let accountids = _.map(jsonData.Included, (accs) => accs.Attributes.AccountId);\r",
 									"    pm.environment.set(\"myAccounts.accountIds\", accountids);\r",
 									"    pm.environment.set(\"myAccounts.firstAccountId\", accountids.toString().split(',')[0])\r",
+									"    \r",
+									"    //get SIPP account \r",
+									"    let bestInvestSippAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"SIPP\");\r",
+									"    if(bestInvestSippAccount != null){\r",
+									"        let bestInvestSippAccountId = bestInvestSippAccount.Attributes.AccountId;\r",
+									"        pm.environment.set(\"myAccounts.SippAccountId\", bestInvestSippAccount.Attributes.AccountId);\r",
+									"    }\r",
+									"\r",
+									"    //get GIA account\r",
+									"    let bestInvestGiaAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"GIA\");\r",
+									"    if(bestInvestGiaAccount != null){\r",
+									"        let bestInvestGiaAccountId = bestInvestGiaAccount.Attributes.AccountId;\r",
+									"        pm.environment.set(\"myAccounts.GiaAccountId\", bestInvestGiaAccountId);\r",
+									"    }\r",
+									"\r",
+									"    //get ISA account\r",
+									"    let bestInvestIsaAccount = jsonData.Included.find(a => a.Attributes.BestInvestAccount === \"ISA\");\r",
+									"    if(bestInvestIsaAccount != null){\r",
+									"        let bestInvestIsaAccountId = bestInvestIsaAccount.Attributes.AccountId;\r",
+									"        pm.environment.set(\"myAccounts.IsaAccountId\", bestInvestIsaAccountId);\r",
+									"    }\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -176,7 +198,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-contact/:id?include=contributions",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-contact/:id?include=contributions,withdrawals",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
@@ -189,7 +211,7 @@
 							"query": [
 								{
 									"key": "include",
-									"value": "contributions"
+									"value": "contributions,withdrawals"
 								}
 							],
 							"variable": [
@@ -197,6 +219,135 @@
 									"key": "id",
 									"value": "{{myAccounts.contactId}}",
 									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/breakdown-allocation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/breakdown-allocation/:id",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"breakdown-allocation",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.IsaAccountId}}"
 								}
 							]
 						}
@@ -403,6 +554,102 @@
 					]
 				},
 				{
+					"name": "/myaccount/account/:id/monthly-savings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/accounts/:id/monthly-savings",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"accounts",
+								":id",
+								"monthly-savings"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.firstAccountId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
 					"name": "/myaccount/investment-summary-account",
 					"request": {
 						"method": "GET",
@@ -422,6 +669,176 @@
 									"key": "filter[id]",
 									"value": "{{myAccounts.accountIds}}"
 								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/portfolio-asset-allocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"accountName\": \"isa\",\r\n        \"accountValue\": 500.00,\r\n        \"equityPercentage\": 71.45\r\n    },\r\n    {\r\n        \"accountName\": \"gia\",\r\n        \"accountValue\": 200.50,\r\n        \"equityPercentage\": 95.2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/portfolio-asset-allocation",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"portfolio-asset-allocation"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"investment-summary-account"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/portfolio-risk-profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"portfolioEquityPercentage\": 45.6,\r\n    \"equityFunds\": [\r\n        {\r\n            \"sedol\": \"BYX8KR5\",\r\n            \"equityProportion\": 67.36\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/portfolio-risk-profile",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"portfolio-risk-profile"
 							]
 						}
 					},

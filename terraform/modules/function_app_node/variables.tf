@@ -38,6 +38,11 @@ variable "node_version" {
   description = "Version of node to run. Run `az webapp list-runtimes --linux` to get possible versions"
 }
 
+variable "subnet_id" {
+  type        = string
+  description = "ID of the subnet to allow ingress traffic from for this function app"
+}
+
 variable "tags" {
   description = "Tags to apply to resources created by this module"
   default     = {}

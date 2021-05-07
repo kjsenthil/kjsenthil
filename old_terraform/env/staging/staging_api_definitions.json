@@ -435,6 +435,6 @@
                 "backend_url": "https:\/\/myaccountsapi.demo2.bestinvest.co.uk",
                 "rewrite_url": "\/api\/investment-summary-account"
             }
-        }                        
+        }
     ]
 }

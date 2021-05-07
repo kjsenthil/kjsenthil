@@ -12,7 +12,7 @@
                     ],
                     "method": "GET"
                 },
-                "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_api"
             }
         },
         {
@@ -27,7 +27,7 @@
                     ],
                     "method": "GET"
                 },
-                "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_api"
             }
         },
         {
@@ -45,7 +45,7 @@
                     ],
                     "method": "GET"
                 },
-                "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_api"
             }
         },
         {
@@ -63,7 +63,7 @@
                     ],
                     "method": "GET"
                 },
-                "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_api"
             }
         },
         {
@@ -81,7 +81,7 @@
                         "Content-Type"
                     ]
                 },
-                "backend_url": "https:\/\/online.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_api"
             }
         },
         {
@@ -106,7 +106,7 @@
                         "value": "@{var cookie = context.Response.Headers.GetValueOrDefault(\"Set-Cookie\",\"\"); return cookie.Replace(\"httponly;\", \"httponly;SameSite=None;\");}"
                     }
                 ],
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -145,7 +145,7 @@
                         "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
                     }
                 ],
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -169,7 +169,7 @@
                         "Cookie"
                     ]
                 },
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -208,7 +208,7 @@
                         "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
                     }
                 ],
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -248,7 +248,7 @@
                         "value": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
                     }
                 ],
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -273,7 +273,7 @@
                         "Cookie"
                     ]
                 },
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -298,7 +298,7 @@
                         "Cookie"
                     ]
                 },
-                "backend_url": "https:\/\/tbigroupuat2.xplan.iress.co.uk\/"
+                "backend_url": "xplan"
             }
         },
         {
@@ -316,7 +316,7 @@
                         "Content-Type"
                     ]
                 },
-                "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_auth"
             }
         },
         {
@@ -334,7 +334,49 @@
                         "Content-Type"
                     ]
                 },
-                "backend_url": "https:\/\/identityapi.demo2.bestinvest.co.uk\/api\/"
+                "backend_url": "bestinvest_auth"
+            }
+        },
+        {
+            "operation_id": "projections-portfolio-asset-allocation",
+            "display_name": "Projections - Get portfolio asset allocation",
+            "url_template": "\/projections\/portfolio-asset-allocation",
+            "description": "Connects to the projections function app and returns the asset allocation of a given portfolio",
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "POST",
+                    "headers": [
+                        "Content-Type",
+                        "Content-Length",
+                        "Host"
+                    ]
+                },
+                "backend_url": "projections_function_app",
+                "rewrite_url": "\/portfolio-asset-allocation"
+            }
+        },
+        {
+            "operation_id": "projections-portfolio-risk-profile",
+            "display_name": "Projections - Get portfolio risk profile",
+            "url_template": "\/projections\/portfolio-risk-profile",
+            "description": "Connects to the projections function app and returns the closest aligned risk profile for a given portfolio",
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "POST",
+                    "headers": [
+                        "Content-Type",
+                        "Content-Length",
+                        "Host"
+                    ]
+                },
+                "backend_url": "projections_function_app",
+                "rewrite_url": "\/portfolio-risk-profile"
             }
         }
     ]

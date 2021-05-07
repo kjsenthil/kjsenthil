@@ -35,3 +35,8 @@ variable "apim_name" {
   type        = string
   description = "Name of the APIM to use for this deployment to create APIs in"
 }
+
+variable "apim_subnet_id" {
+  type        = string
+  description = "ID of the subnet which houses the APIM instance to connect to"
+}
