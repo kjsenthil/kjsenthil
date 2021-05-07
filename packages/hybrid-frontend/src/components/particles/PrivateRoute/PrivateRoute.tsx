@@ -1,5 +1,6 @@
 import React, { useEffect, ComponentType } from 'react';
-import { Redirect, RouteComponentProps } from '@reach/router';
+import { navigate } from 'gatsby';
+import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthType, isLoggedInSession } from '../../../services/auth';
 import { RootState } from '../../../store';
@@ -20,6 +21,8 @@ const PrivateRoute = ({ Component, authType = 'MY_ACCOUNT', ...rest }: PrivateRo
   const loginPath = authType === 'MY_ACCOUNT' ? '/my-account/login' : '/my-account/xplogin';
 
   const hasNoLogginSession = !isLoggedInSession(authType);
+  const hasNotLoggedIn =
+    (authType === 'MY_ACCOUNT' && !isPinLoggedIn) || (authType === 'XPLAN' && !isXplanLoggedIn);
 
   useEffect(() => {
     if (shouldRefreshTokens) {
@@ -27,12 +30,15 @@ const PrivateRoute = ({ Component, authType = 'MY_ACCOUNT', ...rest }: PrivateRo
     }
   }, [shouldRefreshTokens]);
 
-  const hasNotLoggedIn =
-    (authType === 'MY_ACCOUNT' && !isPinLoggedIn) || (authType === 'XPLAN' && !isXplanLoggedIn);
-
-  if ((hasNoLogginSession || hasNotLoggedIn) && rest.location?.pathname !== loginPath) {
-    return <Redirect to={loginPath} />;
-  }
+  useEffect(() => {
+    /* eslint-disable-next-line no-console */
+    console.log(
+      `Checking login status: hasNoLogginSession ${hasNoLogginSession}, hasNotLoggedIn: ${hasNotLoggedIn}, authType: ${authType}, isPinLoggedIn: ${isPinLoggedIn}, isXplanLoggedIn: ${isXplanLoggedIn}`
+    );
+    if ((hasNoLogginSession || hasNotLoggedIn) && rest.location?.pathname !== loginPath) {
+      navigate(loginPath);
+    }
+  }, [hasNoLogginSession, hasNotLoggedIn]);
 
   return <Component {...rest} />;
 };

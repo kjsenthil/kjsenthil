@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React, { useEffect, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from '@reach/router';
+import { navigate } from 'gatsby';
 import { Grid, Typography, Box, TextField } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import { xplanLogin, setEntityId } from '../services/auth/reducers/authSlice';
@@ -17,9 +17,11 @@ const XplanLoginPage = (_: LoginPageProps) => {
     (state: RootState) => state.auth
   );
 
-  if (isXplanLoggedIn) {
-    return <Redirect to="/my-account/accounts" />;
-  }
+  useEffect(() => {
+    if (isXplanLoggedIn) {
+      navigate('/my-account/accounts');
+    }
+  }, [isXplanLoggedIn]);
 
   const dispatch = useDispatch();
 

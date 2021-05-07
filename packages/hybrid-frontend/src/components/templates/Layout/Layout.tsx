@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
     // to maintain styled-components as the priority that overrides MUI's themes
     // MUI classes must be injested in <head> first, then styled-components
     // https://material-ui.com/guides/interoperability/#styled-components
-    <StylesProvider injectFirst>
+    <StylesProvider>
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
           <CssBaseline />

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from '@reach/router';
+import { navigate } from 'gatsby';
 import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import PinLogin from '../components/organisms/PinLogin';
@@ -23,9 +23,11 @@ const LoginPage = (_: LoginPageProps) => {
     pinLoginError,
   } = useSelector((state: RootState) => state.auth);
 
-  if (isPinLoggedIn) {
-    return <Redirect to="/my-account/dash" />;
-  }
+  useEffect(() => {
+    if (isPinLoggedIn) {
+      navigate('/my-account/dash');
+    }
+  }, [isPinLoggedIn]);
 
   const dispatch = useDispatch();
 

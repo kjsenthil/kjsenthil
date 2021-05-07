@@ -3,6 +3,7 @@ import { render, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
+import * as gatsby from 'gatsby';
 import PrivateRoute from './PrivateRoute';
 import * as reducer from '../../../services/auth/reducers';
 import * as authUtils from '../../../services/auth/utils';
@@ -13,9 +14,7 @@ jest.mock('../../../services/auth/api', () => ({
   postPin: jest.fn(),
 }));
 
-jest.mock('@reach/router', () => ({
-  Redirect: ({ to }: { to: string }) => <h1>Redirecting to {to}</h1>,
-}));
+jest.mock('gatsby', () => ({ navigate: jest.fn() }));
 
 jest.mock('../../../services/auth/utils', () => ({
   isLoggedInSession: jest.fn(),
@@ -27,6 +26,7 @@ const mockIsLoggedInSession = (authUtils.isLoggedInSession as jest.Mock).mockRet
 describe('Private Route Components', () => {
   let store: Store;
   let Component: React.ComponentType;
+  let mockNavigate: jest.Mock;
 
   const contentText = 'Private Component';
   beforeEach(() => {
@@ -41,13 +41,15 @@ describe('Private Route Components', () => {
         <PrivateRoute default path="/" Component={() => <h1>{contentText}</h1>} />
       </Provider>
     );
+
+    mockNavigate = gatsby.navigate as jest.Mock;
   });
 
   describe('when there is no login session', () => {
     it('navigate to login page ', () => {
       render(<Component />);
 
-      expect(screen.getByText('Redirecting to /my-account/login')).toBeInTheDocument();
+      expect(mockNavigate).toHaveBeenCalledWith('/my-account/login');
     });
   });
 
@@ -69,6 +71,7 @@ describe('Private Route Components', () => {
 
       render(<Component />);
 
+      expect(mockNavigate).not.toHaveBeenCalledWith('/my-account/login');
       expect(screen.getByText(contentText)).toBeInTheDocument();
     });
 
