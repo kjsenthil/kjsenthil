@@ -5,7 +5,7 @@ import getMyAcnClient from '../../../api/getMyAcnClient';
 import { ApiAppName, UnauthorizedText } from '../../../constants';
 import { Typography } from '../../atoms';
 import { RootState } from '../../../store';
-import { logoutSession, setShouldRefreshTokens } from '../../../services/auth';
+import { setShouldRefreshTokens } from '../../../services/auth';
 
 const DashPage = () => {
   const { contactId, accessTokens } = useSelector((state: RootState) => state.auth);
@@ -22,10 +22,12 @@ const DashPage = () => {
         /* eslint-disable-next-line no-console */
         console.log(`getMyAcnClient resp`, data);
       } catch (error) {
+        /* eslint-disable-next-line no-console */
+        console.error('Could not fetch data', error);
         if (accessTokens.length && error.message === UnauthorizedText) {
           dispatch(setShouldRefreshTokens());
         } else {
-          logoutSession(() => navigate('/my-account/login'));
+          navigate('/error');
         }
       }
     };
