@@ -1,6 +1,5 @@
-import { Link } from 'gatsby';
 import React from 'react';
-import { Box, Card, CardContent, Typography } from '../../atoms';
+import { Box, Card, CardContent, Spacer, Typography } from '../../atoms';
 
 interface StatusComponentProps {
   entityId?: string;
@@ -25,12 +24,16 @@ const StatusComponent = ({
           </Typography>
         )}
 
+        <Spacer y={2} />
+
         {goalStatusMessage && (
           <Typography variant="h5" gutterBottom>
             Goal Status:
             {goalStatusMessage}
           </Typography>
         )}
+
+        <Spacer y={2} />
 
         {objStatusMessage && (
           <Typography variant="h5" gutterBottom>
@@ -45,8 +48,6 @@ const StatusComponent = ({
             {linkStatusMessage}
           </Typography>
         )}
-
-        <Link to="/my-account/sim">Goto Projections</Link>
       </CardContent>
     </Card>
   </Box>

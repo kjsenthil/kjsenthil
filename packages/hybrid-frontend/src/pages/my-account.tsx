@@ -4,11 +4,12 @@ import { trackPageView } from '@tsw/tracking-util';
 import LoginPage from './login';
 import XplanLoginPage from './xplogin';
 import { PrivateRoute } from '../components/particles';
-import SelectAccountsPage from '../components/pages/SelectAccountsPage/SelectAccountsPage';
-import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
-import SelectInputsPage from '../components/pages/SelectInputsPage/SelectInputsPage';
 import SimulationPage from '../components/pages/SimulationPage/SimulationPage';
 import DashPage from '../components/pages/DashPage/DashPage';
+import TargetAmountsPage from '../components/pages/TargetAmountsPage/TargetAmountsPage';
+import TargetDatePage from '../components/pages/TargetDatePage/TargetDatePage';
+import UpfrontContributionPage from '../components/pages/UpfrontContributionPage/UpfrontContributionPage';
+import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -22,9 +23,10 @@ const MyAccount = () => {
       <LoginPage path="/login" />
       <XplanLoginPage path="/xplogin" />
       <PrivateRoute path="/dash" Component={DashPage} />
-      <PrivateRoute authType="XPLAN" path="/accounts" Component={SelectAccountsPage} />
       <PrivateRoute authType="XPLAN" path="/goals" Component={SelectGoalsPage} />
-      <PrivateRoute authType="XPLAN" path="/inputs" Component={SelectInputsPage} />
+      <PrivateRoute authType="XPLAN" path="/targetamount" Component={TargetAmountsPage} />
+      <PrivateRoute authType="XPLAN" path="/targetdate" Component={TargetDatePage} />
+      <PrivateRoute authType="XPLAN" path="/upfront" Component={UpfrontContributionPage} />
       <PrivateRoute authType="XPLAN" path="/sim" Component={SimulationPage} />
     </Router>
   );

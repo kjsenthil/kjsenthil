@@ -23,6 +23,7 @@ export interface CaptureGoalProps {
 const defaultCaptureGoalInputValues: CaptureGoalData = {
   targetAmount: 0,
   targetYear: 2021,
+  targetDate: '05-06-2031',
   upfrontInvestment: 0,
   monthlyInvestment: 0,
   riskAppetite: 'cautious',

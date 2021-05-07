@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { initStatePins } from '../../../constants';
-import { PinLoginItem } from '../../../services/auth';
-import { Button, Card, CardContent, Grid, Spacer, TextField } from '../../atoms';
-import { Alert } from '../../molecules';
+import { PinLoginItem } from '../../../types';
+import { Button, Card, CardContent, Grid, Spacer } from '../../atoms';
+import { Alert, FormInput } from '../../molecules';
 
 export interface PinLoginProps {
   errorMessage?: string;
@@ -30,24 +30,25 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
   };
 
   return (
-    <Card>
+    <Card variant="outlined">
       <CardContent>
         <form onSubmit={onSubmit}>
           <Grid container spacing={2} alignItems="center" justify="center">
             {inputs.map((pinField, index) => (
-              <Grid item xs={3} key={String(pinField.position) + String(pinField.value)}>
-                <TextField
+              <Grid item xs={4} key={String(pinField.position) + String(pinField.value)}>
+                <FormInput
                   type="number"
-                  label={pinField.position}
+                  label={String(pinField.position)}
                   value={pinField.value}
                   onChange={handleChange(index)}
                 />
               </Grid>
             ))}
-
-            <Button data-testid="pin-login" variant="contained" color="primary" type="submit">
-              Log in
-            </Button>
+            <Grid item xs={12}>
+              <Button data-testid="pin-login" variant="contained" color="primary" type="submit">
+                Pin Log in
+              </Button>
+            </Grid>
           </Grid>
         </form>
         <Spacer y={2} />

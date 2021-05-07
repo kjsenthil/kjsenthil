@@ -1,4 +1,5 @@
 import { CaptureGoalData } from '../types';
+import monthDifference from '../utils/date';
 
 // API Config
 export const xPlanBaseUrl = 'https://tbigroupuat2.xplan.iress.co.uk';
@@ -40,51 +41,66 @@ const goalsHardCodedPayloadValues = {
   frequency: '12', //  how often they will take the money out
 };
 
-export const goalsPayLoad = (goalName: string = 'Create goal MVP', inputs: CaptureGoalData) => ({
-  fields: {
-    ...goalsHardCodedPayloadValues,
-    description: `${goalName} Goal created on ${currDateFormat}`,
-    capture_date: {
-      _val: currDateFormat,
-      _type: 'Date',
-    },
-    target_amount: {
-      _val: {
-        code: 'GBP',
-        value: {
-          _val: inputs?.targetAmount,
-          _type: 'BigDecimal',
-        },
+export const calcRegularSavings = (inputs: CaptureGoalData): number => {
+  const monthsVal = monthDifference(inputs?.targetDate, currDateFormat);
+
+  const regularSavingsVal =
+    inputs?.monthlyInvestment ||
+    (inputs?.targetAmount - inputs?.upfrontInvestment) / monthsVal ||
+    0;
+
+  return regularSavingsVal;
+};
+
+export const goalsPayLoad = (goalName: string = 'Create goal MVP', inputs: CaptureGoalData) => {
+  const targetDateval = inputs?.targetDate || `${inputs?.targetYear}-${currDateMonth}`;
+
+  return {
+    fields: {
+      ...goalsHardCodedPayloadValues,
+      description: `${goalName} Goal created on ${currDateFormat}`,
+      capture_date: {
+        _val: currDateFormat,
+        _type: 'Date',
       },
-      _type: 'Currency',
-    },
-    target_date: {
-      _val: `${inputs?.targetYear}-${currDateMonth}`,
-      _type: 'Date',
-    },
-    initial_investment: {
-      _val: {
-        code: 'GBP',
-        value: {
-          _val: inputs?.upfrontInvestment,
-          _type: 'BigDecimal',
+      target_amount: {
+        _val: {
+          code: 'GBP',
+          value: {
+            _val: inputs?.targetAmount,
+            _type: 'BigDecimal',
+          },
         },
+        _type: 'Currency',
       },
-      _type: 'Currency',
-    },
-    regular_saving: {
-      _val: {
-        code: 'GBP',
-        value: {
-          _val: inputs?.monthlyInvestment,
-          _type: 'BigDecimal',
+      target_date: {
+        _val: targetDateval,
+        _type: 'Date',
+      },
+      initial_investment: {
+        _val: {
+          code: 'GBP',
+          value: {
+            _val: inputs?.upfrontInvestment,
+            _type: 'BigDecimal',
+          },
         },
+        _type: 'Currency',
       },
-      _type: 'Currency',
+      regular_saving: {
+        _val: {
+          code: 'GBP',
+          value: {
+            _val: inputs?.monthlyInvestment,
+            _type: 'BigDecimal',
+          },
+        },
+        _type: 'Currency',
+      },
+      goal_level_risk_tolerance: inputs?.riskAppetite,
     },
-    goal_level_risk_tolerance: inputs?.riskAppetite,
-  },
-});
+  };
+};
 
 // Objective
 export const objectivePayLoad = (goalName: string = 'Create objective MVP') => ({

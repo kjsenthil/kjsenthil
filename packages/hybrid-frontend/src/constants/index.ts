@@ -1,3 +1,5 @@
+import { CaptureGoalData } from '../types';
+
 export enum Goals {
   HOUSE = 'house',
   BABY = 'baby',
@@ -40,3 +42,12 @@ export enum ApiAppName {
   myAccounts = 'MyAccountsApi',
   ois = 'OisApi',
 }
+
+export const defaultCaptureGoalData: CaptureGoalData = {
+  targetAmount: 0,
+  targetYear: 0,
+  targetDate: '',
+  upfrontInvestment: 0,
+  monthlyInvestment: 0,
+  riskAppetite: 'Cautious',
+};

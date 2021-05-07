@@ -40,8 +40,8 @@ const LoginPage = (_: LoginPageProps) => {
   };
 
   return (
-    <Grid container alignItems="center" spacing={3}>
-      <Grid item sm={6}>
+    <Grid container justify="center" alignItems="center" spacing={3}>
+      <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Login Page
         </Typography>
@@ -54,7 +54,7 @@ const LoginPage = (_: LoginPageProps) => {
       </Grid>
 
       {twoStepAuthCode && (
-        <Grid item sm={6}>
+        <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             Pin Login
           </Typography>

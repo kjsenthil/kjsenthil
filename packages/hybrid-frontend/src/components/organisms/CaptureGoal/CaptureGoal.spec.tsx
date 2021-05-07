@@ -32,6 +32,7 @@ describe('CaptureGoal', () => {
     const testGoal = {
       targetAmount: 50000,
       targetYear: 2031,
+      targetDate: '05-06-2031',
       upfrontInvestment: 15000,
       monthlyInvestment: 500,
       riskAppetite: 'moderate',
@@ -53,6 +54,7 @@ describe('CaptureGoal', () => {
       upfrontInvestment: testGoal.upfrontInvestment,
       monthlyInvestment: testGoal.monthlyInvestment,
       riskAppetite: testGoal.riskAppetite,
+      targetDate: testGoal.targetDate,
     });
   });
 });

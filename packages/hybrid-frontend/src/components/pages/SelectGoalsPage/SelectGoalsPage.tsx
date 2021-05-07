@@ -13,7 +13,7 @@ const SelectGoalsPage = () => {
     setGoalDetails({
       name: goal,
     });
-    navigate('/my-account/inputs');
+    navigate('/my-account/targetamount');
   };
 
   return (

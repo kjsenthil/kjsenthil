@@ -2,6 +2,7 @@ import React from 'react';
 import Img from 'gatsby-image';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Grid } from '../../atoms';
+import { ChildImage } from '../../../types';
 
 const homeFeatureImagesQuery = graphql`
   query AssetsPhotos {
@@ -28,17 +29,6 @@ const homeFeatureImagesQuery = graphql`
     }
   }
 `;
-
-interface ChildImage {
-  childImageSharp: {
-    fluid: {
-      aspectRatio: number;
-      src: string;
-      srcSet: string;
-      sizes: string;
-    };
-  };
-}
 
 interface FeatureImageResponse {
   thumbnail1: ChildImage;

@@ -1,11 +1,12 @@
 import React, { useEffect, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import { Grid, Typography, Box, TextField } from '../components/atoms';
+import { Grid, Typography, Box } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import { xplanLogin, setEntityId } from '../services/auth/reducers/authSlice';
 import { LoginFormData } from '../services/auth/types';
 import { RootState } from '../store';
+import { FormInput } from '../components/molecules';
 
 interface LoginPageProps {
   path: string;
@@ -19,7 +20,7 @@ const XplanLoginPage = (_: LoginPageProps) => {
 
   useEffect(() => {
     if (isXplanLoggedIn) {
-      navigate('/my-account/accounts');
+      navigate('/my-account/goals');
     }
   }, [isXplanLoggedIn]);
 
@@ -46,7 +47,7 @@ const XplanLoginPage = (_: LoginPageProps) => {
         />
 
         <Box m={1}>
-          <TextField label="Entity ID" type="number" value={entityId} onChange={onEntityHandler} />
+          <FormInput label="Entity ID" type="number" value={entityId} onChange={onEntityHandler} />
         </Box>
       </Grid>
     </Grid>
