@@ -347,7 +347,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "{{myAccounts.IsaAccountId}}"
+									"value": "{{myAccounts.SippAccountId}}"
 								}
 							]
 						}
@@ -732,7 +732,7 @@
 					]
 				},
 				{
-					"name": "/myaccount/portfolio-asset-allocation",
+					"name": "/projections/portfolio-asset-allocation",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -746,13 +746,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/portfolio-asset-allocation",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/projections/portfolio-asset-allocation",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
 								"{{apiPath}}",
-								"myaccount",
+								"projections",
 								"portfolio-asset-allocation"
 							]
 						}
@@ -817,7 +817,7 @@
 					]
 				},
 				{
-					"name": "/myaccount/portfolio-risk-profile",
+					"name": "/projections/portfolio-risk-profile",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -831,13 +831,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/portfolio-risk-profile",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/projections/portfolio-risk-profile",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
 								"{{apiPath}}",
-								"myaccount",
+								"projections",
 								"portfolio-risk-profile"
 							]
 						}
