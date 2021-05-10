@@ -1,4 +1,4 @@
-resource_group_name = "rg-ukw-prod-tfstates-dh"
-storage_account_name = "stukwtswprodtfstatesdh"
-container_name = "prodtfstate"
+resource_group_name = "rg-uks-prod-tfstates-dh"
+storage_account_name = "stukstswprodtfstatesdh"
+container_name = "prod"
 key = "rg/terraform.tfstate"

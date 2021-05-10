@@ -1,23 +1,21 @@
 resource "azurerm_resource_group" "resource_group" {
-  for_each = var.config
-  name     = "rg-ukw-${var.environment}-${each.value.resource_group_name}-dh"
-  location = local.location
+  name     = "rg-${local.short_location}-${var.environment}-tfstates-dh"
+  location = var.location
   tags     = local.default_tags
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  for_each                 = { for k, v in var.config : k => v if v["storage_account_name"] != "" }
-  name                     = "stukwtsw${var.environment}${each.value.storage_account_name}dh"
-  resource_group_name      = azurerm_resource_group.resource_group[each.key].name
-  location                 = azurerm_resource_group.resource_group[each.key].location
+  name                     = "st${local.short_location}tsw${var.environment}tfstatesdh"
+  resource_group_name      = azurerm_resource_group.resource_group.name
+  location                 = azurerm_resource_group.resource_group.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
   tags                     = local.default_tags
 }
 
 resource "azurerm_storage_container" "container" {
-  count                 = length([for k, v in var.config : v["containers"] if length(v["containers"]) > 0][0])
-  name                  = [for k, v in var.config : v["containers"] if length(v["containers"]) > 0][0][count.index]
-  storage_account_name  = azurerm_storage_account.storage_account[[for k, v in { for k, v in var.config : k => v["containers"] if length(v["containers"]) > 0 } : k][0]].name
+  for_each = var.containers
+  name                  = each.key
+  storage_account_name  = azurerm_storage_account.storage_account.name
   container_access_type = "private"
 }

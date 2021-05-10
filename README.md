@@ -109,3 +109,4 @@ Launches the [Cypress](https://www.cypress.io/) test runner for end-to-end UI te
 Runs `format` for all workspaces.
 
 Front end - checks and fixes [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) errors.
+

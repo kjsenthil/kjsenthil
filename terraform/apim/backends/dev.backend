@@ -1,4 +1,4 @@
-resource_group_name = "rg-ukw-dev-tfstates-dh"
-storage_account_name = "stukwtswdevtfstatesdh"
-container_name = "devtfstate"
+resource_group_name = "rg-uks-dev-tfstates-dh"
+storage_account_name = "stukstswdevtfstatesdh"
+container_name = "dev"
 key = "apim/terraform.tfstate"
