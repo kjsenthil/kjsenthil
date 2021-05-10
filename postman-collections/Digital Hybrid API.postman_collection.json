@@ -580,72 +580,61 @@
 					},
 					"response": [
 						{
-							"name": "Bad Request",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
-									"host": [
-										"{{myAccounts.baseUrl}}"
-									],
-									"path": [
-										"api",
-										"investment-summary-account",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{myAccounts.baseUrl}}/api/investment-summary-account/:id",
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/accounts/:id/monthly-savings",
 									"host": [
-										"{{myAccounts.baseUrl}}"
+										"{{digitalHybrid.baseUrl}}"
 									],
 									"path": [
-										"api",
-										"investment-summary-account",
-										":id"
+										"{{apiPath}}",
+										"myaccount",
+										"accounts",
+										":id",
+										"monthly-savings"
 									],
 									"variable": [
 										{
-											"key": "id"
+											"key": "id",
+											"value": "{{myAccounts.firstAccountId}}"
 										}
 									]
 								}
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "text",
+							"_postman_previewlanguage": "plain",
 							"header": [
 								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
 									"key": "Content-Type",
-									"value": "text/plain"
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 10 May 2021 11:23:23 GMT"
 								}
 							],
 							"cookie": [],
-							"body": ""
+							"body": "{\r\n  \"Data\": [\r\n    {\r\n      \"Type\": \"monthly-savings\",\r\n      \"Id\": \"2121301\",\r\n      \"Attributes\": {\r\n        \"MonthlySavingId\": 2121301,\r\n        \"AccountId\": 20499,\r\n        \"AssetId\": 3558,\r\n        \"Sedol\": null,\r\n        \"AssetName\": \"CASH\",\r\n        \"Amount\": 100.00,\r\n        \"ReInvest\": true,\r\n        \"IsStandingOrder\": false\r\n      },\r\n      \"Links\": {\r\n        \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/monthly-savings/2121301\"\r\n      },\r\n      \"Relationships\": null\r\n    }\r\n  ],\r\n  \"Included\": null\r\n}"
 						}
 					]
 				},
