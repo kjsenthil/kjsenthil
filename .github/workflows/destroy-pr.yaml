@@ -21,10 +21,84 @@ jobs:
     outputs:
       prefix: ${{ steps.derive-prefix.outputs.sha-subset }}
 
+  get_rg_outputs:
+    name: "Get resource group outputs"
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/resource_group
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/dev.backend"
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+
+    outputs:
+      resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
+
+  get_apim_outputs:
+    name: "Get APIM outputs"
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/apim
+
+    env:
+      ARM_CLIENT_ID: 1031f58e-c51e-46ea-8803-74e19d760359
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: 12cc0aaa-84e6-49d1-afc3-743c4b0b2d56
+      ARM_TENANT_ID: 7bec33a8-0ab6-4da4-9f1f-f5dcbae296db
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/dev.backend"
+
+      - name: "Set Terraform Outputs"
+        id: set-terraform-outputs
+        run: |
+          echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
+          echo ::set-output name=apim-subnet-id::$( terraform output -json | jq -r .apim_subnet_id.value )
+
+    outputs:
+      apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
+      apim_subnet_id: ${{ steps.set-terraform-outputs.outputs.apim-subnet-id }}
+
   destroy_pr_dev_env:
     name: "Clean up PR deployment"
     runs-on: ubuntu-latest
-    needs: derive_environment_prefix
+    needs: [derive_environment_prefix, get_rg_outputs, get_apim_outputs]
 
     defaults:
       run:
@@ -53,5 +127,6 @@ jobs:
         run: terraform destroy -auto-approve -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
-          TF_VAR_resource_group_name: rg-ukw-dev-tfstates-dh
-          TF_VAR_apim_name: apim-uks-dev-digital-hybrid
+          TF_VAR_resource_group_name: ${{ needs.get_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.get_apim_outputs.outputs.apim_name }}
+          TF_VAR_apim_subnet_id: ${{ needs.get_apim_outputs.outputs.apim_subnet_id }}
