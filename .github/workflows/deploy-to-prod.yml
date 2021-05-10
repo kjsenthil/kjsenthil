@@ -701,9 +701,14 @@ jobs:
     needs:
       [
         build_cache,
+        package_function_apps,
+        deploy_staging_rg_terraform,
+        deploy_staging_apim_terraform,
         deploy_staging_terraform,
         deploy_staging_frontend,
         end_to_end_test_staging,
+        deploy_production_rg_terraform,
+        deploy_production_apim_terraform,
         deploy_production_terraform,
         deploy_production_frontend,
         deploy_storybook_pr,
