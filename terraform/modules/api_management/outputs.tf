@@ -38,3 +38,8 @@ output "gateway_url" {
   value       = azurerm_api_management.api.public_ip_addresses
   description = "Gateway URL for the API management service."
 }
+
+output "principal_id" {
+  value       = azurerm_api_management.api.identity.0.principal_id
+  description = "system identity principal_id for the API management service."
+}
