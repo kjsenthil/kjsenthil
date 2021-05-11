@@ -867,6 +867,8 @@ jobs:
       [
         build_cache,
         derive_environment_prefix,
+        package_function_apps,
+        deploy_rg_terraform,
         deploy_apim_terraform,
         deploy_pr_terraform,
         clear_storybook_storage_account,
