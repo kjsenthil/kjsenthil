@@ -3,6 +3,8 @@ resource "azurerm_virtual_network" "this" {
   resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = data.azurerm_resource_group.resource_group.location
   address_space       = [var.vnet_cidr]
+
+  tags = merge(var.tags, local.default_tags)
 }
 
 resource "azurerm_subnet" "apim_external_subnet" {

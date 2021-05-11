@@ -120,7 +120,7 @@ module "function_app_projections" {
   app_code_path          = var.projections_function_app_code_path
   os_type                = "linux"
   node_version           = "12.9"
-  subnet_id              = var.apim_subnet_id
+  subnet_id              = data.azurerm_subnet.apim_subnet.id
   tags                   = local.default_tags
 }
 

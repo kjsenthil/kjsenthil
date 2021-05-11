@@ -7,10 +7,10 @@ resource "azurerm_key_vault" "key_vault" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   purge_protection_enabled    = false
 
-  sku_name   = "standard"
+  sku_name = "standard"
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = var.principal_id 
+    object_id = var.principal_id
 
     secret_permissions = [
       "Get"

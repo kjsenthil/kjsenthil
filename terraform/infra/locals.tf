@@ -22,7 +22,7 @@ locals {
   }
 
   default_tags = {
-    "Cost Code"           = "934"
+    "CostCode"            = "934"
     "Department"          = "Financial Services"
     "Project"             = "Digital Hybrid"
     "Owner"               = "owner_placeholder"
