@@ -123,3 +123,4 @@ module "function_app_projections" {
   subnet_id              = var.apim_subnet_id
   tags                   = local.default_tags
 }
+

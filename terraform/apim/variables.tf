@@ -29,3 +29,9 @@ variable "vnet_cidr" {
   type        = string
   description = "CIDR block to assign to the APIM VNet"
 }
+
+variable "myaccount_signing_key" {
+  type        = string
+  description = "my accounts accesskey signing key"
+  sensitive   = true
+}

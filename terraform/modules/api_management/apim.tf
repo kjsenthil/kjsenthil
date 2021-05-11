@@ -11,8 +11,13 @@ resource "azurerm_api_management" "api" {
   virtual_network_configuration {
     subnet_id = var.external_subnet_id
   }
-
+  
+  identity {
+    type = "SystemAssigned"
+  }
+  
   lifecycle {
     prevent_destroy = false
   }
+
 }

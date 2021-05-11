@@ -182,11 +182,13 @@ jobs:
         run: terraform plan -no-color -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
