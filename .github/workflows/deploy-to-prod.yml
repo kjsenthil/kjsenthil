@@ -132,9 +132,15 @@ jobs:
         id: set-terraform-outputs
         run: |
           echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+          echo ::set-output name=artifact-storage-account-name::$( terraform output -json | jq -r .artifact_storage_account_name.value )
+          echo ::set-output name=artifact-container-name::$( terraform output -json | jq -r .artifact_container_name.value )
+          echo ::set-output name=test-artifacts-container-name::$( terraform output -json | jq -r .test_artifacts_container_name.value )
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
+      artifact_storage_account_name: ${{ steps.set-terraform-outputs.outputs.artifact-storage-account-name }}
+      artifact_container_name: ${{ steps.set-terraform-outputs.outputs.artifact-container-name }}
+      test_artifacts_container_name: ${{ steps.set-terraform-outputs.outputs.test-artifacts-container-name }}
 
   # Deploys terraform APIM.
   deploy_staging_apim_terraform:
@@ -277,7 +283,7 @@ jobs:
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
     name: "Deploy staging front end"
-    needs: [build_cache, deploy_staging_terraform]
+    needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform]
     runs-on: ubuntu-latest
 
     steps:
@@ -327,8 +333,11 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage container create --name "staging-${{github.sha}}" --account-name "digitalhybridartifact"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "staging-${{github.sha}}" --account-name "digitalhybridartifact"
+            az storage blob upload-batch \
+              --source $GITHUB_WORKSPACE/packages/hybrid-frontend/public \
+              --destination "${{needs.deploy_staging_rg_terraform.outputs.artifact_container_name}}" \
+              --account-name "${{needs.deploy_staging_rg_terraform.outputs.artifact_storage_account_name}}" \
+              --destination-path "${{github.sha}}/"
 
       - name: "Deploy Gatsby static website"
         uses: azure/CLI@v1
@@ -342,7 +351,7 @@ jobs:
   end_to_end_test_staging:
     name: "E2E test (Staging)"
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_staging_terraform, deploy_staging_frontend]
+    needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform, deploy_staging_frontend]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -392,8 +401,11 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage container create --name "testing-${{github.sha}}" --account-name "digitalhybridartifact"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/videos -d "testing-${{github.sha}}" --account-name "digitalhybridartifact" --destination-path "tests/videos/"
+            az storage blob upload-batch \
+              --source $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/videos \
+              --destination "${{needs.deploy_staging_rg_terraform.outputs.test_artifacts_container_name}}" \
+              --account-name "${{needs.deploy_staging_rg_terraform.outputs.artifact_storage_account_name}}" \
+              --destination-path "${{github.sha}}/videos/"
 
   # Deploy Production backend (Terraform)
   deploy_production_rg_terraform:
@@ -439,9 +451,15 @@ jobs:
         id: set-terraform-outputs
         run: |
           echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+          echo ::set-output name=artifact-storage-account-name::$( terraform output -json | jq -r .artifact_storage_account_name.value )
+          echo ::set-output name=artifact-container-name::$( terraform output -json | jq -r .artifact_container_name.value )
+          echo ::set-output name=test-artifacts-container-name::$( terraform output -json | jq -r .test_artifacts_container_name.value )
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
+      artifact_storage_account_name: ${{ steps.set-terraform-outputs.outputs.artifact-storage-account-name }}
+      artifact_container_name: ${{ steps.set-terraform-outputs.outputs.artifact-container-name }}
+      test_artifacts_container_name: ${{ steps.set-terraform-outputs.outputs.test-artifacts-container-name }}
 
   # Deploys terraform APIM.
   deploy_production_apim_terraform:
@@ -585,7 +603,7 @@ jobs:
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
     name: "Deploy production front end"
-    needs: [build_cache, deploy_production_terraform]
+    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform]
 
     runs-on: ubuntu-latest
     steps:
@@ -635,8 +653,11 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage container create --name "prod-${{github.sha}}" --account-name "digitalhybridartifact"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "prod-${{github.sha}}" --account-name "digitalhybridartifact"
+            az storage blob upload-batch \
+              --source $GITHUB_WORKSPACE/packages/hybrid-frontend/public \
+              --destination "${{needs.deploy_production_rg_terraform.outputs.artifact_container_name}}" \
+              --account-name "${{needs.deploy_production_rg_terraform.outputs.artifact_storage_account_name}}" \
+              --destination-path "${{github.sha}}/"
 
       - name: "Deploy frontend as static website"
         uses: azure/CLI@v1
