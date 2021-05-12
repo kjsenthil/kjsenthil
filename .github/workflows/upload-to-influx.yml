@@ -34,7 +34,7 @@ jobs:
         with:
           name: ${{ github.event.workflow_run.name }}
           url: ${{ secrets.INFLUX_DB_URL }}
-          organisation: digital-hybrid
-          bucket: workflow-runs
+          organisation: tsw-digital-hybrid
+          bucket: github-workflow-metrics
           token: ${{ secrets.INFLUX_DB_TOKEN }}
           data: ${{ needs.get-job-object.outputs.job-data }}
