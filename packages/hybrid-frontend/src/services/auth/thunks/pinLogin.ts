@@ -1,7 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState, PinLoginItem } from '../types';
 import { postPin } from '../api';
-import { handleLoginSession } from '../utils';
 
 export const pinLogin = createAsyncThunk(
   'auth/pinLogin',
@@ -10,7 +9,6 @@ export const pinLogin = createAsyncThunk(
       auth: { twoStepAuthCode },
     } = getState() as { auth: AuthState };
     const response = await postPin(pinFormValues, twoStepAuthCode as string);
-    handleLoginSession('MY_ACCOUNT');
     return response.data.attributes;
   }
 );

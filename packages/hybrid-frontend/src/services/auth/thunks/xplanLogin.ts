@@ -2,14 +2,12 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { trackLink } from '@tsw/tracking-util';
 import { AuthState, LoginFormData } from '../types';
 import { postXplanLogin } from '../api';
-import { handleLoginSession } from '../utils';
 
 // Temperory, to be removed once xplan is integrated with the myaccounts login api
 export const xplanLogin = createAsyncThunk(
   'auth/xplanLogin',
   async (loginFormValues: LoginFormData) => {
     await postXplanLogin(loginFormValues);
-    handleLoginSession('XPLAN');
     trackLink({
       eventCategory: 'Account',
       eventAction: 'Account_Login',

@@ -96,7 +96,7 @@ module "mocked_response_api_operation" {
   description         = "Returns a JSON object with all the API endpoints."
   path_params         = []
   is_mock             = true
-  mock_sample         = local.endpoints
+  mock_sample         = jsonencode(local.api_endpoints)
   depends_on          = [module.api_operation]
 }
 

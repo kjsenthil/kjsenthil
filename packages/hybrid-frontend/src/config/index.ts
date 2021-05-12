@@ -1,4 +1,5 @@
 import { from } from 'env-var';
+import { ApiEndpoints } from './types';
 
 const defaultEnv = from({
   NODE_ENV: process.env.NODE_ENV,
@@ -28,11 +29,69 @@ if (typeof global.window === 'undefined') {
  * */
 const env = from({
   API_ENDPOINTS: process.env.API_ENDPOINTS,
-  API_IDENTITY_LOGIN: process.env.API_IDENTITY_LOGIN,
-  XPLAN_BASE_URL: process.env.XPLAN_BASE_URL,
+  API_BASE_URL: process.env.API_BASE_URL,
+  XPLAN_APP_ID: process.env.XPLAN_APP_ID,
 });
 
 const isRequired = NODE_ENV !== 'test';
 
-export const API_ENDPOINTS = env.get('API_ENDPOINTS').required(isRequired).asJsonObject();
-export const XPLAN_BASE_URL = env.get('XPLAN_BASE_URL').asUrlString();
+const defaultEndpoints = {
+  MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
+  GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
+  GET_ASSET_DETAILS: '/Assets/assetdetail/{sedol}',
+  GET_RISK_PROFILE_QUESTIONS: '/OxfordRisk/questions',
+  GET_STANDING_DATA: '/Assets/readymade/standingdata',
+  IDENTITY_LOGIN: '/login',
+  IDENTITY_PIN: '/pin',
+  IDENTITY_REFRESH_TOKEN: '/refresh-token',
+  POST_PROJECTIONS: '/Assets/projections',
+  PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION: '/projections/portfolio-asset-allocation',
+  PROJECTIONS_PORTFOLIO_RISK_PROFILE: '/projections/portfolio-risk-profile',
+  LOGIN_TO_XPLAN: '/touch/web_login',
+  UPDATE_GOAL: '/resourceful/entity/client-v4/{entity-id}/goals/{goal-index}',
+  UPDATE_OBJECTIVE: '/resourceful/entity/client-v4/{entity-id}/objectives/{objective-index}',
+  CREATE_GOAL_ADDITIONAL_FIELDS: '/resourceful/entity/client/{entity-id}/goals',
+  CREATE_GOAL_LESS_FIELDS: '/resourceful/entity/client-v4/{entity-id}/goals',
+  CREATE_OBJECTIVE: '/resourceful/entity/client-v4/{entity-id}/objectives',
+  LINK_GOAL_TO_OBJECTIVE:
+    '/resourceful/entity/client-v4/{entity-id}/goals/{objective-index}/objective_link',
+};
+
+export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
+
+export const API_ENDPOINTS = env
+  .get('API_ENDPOINTS')
+  .required(isRequired)
+  .default(defaultEndpoints)
+  .asJsonObject() as Record<ApiEndpoints, string>;
+
+export const XPLAN_APP_ID = env.get('XPLAN_APP_ID').default('65wshs01RpizdxEwCh6G').asString();
+
+export const MY_ACCOUNTS_API_CLIENT_ID = 'myaccounts-spa';
+
+export const AUTH_ENDPOINTS = [
+  API_ENDPOINTS.IDENTITY_LOGIN,
+  API_ENDPOINTS.IDENTITY_PIN,
+  API_ENDPOINTS.IDENTITY_REFRESH_TOKEN,
+  API_ENDPOINTS.LOGIN_TO_XPLAN,
+];
+
+export const XPLAN_ENDPOINTS = [
+  API_ENDPOINTS.UPDATE_GOAL,
+  API_ENDPOINTS.UPDATE_OBJECTIVE,
+  API_ENDPOINTS.CREATE_OBJECTIVE,
+  API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS,
+  API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS,
+  API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE,
+];
+
+export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
+  API_ENDPOINTS.MYACCOUNT_CLIENTS,
+  API_ENDPOINTS.PROJECTIONS_PORTFOLIO_RISK_PROFILE,
+  API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION,
+  API_ENDPOINTS.POST_PROJECTIONS,
+  API_ENDPOINTS.GET_RISK_PROFILE_QUESTIONS,
+  API_ENDPOINTS.GET_ASSET_DETAILS,
+  API_ENDPOINTS.GET_ASSET_ALLOCATION_BREAKDOWN,
+  API_ENDPOINTS.GET_STANDING_DATA,
+];

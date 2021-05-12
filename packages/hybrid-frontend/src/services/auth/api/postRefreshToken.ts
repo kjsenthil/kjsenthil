@@ -1,27 +1,22 @@
+import api from '../../api';
+import { MY_ACCOUNTS_API_CLIENT_ID, API_ENDPOINTS } from '../../../config';
 import { TokenItem } from '../types';
-import { myAccountsAPIClientId, postApiHeader } from '../../../api/apiConstants';
-import { API_ENDPOINTS } from '../../../config';
 
-export default async (prevTokens: TokenItem[]) => {
+const postRefreshToken = async (prevTokens: TokenItem[]) => {
   const payload = {
     data: {
       type: 'refresh-token',
       id: null,
       attributes: {
-        apiClientId: myAccountsAPIClientId,
+        apiClientId: MY_ACCOUNTS_API_CLIENT_ID,
         tokens: prevTokens,
       },
     },
   };
 
-  const response = await fetch(API_ENDPOINTS['identity-refresh-token'], {
-    method: 'POST',
-    headers: postApiHeader,
-    body: JSON.stringify(payload),
-  });
+  const response = await api.post(API_ENDPOINTS.IDENTITY_REFRESH_TOKEN, payload);
 
-  if (response.ok) {
-    return response.json();
-  }
-  return Promise.reject(new Error('Refresh Token failed'));
+  return response.data;
 };
+
+export default postRefreshToken;

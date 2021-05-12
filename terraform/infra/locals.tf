@@ -4,8 +4,7 @@ locals {
     ukwest  = "ukw"
   }
   short_location = lookup(local.location_map, lower(replace(var.location, "/\\s/", "")))
-
-  endpoints = jsonencode(zipmap(values(module.api_operation).*.operation_id, formatlist("%s%s", "${data.azurerm_api_management.apim.gateway_url}/${module.apima.path}", values(module.api_operation).*.url_template)))
+  api_endpoints = {for api in module.api_operation : upper(replace(api.operation_id, "-", "_")) => api.url_template }
   api_definitions = {
     for k, v in
     tomap(jsondecode(file("${path.module}/api_definitions.json")))["api_definitions"] :

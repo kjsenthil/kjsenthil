@@ -6,9 +6,8 @@ import { renderWithTheme, screen } from '@tsw/test-util';
 import * as reducer from '../../../services/auth/reducers';
 import DashPage from './DashPage';
 
-jest.mock('../../../api/getMyAcnClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
+jest.mock('../../../services/myAccounts', () => ({
+  getMyAccountClient: jest.fn(),
 }));
 
 describe('DashPage', () => {

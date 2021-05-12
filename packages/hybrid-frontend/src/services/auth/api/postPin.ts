@@ -1,25 +1,20 @@
-import { myAccountsAPIClientId, postApiHeader } from '../../../api/apiConstants';
-import { API_ENDPOINTS } from '../../../config';
+import api from '../../api';
+import { MY_ACCOUNTS_API_CLIENT_ID, API_ENDPOINTS } from '../../../config';
 import { PinLoginItem } from '../types';
 
-export default async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => {
+const postPin = async (pinLoginVals: PinLoginItem[], twoStepAuthCode: string) => {
   const payload = {
     data: {
       attributes: {
-        apiClientId: myAccountsAPIClientId,
+        apiClientId: MY_ACCOUNTS_API_CLIENT_ID,
         pin: pinLoginVals,
         twoStepAuthCode,
       },
     },
   };
 
-  const response = await fetch(API_ENDPOINTS['identity-pin'], {
-    method: 'POST',
-    headers: postApiHeader,
-    body: JSON.stringify(payload),
-  });
-  if (response.ok) {
-    return response.json();
-  }
-  return Promise.reject(new Error('Pin Log in failed'));
+  const response = await api.post(API_ENDPOINTS.IDENTITY_PIN, payload);
+  return response.data;
 };
+
+export default postPin;

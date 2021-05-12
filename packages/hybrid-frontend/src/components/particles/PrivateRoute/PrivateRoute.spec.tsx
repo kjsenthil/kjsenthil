@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import * as gatsby from 'gatsby';
 import PrivateRoute from './PrivateRoute';
 import * as reducer from '../../../services/auth/reducers';
-import * as authUtils from '../../../services/auth/utils';
 import * as api from '../../../services/auth/api';
 import { tokens } from '../../../services/auth/mocks';
 
@@ -15,13 +14,6 @@ jest.mock('../../../services/auth/api', () => ({
 }));
 
 jest.mock('gatsby', () => ({ navigate: jest.fn() }));
-
-jest.mock('../../../services/auth/utils', () => ({
-  isLoggedInSession: jest.fn(),
-  handleLoginSession: jest.fn(),
-}));
-
-const mockIsLoggedInSession = (authUtils.isLoggedInSession as jest.Mock).mockReturnValue(false);
 
 describe('Private Route Components', () => {
   let store: Store;
@@ -54,10 +46,6 @@ describe('Private Route Components', () => {
   });
 
   describe('when there is a login session', () => {
-    beforeEach(() => {
-      mockIsLoggedInSession.mockReturnValue(true);
-    });
-
     it('does not navigate to login page ', async () => {
       (api.postPin as jest.Mock).mockResolvedValue({
         data: {
@@ -73,14 +61,6 @@ describe('Private Route Components', () => {
 
       expect(mockNavigate).not.toHaveBeenCalledWith('/my-account/login');
       expect(screen.getByText(contentText)).toBeInTheDocument();
-    });
-
-    it('refreshes token when shouldRefreshTokens is true', () => {
-      store.dispatch(reducer.setShouldRefreshTokens());
-      const refreshTokenSpy = jest.spyOn(reducer, 'refreshToken');
-      render(<Component />);
-
-      expect(refreshTokenSpy).toHaveBeenCalledTimes(1);
     });
   });
 });

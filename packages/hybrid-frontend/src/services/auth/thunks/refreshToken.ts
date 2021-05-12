@@ -21,13 +21,11 @@ export const refreshTokenActionReducerMapBuilder = (
     .addCase(refreshToken.fulfilled, (state, { payload: { tokens } }) => {
       state.status = 'success';
       state.accessTokens = tokens;
-      state.shouldRefreshTokens = false;
     })
     .addCase(refreshToken.rejected, (state, action) => {
       state.status = 'error';
       state.isPinLoggedIn = false;
       state.isCredLoggedIn = false;
-      state.shouldRefreshTokens = false;
       state.refreshTokenError = action.error.message;
     });
 };

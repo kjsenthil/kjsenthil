@@ -40,7 +40,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (isXplanLoggedIn) {
-      navigate('/my-account/accounts');
+      navigate('/my-account/goals');
     }
   }, [isXplanLoggedIn]);
 

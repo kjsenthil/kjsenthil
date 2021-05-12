@@ -4,9 +4,8 @@ import { navigate } from 'gatsby';
 import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
 import PinLogin from '../components/organisms/PinLogin';
-import { credLogin, pinLogin } from '../services/auth/reducers/authSlice';
+import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../services/auth';
 import { RootState } from '../store';
-import { LoginFormData, PinLoginItem } from '../services/auth/types';
 
 interface LoginPageProps {
   path: string;

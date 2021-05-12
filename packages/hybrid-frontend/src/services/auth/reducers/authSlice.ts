@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logoutSession } from '../utils';
 import { AuthState } from '../types';
 import {
   credLogin,
@@ -24,13 +23,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: () => {
-      logoutSession();
-      return initialState;
-    },
-    setShouldRefreshTokens: (state) => {
-      state.shouldRefreshTokens = true;
-    },
+    logout: () => initialState,
     setEntityId: (state, action) => {
       state.entityId = action.payload;
     },
@@ -47,6 +40,6 @@ const authSlice = createSlice({
 });
 
 export { credLogin, pinLogin, xplanLogin, refreshToken };
-export const { setAccessTokens, setEntityId, setShouldRefreshTokens } = authSlice.actions;
+export const { setAccessTokens, setEntityId, logout } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -273,17 +273,19 @@ jobs:
         id: get-terraform-outputs
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
-          echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .endpoints.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
+          echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
+          echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
-      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
+      api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
+      api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
 
   clear_storybook_storage_account:
     name: "Clear storybook storage account"
@@ -440,6 +442,7 @@ jobs:
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
+          echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.pr
           echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
           echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
           cat .env.pr
@@ -501,6 +504,7 @@ jobs:
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
+          echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.pr
           echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
           echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
           cat .env.pr

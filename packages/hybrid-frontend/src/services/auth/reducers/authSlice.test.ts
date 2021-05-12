@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import authReducer, { credLogin, pinLogin, refreshToken } from './authSlice';
 import * as api from '../api';
-import * as utils from '../utils';
 import { tokens } from '../mocks';
 
 const contactId = 'contact-id';
@@ -13,12 +12,6 @@ jest.mock('../api', () => ({
   postRefreshToken: jest.fn(),
   postXplanLogin: jest.fn(),
 }));
-
-jest.mock('../utils', () => ({
-  handleLoginSession: jest.fn(),
-}));
-
-const mockHandleLoginSession = utils.handleLoginSession as jest.Mock;
 
 describe('authSlice', () => {
   let store: Store;
@@ -134,7 +127,6 @@ describe('authSlice', () => {
         expect(status).toStrictEqual('success');
         expect(isPinLoggedIn).toBe(true);
         expect(accessTokens).toStrictEqual(tokens);
-        expect(mockHandleLoginSession).toHaveBeenCalledWith('MY_ACCOUNT');
       });
     });
 

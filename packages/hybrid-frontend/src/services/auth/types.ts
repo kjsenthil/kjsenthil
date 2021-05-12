@@ -27,6 +27,5 @@ export interface AuthState {
   pinLoginError?: string;
   xplanLoginError?: string;
   refreshTokenError?: string;
-  shouldRefreshTokens?: boolean;
   entityId?: string;
 }

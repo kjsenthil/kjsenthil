@@ -23,7 +23,13 @@ output "storybook_storage_account_name" {
   description = "Name of the storage account hosting the storybook."
 }
 
-output "endpoints" {
-  value       = local.endpoints
-  description = "All the available API endpoints."
+output "api_endpoints" {
+  value       = jsonencode(local.api_endpoints)
+  description = "All the resouces URLs that can be accessed from the base URL."
 }
+
+output "api_base_url" {
+  value       = "${data.azurerm_api_management.apim.gateway_url}/${module.apima.path}"
+  description = "A concat of the APIM gateway URL and the API path."
+}
+

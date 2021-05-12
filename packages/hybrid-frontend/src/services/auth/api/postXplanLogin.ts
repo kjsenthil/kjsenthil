@@ -1,26 +1,22 @@
-import { LoginFormData } from '../types';
-import { xplanloginPayload, xPlanBaseUrl } from '../../../api/apiConstants';
+import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
+import { LoginFormData } from '../types';
 
-export default async (values: LoginFormData): Promise<void> => {
-  const loginURL = API_ENDPOINTS['login-to-xplan'] || `${xPlanBaseUrl}/resourceful/site`;
+const postXplanLogin = async ({ username, password }: LoginFormData): Promise<void> => {
+  const loginURL = API_ENDPOINTS.LOGIN_TO_XPLAN;
 
-  const payload = xplanloginPayload
-    .replace(/\{username\}/, values.username)
-    .replace(/\{password\}/, values.password);
-
-  const response = await fetch(loginURL, {
-    method: 'POST',
-    // headers: xplanPostApiHeader, // TODO: replace with JSON when the API can support it
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-    credentials: 'include', // needed based on the APIM changes
-    body: payload,
+  const payload = new URLSearchParams({
+    username,
+    password,
+    loginmode: 'client',
+    force: '1',
+    domain: 'coa',
+    site_type: 'full',
   });
 
-  if (!response.ok) {
-    return Promise.reject(new Error('Log in failed'));
-  }
+  const response = await api.post(loginURL, payload);
 
-  // no response - a session cookie will be set
-  return Promise.resolve();
+  return response.data;
 };
+
+export default postXplanLogin;
