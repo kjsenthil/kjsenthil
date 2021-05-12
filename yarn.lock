@@ -4608,6 +4608,7 @@ __metadata:
     cypress-mochawesome-reporter: ^2.0.1
     d3-array: ^2.12.1
     d3-format: ^2.0.0
+    d3-scale: ^3.3.0
     d3-shape: ^2.1.0
     d3-time-format: ^3.0.0
     dayjs: ^1.10.4
@@ -10113,7 +10114,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-scale@npm:^3.2.3":
+"d3-scale@npm:^3.2.3, d3-scale@npm:^3.3.0":
   version: 3.3.0
   resolution: "d3-scale@npm:3.3.0"
   dependencies:

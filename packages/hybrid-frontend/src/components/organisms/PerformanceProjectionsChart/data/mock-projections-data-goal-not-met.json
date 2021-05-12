@@ -1,0 +1,532 @@
+{
+  "Data": [
+    {
+      "Date": "2021-01-01T00:00:00.000Z",
+      "ValueGood": 607799.82,
+      "ValueBad": 607799.82,
+      "Value": 607799.82,
+      "NetContributionsToDate": 267777.4,
+      "ValueGoalNotMet": 607799.82
+    },
+    {
+      "Date": "2022-01-01T00:00:00.000Z",
+      "ValueGood": 632234.9344783352,
+      "ValueBad": 621552.7593184293,
+      "Value": 625113.4843717313,
+      "NetContributionsToDate": 272777.4,
+      "ValueGoalNotMet": 640891.7666642008
+    },
+    {
+      "Date": "2023-01-01T00:00:00.000Z",
+      "ValueGood": 665916.6439870845,
+      "ValueBad": 640510.0065793537,
+      "Value": 648978.885715264,
+      "NetContributionsToDate": 277777.4,
+      "ValueGoalNotMet": 686506.1768447164
+    },
+    {
+      "Date": "2024-01-01T00:00:00.000Z",
+      "ValueGood": 704275.0775053685,
+      "ValueBad": 662099.4781160924,
+      "Value": 676158.011245851,
+      "NetContributionsToDate": 282777.4,
+      "ValueGoalNotMet": 738454.1731282941
+    },
+    {
+      "Date": "2025-01-01T00:00:00.000Z",
+      "ValueGood": 746025.7011736033,
+      "ValueBad": 685598.193226468,
+      "Value": 705740.6958755131,
+      "NetContributionsToDate": 287777.4,
+      "ValueGoalNotMet": 794996.13911136
+    },
+    {
+      "Date": "2026-01-01T00:00:00.000Z",
+      "ValueGood": 790494.9132708979,
+      "ValueBad": 710627.0252401138,
+      "Value": 737249.6545837085,
+      "NetContributionsToDate": 292777.4,
+      "ValueGoalNotMet": 855219.8305627522
+    },
+    {
+      "Date": "2027-01-01T00:00:00.000Z",
+      "ValueGood": 837257.9452942079,
+      "ValueBad": 736946.8995477447,
+      "Value": 770383.9147965658,
+      "NetContributionsToDate": 297777.4,
+      "ValueGoalNotMet": 918549.9926924908
+    },
+    {
+      "Date": "2028-01-01T00:00:00.000Z",
+      "ValueGood": 886018.9114500361,
+      "ValueBad": 764391.281248664,
+      "Value": 804933.8246491214,
+      "NetContributionsToDate": 302777.4,
+      "ValueGoalNotMet": 984585.9137745968
+    },
+    {
+      "Date": "2029-01-01T00:00:00.000Z",
+      "ValueGood": 936558.2227383397,
+      "ValueBad": 792836.577953106,
+      "Value": 840743.7928815172,
+      "NetContributionsToDate": 307777.4,
+      "ValueGoalNotMet": 1053030.2091790983
+    },
+    {
+      "Date": "2030-01-01T00:00:00.000Z",
+      "ValueGood": 988705.5578871465,
+      "ValueBad": 822186.9268763822,
+      "Value": 877693.1372133037,
+      "NetContributionsToDate": 312777.4,
+      "ValueGoalNotMet": 1123652.2164937984
+    },
+    {
+      "Date": "2031-01-01T00:00:00.000Z",
+      "ValueGood": 1042324.429587675,
+      "ValueBad": 852365.5081747769,
+      "Value": 915685.148645743,
+      "NetContributionsToDate": 317777.4,
+      "ValueGoalNotMet": 1196267.0939105465
+    },
+    {
+      "Date": "2032-01-01T00:00:00.000Z",
+      "ValueGood": 1097302.6810150933,
+      "ValueBad": 883309.1960541615,
+      "Value": 954640.3577078055,
+      "NetContributionsToDate": 322777.4,
+      "ValueGoalNotMet": 1270722.9498689962
+    },
+    {
+      "Date": "2033-01-01T00:00:00.000Z",
+      "ValueGood": 1153546.290390116,
+      "ValueBad": 914965.0717600007,
+      "Value": 994492.1446367058,
+      "NetContributionsToDate": 327777.4,
+      "ValueGoalNotMet": 1346892.4527084688
+    },
+    {
+      "Date": "2034-01-01T00:00:00.000Z",
+      "ValueGood": 1210975.1471268,
+      "ValueBad": 947288.0462452096,
+      "Value": 1035183.7465390732,
+      "NetContributionsToDate": 332777.4,
+      "ValueGoalNotMet": 1424667.1103963365
+    },
+    {
+      "Date": "2035-01-01T00:00:00.000Z",
+      "ValueGood": 1269520.0661639513,
+      "ValueBad": 980239.1797311682,
+      "Value": 1076666.1418754293,
+      "NetContributionsToDate": 337777.4,
+      "ValueGoalNotMet": 1503953.227101666
+    },
+    {
+      "Date": "2036-01-01T00:00:00.000Z",
+      "ValueGood": 1329120.6136432816,
+      "ValueBad": 1013784.4579231386,
+      "Value": 1118896.509829853,
+      "NetContributionsToDate": 342777.4,
+      "ValueGoalNotMet": 1584668.958558208
+    },
+    {
+      "Date": "2037-01-01T00:00:00.000Z",
+      "ValueGood": 1389723.4833067274,
+      "ValueBad": 1047893.87818974,
+      "Value": 1161837.0798954023,
+      "NetContributionsToDate": 347777.4,
+      "ValueGoalNotMet": 1666742.1132544284
+    },
+    {
+      "Date": "2038-01-01T00:00:00.000Z",
+      "ValueGood": 1451281.2579830876,
+      "ValueBad": 1082540.7524841963,
+      "Value": 1205454.2543171602,
+      "NetContributionsToDate": 352777.4,
+      "ValueGoalNotMet": 1750108.4751416673
+    },
+    {
+      "Date": "2039-01-01T00:00:00.000Z",
+      "ValueGood": 1513751.4472815124,
+      "ValueBad": 1117701.1657244852,
+      "Value": 1249717.9262434943,
+      "NetContributionsToDate": 357777.4,
+      "ValueGoalNotMet": 1834710.5004032594
+    },
+    {
+      "Date": "2040-01-01T00:00:00.000Z",
+      "ValueGood": 1577095.7278037213,
+      "ValueBad": 1153353.5481581304,
+      "Value": 1294600.9413733273,
+      "NetContributionsToDate": 362777.4,
+      "ValueGoalNotMet": 1920496.2884903848
+    },
+    {
+      "Date": "2041-01-01T00:00:00.000Z",
+      "ValueGood": 1641279.3347308855,
+      "ValueBad": 1189478.3329259632,
+      "Value": 1340078.6668609374,
+      "NetContributionsToDate": 367777.4,
+      "ValueGoalNotMet": 2007418.7581613543
+    },
+    {
+      "Date": "2042-01-01T00:00:00.000Z",
+      "ValueGood": 1706270.5684939367,
+      "ValueBad": 1226057.6783988718,
+      "Value": 1386128.6417638934,
+      "NetContributionsToDate": 372777.4,
+      "ValueGoalNotMet": 2095434.979375883
+    },
+    {
+      "Date": "2043-01-01T00:00:00.000Z",
+      "ValueGood": 1772040.390266674,
+      "ValueBad": 1263075.2405071384,
+      "Value": 1432730.2904269837,
+      "NetContributionsToDate": 377777.4,
+      "ValueGoalNotMet": 2184505.625480166
+    },
+    {
+      "Date": "2044-01-01T00:00:00.000Z",
+      "ValueGood": 1838562.0869451677,
+      "ValueBad": 1300515.9841790958,
+      "Value": 1479864.6851011198,
+      "NetContributionsToDate": 382777.4,
+      "ValueGoalNotMet": 2274594.519495727
+    },
+    {
+      "Date": "2045-01-01T00:00:00.000Z",
+      "ValueGood": 1905810.9911510954,
+      "ValueBad": 1338366.0257491898,
+      "Value": 1527514.347549825,
+      "NetContributionsToDate": 387777.4,
+      "ValueGoalNotMet": 2365668.2549260077
+    },
+    {
+      "Date": "2046-01-01T00:00:00.000Z",
+      "ValueGood": 1973764.2452886724,
+      "ValueBad": 1376612.5001609428,
+      "Value": 1575663.0818701861,
+      "NetContributionsToDate": 392777.4,
+      "ValueGoalNotMet": 2457695.8762237653
+    },
+    {
+      "Date": "2047-01-01T00:00:00.000Z",
+      "ValueGood": 2042400.6012265687,
+      "ValueBad": 1415243.4482209138,
+      "Value": 1624295.8325561322,
+      "NetContributionsToDate": 397777.4,
+      "ValueGoalNotMet": 2550648.6075046347
+    },
+    {
+      "Date": "2048-01-01T00:00:00.000Z",
+      "ValueGood": 2111700.2490533018,
+      "ValueBad": 1454247.720216226,
+      "Value": 1673398.563161918,
+      "NetContributionsToDate": 402777.4,
+      "ValueGoalNotMet": 2644499.62063426
+    },
+    {
+      "Date": "2049-01-01T00:00:00.000Z",
+      "ValueGood": 2181644.669759046,
+      "ValueBad": 1493614.8929987266,
+      "Value": 1722958.1519188331,
+      "NetContributionsToDate": 407777.4,
+      "ValueGoalNotMet": 2739223.8357184622
+    },
+    {
+      "Date": "2050-01-01T00:00:00.000Z",
+      "ValueGood": 2252216.5077605085,
+      "ValueBad": 1533335.1982375118,
+      "Value": 1772962.3014118443,
+      "NetContributionsToDate": 412777.4,
+      "ValueGoalNotMet": 2834797.74846643
+    },
+    {
+      "Date": "2051-01-01T00:00:00.000Z",
+      "ValueGood": 2323399.46,
+      "ValueBad": 1573399.46,
+      "Value": 1823399.46,
+      "NetContributionsToDate": 398543.69655172416,
+      "ValueGoalNotMet": 2931199.28
+    },
+    {
+      "Date": "2052-01-01T00:00:00.000Z",
+      "ValueGood": 2323334.807985085,
+      "ValueBad": 1573298.76243456,
+      "Value": 1823324.696809217,
+      "NetContributionsToDate": 384309.9931034483,
+      "ValueGoalNotMet": 2931130.913836035
+    },
+    {
+      "Date": "2053-01-01T00:00:00.000Z",
+      "ValueGood": 2322882.24388068,
+      "ValueBad": 1572593.87947648,
+      "Value": 1822801.354473738,
+      "NetContributionsToDate": 370076.28965517244,
+      "ValueGoalNotMet": 2930652.3506882796
+    },
+    {
+      "Date": "2054-01-01T00:00:00.000Z",
+      "ValueGood": 2321653.8555972953,
+      "ValueBad": 1570680.6257331201,
+      "Value": 1821380.8538488664,
+      "NetContributionsToDate": 355842.5862068966,
+      "ValueGoalNotMet": 2929353.393572944
+    },
+    {
+      "Date": "2055-01-01T00:00:00.000Z",
+      "ValueGood": 2319261.731045441,
+      "ValueBad": 1566954.81581184,
+      "Value": 1818614.6157899052,
+      "NetContributionsToDate": 341608.8827586207,
+      "ValueGoalNotMet": 2926823.8455062388
+    },
+    {
+      "Date": "2056-01-01T00:00:00.000Z",
+      "ValueGood": 2315317.9581356263,
+      "ValueBad": 1560812.2643199998,
+      "Value": 1814054.0611521588,
+      "NetContributionsToDate": 327375.17931034486,
+      "ValueGoalNotMet": 2922653.509504373
+    },
+    {
+      "Date": "2057-01-01T00:00:00.000Z",
+      "ValueGood": 2309434.624778362,
+      "ValueBad": 1551648.78586496,
+      "Value": 1807250.6107909305,
+      "NetContributionsToDate": 313141.475862069,
+      "ValueGoalNotMet": 2916432.188583557
+    },
+    {
+      "Date": "2058-01-01T00:00:00.000Z",
+      "ValueGood": 2301223.818884158,
+      "ValueBad": 1538860.19505408,
+      "Value": 1797755.6855615235,
+      "NetContributionsToDate": 298907.77241379314,
+      "ValueGoalNotMet": 2907749.68576
+    },
+    {
+      "Date": "2059-01-01T00:00:00.000Z",
+      "ValueGood": 2290297.628363525,
+      "ValueBad": 1521842.30649472,
+      "Value": 1785120.7063192423,
+      "NetContributionsToDate": 284674.0689655173,
+      "ValueGoalNotMet": 2896195.8040499124
+    },
+    {
+      "Date": "2060-01-01T00:00:00.000Z",
+      "ValueGood": 2276268.141126972,
+      "ValueBad": 1499990.93479424,
+      "Value": 1768897.0939193899,
+      "NetContributionsToDate": 270440.3655172414,
+      "ValueGoalNotMet": 2881360.3464695043
+    },
+    {
+      "Date": "2061-01-01T00:00:00.000Z",
+      "ValueGood": 2258747.44508501,
+      "ValueBad": 1472701.89456,
+      "Value": 1748636.26921727,
+      "NetContributionsToDate": 256206.66206896555,
+      "ValueGoalNotMet": 2862833.116034985
+    },
+    {
+      "Date": "2062-01-01T00:00:00.000Z",
+      "ValueGood": 2237347.6281481483,
+      "ValueBad": 1439371.00039936,
+      "Value": 1723889.6530681865,
+      "NetContributionsToDate": 241972.9586206897,
+      "ValueGoalNotMet": 2840203.9157625656
+    },
+    {
+      "Date": "2063-01-01T00:00:00.000Z",
+      "ValueGood": 2211680.778226897,
+      "ValueBad": 1399394.06691968,
+      "Value": 1694208.6663274425,
+      "NetContributionsToDate": 227739.25517241383,
+      "ValueGoalNotMet": 2813062.5486684544
+    },
+    {
+      "Date": "2064-01-01T00:00:00.000Z",
+      "ValueGood": 2181358.9832317666,
+      "ValueBad": 1352166.90872832,
+      "Value": 1659144.7298503423,
+      "NetContributionsToDate": 213505.55172413797,
+      "ValueGoalNotMet": 2780998.817768863
+    },
+    {
+      "Date": "2065-01-01T00:00:00.000Z",
+      "ValueGood": 2145994.331073267,
+      "ValueBad": 1297085.34043264,
+      "Value": 1618249.264492189,
+      "NetContributionsToDate": 199271.8482758621,
+      "ValueGoalNotMet": 2743602.5260799997
+    },
+    {
+      "Date": "2066-01-01T00:00:00.000Z",
+      "ValueGood": 2105198.909661908,
+      "ValueBad": 1233545.17664,
+      "Value": 1571073.6911082866,
+      "NetContributionsToDate": 185038.14482758625,
+      "ValueGoalNotMet": 2700463.4766180757
+    },
+    {
+      "Date": "2067-01-01T00:00:00.000Z",
+      "ValueGood": 2058584.8069082003,
+      "ValueBad": 1160942.23195776,
+      "Value": 1517169.4305539383,
+      "NetContributionsToDate": 170804.4413793104,
+      "ValueGoalNotMet": 2651171.4723993
+    },
+    {
+      "Date": "2068-01-01T00:00:00.000Z",
+      "ValueGood": 2005764.1107226536,
+      "ValueBad": 1078672.3209932798,
+      "Value": 1456087.903684448,
+      "NetContributionsToDate": 156570.73793103453,
+      "ValueGoalNotMet": 2595316.3164398833
+    },
+    {
+      "Date": "2069-01-01T00:00:00.000Z",
+      "ValueGood": 1946348.9090157778,
+      "ValueBad": 986131.25835392,
+      "Value": 1387380.531355119,
+      "NetContributionsToDate": 142337.03448275867,
+      "ValueGoalNotMet": 2532487.811756035
+    },
+    {
+      "Date": "2070-01-01T00:00:00.000Z",
+      "ValueGood": 1879951.2896980825,
+      "ValueBad": 882714.85864704,
+      "Value": 1310598.7344212555,
+      "NetContributionsToDate": 128103.3310344828,
+      "ValueGoalNotMet": 2462275.761363965
+    },
+    {
+      "Date": "2071-01-01T00:00:00.000Z",
+      "ValueGood": 1806183.3406800788,
+      "ValueBad": 767818.9364799998,
+      "Value": 1225293.9337381604,
+      "NetContributionsToDate": 113869.62758620695,
+      "ValueGoalNotMet": 2384269.9682798833
+    },
+    {
+      "Date": "2072-01-01T00:00:00.000Z",
+      "ValueGood": 1724657.1498722767,
+      "ValueBad": 640839.3064601602,
+      "Value": 1131017.5501611382,
+      "NetContributionsToDate": 99635.92413793108,
+      "ValueGoalNotMet": 2298060.23552
+    },
+    {
+      "Date": "2073-01-01T00:00:00.000Z",
+      "ValueGood": 1634984.8051851853,
+      "ValueBad": 501171.7831948799,
+      "Value": 1027321.0045454919,
+      "NetContributionsToDate": 85402.22068965521,
+      "ValueGoalNotMet": 2203236.366100525
+    },
+    {
+      "Date": "2074-01-01T00:00:00.000Z",
+      "ValueGood": 1536778.3945293152,
+      "ValueBad": 348212.1812915199,
+      "Value": 913755.717746525,
+      "NetContributionsToDate": 71168.51724137933,
+      "ValueGoalNotMet": 2099388.1630376675
+    },
+    {
+      "Date": "2075-01-01T00:00:00.000Z",
+      "ValueGood": 1429650.0058151765,
+      "ValueBad": 181356.3153574402,
+      "Value": 789873.1106195415,
+      "NetContributionsToDate": 56934.813793103465,
+      "ValueGoalNotMet": 1986105.4293476383
+    },
+    {
+      "Date": "2076-01-01T00:00:00.000Z",
+      "ValueGood": 1313211.7269532795,
+      "ValueBad": 0,
+      "Value": 655224.6040198451,
+      "NetContributionsToDate": 42701.1103448276,
+      "ValueGoalNotMet": 1862977.9680466468
+    },
+    {
+      "Date": "2077-01-01T00:00:00.000Z",
+      "ValueGood": 1187075.6458541339,
+      "ValueBad": 0,
+      "Value": 509361.6188027388,
+      "NetContributionsToDate": 28467.40689655173,
+      "ValueGoalNotMet": 1729595.5821509035
+    },
+    {
+      "Date": "2078-01-01T00:00:00.000Z",
+      "ValueGood": 1050853.8504282492,
+      "ValueBad": 0,
+      "Value": 351835.57582352706,
+      "NetContributionsToDate": 14233.703448275865,
+      "ValueGoalNotMet": 1585548.0746766177
+    },
+    {
+      "Date": "2079-01-01T00:00:00.000Z",
+      "ValueGood": 904158.4285861368,
+      "ValueBad": 0,
+      "Value": 182197.89593751263,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 1430425.2486399997
+    },
+    {
+      "Date": "2080-01-01T00:00:00.000Z",
+      "ValueGood": 746601.4682383058,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 1263816.9070572592
+    },
+    {
+      "Date": "2081-01-01T00:00:00.000Z",
+      "ValueGood": 577795.057295267,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 1085312.8529446064
+    },
+    {
+      "Date": "2082-01-01T00:00:00.000Z",
+      "ValueGood": 397351.283667529,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 894502.8893182509
+    },
+    {
+      "Date": "2083-01-01T00:00:00.000Z",
+      "ValueGood": 204882.2352656035,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 690976.8191944025
+    },
+    {
+      "Date": "2084-01-01T00:00:00.000Z",
+      "ValueGood": 0,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 474324.44558927114
+    },
+    {
+      "Date": "2085-01-01T00:00:00.000Z",
+      "ValueGood": 0,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 244135.571519067
+    },
+    {
+      "Date": "2086-01-01T00:00:00.000Z",
+      "ValueGood": 0,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0,
+      "ValueGoalNotMet": 0
+    }
+  ]
+}

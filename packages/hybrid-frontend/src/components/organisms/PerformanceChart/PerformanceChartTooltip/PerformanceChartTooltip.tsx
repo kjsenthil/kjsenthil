@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Typography, Theme } from '../../../atoms';
-import { formatDate } from '../performanceChartFormat/performanceChartFormat';
+import { formatDate } from '../../../../utils/formatters';
 
 export interface PerformanceChartTooltipProps {
-  date: Date;
+  date: Date | null | undefined;
 }
 
 const TooltipContainer = styled.div`
@@ -26,7 +26,7 @@ const TooltipContainer = styled.div`
 `;
 
 export default function PerformanceChartTooltip({ date }: PerformanceChartTooltipProps) {
-  const dateStr = formatDate(date);
+  const dateStr = date ? formatDate(date) : '';
 
   return (
     <TooltipContainer>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { scaleLinear, scaleTime } from '@visx/scale';
-import { ChartDimension } from '../performanceChartStyles/performanceChartStyles';
 import { usePerformanceDataContext } from '../data/dataContext';
+import { ChartDimension } from '../../../../config/chart';
 
 export interface GetScalesProps {
   // General dimensions

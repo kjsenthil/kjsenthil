@@ -1,0 +1,466 @@
+{
+  "Data": [
+    {
+      "Date": "2021-01-01T00:00:00.000Z",
+      "ValueGood": 607799.82,
+      "ValueBad": 607799.82,
+      "Value": 607799.82,
+      "NetContributionsToDate": 267777.4
+    },
+    {
+      "Date": "2022-01-01T00:00:00.000Z",
+      "ValueGood": 632234.9344783352,
+      "ValueBad": 621552.7593184293,
+      "Value": 625113.4843717313,
+      "NetContributionsToDate": 272777.4
+    },
+    {
+      "Date": "2023-01-01T00:00:00.000Z",
+      "ValueGood": 665916.6439870845,
+      "ValueBad": 640510.0065793537,
+      "Value": 648978.885715264,
+      "NetContributionsToDate": 277777.4
+    },
+    {
+      "Date": "2024-01-01T00:00:00.000Z",
+      "ValueGood": 704275.0775053685,
+      "ValueBad": 662099.4781160924,
+      "Value": 676158.011245851,
+      "NetContributionsToDate": 282777.4
+    },
+    {
+      "Date": "2025-01-01T00:00:00.000Z",
+      "ValueGood": 746025.7011736033,
+      "ValueBad": 685598.193226468,
+      "Value": 705740.6958755131,
+      "NetContributionsToDate": 287777.4
+    },
+    {
+      "Date": "2026-01-01T00:00:00.000Z",
+      "ValueGood": 790494.9132708979,
+      "ValueBad": 710627.0252401138,
+      "Value": 737249.6545837085,
+      "NetContributionsToDate": 292777.4
+    },
+    {
+      "Date": "2027-01-01T00:00:00.000Z",
+      "ValueGood": 837257.9452942079,
+      "ValueBad": 736946.8995477447,
+      "Value": 770383.9147965658,
+      "NetContributionsToDate": 297777.4
+    },
+    {
+      "Date": "2028-01-01T00:00:00.000Z",
+      "ValueGood": 886018.9114500361,
+      "ValueBad": 764391.281248664,
+      "Value": 804933.8246491214,
+      "NetContributionsToDate": 302777.4
+    },
+    {
+      "Date": "2029-01-01T00:00:00.000Z",
+      "ValueGood": 936558.2227383397,
+      "ValueBad": 792836.577953106,
+      "Value": 840743.7928815172,
+      "NetContributionsToDate": 307777.4
+    },
+    {
+      "Date": "2030-01-01T00:00:00.000Z",
+      "ValueGood": 988705.5578871465,
+      "ValueBad": 822186.9268763822,
+      "Value": 877693.1372133037,
+      "NetContributionsToDate": 312777.4
+    },
+    {
+      "Date": "2031-01-01T00:00:00.000Z",
+      "ValueGood": 1042324.429587675,
+      "ValueBad": 852365.5081747769,
+      "Value": 915685.148645743,
+      "NetContributionsToDate": 317777.4
+    },
+    {
+      "Date": "2032-01-01T00:00:00.000Z",
+      "ValueGood": 1097302.6810150933,
+      "ValueBad": 883309.1960541615,
+      "Value": 954640.3577078055,
+      "NetContributionsToDate": 322777.4
+    },
+    {
+      "Date": "2033-01-01T00:00:00.000Z",
+      "ValueGood": 1153546.290390116,
+      "ValueBad": 914965.0717600007,
+      "Value": 994492.1446367058,
+      "NetContributionsToDate": 327777.4
+    },
+    {
+      "Date": "2034-01-01T00:00:00.000Z",
+      "ValueGood": 1210975.1471268,
+      "ValueBad": 947288.0462452096,
+      "Value": 1035183.7465390732,
+      "NetContributionsToDate": 332777.4
+    },
+    {
+      "Date": "2035-01-01T00:00:00.000Z",
+      "ValueGood": 1269520.0661639513,
+      "ValueBad": 980239.1797311682,
+      "Value": 1076666.1418754293,
+      "NetContributionsToDate": 337777.4
+    },
+    {
+      "Date": "2036-01-01T00:00:00.000Z",
+      "ValueGood": 1329120.6136432816,
+      "ValueBad": 1013784.4579231386,
+      "Value": 1118896.509829853,
+      "NetContributionsToDate": 342777.4
+    },
+    {
+      "Date": "2037-01-01T00:00:00.000Z",
+      "ValueGood": 1389723.4833067274,
+      "ValueBad": 1047893.87818974,
+      "Value": 1161837.0798954023,
+      "NetContributionsToDate": 347777.4
+    },
+    {
+      "Date": "2038-01-01T00:00:00.000Z",
+      "ValueGood": 1451281.2579830876,
+      "ValueBad": 1082540.7524841963,
+      "Value": 1205454.2543171602,
+      "NetContributionsToDate": 352777.4
+    },
+    {
+      "Date": "2039-01-01T00:00:00.000Z",
+      "ValueGood": 1513751.4472815124,
+      "ValueBad": 1117701.1657244852,
+      "Value": 1249717.9262434943,
+      "NetContributionsToDate": 357777.4
+    },
+    {
+      "Date": "2040-01-01T00:00:00.000Z",
+      "ValueGood": 1577095.7278037213,
+      "ValueBad": 1153353.5481581304,
+      "Value": 1294600.9413733273,
+      "NetContributionsToDate": 362777.4
+    },
+    {
+      "Date": "2041-01-01T00:00:00.000Z",
+      "ValueGood": 1641279.3347308855,
+      "ValueBad": 1189478.3329259632,
+      "Value": 1340078.6668609374,
+      "NetContributionsToDate": 367777.4
+    },
+    {
+      "Date": "2042-01-01T00:00:00.000Z",
+      "ValueGood": 1706270.5684939367,
+      "ValueBad": 1226057.6783988718,
+      "Value": 1386128.6417638934,
+      "NetContributionsToDate": 372777.4
+    },
+    {
+      "Date": "2043-01-01T00:00:00.000Z",
+      "ValueGood": 1772040.390266674,
+      "ValueBad": 1263075.2405071384,
+      "Value": 1432730.2904269837,
+      "NetContributionsToDate": 377777.4
+    },
+    {
+      "Date": "2044-01-01T00:00:00.000Z",
+      "ValueGood": 1838562.0869451677,
+      "ValueBad": 1300515.9841790958,
+      "Value": 1479864.6851011198,
+      "NetContributionsToDate": 382777.4
+    },
+    {
+      "Date": "2045-01-01T00:00:00.000Z",
+      "ValueGood": 1905810.9911510954,
+      "ValueBad": 1338366.0257491898,
+      "Value": 1527514.347549825,
+      "NetContributionsToDate": 387777.4
+    },
+    {
+      "Date": "2046-01-01T00:00:00.000Z",
+      "ValueGood": 1973764.2452886724,
+      "ValueBad": 1376612.5001609428,
+      "Value": 1575663.0818701861,
+      "NetContributionsToDate": 392777.4
+    },
+    {
+      "Date": "2047-01-01T00:00:00.000Z",
+      "ValueGood": 2042400.6012265687,
+      "ValueBad": 1415243.4482209138,
+      "Value": 1624295.8325561322,
+      "NetContributionsToDate": 397777.4
+    },
+    {
+      "Date": "2048-01-01T00:00:00.000Z",
+      "ValueGood": 2111700.2490533018,
+      "ValueBad": 1454247.720216226,
+      "Value": 1673398.563161918,
+      "NetContributionsToDate": 402777.4
+    },
+    {
+      "Date": "2049-01-01T00:00:00.000Z",
+      "ValueGood": 2181644.669759046,
+      "ValueBad": 1493614.8929987266,
+      "Value": 1722958.1519188331,
+      "NetContributionsToDate": 407777.4
+    },
+    {
+      "Date": "2050-01-01T00:00:00.000Z",
+      "ValueGood": 2252216.5077605085,
+      "ValueBad": 1533335.1982375118,
+      "Value": 1772962.3014118443,
+      "NetContributionsToDate": 412777.4
+    },
+    {
+      "Date": "2051-01-01T00:00:00.000Z",
+      "ValueGood": 2323399.46,
+      "ValueBad": 1573399.46,
+      "Value": 1823399.46,
+      "NetContributionsToDate": 400983.76
+    },
+    {
+      "Date": "2052-01-01T00:00:00.000Z",
+      "ValueGood": 2323373.9631609325,
+      "ValueBad": 1573298.76243456,
+      "Value": 1823356.9317327114,
+      "NetContributionsToDate": 389190.12
+    },
+    {
+      "Date": "2053-01-01T00:00:00.000Z",
+      "ValueGood": 2323195.4852874624,
+      "ValueBad": 1572593.87947648,
+      "Value": 1823059.233861691,
+      "NetContributionsToDate": 377396.48
+    },
+    {
+      "Date": "2054-01-01T00:00:00.000Z",
+      "ValueGood": 2322711.045345185,
+      "ValueBad": 1570680.6257331201,
+      "Value": 1822251.196783207,
+      "NetContributionsToDate": 365602.83999999997
+    },
+    {
+      "Date": "2055-01-01T00:00:00.000Z",
+      "ValueGood": 2321767.662299698,
+      "ValueBad": 1566954.81581184,
+      "Value": 1820677.6508935275,
+      "NetContributionsToDate": 353809.19999999995
+    },
+    {
+      "Date": "2056-01-01T00:00:00.000Z",
+      "ValueGood": 2320212.3551165983,
+      "ValueBad": 1560812.2643199998,
+      "Value": 1818083.4265889213,
+      "NetContributionsToDate": 342015.55999999994
+    },
+    {
+      "Date": "2057-01-01T00:00:00.000Z",
+      "ValueGood": 2317892.1427614815,
+      "ValueBad": 1551648.78586496,
+      "Value": 1814213.354265656,
+      "NetContributionsToDate": 330221.9199999999
+    },
+    {
+      "Date": "2058-01-01T00:00:00.000Z",
+      "ValueGood": 2314654.044199945,
+      "ValueBad": 1538860.19505408,
+      "Value": 1808812.2643199998,
+      "NetContributionsToDate": 318428.2799999999
+    },
+    {
+      "Date": "2059-01-01T00:00:00.000Z",
+      "ValueGood": 2310345.0783975855,
+      "ValueBad": 1521842.30649472,
+      "Value": 1801624.9871482216,
+      "NetContributionsToDate": 306634.6399999999
+    },
+    {
+      "Date": "2060-01-01T00:00:00.000Z",
+      "ValueGood": 2304812.26432,
+      "ValueBad": 1499990.93479424,
+      "Value": 1792396.353146589,
+      "NetContributionsToDate": 294840.9999999999
+    },
+    {
+      "Date": "2061-01-01T00:00:00.000Z",
+      "ValueGood": 2297902.6209327844,
+      "ValueBad": 1472701.89456,
+      "Value": 1780871.1927113703,
+      "NetContributionsToDate": 283047.35999999987
+    },
+    {
+      "Date": "2062-01-01T00:00:00.000Z",
+      "ValueGood": 2289463.1672015362,
+      "ValueBad": 1439371.00039936,
+      "Value": 1766794.3362388338,
+      "NetContributionsToDate": 271253.71999999986
+    },
+    {
+      "Date": "2063-01-01T00:00:00.000Z",
+      "ValueGood": 2279340.922091852,
+      "ValueBad": 1399394.06691968,
+      "Value": 1749910.6141252478,
+      "NetContributionsToDate": 259460.07999999987
+    },
+    {
+      "Date": "2064-01-01T00:00:00.000Z",
+      "ValueGood": 2267382.904569328,
+      "ValueBad": 1352166.90872832,
+      "Value": 1729964.8567668805,
+      "NetContributionsToDate": 247666.4399999999
+    },
+    {
+      "Date": "2065-01-01T00:00:00.000Z",
+      "ValueGood": 2253436.133599561,
+      "ValueBad": 1297085.34043264,
+      "Value": 1706701.89456,
+      "NetContributionsToDate": 235872.7999999999
+    },
+    {
+      "Date": "2066-01-01T00:00:00.000Z",
+      "ValueGood": 2237347.6281481483,
+      "ValueBad": 1233545.17664,
+      "Value": 1679866.5579008746,
+      "NetContributionsToDate": 224079.15999999992
+    },
+    {
+      "Date": "2067-01-01T00:00:00.000Z",
+      "ValueGood": 2218964.407180686,
+      "ValueBad": 1160942.23195776,
+      "Value": 1649203.6771857725,
+      "NetContributionsToDate": 212285.51999999993
+    },
+    {
+      "Date": "2068-01-01T00:00:00.000Z",
+      "ValueGood": 2198133.4896627706,
+      "ValueBad": 1078672.3209932798,
+      "Value": 1614458.082810962,
+      "NetContributionsToDate": 200491.87999999995
+    },
+    {
+      "Date": "2069-01-01T00:00:00.000Z",
+      "ValueGood": 2174701.89456,
+      "ValueBad": 986131.25835392,
+      "Value": 1575374.6051727114,
+      "NetContributionsToDate": 188698.23999999996
+    },
+    {
+      "Date": "2070-01-01T00:00:00.000Z",
+      "ValueGood": 2148516.6408379697,
+      "ValueBad": 882714.85864704,
+      "Value": 1531698.0746672887,
+      "NetContributionsToDate": 176904.59999999998
+    },
+    {
+      "Date": "2071-01-01T00:00:00.000Z",
+      "ValueGood": 2119424.747462277,
+      "ValueBad": 767818.9364799998,
+      "Value": 1483173.3216909622,
+      "NetContributionsToDate": 165110.96
+    },
+    {
+      "Date": "2072-01-01T00:00:00.000Z",
+      "ValueGood": 2087273.2333985185,
+      "ValueBad": 640839.3064601602,
+      "Value": 1429545.17664,
+      "NetContributionsToDate": 153317.32
+    },
+    {
+      "Date": "2073-01-01T00:00:00.000Z",
+      "ValueGood": 2051909.1176122907,
+      "ValueBad": 501171.7831948799,
+      "Value": 1370558.4699106705,
+      "NetContributionsToDate": 141523.68
+    },
+    {
+      "Date": "2074-01-01T00:00:00.000Z",
+      "ValueGood": 2013179.4190691907,
+      "ValueBad": 348212.1812915199,
+      "Value": 1305958.031899242,
+      "NetContributionsToDate": 129730.04
+    },
+    {
+      "Date": "2075-01-01T00:00:00.000Z",
+      "ValueGood": 1970931.1567348149,
+      "ValueBad": 181356.3153574402,
+      "Value": 1235488.6930019825,
+      "NetContributionsToDate": 117936.4
+    },
+    {
+      "Date": "2076-01-01T00:00:00.000Z",
+      "ValueGood": 1925011.3495747598,
+      "ValueBad": 0,
+      "Value": 1158895.2836151603,
+      "NetContributionsToDate": 106142.76
+    },
+    {
+      "Date": "2077-01-01T00:00:00.000Z",
+      "ValueGood": 1875267.0165546227,
+      "ValueBad": 0,
+      "Value": 1075922.6341350437,
+      "NetContributionsToDate": 94349.12
+    },
+    {
+      "Date": "2078-01-01T00:00:00.000Z",
+      "ValueGood": 1821545.17664,
+      "ValueBad": 0,
+      "Value": 986315.5749579008,
+      "NetContributionsToDate": 82555.48
+    },
+    {
+      "Date": "2079-01-01T00:00:00.000Z",
+      "ValueGood": 1763692.8487964883,
+      "ValueBad": 0,
+      "Value": 889818.9364799998,
+      "NetContributionsToDate": 70761.84
+    },
+    {
+      "Date": "2080-01-01T00:00:00.000Z",
+      "ValueGood": 1701557.0519896846,
+      "ValueBad": 0,
+      "Value": 786177.5490976092,
+      "NetContributionsToDate": 58968.2
+    },
+    {
+      "Date": "2081-01-01T00:00:00.000Z",
+      "ValueGood": 1634984.8051851853,
+      "ValueBad": 0,
+      "Value": 675136.2432069972,
+      "NetContributionsToDate": 47174.56
+    },
+    {
+      "Date": "2082-01-01T00:00:00.000Z",
+      "ValueGood": 1563823.127348587,
+      "ValueBad": 0,
+      "Value": 556439.8492044316,
+      "NetContributionsToDate": 35380.92
+    },
+    {
+      "Date": "2083-01-01T00:00:00.000Z",
+      "ValueGood": 1487919.0374454868,
+      "ValueBad": 0,
+      "Value": 429833.1974861809,
+      "NetContributionsToDate": 23587.28
+    },
+    {
+      "Date": "2084-01-01T00:00:00.000Z",
+      "ValueGood": 1407119.5544414818,
+      "ValueBad": 0,
+      "Value": 295061.11844851315,
+      "NetContributionsToDate": 11793.64
+    },
+    {
+      "Date": "2085-01-01T00:00:00.000Z",
+      "ValueGood": 1321271.6973021675,
+      "ValueBad": 0,
+      "Value": 151868.44248769677,
+      "NetContributionsToDate": 0
+    },
+    {
+      "Date": "2086-01-01T00:00:00.000Z",
+      "ValueGood": 1230222.4849931411,
+      "ValueBad": 0,
+      "Value": 0,
+      "NetContributionsToDate": 0
+    }
+  ]
+}

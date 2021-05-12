@@ -24,7 +24,7 @@
     "cy:run": "cypress run",
     "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
     "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./static",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
@@ -52,6 +52,7 @@
     "chart.js": "^2.9.4",
     "d3-array": "^2.12.1",
     "d3-format": "^2.0.0",
+    "d3-scale": "^3.3.0",
     "d3-shape": "^2.1.0",
     "d3-time-format": "^3.0.0",
     "dayjs": "^1.10.4",

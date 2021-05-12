@@ -2,8 +2,8 @@ import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './index';
-import { ChartDimension } from '../performanceChartStyles/performanceChartStyles';
 import { PerformanceDataContextProvider } from '../data/dataContext';
+import { ChartDimension } from '../../../../config/chart';
 
 describe('PerformanceChartAxes', () => {
   const chartDimension: ChartDimension = {

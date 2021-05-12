@@ -1,16 +1,11 @@
 import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
-import {
-  ChartDimension,
-  usePerformanceChartStyles,
-} from '../performanceChartStyles/performanceChartStyles';
-import {
-  d3TimeFormatter,
-  D3TimeFormatterType,
-} from '../performanceChartFormat/performanceChartFormat';
+import { usePerformanceChartStyles } from '../performanceChartStyles/performanceChartStyles';
 import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
 import { PerformanceChartPeriod } from '../data/utils';
 import { usePerformanceDataPeriod } from '../data/data';
+import { d3TimeFormatter, D3TimeFormatterType } from '../../../../utils/formatters';
+import { ChartDimension } from '../../../../config/chart';
 
 export interface PerformanceChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;

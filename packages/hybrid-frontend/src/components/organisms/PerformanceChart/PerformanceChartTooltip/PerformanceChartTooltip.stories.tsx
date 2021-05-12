@@ -25,7 +25,7 @@ const Template: Story<PerformanceChartTooltipProps> = ({ date, ...args }) => (
   >
     {/* We have to convert the date like this because Storybook's date picker */}
     {/* doesn't convert the date string automatically. */}
-    <PerformanceChartTooltip date={new Date(date)} {...args} />
+    <PerformanceChartTooltip date={date && new Date(date)} {...args} />
   </div>
 );
 

@@ -28,6 +28,4 @@ describe('PerformanceChartTooltip', () => {
       expect(screen.getByText(expected, { exact: false })).toBeVisible();
     }
   );
-
-  test('The tooltip renders', () => {});
 });

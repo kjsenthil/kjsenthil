@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Spacer, Typography } from '../../../atoms';
-import { formatCurrency, formatPercent } from '../performanceChartFormat/performanceChartFormat';
 import {
   Container,
   ContributionsLabelIndicator,
@@ -9,6 +8,7 @@ import {
   PerformancePercentage,
   SectionContainer,
 } from './PerformanceChartSummaryPanel.styles';
+import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 
 export interface PerformanceChartSummaryPanelProps {
   totalPerformance: number;

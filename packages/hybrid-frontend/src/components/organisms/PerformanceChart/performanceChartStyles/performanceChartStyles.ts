@@ -1,17 +1,5 @@
 import { useTheme } from '../../../atoms';
-
-export interface ChartDimension {
-  width: number;
-  height: number;
-  margin: { top: number; right: number; bottom: number; left: number };
-}
-
-export enum ScreenSize {
-  DESKTOP_HD = 'DESKTOP_HD',
-  DESKTOP = 'DESKTOP',
-  TABLET = 'TABLET',
-  MOBILE = 'MOBILE',
-}
+import { ChartDimension, ScreenSize } from '../../../../config/chart';
 
 const defaultChartDimension: ChartDimension = {
   width: 0,
@@ -43,6 +31,7 @@ const CHART_DIMENSION: Record<ScreenSize, ChartDimension> = {
   },
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export function usePerformanceChartStyles() {
   const {
     palette: { primary, tertiary, common, grey },

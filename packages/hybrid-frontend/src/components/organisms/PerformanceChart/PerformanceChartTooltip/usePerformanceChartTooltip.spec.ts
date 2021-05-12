@@ -1,15 +1,13 @@
 import { bisector } from 'd3-array';
 import { scaleTime } from '@visx/scale';
 import { determineTooltipDataAndPosition } from './usePerformanceChartTooltip';
-import { ChartDimension } from '../performanceChartStyles/performanceChartStyles';
+import { ContributionDatum, PerformanceDatum, TimeSeriesDatum } from '../data/utils';
 import {
-  ContributionDatum,
   defaultGenerateTimeSeriesDataProps,
   generateTimeSeriesData,
   GenerateTimeSeriesDataProps,
-  PerformanceDatum,
-  TimeSeriesDatum,
-} from '../data/utils';
+} from '../../../../utils/data';
+import { ChartDimension } from '../../../../config/chart';
 
 describe('usePerformanceChartTooltip', () => {
   // Return an array like this: [1, 2, ..., 100];

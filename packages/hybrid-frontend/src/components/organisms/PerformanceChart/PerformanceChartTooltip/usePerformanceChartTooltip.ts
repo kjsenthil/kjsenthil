@@ -3,8 +3,8 @@ import { localPoint } from '@visx/event';
 import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { Bisector, bisector } from 'd3-array';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { ChartDimension } from '../performanceChartStyles/performanceChartStyles';
 import { ContributionDatum, PerformanceDatum, TimeSeriesDatum } from '../data/utils';
+import { ChartDimension } from '../../../../config/chart';
 
 export interface UsePerformanceChartTooltipProps {
   chartDimension: ChartDimension;
