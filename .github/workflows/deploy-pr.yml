@@ -443,8 +443,6 @@ jobs:
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
           echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.pr
-          echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
-          echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
           cat .env.pr
 
       # Gatsby can run over the default number of file watchers so we need to up this value
@@ -505,8 +503,6 @@ jobs:
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
           echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.pr
-          echo 'ASSETS_API_BASE_URL=https://digital-hybrid-mgmt.azure-api.net/digitalhybrid/Assets' >> .env.pr
-          echo 'XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk' >> .env.pr
           cat .env.pr
 
       - name: "Gatsby build"
@@ -803,6 +799,15 @@ jobs:
           path: ${{ needs.build_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
+
+      - name: "Create PR env file"
+        working-directory: ./packages/hybrid-frontend
+        run: |
+          touch .env.production
+          echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.production
+          echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.production
+          cat .env.production
+
 
       - name: "Build Storybook"
         run: yarn frontend build-storybook -o "./storybook-static"

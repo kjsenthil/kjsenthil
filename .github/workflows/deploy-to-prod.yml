@@ -319,7 +319,6 @@ jobs:
           touch .env.staging
           echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.staging
           echo 'API_BASE_URL=${{ needs.deploy_staging_terraform.outputs.api_base_url }}' >> .env.staging
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
           cat .env.staging
 
       - name: "Gatsby Build"
@@ -389,7 +388,6 @@ jobs:
           touch .env.staging
           echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.staging
           echo 'API_BASE_URL=${{ needs.deploy_staging_terraform.outputs.api_base_url }}' >> .env.staging
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.staging
           cat .env.staging
 
       - name: "E2E test"
@@ -643,7 +641,6 @@ jobs:
           touch .env.production
           echo 'API_ENDPOINTS=${{ needs.deploy_production_terraform.outputs.api_endpoints }}' >> .env.production
           echo 'API_BASE_URL=${{ needs.deploy_production_terraform.outputs.api_base_url }}' >> .env.production
-          echo "XPLAN_BASE_URL=https://tbigroupuat2.xplan.iress.co.uk" >> .env.production
           cat .env.production
 
       - name: "Gatsby build"
@@ -676,7 +673,7 @@ jobs:
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
 
   # Deploys storybook.
-  deploy_storybook_pr:
+  deploy_storybook_prod:
     name: "Deploy Storybook"
     needs: [build_cache, deploy_production_terraform]
     runs-on: ubuntu-latest
@@ -706,8 +703,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
 
+      - name: "Create env file"
+        working-directory: ./packages/hybrid-frontend
+        run: |
+          touch .env.production
+          echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.production
+          echo 'API_BASE_URL=${{ needs.deploy_staging_terraform.outputs.api_base_url }}' >> .env.production
+          cat .env.production
+
       - name: "Build Storybook"
-        run: yarn frontend build-storybook -o "./storybook-static"
+        run: GATSBY_ACTIVE_ENV=production yarn frontend build-storybook -o "./storybook-static"
 
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -751,7 +756,7 @@ jobs:
         deploy_production_apim_terraform,
         deploy_production_terraform,
         deploy_production_frontend,
-        deploy_storybook_pr,
+        deploy_storybook_prod,
         output_website_urls,
       ]
     runs-on: ubuntu-latest
@@ -770,13 +775,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
+                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -815,7 +820,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
                     }
                   },
                   {
@@ -909,7 +914,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_storybook_pr.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook - Production' : '${{ needs.deploy_storybook_pr.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook - Production' : ':heavy-minus-sign:   Build &amp; Deploy Storybook - Production'
+                      "text": '${{ needs.deploy_storybook_prod.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook - Production' : '${{ needs.deploy_storybook_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook - Production' : ':heavy-minus-sign:   Build &amp; Deploy Storybook - Production'
                     }
                   },
                   {
@@ -978,7 +983,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to Storybook website",
-                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_storybook_pr.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
