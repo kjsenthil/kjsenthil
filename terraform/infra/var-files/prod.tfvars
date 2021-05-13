@@ -1,2 +1,2 @@
-environment_prefix = "prod"
+environment_prefix = "preprod"
 location           = "UK South"
