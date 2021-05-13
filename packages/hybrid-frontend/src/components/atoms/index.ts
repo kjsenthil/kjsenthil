@@ -24,6 +24,7 @@ export {
   CardActionArea,
   CardContent,
   Container,
+  Divider,
   Grid,
   IconButton,
   Input,

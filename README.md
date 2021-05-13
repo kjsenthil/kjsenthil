@@ -25,7 +25,7 @@ Install dependencies with `yarn install`
 
 Copy the `.env.example` file as `.env.development` in the hybrid-frontend, and edit it to configure the environment variables read by the app.
 
-    cp ./hybrid-frontend/.env.example ./hybrid-frontend/.env.development
+    cp ./packages/hybrid-frontend/.env.example ./packages/hybrid-frontend/.env.development
 
 ---
 
@@ -70,7 +70,7 @@ Once again, some commonly used `foreach` scripts have been provided as shortcuts
 | Test         | Runs E2E test commands                              | `yarn all:test:e2e`     |
 | Function App | Builds all function apps                            | `yarn all:fa:build`     |
 | Function App | Builds and zips all function apps                   | `yarn all:fa:build:zip` |
-| Function App | Copies function app zips to common folder           | `yarn all:fa:copy-zip` |
+| Function App | Copies function app zips to common folder           | `yarn all:fa:copy-zip`  |
 
 ### Key Yarn commands
 
@@ -109,4 +109,3 @@ Launches the [Cypress](https://www.cypress.io/) test runner for end-to-end UI te
 Runs `format` for all workspaces.
 
 Front end - checks and fixes [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) errors.
-

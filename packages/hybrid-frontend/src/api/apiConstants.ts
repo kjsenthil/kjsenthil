@@ -1,5 +1,5 @@
 import { CaptureGoalData } from '../types';
-import monthDifference from '../utils/date';
+import monthDifference from '../utils/date-utils/date-utils';
 
 // API Config
 export const xPlanBaseUrl = 'https://tbigroupuat2.xplan.iress.co.uk';
