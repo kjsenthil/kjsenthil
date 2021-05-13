@@ -5,6 +5,8 @@ locals {
   }
   short_location = lookup(local.location_map, lower(replace(var.location, "/\\s/", "")))
 
+  is_development_env = !(var.environment_prefix == "staging" || var.environment_prefix == "preprod" || var.environment_prefix == "prod")
+
   default_tags = {
     "CostCode"            = "934"
     "Department"          = "Financial Services"

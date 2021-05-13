@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "resource_group" {
 }
 
 resource "azurerm_storage_account" "artifact_storage" {
-  count = var.environment_prefix == "staging" ? 1 : var.environment_prefix == "prod" ? 1 : 0
+  count = local.is_development_env ? 0 : 1
 
   name                = "st${local.short_location}tsw${var.environment_prefix}artifacts"
   location            = azurerm_resource_group.resource_group.location
@@ -19,13 +19,15 @@ resource "azurerm_storage_account" "artifact_storage" {
 }
 
 resource "azurerm_storage_container" "artifact_container" {
-  count = var.environment_prefix == "staging" ? 1 : var.environment_prefix == "prod" ? 1 : 0
+  count = local.is_development_env ? 0 : 1
+
   name                 = var.environment_prefix
   storage_account_name = azurerm_storage_account.artifact_storage[0].name
 }
 
 resource "azurerm_storage_container" "test_artifact_container" {
-  count = var.environment_prefix == "staging" ? 1 : var.environment_prefix == "prod" ? 1 : 0
+  count = local.is_development_env ? 0 : 1
+
   name                 = "tests"
   storage_account_name = azurerm_storage_account.artifact_storage[0].name
 }
