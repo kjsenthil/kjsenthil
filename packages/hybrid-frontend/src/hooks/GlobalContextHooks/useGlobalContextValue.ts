@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GlobalDataType } from '../../context/types';
 import { TokenItem } from '../../services/auth';
-import { CaptureGoalData, GoalDetails } from '../../types';
+import { CaptureGoalData, GoalDetails } from '../../services/goalsAndObjectives';
 
 function useGlobalContextValue(): GlobalDataType {
   const [isLoading, setIsLoading] = useState<boolean>(true);

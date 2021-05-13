@@ -8,8 +8,9 @@ const defaultEnv = from({
 
 export const NODE_ENV = defaultEnv.get('NODE_ENV').default('development').asString();
 export const ACTIVE_ENV = defaultEnv.get('GATSBY_ACTIVE_ENV').default(NODE_ENV).asString();
+export const IS_SSR = typeof global.window === 'undefined';
 
-if (typeof global.window === 'undefined') {
+if (IS_SSR) {
   /* eslint-disable-next-line global-require */
   const dotenv = require('dotenv');
   dotenv.config({

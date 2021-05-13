@@ -8,18 +8,16 @@ import UpfrontContributionPage, { titleText } from './UpfrontContributionPage';
 import { mockGoals, mockObjective, mockLink } from '../../../../__mocks__/jestMock';
 import { GlobalProvider } from '../../../context/GlobalContextProvider';
 import useGlobalContextValue from '../../../hooks/GlobalContextHooks/useGlobalContextValue';
-
-import postGoalCreation from '../../../api/postGoalCreation';
-import postLinkGoalObjective from '../../../api/postLinkGoalObjective';
-import postObjectiveCreation from '../../../api/postObjectiveCreation';
-
+import {
+  postLinkGoalObjective,
+  postGoalCreation,
+  postObjectiveCreation,
+} from '../../../services/goalsAndObjectives';
 import * as reducer from '../../../services/auth/reducers';
 
 jest.mock('../../../hooks/GlobalContextHooks/useGlobalContextValue');
 
-jest.mock('../../../api/postGoalCreation');
-jest.mock('../../../api/postObjectiveCreation');
-jest.mock('../../../api/postLinkGoalObjective');
+jest.mock('../../../services/goalsAndObjectives');
 
 describe('UpfrontContributionPage', () => {
   let inputField: HTMLElement;

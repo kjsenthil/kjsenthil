@@ -1,13 +1,16 @@
 import { navigate } from 'gatsby';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { calcRegularSavings, goalsPayLoad, objectivePayLoad } from '../../../api/apiConstants';
-import postGoalCreation from '../../../api/postGoalCreation';
-import postLinkGoalObjective from '../../../api/postLinkGoalObjective';
-import postObjectiveCreation from '../../../api/postObjectiveCreation';
+import {
+  postGoalCreation,
+  postObjectiveCreation,
+  postLinkGoalObjective,
+  GoalsObjectiveLinkApiResponse,
+  GoalsObjectiveApiResponse,
+  calcRegularSavings,
+} from '../../../services/goalsAndObjectives';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 import { RootState } from '../../../store';
-import { XPlanAPIResponse, XPlanLinkObjGoalsAPIResponse } from '../../../types';
 import { Grid } from '../../atoms';
 import { FormInput } from '../../molecules';
 import { StatusComponent } from '../../organisms';
@@ -37,14 +40,16 @@ const UpfrontContributionPage = () => {
   };
 
   const onCreateGoals = async () => {
-    let goalResp: XPlanAPIResponse;
-    let objResp: XPlanAPIResponse;
-    let linkResp: XPlanLinkObjGoalsAPIResponse;
+    let goalResp: GoalsObjectiveApiResponse;
+    let objResp: GoalsObjectiveApiResponse;
+    let linkResp: GoalsObjectiveLinkApiResponse;
 
     try {
-      const createGoalPayload = goalsPayLoad(goalDetails.name, goalCapture);
-
-      goalResp = await postGoalCreation(createGoalPayload, entityId);
+      goalResp = await postGoalCreation({
+        goalName: goalDetails.name || 'Create Goal MVP',
+        inputs: goalCapture,
+        entityId,
+      });
 
       if (goalResp) {
         setGoalStatusMessage(
@@ -63,8 +68,10 @@ const UpfrontContributionPage = () => {
     }
 
     try {
-      const createObjectivePayload = objectivePayLoad(goalDetails.name);
-      objResp = await postObjectiveCreation(createObjectivePayload, entityId);
+      objResp = await postObjectiveCreation({
+        goalName: goalDetails.name || 'Create objective MVP',
+        entityId,
+      });
       if (objResp) {
         setObjStatusMessage(
           `Successfully created objective 

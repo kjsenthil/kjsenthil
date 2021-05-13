@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 
 import AssetDetails from './AssetDetails';
-import { AssetData } from '../../../api/getAssetDetail';
+import { AssetData } from '../../../services/assets';
 
 const mockAsset: AssetData = {
   assetName: 'TILNEY GROWTH PORTFOLIO CLEAN',

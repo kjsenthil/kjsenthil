@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CustomProjectionRequestData } from '../../../types';
+import { CustomProjectionRequestData } from '../../../services/projections';
 import { Button } from '../../atoms';
 import SliderWithInput from '../../molecules/SliderWithInput';
 

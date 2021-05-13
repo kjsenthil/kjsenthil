@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProjectionYear } from '../../../types';
+import { ProjectionYear } from '../../../services/projections';
 import { Grid } from '../../atoms';
 import { ProjectionWidget, ProjectionType, ProjectionValue } from './ProjectionGrid.styles';
 

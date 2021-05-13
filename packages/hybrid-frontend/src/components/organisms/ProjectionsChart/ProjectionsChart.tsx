@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
-import { ProjectionYear } from '../../../types';
+import { ProjectionYear } from '../../../services/projections';
 
 export interface ProjectionsChartProps {
   projections: ProjectionYear[];

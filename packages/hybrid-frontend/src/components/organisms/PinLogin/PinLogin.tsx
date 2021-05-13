@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { initStatePins } from '../../../constants';
-import { PinLoginItem } from '../../../types';
+import { PinLoginItem } from '../../../services/auth';
 import { Button, Card, CardContent, Grid, Spacer } from '../../atoms';
 import { Alert, FormInput } from '../../molecules';
 

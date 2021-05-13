@@ -1,10 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Layout } from './src/components/templates';
 import GlobalProvider from './src/context/GlobalContextProvider';
 import { TEALIUM_ENVIRONMENT } from './src/constants';
-import store from './src/store';
-import axiosSetUp from './src/services/api/setup';
+import { StoreProvider } from './src/components/particles';
 
 export const onRenderBody = ({ setPreBodyComponents }) => {
   setPreBodyComponents([
@@ -17,11 +15,10 @@ export const onRenderBody = ({ setPreBodyComponents }) => {
 
 // Wraps every page in a component
 // Needs to be specified similar as gatbsy-browser.tsx  to resolve layout issue in deployed enviroments
-axiosSetUp();
 export const wrapPageElement = ({ element }) => (
-  <Provider store={store}>
+  <StoreProvider shouldPersist={false}>
     <Layout>{element}</Layout>
-  </Provider>
+  </StoreProvider>
 );
 
 // Wrap root element

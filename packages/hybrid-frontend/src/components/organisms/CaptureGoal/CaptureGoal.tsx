@@ -10,7 +10,7 @@ import {
   TextField,
 } from '../../atoms';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
-import { CaptureGoalData } from '../../../types';
+import { CaptureGoalData } from '../../../services/goalsAndObjectives';
 
 const StyledFormControl = styled(FormControl)`
   width: 100%;

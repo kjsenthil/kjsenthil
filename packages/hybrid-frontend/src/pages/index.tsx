@@ -10,10 +10,13 @@ import {
   ProjectionsChart,
   SimulationForm,
 } from '../components/organisms';
-import getProjections from '../api/getProjection';
+import {
+  ProjectionResponse,
+  CustomProjectionRequestData,
+  getProjections,
+} from '../services/projections';
 
 import { MyAccountLayout } from '../components/templates';
-import { ProjectionResponse, CustomProjectionRequestData } from '../types';
 import { LoginFormData } from '../services/auth';
 import { xplanLogin } from '../services/auth/reducers/authSlice';
 import { RootState } from '../store';

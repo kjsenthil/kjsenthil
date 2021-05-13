@@ -1,7 +1,7 @@
 import React, { createContext, FC, ReactNode } from 'react';
 import { GlobalDataType, GlobalProviderProps } from './types';
 import useGlobalContextValue from '../hooks/GlobalContextHooks/useGlobalContextValue';
-import { CaptureGoalData } from '../types';
+import { CaptureGoalData } from '../services/goalsAndObjectives';
 
 export const globalDataContextDefaultValue: GlobalDataType = {
   isLoading: false,

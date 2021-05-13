@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { TokenItem } from '../services/auth';
-import { CaptureGoalData, GoalDetails } from '../types';
+import { CaptureGoalData, GoalDetails } from '../services/goalsAndObjectives';
 
 export interface GlobalDataType {
   isLoading: boolean;

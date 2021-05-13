@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Grid, Typography } from '../../atoms';
-import getProjections from '../../../api/getProjection';
+import {
+  getProjections,
+  ProjectionResponse,
+  CustomProjectionRequestData,
+} from '../../../services/projections';
 import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 import { HeaderMenu, ProjectionsChart, ProjectionsGrid, SimulationForm } from '../../organisms';
-import { ProjectionResponse, CustomProjectionRequestData } from '../../../types';
 
 const SimulationPage = () => {
   const { goalCapture } = useGlobalContext();

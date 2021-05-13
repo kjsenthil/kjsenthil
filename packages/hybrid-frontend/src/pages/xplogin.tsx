@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import { Grid, Typography, Box } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
-import { xplanLogin, setEntityId } from '../services/auth/reducers/authSlice';
-import { LoginFormData } from '../services/auth/types';
+import { xplanLogin, setEntityId, LoginFormData, logout } from '../services/auth';
 import { RootState } from '../store';
 import { FormInput } from '../components/molecules';
 
@@ -26,6 +25,9 @@ const XplanLoginPage = (_: LoginPageProps) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(logout());
+  }, []);
   const onLoginFormSubmit = async (loginFormValues: LoginFormData) => {
     dispatch(xplanLogin(loginFormValues));
   };

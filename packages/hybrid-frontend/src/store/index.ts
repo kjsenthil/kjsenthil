@@ -1,8 +1,13 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  combineReducers,
+  ReducersMapObject,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-
 import { useDispatch } from 'react-redux';
+import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 
 const persistConfig = {
@@ -10,15 +15,20 @@ const persistConfig = {
   storage,
 };
 
-const reducers = combineReducers({
+const reducers: ReducersMapObject = {
   auth: authReducer,
-});
+};
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, combineReducers(reducers));
+
+const reducer = IS_SSR ? reducers : persistedReducer;
 
 const store = configureStore({
-  reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== 'production',
+  reducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
+  devTools: ACTIVE_ENV !== 'production',
 });
 
 export type RootState = ReturnType<typeof store.getState>;

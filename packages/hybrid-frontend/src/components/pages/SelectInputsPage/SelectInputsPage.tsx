@@ -1,31 +1,39 @@
 import React, { useState } from 'react';
-import { goalsPayLoad, objectivePayLoad } from '../../../api/apiConstants';
-import postGoalCreation from '../../../api/postGoalCreation';
-import postLinkGoalObjective from '../../../api/postLinkGoalObjective';
-import postObjectiveCreation from '../../../api/postObjectiveCreation';
-
-import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
-import { CaptureGoalData } from '../../../types';
+import { useSelector } from 'react-redux';
 import { Grid, Card, CardContent, Typography } from '../../atoms';
 import { Alert } from '../../molecules';
 import { CaptureGoal, StatusComponent } from '../../organisms';
 import { MyAccountLayout } from '../../templates';
+import {
+  postLinkGoalObjective,
+  postGoalCreation,
+  postObjectiveCreation,
+  CaptureGoalData,
+  GoalsObjectiveApiResponse,
+  GoalsObjectiveLinkApiResponse,
+} from '../../../services/goalsAndObjectives';
+import { RootState } from '../../../store';
+import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 
 const SelectInputsPage = () => {
   const [goalStatusMessage, setGoalStatusMessage] = useState<string>('');
   const [objStatusMessage, setObjStatusMessage] = useState<string>('');
   const [linkStatusMessage, setLinkStatusMessage] = useState<string>('');
 
-  const { entityId, goalDetails } = useGlobalContext();
+  const { goalDetails } = useGlobalContext();
+  const { entityId = 'defaultID' } = useSelector((state: RootState) => state.auth);
 
   const onCaptureGoalSubmit = async (inputs: CaptureGoalData) => {
-    let goalResp: any = null;
-    let objResp: any = null;
-    let linkResp: any = null;
+    let goalResp: GoalsObjectiveApiResponse;
+    let objResp: GoalsObjectiveApiResponse;
+    let linkResp: GoalsObjectiveLinkApiResponse;
 
     try {
-      const createGoalPayload = goalsPayLoad(goalDetails.name, inputs);
-      goalResp = await postGoalCreation(createGoalPayload, entityId);
+      goalResp = await postGoalCreation({
+        goalName: goalDetails.name || 'Create Goal MVP',
+        inputs,
+        entityId,
+      });
       if (goalResp) {
         setGoalStatusMessage(
           `Successfully created goal 
@@ -42,8 +50,10 @@ const SelectInputsPage = () => {
     }
 
     try {
-      const createObjectivePayload = objectivePayLoad(goalDetails.name);
-      objResp = await postObjectiveCreation(createObjectivePayload, entityId);
+      objResp = await postObjectiveCreation({
+        goalName: goalDetails.name || 'Create objective MVP',
+        entityId,
+      });
       if (objResp) {
         setObjStatusMessage(
           `Successfully created objective 

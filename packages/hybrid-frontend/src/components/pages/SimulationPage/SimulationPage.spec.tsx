@@ -2,14 +2,18 @@
 import React from 'react';
 import { renderWithTheme, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
-import getProjections from '../../../api/getProjection';
+import { getProjections } from '../../../services/projections';
 import SimulationPage from './SimulationPage';
 
-jest.mock('../../../api/getProjection');
+jest.mock('../../../services/projections', () => ({
+  getProjections: jest.fn(),
+}));
+
 jest.mock('../../organisms/ProjectionsChart', () => ({
   __esModule: true,
   default: () => <div>Projection Chart</div>,
 }));
+
 jest.mock('../../organisms/ProjectionsGrid', () => ({
   __esModule: true,
   default: () => <div>Projection Grid</div>,
@@ -28,8 +32,6 @@ const mockProjectResponse = {
     },
   ],
 };
-
-jest.mock('../../../api/getProjection');
 
 describe('SimulationPage', () => {
   test('SimulationPage titles has been successfully rendered', async () => {
