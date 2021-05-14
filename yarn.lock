@@ -4649,7 +4649,9 @@ __metadata:
     "@testing-library/react": ^11.2.6
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@types/redux": ^3.6.0
     "@typescript-eslint/eslint-plugin": ^4.22.0
+    react-redux: ^7.2.4
   languageName: unknown
   linkType: soft
 

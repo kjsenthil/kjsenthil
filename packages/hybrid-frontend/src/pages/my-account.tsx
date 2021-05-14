@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Router, useLocation } from '@reach/router';
 import { trackPageView } from '@tsw/tracking-util';
-import LoginPage from './login';
+import LoginPage from '../components/pages/LoginPage/LoginPage';
 import XplanLoginPage from './xplogin';
 import { PrivateRoute } from '../components/particles';
 import SimulationPage from '../components/pages/SimulationPage/SimulationPage';

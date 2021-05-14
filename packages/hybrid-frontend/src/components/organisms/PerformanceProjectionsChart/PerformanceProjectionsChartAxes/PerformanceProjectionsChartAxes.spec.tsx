@@ -40,10 +40,10 @@ describe('PerformanceProjectionsChartAxes', () => {
       );
     };
 
-    const { container } = renderWithTheme(<TestComponent />);
+    const { result } = renderWithTheme(<TestComponent />);
 
-    const axisLeft = container.querySelector('.visx-axis-left');
-    const axisBottom = container.querySelector('.visx-axis-bottom');
+    const axisLeft = result.container.querySelector('.visx-axis-left');
+    const axisBottom = result.container.querySelector('.visx-axis-bottom');
 
     expect(axisLeft).toBeVisible();
     expect(axisBottom).toBeVisible();

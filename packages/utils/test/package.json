@@ -1,7 +1,7 @@
 {
   "name": "@tsw/test-util",
   "version": "1.0.0",
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "scripts": {
     "format": "yarn g:format --write src/**/*.{js,ts,tsx,md,json}; yarn lint:fix",
     "lint": "mkdir -p eslintreport && yarn lint:check --format html > eslintreport/index.html",
@@ -14,6 +14,8 @@
     "@testing-library/react": "^11.2.6",
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
-    "@typescript-eslint/eslint-plugin": "^4.22.0"
+    "@types/redux": "^3.6.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "react-redux": "^7.2.4"
   }
 }

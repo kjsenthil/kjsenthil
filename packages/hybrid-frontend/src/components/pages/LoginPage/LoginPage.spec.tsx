@@ -3,7 +3,7 @@ import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import * as reducer from '../../../services/auth/reducers';
-import SelectAccountsPage from './SelectAccountsPage';
+import LoginPage from './LoginPage';
 
 describe('SelectAccountsPage', () => {
   const store: Store = configureStore({
@@ -11,8 +11,8 @@ describe('SelectAccountsPage', () => {
   });
 
   test('SelectAccountsPage titles has been successfully rendered', () => {
-    renderWithProviders(<SelectAccountsPage />, store);
+    renderWithProviders(<LoginPage />, store);
 
-    expect(screen.getByText('Select an account type')).toBeInTheDocument();
+    expect(screen.getByText('Log in')).toBeInTheDocument();
   });
 });

@@ -1,27 +1,27 @@
 import React from 'react';
-import { renderWithTheme, screen } from '@tsw/test-util';
+import { renderWithProviders, screen } from '@tsw/test-util';
+import { Store } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import HeaderMenu from './HeaderMenu';
+import * as reducer from '../../../services/auth/reducers';
 
 const OLD_ENV = process.env;
 
 describe('HeaderMenu', () => {
+  const store: Store = configureStore({
+    reducer: { auth: reducer.authSlice },
+  });
+
   beforeEach(() => {
     process.env = { ...OLD_ENV };
+    renderWithProviders(<HeaderMenu />, store);
   });
 
   afterAll(() => {
     process.env = OLD_ENV;
   });
 
-  test('Renders the header menu', async () => {
-    renderWithTheme(<HeaderMenu />);
+  it('renders the header menu', async () => {
     expect(await screen.findByTestId('header-menu')).toBeInTheDocument();
-  });
-
-  test('Renders the correct environment', async () => {
-    const testEnvironment = 'staging';
-    process.env.GATSBY_ACTIVE_ENV = testEnvironment;
-    renderWithTheme(<HeaderMenu />);
-    expect(await screen.findByText(`[${testEnvironment}]`)).toBeInTheDocument();
   });
 });

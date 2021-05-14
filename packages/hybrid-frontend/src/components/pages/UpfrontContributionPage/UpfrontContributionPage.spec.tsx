@@ -1,9 +1,8 @@
 import React from 'react';
+import { act, fireEvent, renderWithProviders, screen, waitFor } from '@tsw/test-util';
+import userEvent from '@testing-library/user-event';
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
-import { Provider } from 'react-redux';
-import { act, fireEvent, renderWithTheme, screen, waitFor } from '@tsw/test-util';
-import userEvent from '@testing-library/user-event';
 import UpfrontContributionPage, { titleText } from './UpfrontContributionPage';
 import { mockGoals, mockObjective, mockLink } from '../../../../__mocks__/jestMock';
 import { GlobalProvider } from '../../../context/GlobalContextProvider';
@@ -21,25 +20,14 @@ jest.mock('../../../services/goalsAndObjectives');
 
 describe('UpfrontContributionPage', () => {
   let inputField: HTMLElement;
-  let Component: React.ComponentType;
-  let store: Store;
 
-  beforeEach(() => {
-    store = configureStore({
-      reducer: {
-        auth: reducer.authSlice,
-      },
-    });
-
-    Component = () => (
-      <Provider store={store}>
-        <UpfrontContributionPage />
-      </Provider>
-    );
+  const store: Store = configureStore({
+    reducer: { auth: reducer.authSlice },
   });
 
   test('UpfrontContributionPage titles and field has been successfully rendered', () => {
-    renderWithTheme(<Component />);
+    renderWithProviders(<UpfrontContributionPage />, store);
+
     inputField = screen.getByPlaceholderText('Enter Amount');
     expect(screen.getByText(titleText)).toBeInTheDocument();
     expect(inputField).toBeInTheDocument();
@@ -53,10 +41,11 @@ describe('UpfrontContributionPage', () => {
       setGoalCapture: setGoalCaptureMock,
     }));
 
-    renderWithTheme(
+    renderWithProviders(
       <GlobalProvider>
-        <Component />
-      </GlobalProvider>
+        <UpfrontContributionPage />
+      </GlobalProvider>,
+      store
     );
 
     inputField = screen.getByPlaceholderText('Enter Amount');
@@ -71,7 +60,8 @@ describe('UpfrontContributionPage', () => {
     (postObjectiveCreation as jest.Mock).mockResolvedValue(mockObjective);
     (postLinkGoalObjective as jest.Mock).mockResolvedValue(mockLink);
 
-    renderWithTheme(<Component />);
+    renderWithProviders(<UpfrontContributionPage />, store);
+
     inputField = screen.getByPlaceholderText('Enter Amount');
 
     fireEvent.change(inputField, { target: { value: '200' } });

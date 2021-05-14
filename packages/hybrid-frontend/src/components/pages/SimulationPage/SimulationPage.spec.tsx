@@ -1,9 +1,12 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React from 'react';
-import { renderWithTheme, screen, waitFor } from '@tsw/test-util';
+import { renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
-import { getProjections } from '../../../services/projections';
+import { configureStore } from '@reduxjs/toolkit';
+import { Store } from 'redux';
 import SimulationPage from './SimulationPage';
+import { getProjections } from '../../../services/projections';
+import * as reducer from '../../../services/auth/reducers';
 
 jest.mock('../../../services/projections', () => ({
   getProjections: jest.fn(),
@@ -34,10 +37,14 @@ const mockProjectResponse = {
 };
 
 describe('SimulationPage', () => {
+  const store: Store = configureStore({
+    reducer: { auth: reducer.authSlice },
+  });
+
   test('SimulationPage titles has been successfully rendered', async () => {
     (getProjections as jest.Mock).mockResolvedValue(mockProjectResponse);
 
-    renderWithTheme(<SimulationPage />);
+    renderWithProviders(<SimulationPage />, store);
 
     const submit = screen.getByText('Update');
 

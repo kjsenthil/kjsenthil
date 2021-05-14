@@ -1,9 +1,8 @@
 import React from 'react';
-import { Store } from 'redux';
-import { renderWithTheme, screen, waitFor } from '@tsw/test-util';
-import { Provider } from 'react-redux';
+import { renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import { configureStore } from '@reduxjs/toolkit';
+import { Store } from 'redux';
 import {
   postLinkGoalObjective,
   postGoalCreation,
@@ -16,29 +15,18 @@ import { mockGoals, mockObjective, mockLink } from '../../../../__mocks__/jestMo
 jest.mock('../../../services/goalsAndObjectives');
 
 describe('SelectInputsPage', () => {
-  let store: Store;
-
-  let Component: React.ComponentType;
+  const store: Store = configureStore({
+    reducer: { auth: reducer.authSlice },
+  });
 
   beforeEach(() => {
-    store = configureStore({
-      reducer: {
-        auth: reducer.authSlice,
-      },
-    });
-
-    Component = () => (
-      <Provider store={store}>
-        <SelectInputsPage />
-      </Provider>
-    );
     (postGoalCreation as jest.Mock).mockResolvedValue(mockGoals);
     (postObjectiveCreation as jest.Mock).mockResolvedValue(mockObjective);
     (postLinkGoalObjective as jest.Mock).mockResolvedValue(mockLink);
   });
 
   test('SelectInputsPage titles has been successfully rendered', async () => {
-    renderWithTheme(<Component />);
+    renderWithProviders(<SelectInputsPage />, store);
 
     expect(screen.getByLabelText('Target Amount')).toBeInTheDocument();
     expect(screen.getByLabelText('Target Year')).toBeInTheDocument();

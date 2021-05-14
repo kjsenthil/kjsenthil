@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import { Grid, Typography } from '../components/atoms';
-import { LoginForm } from '../components/organisms';
-import PinLogin from '../components/organisms/PinLogin';
-import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../services/auth';
-import { RootState } from '../store';
+import { Grid, Typography } from '../../atoms';
+import { LoginForm } from '../../organisms';
+import PinLogin from '../../organisms/PinLogin';
+import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../../../services/auth';
+import { RootState } from '../../../store';
 
 interface LoginPageProps {
-  path: string;
+  path?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

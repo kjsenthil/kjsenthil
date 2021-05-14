@@ -11,10 +11,12 @@ const intercept401ResponseToRefreshToken = (
   response: AxiosResponse;
   config: AxiosRequestConfig & { hasBeenRetried?: boolean };
 }) => {
-  const { status } = error.response;
   const originalRequest = error.config;
 
-  if (status === 401 && !originalRequest.url?.includes(API_ENDPOINTS.IDENTITY_REFRESH_TOKEN)) {
+  if (
+    error?.response?.status === 401 &&
+    !originalRequest.url?.includes(API_ENDPOINTS.IDENTITY_REFRESH_TOKEN)
+  ) {
     if (!originalRequest.hasBeenRetried) {
       originalRequest.hasBeenRetried = true;
       await refreshTokenCallback();
