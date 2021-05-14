@@ -9,6 +9,7 @@ import { persistReducer } from 'redux-persist';
 import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
+import { goalSlice as goalReducer } from '../services/goal/reducers';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +18,7 @@ const persistConfig = {
 
 const reducers: ReducersMapObject = {
   auth: authReducer,
+  goal: goalReducer,
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducers(reducers));

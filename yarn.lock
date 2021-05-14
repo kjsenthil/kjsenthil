@@ -4570,6 +4570,7 @@ __metadata:
     "@tsw/tracking-util": "workspace:packages/utils/tracking"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
     "@types/axios": ^0.14.0
+    "@types/camelcase-keys": ^5.1.1
     "@types/chart.js": ^2.9.30
     "@types/d3-array": ^2.9.0
     "@types/d3-format": ^2.0.0
@@ -4602,6 +4603,7 @@ __metadata:
     babel-plugin-styled-components: ^1.12.0
     babel-preset-gatsby: ^0.11.0
     babel-preset-react-app: ^10.0.0
+    camelcase-keys: ^6.2.2
     chart.js: ^2.9.4
     concurrently: ^6.0.2
     cypress: ^6.3.0
@@ -4775,6 +4777,15 @@ __metadata:
     "@types/node": "*"
     "@types/responselike": "*"
   checksum: 3dae802a0808573986c56b92bf16cd031a5b648b6c893d20c7ef6bfda3fc72a2107c7978697d2b27b14febc597162d6959985eeb5befc307a9f9f3c5081d4905
+  languageName: node
+  linkType: hard
+
+"@types/camelcase-keys@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@types/camelcase-keys@npm:5.1.1"
+  dependencies:
+    camelcase-keys: "*"
+  checksum: 14770967e57ef381136a747d37283150d3dd31addafc148fafae8bb41dd3e699c62b709cae45d13b9256bd90c9f9f4d108f909c9adda9d415c2901291d472622
   languageName: node
   linkType: hard
 
@@ -8323,17 +8334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camelcase-keys@npm:^2.0.0":
-  version: 2.1.0
-  resolution: "camelcase-keys@npm:2.1.0"
-  dependencies:
-    camelcase: ^2.0.0
-    map-obj: ^1.0.0
-  checksum: 74eff079c8e6335aee88e3e950a138a293cd97055520a404d51eb5caad36af2bca92efcf4f78a5f319d41fcb146d46630fef380daf897a7ce38711ed66c52849
-  languageName: node
-  linkType: hard
-
-"camelcase-keys@npm:^6.2.2":
+"camelcase-keys@npm:*, camelcase-keys@npm:^6.2.2":
   version: 6.2.2
   resolution: "camelcase-keys@npm:6.2.2"
   dependencies:
@@ -8341,6 +8342,16 @@ __metadata:
     map-obj: ^4.0.0
     quick-lru: ^4.0.1
   checksum: d4bd5fa5249127be0f5b1aa961da3a9de7d0a578d9524c5013f21c0ed345637eaa1e42bab28a75bbfc8511911ffb30fec4191a9efcec52741c1a3402dc38dd53
+  languageName: node
+  linkType: hard
+
+"camelcase-keys@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "camelcase-keys@npm:2.1.0"
+  dependencies:
+    camelcase: ^2.0.0
+    map-obj: ^1.0.0
+  checksum: 74eff079c8e6335aee88e3e950a138a293cd97055520a404d51eb5caad36af2bca92efcf4f78a5f319d41fcb146d46630fef380daf897a7ce38711ed66c52849
   languageName: node
   linkType: hard
 

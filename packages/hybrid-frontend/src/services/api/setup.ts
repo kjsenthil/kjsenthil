@@ -4,6 +4,7 @@ import {
   intercept401ResponseToRefreshTokens,
   interceptMyAccountsAuthorizationRequestHeaders,
   interceptXplanRequestHeaders,
+  interceptResponseDataShape,
 } from './interceptors';
 import store from '../../store';
 import { logout, refreshToken } from '../auth';
@@ -15,7 +16,7 @@ const axiosSetUp = () => {
   axios.interceptors.request.use(interceptXplanRequestHeaders());
   axios.interceptors.request.use(interceptMyAccountsAuthorizationRequestHeaders(store.getState));
   axios.interceptors.response.use(
-    (res) => res,
+    interceptResponseDataShape(),
     intercept401ResponseToRefreshTokens(
       () => dispatch(refreshToken()),
       () => dispatch(logout())

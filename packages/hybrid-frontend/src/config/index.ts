@@ -32,6 +32,7 @@ const env = from({
   API_ENDPOINTS: process.env.API_ENDPOINTS,
   API_BASE_URL: process.env.API_BASE_URL,
   XPLAN_APP_ID: process.env.XPLAN_APP_ID,
+  ENTITY_ID: process.env.ENTITY_ID,
 });
 
 const isRequired = NODE_ENV !== 'test';
@@ -65,6 +66,8 @@ export const API_ENDPOINTS = env
   .required(isRequired)
   .default(defaultEndpoints)
   .asJsonObject() as Record<ApiEndpoints, string>;
+
+export const ENTITY_ID = env.get('ENTITY_ID').required(isRequired).default('6359457').asInt();
 
 export const XPLAN_APP_ID = env.get('XPLAN_APP_ID').default('65wshs01RpizdxEwCh6G').asString();
 

@@ -1,5 +1,7 @@
+import { TokenItem } from '../types';
+
 /* eslint-disable import/prefer-default-export */
-export const tokens = [
+export const tokens: TokenItem[] = [
   {
     application: 'MyAccountsApi',
     accessToken:

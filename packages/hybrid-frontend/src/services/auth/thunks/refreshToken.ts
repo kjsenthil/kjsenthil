@@ -7,7 +7,7 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async (_, { ge
     auth: { accessTokens },
   } = getState() as { auth: AuthState };
   const response = await postRefreshToken(accessTokens);
-  const tokens = response.Data.Attributes.NewTokens;
+  const tokens = response.data.attributes.newTokens;
   return { tokens };
 });
 

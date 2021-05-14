@@ -10,13 +10,15 @@ import {
   xplanLoginActionReducerMapBuilder,
   refreshTokenActionReducerMapBuilder,
 } from '../thunks';
+import { ENTITY_ID } from '../../../config';
 
 const initialState: AuthState = {
+  status: 'idle',
+  entityId: ENTITY_ID,
+  accessTokens: [],
   isCredLoggedIn: false,
   isPinLoggedIn: false,
   isXplanLoggedIn: false,
-  accessTokens: [],
-  status: 'idle',
 };
 
 const authSlice = createSlice({
@@ -24,9 +26,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: () => initialState,
-    setEntityId: (state, action) => {
-      state.entityId = action.payload;
-    },
     setAccessTokens: (state, action) => {
       state.accessTokens = action.payload;
     },
@@ -40,6 +39,6 @@ const authSlice = createSlice({
 });
 
 export { credLogin, pinLogin, xplanLogin, refreshToken };
-export const { setAccessTokens, setEntityId, logout } = authSlice.actions;
+export const { setAccessTokens, logout } = authSlice.actions;
 
 export default authSlice.reducer;

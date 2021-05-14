@@ -149,9 +149,9 @@ describe('authSlice', () => {
 
     beforeEach(() => {
       (api.postRefreshToken as jest.Mock).mockResolvedValue({
-        Data: {
-          Attributes: {
-            NewTokens: tokens,
+        data: {
+          attributes: {
+            newTokens: tokens,
           },
         },
       });

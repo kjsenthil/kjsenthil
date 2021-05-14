@@ -1,11 +1,10 @@
-import React, { useEffect, ChangeEvent } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import { Grid, Typography, Box } from '../components/atoms';
+import { Grid, Typography } from '../components/atoms';
 import { LoginForm } from '../components/organisms';
-import { xplanLogin, setEntityId, LoginFormData, logout } from '../services/auth';
+import { xplanLogin, LoginFormData, logout } from '../services/auth';
 import { RootState } from '../store';
-import { FormInput } from '../components/molecules';
 
 interface LoginPageProps {
   path: string;
@@ -13,9 +12,7 @@ interface LoginPageProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const XplanLoginPage = (_: LoginPageProps) => {
-  const { isXplanLoggedIn, xplanLoginError, entityId } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { isXplanLoggedIn, xplanLoginError } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (isXplanLoggedIn) {
@@ -32,9 +29,6 @@ const XplanLoginPage = (_: LoginPageProps) => {
     dispatch(xplanLogin(loginFormValues));
   };
 
-  const onEntityHandler = (evt: ChangeEvent<HTMLInputElement>) =>
-    dispatch(setEntityId(evt.target.value));
-
   return (
     <Grid container justify="center">
       <Grid item xs={6}>
@@ -47,10 +41,6 @@ const XplanLoginPage = (_: LoginPageProps) => {
           errorMessage={xplanLoginError || ''}
           title="Xplan Login"
         />
-
-        <Box m={1}>
-          <FormInput label="Entity ID" type="number" value={entityId} onChange={onEntityHandler} />
-        </Box>
       </Grid>
     </Grid>
   );
