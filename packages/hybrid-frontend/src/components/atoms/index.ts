@@ -13,6 +13,7 @@ export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Typography } from './Typography';
 export { default as Slider } from './Slider';
+export { default as ProgressBar } from './ProgressBar';
 
 /* material-ui atoms */
 export {

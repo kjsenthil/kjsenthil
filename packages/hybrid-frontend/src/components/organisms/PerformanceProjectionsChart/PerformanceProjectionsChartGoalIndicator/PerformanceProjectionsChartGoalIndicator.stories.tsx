@@ -41,7 +41,7 @@ const defaultArgs: PerformanceProjectionsChartGoalIndicatorProps = {
   top: 0,
   left: 30,
   label: 'Retire',
-  progress: 0.2,
+  progress: 0.5,
   icon: '/goal-graphic.png',
   goalMet: true,
 };
