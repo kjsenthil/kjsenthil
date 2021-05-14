@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 import { goalSlice as goalReducer } from '../services/goal/reducers';
+import { AuthState } from '../services/auth';
+import { GoalState } from '../services/goal';
 
 const persistConfig = {
   key: 'root',
@@ -33,7 +35,11 @@ const store = configureStore({
   devTools: ACTIVE_ENV !== 'production',
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export interface RootState {
+  auth: AuthState;
+  goal: GoalState;
+}
+
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

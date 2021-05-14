@@ -2,7 +2,7 @@ import React from 'react';
 
 import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import GoalSelection from './GoalSelection';
-import { Goals } from '../../../constants';
+import { Goals } from '../../../services/goal';
 
 describe('GoalSelection', () => {
   const onSubmit = jest.fn();

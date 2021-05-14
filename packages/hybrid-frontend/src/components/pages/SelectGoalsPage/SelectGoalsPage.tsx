@@ -1,19 +1,23 @@
-import { navigate } from 'gatsby';
 import React from 'react';
-import { Goals } from '../../../constants';
-import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
-
+import { useDispatch } from 'react-redux';
+import { navigate } from 'gatsby';
+import { setGoalDetails, reset, Goals } from '../../../services/goal';
 import { GoalSelection } from '../../organisms';
 import { MyAccountLayout } from '../../templates';
 
 const SelectGoalsPage = () => {
-  const { setGoalDetails } = useGlobalContext();
+  const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    dispatch(reset());
+  }, []);
   const onSubmitHandler = async (goal: Goals) => {
-    setGoalDetails({
-      name: goal,
-    });
-    navigate('/my-account/targetamount');
+    dispatch(
+      setGoalDetails({
+        name: goal,
+      })
+    );
+    navigate('/my-account/target-amount');
   };
 
   return (

@@ -1,12 +1,11 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
 import { renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
-import { configureStore } from '@reduxjs/toolkit';
-import { Store } from 'redux';
 import SimulationPage from './SimulationPage';
 import { getProjections } from '../../../services/projections';
-import * as reducer from '../../../services/auth/reducers';
+import { goalSlice, setGoalCapture } from '../../../services/goal/reducers';
 
 jest.mock('../../../services/projections', () => ({
   getProjections: jest.fn(),
@@ -37,14 +36,25 @@ const mockProjectResponse = {
 };
 
 describe('SimulationPage', () => {
-  const store: Store = configureStore({
-    reducer: { auth: reducer.authSlice },
+  const store = configureStore({
+    reducer: {
+      goal: goalSlice,
+    },
   });
 
-  test('SimulationPage titles has been successfully rendered', async () => {
-    (getProjections as jest.Mock).mockResolvedValue(mockProjectResponse);
-
+  beforeEach(() => {
+    store.dispatch(
+      setGoalCapture({
+        upfrontInvestment: 2000,
+        targetDate: '2100-11-11',
+        targetAmount: 1000000,
+      })
+    );
     renderWithProviders(<SimulationPage />, store);
+  });
+
+  it('renders titles successfully', async () => {
+    (getProjections as jest.Mock).mockResolvedValue(mockProjectResponse);
 
     const submit = screen.getByText('Update');
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Grid, Typography } from '../../atoms';
-import { Goals } from '../../../constants';
+import { Goals } from '../../../services/goal';
 import { GoalBox, ELEVATION } from './GoalSelection.styles';
 
 interface GoalBoxProps {

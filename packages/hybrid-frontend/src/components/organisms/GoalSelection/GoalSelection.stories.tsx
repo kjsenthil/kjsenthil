@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { Grid } from '../../atoms';
 import GoalSelection, { GoalSelectionProps } from './GoalSelection';
-import { Goals } from '../../../constants';
+import { Goals } from '../../../services/goal';
 
 export default {
   title: 'Digital Hybrid/Organisms/Goal Selection',

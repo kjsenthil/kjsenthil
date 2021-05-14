@@ -1,38 +1,50 @@
 import React from 'react';
-import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
+import * as gatsby from 'gatsby';
+import { configureStore } from '@reduxjs/toolkit';
+import { act, waitFor, fireEvent, renderWithProviders, screen } from '@tsw/test-util';
+import userEvent from '@testing-library/user-event';
 import TargetAmountsPage, { titleText } from './TargetAmountsPage';
-import { GlobalProvider } from '../../../context/GlobalContextProvider';
-import useGlobalContextValue from '../../../hooks/GlobalContextHooks/useGlobalContextValue';
-
-jest.mock('../../../hooks/GlobalContextHooks/useGlobalContextValue');
+import { goalSlice } from '../../../services/goal/reducers';
 
 describe('TargetAmountsPage', () => {
   let inputField: HTMLElement;
 
-  test('TargetAmountsPage titles and field has been successfully rendered', () => {
-    renderWithTheme(<TargetAmountsPage />);
-    expect(screen.getByText(titleText)).toBeInTheDocument();
-    inputField = screen.getByPlaceholderText('Target Amount');
-    expect(inputField).toBeInTheDocument();
+  const store = configureStore({
+    reducer: {
+      goal: goalSlice,
+    },
   });
 
-  test('TargetAmountsPage Onchange event', async () => {
-    const setGoalCaptureMock = jest.fn();
-
-    (useGlobalContextValue as jest.Mock).mockImplementation(() => ({
-      goalCapture: {},
-      setGoalCapture: setGoalCaptureMock,
-    }));
-
-    renderWithTheme(
-      <GlobalProvider>
-        <TargetAmountsPage />
-      </GlobalProvider>
-    );
-
+  beforeEach(() => {
+    renderWithProviders(<TargetAmountsPage />, store);
     inputField = screen.getByPlaceholderText('Target Amount');
+  });
+
+  it('renders title and fields successfully', () => {
+    const { targetAmount } = store.getState().goal.goalCapture || {};
+
+    expect(screen.getByText(titleText)).toBeInTheDocument();
+    expect(inputField).toBeInTheDocument();
+    expect(targetAmount).toBeUndefined();
+  });
+
+  it('captures upfront investment onChange', async () => {
     fireEvent.change(inputField, { target: { value: '4000' } });
-    expect(useGlobalContextValue).toHaveBeenCalledTimes(1);
-    expect(setGoalCaptureMock).toHaveBeenCalledTimes(1);
+
+    const { targetAmount } = store.getState().goal.goalCapture || {};
+
+    expect(targetAmount).toStrictEqual(4000);
+  });
+
+  it('navigates on Submit', async () => {
+    const navigateSpy = jest.spyOn(gatsby, 'navigate');
+
+    const continueButton = screen.getByText('Continue');
+
+    userEvent.click(continueButton);
+
+    await act(async () => {
+      await waitFor(() => expect(navigateSpy).toHaveBeenCalledWith('/my-account/target-date'));
+    });
   });
 });

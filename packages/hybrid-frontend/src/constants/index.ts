@@ -1,10 +1,3 @@
-export enum Goals {
-  HOUSE = 'house',
-  BABY = 'baby',
-  HOLIDAY = 'holiday',
-  UNIVERSITY = 'university',
-}
-
 export enum AccountType {
   ISA = 'isa',
   GIA = 'gia',

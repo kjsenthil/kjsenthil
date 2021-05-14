@@ -24,9 +24,13 @@ const MyAccount = () => {
       <XplanLoginPage path="/xplogin" />
       <PrivateRoute path="/dash" Component={DashPage} />
       <PrivateRoute authType="XPLAN" path="/goals" Component={SelectGoalsPage} />
-      <PrivateRoute authType="XPLAN" path="/targetamount" Component={TargetAmountsPage} />
-      <PrivateRoute authType="XPLAN" path="/targetdate" Component={TargetDatePage} />
-      <PrivateRoute authType="XPLAN" path="/upfront" Component={UpfrontContributionPage} />
+      <PrivateRoute authType="XPLAN" path="/target-amount" Component={TargetAmountsPage} />
+      <PrivateRoute authType="XPLAN" path="/target-date" Component={TargetDatePage} />
+      <PrivateRoute
+        authType="XPLAN"
+        path="/upfront-investment"
+        Component={UpfrontContributionPage}
+      />
       <PrivateRoute authType="XPLAN" path="/sim" Component={SimulationPage} />
     </Router>
   );

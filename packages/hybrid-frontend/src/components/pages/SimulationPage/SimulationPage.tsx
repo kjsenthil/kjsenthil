@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Card, CardContent, Grid, Typography } from '../../atoms';
 import {
   getProjections,
   ProjectionResponse,
   CustomProjectionRequestData,
 } from '../../../services/projections';
-import useGlobalContext from '../../../hooks/GlobalContextHooks/useGlobalContext';
 import { HeaderMenu, ProjectionsChart, ProjectionsGrid, SimulationForm } from '../../organisms';
+import { RootState } from '../../../store';
 
 const SimulationPage = () => {
-  const { goalCapture } = useGlobalContext();
+  const { goalCapture } = useSelector((state: RootState) => state.goal);
 
   const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
 
@@ -19,8 +20,8 @@ const SimulationPage = () => {
   };
 
   const goalValsFromState = {
-    monthlyInvestment: goalCapture.monthlyInvestment,
-    upfrontInvestment: goalCapture.upfrontInvestment,
+    monthlyInvestment: Number(goalCapture.monthlyInvestment),
+    upfrontInvestment: Number(goalCapture.upfrontInvestment),
     investmentPeriod: 30,
   };
 

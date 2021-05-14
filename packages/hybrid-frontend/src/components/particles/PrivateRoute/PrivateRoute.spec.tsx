@@ -1,11 +1,10 @@
 import React from 'react';
-import { render, screen } from '@tsw/test-util';
-import { configureStore } from '@reduxjs/toolkit';
-import { Store } from 'redux';
-import { Provider } from 'react-redux';
+import { renderWithStore, screen } from '@tsw/test-util';
 import * as gatsby from 'gatsby';
+import { Store } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import PrivateRoute from './PrivateRoute';
-import * as reducer from '../../../services/auth/reducers';
+import { authSlice, pinLogin } from '../../../services/auth';
 import * as api from '../../../services/auth/api';
 import { tokens } from '../../../services/auth/mocks';
 
@@ -15,31 +14,25 @@ jest.mock('../../../services/auth/api', () => ({
 
 jest.mock('gatsby', () => ({ navigate: jest.fn() }));
 
+const reducer = { auth: authSlice };
+
 describe('Private Route Components', () => {
   let store: Store;
   let Component: React.ComponentType;
   let mockNavigate: jest.Mock;
 
   const contentText = 'Private Component';
-  beforeEach(() => {
-    store = configureStore({
-      reducer: {
-        auth: reducer.authSlice,
-      },
-    });
 
-    Component = () => (
-      <Provider store={store}>
-        <PrivateRoute default path="/" Component={() => <h1>{contentText}</h1>} />
-      </Provider>
-    );
+  beforeEach(() => {
+    store = configureStore({ reducer });
+    Component = () => <PrivateRoute default path="/" Component={() => <h1>{contentText}</h1>} />;
 
     mockNavigate = gatsby.navigate as jest.Mock;
   });
 
   describe('when there is no login session', () => {
     it('navigate to login page ', () => {
-      render(<Component />);
+      renderWithStore(<Component />, store);
 
       expect(mockNavigate).toHaveBeenCalledWith('/my-account/login');
     });
@@ -55,9 +48,9 @@ describe('Private Route Components', () => {
           },
         },
       });
-      await store.dispatch(reducer.pinLogin([]) as any);
+      await store.dispatch(pinLogin([]) as any);
 
-      render(<Component />);
+      renderWithStore(<Component />, store);
 
       expect(mockNavigate).not.toHaveBeenCalledWith('/my-account/login');
       expect(screen.getByText(contentText)).toBeInTheDocument();

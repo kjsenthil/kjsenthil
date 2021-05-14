@@ -33,7 +33,9 @@ describe('PerformanceChartAxes', () => {
   });
 
   test('The chart axes render correctly', () => {
-    const { result } = renderWithTheme(
+    const {
+      result: { container },
+    } = renderWithTheme(
       <PerformanceDataContextProvider>
         <svg width={300} height={300}>
           <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
@@ -42,8 +44,8 @@ describe('PerformanceChartAxes', () => {
       </PerformanceDataContextProvider>
     );
 
-    const axisLeft = result.container.querySelector('.visx-axis-left');
-    const axisBottom = result.container.querySelector('.visx-axis-bottom');
+    const axisLeft = container.querySelector('.visx-axis-left');
+    const axisBottom = container.querySelector('.visx-axis-bottom');
 
     expect(axisLeft).toBeVisible();
     expect(axisBottom).toBeVisible();

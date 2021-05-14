@@ -1,38 +1,52 @@
 import React from 'react';
-import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
+import * as gatsby from 'gatsby';
+import { configureStore } from '@reduxjs/toolkit';
+import { act, waitFor, fireEvent, renderWithProviders, screen } from '@tsw/test-util';
+import userEvent from '@testing-library/user-event';
 import TargetDatePage, { titleText } from './TargetDatePage';
-import { GlobalProvider } from '../../../context/GlobalContextProvider';
-import useGlobalContextValue from '../../../hooks/GlobalContextHooks/useGlobalContextValue';
-
-jest.mock('../../../hooks/GlobalContextHooks/useGlobalContextValue');
+import { goalSlice } from '../../../services/goal/reducers';
 
 describe('TargetDatePage', () => {
   let inputField: HTMLElement;
 
-  test('TargetDatePage titles and field has been successfully rendered', () => {
-    renderWithTheme(<TargetDatePage />);
-    expect(screen.getByText(titleText)).toBeInTheDocument();
-    inputField = screen.getByPlaceholderText('Target Date');
-    expect(inputField).toBeInTheDocument();
+  const store = configureStore({
+    reducer: {
+      goal: goalSlice,
+    },
   });
 
-  test('TargetDatePage Onchange event', async () => {
-    const setGoalCaptureMock = jest.fn();
-
-    (useGlobalContextValue as jest.Mock).mockImplementation(() => ({
-      goalCapture: {},
-      setGoalCapture: setGoalCaptureMock,
-    }));
-
-    renderWithTheme(
-      <GlobalProvider>
-        <TargetDatePage />
-      </GlobalProvider>
-    );
-
+  beforeEach(() => {
+    renderWithProviders(<TargetDatePage />, store);
     inputField = screen.getByPlaceholderText('Target Date');
-    fireEvent.change(inputField, { target: { value: '2023-06-07' } });
-    expect(useGlobalContextValue).toHaveBeenCalledTimes(1);
-    expect(setGoalCaptureMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders title and fields successfully', () => {
+    const { targetDate } = store.getState().goal.goalCapture || {};
+
+    expect(screen.getByText(titleText)).toBeInTheDocument();
+    expect(inputField).toBeInTheDocument();
+    expect(targetDate).toBeUndefined();
+  });
+
+  it('captures upfront investment onChange', async () => {
+    fireEvent.change(inputField, { target: { value: '2022-05-21' } });
+
+    const { targetDate } = store.getState().goal.goalCapture || {};
+
+    expect(targetDate).toStrictEqual('2022-05-21');
+  });
+
+  it('navigates on Submit', async () => {
+    const navigateSpy = jest.spyOn(gatsby, 'navigate');
+
+    const continueButton = screen.getByText('Continue');
+
+    userEvent.click(continueButton);
+
+    await act(async () => {
+      await waitFor(() =>
+        expect(navigateSpy).toHaveBeenCalledWith('/my-account/upfront-investment')
+      );
+    });
   });
 });
