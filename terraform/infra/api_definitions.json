@@ -78,7 +78,8 @@
                     ],
                     "method": "POST",
                     "headers": [
-                        "Content-Type"
+                        "Content-Type",
+                        "Authorization"
                     ]
                 },
                 "backend_url": "bestinvest_api"
