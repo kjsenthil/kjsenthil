@@ -102,6 +102,7 @@ jobs:
   deploy_rg_terraform:
     name: "Deploy Resource Group"
     runs-on: ubuntu-latest
+    concurrency: dev_rg_terraform_deployment
 
     defaults:
       run:
@@ -150,6 +151,7 @@ jobs:
     name: "Deploy APIM"
     needs: [deploy_rg_terraform]
     runs-on: ubuntu-latest
+    concurrency: dev_apim_terraform_deployment
 
     defaults:
       run:
@@ -213,6 +215,7 @@ jobs:
         package_function_apps,
       ]
     runs-on: ubuntu-latest
+    concurrency: dev_infra_terraform_deployment
 
     defaults:
       run:
@@ -604,6 +607,8 @@ jobs:
     name: "Terraform plan Staging"
     needs: [deploy_pr_terraform, package_function_apps, get_staging_rg_outputs, get_staging_apim_outputs]
     runs-on: ubuntu-latest
+    concurrency: staging_infra_terraform_deployment
+
     defaults:
       run:
         working-directory: ./terraform/infra
@@ -726,6 +731,8 @@ jobs:
     name: "Terraform plan Prod"
     needs: [deploy_pr_terraform, package_function_apps, get_prod_rg_outputs, get_prod_apim_outputs]
     runs-on: ubuntu-latest
+    concurrency: prod_infra_terraform_deployment
+
     defaults:
       run:
         working-directory: ./terraform/infra

@@ -5,6 +5,8 @@ on:
     branches:
       - master
 
+concurrency: prod_deployment
+
 jobs:
   build_cache:
     name: "Build caches"
@@ -93,6 +95,7 @@ jobs:
   deploy_staging_rg_terraform:
     name: "Deploy Staging Resource Group"
     runs-on: ubuntu-latest
+    concurrency: staging_rg_terraform_deployment
 
     defaults:
       run:
@@ -147,6 +150,7 @@ jobs:
     name: "Deploy Staging APIM"
     needs: [deploy_staging_rg_terraform]
     runs-on: ubuntu-latest
+    concurrency: staging_apim_terraform_deployment
 
     defaults:
       run:
@@ -209,6 +213,7 @@ jobs:
         package_function_apps,
       ]
     runs-on: ubuntu-latest
+    concurrency: staging_infra_terraform_deployment
 
     env:
       ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
@@ -414,6 +419,7 @@ jobs:
     name: "Deploy prod Resource Group"
     needs: "end_to_end_test_staging"
     runs-on: ubuntu-latest
+    concurrency: prod_rg_terraform_deployment
 
     defaults:
       run:
@@ -468,6 +474,7 @@ jobs:
     name: "Deploy prod APIM"
     needs: [end_to_end_test_staging, deploy_production_rg_terraform]
     runs-on: ubuntu-latest
+    concurrency: prod_rg_terraform_deployment
 
     defaults:
       run:
@@ -531,6 +538,7 @@ jobs:
         package_function_apps,
       ]
     runs-on: ubuntu-latest
+    concurrency: prod_infra_terraform_deployment
 
     env:
       ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}

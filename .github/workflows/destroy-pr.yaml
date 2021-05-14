@@ -101,6 +101,7 @@ jobs:
     name: "Clean up PR deployment"
     runs-on: ubuntu-latest
     needs: [derive_environment_prefix, get_rg_outputs, get_apim_outputs]
+    concurrency: dev_infra_terraform_deployment
 
     defaults:
       run:
