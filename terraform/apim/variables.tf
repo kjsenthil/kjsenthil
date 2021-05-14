@@ -35,3 +35,19 @@ variable "myaccount_signing_key" {
   description = "my accounts accesskey signing key"
   sensitive   = true
 }
+
+variable "xplan_app_id" {
+  type        = string
+  description = "xplan Application Id"
+}
+
+variable "xplan_username" {
+  type        = string
+  description = "xplan basic auth username"
+}
+
+variable "xplan_password" {
+  type        = string
+  description = "xplan basic auth password"
+  sensitive   = true
+}

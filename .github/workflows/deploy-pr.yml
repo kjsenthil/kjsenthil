@@ -149,6 +149,7 @@ jobs:
   # Deploys terraform APIM.
   deploy_apim_terraform:
     name: "Deploy APIM"
+    environment: development
     needs: [deploy_rg_terraform]
     runs-on: ubuntu-latest
     concurrency: dev_apim_terraform_deployment
@@ -185,12 +186,19 @@ jobs:
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -605,6 +613,7 @@ jobs:
 
   plan_staging:
     name: "Terraform plan Staging"
+    environment: staging
     needs: [deploy_pr_terraform, package_function_apps, get_staging_rg_outputs, get_staging_apim_outputs]
     runs-on: ubuntu-latest
     concurrency: staging_infra_terraform_deployment
@@ -646,6 +655,10 @@ jobs:
           TF_VAR_apim_name: ${{ needs.get_staging_apim_outputs.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.get_staging_apim_outputs.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.get_staging_apim_outputs.outputs.apim_subnet_name }}
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
 
     outputs:
       plan_outcome: ${{ steps.plan.outcome }}
@@ -729,6 +742,7 @@ jobs:
 
   plan_prod:
     name: "Terraform plan Prod"
+    environment: prod
     needs: [deploy_pr_terraform, package_function_apps, get_prod_rg_outputs, get_prod_apim_outputs]
     runs-on: ubuntu-latest
     concurrency: prod_infra_terraform_deployment
@@ -770,7 +784,11 @@ jobs:
           TF_VAR_apim_name: ${{ needs.get_prod_apim_outputs.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.get_prod_apim_outputs.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.get_prod_apim_outputs.outputs.apim_subnet_name }}
-
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          
     outputs:
       plan_outcome: ${{ steps.plan.outcome }}
       plan: ${{ steps.plan.outputs.stdout }}

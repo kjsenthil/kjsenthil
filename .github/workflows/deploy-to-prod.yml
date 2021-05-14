@@ -148,6 +148,7 @@ jobs:
   # Deploys terraform APIM.
   deploy_staging_apim_terraform:
     name: "Deploy Staging APIM"
+    environment: staging
     needs: [deploy_staging_rg_terraform]
     runs-on: ubuntu-latest
     concurrency: staging_apim_terraform_deployment
@@ -184,12 +185,20 @@ jobs:
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/staging.tfvars"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -472,6 +481,7 @@ jobs:
   # Deploys terraform APIM.
   deploy_production_apim_terraform:
     name: "Deploy prod APIM"
+    environment: prod
     needs: [end_to_end_test_staging, deploy_production_rg_terraform]
     runs-on: ubuntu-latest
     concurrency: prod_rg_terraform_deployment
@@ -508,12 +518,19 @@ jobs:
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/prod.tfvars"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs

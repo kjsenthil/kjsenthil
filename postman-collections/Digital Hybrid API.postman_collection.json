@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2bdb6168-41dc-434c-9875-87092d22922d",
+		"_postman_id": "aa90251a-06fe-407b-beaf-fa89052468d7",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -259,40 +259,6 @@
 							"body": ""
 						},
 						{
-							"name": "Bad Request",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
-									"host": [
-										"{{myAccounts.baseUrl}}"
-									],
-									"path": [
-										"api",
-										"performance-contact",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
-						},
-						{
 							"name": "Not Found",
 							"originalRequest": {
 								"method": "GET",
@@ -316,6 +282,40 @@
 							},
 							"status": "Not Found",
 							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/performance-contact/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"performance-contact",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
@@ -923,6 +923,386 @@
 			]
 		},
 		{
+			"name": "Xplan",
+			"item": [
+				{
+					"name": "Create Goal (less fields)",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAccounts.accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Xplan-App-Id",
+								"type": "text",
+								"value": "{{AdviceAppKey}}"
+							},
+							{
+								"key": "Origin",
+								"type": "text",
+								"value": "{{siteURL}}",
+								"disabled": true
+							},
+							{
+								"key": "Origin",
+								"value": "https://tbigroupuat2.xplan.iress.co.uk/",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded; charset=UTF-8",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fields\": {\n            \"status\": \"2\",\n            \"category\": 5,\n            \"capture_date\": {\n                \"_val\": \"2021-02-15\",\n                \"_type\": \"Date\"\n            },\n            \"advice_type\": 3,\n            \"xpt_external_id\": null,\n            \"owner\": \"client\"\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client-v4",
+								"goals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link goal to objective",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "https://tbigroupuat2.xplan.iress.co.uk/",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"objective_obj_index\": \"2251262\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/:entity_id/goals/:list_obj_index/objective_link",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client-v4",
+								":entity_id",
+								"goals",
+								":list_obj_index",
+								"objective_link"
+							],
+							"query": [
+								{
+									"key": "objective_obj_index",
+									"value": "2251248",
+									"disabled": true
+								},
+								{
+									"key": "Target_Amount",
+									"value": "100000",
+									"disabled": true
+								},
+								{
+									"key": "Owner",
+									"value": "\"client\"",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "entity_id",
+									"value": "{{dummyclient}}"
+								},
+								{
+									"key": "list_obj_index",
+									"value": "605832650"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create goal (additional fields)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fields\": {\n            \"status\": \"2\",\n            \"category\": 5,\n            \"description\": \"Retirement goal\",\n            \"capture_date\": {\n                \"_val\": \"2021-02-14\",\n                \"_type\": \"Date\"\n            },\n            \"objective_frequency_start_age\": 65,\n            \"advice_type\": 3,\n            \"xpt_external_id\": null,\n            \"target_amount\": {\n                \"_val\": {\n                    \"code\": \"GBP\",\n                    \"value\": {\n                        \"_val\": \"100000\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            },\n            \"target_age\": \"80\",\n            \"regular_saving\": {\n                \"_val\" : {\n                    \"code\": \"GBP\",\n                    \"value\" : {\n                        \"_val\": \"1000\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            },\n            \"frequency\": \"12\",\n            \"owner\": \"client\"\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client/goals",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client",
+								"goals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create objective",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fields\": {\r\n    \"description\": \"Goal Objective 2\",\r\n    \"owner\": \"client\",\r\n    \"target_amount\":{\r\n                \"_val\": {\r\n                    \"code\": \"GBP\",\r\n                    \"value\": {\r\n                        \"_val\": \"10000\",\r\n                        \"_type\": \"BigDecimal\"\r\n                    }\r\n                },\r\n                \"_type\": \"Currency\"\r\n    },\r\n    \"capture_date\": {\r\n        \"_val\": \"2021-02-19\",\r\n        \"_type\": \"Date\"\r\n    }\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/objectives",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client-v4",
+								"objectives"
+							],
+							"query": [
+								{
+									"key": "Description",
+									"value": "\"Goal objective\"",
+									"disabled": true
+								},
+								{
+									"key": "Target_Amount",
+									"value": "100000",
+									"disabled": true
+								},
+								{
+									"key": "Owner",
+									"value": "\"client\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update goal",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Xplan-App-Id",
+								"type": "text",
+								"value": "{{AdviceAppKey}}"
+							},
+							{
+								"key": "Origin",
+								"type": "text",
+								"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"fields\": {\n                        \"description\": \"savings goal\",\n            \"target_amount\": {\n                \"_val\": {\n                    \"code\": \"GBP\",\n                    \"value\": {\n                        \"_val\": \"100000\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            },\n            \"initial_investment\": {\n                \"_val\": {\n                    \"code\": \"GBP\",\n                    \"value\": {\n                        \"_val\": \"20000\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            },\n            \"term_timeframe\": \"medium_term\",\n            \"regular_saving\": {\n                \"_val\" : {\n                    \"code\": \"GBP\",\n                    \"value\" : {\n                        \"_val\": \"5000\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            },\n            \"frequency\": \"12\"\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}resourceful/entity/client-v4/:entityid/goals/:list_obj_index",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}resourceful",
+								"entity",
+								"client-v4",
+								":entityid",
+								"goals",
+								":list_obj_index"
+							],
+							"variable": [
+								{
+									"key": "entityid",
+									"value": "{{xplan.entityId}}"
+								},
+								{
+									"key": "list_obj_index",
+									"value": "177835771"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{myAccounts.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Projections",
+			"item": [
+				{
+					"name": "Asset Projections",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"riskModel\": \"TAA5\",\r\n    \"sedolCode\": \"BYX8KR5\",\r\n    \"upfrontInvestment\": 635376.130119,\r\n    \"monthlyInvestment\": 0,\r\n    \"investmentPeriod\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/Projections",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"Assets",
+								"Projections"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{myAccounts.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "/login",
 			"event": [
 				{
@@ -981,38 +1361,6 @@
 			},
 			"response": [
 				{
-					"name": "Not Found",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/login",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"login"
-							]
-						}
-					},
-					"status": "Not Found",
-					"code": 404,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						}
-					],
-					"cookie": [],
-					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
-				},
-				{
 					"name": "Bad Request",
 					"originalRequest": {
 						"method": "POST",
@@ -1034,6 +1382,38 @@
 					},
 					"status": "Bad Request",
 					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
@@ -1147,38 +1527,6 @@
 			},
 			"response": [
 				{
-					"name": "Success",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/pin",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"pin"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "text",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "text/plain"
-						}
-					],
-					"cookie": [],
-					"body": ""
-				},
-				{
 					"name": "Bad Request",
 					"originalRequest": {
 						"method": "POST",
@@ -1209,6 +1557,38 @@
 					],
 					"cookie": [],
 					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+				},
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pin"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
 				},
 				{
 					"name": "Not Found",

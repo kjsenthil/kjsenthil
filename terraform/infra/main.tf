@@ -43,7 +43,50 @@ module "api_management_policy" {
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
-      rewrite_url          = lookup(each.value.policy, "rewrite_url", null)
+      rewrite_url          = lookup(each.value.policy, "rewrite_url", null),
+      variables            = lookup(each.value.policy, "set_variable", null),
+      authentication-basic = lookup(each.value.policy, "authentication-basic", null)
+    }
+  })
+  depends_on = [module.api_operation, module.function_app_projections]
+}
+
+
+module "api_operation_xplan" {
+  source              = "../modules/api_operation"
+  for_each            = local.xplan_api_definitions
+  apima_name          = module.apima.name
+  apim_name           = data.azurerm_api_management.apim.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  operation_id        = lookup(each.value, "operation_id", null)
+  display_name        = lookup(each.value, "display_name", null)
+  method              = lookup(each.value.policy.cors, "method", null)
+  url_template        = lookup(each.value, "url_template", null)
+  description         = lookup(each.value, "description", null)
+  path_params         = lookup(each.value, "path_params", [])
+  is_mock             = false
+}
+
+module "api_management_policy_xplan" {
+  source              = "../modules/api_management_policy"
+  for_each            = local.xplan_api_definitions
+  apima_name          = module.apima.name
+  apim_name           = data.azurerm_api_management.apim.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  operation_id        = lookup(each.value, "operation_id", null)
+  xml_policy_file = templatefile("../modules/policy_documents/api_operation_policy_xplan.xml", {
+    config = {
+      backend_url          = lookup(local.api_backends, lookup(each.value.policy, "backend_url", null), null),
+      cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
+      cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
+      cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
+      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.static_website_storage_account.primary_web_endpoint]),
+      allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
+      headers              = lookup(each.value.policy, "set_header", null),
+      outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
+      rewrite_url          = lookup(each.value.policy, "rewrite_url", null),
+      variables            = lookup(each.value.policy, "set_variable", null),
+      authentication-basic = lookup(each.value.policy, "authentication-basic", null)
     }
   })
   depends_on = [module.api_operation, module.function_app_projections]
