@@ -321,6 +321,78 @@
                 "backend_url": "myaccounts_api",
                 "rewrite_url": "\/api\/accounts\/{id}\/monthly-savings"
             }
-        }        
+        },
+        {
+            "operation_id": "contribution-account",
+            "display_name": "Myaccount account contributions",
+            "url_template": "\/myaccount\/contribution-account\/{id}",
+            "description": "This lets the user to get contributions a given account",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
+                    ]
+                },
+                "backend_url": "myaccounts_api",
+                "rewrite_url": "\/api\/contribution-account/{id}"
+            }
+        },
+        {
+            "operation_id": "isa-contributions",
+            "display_name": "Myaccount ISA contributions",
+            "url_template": "\/myaccount\/isa-contributions\/{id}",
+            "description": "This lets the user to get ISA contributions for the given contact",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
+                    ]
+                },
+                "backend_url": "myaccounts_api",
+                "rewrite_url": "\/api\/isa-contributions/{id}"
+            }
+        },
+        {
+            "operation_id": "investments",
+            "display_name": "Myaccount investments",
+            "url_template": "\/myaccount\/Accounts\/{id}\/investments",
+            "description": "This lets the user to get investments for the given account",
+            "path_params": [
+                "id"
+            ],            
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
+                    ]
+                },
+                "backend_url": "myaccounts_api",
+                "rewrite_url": "\/api\/Accounts\/{id}\/investments"
+            }
+        }                    
     ]
 }
