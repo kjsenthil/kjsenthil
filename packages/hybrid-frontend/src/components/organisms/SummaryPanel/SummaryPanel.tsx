@@ -72,7 +72,7 @@ export default function SummaryPanel({
 
           <Grid item xs={12} sm={3}>
             <Grid container justify="flex-end">
-              <Divider orientation="vertical" flexItem />
+              <Divider />
               <Spacer x={4} />
               <Grid item>
                 <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>

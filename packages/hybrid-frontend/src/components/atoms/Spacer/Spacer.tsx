@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, BoxProps, useTheme } from '@material-ui/core';
 
-type Props = BoxProps & {
+export type SpacerProps = BoxProps & {
   x?: number;
   y?: number;
   basis?: number;
@@ -13,7 +13,7 @@ type Props = BoxProps & {
   asDivider?: boolean;
 };
 
-const Spacer: React.FC<Props> = ({ x, y, basis, asDivider, ...restProps }) => {
+const Spacer = ({ x, y, basis, asDivider, ...restProps }: SpacerProps) => {
   const theme = useTheme();
   return (
     <Box

@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { Spacer, Typography } from '../../../atoms';
+import { Spacer, Typography, ChartIndicator, Divider } from '../../../atoms';
 import {
   Container,
-  ContributionsLabelIndicator,
-  Divider,
-  PerformanceLabelIndicator,
   PerformancePercentage,
   SectionContainer,
 } from './PerformanceChartSummaryPanel.styles';
@@ -27,7 +24,7 @@ export default function PerformanceChartSummaryPanel({
   return (
     <Container>
       <SectionContainer>
-        <PerformanceLabelIndicator />
+        <ChartIndicator variant="solid" />
 
         <div>
           <Typography variant="sh4" color="grey" colorShade="dark1">
@@ -43,7 +40,7 @@ export default function PerformanceChartSummaryPanel({
       <Divider />
 
       <SectionContainer>
-        <ContributionsLabelIndicator />
+        <ChartIndicator variant="dotted" color="grey" />
 
         <div>
           <Typography variant="sh4" color="grey" colorShade="dark1">

@@ -50,9 +50,9 @@ const determineColor = (
 const sizes = {
   h1: { fontSize: 56, lineHeight: 68, letterSpacing: 0.9, fontWeight: 900 },
   h2: { fontSize: 40, lineHeight: 48, letterSpacing: 0.7, fontWeight: 900 },
-  h3: { fontSize: 28, lineHeight: 32, letterSpacing: 0.4, fontWeight: 'bold' },
-  h4: { fontSize: 24, lineHeight: 24, letterSpacing: 0.3, fontWeight: 900 },
-  h5: { fontSize: 20, lineHeight: 24, letterSpacing: 0.3, fontWeight: 'bold' },
+  h3: { fontSize: 28, lineHeight: 32, letterSpacing: 0.4, fontWeight: 900 },
+  h4: { fontSize: 24, lineHeight: 28, letterSpacing: 0.3, fontWeight: 900 },
+  h5: { fontSize: 20, lineHeight: 24, letterSpacing: 0.3, fontWeight: 900 },
   sh1: { fontSize: 18, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'bold' },
   sh2: { fontSize: 16, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'bold' },
   sh3: { fontSize: 14, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'bold' },

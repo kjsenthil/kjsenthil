@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { Spacer, Typography } from '../../../atoms';
+import { Divider, Typography, ChartIndicator } from '../../../atoms';
 import { Container, SectionContainer } from './PerformanceProjectionsChartSummaryPanel.styles';
 import { formatCurrency } from '../../../../utils/formatters';
-import PerformancePathLabel from './PerformancePathLabel';
-import LikelyRangeAreaLabel from './LikelyRangeAreaLabel';
-import ContributionsPathLabel from './ContributionsPathLabel';
-import GoalNotMetPathLabel from './GoalNotMetPathLabel';
 
 export interface PerformanceProjectionsChartSummaryPanelProps {
   performance: number;
@@ -27,8 +23,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
   return (
     <Container>
       <SectionContainer>
-        <PerformancePathLabel />
-
+        <ChartIndicator variant="double-solid" />
         <div>
           <Typography variant="sh4" color="grey" colorShade="dark1">
             PAST / PROJECTED VALUE
@@ -39,10 +34,10 @@ export default function PerformanceProjectionsChartSummaryPanel({
         </div>
       </SectionContainer>
 
-      <Spacer asDivider />
+      <Divider />
 
       <SectionContainer>
-        <LikelyRangeAreaLabel />
+        <ChartIndicator variant="gradient" color="tertiary" />
 
         <div>
           <Typography variant="sh4" color="grey" colorShade="dark1">
@@ -72,10 +67,10 @@ export default function PerformanceProjectionsChartSummaryPanel({
 
       {performanceTargetNotMet !== undefined && (
         <>
-          <Spacer asDivider />
+          <Divider />
 
           <SectionContainer>
-            <GoalNotMetPathLabel />
+            <ChartIndicator variant="dotted" color="gold" />
 
             <div>
               <Typography variant="sh4" color="grey" colorShade="dark1">
@@ -96,10 +91,10 @@ export default function PerformanceProjectionsChartSummaryPanel({
         </>
       )}
 
-      <Spacer asDivider />
+      <Divider />
 
       <SectionContainer>
-        <ContributionsPathLabel />
+        <ChartIndicator variant="dotted" color="grey" />
 
         <div>
           <Typography variant="sh4" color="grey" colorShade="dark1">

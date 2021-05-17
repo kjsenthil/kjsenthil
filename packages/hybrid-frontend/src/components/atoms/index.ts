@@ -8,12 +8,14 @@ export type { ButtonProps };
 export { Button };
 
 export { default as Spacer } from './Spacer';
+export { Divider } from './Spacer';
 export { default as Switcher } from './Switcher';
 export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Typography } from './Typography';
 export { default as Slider } from './Slider';
 export { default as ProgressBar } from './ProgressBar';
+export { default as ChartIndicator } from './ChartIndicator';
 
 /* material-ui atoms */
 export {
@@ -25,7 +27,6 @@ export {
   CardActionArea,
   CardContent,
   Container,
-  Divider,
   Grid,
   IconButton,
   Input,
