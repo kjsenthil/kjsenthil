@@ -37,7 +37,7 @@ const DashPage = () => {
       <Spacer y={2} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {projections && projections.projections && (
+          {projections?.projections && (
             <>
               <ProjectionsGrid projections={projections.projections} />
               <ProjectionsChart projections={projections.projections} />

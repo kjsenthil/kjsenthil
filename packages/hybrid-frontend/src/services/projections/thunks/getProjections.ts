@@ -4,6 +4,7 @@ import {
   getMyAccountClientAccounts,
   getMyAccountEquityAllocation,
   getMyAccountInvestAccounts,
+  getMyAccountMonthlySavingsAmount,
 } from '../../myAccounts';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
@@ -21,6 +22,7 @@ const getProjections = createAsyncThunk(
       allAccountsData.map(async (account) => ({
         ...account,
         equityPercentage: await getMyAccountEquityAllocation(account.id),
+        monthlyInvestment: await getMyAccountMonthlySavingsAmount(account.id),
       }))
     );
 
@@ -37,16 +39,18 @@ const getProjections = createAsyncThunk(
       (accumulator, account) => accumulator + account.accountValue,
       0
     );
+    const monthlyInvestmentTotal = accountTotals.reduce(
+      (accumulator, account) => accumulator + account.monthlyInvestment,
+      0
+    );
 
-    const response = await postProjections({
+    return postProjections({
       upfrontInvestment: portfolioTotal,
-      monthlyInvestment: 0,
+      monthlyInvestment: monthlyInvestmentTotal,
       investmentPeriod: 50,
       sedolCode: riskProfile.sedol,
       riskModel: riskProfile.riskModel,
     });
-
-    return response;
   }
 );
 

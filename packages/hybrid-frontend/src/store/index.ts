@@ -11,6 +11,9 @@ import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 import { goalSlice as goalReducer } from '../services/goal/reducers';
 import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
+import { GoalState } from '../services/goal';
+import { AuthState } from '../services/auth';
+import { ProjectionsState } from '../services/projections';
 
 const persistConfig = {
   key: 'root',
@@ -35,7 +38,11 @@ const store = configureStore({
   devTools: ACTIVE_ENV !== 'production',
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export interface RootState {
+  auth: AuthState;
+  goal: GoalState;
+  projections: ProjectionsState;
+}
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

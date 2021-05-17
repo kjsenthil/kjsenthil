@@ -1,8 +1,11 @@
+import { SedolCode } from '../types';
+
 export interface AccountData {
   id: string;
   accountName: string;
   accountValue: number;
   equityPercentage?: number;
+  monthlyInvestment?: number;
 }
 
 export interface MyAccountItem {
@@ -97,6 +100,28 @@ export interface InvestmentSummary {
 
 export interface InvestmentSummaryAccountsResponse {
   data: InvestmentSummary[];
+  included: null;
+}
+
+interface MonthlySavingItem {
+  attributes: {
+    accountId: number;
+    amount: number;
+    assetId: number;
+    assetName: string;
+    isStandingOrder: boolean;
+    monthlySavingId: number;
+    reInvest: boolean;
+    sedol: SedolCode | null;
+  };
+  id: string;
+  links: Record<string, unknown>;
+  relationships: unknown;
+  type: 'monthly-savings';
+}
+
+export interface MonthlySavingsResponse {
+  data: MonthlySavingItem[];
   included: null;
 }
 

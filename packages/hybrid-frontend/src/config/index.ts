@@ -41,6 +41,7 @@ const defaultEndpoints = {
   MYACCOUNT_BREAKDOWN_ALLOCATION: '/myaccount/breakdown-allocation/{id}',
   MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
   MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS: '/myaccount/investment-summary-account',
+  MYACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',
   GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
   GET_ASSET_DETAILS: '/Assets/assetdetail/{sedol}',
   GET_RISK_PROFILE_QUESTIONS: '/OxfordRisk/questions',

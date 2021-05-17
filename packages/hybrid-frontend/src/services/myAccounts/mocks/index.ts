@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { ClientResponse } from '../types';
+import { ClientResponse, MonthlySavingsResponse } from '../types';
 
 export const mockClientResponse: ClientResponse = {
   data: {
@@ -68,4 +68,28 @@ export const mockClientResponse: ClientResponse = {
       relationships: null,
     },
   ],
+};
+
+export const mockMonthlySavingsResponse: MonthlySavingsResponse = {
+  data: [
+    {
+      type: 'monthly-savings',
+      id: '2121301',
+      attributes: {
+        monthlySavingId: 2121301,
+        accountId: 20499,
+        assetId: 3558,
+        sedol: null,
+        assetName: 'CASH',
+        amount: 100,
+        reInvest: true,
+        isStandingOrder: false,
+      },
+      links: {
+        self: 'https://myaccountsapi.demo2.bestinvest.co.uk/api/monthly-savings/2121301',
+      },
+      relationships: null,
+    },
+  ],
+  included: null,
 };
