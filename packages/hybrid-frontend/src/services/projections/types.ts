@@ -1,9 +1,18 @@
+import { CommonState, RiskModel, SedolCode } from '../types';
+
+export interface AccountData {
+  id: string;
+  accountName: string;
+  accountValue: number;
+  equityPercentage?: number;
+}
+
 export interface ProjectionRequest {
   upfrontInvestment: number;
   monthlyInvestment: number;
   investmentPeriod: number;
-  riskModel: string;
-  sedolCode: string;
+  riskModel?: RiskModel;
+  sedolCode?: SedolCode;
 }
 
 export interface ProjectionYear {
@@ -15,8 +24,11 @@ export interface ProjectionYear {
 }
 
 export interface ProjectionResponse {
-  contributions: number;
-  projections: ProjectionYear[];
+  contributions?: number;
+  projections?: ProjectionYear[];
 }
 
-export type CustomProjectionRequestData = Omit<ProjectionRequest, 'riskModel' | 'sedolCode'>;
+export interface ProjectionsState extends CommonState {
+  projections: ProjectionResponse;
+  postProjectionsError?: string;
+}

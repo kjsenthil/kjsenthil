@@ -38,7 +38,9 @@ const env = from({
 const isRequired = NODE_ENV !== 'test';
 
 const defaultEndpoints = {
+  MYACCOUNT_BREAKDOWN_ALLOCATION: '/myaccount/breakdown-allocation/{id}',
   MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
+  MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS: '/myaccount/investment-summary-account',
   GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
   GET_ASSET_DETAILS: '/Assets/assetdetail/{sedol}',
   GET_RISK_PROFILE_QUESTIONS: '/OxfordRisk/questions',
@@ -90,7 +92,9 @@ export const XPLAN_ENDPOINTS = [
 ];
 
 export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
+  API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION,
   API_ENDPOINTS.MYACCOUNT_CLIENTS,
+  API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS,
   API_ENDPOINTS.PROJECTIONS_PORTFOLIO_RISK_PROFILE,
   API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION,
   API_ENDPOINTS.POST_PROJECTIONS,

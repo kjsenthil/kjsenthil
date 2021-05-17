@@ -9,6 +9,7 @@
     "gatsby-node.ts",
     "gatsby-browser.tsx",
     "gatsby-ssr.tsx",
+    "plugins",
     "../../node_modules/jest-extended/types/**/*.d.ts"
   ],
   "exclude": ["node_modules", "public", ".cache"]

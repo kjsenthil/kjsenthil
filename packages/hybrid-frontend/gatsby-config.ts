@@ -1,6 +1,9 @@
+import { includePlugins } from 'gatsby-plugin-ts-config';
 import { ACTIVE_ENV } from './src/config';
 
 const env = ACTIVE_ENV === 'production' ? 'prod' : 'dev';
+
+includePlugins(['assets-api-plugin']);
 
 export default {
   plugins: [
@@ -34,8 +37,5 @@ export default {
         path: `${__dirname}/src/assets/img/`,
       },
     },
-
-    // Custom plugins
-    'assets-api-plugin',
   ],
 };

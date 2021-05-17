@@ -1,20 +1,21 @@
 import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
+import { authSlice as authReducer } from '../../../services/auth/reducers';
+import { projectionsSlice as projectionsReducer } from '../../../services/projections/reducers';
 import DashPage from './DashPage';
-import * as reducer from '../../../services/auth/reducers';
-
-jest.mock('../../../services/myAccounts', () => ({
-  getMyAccountClient: jest.fn(),
-}));
 
 describe('DashPage', () => {
   const store = configureStore({
-    reducer: { auth: reducer.authSlice },
+    reducer: {
+      auth: authReducer,
+      projections: projectionsReducer,
+    },
   });
 
-  test('DashPage title has been successfully rendered', async () => {
+  it('renders titles successfully', async () => {
     renderWithProviders(<DashPage />, store);
-    expect(screen.getByText('DashBoard Page')).toBeInTheDocument();
+
+    expect(screen.getByText('XO projection spike')).toBeInTheDocument();
   });
 });

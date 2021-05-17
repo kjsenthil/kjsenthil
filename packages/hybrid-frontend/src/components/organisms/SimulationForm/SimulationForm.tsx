@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { CustomProjectionRequestData } from '../../../services/projections';
+import { ProjectionRequest } from '../../../services/projections/types';
 import { Button } from '../../atoms';
 import SliderWithInput from '../../molecules/SliderWithInput';
 
 export interface SimulationFormProps {
-  projInputStateVals?: CustomProjectionRequestData;
-  onSubmit: (formValues: CustomProjectionRequestData) => void;
+  projInputStateVals?: ProjectionRequest;
+  onSubmit: (formValues: ProjectionRequest) => void;
 }
 
 const projInputDefaultValues = {

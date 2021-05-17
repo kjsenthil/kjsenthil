@@ -1,3 +1,5 @@
+import { RiskModel, SedolCode } from '../types';
+
 export interface AssetData {
   assetName: string;
   investmentCodeName: string;
@@ -17,4 +19,16 @@ export interface AssetData {
   sector: string;
   sectorCode: null;
   groupName: string;
+}
+
+export interface Fund {
+  equityProportion: number;
+  riskModel: RiskModel;
+  sedol: SedolCode;
+}
+
+export interface AllAssets {
+  allAsset: {
+    nodes: Fund[];
+  };
 }

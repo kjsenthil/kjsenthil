@@ -10,8 +10,7 @@ import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 import { goalSlice as goalReducer } from '../services/goal/reducers';
-import { AuthState } from '../services/auth';
-import { GoalState } from '../services/goal';
+import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
 
 const persistConfig = {
   key: 'root',
@@ -21,6 +20,7 @@ const persistConfig = {
 const reducers: ReducersMapObject = {
   auth: authReducer,
   goal: goalReducer,
+  projections: projectionsReducer,
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducers(reducers));
@@ -35,10 +35,7 @@ const store = configureStore({
   devTools: ACTIVE_ENV !== 'production',
 });
 
-export interface RootState {
-  auth: AuthState;
-  goal: GoalState;
-}
+export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

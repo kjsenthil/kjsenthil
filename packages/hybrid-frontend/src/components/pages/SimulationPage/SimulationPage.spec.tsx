@@ -4,11 +4,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import SimulationPage from './SimulationPage';
-import { getProjections } from '../../../services/projections';
+import { postProjections } from '../../../services/projections/api';
 import { goalSlice, setGoalCapture } from '../../../services/goal/reducers';
 
-jest.mock('../../../services/projections', () => ({
-  getProjections: jest.fn(),
+jest.mock('../../../services/projections/api', () => ({
+  postProjections: jest.fn(),
 }));
 
 jest.mock('../../organisms/ProjectionsChart', () => ({
@@ -54,7 +54,7 @@ describe('SimulationPage', () => {
   });
 
   it('renders titles successfully', async () => {
-    (getProjections as jest.Mock).mockResolvedValue(mockProjectResponse);
+    (postProjections as jest.Mock).mockResolvedValue(mockProjectResponse);
 
     const submit = screen.getByText('Update');
 

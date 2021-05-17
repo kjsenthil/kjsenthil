@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
-import getProjections, { projectionsFixedParams } from './getProjections';
+import postProjections from './postProjections';
+import { projectionsDefaults } from '../constants';
 
 const mockAxios = new MockAdapter(axios);
 const url = API_ENDPOINTS.POST_PROJECTIONS;
 
-describe('getProjections', () => {
+describe('postProjections', () => {
   it(`makes a call to ${url}`, async () => {
     const params = {
       upfrontInvestment: 4000,
@@ -21,11 +22,11 @@ describe('getProjections', () => {
     mockAxios
       .onPost(url, {
         ...params,
-        ...projectionsFixedParams,
+        ...projectionsDefaults,
       })
       .reply(200, data);
 
-    const response = await getProjections(params);
+    const response = await postProjections(params);
 
     expect(response).toStrictEqual(data);
   });
