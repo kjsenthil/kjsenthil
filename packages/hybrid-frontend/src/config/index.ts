@@ -31,8 +31,6 @@ if (IS_SSR) {
 const env = from({
   API_ENDPOINTS: process.env.API_ENDPOINTS,
   API_BASE_URL: process.env.API_BASE_URL,
-  XPLAN_APP_ID: process.env.XPLAN_APP_ID,
-  ENTITY_ID: process.env.ENTITY_ID,
 });
 
 const isRequired = NODE_ENV !== 'test';
@@ -52,14 +50,12 @@ const defaultEndpoints = {
   POST_PROJECTIONS: '/Assets/projections',
   PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION: '/projections/portfolio-asset-allocation',
   PROJECTIONS_PORTFOLIO_RISK_PROFILE: '/projections/portfolio-risk-profile',
-  LOGIN_TO_XPLAN: '/touch/web_login',
-  UPDATE_GOAL: '/resourceful/entity/client-v4/{entity-id}/goals/{goal-index}',
-  UPDATE_OBJECTIVE: '/resourceful/entity/client-v4/{entity-id}/objectives/{objective-index}',
-  CREATE_GOAL_ADDITIONAL_FIELDS: '/resourceful/entity/client/{entity-id}/goals',
-  CREATE_GOAL_LESS_FIELDS: '/resourceful/entity/client-v4/{entity-id}/goals',
-  CREATE_OBJECTIVE: '/resourceful/entity/client-v4/{entity-id}/objectives',
-  LINK_GOAL_TO_OBJECTIVE:
-    '/resourceful/entity/client-v4/{entity-id}/goals/{objective-index}/objective_link',
+  UPDATE_GOAL: '/resourceful/entity/client-v4/goals/{goal-index}',
+  UPDATE_OBJECTIVE: '/resourceful/entity/client-v4/objectives/{objective-index}',
+  CREATE_GOAL_ADDITIONAL_FIELDS: '/resourceful/entity/client/goals',
+  CREATE_GOAL_LESS_FIELDS: '/resourceful/entity/client-v4/goals',
+  CREATE_OBJECTIVE: '/resourceful/entity/client-v4/objectives',
+  LINK_GOAL_TO_OBJECTIVE: '/resourceful/entity/client-v4/goals/{objective-index}/objective_link',
 };
 
 export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
@@ -70,26 +66,12 @@ export const API_ENDPOINTS = env
   .default(defaultEndpoints)
   .asJsonObject() as Record<ApiEndpoints, string>;
 
-export const ENTITY_ID = env.get('ENTITY_ID').required(isRequired).default('6359457').asInt();
-
-export const XPLAN_APP_ID = env.get('XPLAN_APP_ID').default('65wshs01RpizdxEwCh6G').asString();
-
 export const MY_ACCOUNTS_API_CLIENT_ID = 'myaccounts-spa';
 
 export const AUTH_ENDPOINTS = [
   API_ENDPOINTS.IDENTITY_LOGIN,
   API_ENDPOINTS.IDENTITY_PIN,
   API_ENDPOINTS.IDENTITY_REFRESH_TOKEN,
-  API_ENDPOINTS.LOGIN_TO_XPLAN,
-];
-
-export const XPLAN_ENDPOINTS = [
-  API_ENDPOINTS.UPDATE_GOAL,
-  API_ENDPOINTS.UPDATE_OBJECTIVE,
-  API_ENDPOINTS.CREATE_OBJECTIVE,
-  API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS,
-  API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS,
-  API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE,
 ];
 
 export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
@@ -103,4 +85,10 @@ export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.GET_ASSET_DETAILS,
   API_ENDPOINTS.GET_ASSET_ALLOCATION_BREAKDOWN,
   API_ENDPOINTS.GET_STANDING_DATA,
+  API_ENDPOINTS.UPDATE_GOAL,
+  API_ENDPOINTS.UPDATE_OBJECTIVE,
+  API_ENDPOINTS.CREATE_OBJECTIVE,
+  API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS,
+  API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS,
+  API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE,
 ];

@@ -55,13 +55,10 @@ export interface LoginFormData {
 export interface AuthState extends CommonState {
   isCredLoggedIn: boolean;
   isPinLoggedIn: boolean;
-  isXplanLoggedIn: boolean;
   accessTokens: TokenItem[];
   contactId?: string;
   twoStepAuthCode?: string;
   credLoginError?: string;
   pinLoginError?: string;
-  xplanLoginError?: string;
   refreshTokenError?: string;
-  entityId: number;
 }

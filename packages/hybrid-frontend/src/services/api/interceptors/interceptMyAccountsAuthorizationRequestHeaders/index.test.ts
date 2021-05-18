@@ -1,11 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import interceptMyAccountsAuthorizationRequestHeaders from '.';
-import {
-  XPLAN_ENDPOINTS,
-  ACCESS_TOKEN_REQUIRED_ENDPOINTS,
-  AUTH_ENDPOINTS,
-} from '../../../../config';
+import { ACCESS_TOKEN_REQUIRED_ENDPOINTS, AUTH_ENDPOINTS } from '../../../../config';
 import { AuthState } from '../../../auth';
 
 const mockAxios = new MockAdapter(axios);
@@ -29,10 +25,7 @@ const accessTokens = [
 
 const getState = () => ({ auth: { accessTokens } as AuthState });
 
-const URLS_NOT_NEEDING_AUTHORIZATION = [
-  ...Object.values(XPLAN_ENDPOINTS),
-  ...Object.values(AUTH_ENDPOINTS),
-];
+const URLS_NOT_NEEDING_AUTHORIZATION = [...Object.values(AUTH_ENDPOINTS)];
 
 const URLS_NEEDING_AUTHORIZATION = Object.values(ACCESS_TOKEN_REQUIRED_ENDPOINTS);
 

@@ -1,6 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-export const entityIDParse = /\{entity-id\}/;
-
 export enum RiskAppetites {
   DEFENSIVE = 'defensive',
   CAUTIOUS = 'cautious',

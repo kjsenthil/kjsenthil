@@ -6,16 +6,13 @@ import { RootState } from '../../../store';
 
 interface PrivateRouteProps extends RouteComponentProps {
   Component: ComponentType<RouteComponentProps>;
-  authType?: 'XPLAN' | 'MY_ACCOUNT';
 }
 
-const PrivateRoute = ({ Component, authType = 'MY_ACCOUNT', ...rest }: PrivateRouteProps) => {
-  const { isPinLoggedIn, isXplanLoggedIn } = useSelector((state: RootState) => state.auth);
+const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
+  const { isPinLoggedIn: isLoggedIn } = useSelector((state: RootState) => state.auth);
 
-  const loginPath = authType === 'MY_ACCOUNT' ? '/my-account/login' : '/my-account/xplogin';
-
-  const isNotLoggedIn =
-    (authType === 'MY_ACCOUNT' && !isPinLoggedIn) || (authType === 'XPLAN' && !isXplanLoggedIn);
+  const loginPath = '/my-account/login';
+  const isNotLoggedIn = !isLoggedIn;
 
   useEffect(() => {
     /* eslint-disable-next-line no-console */

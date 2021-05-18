@@ -2,12 +2,11 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
 import postGoalCreation, { createGoalsPayLoad } from './postGoalCreation';
-import { entityIDParse, Goals, RiskAppetites } from '../constants';
+import { Goals, RiskAppetites } from '../constants';
 import { CaptureGoalData, GoalsObjectiveApiResponse } from '../types';
 
 const mockAxios = new MockAdapter(axios);
-const entityId = 1234567;
-const url = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS.replace(entityIDParse, String(entityId));
+const url = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
 
 describe('postGoalCreation', () => {
   it(`makes a call to ${url}`, async () => {
@@ -29,7 +28,7 @@ describe('postGoalCreation', () => {
 
     mockAxios.onPost(url, createGoalsPayLoad(goalName, inputs)).reply(200, data);
 
-    const response = await postGoalCreation({ goalName, inputs, entityId });
+    const response = await postGoalCreation({ goalName, inputs });
 
     expect(response).toStrictEqual(data);
   });

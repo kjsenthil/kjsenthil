@@ -4,7 +4,6 @@ import goalReducer, { createGoal, setGoalDetails } from './goalSlice';
 import * as api from '../api';
 import { authSlice as authReducer } from '../../auth';
 import { RiskAppetites } from '../constants';
-import { ENTITY_ID } from '../../../config';
 
 jest.mock('../api', () => ({
   postGoalCreation: jest.fn(),
@@ -59,7 +58,6 @@ describe('goalSlice', () => {
         expect(api.postGoalCreation).toHaveBeenCalledWith({
           goalName,
           inputs,
-          entityId: ENTITY_ID,
         });
         expect(status).toStrictEqual('loading');
         expect(goalCreationError).toBeUndefined();

@@ -1,4 +1,3 @@
-import { entityIDParse } from '../constants';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 import { CaptureGoalData, GoalRequestPayload, GoalsObjectiveApiResponse } from '../types';
@@ -74,13 +73,12 @@ export const createGoalsPayLoad = (
 interface GoalCreationProps {
   goalName: string;
   inputs: CaptureGoalData;
-  entityId: number;
 }
 
-const postGoalCreation = async ({ goalName, inputs, entityId }: GoalCreationProps) => {
+const postGoalCreation = async ({ goalName, inputs }: GoalCreationProps) => {
   const goalsPayload = createGoalsPayLoad(goalName, inputs);
 
-  const goalsURL = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS?.replace(entityIDParse, String(entityId));
+  const goalsURL = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
 
   const response = await api.post<GoalsObjectiveApiResponse>(goalsURL, goalsPayload);
 

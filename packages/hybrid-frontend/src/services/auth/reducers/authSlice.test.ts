@@ -10,7 +10,6 @@ jest.mock('../api', () => ({
   postLogin: jest.fn(),
   postPin: jest.fn(),
   postRefreshToken: jest.fn(),
-  postXplanLogin: jest.fn(),
 }));
 
 describe('authSlice', () => {
@@ -38,19 +37,12 @@ describe('authSlice', () => {
     });
 
     it('starts with sensible defaults', () => {
-      const {
-        status,
-        twoStepAuthCode,
-        isCredLoggedIn,
-        isPinLoggedIn,
-        isXplanLoggedIn,
-      } = store.getState().auth;
+      const { status, twoStepAuthCode, isCredLoggedIn, isPinLoggedIn } = store.getState().auth;
 
       expect(status).toStrictEqual('idle');
       expect(twoStepAuthCode).toBeUndefined();
       expect(isCredLoggedIn).toBe(false);
       expect(isPinLoggedIn).toBe(false);
-      expect(isXplanLoggedIn).toBe(false);
     });
 
     describe('when call is still pending', () => {
