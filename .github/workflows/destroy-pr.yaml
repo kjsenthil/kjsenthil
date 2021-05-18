@@ -91,11 +91,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   destroy_pr_dev_env:
     name: "Clean up PR deployment"
@@ -134,3 +136,4 @@ jobs:
           TF_VAR_apim_name: ${{ needs.get_apim_outputs.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.get_apim_outputs.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.get_apim_outputs.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.get_apim_outputs.outputs.cdn_profile_name }}

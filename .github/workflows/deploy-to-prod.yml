@@ -300,10 +300,28 @@ jobs:
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
 
+  open_staging_storage_account_firewalls:
+    name: "Open storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_staging_rg_terraform, deploy_staging_terraform]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Allow
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Allow
+
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
     name: "Deploy staging front end"
-    needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform]
+    needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform, open_staging_storage_account_firewalls]
     runs-on: ubuntu-latest
 
     steps:
@@ -364,11 +382,9 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
-            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   end_to_end_test_staging:
     name: "E2E test (Staging)"
@@ -428,6 +444,24 @@ jobs:
               --destination "${{needs.deploy_staging_rg_terraform.outputs.test_artifacts_container_name}}" \
               --account-name "${{needs.deploy_staging_rg_terraform.outputs.artifact_storage_account_name}}" \
               --destination-path "${{github.sha}}/videos/"
+
+  close_staging_storage_account_firewalls:
+    name: "Close storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_staging_rg_terraform, deploy_staging_terraform, deploy_staging_frontend, end_to_end_test_staging]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Deny
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   # Deploy Production backend (Terraform)
   deploy_production_rg_terraform:
@@ -639,6 +673,24 @@ jobs:
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
 
+  open_prod_storage_account_firewalls:
+    name: "Open storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_production_rg_terraform, deploy_production_terraform]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Allow
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Allow
+
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
     name: "Deploy production front end"
@@ -703,11 +755,9 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
-            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   # Deploys storybook.
   deploy_storybook_prod:
@@ -761,11 +811,27 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
+
+  close_prod_storage_account_firewalls:
+    name: "Close storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_production_rg_terraform, deploy_production_terraform, deploy_production_frontend, deploy_storybook_prod]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
             az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Deny
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   output_website_urls:
     name: "Output website urls"
