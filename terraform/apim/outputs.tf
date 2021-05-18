@@ -12,3 +12,8 @@ output "apim_subnet_name" {
   value       = azurerm_subnet.apim_external_subnet.name
   description = "Name of the subnet which houses APIM"
 }
+
+output "cdn_profile_name" {
+  value       = module.cdn_profile.name
+  description = "Name of the CDN profile created for this environment"
+}

@@ -206,11 +206,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   # Deploys terraform PR contents.
   deploy_pr_terraform:
@@ -269,6 +271,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -279,6 +282,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -298,10 +302,28 @@ jobs:
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
 
+  open_storage_account_firewalls:
+    name: "Open storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_rg_terraform, deploy_pr_terraform]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Allow
+            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Allow
+
   clear_storybook_storage_account:
     name: "Clear storybook storage account"
     runs-on: ubuntu-latest
-    needs: deploy_pr_terraform
+    needs: [deploy_rg_terraform, deploy_pr_terraform, open_storage_account_firewalls]
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -318,7 +340,7 @@ jobs:
   linting:
     name: "Checks"
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
+    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -365,7 +387,7 @@ jobs:
   unit_test:
     name: "Unit test"
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
+    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
     env:
       JEST_HTML_REPORTER_PAGE_TITLE: Jest Test Summary for branch ${{ github.head_ref }}
     steps:
@@ -417,6 +439,7 @@ jobs:
         build_cache,
         linting,
         unit_test,
+        deploy_rg_terraform,
         deploy_pr_terraform,
         clear_storybook_storage_account,
       ]
@@ -480,7 +503,7 @@ jobs:
   # Deploys frontend pr contents
   deploy_gatsby:
     name: "Build & Deploy Gatsby"
-    needs: [deploy_pr_terraform, build_cache, linting, unit_test]
+    needs: [deploy_rg_terraform, deploy_pr_terraform, build_cache, linting, unit_test]
     runs-on: ubuntu-latest
 
     steps:
@@ -605,11 +628,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   plan_staging:
     name: "Terraform plan Staging"
@@ -659,6 +684,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_cdn_profile_name: ${{ needs.get_staging_apim_outputs.outputs.cdn_profile_name }}
 
     outputs:
       plan_outcome: ${{ steps.plan.outcome }}
@@ -734,11 +760,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   plan_prod:
     name: "Terraform plan Prod"
@@ -788,7 +816,8 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
-          
+          TF_VAR_cdn_profile_name: ${{ needs.get_prod_apim_outputs.outputs.cdn_profile_name }}
+
     outputs:
       plan_outcome: ${{ steps.plan.outcome }}
       plan: ${{ steps.plan.outputs.stdout }}
@@ -797,7 +826,7 @@ jobs:
   # Deploys storybook.
   deploy_storybook:
     name: "Build & deploy Storybook"
-    needs: [build_cache, deploy_pr_terraform, clear_storybook_storage_account]
+    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
     runs-on: ubuntu-latest
 
     steps:
@@ -851,6 +880,24 @@ jobs:
 
     outputs:
       url: ${{ needs.deploy_pr_terraform.outputs.storybook_web_endpoint }}
+
+  close_storage_account_firewalls:
+    name: "Close storage account firewalls for uploads"
+    runs-on: ubuntu-latest
+    needs: [deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account, linting, unit_test, end_to_end_test, deploy_gatsby, deploy_storybook]
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Set default rule to allow to enable uploads"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Deny
+            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   publish_results:
     name: "Publish results"
@@ -1169,7 +1216,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to Cypress report",
-                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}cypress/index.html' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/cypress/index.html' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
@@ -1187,7 +1234,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to Jest coverage report",
-                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
@@ -1205,7 +1252,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to Jest test report",
-                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
@@ -1223,7 +1270,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to ESlint report",
-                      "url": '${{ needs.linting.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}eslint/index.html' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.linting.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/eslint/index.html' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },

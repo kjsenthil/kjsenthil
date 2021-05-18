@@ -39,7 +39,7 @@ module "api_management_policy" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.static_website_storage_account.primary_web_endpoint]),
+      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.front_end.web_endpoint]),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
@@ -80,7 +80,7 @@ module "api_management_policy_xplan" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.static_website_storage_account.primary_web_endpoint]),
+      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), ["http://localhost:8000", module.front_end.web_endpoint]),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
@@ -92,27 +92,31 @@ module "api_management_policy_xplan" {
   depends_on = [module.api_operation, module.function_app_projections]
 }
 
-module "static_website_storage_account" {
-  source                   = "../modules/static_website_storage_account"
+module "front_end" {
+  source                   = "../modules/static_website_with_cdn"
   storage_account_name     = "st${local.short_location}tsw${var.environment_prefix}dh"
   resource_group_name      = data.azurerm_resource_group.resource_group.name
   location                 = data.azurerm_resource_group.resource_group.location
   account_kind             = "StorageV2"
   account_replication_type = "GRS"
   account_tier             = "Standard"
-  tags                     = local.default_tags
+  cdn_profile_name         = var.cdn_profile_name
+
+  tags = merge(var.tags, local.default_tags)
 }
 
-module "storybook_storage_account" {
+module "storybook" {
   count                    = var.environment_prefix == "staging" ? 0 : 1
-  source                   = "../modules/static_website_storage_account"
+  source                   = "../modules/static_website_with_cdn"
   storage_account_name     = "st${local.short_location}tsw${var.environment_prefix}dhsb"
   resource_group_name      = data.azurerm_resource_group.resource_group.name
   location                 = data.azurerm_resource_group.resource_group.location
   account_kind             = "StorageV2"
   account_replication_type = "GRS"
   account_tier             = "Standard"
-  tags                     = local.default_tags
+  cdn_profile_name         = var.cdn_profile_name
+
+  tags = merge(var.tags, local.default_tags)
 }
 
 module "api_functions_asp" {

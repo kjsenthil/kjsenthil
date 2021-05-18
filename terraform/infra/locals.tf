@@ -6,10 +6,10 @@ locals {
   short_location = lookup(local.location_map, lower(replace(var.location, "/\\s/", "")))
 
 
-  operation_endpoints = {for api in module.api_operation : upper(replace(api.operation_id, "-", "_")) => api.url_template }
-  xplan_operation_endpoints = {for api in module.api_operation_xplan : upper(replace(api.operation_id, "-", "_")) => api.url_template } 
+  operation_endpoints       = { for api in module.api_operation : upper(replace(api.operation_id, "-", "_")) => api.url_template }
+  xplan_operation_endpoints = { for api in module.api_operation_xplan : upper(replace(api.operation_id, "-", "_")) => api.url_template }
 
-  api_endpoints = merge(local.operation_endpoints,local.xplan_operation_endpoints)
+  api_endpoints = merge(local.operation_endpoints, local.xplan_operation_endpoints)
 
 
   api_definitions = {

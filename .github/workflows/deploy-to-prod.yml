@@ -206,11 +206,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   # Deploys terraform PR contents.
   deploy_staging_terraform:
@@ -266,6 +268,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -276,6 +279,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -360,9 +364,11 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   end_to_end_test_staging:
     name: "E2E test (Staging)"
@@ -538,11 +544,13 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
+          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
+      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
 
   # Deploys terraform PR contents.
   deploy_production_terraform:
@@ -599,6 +607,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -609,6 +618,7 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name : ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name : ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -693,14 +703,16 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }}"
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   # Deploys storybook.
   deploy_storybook_prod:
     name: "Deploy Storybook"
-    needs: [build_cache, deploy_production_terraform]
+    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform]
     runs-on: ubuntu-latest
 
     steps:
@@ -749,9 +761,11 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Allow
             az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
+            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Deny
 
   output_website_urls:
     name: "Output website urls"

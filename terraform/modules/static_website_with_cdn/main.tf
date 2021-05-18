@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "static_website_storage_account" {
+resource "azurerm_storage_account" "this" {
   name                      = var.storage_account_name
   resource_group_name       = var.resource_group_name
   location                  = var.location
@@ -28,3 +28,23 @@ resource "azurerm_storage_account" "static_website_storage_account" {
   }
 }
 
+resource "azurerm_storage_account_network_rules" "this" {
+  resource_group_name  = var.resource_group_name
+  storage_account_name = azurerm_storage_account.this.name
+  default_action       = "Deny"
+  // Allows Azure CDN IPs
+  ip_rules = ["147.243.0.0/16"]
+}
+
+module "cdn" {
+  source = "../../modules/cdn_endpoint"
+
+  name                = azurerm_storage_account.this.name
+  resource_group_name = data.azurerm_cdn_profile.cdn_profile.resource_group_name
+  cdn_profile_name    = data.azurerm_cdn_profile.cdn_profile.name
+
+  origin_name     = azurerm_storage_account.this.name
+  origin_hostname = azurerm_storage_account.this.primary_web_host
+
+  tags = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
+}

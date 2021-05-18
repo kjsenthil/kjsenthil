@@ -34,6 +34,11 @@ variable "account_replication_type" {
   description = "The replication type for the storage account."
 }
 
+variable "cdn_profile_name" {
+  type        = string
+  description = "Name of the CDN profile to create the endpoint in"
+}
+
 variable "enable_https_traffic_only" {
   type        = bool
   default     = true

@@ -4,22 +4,22 @@ output "apim_gateway_url" {
 }
 
 output "frontend_web_endpoint" {
-  value       = module.static_website_storage_account.primary_web_endpoint
+  value       = module.front_end.web_endpoint
   description = "The Gatsby App web endpoint."
 }
 
 output "storybook_web_endpoint" {
-  value       = var.environment_prefix != "staging" ? module.storybook_storage_account[0].primary_web_endpoint : null
+  value       = var.environment_prefix != "staging" ? module.storybook[0].web_endpoint : null
   description = "The storybook web endpoint."
 }
 
 output "frontend_storage_account_name" {
-  value       = module.static_website_storage_account.name
+  value       = module.front_end.name
   description = "Name of the storage account hosting the Gatsby App."
 }
 
 output "storybook_storage_account_name" {
-  value       = var.environment_prefix != "staging" ? module.storybook_storage_account[0].name : null
+  value       = var.environment_prefix != "staging" ? module.storybook[0].name : null
   description = "Name of the storage account hosting the storybook."
 }
 
