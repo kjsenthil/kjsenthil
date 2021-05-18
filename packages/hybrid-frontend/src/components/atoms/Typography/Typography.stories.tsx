@@ -30,7 +30,7 @@ export default {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'black', 'white', 'primary', 'secondary', 'grey'],
+      options: [undefined, 'black', 'white', 'primary', 'secondary', 'tertiary', 'grey'],
     },
     colorShade: {
       control: {

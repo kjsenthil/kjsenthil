@@ -4,10 +4,10 @@ import {
   TypographyProps as MUITypographyProps,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { Palette } from '@material-ui/core/styles/createPalette';
+import { Palette, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 
-export type Color = 'primary' | 'secondary' | 'white' | 'black' | 'grey' | 'error';
-export type ColorShade = 'main' | 'light1' | 'light2' | 'dark1' | 'dark2';
+export type ColorShade = keyof SimplePaletteColorOptions;
+export type Color = 'primary' | 'secondary' | 'tertiary' | 'white' | 'black' | 'grey' | 'error';
 export type Variant =
   | 'h1'
   | 'h2'
@@ -38,7 +38,7 @@ const determineColor = (
   if (['black', 'white'].includes(color)) {
     return palette.common[color];
   }
-  if (['primary', 'secondary', 'grey', 'error'].includes(color)) {
+  if (['primary', 'secondary', 'tertiary', 'grey', 'error'].includes(color)) {
     return palette[color][colorShade || 'main'];
   }
   if (['b1', 'b2', 'b3'].includes(variant)) {

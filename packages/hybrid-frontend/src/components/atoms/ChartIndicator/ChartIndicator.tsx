@@ -4,20 +4,20 @@ import {
   DottedIndicatorContainer,
   IndicatorSquare,
   SolidIndicator,
-  ColorShades,
-  Colors,
+  ColorShade,
+  Color,
   GradientIndicator,
 } from './ChartIndicator.styles';
 
 export interface ChartIndicatorProps {
   variant: 'solid' | 'double-solid' | 'dotted' | 'gradient';
-  colorShade?: ColorShades;
-  color?: Colors;
-  secondaryColor?: Colors;
-  secondaryColorShade?: ColorShades;
+  colorShade?: ColorShade;
+  color?: Color;
+  secondaryColor?: Color;
+  secondaryColorShade?: ColorShade;
 }
 
-const DottedIndicator = ({ colorShade, color }: { colorShade?: ColorShades; color?: Colors }) => (
+const DottedIndicator = ({ colorShade, color }: { colorShade?: ColorShade; color?: Color }) => (
   <DottedIndicatorContainer>
     {Array.from({ length: 3 }).map(() => (
       <IndicatorSquare color={color} colorShade={colorShade} />

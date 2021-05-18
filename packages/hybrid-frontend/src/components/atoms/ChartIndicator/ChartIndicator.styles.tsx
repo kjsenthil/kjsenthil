@@ -2,13 +2,13 @@ import * as React from 'react';
 import { SimplePaletteColorOptions, Theme } from '@material-ui/core';
 import styled from 'styled-components';
 
-export type ColorShades = keyof SimplePaletteColorOptions;
-export type Colors = keyof Theme['palette'];
+export type ColorShade = keyof SimplePaletteColorOptions;
+export type Color = keyof Theme['palette'];
 
 interface StyleProps {
   theme: Theme;
-  color?: Colors;
-  colorShade?: ColorShades;
+  color?: Color;
+  colorShade?: ColorShade;
 }
 
 const Div = ({ color, colorShade, ...props }) => <div {...props} />;
@@ -48,7 +48,7 @@ export const GradientIndicator = styled(Div)`
     color = 'primary',
     topShade = 'light2',
     bottomShade = 'light1',
-  }: StyleProps & { topShade: ColorShades; bottomShade: ColorShades }) => `
+  }: StyleProps & { topShade: ColorShade; bottomShade: ColorShade }) => `
     min-width: ${theme.typography.pxToRem(17)};
     width: ${theme.typography.pxToRem(17)};
     height: ${theme.typography.pxToRem(20)};

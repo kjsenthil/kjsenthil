@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { Spacer, Typography, ChartIndicator, Divider } from '../../../atoms';
-import {
-  Container,
-  PerformancePercentage,
-  SectionContainer,
-} from './PerformanceChartSummaryPanel.styles';
+import { TagBox } from '../../../molecules';
+import { Container, SectionContainer } from './PerformanceChartSummaryPanel.styles';
 import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 
 export interface PerformanceChartSummaryPanelProps {
@@ -65,11 +62,10 @@ export default function PerformanceChartSummaryPanel({
             <Typography display="inline" variant="sh4" color="primary" colorShade="dark2">
               {formatCurrency(totalReturn)}
             </Typography>
-            <PerformancePercentage>
-              <Typography variant="sh4" color="white">
-                {formatPercent(totalReturnPct)}
-              </Typography>
-            </PerformancePercentage>
+            <Spacer x={1} display="inline-block" />
+            <TagBox variant="percentage" formatter={formatPercent}>
+              {totalReturnPct}
+            </TagBox>
           </div>
         </div>
       </SectionContainer>
