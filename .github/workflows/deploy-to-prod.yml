@@ -315,7 +315,6 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Allow
             az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Allow
 
   # Deploys the frontend in the staging environment.
@@ -460,7 +459,6 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Deny
             az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   # Deploy Production backend (Terraform)
