@@ -12,25 +12,7 @@ import styled from 'styled-components';
 import { curveNatural } from '@visx/curve';
 import { GridRows } from '@visx/grid';
 import { Theme } from '../../atoms';
-import {
-  useGoalsData,
-  useHistoricalData,
-  useMetadata,
-  useProjectionsData,
-} from './data/performanceProjectionsChartData';
 import { usePerformanceProjectionsChartStyles } from './performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import {
-  contributionsAccessor,
-  dateAccessor,
-  getPerformanceProjectionsDataMaxValue,
-  goalNotMetAccessor,
-  PerformanceHistoricalDatum,
-  PerformanceProjectionsDatum,
-  valueAccessor,
-  valueBadAccessor,
-  valueDefinedFactory,
-  valueGoodAccessor,
-} from './data/performanceProjectionsChartDataUtils';
 import { useTimeValueScales } from '../../../hooks/ChartHooks';
 import {
   PerformanceProjectionsChartAxisBottom,
@@ -44,10 +26,31 @@ import usePerformanceProjectionsChartTooltip, {
 import PerformanceProjectionsChartTooltip from './PerformanceProjectionsChartTooltip/PerformanceProjectionsChartTooltip';
 import { getDatumAtPosX } from '../../../utils/chart';
 import { TypedReactMemo } from '../../../utils/common';
+import {
+  contributionsAccessor,
+  dateAccessor,
+  getPerformanceProjectionsDataMaxValue,
+  goalNotMetAccessor,
+  ProjectionsChartAnnualHistoricalDatum,
+  valueAccessor,
+  valueBadAccessor,
+  valueDefinedFactory,
+  valueGoodAccessor,
+} from './performanceProjectionsData';
+import {
+  ProjectionsChartMetadata,
+  ProjectionsChartProjectionDatum,
+} from '../../../services/projections';
+import { ProjectionsChartGoalDatum } from '../../../services/goal';
 
 export interface PerformanceProjectionsChartProps
   extends WithParentSizeProps,
-    WithParentSizeProvidedProps {}
+    WithParentSizeProvidedProps {
+  projectionsData: ProjectionsChartProjectionDatum[];
+  annualHistoricalData: ProjectionsChartAnnualHistoricalDatum[];
+  goalsData: ProjectionsChartGoalDatum[];
+  projectionsMetadata: ProjectionsChartMetadata;
+}
 
 // ---------- Utilities ---------- //
 
@@ -67,20 +70,21 @@ const Container = styled.div`
   `}
 `;
 
-function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjectionsChartProps) {
+function PerformanceProjectionsChart({
+  projectionsData,
+  annualHistoricalData,
+  goalsData,
+  projectionsMetadata,
+  parentWidth = 0,
+}: PerformanceProjectionsChartProps) {
   // ----- Stylings ----- //
 
   const chartStyles = usePerformanceProjectionsChartStyles();
 
   // ----- Chart data ----- //
 
-  const projectionsData = useProjectionsData();
-  const historicalData = useHistoricalData();
-  const goalsData = useGoalsData();
-
   const hasProjectionsData = projectionsData.length > 0;
-
-  const { goalMet, zeroValueYear, todayAge } = useMetadata();
+  const { goalMet, zeroValueYear, todayAge } = projectionsMetadata;
 
   // ----- Chart scales & bounds ----- //
 
@@ -96,7 +100,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
   const chartInnerWidth =
     chartDimension.width - chartDimension.margin.left - chartDimension.margin.right;
 
-  const minChartDate = d3ArrayMin(historicalData, dateAccessor);
+  const minChartDate = d3ArrayMin(annualHistoricalData, dateAccessor);
   const maxChartDate = d3ArrayMax(projectionsData, dateAccessor);
   const minChartValue = 0;
   const maxChartValue = getPerformanceProjectionsDataMaxValue(projectionsData);
@@ -137,9 +141,11 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
     yScale,
   ]);
 
-  const graphProjectedPerformanceDefined = React.useCallback(valueDefinedFactory(zeroValueYear), [
-    zeroValueYear,
-  ]);
+  // If zeroValueYear is undefined, we defined all values in our chart
+  const graphProjectedPerformanceDefined = React.useMemo(
+    () => (zeroValueYear === undefined ? undefined : valueDefinedFactory(zeroValueYear)),
+    [zeroValueYear]
+  );
 
   // ----- Chart tooltip ----- //
 
@@ -163,7 +169,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
   // When the chart is not hovered on, we show the tooltip and indicator at the
   // first (earliest) data point
 
-  let firstPerformanceProjectionsDataPoint: PerformanceProjectionsDatum | undefined;
+  let firstPerformanceProjectionsDataPoint: ProjectionsChartProjectionDatum | undefined;
   let defaultTooltipLeft = 0;
   let defaultTooltipTop = 0;
   let defaultTooltipData: TooltipData | undefined;
@@ -193,17 +199,17 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
   let performanceTargetNotMet: number | undefined;
 
   if (tooltipData) {
-    performance = tooltipData.performanceProjection.Value;
-    performanceLowEnd = tooltipData.performanceProjection.ValueBad;
-    performanceHighEnd = tooltipData.performanceProjection.ValueGood;
-    contributions = tooltipData.performanceProjection.NetContributionsToDate;
-    performanceTargetNotMet = tooltipData.performanceProjection.ValueGoalNotMet;
+    performance = tooltipData.performanceProjection.value;
+    performanceLowEnd = tooltipData.performanceProjection.valueBad;
+    performanceHighEnd = tooltipData.performanceProjection.valueGood;
+    contributions = tooltipData.performanceProjection.netContributionsToDate;
+    performanceTargetNotMet = tooltipData.performanceProjection.valueGoalNotMet;
   } else if (firstPerformanceProjectionsDataPoint) {
-    performance = firstPerformanceProjectionsDataPoint.Value;
-    performanceLowEnd = firstPerformanceProjectionsDataPoint.ValueBad;
-    performanceHighEnd = firstPerformanceProjectionsDataPoint.ValueGood;
-    contributions = firstPerformanceProjectionsDataPoint.NetContributionsToDate;
-    performanceTargetNotMet = firstPerformanceProjectionsDataPoint.ValueGoalNotMet;
+    performance = firstPerformanceProjectionsDataPoint.value;
+    performanceLowEnd = firstPerformanceProjectionsDataPoint.valueBad;
+    performanceHighEnd = firstPerformanceProjectionsDataPoint.valueGood;
+    contributions = firstPerformanceProjectionsDataPoint.netContributionsToDate;
+    performanceTargetNotMet = firstPerformanceProjectionsDataPoint.valueGoalNotMet;
   }
 
   // ----- Goal indicators ----- //
@@ -211,29 +217,28 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
   let goalIndicators: React.ReactNode[] = [];
 
   if (hasProjectionsData) {
-    goalIndicators = goalsData.map(({ Date, Progress, Icon, Label }) => {
-      const posX = xScale(Date) + chartDimension.margin.left;
+    goalIndicators = goalsData.map(({ date, progress, icon, label }) => {
+      const posX = xScale(date) + chartDimension.margin.left;
 
-      const correspondingProjectionsDatum = getDatumAtPosX<PerformanceProjectionsDatum>({
+      const correspondingProjectionsDatum = getDatumAtPosX<ProjectionsChartProjectionDatum>({
         data: projectionsData,
         dateAccessor,
         xScale,
         posX,
       });
 
-      const { ValueGood, ValueGoalNotMet } = correspondingProjectionsDatum;
+      const { valueGood, valueGoalNotMet } = correspondingProjectionsDatum;
 
-      const maxYDataPoint = !goalMet && ValueGoalNotMet ? ValueGoalNotMet : ValueGood;
+      const maxYDataPoint = !goalMet && valueGoalNotMet ? valueGoalNotMet : valueGood;
 
       return (
         <PerformanceProjectionsChartGoalIndicator
-          key={Date.valueOf()}
+          key={date.valueOf()}
           left={posX}
           top={yScale(maxYDataPoint) - 20}
-          label={Label}
-          icon={Icon}
-          progress={Progress}
-          goalMet={goalMet}
+          label={label}
+          icon={icon}
+          progress={progress}
         />
       );
     });
@@ -246,7 +251,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
         performanceLowEnd={performanceLowEnd}
         performanceHighEnd={performanceHighEnd}
         contributions={contributions}
-        performanceTargetNotMet={performanceTargetNotMet}
+        performanceTargetNotMet={!goalMet ? performanceTargetNotMet : undefined}
       />
 
       <svg
@@ -287,8 +292,8 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
               shading. We can't use AreaClosed with stroke because then there
               will be strokes along the chart's 2 sides and bottom, which we
               don't want. */}
-          <MemoizedAreaClosed<PerformanceHistoricalDatum>
-            data={historicalData}
+          <MemoizedAreaClosed<ProjectionsChartAnnualHistoricalDatum>
+            data={annualHistoricalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             yScale={yScale}
@@ -296,8 +301,8 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
             strokeWidth={0}
             fill="url(#performance-historical-gradient)"
           />
-          <MemoizedLinePath<PerformanceHistoricalDatum>
-            data={historicalData}
+          <MemoizedLinePath<ProjectionsChartAnnualHistoricalDatum>
+            data={annualHistoricalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             curve={curveNatural}
@@ -306,8 +311,8 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
           />
 
           {/* This path represents historical contributions */}
-          <MemoizedLinePath<PerformanceHistoricalDatum>
-            data={historicalData}
+          <MemoizedLinePath<ProjectionsChartAnnualHistoricalDatum>
+            data={annualHistoricalData}
             x={graphDateAccessor}
             y={graphContributionsAccessor}
             curve={curveNatural}
@@ -323,7 +328,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
               shading. We can't use AreaClosed with stroke because then there
               will be strokes along the chart's 2 sides and bottom, which we
               don't want. */}
-          <MemoizedAreaClosed<PerformanceProjectionsDatum>
+          <MemoizedAreaClosed<ProjectionsChartProjectionDatum>
             data={projectionsData}
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
@@ -332,7 +337,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
             strokeWidth={0}
             fill="url(#performance-projections-gradient)"
           />
-          <MemoizedLinePath<PerformanceProjectionsDatum>
+          <MemoizedLinePath<ProjectionsChartProjectionDatum>
             data={projectionsData}
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
@@ -344,7 +349,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
 
           {/* The projection band is just an AreaClosed. It has a transparent
               fill with no stroke color */}
-          <MemoizedAreaClosed<PerformanceProjectionsDatum>
+          <MemoizedAreaClosed<ProjectionsChartProjectionDatum>
             data={projectionsData}
             x={graphDateAccessor}
             y0={graphProjectedPerformanceBadAccessor}
@@ -356,7 +361,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
           />
 
           {/* This path represents projected contributions */}
-          <MemoizedLinePath<PerformanceProjectionsDatum>
+          <MemoizedLinePath<ProjectionsChartProjectionDatum>
             data={projectionsData}
             x={graphDateAccessor}
             y={graphContributionsAccessor}
@@ -373,7 +378,7 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
               only appears when performance is projected to not meet the goal
            */}
           {!goalMet && (
-            <MemoizedLinePath<PerformanceProjectionsDatum>
+            <MemoizedLinePath<ProjectionsChartProjectionDatum>
               data={projectionsData}
               x={graphDateAccessor}
               y={graphGoalNotMetAccessor}
@@ -491,8 +496,8 @@ function PerformanceProjectionsChart({ parentWidth = 0 }: PerformanceProjections
               <PerformanceProjectionsChartTooltip
                 date={
                   tooltipOpen && tooltipData
-                    ? tooltipData.performanceProjection.Date
-                    : defaultTooltipData.performanceProjection.Date
+                    ? tooltipData.performanceProjection.date
+                    : defaultTooltipData.performanceProjection.date
                 }
                 todayAge={todayAge}
               />

@@ -4,14 +4,13 @@ import { Theme } from '../../../../atoms';
 
 interface GoalImageProps {
   imageSrc: string;
-  goalMet: boolean;
 }
 
 const GoalImageContainer = styled.div`
   position: relative;
 `;
 
-const GoalImageImage = ({ imageSrc, goalMet, ...props }: GoalImageProps) => (
+const GoalImageImage = ({ imageSrc, ...props }: GoalImageProps) => (
   <svg viewBox="0 0 45 50" width={44} height={50} {...props}>
     <pattern id={`goal-indicator-icon-fill-${imageSrc}`} x="0" y="0" width="1" height="1">
       <image href={imageSrc} x="0" y="0" width="50" height="50" />
@@ -26,17 +25,17 @@ const GoalImageImage = ({ imageSrc, goalMet, ...props }: GoalImageProps) => (
 );
 
 const SGoalImageImage = styled(GoalImageImage)`
-  ${({ theme, goalMet }: { theme: Theme } & GoalImageProps) => `
+  ${({ theme }: { theme: Theme }) => `
     & path {
-      stroke: ${goalMet ? theme.palette.tertiary.main : theme.palette.gold.main}
+      stroke: ${theme.palette.tertiary.main}
     }
   `}
 `;
 
-export default function GoalImage({ goalMet, imageSrc }: GoalImageProps) {
+export default function GoalImage({ imageSrc }: GoalImageProps) {
   return (
     <GoalImageContainer>
-      <SGoalImageImage goalMet={goalMet} imageSrc={imageSrc} />
+      <SGoalImageImage imageSrc={imageSrc} />
     </GoalImageContainer>
   );
 }

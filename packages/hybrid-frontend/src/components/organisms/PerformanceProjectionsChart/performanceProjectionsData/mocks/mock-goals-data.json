@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "date": "2051-01-01T00:00:00.000Z",
+      "progress": 0.4,
+      "icon": "/goal-graphic.png",
+      "label": "Retire",
+      "targetAmount": 2000000
+    }
+  ]
+}

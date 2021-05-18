@@ -3,21 +3,21 @@
  */
 
 import { scaleLinear, scaleTime } from '@visx/scale';
-import { PerformanceProjectionsDatum } from '../data/performanceProjectionsChartDataUtils';
 import { ChartDimension } from '../../../../config/chart';
+import { ProjectionsChartProjectionDatum } from '../../../../services/projections';
 
-function generatePerformanceProjectionsData(howMany: number): PerformanceProjectionsDatum[] {
-  const data: PerformanceProjectionsDatum[] = [];
+function generatePerformanceProjectionsData(howMany: number): ProjectionsChartProjectionDatum[] {
+  const data: ProjectionsChartProjectionDatum[] = [];
 
   const firstYear = 2020;
 
   for (let i = 0; i < howMany; i += 1) {
     data.push({
-      Date: new Date(firstYear + i, 0, 1),
-      ValueGood: 110 * i,
-      Value: 100 * i,
-      ValueBad: 90 * i,
-      NetContributionsToDate: 50 * i,
+      date: new Date(firstYear + i, 0, 1),
+      valueGood: 110 * i,
+      value: 100 * i,
+      valueBad: 90 * i,
+      netContributionsToDate: 50 * i,
     });
   }
 
@@ -45,8 +45,8 @@ export function generateParametersForUseTooltipHook(dataLength: number) {
 
   const hasData = dataLength > 0;
 
-  const minX = hasData ? data[0].Date : new Date();
-  const maxX = hasData ? data[dataLength - 1].Date : new Date();
+  const minX = hasData ? data[0].date : new Date();
+  const maxX = hasData ? data[dataLength - 1].date : new Date();
   const xScale = scaleTime({
     domain: [minX, maxX],
     range: [chartDimension.margin.left, chartInnerWidth],
@@ -56,8 +56,8 @@ export function generateParametersForUseTooltipHook(dataLength: number) {
   // contain the lowest and highest points of the graph (not reflective of
   // real-world scenarios where min / max calculations are used to determine
   // this).
-  const minY = hasData ? data[0].NetContributionsToDate : 0;
-  const maxY = hasData ? data[dataLength - 1].ValueGood : 0;
+  const minY = hasData ? data[0].netContributionsToDate : 0;
+  const maxY = hasData ? data[dataLength - 1].valueGood : 0;
   const yScale = scaleLinear({
     domain: [minY, maxY],
     range: [chartDimension.margin.top, chartInnerHeight],

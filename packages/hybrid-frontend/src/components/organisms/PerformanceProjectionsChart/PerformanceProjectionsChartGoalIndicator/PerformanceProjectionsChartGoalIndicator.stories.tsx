@@ -43,7 +43,6 @@ const defaultArgs: PerformanceProjectionsChartGoalIndicatorProps = {
   label: 'Retire',
   progress: 0.5,
   icon: '/goal-graphic.png',
-  goalMet: true,
 };
 
 export const Default = Template.bind({});

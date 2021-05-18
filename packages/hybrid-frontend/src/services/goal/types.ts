@@ -75,3 +75,11 @@ export interface GoalState extends CommonState {
   goalDetails: GoalDetails;
   goalCreationError?: string;
 }
+
+// This kind of data is used by the projections chart
+export interface ProjectionsChartGoalDatum {
+  date: Date;
+  progress: number;
+  label: string;
+  icon: string;
+}

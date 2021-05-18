@@ -3,27 +3,27 @@ import { localPoint } from '@visx/event';
 import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { ScaleLinear, ScaleTime } from 'd3-scale';
-import { PerformanceProjectionsDatum } from '../data/performanceProjectionsChartDataUtils';
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { ChartDimension } from '../../../../config/chart';
+import { ProjectionsChartProjectionDatum } from '../../../../services/projections';
 
 export interface UsePerformanceProjectionsChartTooltipProps {
   chartDimension: ChartDimension;
 
-  projectionsData: PerformanceProjectionsDatum[];
+  projectionsData: ProjectionsChartProjectionDatum[];
   goalMet: boolean;
 
-  dateAccessor: (d: PerformanceProjectionsDatum) => Date;
-  performanceAccessor: (d: PerformanceProjectionsDatum) => number;
-  contributionAccessor: (d: PerformanceProjectionsDatum) => number;
-  goalNotMetAccessor: (d: PerformanceProjectionsDatum) => number;
+  dateAccessor: (d: ProjectionsChartProjectionDatum) => Date;
+  performanceAccessor: (d: ProjectionsChartProjectionDatum) => number;
+  contributionAccessor: (d: ProjectionsChartProjectionDatum) => number;
+  goalNotMetAccessor: (d: ProjectionsChartProjectionDatum) => number;
 
   xScale: ScaleTime<number, number>;
   yScale: ScaleLinear<number, number>;
 }
 
 export interface TooltipData {
-  performanceProjection: PerformanceProjectionsDatum;
+  performanceProjection: ProjectionsChartProjectionDatum;
 
   performanceIndicatorPosY: number | undefined;
   contributionIndicatorPosY: number | undefined;
@@ -80,7 +80,7 @@ export default function usePerformanceProjectionsChartTooltip({
       // Adjust the x-position for margins
       const adjMouseX = mouseX - chartDimension.margin.left;
 
-      const datumAtPosX = getDatumAtPosX<PerformanceProjectionsDatum>({
+      const datumAtPosX = getDatumAtPosX<ProjectionsChartProjectionDatum>({
         data: projectionsData,
         posX: adjMouseX,
         xScale,

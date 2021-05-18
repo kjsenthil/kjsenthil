@@ -6,11 +6,11 @@ import {
   contributionsAccessor,
   dateAccessor,
   goalNotMetAccessor,
-  PerformanceProjectionsDatum,
   valueAccessor,
-} from '../data/performanceProjectionsChartDataUtils';
+} from '../performanceProjectionsData';
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { generateParametersForUseTooltipHook } from './PerformanceProjectionsChartTooltipTestUtils';
+import { ProjectionsChartProjectionDatum } from '../../../../services/projections';
 
 jest.mock('@visx/event');
 
@@ -87,7 +87,7 @@ describe('usePerformanceProjectionsChartTooltip', () => {
       result.current.handleShowContributionsTooltip(new Event('hover'));
     });
 
-    const datum = getDatumAtPosX<PerformanceProjectionsDatum>({
+    const datum = getDatumAtPosX<ProjectionsChartProjectionDatum>({
       data,
       xScale,
       dateAccessor,

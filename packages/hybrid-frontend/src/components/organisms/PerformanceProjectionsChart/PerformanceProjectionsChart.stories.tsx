@@ -3,48 +3,36 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import PerformanceProjectionsChart, {
   PerformanceProjectionsChartProps,
 } from './PerformanceProjectionsChart';
-import {
-  initialPerformanceProjectionsDataState,
-  initialPerformanceProjectionsDataStateGoalNotMet,
-  PerformanceProjectionsDataContextProvider,
-} from './data/performanceProjectionsChartDataContext';
+import mockProjectionsData from './performanceProjectionsData/mocks/mock-projections-data.json';
+import mockProjectionsGoalNotMetData from './performanceProjectionsData/mocks/mock-projections-data-goal-not-met.json';
+import mockAnnualHistoricalData from './performanceProjectionsData/mocks/mock-annual-historical-data.json';
+import mockGoalsData from './performanceProjectionsData/mocks/mock-goals-data.json';
+import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
+import mockProjectionsMetadataGoalNotMet from './performanceProjectionsData/mocks/mock-projections-metadata-goal-not-met.json';
+import { mapDate } from './performanceProjectionsData';
 
 export default {
   title: 'Digital Hybrid/Organisms/Performance Projections Chart/Performance Projections Chart',
   component: PerformanceProjectionsChart,
-  argTypes: {
-    goalMet: {
-      control: {
-        type: null,
-      },
-    },
-  },
+  decorators: [
+    (StoryComponent) => (
+      <div style={{ padding: 10 }}>
+        <StoryComponent />
+      </div>
+    ),
+  ],
+  argTypes: {},
 } as Meta;
 
-interface StoryComponentProps extends PerformanceProjectionsChartProps {
-  goalMet: boolean;
-}
-
-const Template: Story<StoryComponentProps> = ({ goalMet, ...args }) => (
-  <PerformanceProjectionsDataContextProvider
-    initialState={
-      goalMet
-        ? initialPerformanceProjectionsDataState
-        : initialPerformanceProjectionsDataStateGoalNotMet
-    }
-  >
-    <div
-      style={{
-        padding: 10,
-      }}
-    >
-      <PerformanceProjectionsChart {...args} />
-    </div>
-  </PerformanceProjectionsDataContextProvider>
+const Template: Story<PerformanceProjectionsChartProps> = (args) => (
+  <PerformanceProjectionsChart {...args} />
 );
 
-const defaultArgs: StoryComponentProps = {
-  goalMet: true,
+const defaultArgs: PerformanceProjectionsChartProps = {
+  projectionsData: mockProjectionsData.data.map(mapDate),
+  annualHistoricalData: mockAnnualHistoricalData.data.map(mapDate),
+  goalsData: mockGoalsData.data.map(mapDate),
+  projectionsMetadata: mockProjectionsMetadata,
 };
 
 export const Default = Template.bind({});
@@ -53,5 +41,6 @@ Default.args = defaultArgs;
 export const GoalNotMet = Template.bind({});
 GoalNotMet.args = {
   ...defaultArgs,
-  goalMet: false,
+  projectionsData: mockProjectionsGoalNotMetData.data.map(mapDate),
+  projectionsMetadata: mockProjectionsMetadataGoalNotMet,
 };

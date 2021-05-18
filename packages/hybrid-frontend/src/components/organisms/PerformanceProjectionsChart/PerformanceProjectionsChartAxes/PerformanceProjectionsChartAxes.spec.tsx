@@ -4,7 +4,6 @@ import {
   PerformanceProjectionsChartAxisBottom,
   PerformanceProjectionsChartAxisLeft,
 } from './index';
-import { PerformanceProjectionsDataContextProvider } from '../data/performanceProjectionsChartDataContext';
 import { useTimeValueScales } from '../../../../hooks/ChartHooks';
 import { ChartDimension } from '../../../../config/chart';
 
@@ -31,12 +30,10 @@ describe('PerformanceProjectionsChartAxes', () => {
       });
 
       return (
-        <PerformanceProjectionsDataContextProvider>
-          <svg width={300} height={300}>
-            <PerformanceProjectionsChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-            <PerformanceProjectionsChartAxisBottom chartDimension={chartDimension} scale={xScale} />
-          </svg>
-        </PerformanceProjectionsDataContextProvider>
+        <svg width={300} height={300}>
+          <PerformanceProjectionsChartAxisLeft chartDimension={chartDimension} scale={yScale} />
+          <PerformanceProjectionsChartAxisBottom chartDimension={chartDimension} scale={xScale} />
+        </svg>
       );
     };
 
