@@ -15,6 +15,7 @@ export { default as Checkbox } from './Checkbox';
 export { default as Typography } from './Typography';
 export { default as Slider } from './Slider';
 export { default as ProgressBar } from './ProgressBar';
+export { default as Link } from './Link';
 export { default as ChartIndicator } from './ChartIndicator';
 
 /* material-ui atoms */
