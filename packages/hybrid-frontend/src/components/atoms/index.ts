@@ -34,6 +34,7 @@ export {
   InputLabel,
   InputAdornment,
   FormControl,
+  Menu,
   MenuItem,
   RadioGroup,
   FormControlLabel,

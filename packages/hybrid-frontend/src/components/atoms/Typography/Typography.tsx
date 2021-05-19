@@ -24,7 +24,7 @@ export type Variant =
 
 export interface TypographyProps
   extends Omit<MUITypographyProps, 'color' | 'component' | 'variant'> {
-  color?: Color;
+  color?: Color | 'inherit';
   colorShade?: ColorShade;
   variant?: Variant;
 }

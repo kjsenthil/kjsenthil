@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { Card, CardContent, Grid, Typography } from '../../atoms';
 import { ProjectionRequest, ProjectionResponse } from '../../../services/projections';
 import { postProjections } from '../../../services/projections/api';
-import { HeaderMenu, ProjectionsChart, ProjectionsGrid, SimulationForm } from '../../organisms';
+import { ProjectionsChart, ProjectionsGrid, SimulationForm } from '../../organisms';
 import { RootState } from '../../../store';
+import { MyAccountLayout } from '../../templates';
 
 const SimulationPage = () => {
   const { goalCapture } = useSelector((state: RootState) => state.goal);
@@ -23,9 +24,7 @@ const SimulationPage = () => {
   };
 
   return (
-    <>
-      <HeaderMenu />
-
+    <MyAccountLayout>
       <Card>
         <CardContent>
           <Typography variant="h4" gutterBottom>
@@ -47,7 +46,7 @@ const SimulationPage = () => {
           </Grid>
         </CardContent>
       </Card>
-    </>
+    </MyAccountLayout>
   );
 };
 

@@ -10,10 +10,8 @@ describe('SummaryPanel', () => {
         totalContributions={120726.83}
         totalReturn={27512.14}
         totalReturnPct={0.2534}
-        riseInTotalReturn
         threeMonthsReturn={7632.04}
         threeMonthsReturnPct={0.4511}
-        riseInThreeMonthsReturn
       />
     );
   });
@@ -26,8 +24,8 @@ describe('SummaryPanel', () => {
 
     const totalValueNumber = screen.getByText('£148,238.52');
     const totalContributionsNumber = screen.getByText('£120,726.83');
-    const totalReturnNumber = screen.getByText('+ £27,512.14');
-    const threeMonthsReturnNumber = screen.getByText('+ £7,632.04');
+    const totalReturnNumber = screen.getByText('+£27,512.14');
+    const threeMonthsReturnNumber = screen.getByText('+£7,632.04');
 
     expect(totalValueLabel).toBeVisible();
     expect(totalContributionsLabel).toBeVisible();

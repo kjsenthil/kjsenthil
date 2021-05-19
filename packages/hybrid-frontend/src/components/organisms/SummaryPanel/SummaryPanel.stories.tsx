@@ -15,10 +15,8 @@ const defaultArgs: SummaryPanelProps = {
   totalContributions: 120726.83,
   totalReturn: 27512.14,
   totalReturnPct: 0.2534,
-  riseInTotalReturn: true,
   threeMonthsReturn: 7632.04,
   threeMonthsReturnPct: 0.4511,
-  riseInThreeMonthsReturn: true,
 };
 
 export const Default = Template.bind({});

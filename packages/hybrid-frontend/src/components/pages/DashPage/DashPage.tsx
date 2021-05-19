@@ -50,7 +50,7 @@ const DashPage = () => {
   }, []);
 
   return (
-    <MyAccountLayout stretch>
+    <MyAccountLayout>
       <Typography variant="h2">XO projection spike</Typography>
       <Spacer y={2} />
       <Grid container spacing={3}>

@@ -21,7 +21,7 @@ const SelectGoalsPage = () => {
   };
 
   return (
-    <MyAccountLayout pageTitle="Select a goal">
+    <MyAccountLayout>
       <GoalSelection onSubmit={onSubmitHandler} />
     </MyAccountLayout>
   );
