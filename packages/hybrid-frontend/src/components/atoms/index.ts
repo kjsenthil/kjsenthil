@@ -1,22 +1,22 @@
 /* custom atoms */
 import Button, { ButtonProps } from './Button';
+import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
+import Typography, { TypographyProps } from './Typography';
 
 export { default as Icon } from './Icon';
 
-export type { ButtonProps };
+export type { ButtonProps, ChartIndicatorProps, TypographyProps };
 
-export { Button };
+export { Button, Typography, ChartIndicator };
 
 export { default as Spacer } from './Spacer';
 export { Divider } from './Spacer';
 export { default as Switcher } from './Switcher';
 export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
-export { default as Typography } from './Typography';
 export { default as Slider } from './Slider';
 export { default as ProgressBar } from './ProgressBar';
 export { default as Link } from './Link';
-export { default as ChartIndicator } from './ChartIndicator';
 
 /* material-ui atoms */
 export {

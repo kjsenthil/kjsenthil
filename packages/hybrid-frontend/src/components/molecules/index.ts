@@ -5,6 +5,7 @@ export { default as FormInput } from './FormInput';
 export { default as FormSelect } from './FormSelect';
 export { default as MainCard } from './MainCard';
 export { default as TagBox } from './TagBox';
+export { default as Legend } from './Legend';
 
 /* material-ui molecules */
 export { default as Alert } from '@material-ui/lab/Alert';

@@ -20,6 +20,7 @@ export const PercentageTag = styled.div`
   ${({ color, theme }: { color: 'success' | 'gold'; theme: Theme }) => `
     display: inline-block;
     padding: ${theme.spacing(1 / 8)}px ${theme.spacing(0.5)}px;
+    height: ${theme.typography.pxToRem(16.8)};
     border-radius: 2px;
     background-color: ${theme.palette[color].main};
   `}

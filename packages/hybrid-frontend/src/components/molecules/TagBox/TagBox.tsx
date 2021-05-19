@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import * as React from 'react';
 import { Typography } from '../../atoms';
 import { PercentageTag, LabelTag, BadgeTag } from './TagBox.styles';
