@@ -1,4 +1,4 @@
-import { SedolCode } from '../types';
+import { CommonState, SedolCode } from '../types';
 
 export interface AccountData {
   id: string;
@@ -11,6 +11,11 @@ export interface AccountData {
 export interface MyAccountItem {
   id: string;
   name: string;
+}
+
+export interface ClientState extends CommonState {
+  client?: ClientResponse;
+  getClientError?: string;
 }
 
 export interface ClientAccount {

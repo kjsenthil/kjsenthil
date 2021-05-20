@@ -5,6 +5,7 @@ import { Skeleton } from '@material-ui/lab';
 import { Box, Grid, Spacer, Typography } from '../../atoms';
 import { RootState } from '../../../store';
 import { MyAccountLayout } from '../../templates';
+import { getClient, extractClientAccounts } from '../../../services/myAccounts';
 import { getProjections } from '../../../services/projections';
 import { AllAssets } from '../../../services/assets';
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
@@ -27,7 +28,7 @@ const query = graphql`
 `;
 
 const DashPage = () => {
-  const { contactId = '' } = useSelector((state: RootState) => state.auth);
+  const { client } = useSelector((state: RootState) => state.client);
 
   const dispatch = useDispatch();
 
@@ -46,8 +47,13 @@ const DashPage = () => {
   const fundData = useStaticQuery<AllAssets>(query);
 
   useEffect(() => {
-    dispatch(getProjections({ contactId, fundData }));
-  }, []);
+    if (!client) {
+      dispatch(getClient());
+    } else {
+      const accounts = extractClientAccounts(client);
+      dispatch(getProjections({ accounts, fundData }));
+    }
+  }, [client]);
 
   return (
     <MyAccountLayout>

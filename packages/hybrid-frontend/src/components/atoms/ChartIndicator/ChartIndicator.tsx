@@ -27,6 +27,7 @@ const DashedIndicator = ({
 }) => (
   <DashedIndicatorContainer thick={numOfDashes === 3}>
     {Array.from({ length: numOfDashes }).map((_, i) => (
+      /* eslint-disable-next-line react/no-array-index-key */
       <IndicatorDash key={i} color={color} colorShade={colorShade} />
     ))}
   </DashedIndicatorContainer>

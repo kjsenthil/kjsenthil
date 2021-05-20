@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { ClientResponse, MonthlySavingsResponse } from '../types';
 
 export const mockClientResponse: ClientResponse = {

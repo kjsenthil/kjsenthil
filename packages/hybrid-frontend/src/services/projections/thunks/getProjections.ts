@@ -1,21 +1,19 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections } from '../api';
 import {
-  getMyAccountClientAccounts,
   getMyAccountEquityAllocation,
   getMyAccountInvestAccounts,
   getMyAccountMonthlySavingsAmount,
+  MyAccountItem,
 } from '../../myAccounts';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
 
 const getProjections = createAsyncThunk(
   'projections/getProjections',
-  async (params: { contactId: string; fundData: AllAssets }) => {
-    const clientAccounts = await getMyAccountClientAccounts(params.contactId);
-
+  async (params: { accounts: MyAccountItem[]; fundData: AllAssets }) => {
     // get an investment summary for all the customer's accounts
-    const allAccountsData = await getMyAccountInvestAccounts(clientAccounts);
+    const allAccountsData = await getMyAccountInvestAccounts(params.accounts);
 
     // get a percentage equity allocation for each account
     const accountTotals = await Promise.all(
