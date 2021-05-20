@@ -56,7 +56,9 @@ const DashPage = () => {
   }, [client]);
 
   return (
-    <MyAccountLayout>
+    <MyAccountLayout
+      heading={{ primary: `You have £148,238.52`, secondary: 'Hi Ava,', tertiary: '£7,632.04' }}
+    >
       <Typography variant="h2">XO projection spike</Typography>
       <Spacer y={2} />
       <Grid container spacing={3}>

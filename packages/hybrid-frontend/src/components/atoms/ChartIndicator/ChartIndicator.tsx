@@ -16,6 +16,7 @@ export interface ChartIndicatorProps {
   secondaryColorShade?: ColorShade;
 }
 
+/* eslint-disable react/no-array-index-key */
 const DashedIndicator = ({
   colorShade,
   color,

@@ -1,7 +1,15 @@
-/* eslint-disable no-nested-ternary */
-
 import React from 'react';
-import { Box, BoxProps, useTheme } from '@material-ui/core';
+import { Box, BoxProps, Theme, useTheme } from '@material-ui/core';
+import styled from 'styled-components';
+
+const Divider = styled.div`
+  ${({ theme, isVertical }: { theme: Theme; isVertical: boolean }) => `
+      background-color: ${theme.palette.grey[100]};
+      width: ${isVertical ? '2px' : '100%'};
+      height: ${isVertical ? '100%' : '2px'};
+      border-radius: 1.5px;
+   `}
+`;
 
 export type SpacerProps = BoxProps & {
   x?: number;
@@ -15,18 +23,22 @@ export type SpacerProps = BoxProps & {
 
 const Spacer = ({ x, y, basis, asDivider, ...restProps }: SpacerProps) => {
   const theme = useTheme();
+
   return (
     <Box
       data-testid="Spacer"
-      width={x ? theme.spacing(x) : asDivider ? 3 : undefined}
+      width={x ? theme.spacing(x) : undefined}
       height={y ? theme.spacing(y) : undefined}
       flexBasis={basis ? theme.spacing(basis) : undefined}
       flexGrow={0}
       flexShrink={0}
-      bgcolor={asDivider ? theme.palette.grey['100'] : undefined}
-      borderRadius={asDivider ? 1.5 : undefined}
       {...restProps}
-    />
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {asDivider && <Divider isVertical={typeof x === 'number'} />}
+    </Box>
   );
 };
 

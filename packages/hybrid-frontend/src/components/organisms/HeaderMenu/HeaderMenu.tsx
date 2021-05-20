@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import { logout } from '../../../services/auth';
 import {
-  AppBar,
   Toolbar,
   Button,
   Grid,
@@ -19,7 +18,7 @@ import {
   IconButton,
 } from '../../atoms';
 import NavLink from '../../molecules/NavLink';
-import LogoImage from './HeaderMenu.styles';
+import { LogoImage, StyledAppBar } from './HeaderMenu.styles';
 
 export interface HeaderMenuProps {
   profileName: string;
@@ -58,8 +57,8 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
   };
 
   return (
-    <Box m={1} data-test-id="header-menu">
-      <AppBar position="relative" data-testid="header-menu" color="inherit" elevation={1}>
+    <Box data-test-id="header-menu">
+      <StyledAppBar position="relative" data-testid="header-menu" color="inherit" elevation={0}>
         <Toolbar variant="dense">
           <Grid container justify="space-between" alignItems="center">
             <Grid item xs={12} md={8}>
@@ -156,7 +155,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
             )}
           </Grid>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
     </Box>
   );
 };

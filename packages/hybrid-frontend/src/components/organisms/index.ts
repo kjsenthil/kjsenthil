@@ -1,5 +1,6 @@
 export { default as LoginForm } from './LoginForm';
 export { default as HeaderMenu } from './HeaderMenu';
+export { default as Footer } from './Footer';
 export { default as ProjectionsChart } from './ProjectionsChart';
 export { default as ProjectionsGrid } from './ProjectionsGrid';
 export { default as AssetDetails } from './AssetDetails';

@@ -69,6 +69,7 @@ const StyledTypography = styled(({ variant, colorShade, color, ...props }) => (
     colorShade,
     variant,
     color,
+    fontWeight,
     theme: {
       palette,
       typography: { pxToRem },
@@ -79,7 +80,7 @@ const StyledTypography = styled(({ variant, colorShade, color, ...props }) => (
       font-size: ${pxToRem(variantSizes?.fontSize)};
       line-height: ${pxToRem(variantSizes?.lineHeight)};
       letter-spacing: ${pxToRem(variantSizes?.letterSpacing)};
-      font-weight: ${variantSizes?.fontWeight};
+      font-weight: ${fontWeight || variantSizes?.fontWeight};
       color: ${determineColor(color, palette, variant, colorShade)};
   `;
   }}
