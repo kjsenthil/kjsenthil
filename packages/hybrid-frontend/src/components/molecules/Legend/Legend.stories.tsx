@@ -15,7 +15,7 @@ export const PastProjectedValue = Template.bind({});
 PastProjectedValue.args = {
   title: 'Past / Projected Value',
   value: 281231,
-  chartIndicatorProps: { variant: 'double-solid' },
+  chartIndicatorProps: { variant: 'solid' },
   valueFormatter: formatCurrency,
 };
 
@@ -23,7 +23,7 @@ export const LikelyRange = Template.bind({});
 LikelyRange.args = {
   title: 'Likely Range',
   value: [290234, 320324],
-  chartIndicatorProps: { variant: 'gradient', color: 'tertiary' },
+  chartIndicatorProps: { variant: 'rectangle', color: 'tertiary' },
   valueFormatter: formatCurrency,
 };
 
@@ -31,7 +31,7 @@ export const Contributions = Template.bind({});
 Contributions.args = {
   title: 'Contributions',
   value: 290234,
-  chartIndicatorProps: { variant: 'dotted', color: 'gold' },
+  chartIndicatorProps: { variant: 'dashed-4', color: 'secondary' },
   valueFormatter: formatCurrency,
 };
 
@@ -39,7 +39,7 @@ export const ContributionsNoFormatters = Template.bind({});
 ContributionsNoFormatters.args = {
   title: 'Contributions',
   value: '£290,234.00 - £320,324.00',
-  chartIndicatorProps: { variant: 'dotted', color: 'gold' },
+  chartIndicatorProps: { variant: 'dashed-3', color: 'gold' },
 };
 
 export const TotalReturn = Template.bind({});

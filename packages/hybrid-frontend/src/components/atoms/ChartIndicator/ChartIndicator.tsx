@@ -1,53 +1,50 @@
 import * as React from 'react';
 import {
-  DoubleSolidIndicatorContainer,
-  DottedIndicatorContainer,
-  IndicatorSquare,
+  DashedIndicatorContainer,
+  IndicatorDash,
   SolidIndicator,
   ColorShade,
   Color,
-  GradientIndicator,
+  RectangleIndicator,
 } from './ChartIndicator.styles';
 
 export interface ChartIndicatorProps {
-  variant: 'solid' | 'double-solid' | 'dotted' | 'gradient';
+  variant: 'solid' | 'dashed-3' | 'dashed-4' | 'rectangle';
   colorShade?: ColorShade;
   color?: Color;
   secondaryColor?: Color;
   secondaryColorShade?: ColorShade;
 }
 
-const DottedIndicator = ({ colorShade, color }: { colorShade?: ColorShade; color?: Color }) => (
-  <DottedIndicatorContainer>
-    {Array.from({ length: 3 }).map(() => (
-      <IndicatorSquare color={color} colorShade={colorShade} />
-    ))}
-  </DottedIndicatorContainer>
-);
-
-const ChartIndicator = ({
-  variant,
+const DashedIndicator = ({
   colorShade,
   color,
-  secondaryColor,
-  secondaryColorShade,
-}: ChartIndicatorProps) => {
+  numOfDashes,
+}: {
+  colorShade?: ColorShade;
+  numOfDashes: 3 | 4;
+  color?: Color;
+}) => (
+  <DashedIndicatorContainer thick={numOfDashes === 3}>
+    {Array.from({ length: numOfDashes }).map((_, i) => (
+      <IndicatorDash key={i} color={color} colorShade={colorShade} />
+    ))}
+  </DashedIndicatorContainer>
+);
+
+const ChartIndicator = ({ variant, color, colorShade }: ChartIndicatorProps) => {
   switch (variant) {
     case 'solid':
       return <SolidIndicator color={color} colorShade={colorShade} />;
-    case 'double-solid':
-      return (
-        <DoubleSolidIndicatorContainer>
-          <SolidIndicator color={color || 'primary'} colorShade={colorShade} />
-          <SolidIndicator color={secondaryColor || 'tertiary'} colorShade={colorShade} />
-        </DoubleSolidIndicatorContainer>
-      );
-    case 'dotted':
-      return <DottedIndicator color={color} colorShade={colorShade} />;
-    case 'gradient':
-      return (
-        <GradientIndicator color={color} topShade={colorShade} bottomShade={secondaryColorShade} />
-      );
+
+    case 'dashed-3':
+      return <DashedIndicator numOfDashes={3} color={color} />;
+
+    case 'dashed-4':
+      return <DashedIndicator numOfDashes={4} color={color} />;
+
+    case 'rectangle':
+      return <RectangleIndicator color={color} colorShade={colorShade} />;
     default:
       return null;
   }

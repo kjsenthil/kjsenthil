@@ -10,15 +10,9 @@ export default {
       control: {
         type: 'radio',
       },
-      options: ['solid', 'double-solid', 'dotted', 'gradient'],
+      options: ['solid', 'dashed-3', 'dashed-4', 'rectangle'],
     },
     color: {
-      control: {
-        type: 'radio',
-      },
-      options: ['primary', 'tertiary', 'grey', 'gold'],
-    },
-    secondaryColor: {
       control: {
         type: 'radio',
       },

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Spacer, Typography, ChartIndicator, Divider } from '../../../atoms';
-import { TagBox } from '../../../molecules';
-import { Container, SectionContainer } from './PerformanceChartSummaryPanel.styles';
+import { Legend } from '../../../molecules';
+import { Container } from './PerformanceChartSummaryPanel.styles';
 import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 
 export interface PerformanceChartSummaryPanelProps {
@@ -20,55 +19,27 @@ export default function PerformanceChartSummaryPanel({
 }: PerformanceChartSummaryPanelProps) {
   return (
     <Container>
-      <SectionContainer>
-        <ChartIndicator variant="solid" />
+      <Legend
+        title="Total value"
+        value={totalPerformance}
+        valueFormatter={formatCurrency}
+        chartIndicatorProps={{ variant: 'solid' }}
+      />
 
-        <div>
-          <Typography variant="sh4" color="grey" colorShade="dark1">
-            TOTAL VALUE
-          </Typography>
-          <Spacer x={1} />
-          <Typography variant="sh4" color="primary" colorShade="dark2">
-            {formatCurrency(totalPerformance)}
-          </Typography>
-        </div>
-      </SectionContainer>
+      <Legend
+        title="Total Contributed"
+        value={totalContributions}
+        valueFormatter={formatCurrency}
+        chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
+      />
 
-      <Divider />
-
-      <SectionContainer>
-        <ChartIndicator variant="dotted" color="grey" />
-
-        <div>
-          <Typography variant="sh4" color="grey" colorShade="dark1">
-            TOTAL CONTRIBUTED
-          </Typography>
-          <Spacer x={1} />
-          <Typography variant="sh4" color="primary" colorShade="dark2">
-            {formatCurrency(totalContributions)}
-          </Typography>
-        </div>
-      </SectionContainer>
-
-      <Divider />
-
-      <SectionContainer>
-        <div>
-          <Typography variant="sh4" color="grey" colorShade="dark1">
-            TOTAL RETURN
-          </Typography>
-          <Spacer x={1} />
-          <div>
-            <Typography display="inline" variant="sh4" color="primary" colorShade="dark2">
-              {formatCurrency(totalReturn)}
-            </Typography>
-            <Spacer x={1} display="inline-block" />
-            <TagBox variant="percentage" formatter={formatPercent}>
-              {totalReturnPct}
-            </TagBox>
-          </div>
-        </div>
-      </SectionContainer>
+      <Legend
+        title="Total return"
+        value={totalReturn}
+        valueFormatter={formatCurrency}
+        percentageChange={totalReturnPct}
+        percentageFormatter={formatPercent}
+      />
     </Container>
   );
 }

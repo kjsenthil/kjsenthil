@@ -14,47 +14,68 @@ interface StyleProps {
 const Div = ({ color, colorShade, ...props }) => <div {...props} />;
 
 export const SolidIndicator = styled(Div)`
-  ${({ theme, color = 'primary', colorShade = 'main' }: StyleProps) => `
-    width: ${theme.typography.pxToRem(18)};
-    height: ${theme.typography.pxToRem(3)};
-    border-radius: 1.5px;
-    background-color: ${theme.palette[color][colorShade]};
-  `}
-`;
-
-export const IndicatorSquare = styled(Div)`
-  ${({ theme, color = 'primary', colorShade = 'main' }: StyleProps) => `
-    width: ${theme.typography.pxToRem(5)};
-    height: ${theme.typography.pxToRem(3)};
-    border-radius: 1.5px;
-    background-color: ${theme.palette[color][colorShade]};
-  `}
-`;
-
-export const DottedIndicatorContainer = styled.div`
-  display: flex;
-  gap: 1px;
-`;
-
-export const DoubleSolidIndicatorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-export const GradientIndicator = styled(Div)`
   ${({
-    theme,
+    theme: {
+      palette,
+      typography: { pxToRem },
+    },
     color = 'primary',
-    topShade = 'light2',
-    bottomShade = 'light1',
-  }: StyleProps & { topShade: ColorShade; bottomShade: ColorShade }) => `
-    min-width: ${theme.typography.pxToRem(17)};
-    width: ${theme.typography.pxToRem(17)};
-    height: ${theme.typography.pxToRem(20)};
-    border-radius: 8px;
-    background-image: linear-gradient(to bottom, ${theme.palette[color][topShade]} 45%, ${
-    theme.palette[color][bottomShade]
-  } 53%);
+    colorShade = 'main',
+  }: StyleProps) => `
+    width: ${pxToRem(3)};
+    height: ${pxToRem(32)};
+    border-radius: 1.5px;
+    background-color: ${palette[color][colorShade]};
+  `}
+`;
+
+export const IndicatorDash = styled(Div)`
+  ${({
+    theme: {
+      palette,
+      typography: { pxToRem },
+    },
+    color = 'primary',
+    colorShade = 'main',
+  }: StyleProps) => `
+    max-width: ${pxToRem(5)};
+    height: 100%;
+    border-radius: 1.5px;
+    background-color: ${palette[color][colorShade]};
+  `}
+`;
+
+export const DashedIndicatorContainer = styled.div`
+  ${({
+    thick,
+    theme: {
+      typography: { pxToRem },
+    },
+  }: {
+    thick: boolean;
+    theme: Theme;
+  }) => `
+    height: ${pxToRem(32)};
+    width: ${thick ? pxToRem(4) : pxToRem(3)};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: ${thick ? pxToRem(3) : pxToRem(1)};
+  `}
+`;
+
+export const RectangleIndicator = styled(Div)`
+  ${({
+    theme: {
+      palette,
+      typography: { pxToRem },
+    },
+    color = 'primary',
+    colorShade = 'light1',
+  }: StyleProps) => `
+    width: ${pxToRem(16)};
+    height: ${pxToRem(32)};
+    border-radius: 2px;
+    background-color: ${palette[color][colorShade]};
   `}
 `;

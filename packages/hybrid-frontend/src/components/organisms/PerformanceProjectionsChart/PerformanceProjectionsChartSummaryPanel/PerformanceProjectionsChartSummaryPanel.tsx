@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Divider } from '../../../atoms';
 import { Legend } from '../../../molecules';
 import { Container } from './PerformanceProjectionsChartSummaryPanel.styles';
 import { formatCurrency } from '../../../../utils/formatters';
@@ -36,38 +35,30 @@ export default function PerformanceProjectionsChartSummaryPanel({
         title="Past / Projected value"
         value={performance}
         valueFormatter={formatCurrency}
-        chartIndicatorProps={{ variant: 'double-solid' }}
+        chartIndicatorProps={{ variant: 'solid' }}
       />
-
-      <Divider />
 
       <Legend
         title="Likely range"
         value={[performanceLowEnd, performanceHighEnd]}
         valueFormatter={(val) => formatCurrency(val, valueFormatterOptions)}
-        chartIndicatorProps={{ variant: 'gradient', color: 'tertiary' }}
+        chartIndicatorProps={{ variant: 'rectangle', color: 'tertiary' }}
       />
 
       {performanceTargetNotMet !== undefined && (
-        <>
-          <Divider />
-
-          <Legend
-            title="Target value"
-            value={performanceTargetNotMet}
-            valueFormatter={(val) => formatCurrency(val, valueFormatterOptions)}
-            chartIndicatorProps={{ variant: 'dotted', color: 'gold' }}
-          />
-        </>
+        <Legend
+          title="Target value"
+          value={performanceTargetNotMet}
+          valueFormatter={(val) => formatCurrency(val, valueFormatterOptions)}
+          chartIndicatorProps={{ variant: 'dashed-3', color: 'gold' }}
+        />
       )}
-
-      <Divider />
 
       <Legend
         title="Contributions"
         value={contributions}
         valueFormatter={formatCurrency}
-        chartIndicatorProps={{ variant: 'dotted', color: 'grey' }}
+        chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
       />
     </Container>
   );

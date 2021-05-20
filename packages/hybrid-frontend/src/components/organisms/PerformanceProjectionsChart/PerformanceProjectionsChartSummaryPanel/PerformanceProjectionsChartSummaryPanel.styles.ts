@@ -5,6 +5,6 @@ import { Theme } from '../../../atoms';
 export const Container = styled.div`
   ${({ theme }: { theme: Theme }) => `
     display: inline-flex;
-    gap: ${theme.spacing(4)}px;
+    gap: ${theme.spacing(6)}px;
   `}
 `;
