@@ -3,6 +3,32 @@ name: "Deploy PR environment"
 on: pull_request
 
 jobs:
+  detect_changes:
+    name: "Detect changes"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v2.10.1
+        id: changes
+        with:
+          filters: |
+            pipelines:
+              - '.github/workflows/**'
+            tf_resource_group:
+              - 'terraform/resource_group/**'
+            tf_apim:
+              - 'terraform/apim/**'
+            tf_infra:
+              - 'terraform/infra/**'
+            packages:
+              - 'packages/**'
+
+    outputs:
+      has_pipeline_changes: ${{ steps.changes.outputs.pipelines }}
+      has_tf_resource_group_changes: ${{ steps.changes.outputs.tf_resource_group }}
+      has_tf_apim_changes: ${{ steps.changes.outputs.tf_apim }}
+      has_tf_infra_changes: ${{ steps.changes.outputs.tf_infra }}
+      has_package_changes: ${{ steps.changes.outputs.packages }}
+
   build_cache:
     name: "Build caches"
     runs-on: ubuntu-latest
@@ -59,7 +85,9 @@ jobs:
 
   package_function_apps:
     name: "Package Function Apps"
-    needs: [build_cache]
+    if: always()
+    needs:
+      - build_cache
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -101,7 +129,11 @@ jobs:
 
   deploy_rg_terraform:
     name: "Deploy Resource Group"
+    if: ${{ needs.detect_changes.outputs.has_tf_resource_group_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     runs-on: ubuntu-latest
+    needs:
+      - detect_changes
+
     concurrency: dev_rg_terraform_deployment
 
     defaults:
@@ -138,6 +170,37 @@ jobs:
       - name: "Terraform Apply"
         run: terraform apply -var-file="./var-files/dev.tfvars" -auto-approve
 
+  get_dev_rg_outputs:
+    name: "Get dev resource group outputs"
+    if: always()
+    needs:
+      - deploy_rg_terraform
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/resource_group
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/dev.backend"
+
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
@@ -149,8 +212,12 @@ jobs:
   # Deploys terraform APIM.
   deploy_apim_terraform:
     name: "Deploy APIM"
+    if: ${{ needs.detect_changes.outputs.has_tf_apim_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     environment: development
-    needs: [deploy_rg_terraform]
+    needs:
+      - detect_changes
+      - deploy_rg_terraform
+      - get_dev_rg_outputs
     runs-on: ubuntu-latest
     concurrency: dev_apim_terraform_deployment
 
@@ -184,7 +251,7 @@ jobs:
       - name: "Terraform Plan"
         run: terraform plan -no-color -var-file="./var-files/dev.tfvars"
         env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
@@ -194,11 +261,42 @@ jobs:
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
         env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
+  get_dev_apim_outputs:
+    name: "Get dev APIM outputs"
+    if: always()
+    needs:
+      - deploy_apim_terraform
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform/apim
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      TF_INPUT: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+          terraform_wrapper: false
+
+      - name: "Terraform Init"
+        run: terraform init -backend-config="./backends/dev.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -217,13 +315,14 @@ jobs:
   # Deploys terraform PR contents.
   deploy_pr_terraform:
     name: "Deploy PR Infrastructure"
+    if: always()
     needs:
-      [
-        deploy_rg_terraform,
-        deploy_apim_terraform,
-        derive_environment_prefix,
-        package_function_apps,
-      ]
+      - deploy_rg_terraform
+      - get_dev_rg_outputs
+      - deploy_apim_terraform
+      - get_dev_apim_outputs
+      - derive_environment_prefix
+      - package_function_apps
     runs-on: ubuntu-latest
     concurrency: dev_infra_terraform_deployment
 
@@ -267,22 +366,22 @@ jobs:
         run: terraform plan -no-color -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
-          TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_apim_name: ${{ needs.deploy_apim_terraform.outputs.apim_name }}
-          TF_VAR_apim_vnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_vnet_name }}
-          TF_VAR_apim_subnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.get_dev_apim_outputs.outputs.apim_name }}
+          TF_VAR_apim_vnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_vnet_name }}
+          TF_VAR_apim_subnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
-          TF_VAR_resource_group_name: ${{ needs.deploy_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_apim_name: ${{ needs.deploy_apim_terraform.outputs.apim_name }}
-          TF_VAR_apim_vnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_vnet_name }}
-          TF_VAR_apim_subnet_name: ${{ needs.deploy_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_apim_name: ${{ needs.get_dev_apim_outputs.outputs.apim_name }}
+          TF_VAR_apim_vnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_vnet_name }}
+          TF_VAR_apim_subnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_subnet_name }}
+          TF_VAR_cdn_profile_name: ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -304,8 +403,11 @@ jobs:
 
   open_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
+    if: always()
     runs-on: ubuntu-latest
-    needs: [deploy_rg_terraform, deploy_pr_terraform]
+    needs:
+      - get_dev_rg_outputs
+      - deploy_pr_terraform
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -317,13 +419,16 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Allow
-            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Allow
+            az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Allow
+            az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Allow
 
   clear_storybook_storage_account:
     name: "Clear storybook storage account"
+    if: always()
     runs-on: ubuntu-latest
-    needs: [deploy_rg_terraform, deploy_pr_terraform, open_storage_account_firewalls]
+    needs:
+      - deploy_pr_terraform
+      - open_storage_account_firewalls
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -339,8 +444,13 @@ jobs:
 
   linting:
     name: "Checks"
+    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
+    needs:
+      - detect_changes
+      - build_cache
+      - deploy_pr_terraform
+      - clear_storybook_storage_account
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -386,8 +496,13 @@ jobs:
 
   unit_test:
     name: "Unit test"
+    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     runs-on: ubuntu-latest
-    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
+    needs:
+      - detect_changes
+      - build_cache
+      - deploy_pr_terraform
+      - clear_storybook_storage_account
     env:
       JEST_HTML_REPORTER_PAGE_TITLE: Jest Test Summary for branch ${{ github.head_ref }}
     steps:
@@ -433,16 +548,13 @@ jobs:
 
   end_to_end_test:
     name: "E2E test"
+    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     runs-on: ubuntu-latest
     needs:
-      [
-        build_cache,
-        linting,
-        unit_test,
-        deploy_rg_terraform,
-        deploy_pr_terraform,
-        clear_storybook_storage_account,
-      ]
+      - detect_changes
+      - build_cache
+      - deploy_pr_terraform
+      - clear_storybook_storage_account
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -503,7 +615,11 @@ jobs:
   # Deploys frontend pr contents
   deploy_gatsby:
     name: "Build & Deploy Gatsby"
-    needs: [deploy_rg_terraform, deploy_pr_terraform, build_cache, linting, unit_test]
+    if: always()
+    needs:
+      - build_cache
+      - deploy_pr_terraform
+      - open_storage_account_firewalls
     runs-on: ubuntu-latest
 
     steps:
@@ -560,6 +676,9 @@ jobs:
 
   get_staging_rg_outputs:
     name: "Get staging resource group outputs"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    needs:
+      - detect_changes
     runs-on: ubuntu-latest
 
     defaults:
@@ -596,6 +715,9 @@ jobs:
 
   get_staging_apim_outputs:
     name: "Get staging APIM outputs"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    needs:
+      - detect_changes
     runs-on: ubuntu-latest
 
     defaults:
@@ -638,8 +760,13 @@ jobs:
 
   plan_staging:
     name: "Terraform plan Staging"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     environment: staging
-    needs: [deploy_pr_terraform, package_function_apps, get_staging_rg_outputs, get_staging_apim_outputs]
+    needs:
+      - detect_changes
+      - package_function_apps
+      - get_staging_rg_outputs
+      - get_staging_apim_outputs
     runs-on: ubuntu-latest
     concurrency: staging_infra_terraform_deployment
 
@@ -692,6 +819,9 @@ jobs:
 
   get_prod_rg_outputs:
     name: "Get prod resource group outputs"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true'}}
+    needs:
+      - detect_changes
     runs-on: ubuntu-latest
 
     defaults:
@@ -728,6 +858,9 @@ jobs:
 
   get_prod_apim_outputs:
     name: "Get prod APIM outputs"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    needs:
+      - detect_changes
     runs-on: ubuntu-latest
 
     defaults:
@@ -770,8 +903,13 @@ jobs:
 
   plan_prod:
     name: "Terraform plan Prod"
+    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
     environment: prod
-    needs: [deploy_pr_terraform, package_function_apps, get_prod_rg_outputs, get_prod_apim_outputs]
+    needs:
+      - detect_changes
+      - package_function_apps
+      - get_prod_rg_outputs
+      - get_prod_apim_outputs
     runs-on: ubuntu-latest
     concurrency: prod_infra_terraform_deployment
 
@@ -822,11 +960,14 @@ jobs:
       plan_outcome: ${{ steps.plan.outcome }}
       plan: ${{ steps.plan.outputs.stdout }}
 
-  # TODO Deploy the storybook container here via terraform
   # Deploys storybook.
   deploy_storybook:
     name: "Build & deploy Storybook"
-    needs: [build_cache, deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account]
+    if: always()
+    needs:
+      - build_cache
+      - deploy_pr_terraform
+      - clear_storybook_storage_account
     runs-on: ubuntu-latest
 
     steps:
@@ -883,8 +1024,16 @@ jobs:
 
   close_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
+    if: always()
     runs-on: ubuntu-latest
-    needs: [deploy_rg_terraform, deploy_pr_terraform, clear_storybook_storage_account, linting, unit_test, end_to_end_test, deploy_gatsby, deploy_storybook]
+    needs:
+      - get_dev_rg_outputs
+      - deploy_pr_terraform
+      - linting
+      - unit_test
+      - end_to_end_test
+      - deploy_gatsby
+      - deploy_storybook
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -896,21 +1045,20 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Deny
-            az storage account update --resource-group ${{ needs.deploy_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Deny
+            az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }} --default-action Deny
+            az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.deploy_pr_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   publish_results:
     name: "Publish results"
+    if: always()
     needs:
-      [
-        linting,
-        unit_test,
-        end_to_end_test,
-        deploy_gatsby,
-        deploy_storybook,
-        plan_staging,
-        plan_prod,
-      ]
+      - linting
+      - unit_test
+      - end_to_end_test
+      - deploy_gatsby
+      - deploy_storybook
+      - plan_staging
+      - plan_prod
     runs-on: ubuntu-latest
 
     steps:
@@ -957,23 +1105,30 @@ jobs:
     if: always()
     name: "Post to Slack"
     needs:
-      [
-        build_cache,
-        derive_environment_prefix,
-        package_function_apps,
-        deploy_rg_terraform,
-        deploy_apim_terraform,
-        deploy_pr_terraform,
-        clear_storybook_storage_account,
-        plan_staging,
-        plan_prod,
-        linting,
-        unit_test,
-        deploy_storybook,
-        end_to_end_test,
-        deploy_gatsby,
-        publish_results,
-      ]
+      - detect_changes
+      - build_cache
+      - derive_environment_prefix
+      - package_function_apps
+      - deploy_rg_terraform
+      - get_dev_rg_outputs
+      - deploy_apim_terraform
+      - get_dev_apim_outputs
+      - deploy_pr_terraform
+      - open_storage_account_firewalls
+      - clear_storybook_storage_account
+      - linting
+      - unit_test
+      - end_to_end_test
+      - deploy_gatsby
+      - deploy_storybook
+      - close_storage_account_firewalls
+      - get_staging_rg_outputs
+      - get_staging_apim_outputs
+      - plan_staging
+      - get_prod_rg_outputs
+      - get_prod_apim_outputs
+      - plan_prod
+      - publish_results
     runs-on: ubuntu-latest
     steps:
       - name: "Get current timestamp"
@@ -990,13 +1145,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? '#009933' : '#cc0000',
+                "color": '${{ needs.detect_changes.result }}' === 'success' && '${{ needs.build_cache.result }}' === 'success' && '${{ needs.derive_environment_prefix.result }}' === 'success' && '${{ needs.package_function_apps.result }}' === 'success' && '${{ needs.deploy_rg_terraform.result }}' === 'success' && '${{ needs.get_dev_rg_outputs.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.get_dev_apim_outputs.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.open_storage_account_firewalls.result }}' === 'success' && '${{ needs.clear_storybook_storage_account.result }}' === 'success' && '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.close_storage_account_firewalls.result }}' === 'success' && '${{ needs.get_staging_rg_outputs.result }}' === 'success' && '${{ needs.get_staging_apim_outputs.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.get_prod_rg_outputs.result }}' === 'success' && '${{ needs.get_prod_apim_outputs.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' && '${{ needs.publish_results.result }}' === 'success' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ needs.detect_changes.result }}' === 'success' && '${{ needs.build_cache.result }}' === 'success' && '${{ needs.derive_environment_prefix.result }}' === 'success' && '${{ needs.package_function_apps.result }}' === 'success' && '${{ needs.deploy_rg_terraform.result }}' === 'success' && '${{ needs.get_dev_rg_outputs.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.get_dev_apim_outputs.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.open_storage_account_firewalls.result }}' === 'success' && '${{ needs.clear_storybook_storage_account.result }}' === 'success' && '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.close_storage_account_firewalls.result }}' === 'success' && '${{ needs.get_staging_rg_outputs.result }}' === 'success' && '${{ needs.get_staging_apim_outputs.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.get_prod_rg_outputs.result }}' === 'success' && '${{ needs.get_prod_apim_outputs.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' && '${{ needs.publish_results.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -1006,36 +1161,20 @@ jobs:
                   {
                     "type": "context",
                     "elements": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Workflow Name* : ${{ github.workflow }}"
-                      }
+                      { "type": "mrkdwn", "text": "*Workflow Name* : ${{ github.workflow }}" }
                     ]
                   },
-                  {
-                    "type": "context",
-                    "elements": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Deployment initiated by*:"
-                      },
-                      {
-                        "type": "image",
-                        "image_url": "https://github.com/${{ github.actor }}.png?size=40",
-                        "alt_text": "Authors Avatar"
-                      },
-                      {
-                        "type": "plain_text",
-                        "text": "${{ github.actor }}",
-                        "emoji": true
-                      }
+                  { "type": "context", "elements": [
+                      { "type": "mrkdwn", "text": "*Deployment initiated by*:" },
+                      { "type": "image", "image_url": "https://github.com/${{ github.actor }}.png?size=40", "alt_text": "Authors Avatar" },
+                      { "type": "plain_text", "text": "${{ github.actor }}", "emoji": true }
                     ]
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                      "text": '${{ needs.detect_changes.result }}' === 'success' && '${{ needs.build_cache.result }}' === 'success' && '${{ needs.derive_environment_prefix.result }}' === 'success' && '${{ needs.package_function_apps.result }}' === 'success' && '${{ needs.deploy_rg_terraform.result }}' === 'success' && '${{ needs.get_dev_rg_outputs.result }}' === 'success' && '${{ needs.deploy_apim_terraform.result }}' === 'success' && '${{ needs.get_dev_apim_outputs.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' && '${{ needs.open_storage_account_firewalls.result }}' === 'success' && '${{ needs.clear_storybook_storage_account.result }}' === 'success' && '${{ needs.linting.result }}' === 'success' && '${{ needs.unit_test.result }}' === 'success' && '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_gatsby.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' && '${{ needs.close_storage_account_firewalls.result }}' === 'success' && '${{ needs.get_staging_rg_outputs.result }}' === 'success' && '${{ needs.get_staging_apim_outputs.result }}' === 'success' && '${{ needs.plan_staging.result }}' === 'success' && '${{ needs.get_prod_rg_outputs.result }}' === 'success' && '${{ needs.get_prod_apim_outputs.result }}' === 'success' && '${{ needs.plan_prod.result }}' === 'success' && '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
                     }
                   },
                   {
@@ -1062,118 +1201,31 @@ jobs:
                       "text": "*Job Conclusions for this workflow run.*"
                     }
                   },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.build_cache.result }}' === 'success' ? ':heavy-check-mark:   Build Cache' : '${{ needs.build_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Build Cache' : ':heavy-minus-sign:   Build Cache'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.derive_environment_prefix.result }}' === 'success' ? ':heavy-check-mark:   Derive Environment Prefix' : '${{ needs.derive_environment_prefix.result }}' === 'failure' ? ':heavy-cross-mark:   Derive Environment Prefix' : ':heavy-minus-sign:   Derive Environment Prefix'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.package_function_apps.result }}' === 'success' ? ':heavy-check-mark:   Package Function Apps' : '${{ needs.package_function_apps.result }}' === 'failure' ? ':heavy-cross-mark:   Package Function Apps' : ':heavy-minus-sign:   Package Function Apps'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Resource Group' : '${{ needs.deploy_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Resource Group' : ':heavy-minus-sign:   Deploy Resource Group'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy APIM' : '${{ needs.deploy_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy APIM' : ':heavy-minus-sign:   Deploy APIM'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy PR Infrastructure' : '${{ needs.deploy_pr_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy PR Infrastructure' : ':heavy-minus-sign:   Deploy PR Infrastructure'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.clear_storybook_storage_account.result }}' === 'success' ? ':heavy-check-mark:   Clear Storybook Storage Account' : '${{ needs.clear_storybook_storage_account.result }}' === 'failure' ? ':heavy-cross-mark:   Clear Storybook Storage Account' : ':heavy-minus-sign:   Clear Storybook Storage Account'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.plan_staging.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Staging' : '${{ needs.plan_staging.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Staging' : ':heavy-minus-sign:   Terraform Plan - Staging'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.plan_prod.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Production' : '${{ needs.plan_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Production' : ':heavy-minus-sign:   Terraform Plan - Production'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.end_to_end_test.result }}' === 'success' ? ':heavy-check-mark:   E2E Tests' : '${{ needs.end_to_end_test.result }}' === 'failure' ? ':heavy-cross-mark:   E2E Tests' : ':heavy-minus-sign:   E2E Tests'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   Publish Results to PR' : '${{ needs.publish_results.result }}' === 'failure' ? ':heavy-cross-mark:   Publish Results to PR' : ':heavy-minus-sign:   Publish Results to PR'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ job.status }}' === 'success' ? ':heavy-check-mark:   Post to Slack' : '${{ job.status }}' === 'failure' ? ':heavy-cross-mark:   Post to Slack' : ':heavy-minus-sign:   Post to Slack'
-                    }
-                  },
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.detect_changes.result }}' === 'success' ? ':heavy-check-mark:   Detect Changes' : '${{ needs.detect_changes.result }}' === 'failure' ? ':heavy-cross-mark:   Detect Changes' : ':heavy-minus-sign:   Detect Changes' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.build_cache.result }}' === 'success' ? ':heavy-check-mark:   Build Cache' : '${{ needs.build_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Build Cache' : ':heavy-minus-sign:   Build Cache' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.derive_environment_prefix.result }}' === 'success' ? ':heavy-check-mark:   Derive Environment Prefix' : '${{ needs.derive_environment_prefix.result }}' === 'failure' ? ':heavy-cross-mark:   Derive Environment Prefix' : ':heavy-minus-sign:   Derive Environment Prefix' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.package_function_apps.result }}' === 'success' ? ':heavy-check-mark:   Package Function Apps' : '${{ needs.package_function_apps.result }}' === 'failure' ? ':heavy-cross-mark:   Package Function Apps' : ':heavy-minus-sign:   Package Function Apps' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Resource Group' : '${{ needs.deploy_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Resource Group' : ':heavy-minus-sign:   Deploy Resource Group' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_dev_rg_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Dev RG TF Outputs' : '${{ needs.get_dev_rg_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Dev RG TF Outputs' : ':heavy-minus-sign:   Get Dev RG TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy APIM' : '${{ needs.deploy_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy APIM' : ':heavy-minus-sign:   Deploy APIM' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_dev_apim_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Dev APIM TF Outputs' : '${{ needs.get_dev_apim_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Get Dev APIM TF Outputs' : ':heavy-minus-sign:   Get Dev APIM TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy PR Infrastructure' : '${{ needs.deploy_pr_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy PR Infrastructure' : ':heavy-minus-sign:   Deploy PR Infrastructure' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.open_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Open Storage Account Firewalls' : '${{ needs.open_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Open Storage Account Firewalls' : ':heavy-minus-sign:   Open Storage Account Firewalls' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.clear_storybook_storage_account.result }}' === 'success' ? ':heavy-check-mark:   Clear Storybook Storage Account' : '${{ needs.clear_storybook_storage_account.result }}' === 'failure' ? ':heavy-cross-mark:   Clear Storybook Storage Account' : ':heavy-minus-sign:   Clear Storybook Storage Account'}},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_staging_rg_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Staging RG TF Outputs' : '${{ needs.get_staging_rg_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Get Staging RG TF Outputs' : ':heavy-minus-sign:   Get Staging RG TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_staging_apim_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Staging APIM TF Outputs' : '${{ needs.get_staging_apim_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Get Staging APIM TF Outputs' : ':heavy-minus-sign:   Get Staging APIM TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.plan_staging.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Staging' : '${{ needs.plan_staging.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Staging' : ':heavy-minus-sign:   Terraform Plan - Staging' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_prod_rg_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Prod RG TF Outputs' : '${{ needs.get_prod_rg_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Get Prod RG TF Outputs' : ':heavy-minus-sign:   Get Prod RG TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.get_prod_apim_outputs.result }}' === 'success' ? ':heavy-check-mark:   Get Prod APIM TF Outputs' : '${{ needs.get_prod_apim_outputs.result }}' === 'failure' ? ':heavy-cross-mark:   Get Prod APIM TF Outputs' : ':heavy-minus-sign:   Get Prod APIM TF Outputs' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.plan_prod.result }}' === 'success' ? ':heavy-check-mark:   Terraform Plan - Production' : '${{ needs.plan_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Terraform Plan - Production' : ':heavy-minus-sign:   Terraform Plan - Production' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.close_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Storage Account Firewalls' : '${{ needs.close_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Storage Account Firewalls' : ':heavy-minus-sign:   Close Storage Account Firewalls' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.end_to_end_test.result }}' === 'success' ? ':heavy-check-mark:   E2E Tests' : '${{ needs.end_to_end_test.result }}' === 'failure' ? ':heavy-cross-mark:   E2E Tests' : ':heavy-minus-sign:   E2E Tests' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   Publish Results to PR' : '${{ needs.publish_results.result }}' === 'failure' ? ':heavy-cross-mark:   Publish Results to PR' : ':heavy-minus-sign:   Publish Results to PR' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ job.status }}' === 'success' ? ':heavy-check-mark:   Post to Slack' : '${{ job.status }}' === 'failure' ? ':heavy-cross-mark:   Post to Slack' : ':heavy-minus-sign:   Post to Slack' }},
                   {
                     "type": "divider"
                   },

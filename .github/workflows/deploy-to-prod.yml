@@ -692,7 +692,7 @@ jobs:
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
     name: "Deploy production front end"
-    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform]
+    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform, open_prod_storage_account_firewalls]
 
     runs-on: ubuntu-latest
     steps:
@@ -760,7 +760,7 @@ jobs:
   # Deploys storybook.
   deploy_storybook_prod:
     name: "Deploy Storybook"
-    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform]
+    needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform, open_prod_storage_account_firewalls]
     runs-on: ubuntu-latest
 
     steps:
