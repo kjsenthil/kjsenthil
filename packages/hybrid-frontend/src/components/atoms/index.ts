@@ -41,6 +41,7 @@ export {
   Paper,
   Select,
   TextField,
+  Tooltip,
   Toolbar,
   useTheme,
   makeStyles,
