@@ -9,17 +9,17 @@ import { persistReducer, PersistConfig } from 'redux-persist';
 import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
-import { clientSlice as clientReducer } from '../services/myAccounts/reducers';
+import { myAccountSlice as myAccountReducer } from '../services/myAccount/reducers';
 import { goalSlice as goalReducer } from '../services/goal/reducers';
 import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
 import { GoalState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import { ProjectionsState } from '../services/projections';
-import { ClientState } from '../services/myAccounts';
+import { MyAccountState } from '../services/myAccount';
 
 export interface RootState {
   auth: AuthState;
-  client: ClientState;
+  myAccount: MyAccountState;
   goal: GoalState;
   projections: ProjectionsState;
 }
@@ -32,7 +32,7 @@ const persistConfig: PersistConfig<RootState> = {
 
 const reducers: ReducersMapObject = {
   auth: authReducer,
-  client: clientReducer,
+  myAccount: myAccountReducer,
   goal: goalReducer,
   projections: projectionsReducer,
 };

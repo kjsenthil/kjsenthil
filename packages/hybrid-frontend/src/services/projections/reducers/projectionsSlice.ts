@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProjectionResponse, ProjectionsState } from '../types';
-import { getProjections, getProjectionsActionReducerMapBuilder } from '../thunks';
+import { fetchProjections, fetchProjectionsActionReducerMapBuilder } from '../thunks';
 
 const initialState: ProjectionsState = {
   status: 'idle',
@@ -16,11 +16,11 @@ const projectionsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    getProjectionsActionReducerMapBuilder(builder);
+    fetchProjectionsActionReducerMapBuilder(builder);
   },
 });
 
-export { getProjections };
+export { fetchProjections };
 export const { setProjections } = projectionsSlice.actions;
 
 export default projectionsSlice.reducer;

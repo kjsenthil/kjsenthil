@@ -29,6 +29,22 @@ export interface ProjectionResponse {
   projections?: ProjectionYear[];
 }
 
+export interface EquityFund {
+  riskModel: RiskModel;
+  sedol: SedolCode;
+  equityProportion: number;
+}
+
+export interface RiskProfileData {
+  portfolioEquityPercentage: number;
+  equityFunds: EquityFund[];
+}
+
+export interface PortfolioRiskProfile {
+  riskModel: RiskModel;
+  sedol: SedolCode;
+}
+
 export interface ProjectionsState extends CommonState {
   projections: ProjectionResponse;
   postProjectionsError?: string;

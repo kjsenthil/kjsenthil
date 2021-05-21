@@ -1,1 +1,4 @@
-export { default as getProjections, getProjectionsActionReducerMapBuilder } from './getProjections';
+export {
+  default as fetchProjections,
+  fetchProjectionsActionReducerMapBuilder,
+} from './fetchProjections';

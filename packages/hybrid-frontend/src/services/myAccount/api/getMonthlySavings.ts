@@ -6,7 +6,7 @@ export enum MonthlySavingsErrors {
   NO_SAVINGS_ERROR = 'NO_SAVINGS_ERROR',
 }
 
-const getMyAccountMonthlySavings = async (accountId: string): Promise<MonthlySavingsResponse> => {
+const getMonthlySavings = async (accountId: string): Promise<MonthlySavingsResponse> => {
   const path = API_ENDPOINTS.MYACCOUNT_MONTHLY_SAVINGS.replace(/\{id\}/, accountId);
 
   try {
@@ -21,4 +21,4 @@ const getMyAccountMonthlySavings = async (accountId: string): Promise<MonthlySav
   }
 };
 
-export default getMyAccountMonthlySavings;
+export default getMonthlySavings;

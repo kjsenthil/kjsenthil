@@ -13,7 +13,7 @@ export interface MyAccountItem {
   name: string;
 }
 
-export interface ClientState extends CommonState {
+export interface MyAccountState extends CommonState {
   client?: ClientResponse;
   getClientError?: string;
 }

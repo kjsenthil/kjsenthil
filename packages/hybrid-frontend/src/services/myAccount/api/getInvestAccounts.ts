@@ -2,7 +2,7 @@ import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 import { AccountData, InvestmentSummaryAccountsResponse, MyAccountItem } from '../types';
 
-export default async (clientAccounts: MyAccountItem[]): Promise<AccountData[]> => {
+const getInvestAccounts = async (clientAccounts: MyAccountItem[]): Promise<AccountData[]> => {
   const accountIds = clientAccounts.map((account) => account.id);
 
   const path = `${API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS}?filter[id]=${accountIds.join(
@@ -22,3 +22,5 @@ export default async (clientAccounts: MyAccountItem[]): Promise<AccountData[]> =
     };
   });
 };
+
+export default getInvestAccounts;

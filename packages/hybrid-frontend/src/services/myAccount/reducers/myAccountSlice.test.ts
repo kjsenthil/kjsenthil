@@ -3,35 +3,35 @@ import { Store } from 'redux';
 import * as api from '../api';
 import { authSlice as authReducer } from '../../auth';
 import { goalSlice as goalReducer } from '../../goal';
-import clientReducer, { getClient } from './clientSlice';
+import myAccountReducer, { fetchClient } from './myAccountSlice';
 import { mockClientResponse } from '../mocks';
 
 jest.mock('../api', () => ({
-  getMyAccountClient: jest.fn(),
+  getClient: jest.fn(),
 }));
 
-describe('clientSlice', () => {
+describe('myAccountSlice', () => {
   let store: Store;
 
   beforeEach(() => {
     store = configureStore({
       reducer: {
         auth: authReducer,
-        client: clientReducer,
+        myAccount: myAccountReducer,
         goal: goalReducer,
       },
     });
   });
 
-  describe('dispatch getClient', () => {
-    const getClientAction = getClient() as any;
+  describe('dispatch fetchClient', () => {
+    const getClientAction = fetchClient() as any;
 
     beforeEach(() => {
-      (api.getMyAccountClient as jest.Mock).mockResolvedValue(mockClientResponse);
+      (api.getClient as jest.Mock).mockResolvedValue(mockClientResponse);
     });
 
     it('starts with sensible defaults', () => {
-      const { status, getClientError } = store.getState().client;
+      const { status, getClientError } = store.getState().myAccount;
 
       expect(status).toStrictEqual('idle');
       expect(getClientError).toBeUndefined();
@@ -40,9 +40,9 @@ describe('clientSlice', () => {
     describe('when call is still pending', () => {
       it('sets status to loading', () => {
         store.dispatch(getClientAction);
-        const { status, getClientError } = store.getState().client;
+        const { status, getClientError } = store.getState().myAccount;
 
-        expect(api.getMyAccountClient).toHaveBeenCalledTimes(1);
+        expect(api.getClient).toHaveBeenCalledTimes(1);
         expect(status).toStrictEqual('loading');
         expect(getClientError).toBeUndefined();
       });
@@ -51,7 +51,7 @@ describe('clientSlice', () => {
     describe('when call is fulfilled', () => {
       it('sets status to success', async () => {
         await store.dispatch(getClientAction);
-        const { status, getClientError } = store.getState().client;
+        const { status, getClientError } = store.getState().myAccount;
 
         expect(status).toStrictEqual('success');
         expect(getClientError).toBeUndefined();
@@ -61,9 +61,9 @@ describe('clientSlice', () => {
     describe('when call is rejected', () => {
       it('sets getClientError', async () => {
         const error = 'Something went wrong';
-        (api.getMyAccountClient as jest.Mock).mockRejectedValue(error);
+        (api.getClient as jest.Mock).mockRejectedValue(error);
         await store.dispatch(getClientAction);
-        const { status, getClientError } = store.getState().client;
+        const { status, getClientError } = store.getState().myAccount;
 
         expect(status).toStrictEqual('error');
         expect(getClientError).toStrictEqual(error);

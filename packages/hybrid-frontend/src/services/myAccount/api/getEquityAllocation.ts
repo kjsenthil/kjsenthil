@@ -1,12 +1,10 @@
-import getMyAccountBreakdownAllocation, {
-  BreakdownAllocationErrors,
-} from './getMyAccountBreakdownAllocation';
+import getBreakdownAllocation, { BreakdownAllocationErrors } from './getBreakdownAllocation';
 
-const getMyAccountEquityAllocation = async (accountId: string): Promise<number | undefined> => {
+const getEquityAllocation = async (accountId: string): Promise<number | undefined> => {
   let equityPercentage: number | undefined;
 
   try {
-    const breakdown = await getMyAccountBreakdownAllocation(accountId);
+    const breakdown = await getBreakdownAllocation(accountId);
     equityPercentage = breakdown.data.attributes.breakdown.find(
       (allocation) => allocation.name === 'Equity'
     )?.percentage;
@@ -22,4 +20,4 @@ const getMyAccountEquityAllocation = async (accountId: string): Promise<number |
   return equityPercentage;
 };
 
-export default getMyAccountEquityAllocation;
+export default getEquityAllocation;

@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ClientState } from '../types';
-import { getClient, getClientActionReducerMapBuilder } from '../thunks';
+import { MyAccountState } from '../types';
+import { fetchClient, getClientActionReducerMapBuilder } from '../thunks';
 
-const initialState: ClientState = {
+const initialState: MyAccountState = {
   status: 'idle',
   client: undefined,
 };
 
-const clientSlice = createSlice({
+const myAccountSlice = createSlice({
   name: 'client',
   initialState,
   reducers: {
@@ -20,7 +20,7 @@ const clientSlice = createSlice({
   },
 });
 
-export { getClient };
-export const { setClient } = clientSlice.actions;
+export { fetchClient };
+export const { setClient } = myAccountSlice.actions;
 
-export default clientSlice.reducer;
+export default myAccountSlice.reducer;

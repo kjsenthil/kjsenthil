@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import ProjectionsChart, { ProjectionsChartProps } from './ProjectionsChart';
-import { mockProjectionResponse } from '../../../constants';
+import { mockProjectionResponse } from '../../../services/projections/mocks';
 
 export default {
   title: 'Digital Hybrid/Organisms/Projections Chart',

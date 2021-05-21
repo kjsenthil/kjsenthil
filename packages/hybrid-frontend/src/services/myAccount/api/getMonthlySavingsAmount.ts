@@ -1,10 +1,10 @@
-import getMyAccountMonthlySavings, { MonthlySavingsErrors } from './getMyAccountMonthlySavings';
+import getMonthlySavings, { MonthlySavingsErrors } from './getMonthlySavings';
 
-const getMyAccountMonthlySavingsAmount = async (accountId: string): Promise<number> => {
+const getMonthlySavingsAmount = async (accountId: string): Promise<number> => {
   let monthlySavingsAmount: number;
 
   try {
-    const reponse = await getMyAccountMonthlySavings(accountId);
+    const reponse = await getMonthlySavings(accountId);
     monthlySavingsAmount = reponse.data[0].attributes.amount;
   } catch (e) {
     // use a monthly savings amount of 0 for accounts with no monthly savings
@@ -18,4 +18,4 @@ const getMyAccountMonthlySavingsAmount = async (accountId: string): Promise<numb
   return monthlySavingsAmount;
 };
 
-export default getMyAccountMonthlySavingsAmount;
+export default getMonthlySavingsAmount;

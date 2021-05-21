@@ -1,26 +1,26 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections } from '../api';
 import {
-  getMyAccountEquityAllocation,
-  getMyAccountInvestAccounts,
-  getMyAccountMonthlySavingsAmount,
+  getEquityAllocation,
+  getInvestAccounts,
+  getMonthlySavingsAmount,
   MyAccountItem,
-} from '../../myAccounts';
+} from '../../myAccount';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
 
-const getProjections = createAsyncThunk(
-  'projections/getProjections',
+const fetchProjections = createAsyncThunk(
+  'projections/fetchProjections',
   async (params: { accounts: MyAccountItem[]; fundData: AllAssets }) => {
     // get an investment summary for all the customer's accounts
-    const allAccountsData = await getMyAccountInvestAccounts(params.accounts);
+    const allAccountsData = await getInvestAccounts(params.accounts);
 
     // get a percentage equity allocation for each account
     const accountTotals = await Promise.all(
       allAccountsData.map(async (account) => ({
         ...account,
-        equityPercentage: await getMyAccountEquityAllocation(account.id),
-        monthlyInvestment: await getMyAccountMonthlySavingsAmount(account.id),
+        equityPercentage: await getEquityAllocation(account.id),
+        monthlyInvestment: await getMonthlySavingsAmount(account.id),
       }))
     );
 
@@ -52,23 +52,23 @@ const getProjections = createAsyncThunk(
   }
 );
 
-export const getProjectionsActionReducerMapBuilder = (
+export const fetchProjectionsActionReducerMapBuilder = (
   builder: ActionReducerMapBuilder<ProjectionsState>
 ) => {
   builder
-    .addCase(getProjections.pending, (state) => {
+    .addCase(fetchProjections.pending, (state) => {
       state.status = 'loading';
       state.postProjectionsError = undefined;
     })
-    .addCase(getProjections.fulfilled, (state, { payload }) => {
+    .addCase(fetchProjections.fulfilled, (state, { payload }) => {
       state.status = 'success';
       state.postProjectionsError = undefined;
       state.projections = payload;
     })
-    .addCase(getProjections.rejected, (state, action) => {
+    .addCase(fetchProjections.rejected, (state, action) => {
       state.status = 'error';
       state.postProjectionsError = action.error.message;
     });
 };
 
-export default getProjections;
+export default fetchProjections;

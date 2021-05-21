@@ -6,7 +6,7 @@ export enum BreakdownAllocationErrors {
   NO_EQUITIES_ERROR = 'NO_EQUITIES_ERROR',
 }
 
-export default async (accountId: string): Promise<BreakDownAllocationResponse> => {
+const getBreakdownAllocation = async (accountId: string): Promise<BreakDownAllocationResponse> => {
   const path = API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION.replace(/\{id\}/, accountId);
 
   try {
@@ -20,3 +20,5 @@ export default async (accountId: string): Promise<BreakDownAllocationResponse> =
     throw error;
   }
 };
+
+export default getBreakdownAllocation;
