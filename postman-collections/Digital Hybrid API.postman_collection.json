@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "17df36d1-5fcc-4490-b8bb-a8bf66f02180",
+		"_postman_id": "d3701c71-6bd9-4ba1-a8fd-cdaf4edcde15",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -454,6 +454,134 @@
 							],
 							"cookie": [],
 							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/myaccount/Aggregared-breakdown-allocation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/Aggregated-breakdown-allocation?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"Aggregated-breakdown-allocation"
+							],
+							"query": [
+								{
+									"key": "filter[id]",
+									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},

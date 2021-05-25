@@ -393,6 +393,27 @@
                 "backend_url": "myaccounts_api",
                 "rewrite_url": "\/api\/Accounts\/{id}\/investments"
             }
-        }                    
+        },
+        {
+            "operation_id": "myaccount-Aggregated-breakdown-allocation",
+            "display_name": "Myaccount Aggregated breakdown allocation for multiple accounts",
+            "url_template": "\/myaccount\/Aggregated-breakdown-allocation",
+            "description": "This lets the user to get breakdown of allocation for multiple accounts",
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type",
+                        "Origin",
+                        "Authorization"
+                    ]
+                },
+                "backend_url": "myaccounts_api",
+                "rewrite_url": "\/api\/Aggregated-breakdown-allocation"
+            }
+        }
     ]
 }
