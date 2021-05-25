@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import PerformanceProjectionsChart from './PerformanceProjectionsChart';
+import PerformanceProjectionsSimplifiedChart from './PerformanceProjectionsSimplifiedChart';
+import { mapDate } from './performanceProjectionsData';
 import mockProjectionsData from './performanceProjectionsData/mocks/mock-projections-data.json';
 import mockAnnualHistoricalData from './performanceProjectionsData/mocks/mock-annual-historical-data.json';
 import mockGoalsData from './performanceProjectionsData/mocks/mock-goals-data.json';
 import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
-import { mapDate } from './performanceProjectionsData';
 
-describe('PerformanceProjectionsChartChart', () => {
+describe('PerformanceProjectionsSimplifiedChartChart', () => {
   const CHART_SIZE = 600;
 
   test('The chart renders correctly', () => {
@@ -18,7 +18,7 @@ describe('PerformanceProjectionsChartChart', () => {
           height: CHART_SIZE,
         }}
       >
-        <PerformanceProjectionsChart
+        <PerformanceProjectionsSimplifiedChart
           initialWidth={CHART_SIZE}
           initialHeight={CHART_SIZE}
           parentWidth={CHART_SIZE}
@@ -30,6 +30,18 @@ describe('PerformanceProjectionsChartChart', () => {
       </div>
     );
 
-    expect(screen.getByTestId('performance-projections-chart-svg')).toBeVisible();
+    expect(screen.getByTestId('performance-projections-simplified-chart-svg')).toBeVisible();
+    expect(
+      screen.getByTestId('performance-projections-simplified-chart-historical-area')
+    ).toBeVisible();
+    expect(
+      screen.getByTestId('performance-projections-simplified-chart-historical-line')
+    ).toBeVisible();
+    expect(
+      screen.getByTestId('performance-projections-simplified-chart-projections-area')
+    ).toBeVisible();
+    expect(
+      screen.getByTestId('performance-projections-simplified-chart-projections-line')
+    ).toBeVisible();
   });
 });

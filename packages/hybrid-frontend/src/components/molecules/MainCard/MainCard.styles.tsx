@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card } from '../../atoms';
 
-const CustomCard = styled(Card)`
+export const CustomCard = styled(Card)`
   ${({ theme }) => `
     padding: ${theme.spacing(3)}px;
     background-color:  ${theme.palette.background.paper};
@@ -10,4 +10,6 @@ const CustomCard = styled(Card)`
   `}
 `;
 
-export default CustomCard;
+export const ActionElementContainer = styled.div`
+  max-width: 33%;
+`;

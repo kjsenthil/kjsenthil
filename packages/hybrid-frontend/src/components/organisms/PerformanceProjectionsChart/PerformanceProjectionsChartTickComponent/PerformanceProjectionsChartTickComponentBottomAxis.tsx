@@ -14,6 +14,15 @@ export interface PerformanceProjectionsChartTickComponentBottomAxisProps extends
   chartStyles: ReturnType<typeof usePerformanceProjectionsChartStyles>;
 
   todayAge: number;
+
+  // Default mode shows both years and ages.
+  // Simplified mode shows 'TODAY' when the year is today's year, and only ages
+  // otherwise.
+  displayMode: 'default' | 'simplified';
+
+  // By providing the final year, we can shift the final tick to the left to
+  // avoid margin collision.
+  finalYear?: number;
 }
 
 /**
@@ -23,51 +32,78 @@ export interface PerformanceProjectionsChartTickComponentBottomAxisProps extends
 export function getAgeText(formattedValue: string | undefined, todayAge: number): string {
   const tickYear = Number(formattedValue);
 
-  if (Number.isNaN(tickYear)) return `Age unknown`;
+  if (Number.isNaN(tickYear)) return `AGE UNKNOWN`;
 
   const todayYear = new Date().getFullYear();
 
   const age = todayAge + (tickYear - todayYear);
 
-  return `Age ${age}`;
+  return `AGE ${age}`;
 }
 
 export default function PerformanceProjectionsChartTickComponentBottomAxis({
   chartStyles,
   todayAge,
+  displayMode,
+  finalYear,
   x,
   y,
   formattedValue,
   ...tickLabelProps
 }: PerformanceProjectionsChartTickComponentBottomAxisProps) {
+  // When the tick is for today's year, then we always display "TODAY".
+  // In simplified display mode, only the "TODAY" year text is shown. No other
+  // year text ticks are shown.
+  const todayYear = new Date().getFullYear();
+  const yearText = Number(formattedValue) === todayYear ? 'TODAY' : formattedValue;
+  const showYearText =
+    displayMode === 'default' || (displayMode === 'simplified' && yearText === 'TODAY');
+
+  // We always show ages in simplified display mode, except for the "TODAY"
+  // tick.
+  const showAgeText =
+    displayMode === 'default' || (displayMode === 'simplified' && yearText !== 'TODAY');
+
+  // There is a y-offset for age texts (because they are on line #2). We don't
+  // need this offset when the years are not shown, however.
+  const ageTextYOffset = !showYearText ? 0 : 15;
+
+  const textDxOffset = finalYear && Number(formattedValue) === finalYear ? '-4%' : undefined;
+
   return (
     <>
-      <Text
-        x={x}
-        y={y}
-        {...tickLabelProps}
-        fill={chartStyles.TEXT_COLOR.AXES}
-        fontSize={chartStyles.TEXT_SIZE.AXES}
-        fontFamily={chartStyles.TEXT_FONT.COMMON}
-        width={56}
-        lineHeight={15}
-        style={{ fontWeight: 'bold' }}
-      >
-        {formattedValue}
-      </Text>
-      <Text
-        x={x}
-        y={y + 15}
-        {...tickLabelProps}
-        fill={chartStyles.TEXT_COLOR.AXES}
-        fontSize={chartStyles.TEXT_SIZE.AXES}
-        fontFamily={chartStyles.TEXT_FONT.COMMON}
-        width={56}
-        lineHeight={15}
-        style={{ fontWeight: 'bold' }}
-      >
-        {getAgeText(formattedValue, todayAge)}
-      </Text>
+      {showYearText && (
+        <Text
+          x={x}
+          dx={textDxOffset}
+          y={y}
+          {...tickLabelProps}
+          fill={chartStyles.TEXT_COLOR.AXES}
+          fontSize={chartStyles.TEXT_SIZE.AXES}
+          fontFamily={chartStyles.TEXT_FONT.COMMON}
+          width={56}
+          lineHeight={15}
+          style={{ fontWeight: 'bold' }}
+        >
+          {yearText}
+        </Text>
+      )}
+      {showAgeText && (
+        <Text
+          x={x}
+          dx={textDxOffset}
+          y={y + ageTextYOffset}
+          {...tickLabelProps}
+          fill={chartStyles.TEXT_COLOR.AXES}
+          fontSize={chartStyles.TEXT_SIZE.AXES}
+          fontFamily={chartStyles.TEXT_FONT.COMMON}
+          width={56}
+          lineHeight={15}
+          style={{ fontWeight: 'bold' }}
+        >
+          {getAgeText(formattedValue, todayAge)}
+        </Text>
+      )}
     </>
   );
 }

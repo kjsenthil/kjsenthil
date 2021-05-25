@@ -1,19 +1,25 @@
 import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
 import { usePerformanceProjectionsChartStyles } from '../performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import PerformanceProjectionsChartTickComponentBottomAxis from '../PerformanceProjectionsChartTickComponent/PerformanceProjectionsChartTickComponentBottomAxis';
+import PerformanceProjectionsChartTickComponentBottomAxis, {
+  PerformanceProjectionsChartTickComponentBottomAxisProps,
+} from '../PerformanceProjectionsChartTickComponent/PerformanceProjectionsChartTickComponentBottomAxis';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../../utils/formatters';
 import { ChartDimension } from '../../../../config/chart';
 
 export interface PerformanceProjectionsChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;
   todayAge: number;
+  displayMode?: PerformanceProjectionsChartTickComponentBottomAxisProps['displayMode'];
+  finalYear?: number;
 }
 
 export default function PerformanceProjectionsChartAxisBottom({
   scale,
   chartDimension,
   todayAge,
+  displayMode = 'default',
+  finalYear,
   ...props
 }: PerformanceProjectionsChartAxisBottomProps) {
   // Check PerformanceProjectionsChartTickComponent to see why we have to pass this down
@@ -33,6 +39,8 @@ export default function PerformanceProjectionsChartAxisBottom({
         <PerformanceProjectionsChartTickComponentBottomAxis
           chartStyles={chartStyles}
           todayAge={todayAge}
+          displayMode={displayMode}
+          finalYear={finalYear}
           {...tickRendererProps}
         />
       )}

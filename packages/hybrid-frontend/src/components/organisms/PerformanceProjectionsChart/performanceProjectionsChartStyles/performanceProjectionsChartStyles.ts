@@ -12,23 +12,47 @@ const defaultPerformanceProjectionsChartDimension: ChartDimension = {
   },
 };
 
+const simplifiedPerformanceProjectionsChartDimension: ChartDimension = {
+  ...defaultChartDimension,
+  height: 360,
+  margin: {
+    top: 10,
+    right: 0,
+    bottom: 30,
+    left: 0,
+  },
+};
+
 // Note: update the default chart height for each screen size as needed
-const CHART_DIMENSION: Record<ScreenSize, ChartDimension> = {
+const DEFAULT_CHART_DIMENSION: Record<ScreenSize, ChartDimension> = {
   [ScreenSize.DESKTOP_HD]: defaultPerformanceProjectionsChartDimension,
   [ScreenSize.DESKTOP]: defaultPerformanceProjectionsChartDimension,
   [ScreenSize.TABLET]: defaultPerformanceProjectionsChartDimension,
   [ScreenSize.MOBILE]: defaultPerformanceProjectionsChartDimension,
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export function usePerformanceProjectionsChartStyles() {
+// Note: update the default chart height for each screen size as needed
+const SIMPLIFIED_CHART_DIMENSION: Record<ScreenSize, ChartDimension> = {
+  [ScreenSize.DESKTOP_HD]: simplifiedPerformanceProjectionsChartDimension,
+  [ScreenSize.DESKTOP]: simplifiedPerformanceProjectionsChartDimension,
+  [ScreenSize.TABLET]: simplifiedPerformanceProjectionsChartDimension,
+  [ScreenSize.MOBILE]: simplifiedPerformanceProjectionsChartDimension,
+};
+
+export interface UsePerformanceProjectionsChartStylesProps {
+  dimension?: Record<ScreenSize, ChartDimension>;
+}
+
+export function usePerformanceProjectionsChartStyles(
+  chartType: 'default' | 'simplified' = 'default'
+) {
   const {
     palette: { primary, tertiary, common, grey, gold },
     typography: { fontFamily },
   } = useTheme();
 
   return {
-    DIMENSION: CHART_DIMENSION,
+    DIMENSION: chartType === 'simplified' ? SIMPLIFIED_CHART_DIMENSION : DEFAULT_CHART_DIMENSION,
 
     GRADIENT: {
       HISTORICAL_GRAPH: {
