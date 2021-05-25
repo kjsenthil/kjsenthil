@@ -63,6 +63,9 @@ export interface ProjectionsChartMetadata {
 
   // The age of the user as of today. Used to calculate future ages.
   todayAge: number;
+
+  // The number of years for which the investment should be projected
+  investmentPeriod: number;
 }
 
 // This kind of data is used by the projections chart

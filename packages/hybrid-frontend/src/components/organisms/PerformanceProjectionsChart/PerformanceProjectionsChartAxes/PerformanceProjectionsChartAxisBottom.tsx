@@ -7,19 +7,18 @@ import { ChartDimension } from '../../../../config/chart';
 
 export interface PerformanceProjectionsChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;
+  todayAge: number;
 }
 
 export default function PerformanceProjectionsChartAxisBottom({
   scale,
   chartDimension,
+  todayAge,
   ...props
 }: PerformanceProjectionsChartAxisBottomProps) {
   // Check PerformanceProjectionsChartTickComponent to see why we have to pass this down
   // as a prop.
   const chartStyles = usePerformanceProjectionsChartStyles();
-
-  // TODO: somehow get user age as of today
-  const todayAge = 31;
 
   return (
     <AxisBottom

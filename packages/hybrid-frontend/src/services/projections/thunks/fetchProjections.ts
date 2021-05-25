@@ -11,7 +11,7 @@ import { AllAssets } from '../../assets';
 
 const fetchProjections = createAsyncThunk(
   'projections/fetchProjections',
-  async (params: { accounts: MyAccountItem[]; fundData: AllAssets }) => {
+  async (params: { accounts: MyAccountItem[]; fundData: AllAssets; investmentPeriod: number }) => {
     // get an investment summary for all the customer's accounts
     const allAccountsData = await getInvestAccounts(params.accounts);
 
@@ -45,7 +45,7 @@ const fetchProjections = createAsyncThunk(
     return postProjections({
       upfrontInvestment: portfolioTotal,
       monthlyInvestment: monthlyInvestmentTotal,
-      investmentPeriod: 50,
+      investmentPeriod: params.investmentPeriod,
       sedolCode: riskProfile.sedol,
       riskModel: riskProfile.riskModel,
     });

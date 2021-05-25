@@ -32,7 +32,11 @@ describe('PerformanceProjectionsChartAxes', () => {
       return (
         <svg width={300} height={300}>
           <PerformanceProjectionsChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-          <PerformanceProjectionsChartAxisBottom chartDimension={chartDimension} scale={xScale} />
+          <PerformanceProjectionsChartAxisBottom
+            chartDimension={chartDimension}
+            scale={xScale}
+            todayAge={31}
+          />
         </svg>
       );
     };

@@ -39,19 +39,21 @@ const DashPage = () => {
   const performanceProjectionsChartStyles = usePerformanceProjectionsChartStyles();
 
   const hasDataForChart =
-    projectionsData.length > 0 &&
-    annualHistoricalData.length > 0 &&
-    goalsData.length > 0 &&
-    projectionsMetadata;
+    projectionsData.length > 0 && annualHistoricalData.length > 0 && goalsData.length > 0;
 
   const fundData = useStaticQuery<AllAssets>(query);
 
   useEffect(() => {
     if (!client) {
       dispatch(fetchClient());
-    } else {
-      const accounts = extractClientAccounts(client);
-      dispatch(fetchProjections({ accounts, fundData }));
+    } else if (projectionsMetadata) {
+      dispatch(
+        fetchProjections({
+          accounts: extractClientAccounts(client),
+          fundData,
+          investmentPeriod: projectionsMetadata.investmentPeriod,
+        })
+      );
     }
   }, [client]);
 
@@ -63,7 +65,7 @@ const DashPage = () => {
       <Spacer y={2} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {hasDataForChart ? (
+          {hasDataForChart && projectionsMetadata ? (
             <Box p={2}>
               <PerformanceProjectionsChart
                 projectionsData={projectionsData}

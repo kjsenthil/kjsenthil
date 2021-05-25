@@ -43,6 +43,7 @@ describe('projectionsSlice', () => {
     const fetchProjectionsAction = fetchProjections({
       accounts: mockAccounts,
       fundData: mockAssets,
+      investmentPeriod: 50,
     }) as any;
 
     beforeEach(() => {

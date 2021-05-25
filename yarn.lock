@@ -4632,6 +4632,7 @@ __metadata:
     jest-extended: ^0.11.5
     jest-html-reporter: ^3.3.0
     lint-staged: ^10.5.3
+    mockdate: ^3.0.5
     react: ^16.12.0
     react-chartjs-2: ^2.11.1
     react-dom: ^16.12.0
@@ -19546,6 +19547,13 @@ fsevents@^1.2.7:
   peerDependencies:
     mocha: ">=7"
   checksum: 4fe571d0cb2b21a238c08804e2e5d3d240b909708fbcdedb680a6b65dbca4bf7e19b588c9719416c5bbd0512e8b1bf6db8a3bc2e0b3b23f3541838d8666b452f
+  languageName: node
+  linkType: hard
+
+"mockdate@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "mockdate@npm:3.0.5"
+  checksum: 8098a98f0af3a143b7a3f9625c6ae525cad0b72c9798a82b9429e6c89bcb0c67e238126e5df8962169e8a503a51af18d03eea222051c8e67f62707277880ece0
   languageName: node
   linkType: hard
 

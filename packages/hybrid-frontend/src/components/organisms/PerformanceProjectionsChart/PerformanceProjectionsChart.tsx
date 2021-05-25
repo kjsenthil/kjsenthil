@@ -283,7 +283,11 @@ function PerformanceProjectionsChart({
           {/* ----- Axes ----- */}
 
           <PerformanceProjectionsChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-          <PerformanceProjectionsChartAxisBottom chartDimension={chartDimension} scale={xScale} />
+          <PerformanceProjectionsChartAxisBottom
+            chartDimension={chartDimension}
+            scale={xScale}
+            todayAge={todayAge}
+          />
 
           {/* ----- Graph paths - Historical ----- */}
 
