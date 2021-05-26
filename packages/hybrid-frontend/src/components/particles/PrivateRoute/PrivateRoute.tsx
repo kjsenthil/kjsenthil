@@ -9,10 +9,10 @@ interface PrivateRouteProps extends RouteComponentProps {
 }
 
 const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
-  const { isPinLoggedIn: isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { accessTokens } = useSelector((state: RootState) => state.auth);
 
   const loginPath = '/my-account/login';
-  const isNotLoggedIn = !isLoggedIn;
+  const isNotLoggedIn = accessTokens.length === 0;
 
   useEffect(() => {
     /* eslint-disable-next-line no-console */

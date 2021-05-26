@@ -3,8 +3,10 @@ import {
   combineReducers,
   ReducersMapObject,
   getDefaultMiddleware,
+  Action,
 } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
+import createWhitelistFilter from 'redux-persist-transform-filter';
 import { persistReducer, PersistConfig } from 'redux-persist';
 import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, IS_SSR } from '../config';
@@ -28,13 +30,24 @@ export interface RootState {
   projections: ProjectionsState;
 }
 
+/*
+ * To whitelist or blacklist nested data you can use createBlacklistFilter or createWhitelistFilter in this way:
+ *
+ * const clientWhitelist = createWhitelistFilter('client', ['data.attributes.firstName', 'data.attributes.lastName']);
+ *
+ * then add the filter to the transforms array
+ */
+
+const authWhitelist = createWhitelistFilter('auth', ['accessTokens', 'contactId']);
+
 const persistConfig: PersistConfig<RootState> = {
-  blacklist: ['client'],
+  blacklist: ['goal', 'projections', 'investmentSummary'],
+  transforms: [authWhitelist],
   key: 'root',
   storage,
 };
 
-const reducers: ReducersMapObject = {
+const reducersMap: ReducersMapObject = {
   auth: authReducer,
   client: clientReducer,
   investmentSummary: investmentSummaryReducer,
@@ -42,9 +55,19 @@ const reducers: ReducersMapObject = {
   projections: projectionsReducer,
 };
 
-const persistedReducer = persistReducer(persistConfig, combineReducers(reducers));
+const reducers = combineReducers(reducersMap);
 
-const reducer = IS_SSR ? reducers : persistedReducer;
+const rootReducer = (state: RootState | undefined, action: Action) => {
+  if (action.type === 'auth/logout') {
+    state = undefined;
+  }
+
+  return reducers(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const reducer = IS_SSR ? reducersMap : persistedReducer;
 
 const store = configureStore({
   reducer,

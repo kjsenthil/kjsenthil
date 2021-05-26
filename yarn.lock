@@ -4640,6 +4640,7 @@ __metadata:
     react-redux: ^7.2.4
     redux: ^4.1.0
     redux-persist: ^6.0.0
+    redux-persist-transform-filter: ^0.0.20
     start-server-and-test: ^1.11.7
     styled-components: ^5.2.1
   languageName: unknown
@@ -18207,7 +18208,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lodash.clonedeep@npm:4.5.0":
+"lodash.clonedeep@npm:4.5.0, lodash.clonedeep@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.clonedeep@npm:4.5.0"
   checksum: 41e2fe4c57c56a66a4775a6ddeebe9272f0ce4d257d97b3cb8724a9b01eeec9b09ce7e8603d6926baf5f48c287d988f0de4bf5aa244ea86b1f22c1e6f203cc27
@@ -18267,6 +18268,13 @@ fsevents@^1.2.7:
   version: 4.5.0
   resolution: "lodash.foreach@npm:4.5.0"
   checksum: aa177589a923db147831937b2b74746276247a4c0870c8dfe14bcebb009e9a89b33287589ba0af90a6fa2355b0759cea03ab6d0a25219a25d0d96222de4a831f
+  languageName: node
+  linkType: hard
+
+"lodash.forin@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.forin@npm:4.4.0"
+  checksum: a5d82f15b96e2aab7f1f89cd1d7ce42f44553ecc6caaa180a2fc042a501a4a9631e6da36370f446313999cc77215e4b5b500e100faad926129d642bdf6588d2a
   languageName: node
   linkType: hard
 
@@ -18354,6 +18362,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lodash.pickby@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.pickby@npm:4.6.0"
+  checksum: 4be8dc90315a03aa002d9c3899a5803f8ba22739442a187de2258a332666d51a0800db8b87875543ebc05bdc6919d12a0d8b6d8ab2e0fcdd20fe1cf908f15c31
+  languageName: node
+  linkType: hard
+
+"lodash.set@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "lodash.set@npm:4.3.2"
+  checksum: 4dfedacae1c1cf86385a2b6e30ba538f06c90d703a0abd83a11432d80ec24b4016fe27359cdc0554a02a31a468789cbb282801dd755e54581cf0295477e2341d
+  languageName: node
+  linkType: hard
+
 "lodash.union@npm:^4.6.0":
   version: 4.6.0
   resolution: "lodash.union@npm:4.6.0"
@@ -18365,6 +18387,13 @@ fsevents@^1.2.7:
   version: 4.5.0
   resolution: "lodash.uniq@npm:4.5.0"
   checksum: 47cb25b59bf40ef3bdf441b7b6cb41d0b95ae0ca576be2c206724dd66041fa8aadab55c1210792671aa0b1c9878d5c0be48927bf4d22f3ed50e5f79d3b2e90b7
+  languageName: node
+  linkType: hard
+
+"lodash.unset@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "lodash.unset@npm:4.5.2"
+  checksum: 55716de1b31d6ed509fd0709fb46e9a35179a437e39e0ff3b9ba55f4aacfc3efbe63a171b5c60809994ba3ba6319ac85a0ea7f9a55ac1ab260239224eac984f0
   languageName: node
   linkType: hard
 
@@ -23187,6 +23216,24 @@ fsevents@^1.2.7:
   dependencies:
     balanced-match: ^1.0.0
   checksum: 155d191b6ea29f06114e7c0774479cd7f7d0c3794c0dfdc9eb5a6914657540884d7f3f2e06a011609ff0fd1c4884bab5bc32a63fd2480b6d4d9fc6998b18523d
+  languageName: node
+  linkType: hard
+
+"redux-persist-transform-filter@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "redux-persist-transform-filter@npm:0.0.20"
+  dependencies:
+    lodash.clonedeep: ^4.5.0
+    lodash.forin: ^4.4.0
+    lodash.get: ^4.4.2
+    lodash.isempty: ^4.4.0
+    lodash.pickby: ^4.6.0
+    lodash.set: ^4.3.2
+    lodash.unset: ^4.5.2
+  peerDependencies:
+    redux: ">3.0.0"
+    redux-persist: ^3.4.0 || ^4 || ^5 || ^6
+  checksum: c331124497d76493d38332ee00c0220dabba5cf095c7b5c9b2f73efae65a36ea972bf4f33c8f4a52f35e0b05ebfcf5484de0edfb9a17ff82fe292f29df35318f
   languageName: node
   linkType: hard
 

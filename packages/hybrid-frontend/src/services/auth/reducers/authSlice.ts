@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 import { AuthState } from '../types';
 import {
   credLogin,
@@ -16,11 +16,12 @@ const initialState: AuthState = {
   isPinLoggedIn: false,
 };
 
+const logout = createAction('auth/logout');
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: () => initialState,
     setAccessTokens: (state, action) => {
       state.accessTokens = action.payload;
     },
@@ -32,7 +33,7 @@ const authSlice = createSlice({
   },
 });
 
-export { credLogin, pinLogin, refreshToken };
-export const { setAccessTokens, logout } = authSlice.actions;
+export { credLogin, pinLogin, refreshToken, logout };
+export const { setAccessTokens } = authSlice.actions;
 
 export default authSlice.reducer;
