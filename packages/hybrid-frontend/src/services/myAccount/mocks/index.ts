@@ -2,7 +2,7 @@ import {
   AccountData,
   BreakDownAllocationResponse,
   ClientResponse,
-  InvestmentSummaryAccountsResponse,
+  InvestmentSummaryResponse,
   MonthlySavingsResponse,
   MyAccountItem,
 } from '../types';
@@ -133,7 +133,7 @@ export const mockInvestAccounts: AccountData[] = [
   },
 ];
 
-export const mockInvestSummary: InvestmentSummaryAccountsResponse = {
+export const mockInvestSummaryResponse: InvestmentSummaryResponse = {
   data: [
     {
       type: 'investment-summary',

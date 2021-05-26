@@ -1,11 +1,9 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Box, Grid, Spacer, Typography } from '../../atoms';
-import { RootState } from '../../../store';
 import { MyAccountLayout } from '../../templates';
-import { fetchClient, extractClientAccounts } from '../../../services/myAccount';
 import { fetchProjections } from '../../../services/projections';
 import { AllAssets } from '../../../services/assets';
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
@@ -14,6 +12,7 @@ import useProjectionsDataForChart from '../../../services/projections/hooks/useP
 import { useAnnualHistoricalDataForChart } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData';
 import useGoalsDataForChart from '../../../services/goal/hooks/useGoalsDataForChart';
 import useProjectionsMetadataForChart from '../../../services/projections/hooks/useProjectionsMetadataForChart';
+import { formatCurrency } from '../../../utils/formatters';
 
 const query = graphql`
   query Funds {
@@ -28,8 +27,6 @@ const query = graphql`
 `;
 
 const DashPage = () => {
-  const { client } = useSelector((state: RootState) => state.myAccount);
-
   const dispatch = useDispatch();
 
   const projectionsData = useProjectionsDataForChart();
@@ -39,27 +36,29 @@ const DashPage = () => {
   const performanceProjectionsChartStyles = usePerformanceProjectionsChartStyles();
 
   const hasDataForChart =
-    projectionsData.length > 0 && annualHistoricalData.length > 0 && goalsData.length > 0;
-
+    projectionsData.length > 0 &&
+    annualHistoricalData.length > 0 &&
+    goalsData.length > 0 &&
+    projectionsMetadata;
   const fundData = useStaticQuery<AllAssets>(query);
 
   useEffect(() => {
-    if (!client) {
-      dispatch(fetchClient());
-    } else if (projectionsMetadata) {
+    if (projectionsMetadata) {
       dispatch(
-        fetchProjections({
-          accounts: extractClientAccounts(client),
-          fundData,
-          investmentPeriod: projectionsMetadata.investmentPeriod,
-        })
+        fetchProjections({ fundData, investmentPeriod: projectionsMetadata.investmentPeriod })
       );
     }
-  }, [client]);
+  }, []);
 
   return (
     <MyAccountLayout
-      heading={{ primary: `You have £148,238.52`, secondary: 'Hi Ava,', tertiary: '£7,632.04' }}
+      heading={(basicInfo) => ({
+        primary: `You have ${formatCurrency(basicInfo.totalInvested)}`,
+        secondary: `Hi ${basicInfo.firstName},`,
+        tertiary: `${formatCurrency(basicInfo.totalGainLoss)} total ${
+          basicInfo.totalGainLoss >= 0 ? 'gain' : 'loss'
+        }`,
+      })}
     >
       <Typography variant="h2">XO projection spike</Typography>
       <Spacer y={2} />

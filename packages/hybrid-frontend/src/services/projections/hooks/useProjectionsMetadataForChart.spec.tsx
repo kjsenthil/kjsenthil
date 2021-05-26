@@ -8,8 +8,8 @@ import useProjectionsMetadataForChart from './useProjectionsMetadataForChart';
 function getWrapperWithMockStore(dateOfBirth?: string) {
   const mockStore = configureStore({
     reducer: {
-      myAccount: () => ({
-        client: dateOfBirth ? { data: { attributes: { dateOfBirth } } } : undefined,
+      client: () => ({
+        data: dateOfBirth ? { attributes: { dateOfBirth } } : undefined,
       }),
     },
   });

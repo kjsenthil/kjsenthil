@@ -5,8 +5,20 @@ import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { action } from '@storybook/addon-actions';
 import theme from '../src/themes/mui';
-import { GlobalStyle } from '../src/components/particles';
-import store from '../src/store';
+import { configureStore } from '@reduxjs/toolkit';
+import { mockClientResponse, mockInvestSummaryResponse } from '../src/services/myAccount/mocks';
+
+const mockStore = configureStore({
+  reducer: {
+    myAccount: () => ({
+      client: mockClientResponse,
+      investmentSummary: mockInvestSummaryResponse,
+    }),
+    projections: () => ({
+      projections: { projections: undefined },
+    }),
+  },
+});
 
 /**
  * Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
@@ -37,7 +49,7 @@ export const parameters = {
 // Global decorator to make Material UI theme available to all components
 export const decorators = [
   (Story) => (
-    <Provider store={store}>
+    <Provider store={mockStore}>
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>

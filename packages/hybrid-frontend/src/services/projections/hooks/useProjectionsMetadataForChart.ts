@@ -5,13 +5,13 @@ import { TARGET_RETIREMENT_AGE } from '../constants';
 import { ProjectionsChartMetadata } from '../types';
 
 export default function useProjectionsMetadataForChart(): ProjectionsChartMetadata | undefined {
-  const { client } = useSelector((state: RootState) => state.myAccount);
+  const { data: client } = useSelector((state: RootState) => state.client);
 
   if (!client) {
     return undefined;
   }
 
-  const { dateOfBirth } = client.data.attributes;
+  const { dateOfBirth } = client.attributes;
 
   const age = calculateAgeToday(new Date(dateOfBirth));
   const yearsUntilRetirement = TARGET_RETIREMENT_AGE - age;

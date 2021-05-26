@@ -1,4 +1,4 @@
-export const mockClient = {
+export const mockClientResponse = {
   Data: {
     Type: 'contact',
     Id: '283732',

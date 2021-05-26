@@ -1,1 +1,4 @@
-export { default } from './HeaderMenu';
+import HeaderMenu, { HeaderMenuProps } from './HeaderMenu';
+
+export type { HeaderMenuProps };
+export default HeaderMenu;

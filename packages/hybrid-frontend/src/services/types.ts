@@ -1,4 +1,7 @@
-export interface CommonState {
+export interface CommonState<D = unknown, I = unknown, E = string> {
+  data?: D;
+  included?: I;
+  error?: E;
   status: 'idle' | 'loading' | 'success' | 'error';
 }
 

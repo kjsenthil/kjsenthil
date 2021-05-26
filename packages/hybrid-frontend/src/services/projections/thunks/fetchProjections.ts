@@ -1,27 +1,53 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections } from '../api';
 import {
+  extractClientAccounts,
   getEquityAllocation,
-  getInvestAccounts,
   getMonthlySavingsAmount,
-  MyAccountItem,
+  ClientState,
+  InvestmentSummaryResponse,
 } from '../../myAccount';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
 
 const fetchProjections = createAsyncThunk(
   'projections/fetchProjections',
-  async (params: { accounts: MyAccountItem[]; fundData: AllAssets; investmentPeriod: number }) => {
-    // get an investment summary for all the customer's accounts
-    const allAccountsData = await getInvestAccounts(params.accounts);
+  async (params: { fundData: AllAssets; investmentPeriod: number }, { getState }) => {
+    const { client, investmentSummary } = getState() as {
+      client: ClientState;
+      investmentSummary: InvestmentSummaryResponse;
+    };
+
+    if (!client.included) {
+      throw new Error('Could not find client data.');
+    }
+
+    if (!investmentSummary.data) {
+      throw new Error('Could not find investment summary data.');
+    }
+
+    const accounts = extractClientAccounts(client.included);
 
     // get a percentage equity allocation for each account
     const accountTotals = await Promise.all(
-      allAccountsData.map(async (account) => ({
-        ...account,
-        equityPercentage: await getEquityAllocation(account.id),
-        monthlyInvestment: await getMonthlySavingsAmount(account.id),
-      }))
+      investmentSummary.data.map(async (account) => {
+        const accountName =
+          accounts.find((clientAccount) => clientAccount.id === account.id)?.name || '';
+
+        const [equityPercentage, monthlyInvestment] = await Promise.all([
+          getEquityAllocation(account.id),
+          getMonthlySavingsAmount(account.id),
+        ]);
+
+        return {
+          id: account.id,
+          accountName,
+          accountValue:
+            account.attributes.cash + account.attributes.funds + account.attributes.shares, // create util
+          equityPercentage,
+          monthlyInvestment,
+        };
+      })
     );
 
     // get the percentage equity allocation for the customer's entire portfolio

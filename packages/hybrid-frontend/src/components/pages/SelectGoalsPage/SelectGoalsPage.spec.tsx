@@ -6,6 +6,11 @@ import userEvent from '@testing-library/user-event';
 import SelectGoalsPage from './SelectGoalsPage';
 import { goalSlice } from '../../../services/goal/reducers';
 
+jest.mock('../../templates/MyAccountLayout', () => ({
+  __esModule: true,
+  default: ({ children }) => <div>{children}</div>,
+}));
+
 jest.mock('../../templates', () => ({
   MyAccountLayout: ({ children }) => children,
 }));

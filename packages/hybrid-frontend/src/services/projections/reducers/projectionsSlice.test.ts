@@ -2,20 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import projectionsReducer, { fetchProjections } from './projectionsSlice';
 import * as api from '../api';
-import {
-  getEquityAllocation,
-  getInvestAccounts,
-  getMonthlySavingsAmount,
-} from '../../myAccount/api';
-import { authSlice as authReducer } from '../../auth';
-import { goalSlice as goalReducer } from '../../goal';
-import { mockAccounts, mockInvestAccounts } from '../../myAccount/mocks';
+import { getEquityAllocation, getMonthlySavingsAmount } from '../../myAccount/api';
+import { mockClientResponse, mockInvestSummaryResponse } from '../../myAccount/mocks';
 import { mockAssets } from '../../assets/mocks';
 import { RiskModel, SedolCode } from '../../types';
 import { mockProjectionResponse } from '../mocks';
 
 jest.mock('../../myAccount/api', () => ({
-  getInvestAccounts: jest.fn(),
   getEquityAllocation: jest.fn(),
   getMonthlySavingsAmount: jest.fn(),
 }));
@@ -32,22 +25,20 @@ describe('projectionsSlice', () => {
   beforeEach(() => {
     store = configureStore({
       reducer: {
-        auth: authReducer,
-        goal: goalReducer,
         projections: projectionsReducer,
+        client: () => mockClientResponse,
+        investmentSummary: () => mockInvestSummaryResponse,
       },
     });
   });
 
   describe('dispatch fetchProjections', () => {
     const fetchProjectionsAction = fetchProjections({
-      accounts: mockAccounts,
       fundData: mockAssets,
       investmentPeriod: 50,
     }) as any;
 
     beforeEach(() => {
-      (getInvestAccounts as jest.Mock).mockResolvedValue(mockInvestAccounts);
       (getEquityAllocation as jest.Mock).mockResolvedValue(40);
       (getMonthlySavingsAmount as jest.Mock).mockResolvedValue(150);
       (api.getPortfolioAssetAllocation as jest.Mock).mockResolvedValue(40);
@@ -69,9 +60,6 @@ describe('projectionsSlice', () => {
       it('sets status to loading', async () => {
         store.dispatch(fetchProjectionsAction);
         const { status, postProjectionsError } = store.getState().projections;
-
-        expect(getInvestAccounts).toHaveBeenCalledTimes(1);
-        expect(getInvestAccounts).toHaveBeenCalledWith(mockAccounts);
 
         expect(status).toStrictEqual('loading');
         expect(postProjectionsError).toBeUndefined();

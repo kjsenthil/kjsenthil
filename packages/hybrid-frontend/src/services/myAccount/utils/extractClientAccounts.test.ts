@@ -3,7 +3,7 @@ import { mockClientResponse } from '../mocks';
 
 describe('extractClientAccounts', () => {
   it('returns an array of client accounts', () => {
-    const accounts = extractClientAccounts(mockClientResponse);
+    const accounts = extractClientAccounts(mockClientResponse.included);
     expect(accounts).toStrictEqual([
       { id: '20500', name: 'ISA ' },
       { id: '20871', name: 'SIPP ' },
@@ -11,12 +11,12 @@ describe('extractClientAccounts', () => {
   });
 
   it('returns an empty array when the client has no accounts', () => {
-    const mockClientNoAccounts = {
+    const mockClientResponseNoAccounts = {
       ...mockClientResponse,
       included: [],
     };
 
-    const accounts = extractClientAccounts(mockClientNoAccounts);
+    const accounts = extractClientAccounts(mockClientResponseNoAccounts.included);
     expect(accounts).toStrictEqual([]);
   });
 });

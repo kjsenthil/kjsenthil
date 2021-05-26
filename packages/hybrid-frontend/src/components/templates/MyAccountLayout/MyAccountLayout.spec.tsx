@@ -1,28 +1,34 @@
 import React from 'react';
-import { renderWithProviders, screen } from '@tsw/test-util';
-import { configureStore } from '@reduxjs/toolkit';
-import { Store } from 'redux';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import MyAccountLayout from './MyAccountLayout';
-
-import * as reducer from '../../../services/auth/reducers';
+import * as hooks from '../../../hooks';
+import { formatCurrency } from '../../../utils/formatters';
 
 jest.mock('../../organisms', () => ({
   HeaderMenu: () => <div data-testid="header" />,
   Footer: () => <div data-testid="footer" />,
 }));
 
+const basicInfo = {
+  isLoading: false,
+  firstName: 'Ava',
+  lastName: 'Garcia',
+  totalInvested: 148238.52,
+  totalGainLoss: 7632.04,
+};
+
 describe('MyAccountLayout', () => {
-  const store: Store = configureStore({
-    reducer: { auth: reducer.authSlice },
+  let useBasicInfoSpy: jest.SpyInstance;
+  beforeEach(() => {
+    useBasicInfoSpy = jest.spyOn(hooks, 'useBasicInfo').mockReturnValue(basicInfo);
   });
 
   describe('without heading', () => {
     beforeEach(() => {
-      renderWithProviders(
+      renderWithTheme(
         <MyAccountLayout>
           <div data-testid="some-child-element" />
-        </MyAccountLayout>,
-        store
+        </MyAccountLayout>
       );
     });
 
@@ -45,23 +51,25 @@ describe('MyAccountLayout', () => {
 
   describe('with heading', () => {
     it('renders with heading', async () => {
-      const heading = {
-        primary: `You have £148,238.52 `,
-        secondary: 'Hi Ava, ',
-        tertiary: '£7,632.04 total gain',
-      };
-      renderWithProviders(
-        <MyAccountLayout heading={heading}>
+      const heading = ({ firstName, totalInvested, totalGainLoss }: hooks.BasicInfo) => ({
+        primary: `You have ${formatCurrency(totalInvested)} `,
+        secondary: `Hi ${firstName}, `,
+        tertiary: `${formatCurrency(totalGainLoss)} total gain`,
+      });
+
+      renderWithTheme(
+        <MyAccountLayout headerProps={{ profileName: 'Ava' }} heading={heading}>
           <div data-testid="some-child-element" />
-        </MyAccountLayout>,
-        store
+        </MyAccountLayout>
       );
 
+      expect(useBasicInfoSpy).toHaveBeenCalledTimes(1);
       const pageHeading = await screen.findByTestId('page-heading');
 
       expect(pageHeading.textContent).toMatchInlineSnapshot(
         `"Hi Ava, You have £148,238.52 £7,632.04 total gain"`
       );
+
       expect(pageHeading).toBeInTheDocument();
     });
   });

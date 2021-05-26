@@ -13,10 +13,11 @@ export interface MyAccountItem {
   name: string;
 }
 
-export interface MyAccountState extends CommonState {
-  client?: ClientResponse;
-  getClientError?: string;
-}
+export interface ClientState
+  extends CommonState<ClientResponse['data'], ClientResponse['included']> {}
+
+export interface InvestmentSummaryState
+  extends CommonState<InvestmentSummaryResponse['data'], InvestmentSummaryResponse['included']> {}
 
 export interface ClientAccount {
   type: 'accounts';
@@ -103,7 +104,7 @@ export interface InvestmentSummary {
   relationships: Record<string, DataRelationship>[] | null;
 }
 
-export interface InvestmentSummaryAccountsResponse {
+export interface InvestmentSummaryResponse {
   data: InvestmentSummary[];
   included: null;
 }

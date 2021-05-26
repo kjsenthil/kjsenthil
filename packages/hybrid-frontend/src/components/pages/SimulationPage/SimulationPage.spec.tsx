@@ -7,6 +7,11 @@ import SimulationPage from './SimulationPage';
 import { postProjections } from '../../../services/projections/api';
 import { goalSlice, setGoalCapture } from '../../../services/goal/reducers';
 
+jest.mock('../../templates/MyAccountLayout', () => ({
+  __esModule: true,
+  default: ({ children }) => <div>{children}</div>,
+}));
+
 jest.mock('../../../services/projections/api', () => ({
   postProjections: jest.fn(),
 }));

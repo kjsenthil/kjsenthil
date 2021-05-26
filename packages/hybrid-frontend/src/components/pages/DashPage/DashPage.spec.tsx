@@ -1,17 +1,20 @@
 import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
-import { authSlice as authReducer } from '../../../services/auth';
-import { myAccountSlice as myAccountReducer } from '../../../services/myAccount';
 import { projectionsSlice as projectionsReducer } from '../../../services/projections';
 import DashPage from './DashPage';
+import { mockClientResponse } from '../../../services/myAccount/mocks';
+
+jest.mock('../../templates/MyAccountLayout', () => ({
+  __esModule: true,
+  default: ({ children }) => <div>{children}</div>,
+}));
 
 describe('DashPage', () => {
   const store = configureStore({
     reducer: {
-      auth: authReducer,
-      myAccount: myAccountReducer,
       projections: projectionsReducer,
+      client: () => mockClientResponse,
     },
   });
 

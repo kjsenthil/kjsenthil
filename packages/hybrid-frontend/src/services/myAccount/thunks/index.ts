@@ -1,1 +1,2 @@
-export { default as fetchClient, getClientActionReducerMapBuilder } from './fetchClient';
+export { default as fetchClient } from './fetchClient';
+export { default as fetchInvestmentSummary } from './fetchInvestmentSummary';

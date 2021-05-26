@@ -14,11 +14,11 @@ export default {
 const Template: Story<MyAccountLayoutProps> = (args) => <MyAccountLayout {...args} />;
 
 const defaultArgs: MyAccountLayoutProps = {
-  heading: {
+  heading: () => ({
     secondary: 'Hi Ava,',
     primary: 'You have £148,231.55',
     tertiary: '£7,122.44 total gain',
-  },
+  }),
   children: (
     <MainCard title="Test body" renderActionEl={() => <Button>Click Me</Button>}>
       <Typography variant="h1">Test Content</Typography>

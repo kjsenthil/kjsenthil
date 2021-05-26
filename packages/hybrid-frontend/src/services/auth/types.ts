@@ -52,7 +52,7 @@ export interface LoginFormData {
   username: string;
 }
 
-export interface AuthState extends CommonState {
+export interface AuthState extends Omit<CommonState, 'data' | 'error'> {
   isCredLoggedIn: boolean;
   isPinLoggedIn: boolean;
   accessTokens: TokenItem[];
