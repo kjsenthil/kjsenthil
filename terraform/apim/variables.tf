@@ -20,6 +20,11 @@ variable "resource_group_name" {
   description = "The resource group to deploy the resource."
 }
 
+variable "api_management_sku_name" {
+  type        = string
+  description = "SKU to start APIM with. Must match a valid APIM SKU from MS docs"
+}
+
 variable "location" {
   type        = string
   description = "Azure location to deploy resources into. Must be either 'uksouth' or 'ukwest'"

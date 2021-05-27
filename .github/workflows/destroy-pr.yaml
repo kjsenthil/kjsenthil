@@ -23,6 +23,7 @@ jobs:
 
   get_rg_outputs:
     name: "Get resource group outputs"
+    environment: development
     runs-on: ubuntu-latest
 
     defaults:
@@ -30,10 +31,10 @@ jobs:
         working-directory: ./terraform/resource_group
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -59,6 +60,7 @@ jobs:
 
   get_apim_outputs:
     name: "Get APIM outputs"
+    environment: development
     runs-on: ubuntu-latest
 
     defaults:
@@ -66,10 +68,10 @@ jobs:
         working-directory: ./terraform/apim
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -102,6 +104,7 @@ jobs:
   destroy_pr_dev_env:
     name: "Clean up PR deployment"
     runs-on: ubuntu-latest
+    environment: development
     needs: [derive_environment_prefix, get_rg_outputs, get_apim_outputs]
     concurrency: dev_infra_terraform_deployment
 
@@ -110,10 +113,10 @@ jobs:
         working-directory: ./terraform/infra
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:

@@ -94,6 +94,7 @@ jobs:
   # Deploys Staging backend (Terraform).
   deploy_staging_rg_terraform:
     name: "Deploy Staging Resource Group"
+    environment: staging
     runs-on: ubuntu-latest
     concurrency: staging_rg_terraform_deployment
 
@@ -102,10 +103,10 @@ jobs:
         working-directory: ./terraform/resource_group
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -158,10 +159,10 @@ jobs:
         working-directory: ./terraform/apim
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -217,6 +218,7 @@ jobs:
   # Deploys terraform PR contents.
   deploy_staging_terraform:
     name: "Deploy Staging Infrastructure."
+    environment: staging
     needs:
       [
         deploy_staging_rg_terraform,
@@ -227,10 +229,10 @@ jobs:
     concurrency: staging_infra_terraform_deployment
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 93b71b78-b75b-4806-8282-97b9e70ae16c
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -302,6 +304,7 @@ jobs:
 
   open_staging_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
+    environment: staging
     runs-on: ubuntu-latest
     needs: [deploy_staging_rg_terraform, deploy_staging_terraform]
     steps:
@@ -320,6 +323,7 @@ jobs:
   # Deploys the frontend in the staging environment.
   deploy_staging_frontend:
     name: "Deploy staging front end"
+    environment: staging
     needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform, open_staging_storage_account_firewalls]
     runs-on: ubuntu-latest
 
@@ -387,6 +391,7 @@ jobs:
 
   end_to_end_test_staging:
     name: "E2E test (Staging)"
+    environment: staging
     runs-on: ubuntu-latest
     needs: [build_cache, deploy_staging_rg_terraform, deploy_staging_terraform, deploy_staging_frontend]
     steps:
@@ -446,6 +451,7 @@ jobs:
 
   close_staging_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
+    environment: staging
     runs-on: ubuntu-latest
     needs: [deploy_staging_rg_terraform, deploy_staging_terraform, deploy_staging_frontend, end_to_end_test_staging]
     steps:
@@ -464,6 +470,7 @@ jobs:
   # Deploy Production backend (Terraform)
   deploy_production_rg_terraform:
     name: "Deploy prod Resource Group"
+    environment: prod
     needs: "end_to_end_test_staging"
     runs-on: ubuntu-latest
     concurrency: prod_rg_terraform_deployment
@@ -473,10 +480,10 @@ jobs:
         working-directory: ./terraform/resource_group
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 211bb550-03e5-4e25-8e32-05ee16ac07eb
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -529,10 +536,10 @@ jobs:
         working-directory: ./terraform/apim
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 211bb550-03e5-4e25-8e32-05ee16ac07eb
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -587,6 +594,7 @@ jobs:
   # Deploys terraform PR contents.
   deploy_production_terraform:
     name: "Deploy prod infrastructure."
+    environment: prod
     needs:
       [
         deploy_production_rg_terraform,
@@ -598,10 +606,10 @@ jobs:
     concurrency: prod_infra_terraform_deployment
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.TF_ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TF_ARM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TF_ARM_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.TF_ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 211bb550-03e5-4e25-8e32-05ee16ac07eb
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TF_INPUT: false
 
     steps:
@@ -673,6 +681,7 @@ jobs:
 
   open_prod_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
+    environment: prod
     runs-on: ubuntu-latest
     needs: [deploy_production_rg_terraform, deploy_production_terraform]
     steps:
@@ -692,6 +701,7 @@ jobs:
   # Deploys the frontend in the production environment.
   deploy_production_frontend:
     name: "Deploy production front end"
+    environment: prod
     needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform, open_prod_storage_account_firewalls]
 
     runs-on: ubuntu-latest
@@ -760,6 +770,7 @@ jobs:
   # Deploys storybook.
   deploy_storybook_prod:
     name: "Deploy Storybook"
+    environment: prod
     needs: [build_cache, deploy_production_rg_terraform, deploy_production_terraform, open_prod_storage_account_firewalls]
     runs-on: ubuntu-latest
 
@@ -815,6 +826,7 @@ jobs:
 
   close_prod_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
+    environment: prod
     runs-on: ubuntu-latest
     needs: [deploy_production_rg_terraform, deploy_production_terraform, deploy_production_frontend, deploy_storybook_prod]
     steps:
@@ -844,8 +856,9 @@ jobs:
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
 
   post-to-slack:
-    if: always()
     name: "Post to Slack"
+    if: always()
+    environment: prod
     needs:
       [
         build_cache,
@@ -872,7 +885,7 @@ jobs:
       - name: "Post to slack"
         uses: 8398a7/action-slack@v3
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_PROD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: custom
           custom_payload: |
