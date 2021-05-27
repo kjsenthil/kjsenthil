@@ -5,7 +5,14 @@ import Select, { SelectProps } from '.';
 export default {
   title: 'Digital Hybrid/Atoms/Select',
   component: Select,
-  argTypes: {},
+  argTypes: {
+    fullWidth: {
+      control: {
+        type: 'boolean',
+      },
+      options: ['True', 'False'],
+    },
+  },
 } as Meta;
 
 const Template: Story<SelectProps> = (args) => <Select {...args} />;

@@ -5,10 +5,15 @@ import styled from 'styled-components';
 import TextField from '../TextField';
 
 const StyledTextField = styled(MUISelect)`
-  width: ${({ theme }) => theme.typography.pxToRem(182)};
-  .MuiSelect-icon {
-    margin-right: 11px;
-  }
+  ${({ theme, fullWidth }) => `
+    background-color: ${theme.palette.common.white};
+    min-width: ${theme.typography.pxToRem(182)};
+    ${fullWidth ? 'width: 100%;' : ''}
+    .MuiSelect-icon {
+      margin-right: 11px;
+    }
+
+   `}
 `;
 
 export interface SelectProps extends Omit<MUISelectProps, 'color' | 'variant'> {

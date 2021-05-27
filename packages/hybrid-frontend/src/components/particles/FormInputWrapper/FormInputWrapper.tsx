@@ -7,8 +7,9 @@ const StyledFormControl = styled(
   ({
     hasError,
     hasLeadingIcon,
+    fullWidth,
     ...props
-  }: FormControlProps & {
+  }: Omit<FormControlProps, 'fullWidth'> & {
     hasError: boolean;
     hasLeadingIcon: boolean;
     theme: Theme;
@@ -17,12 +18,14 @@ const StyledFormControl = styled(
   ${({
     hasLeadingIcon,
     hasError,
+    fullWidth,
     theme: {
       palette,
       typography: { pxToRem },
     },
   }) => `
     display: flex;
+    width: ${fullWidth ? '100%' : 'fit-content'};
     flex-direction: column;
     position: relative;
     margin-top: ${pxToRem(24)};
@@ -89,6 +92,7 @@ export interface FormInputWrapperProps {
   error?: string;
   hasValue: boolean;
   hasLeadingIcon: boolean;
+  fullWidth: boolean;
 }
 
 const FormInputWrapper: React.FC<FormInputWrapperProps> = ({
@@ -97,9 +101,10 @@ const FormInputWrapper: React.FC<FormInputWrapperProps> = ({
   label,
   hasValue,
   hasLeadingIcon,
+  fullWidth,
   children,
 }) => (
-  <StyledFormControl hasError={!!error} hasLeadingIcon={hasLeadingIcon}>
+  <StyledFormControl hasError={!!error} hasLeadingIcon={hasLeadingIcon} fullWidth={fullWidth}>
     <InputLabel shrink={hasValue || !!error} htmlFor={id} data-shrink="true">
       {label}
     </InputLabel>

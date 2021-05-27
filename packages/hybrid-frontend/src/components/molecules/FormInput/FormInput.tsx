@@ -8,7 +8,7 @@ export interface FormInputProps extends TextFieldProps {
 }
 
 const FormInput: React.FC<FormInputProps> = (props) => {
-  const { id, name, value, error, startAdornment, label, placeholder } = props;
+  const { id, name, value, error, startAdornment, label, placeholder, fullWidth } = props;
   return (
     <FormInputWrapper
       label={label}
@@ -16,8 +16,15 @@ const FormInput: React.FC<FormInputProps> = (props) => {
       id={id || name}
       hasValue={!!value}
       hasLeadingIcon={!!startAdornment}
+      fullWidth={!!fullWidth}
     >
-      <TextField {...props} id={id || name} hasError={!!error} placeholder={placeholder || label} />
+      <TextField
+        {...props}
+        id={id || name}
+        hasError={!!error}
+        placeholder={placeholder || label}
+        fullWidth={fullWidth}
+      />
     </FormInputWrapper>
   );
 };

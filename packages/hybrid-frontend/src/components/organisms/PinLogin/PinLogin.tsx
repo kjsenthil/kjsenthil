@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { initStatePins } from '../../../constants';
 import { PinLoginItem } from '../../../services/auth';
-import { Button, Card, CardContent, Grid, Spacer } from '../../atoms';
-import { Alert, FormInput } from '../../molecules';
+import { Grid, Typography, Button, Box, useMediaQuery, useTheme, Icon } from '../../atoms';
+import { FormInput } from '../../molecules';
+import { AlertBubble, AlertTypography } from './PinLogin.styles';
+
+const buildPinFieldLabel = (pinPosition) => {
+  switch (pinPosition) {
+    case 1:
+      return '1st digit of your pin';
+    case 2:
+      return '2nd digit of your pin';
+    case 3:
+      return '3rd digit of your pin';
+    case 4:
+      return '4th digit of your pin';
+    case 5:
+      return '5th digit of your pin';
+    case 6:
+      return '6th digit of your pin';
+    default:
+  }
+  return '';
+};
 
 export interface PinLoginProps {
   errorMessage?: string;
@@ -12,7 +32,7 @@ export interface PinLoginProps {
 
 const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) => {
   const [inputs, setInputs] = useState<PinLoginItem[]>(initStatePins);
-
+  const theme = useTheme();
   const handleChange = (posIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: remove this when we upgrade to React 17
     event.persist();
@@ -28,34 +48,65 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
     const resp = await onPinSubmit(inputs);
     return resp;
   };
-
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs' as any));
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={2} alignItems="center" justify="center">
+    <Grid container spacing={8} justify="center">
+      <Grid item xs={12}>
+        <Typography variant="sh1" color="grey" colorShade="dark1" align="center" gutterBottom>
+          Please insert the digits from your pin as requested below
+        </Typography>
+      </Grid>
+      <form onSubmit={onSubmit}>
+        <Box maxWidth={600} m="auto">
+          <Grid container spacing={2} justify="center">
             {inputs.map((pinField, index) => (
-              <Grid item xs={4} key={String(pinField.position) + String(pinField.value)}>
+              <Grid
+                item
+                xs={isMobile ? 9 : undefined}
+                key={String(pinField.position) + String(pinField.value)}
+              >
                 <FormInput
                   type="number"
-                  label={String(pinField.position)}
+                  label={String(buildPinFieldLabel(pinField.position))}
                   value={pinField.value}
                   onChange={handleChange(index)}
+                  fullWidth={isMobile}
                 />
               </Grid>
             ))}
-            <Grid item xs={12}>
-              <Button data-testid="pin-login" variant="contained" color="primary" type="submit">
-                Pin Log in
+            <Grid item xs={9} sm={12}>
+              <Button
+                data-testid="pin-login"
+                variant="contained"
+                color="gradient"
+                type="submit"
+                fullWidth
+              >
+                Pin log in
               </Button>
             </Grid>
+            <Grid item xs={9} sm={12}>
+              <Grid container justify="center">
+                {successMessage && (
+                  <AlertBubble severity="success" icon={<Icon name="successTick" />}>
+                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
+                      {successMessage}
+                    </AlertTypography>
+                  </AlertBubble>
+                )}
+                {errorMessage && (
+                  <AlertBubble severity="error" icon={<Icon name="errorCircle" />}>
+                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
+                      {errorMessage}
+                    </AlertTypography>
+                  </AlertBubble>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
-        </form>
-        <Spacer y={2} />
-        {successMessage && <Alert severity="success">{successMessage}</Alert>}
-        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      </CardContent>
-    </Card>
+        </Box>
+      </form>
+    </Grid>
   );
 };
 

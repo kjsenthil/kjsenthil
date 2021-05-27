@@ -47,6 +47,7 @@ export {
   makeStyles,
   createStyles,
   ThemeProvider,
+  useMediaQuery,
 } from '@material-ui/core';
 
 /* material-ui atoms - types */

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Divider, Spacer, Typography } from '../../atoms';
 import { HeaderMenu, Footer } from '../../organisms';
-import CustomContainer from './MyAccountLayout.styles';
 import { HeaderMenuProps } from '../../organisms/HeaderMenu';
 import { useBasicInfo, BasicInfo } from '../../../hooks';
+import LayoutContainer from '../LayoutContainer';
 
 interface PageHeading {
   primary: string;
@@ -35,7 +35,7 @@ const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayou
   return basicInfo.isLoading ? (
     <div>Loading...</div>
   ) : (
-    <CustomContainer maxWidth="lg" disableGutters>
+    <LayoutContainer maxWidth="lg" disableGutters>
       <HeaderMenu {...headerProps} profileName={`${basicInfo.firstName} ${basicInfo.lastName}`} />
       <Box px={10} py={5}>
         {heading && (
@@ -49,7 +49,7 @@ const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayou
         <Divider y={6} />
         <Footer />
       </Box>
-    </CustomContainer>
+    </LayoutContainer>
   );
 };
 

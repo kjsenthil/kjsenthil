@@ -10,7 +10,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => (
+const ProvisionalLayout = ({ children }: LayoutProps) => (
   // to maintain styled-components as the priority that overrides MUI's themes
   // MUI classes must be injested in <head> first, then styled-components
   // https://material-ui.com/guides/interoperability/#styled-components
@@ -18,10 +18,12 @@ const Layout = ({ children }: LayoutProps) => (
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container>{children}</Container>
+        <Container maxWidth={false} disableGutters>
+          {children}
+        </Container>
       </ThemeProvider>
     </MuiThemeProvider>
   </StylesProvider>
 );
 
-export default Layout;
+export default ProvisionalLayout;

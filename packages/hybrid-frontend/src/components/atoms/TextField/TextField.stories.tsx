@@ -5,7 +5,14 @@ import TextField, { TextFieldProps } from '.';
 export default {
   title: 'Digital Hybrid/Atoms/TextField',
   component: TextField,
-  argTypes: {},
+  argTypes: {
+    fullWidth: {
+      control: {
+        type: 'boolean',
+      },
+      options: ['True', 'False'],
+    },
+  },
 } as Meta;
 
 const Template: Story<TextFieldProps> = (args) => <TextField {...args} />;

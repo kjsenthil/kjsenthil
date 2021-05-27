@@ -6,6 +6,12 @@ export default {
   title: 'Digital Hybrid/Molecules/Form Select',
   component: FormSelect,
   argTypes: {
+    fullWidth: {
+      control: {
+        type: 'boolean',
+      },
+      options: ['True', 'False'],
+    },
     error: {
       control: {
         type: 'text',

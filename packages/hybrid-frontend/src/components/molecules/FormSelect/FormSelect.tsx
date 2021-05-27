@@ -8,7 +8,7 @@ export interface FormSelectProps extends SelectProps {
 }
 
 const FormSelect: React.FC<FormSelectProps> = (props) => {
-  const { id, name, value, error, label } = props;
+  const { id, name, value, error, label, fullWidth } = props;
   return (
     <FormInputWrapper
       label={label}
@@ -16,8 +16,15 @@ const FormSelect: React.FC<FormSelectProps> = (props) => {
       id={id || name}
       hasValue={!!value}
       hasLeadingIcon={false}
+      fullWidth={!!fullWidth}
     >
-      <Select {...props} id={id || name} labelId={id || name} hasError={!!error} />
+      <Select
+        {...props}
+        id={id || name}
+        labelId={id || name}
+        hasError={!!error}
+        fullWidth={fullWidth}
+      />
     </FormInputWrapper>
   );
 };

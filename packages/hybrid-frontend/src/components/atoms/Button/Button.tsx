@@ -67,7 +67,7 @@ const BaseButton = styled(({ isIcon, ...props }) => <MUIButton {...props} disabl
       height: ${size === 'small' ? '28px' : '40px'};
       border-radius: 6px;
       min-width: 40px;
-      width: ${isIcon ? '40px' : 'inherit'};
+      ${isIcon ? 'width: 40px' : ''};
       padding: ${isIcon ? '8px' : '12px 16px'};
       padding: ${size === 'small' ? '6px 24px' : '12px 16px'};
       text-transform: capitalize;

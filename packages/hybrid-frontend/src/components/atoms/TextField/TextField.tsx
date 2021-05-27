@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const StyledTextField = styled(({ hasError, ...props }) => <MUIInputBase {...props} />)`
   ${({
     hasError,
+    fullWidth,
     theme: {
       palette,
       typography: { pxToRem },
@@ -16,10 +17,11 @@ const StyledTextField = styled(({ hasError, ...props }) => <MUIInputBase {...pro
 
       &.MuiInputBase-root {
         border: none;
-        .MuiInputBase-input {
-          width: ${pxToRem(182)};
-          height: ${pxToRem(48)};
+        min-width: ${pxToRem(182)};
+        width: ${fullWidth ? '100%' : pxToRem(182)};
 
+        .MuiInputBase-input {
+          height: ${pxToRem(48)};
           padding: 0;
           padding-left: ${pxToRem(12)};
 
@@ -28,6 +30,7 @@ const StyledTextField = styled(({ hasError, ...props }) => <MUIInputBase {...pro
           font-weight: bold;
           line-height: 1.25;
           letter-spacing: ${pxToRem(0.29)};
+          background-color: ${palette.common.white};
           border-radius: 4px;
           border: ${
             hasError ? `1px solid ${palette.error.main}` : `2px solid ${palette.grey.light2}`

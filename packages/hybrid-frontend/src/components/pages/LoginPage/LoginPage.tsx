@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import { Grid, Typography } from '../../atoms';
+import styled from 'styled-components';
+import { Grid, Button, Icon } from '../../atoms';
 import { LoginForm } from '../../organisms';
 import PinLogin from '../../organisms/PinLogin';
 import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
+import { LayoutContainer } from '../../templates';
+
+export const LoginGrid = styled(Grid)`
+  padding-top: 10rem;
+`;
 
 interface LoginPageProps {
   path?: string;
@@ -39,32 +45,38 @@ const LoginPage = (_: LoginPageProps) => {
   };
 
   return (
-    <Grid container justify="center" alignItems="center" spacing={3}>
-      <Grid item xs={12}>
-        <Typography variant="h4" gutterBottom>
-          Login Page
-        </Typography>
-
-        <LoginForm
-          onSubmit={onLoginFormSubmit}
-          errorMessage={status === 'error' ? credLoginError : undefined}
-          successMessage={isCredLoggedIn ? 'Success' : undefined}
-        />
-      </Grid>
-
-      {twoStepAuthCode && (
+    <LayoutContainer maxWidth={false} disableGutters>
+      <LoginGrid container justify="center" alignItems="center" spacing={7}>
         <Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            Pin Login
-          </Typography>
-
-          <PinLogin
-            onPinSubmit={onPinSubmit}
-            errorMessage={status === 'error' ? pinLoginError : undefined}
+          <LoginForm
+            onSubmit={onLoginFormSubmit}
+            errorMessage={status === 'error' ? credLoginError : undefined}
+            successMessage={isCredLoggedIn ? 'Success' : undefined}
           />
         </Grid>
-      )}
-    </Grid>
+
+        {twoStepAuthCode && (
+          <Grid item xs={12}>
+            <PinLogin
+              onPinSubmit={onPinSubmit}
+              errorMessage={status === 'error' ? pinLoginError : undefined}
+            />
+          </Grid>
+        )}
+
+        <Grid item>
+          <Grid contanier justify="center">
+            <Button
+              color="primary"
+              startIcon={<Icon name="arrowHeadLeft" fontSize="large" />}
+              variant={undefined}
+            >
+              Back to Bestinvest
+            </Button>
+          </Grid>
+        </Grid>
+      </LoginGrid>
+    </LayoutContainer>
   );
 };
 

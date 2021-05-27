@@ -37,6 +37,7 @@ const digitalHybridTheme = createMuiTheme({
     background: {
       default: colors.common.white,
       paper: colors.common.white,
+      layout: digitalHybridColors.bg.main,
     },
 
     primary: {

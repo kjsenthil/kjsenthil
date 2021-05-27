@@ -22,11 +22,11 @@ Default.args = defaultArgs;
 export const Error = Template.bind({});
 Error.args = {
   ...defaultArgs,
-  errorMessage: 'Log in failed',
+  errorMessage: 'Something went wrong, please try again',
 };
 
 export const Success = Template.bind({});
 Success.args = {
   ...defaultArgs,
-  successMessage: 'Log in successful',
+  successMessage: 'Success!',
 };

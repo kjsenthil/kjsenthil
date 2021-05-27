@@ -16,6 +16,10 @@ declare module '@material-ui/core/styles/createPalette' {
     dark2?: string;
   }
 
+  interface TypeBackground {
+    layout: string;
+  }
+
   interface Palette {
     tertiary: SimplePaletteColorOptions;
     grey: SimplePaletteColorOptions;

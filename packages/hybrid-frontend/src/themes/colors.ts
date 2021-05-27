@@ -40,6 +40,7 @@ export const digitalHybridColors: CustomColors = {
   },
 
   white: { main: '#ffffff' },
+  bg: { main: '#f9fafc' },
   gold: { main: '#ebb300' },
   success: { main: '#3dd598' },
   error: { main: '#eb3a17' },

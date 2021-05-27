@@ -1,13 +1,13 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import Layout from './Layout';
+import ProvisionalLayout from './ProvisionalLayout';
 
-describe('Layout', () => {
+describe('ProvisionalLayout', () => {
   test('Renders with child elements', async () => {
     renderWithTheme(
-      <Layout>
+      <ProvisionalLayout>
         <div data-testid="some-child-element" />
-      </Layout>
+      </ProvisionalLayout>
     );
     expect(await screen.findByTestId('some-child-element')).toBeInTheDocument();
   });

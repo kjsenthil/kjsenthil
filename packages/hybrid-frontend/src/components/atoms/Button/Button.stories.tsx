@@ -31,6 +31,12 @@ export default {
       },
       options: ['True', 'False'],
     },
+    fullWidth: {
+      control: {
+        type: 'boolean',
+      },
+      options: ['True', 'False'],
+    },
   },
 } as Meta;
 
