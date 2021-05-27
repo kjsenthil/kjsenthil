@@ -86,6 +86,28 @@
             }
         },
         {
+            "operation_id": "tilney-asset-model",
+            "display_name": "tilney-asset-model",
+            "url_template": "\/Assets\/tilney-asset-model\/{riskName}",
+            "description": "This returns the TAA values like Expected return, Volatility, ZScores for the given TAA /Risk name",
+            "path_params": [
+                "riskName"
+            ],            
+            "policy": {
+                "cors": {
+                    "allowed_origins": [
+                        "*"
+                    ],
+                    "method": "GET",
+                    "headers": [
+                        "Content-Type",
+                        "Authorization"
+                    ]
+                },
+                "backend_url": "bestinvest_api"
+            }
+        },        
+        {
             "operation_id": "identity-login",
             "display_name": "Identity Login",
             "url_template": "\/login",

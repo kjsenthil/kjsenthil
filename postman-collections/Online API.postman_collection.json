@@ -1,0 +1,5074 @@
+{
+	"info": {
+		"_postman_id": "e6fb2548-1a2c-4e5c-9816-63f4c6bf2f84",
+		"name": "Online API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Account Setup",
+					"item": [
+						{
+							"name": "checkusernameexists",
+							"item": [
+								{
+									"name": "Is User Name Exists",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userName\": \"cillum\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/checkusernameexists",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"checkusernameexists"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"userName\": \"cillum\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/checkusernameexists",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"checkusernameexists"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Check User Name Exists",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/checkusernameexists/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"checkusernameexists",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/checkusernameexists/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"checkusernameexists",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "contact",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "additional-details",
+											"item": [
+												{
+													"name": "Insert Update Client Additional Details",
+													"request": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"tin\": {\n        \"countryId\": -7314358,\n        \"tinNumber\": \"ut commodo dolore aliqua\"\n    },\n    \"updatedBy\": \"et reprehenderit\",\n    \"source\": 0,\n    \"contactId\": -73283981,\n    \"updatedIpAddress\": \"nisi exercitatio\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/additional-details",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"AccountSetup",
+																"contact",
+																":id",
+																"additional-details"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "-86285773",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Success",
+															"originalRequest": {
+																"method": "PUT",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"tin\": {\n        \"countryId\": -7314358,\n        \"tinNumber\": \"ut commodo dolore aliqua\"\n    },\n    \"updatedBy\": \"et reprehenderit\",\n    \"source\": 0,\n    \"contactId\": -73283981,\n    \"updatedIpAddress\": \"nisi exercitatio\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/additional-details",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"AccountSetup",
+																		"contact",
+																		":id",
+																		"additional-details"
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												},
+												{
+													"name": "Delete Tin",
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/additional-details",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"AccountSetup",
+																"contact",
+																":id",
+																"additional-details"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "-86285773",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Success",
+															"originalRequest": {
+																"method": "DELETE",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/additional-details",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"AccountSetup",
+																		"contact",
+																		":id",
+																		"additional-details"
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "Insert Update Bank Details",
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bankAccountName\": \"ad officia culpa\",\n    \"bankAccountNumber\": \"aute laboris\",\n    \"sortCodePart2\": \"adipisi\",\n    \"sortCodePart3\": \"aliquip mollit est\",\n    \"updatedBy\": \"et pariatur in\",\n    \"performAmlCheck\": false,\n    \"contactId\": -83412496,\n    \"sortCodePart1\": \"sunt dolore\",\n    \"updatedIpAddress\": \"culpa nulla nisi enim ipsum\",\n    \"rePublishToAdminQueue\": true,\n    \"amlBankCheckRequestModel\": {\n        \"bankAccountName\": \"\",\n        \"accountNumber\": \"laboris ad elit nostrud\",\n        \"sortCodePart1\": \"irure sunt\",\n        \"sortCodePart2\": \"officia ea enim\",\n        \"sortCodePart3\": \"pariatur amet\",\n        \"source\": 1,\n        \"sessionId\": \"Ut veniam amet\",\n        \"title\": \"tempor in adipisicing\",\n        \"contactId\": -97446141,\n        \"firstName\": \"nulla culpa tempor do re\",\n        \"lastName\": \"irure voluptate Excepteur\",\n        \"dayOfBirth\": 75249137,\n        \"monthOfBirth\": 59979369,\n        \"yearOfBirth\": 33457499,\n        \"houseNumber\": \"Lorem tempor cupidatat minim pariatur\",\n        \"houseName\": \"officia Ut tempor ad\",\n        \"flatNumber\": \"\",\n        \"primaryStreet\": \"in eiusmod elit\",\n        \"postcode\": \"culpa ex officia velit\",\n        \"addressLine1\": \"anim\",\n        \"addressLine2\": \"culpa qui aliquip pariatur do\",\n        \"town\": \"quis ipsum irure dolore consectetur\",\n        \"nationalInsuranceNumber\": \"nostrud est amet sed\",\n        \"drivingLicence\": \"veniam nisi\",\n        \"passportNo\": \"ut dolor ut laboris eiusmod\",\n        \"passportNoPart1\": \"irure velit\",\n        \"passportNoPart2\": \"dolor magna eiusmod\",\n        \"passportNoPart3\": \"non\",\n        \"passportNoPart4\": \"nostrud\",\n        \"passportNoPart5\": \"proident\",\n        \"passportNoPart6\": \"veniam adipisicing dolor irure\",\n        \"passportCountryOfIssue\": \"do sed eu et\",\n        \"dayOfPassportExpiry\": -19615286,\n        \"monthOfPassportExpiry\": -53267728,\n        \"yearOfPassportExpiry\": -69481755,\n        \"additionalInformationRequired\": false,\n        \"hiddenAdditionalInformationRequired\": true\n    }\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/bank-details",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														":id",
+														"bank-details"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "-86285773",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/AccountSetup/contact/:id/bank-details",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"AccountSetup",
+																"contact",
+																":id",
+																"bank-details"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Insert Update Client",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 1,\n    \"contactId\": -37534943,\n    \"contactStatus\": 1,\n    \"loginDetails\": {\n        \"username\": \"esse nisi tempor commodo elit\",\n        \"password\": \"culpa\",\n        \"pin\": \"enim in\"\n    },\n    \"personalDetails\": {\n        \"gender\": 0,\n        \"nino\": \"dolo\",\n        \"firstCountryOfCitizenshipId\": 71014546,\n        \"countryOfBirthId\": -64082821,\n        \"ukTaxPayerOnly\": true,\n        \"dateOfBirth\": \"2014-08-28T07:11:58.660Z\",\n        \"dayOfBirth\": 70868082,\n        \"monthOfBirth\": -48793874,\n        \"yearOfBirth\": 40825170,\n        \"secondCountryOfCitizenshipId\": -92385353,\n        \"titleId\": -83100706,\n        \"title\": \"consectetur minim velit id\",\n        \"firstname\": \"quis commodo officia anim nostrud\",\n        \"lastname\": \"minim nisi cupi\"\n    },\n    \"address\": {\n        \"addressLine1\": \"laboris\",\n        \"countryId\": 3191148,\n        \"postCode\": \"ut et ut dolor\",\n        \"town\": \"Duis amet fugiat labore sint\",\n        \"addressLine2\": \"reprehenderit deserunt dolor id dolore\",\n        \"addressLine3\": \"in irure\",\n        \"addressLine4\": \"sunt\",\n        \"country\": \"anim voluptate labore do Duis\",\n        \"addressType\": 0\n    },\n    \"email\": {\n        \"emailAddress\": \"dolore eu\",\n        \"emailType\": 0\n    },\n    \"phone\": {\n        \"phoneNumber\": \"occaecat id veniam aliquip\",\n        \"phoneType\": 0\n    },\n    \"updatedBy\": \"u\",\n    \"updatedIpAddress\": \"laboris ullamco occaecat\",\n    \"performAmlCheck\": false,\n    \"amlRequestModel\": {\n        \"source\": 1,\n        \"sessionId\": \"in nostrud dolor cupidatat do\",\n        \"title\": \"id nisi consectetur ea\",\n        \"contactId\": 64871828,\n        \"firstName\": \"nulla ex\",\n        \"lastName\": \"dolore laboris mollit\",\n        \"dayOfBirth\": -26743715,\n        \"monthOfBirth\": -68538159,\n        \"yearOfBirth\": -18680299,\n        \"houseNumber\": \"enim occaecat do cu\",\n        \"houseName\": \"ullamco labore tempor proident\",\n        \"flatNumber\": \"officia non aliquip ex\",\n        \"primaryStreet\": \"enim aliquip amet nisi\",\n        \"postcode\": \"in amet ex\",\n        \"addressLine1\": \"voluptate consequat Duis\",\n        \"addressLine2\": \"deserunt ul\",\n        \"town\": \"null\",\n        \"nationalInsuranceNumber\": \"sint\",\n        \"drivingLicence\": \"dolore Duis\",\n        \"passportNo\": \"et eiusmo\",\n        \"passportNoPart1\": \"sit \",\n        \"passportNoPart2\": \"dolor\",\n        \"passportNoPart3\": \"eiusmod proident amet\",\n        \"passportNoPart4\": \"enim nisi non\",\n        \"passportNoPart5\": \"laborum in aliq\",\n        \"passportNoPart6\": \"qui velit\",\n        \"passportCountryOfIssue\": \"laborum\",\n        \"dayOfPassportExpiry\": -52074750,\n        \"monthOfPassportExpiry\": -96261563,\n        \"yearOfPassportExpiry\": 83657866,\n        \"additionalInformationRequired\": false,\n        \"hiddenAdditionalInformationRequired\": true\n    },\n    \"marketingAnalyticsModel\": {\n        \"contactId\": 96434596,\n        \"webUserId\": \"e049f637-7f66-0f14-a62a-74e3e053163e\",\n        \"tealiumId\": \"aliqua in\",\n        \"webActionTrackingId\": \"217332d2-e3a6-0308-3a91-56cefb811ece\",\n        \"xPlanEntityId\": 63310253,\n        \"actionTypeId\": \"f5c2132b-3ad9-0b63-ba6c-283457254fb4\",\n        \"productId\": \"1cee3d62-f502-0c1b-9bee-2df853323ae9\"\n    },\n    \"clientKey\": \"elit id ipsum ea\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"source\": 1,\n    \"contactId\": -37534943,\n    \"contactStatus\": 1,\n    \"loginDetails\": {\n        \"username\": \"esse nisi tempor commodo elit\",\n        \"password\": \"culpa\",\n        \"pin\": \"enim in\"\n    },\n    \"personalDetails\": {\n        \"gender\": 0,\n        \"nino\": \"dolo\",\n        \"firstCountryOfCitizenshipId\": 71014546,\n        \"countryOfBirthId\": -64082821,\n        \"ukTaxPayerOnly\": true,\n        \"dateOfBirth\": \"2014-08-28T07:11:58.660Z\",\n        \"dayOfBirth\": 70868082,\n        \"monthOfBirth\": -48793874,\n        \"yearOfBirth\": 40825170,\n        \"secondCountryOfCitizenshipId\": -92385353,\n        \"titleId\": -83100706,\n        \"title\": \"consectetur minim velit id\",\n        \"firstname\": \"quis commodo officia anim nostrud\",\n        \"lastname\": \"minim nisi cupi\"\n    },\n    \"address\": {\n        \"addressLine1\": \"laboris\",\n        \"countryId\": 3191148,\n        \"postCode\": \"ut et ut dolor\",\n        \"town\": \"Duis amet fugiat labore sint\",\n        \"addressLine2\": \"reprehenderit deserunt dolor id dolore\",\n        \"addressLine3\": \"in irure\",\n        \"addressLine4\": \"sunt\",\n        \"country\": \"anim voluptate labore do Duis\",\n        \"addressType\": 0\n    },\n    \"email\": {\n        \"emailAddress\": \"dolore eu\",\n        \"emailType\": 0\n    },\n    \"phone\": {\n        \"phoneNumber\": \"occaecat id veniam aliquip\",\n        \"phoneType\": 0\n    },\n    \"updatedBy\": \"u\",\n    \"updatedIpAddress\": \"laboris ullamco occaecat\",\n    \"performAmlCheck\": false,\n    \"amlRequestModel\": {\n        \"source\": 1,\n        \"sessionId\": \"in nostrud dolor cupidatat do\",\n        \"title\": \"id nisi consectetur ea\",\n        \"contactId\": 64871828,\n        \"firstName\": \"nulla ex\",\n        \"lastName\": \"dolore laboris mollit\",\n        \"dayOfBirth\": -26743715,\n        \"monthOfBirth\": -68538159,\n        \"yearOfBirth\": -18680299,\n        \"houseNumber\": \"enim occaecat do cu\",\n        \"houseName\": \"ullamco labore tempor proident\",\n        \"flatNumber\": \"officia non aliquip ex\",\n        \"primaryStreet\": \"enim aliquip amet nisi\",\n        \"postcode\": \"in amet ex\",\n        \"addressLine1\": \"voluptate consequat Duis\",\n        \"addressLine2\": \"deserunt ul\",\n        \"town\": \"null\",\n        \"nationalInsuranceNumber\": \"sint\",\n        \"drivingLicence\": \"dolore Duis\",\n        \"passportNo\": \"et eiusmo\",\n        \"passportNoPart1\": \"sit \",\n        \"passportNoPart2\": \"dolor\",\n        \"passportNoPart3\": \"eiusmod proident amet\",\n        \"passportNoPart4\": \"enim nisi non\",\n        \"passportNoPart5\": \"laborum in aliq\",\n        \"passportNoPart6\": \"qui velit\",\n        \"passportCountryOfIssue\": \"laborum\",\n        \"dayOfPassportExpiry\": -52074750,\n        \"monthOfPassportExpiry\": -96261563,\n        \"yearOfPassportExpiry\": 83657866,\n        \"additionalInformationRequired\": false,\n        \"hiddenAdditionalInformationRequired\": true\n    },\n    \"marketingAnalyticsModel\": {\n        \"contactId\": 96434596,\n        \"webUserId\": \"e049f637-7f66-0f14-a62a-74e3e053163e\",\n        \"tealiumId\": \"aliqua in\",\n        \"webActionTrackingId\": \"217332d2-e3a6-0308-3a91-56cefb811ece\",\n        \"xPlanEntityId\": 63310253,\n        \"actionTypeId\": \"f5c2132b-3ad9-0b63-ba6c-283457254fb4\",\n        \"productId\": \"1cee3d62-f502-0c1b-9bee-2df853323ae9\"\n    },\n    \"clientKey\": \"elit id ipsum ea\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Basic Personal Detail",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/basicpersonaldetail/:contactId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"basicpersonaldetail",
+												":contactId"
+											],
+											"variable": [
+												{
+													"key": "contactId",
+													"value": "-86285773",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/basicpersonaldetail/:contactId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"basicpersonaldetail",
+														":contactId"
+													],
+													"variable": [
+														{
+															"key": "contactId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "ISA Contribution To Date",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/isacontributiontodate/:contactId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"isacontributiontodate",
+												":contactId"
+											],
+											"variable": [
+												{
+													"key": "contactId",
+													"value": "-86285773",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/isacontributiontodate/:contactId",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"isacontributiontodate",
+														":contactId"
+													],
+													"variable": [
+														{
+															"key": "contactId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Insert Update Account",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 1,\n    \"openGiaAlways\": true,\n    \"contactId\": 10508355,\n    \"productType\": 4,\n    \"prospectAccounts\": [\n        {\n            \"accountId\": -98201328,\n            \"accountNumber\": \"anim eiusmod Duis\",\n            \"productType\": 4,\n            \"capacityType\": 1\n        },\n        {\n            \"accountId\": -98952182,\n            \"accountNumber\": \"qui labore n\",\n            \"productType\": 2,\n            \"capacityType\": 0\n        }\n    ],\n    \"monthlySavings\": [\n        {\n            \"assetId\": -81628191,\n            \"sedol\": \"Lorem aute in qui\",\n            \"amount\": -38137128.47483912\n        },\n        {\n            \"assetId\": -57427661,\n            \"sedol\": \"consectet\",\n            \"amount\": 60466993.65648961\n        }\n    ],\n    \"additionalMonthlySavingsBestinvestPlus\": [\n        {\n            \"assetId\": -32098074,\n            \"sedol\": \"velit\",\n            \"amount\": 85794606.01418635\n        },\n        {\n            \"assetId\": 40463509,\n            \"sedol\": \"eiusmod amet Lorem\",\n            \"amount\": 2995926.0635424256\n        }\n    ],\n    \"updatedBy\": \"in ipsum velit Excepteur\",\n    \"updatedByIpAddress\": \"labori\",\n    \"capacityType\": 0,\n    \"sourceOfWealth\": {\n        \"employmentStatus\": 55154461,\n        \"industryOfWork\": 63828820,\n        \"industryOfWorkOther\": \"aute in\",\n        \"salaryBand\": 66567537,\n        \"investmentFundSource\": 38690364,\n        \"investmentFundSourceOther\": \"cupidatat sed deserunt\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/InsertUpdateAccounts",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"InsertUpdateAccounts"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"source\": 0,\n    \"openGiaAlways\": false,\n    \"contactId\": 28122006,\n    \"productType\": 2,\n    \"prospectAccounts\": [\n        {\n            \"accountId\": 60555862,\n            \"accountNumber\": \"voluptate sed\",\n            \"productType\": 1,\n            \"capacityType\": 2\n        },\n        {\n            \"accountId\": -19591163,\n            \"accountNumber\": \"Duis dolor dolore\",\n            \"productType\": 1,\n            \"capacityType\": 0\n        }\n    ],\n    \"monthlySavings\": [\n        {\n            \"assetId\": 59200275,\n            \"sedol\": \"ipsum laboris\",\n            \"amount\": -92841408.1709303\n        },\n        {\n            \"assetId\": -78731670,\n            \"sedol\": \"ex eu occaecat\",\n            \"amount\": -21233354.153042868\n        }\n    ],\n    \"additionalMonthlySavingsBestinvestPlus\": [\n        {\n            \"assetId\": 46850779,\n            \"sedol\": \"in occaecat irure sunt quis\",\n            \"amount\": -80671041.11865029\n        },\n        {\n            \"assetId\": 76728720,\n            \"sedol\": \"dolore aliqua Duis in aute\",\n            \"amount\": -76526733.22274435\n        }\n    ],\n    \"updatedBy\": \"in\",\n    \"updatedByIpAddress\": \"qui et elit Lorem occaecat\",\n    \"capacityType\": 0,\n    \"sourceOfWealth\": {\n        \"employmentStatus\": 4981275,\n        \"industryOfWork\": -64849742,\n        \"industryOfWorkOther\": \"sit\",\n        \"salaryBand\": 44729436,\n        \"investmentFundSource\": 38693221,\n        \"investmentFundSourceOther\": \"qui est aute Duis\"\n    }\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/InsertUpdateAccounts",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"InsertUpdateAccounts"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Complete Account Setup",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": -88357721,\n    \"accounts\": [\n        {\n            \"accountId\": 88313971,\n            \"accountNumber\": \"sit adipisicing proident\",\n            \"productType\": 1,\n            \"capacityType\": 1\n        },\n        {\n            \"accountId\": -69382980,\n            \"accountNumber\": \"et Excepteur\",\n            \"productType\": 0,\n            \"capacityType\": 2\n        }\n    ],\n    \"updatedByIp\": \"officia pariatur id commodo\",\n    \"updateBy\": \"reprehenderit do qui\",\n    \"cashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"pariatur in sunt\",\n        \"rbsPaymentAccountId\": 78494040,\n        \"amount\": 79436688.67435524,\n        \"updatedByIp\": \"amet labore adipisicing\",\n        \"updateBy\": \"non amet sunt\"\n    },\n    \"fundOrder\": {\n        \"accountId\": -75865203,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": 33618423,\n                \"sedol\": \"labore Duis\",\n                \"amount\": 62684310.910619825,\n                \"reinvestIncome\": false\n            },\n            {\n                \"relatedActivityId\": 65618909,\n                \"sedol\": \"et in consequat dolore nulla\",\n                \"amount\": 93217791.18704948,\n                \"reinvestIncome\": true\n            }\n        ],\n        \"updatedByIp\": \"sunt aliqua anim\",\n        \"updateBy\": \"dolor qui\"\n    },\n    \"transfersRequest\": [\n        {\n            \"transferId\": 68549494,\n            \"isElectronic\": true\n        },\n        {\n            \"transferId\": 26625741,\n            \"isElectronic\": false\n        }\n    ],\n    \"isTransferForAnExistingAccount\": true\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/completeaccountsetup",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"completeaccountsetup"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"contactId\": -60576710,\n    \"accounts\": [\n        {\n            \"accountId\": -92041296,\n            \"accountNumber\": \"culpa veniam\",\n            \"productType\": 2,\n            \"capacityType\": 2\n        },\n        {\n            \"accountId\": -75154522,\n            \"accountNumber\": \"in Duis\",\n            \"productType\": 4,\n            \"capacityType\": 1\n        }\n    ],\n    \"updatedByIp\": \"Duis in non labore\",\n    \"updateBy\": \"Lorem adipisicing\",\n    \"cashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"minim in nisi\",\n        \"rbsPaymentAccountId\": -5035528,\n        \"amount\": 11822705.5866912,\n        \"updatedByIp\": \"ad ex reprehenderit incididunt\",\n        \"updateBy\": \"sit cupidatat\"\n    },\n    \"fundOrder\": {\n        \"accountId\": 48508497,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": 89624970,\n                \"sedol\": \"dolor nulla\",\n                \"amount\": -98136296.65200377,\n                \"reinvestIncome\": false\n            },\n            {\n                \"relatedActivityId\": 36990906,\n                \"sedol\": \"aliqua\",\n                \"amount\": 83935723.1442726,\n                \"reinvestIncome\": true\n            }\n        ],\n        \"updatedByIp\": \"reprehenderit Excepteur\",\n        \"updateBy\": \"ad in\"\n    },\n    \"transfersRequest\": [\n        {\n            \"transferId\": 49057787,\n            \"isElectronic\": true\n        },\n        {\n            \"transferId\": 56827617,\n            \"isElectronic\": false\n        }\n    ],\n    \"isTransferForAnExistingAccount\": true\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/completeaccountsetup",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"completeaccountsetup"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Complete Account Setup Bestinvest Plus",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"additionalCashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"Lore\",\n        \"rbsPaymentAccountId\": 31559219,\n        \"amount\": -74214875.7283606,\n        \"updatedByIp\": \"et do in\",\n        \"updateBy\": \"nostrud Lorem\"\n    },\n    \"additionalFundOrder\": {\n        \"accountId\": -37498364,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": -15145623,\n                \"sedol\": \"Excepteur\",\n                \"amount\": -98152001.41864398,\n                \"reinvestIncome\": true\n            },\n            {\n                \"relatedActivityId\": -6863233,\n                \"sedol\": \"culpa\",\n                \"amount\": 32182509.9493708,\n                \"reinvestIncome\": true\n            }\n        ],\n        \"updatedByIp\": \"Ut dolore minim aliquip\",\n        \"updateBy\": \"occaecat commodo\"\n    },\n    \"msExistingAccounts\": [\n        {\n            \"contactId\": -81423620,\n            \"accountId\": -3716795,\n            \"monthlySavings\": [\n                {\n                    \"assetId\": -885324,\n                    \"sedol\": \"pariatur eu\",\n                    \"amount\": 1213180.362448305\n                },\n                {\n                    \"assetId\": -90024710,\n                    \"sedol\": \"nostrud\",\n                    \"amount\": 41033236.802930266\n                }\n            ],\n            \"updatedBy\": \"aliquip ex\",\n            \"updatedByIpAddress\": \"adipisicing id officia anim veniam\"\n        },\n        {\n            \"contactId\": 77327516,\n            \"accountId\": -26342018,\n            \"monthlySavings\": [\n                {\n                    \"assetId\": -1267002,\n                    \"sedol\": \"exercitation proident non adipisicing commodo\",\n                    \"amount\": -26626958.91969444\n                },\n                {\n                    \"assetId\": 88330062,\n                    \"sedol\": \"sunt laborum dolor esse\",\n                    \"amount\": -61504641.81518891\n                }\n            ],\n            \"updatedBy\": \"id nostrud ut laboru\",\n            \"updatedByIpAddress\": \"cillum ipsum\"\n        }\n    ],\n    \"contactId\": 93451551,\n    \"accounts\": [\n        {\n            \"accountId\": -68380583,\n            \"accountNumber\": \"dolore\",\n            \"productType\": 2,\n            \"capacityType\": 0\n        },\n        {\n            \"accountId\": -40425564,\n            \"accountNumber\": \"eiusmod non nostrud\",\n            \"productType\": 1,\n            \"capacityType\": 2\n        }\n    ],\n    \"updatedByIp\": \"Lorem pariatur\",\n    \"updateBy\": \"Lorem sunt\",\n    \"cashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"dolore irure ea\",\n        \"rbsPaymentAccountId\": -63574829,\n        \"amount\": 26584329.301830098,\n        \"updatedByIp\": \"velit quis officia\",\n        \"updateBy\": \"ani\"\n    },\n    \"fundOrder\": {\n        \"accountId\": -18173126,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": -93878707,\n                \"sedol\": \"eu id reprehenderit ut\",\n                \"amount\": 86222425.65043202,\n                \"reinvestIncome\": false\n            },\n            {\n                \"relatedActivityId\": 19937726,\n                \"sedol\": \"non fugiat officia\",\n                \"amount\": -54502091.20872271,\n                \"reinvestIncome\": true\n            }\n        ],\n        \"updatedByIp\": \"in aliqua\",\n        \"updateBy\": \"dolor id\"\n    },\n    \"transfersRequest\": [\n        {\n            \"transferId\": -4650474,\n            \"isElectronic\": true\n        },\n        {\n            \"transferId\": -38340423,\n            \"isElectronic\": false\n        }\n    ],\n    \"isTransferForAnExistingAccount\": false\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/completeaccountsetupbestinvestplus",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"completeaccountsetupbestinvestplus"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"additionalCashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"dolore est magna mollit\",\n        \"rbsPaymentAccountId\": -49614460,\n        \"amount\": -18953957.951839313,\n        \"updatedByIp\": \"dolor minim commodo ex nostrud\",\n        \"updateBy\": \"dolore quis\"\n    },\n    \"additionalFundOrder\": {\n        \"accountId\": -12211476,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": 80587351,\n                \"sedol\": \"Duis adipisicing esse laboris\",\n                \"amount\": -88515490.62234305,\n                \"reinvestIncome\": false\n            },\n            {\n                \"relatedActivityId\": -6024249,\n                \"sedol\": \"pariatur commodo\",\n                \"amount\": -37514683.24636433,\n                \"reinvestIncome\": false\n            }\n        ],\n        \"updatedByIp\": \"ut e\",\n        \"updateBy\": \"nisi sint dolor irure\"\n    },\n    \"msExistingAccounts\": [\n        {\n            \"contactId\": 2470389,\n            \"accountId\": -51193126,\n            \"monthlySavings\": [\n                {\n                    \"assetId\": -10421768,\n                    \"sedol\": \"reprehenderit proident commodo\",\n                    \"amount\": -69320376.77119567\n                },\n                {\n                    \"assetId\": -91209092,\n                    \"sedol\": \"est\",\n                    \"amount\": 37187814.45362693\n                }\n            ],\n            \"updatedBy\": \"id quis minim consequat laboris\",\n            \"updatedByIpAddress\": \"sit exercitation Duis in\"\n        },\n        {\n            \"contactId\": 38885716,\n            \"accountId\": -65814993,\n            \"monthlySavings\": [\n                {\n                    \"assetId\": -39174107,\n                    \"sedol\": \"ex minim\",\n                    \"amount\": -37673944.471704334\n                },\n                {\n                    \"assetId\": 91813528,\n                    \"sedol\": \"sed \",\n                    \"amount\": -80309059.95077276\n                }\n            ],\n            \"updatedBy\": \"Excepteur\",\n            \"updatedByIpAddress\": \"culpa proident Lorem\"\n        }\n    ],\n    \"contactId\": -88163983,\n    \"accounts\": [\n        {\n            \"accountId\": -56896789,\n            \"accountNumber\": \"consequat incididunt\",\n            \"productType\": 3,\n            \"capacityType\": 2\n        },\n        {\n            \"accountId\": 17116213,\n            \"accountNumber\": \"consectetur aliqua occaecat commodo\",\n            \"productType\": 2,\n            \"capacityType\": 2\n        }\n    ],\n    \"updatedByIp\": \"cillum laboris minim non\",\n    \"updateBy\": \"minim cupidatat aute\",\n    \"cashReceipt\": {\n        \"rbsPaymentReferenceNum\": \"quis\",\n        \"rbsPaymentAccountId\": 41919902,\n        \"amount\": 37320689.94739756,\n        \"updatedByIp\": \"nisi in sunt\",\n        \"updateBy\": \"dolore mollit anim sint\"\n    },\n    \"fundOrder\": {\n        \"accountId\": -5255726,\n        \"basketItems\": [\n            {\n                \"relatedActivityId\": 62268661,\n                \"sedol\": \"reprehenderit\",\n                \"amount\": 29439650.637255847,\n                \"reinvestIncome\": true\n            },\n            {\n                \"relatedActivityId\": -30148233,\n                \"sedol\": \"deserunt pariatur\",\n                \"amount\": -36264862.17847367,\n                \"reinvestIncome\": true\n            }\n        ],\n        \"updatedByIp\": \"et dolor\",\n        \"updateBy\": \"mollit occaecat\"\n    },\n    \"transfersRequest\": [\n        {\n            \"transferId\": -38098222,\n            \"isElectronic\": true\n        },\n        {\n            \"transferId\": -79962353,\n            \"isElectronic\": true\n        }\n    ],\n    \"isTransferForAnExistingAccount\": false\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/completeaccountsetupbestinvestplus",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"completeaccountsetupbestinvestplus"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Activate Account",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": -58254268,\n    \"activationEmailExpiryTimeInMinute\": -74508234\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/validateemail",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"validateemail"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"contactId\": -58254268,\n    \"activationEmailExpiryTimeInMinute\": -74508234\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/validateemail",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"validateemail"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Activate Account",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": 79111144,\n    \"updateBy\": \"dolor\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/activateaccount",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"activateaccount"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"contactId\": 79111144,\n    \"updateBy\": \"dolor\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/activateaccount",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"activateaccount"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Add Marketing Consent",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 0,\n    \"contactId\": 94875999,\n    \"clientNumber\": \"nulla nostrud labore irure\",\n    \"consentEmail\": false,\n    \"consentPost\": true,\n    \"consentPhone\": false,\n    \"emailSentDateTime\": \"1945-02-12T23:17:21.315Z\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contact/addmarketingconsent",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contact",
+												"addmarketingconsent"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"source\": 0,\n    \"contactId\": 94875999,\n    \"clientNumber\": \"nulla nostrud labore irure\",\n    \"consentEmail\": false,\n    \"consentPost\": true,\n    \"consentPhone\": false,\n    \"emailSentDateTime\": \"1945-02-12T23:17:21.315Z\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountSetup/contact/addmarketingconsent",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountSetup",
+														"contact",
+														"addmarketingconsent"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Check If Client Is Ois Or Legacy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/checkifclientisoisorlegacy/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"checkifclientisoisorlegacy",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "eu ex amet labore commodo",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/checkifclientisoisorlegacy/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"checkifclientisoisorlegacy",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Contact Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/contactstatus/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"contactstatus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "-86285773",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/contactstatus/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"contactstatus",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Existing Accounts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/getexistingaccounts/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"getexistingaccounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "-86285773",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/getexistingaccounts/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"getexistingaccounts",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Standing Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/standing/data",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"standing",
+										"data"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/standing/data",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"standing",
+												"data"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Identity Check",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/ssaml/identity/check",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"ssaml",
+										"identity",
+										"check"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/ssaml/identity/check",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"ssaml",
+												"identity",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Insert Update Client Login",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source\": 1,\n    \"contactId\": 77071596,\n    \"loginDetails\": {\n        \"username\": \"ullamco sed officia veniam\",\n        \"password\": \"ut enim\",\n        \"pin\": \"veniam proident elit\"\n    },\n    \"updatedBy\": \"deserunt dolore magna\",\n    \"updatedIpAddress\": \"anim laborum\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/createlogin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"createlogin"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 1,\n    \"contactId\": 77071596,\n    \"loginDetails\": {\n        \"username\": \"ullamco sed officia veniam\",\n        \"password\": \"ut enim\",\n        \"pin\": \"veniam proident elit\"\n    },\n    \"updatedBy\": \"deserunt dolore magna\",\n    \"updatedIpAddress\": \"anim laborum\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/createlogin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"createlogin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Set Strategy",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accountId\": 3249670,\n    \"sedol\": \"esse dolore exercitation tempor\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountSetup/strategy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountSetup",
+										"strategy"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"accountId\": 3249670,\n    \"sedol\": \"esse dolore exercitation tempor\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountSetup/strategy",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountSetup",
+												"strategy"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Account Transfer",
+					"item": [
+						{
+							"name": "X Plan",
+							"item": [
+								{
+									"name": "Create Account Transfer X Plan Task With Attachment",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": -15417550,\n    \"transferIds\": [\n        {\n            \"transferId\": 1878385,\n            \"electronic\": true\n        },\n        {\n            \"transferId\": 36280320,\n            \"electronic\": false\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountTransfer/XPlan/CreateTask",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountTransfer",
+												"XPlan",
+												"CreateTask"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountTransfer/XPlan/CreateTask",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountTransfer",
+														"XPlan",
+														"CreateTask"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Create Pdf And Account Transfer X Plan Task With Attachment",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": 41911262,\n    \"transferIds\": [\n        -8388018,\n        87435176\n    ],\n    \"pdfTemplateName\": \"dolor deserunt tempor non\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountTransfer/XPlan/CreatePdfAndTask",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountTransfer",
+												"XPlan",
+												"CreatePdfAndTask"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"contactId\": -64776630,\n    \"transferIds\": [\n        87473141,\n        92804417\n    ],\n    \"pdfTemplateName\": \"nisi sit laborum\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/AccountTransfer/XPlan/CreatePdfAndTask",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"AccountTransfer",
+														"XPlan",
+														"CreatePdfAndTask"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Insert Transfer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transfers\": [\n        {\n            \"transferRequestId\": \"urn:uuid:6159ae41-6e46-bdd2-7768-2f9f14490a11\",\n            \"productType\": 0,\n            \"transferType\": 0,\n            \"contactId\": -98400440,\n            \"accountId\": -21010184,\n            \"providerName\": \"nulla dolore dolor\",\n            \"isElectronic\": false,\n            \"providerId\": -42468419,\n            \"transferAmount\": 12450208.99210471,\n            \"accountNumber\": \"enim aliqua\",\n            \"bankAccountNumber\": \"id nostrud\",\n            \"sortCode\": \"pariatur cillum sit culpa\",\n            \"transferMode\": 1,\n            \"paidInCurrentTaxYear\": \"fugiat aute aliqua cillum\",\n            \"providerAddress\": {\n                \"addressLine1\": \"cillum velit\",\n                \"addressLine2\": \"anim ullamco tempor pariatur\",\n                \"addressLine3\": \"do in aliqua\",\n                \"addressLine4\": \"elit\",\n                \"countryId\": 98135065,\n                \"postCode\": \"id tempor\",\n                \"town\": \"culpa ut consectetur Ut minim\",\n                \"addressTypeIdId\": -71156104,\n                \"addressLine5\": \"eiusmod\",\n                \"country\": \"est aute commodo velit id\",\n                \"houseNumber\": \"ad in dolor ut\",\n                \"houseName\": \"ex nostrud officia qui\",\n                \"flatNumber\": \"irure\",\n                \"primaryStreet\": \"in voluptate pariatur in\"\n            }\n        },\n        {\n            \"transferRequestId\": \"urn:uuid:06a902f8-5769-4a96-f6c0-f4e6e3beb7f5\",\n            \"productType\": 3,\n            \"transferType\": 1,\n            \"contactId\": 27386556,\n            \"accountId\": -3655518,\n            \"providerName\": \"mollit eiusmod exercitation\",\n            \"isElectronic\": false,\n            \"providerId\": 12821400,\n            \"transferAmount\": -99044272.63229607,\n            \"accountNumber\": \"adi\",\n            \"bankAccountNumber\": \"consequat sed\",\n            \"sortCode\": \"dolore minim\",\n            \"transferMode\": 0,\n            \"paidInCurrentTaxYear\": \"Duis ut voluptate eu\",\n            \"providerAddress\": {\n                \"addressLine1\": \"commodo esse\",\n                \"addressLine2\": \"do consectetur exercitation dolor fugiat\",\n                \"addressLine3\": \"nisi laboris\",\n                \"addressLine4\": \"sint do\",\n                \"countryId\": 8945547,\n                \"postCode\": \"Ut irure\",\n                \"town\": \"laboris nisi deseru\",\n                \"addressTypeIdId\": -98377127,\n                \"addressLine5\": \"c\",\n                \"country\": \"\",\n                \"houseNumber\": \"volup\",\n                \"houseName\": \"commodo\",\n                \"flatNumber\": \"magna elit veniam\",\n                \"primaryStreet\": \"consequat veniam pariatur amet\"\n            }\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountTransfer/transfer",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountTransfer",
+										"transfer"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"transfers\": [\n        {\n            \"transferRequestId\": \"urn:uuid:04c655d3-a446-6777-fa52-0d3529636534\",\n            \"productType\": 0,\n            \"transferType\": 0,\n            \"contactId\": 68836443,\n            \"accountId\": 14843576,\n            \"providerName\": \"sunt consequat\",\n            \"isElectronic\": false,\n            \"providerId\": 13687240,\n            \"transferAmount\": 95188091.27128673,\n            \"accountNumber\": \"do pariatur ipsum\",\n            \"bankAccountNumber\": \"labore veniam aliquip\",\n            \"sortCode\": \"laborum in nostrud non Excepteur\",\n            \"transferMode\": 1,\n            \"paidInCurrentTaxYear\": \"Excepteur ipsum dolor incididunt\",\n            \"providerAddress\": {\n                \"addressLine1\": \"dolor deserunt amet\",\n                \"addressLine2\": \"elit exercitation adi\",\n                \"addressLine3\": \"adipisicing eiusmod\",\n                \"addressLine4\": \"aliquip pariatur Lorem\",\n                \"countryId\": -40196294,\n                \"postCode\": \"adipisicing officia\",\n                \"town\": \"do ad non exercitation sit\",\n                \"addressTypeIdId\": 40509401,\n                \"addressLine5\": \"ad\",\n                \"country\": \"culpa aliqua volu\",\n                \"houseNumber\": \"laboris\",\n                \"houseName\": \"magna ea dolor in\",\n                \"flatNumber\": \"tempor cupidatat consectetur ullamco mollit\",\n                \"primaryStreet\": \"aliqua\"\n            }\n        },\n        {\n            \"transferRequestId\": \"37f8b8bc-2fc3-26a1-ce73-b23be05043c6\",\n            \"productType\": 0,\n            \"transferType\": 0,\n            \"contactId\": 15331463,\n            \"accountId\": -16558677,\n            \"providerName\": \"ipsum\",\n            \"isElectronic\": true,\n            \"providerId\": 84387641,\n            \"transferAmount\": 84974148.81658214,\n            \"accountNumber\": \"exercitation ad aliquip Lorem magna\",\n            \"bankAccountNumber\": \"velit exercitation adipisicing aliquip\",\n            \"sortCode\": \"Ut enim officia\",\n            \"transferMode\": 1,\n            \"paidInCurrentTaxYear\": \"do Lorem\",\n            \"providerAddress\": {\n                \"addressLine1\": \"ut irure laborum ullamco\",\n                \"addressLine2\": \"commodo nulla eiusmod\",\n                \"addressLine3\": \"ut magna\",\n                \"addressLine4\": \"reprehenderit dolore voluptat\",\n                \"countryId\": -14769627,\n                \"postCode\": \"ut mollit ipsum labore\",\n                \"town\": \"nostrud Lorem \",\n                \"addressTypeIdId\": 81422852,\n                \"addressLine5\": \"sed fugiat eu elit ad\",\n                \"country\": \"exercit\",\n                \"houseNumber\": \"do labore\",\n                \"houseName\": \"qui nulla occaecat\",\n                \"flatNumber\": \"et magna nulla proident a\",\n                \"primaryStreet\": \"cillum ut in\"\n            }\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountTransfer/transfer",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountTransfer",
+												"transfer"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create Account Transfer Isa Letter Of Authority Pdf",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contactId\": -73444223,\n    \"transferIds\": [\n        {\n            \"transferId\": 41702437,\n            \"electronic\": false\n        },\n        {\n            \"transferId\": -68894123,\n            \"electronic\": false\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountTransfer/Pdf/Create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountTransfer",
+										"Pdf",
+										"Create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountTransfer/Pdf/Create",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountTransfer",
+												"Pdf",
+												"Create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Insert Transfer Status Data",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contactId\": -20367039,\n    \"accountId\": -35088451,\n    \"startDate\": \"1941-08-28T11:41:13.670Z\",\n    \"updateDate\": \"1949-09-16T00:26:01.677Z\",\n    \"status\": \"amet pariatur cupidatat\",\n    \"updatedBy\": \"tempor eu deserunt voluptate\",\n    \"transferId\": \"urn:uuid:727e1657-1dac-516b-1ed5-be78a193c593\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/AccountTransfer/StatusReport/Insert",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AccountTransfer",
+										"StatusReport",
+										"Insert"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": -20367039,\n    \"accountId\": -35088451,\n    \"startDate\": \"1941-08-28T11:41:13.670Z\",\n    \"updateDate\": \"1949-09-16T00:26:01.677Z\",\n    \"status\": \"amet pariatur cupidatat\",\n    \"updatedBy\": \"tempor eu deserunt voluptate\",\n    \"transferId\": \"urn:uuid:727e1657-1dac-516b-1ed5-be78a193c593\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/AccountTransfer/StatusReport/Insert",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"AccountTransfer",
+												"StatusReport",
+												"Insert"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Address",
+					"item": [
+						{
+							"name": "Find Address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Address/find?searchTerm=eu ex amet labore commodo&lastId=eu ex amet labore commodo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Address",
+										"find"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "eu ex amet labore commodo"
+										},
+										{
+											"key": "lastId",
+											"value": "eu ex amet labore commodo"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Address/find?searchTerm=eu ex amet labore commodo&lastId=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Address",
+												"find"
+											],
+											"query": [
+												{
+													"key": "searchTerm",
+													"value": "eu ex amet labore commodo"
+												},
+												{
+													"key": "lastId",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Retrieve Address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Address/retrieve?id=eu ex amet labore commodo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Address",
+										"retrieve"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "eu ex amet labore commodo"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Address/retrieve?id=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Address",
+												"retrieve"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "insert",
+							"item": [
+								{
+									"name": "Insert Reference Data",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"referenceData\": [\n        {\n            \"id\": 6807663,\n            \"taaModel\": \"et ut exercitation quis\",\n            \"expectedReturn\": 77479835.61843678,\n            \"volatility\": -71186674.92974877\n        },\n        {\n            \"id\": 14672404,\n            \"taaModel\": \"fugiat laborum\",\n            \"expectedReturn\": -27099593.90333441,\n            \"volatility\": -65632568.26701967\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/insert/referencedata",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"insert",
+												"referencedata"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"referenceData\": [\n        {\n            \"id\": 79332833,\n            \"taaModel\": \"proident laboru\",\n            \"expectedReturn\": -7725253.200342357,\n            \"volatility\": -85723596.21714348\n        },\n        {\n            \"id\": 33821729,\n            \"taaModel\": \"voluptate aliquip\",\n            \"expectedReturn\": 67245012.65235528,\n            \"volatility\": -45914137.63189957\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/insert/referencedata",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"insert",
+														"referencedata"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Insert Z Score Data",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"zscores\": [\n        {\n            \"id\": 11711628,\n            \"taamodel\": \"qui\",\n            \"target\": \"nostrud ut incididunt in\",\n            \"value\": \"do esse\"\n        },\n        {\n            \"id\": 86449770,\n            \"taamodel\": \"aliquip fugiat deserunt nisi\",\n            \"target\": \"nostrud elit Lorem\",\n            \"value\": \"ad elit labore\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/insert/zScoreData",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"insert",
+												"zScoreData"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"zscores\": [\n        {\n            \"id\": -93452353,\n            \"taamodel\": \"non Ut dolor\",\n            \"target\": \"nostrud\",\n            \"value\": \"eiusmod est\"\n        },\n        {\n            \"id\": -26455787,\n            \"taamodel\": \"moll\",\n            \"target\": \"aute aliquip\",\n            \"value\": \"Duis do Lorem\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/insert/zScoreData",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"insert",
+														"zScoreData"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "Delete All Reference Data",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/delete/referencedata?key=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"delete",
+												"referencedata"
+											],
+											"query": [
+												{
+													"key": "key",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/delete/referencedata?key=eu ex amet labore commodo",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"delete",
+														"referencedata"
+													],
+													"query": [
+														{
+															"key": "key",
+															"value": "eu ex amet labore commodo"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete Z Score Data",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/delete/zScoreData?key=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"delete",
+												"zScoreData"
+											],
+											"query": [
+												{
+													"key": "key",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/delete/zScoreData?key=eu ex amet labore commodo",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"delete",
+														"zScoreData"
+													],
+													"query": [
+														{
+															"key": "key",
+															"value": "eu ex amet labore commodo"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get Reference Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Admin/referencedata",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Admin",
+										"referencedata"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/referencedata",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"referencedata"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Aml",
+					"item": [
+						{
+							"name": "Identity Check",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source\": 1,\n    \"sessionId\": \"labore veniam\",\n    \"title\": \"sit Excepteur\",\n    \"contactId\": 73518388,\n    \"firstName\": \"ad velit quis reprehenderit Duis\",\n    \"lastName\": \"in dolor\",\n    \"dayOfBirth\": 64348844,\n    \"monthOfBirth\": -42097414,\n    \"yearOfBirth\": 84644283,\n    \"houseNumber\": \"labore sit\",\n    \"houseName\": \"Ut qui\",\n    \"flatNumber\": \"exercitation enim\",\n    \"primaryStreet\": \"est laboris dolore cillum fugiat\",\n    \"postcode\": \"Excepteur ad ut\",\n    \"addressLine1\": \"ea culpa\",\n    \"addressLine2\": \"cupidatat pariatur\",\n    \"town\": \"sit in proident officia\",\n    \"nationalInsuranceNumber\": \"quis\",\n    \"drivingLicence\": \"proident do dolor amet\",\n    \"passportNo\": \"ullamco Ut\",\n    \"passportNoPart1\": \"mollit eiusmod consequat ex voluptate\",\n    \"passportNoPart2\": \"aliquip id laboris ipsum\",\n    \"passportNoPart3\": \"laborum dolore\",\n    \"passportNoPart4\": \"in nisi\",\n    \"passportNoPart5\": \"sunt sint sed esse\",\n    \"passportNoPart6\": \"anim Lorem aliquip dolore\",\n    \"passportCountryOfIssue\": \"ut cupidatat Ut amet\",\n    \"dayOfPassportExpiry\": -8579892,\n    \"monthOfPassportExpiry\": -71715787,\n    \"yearOfPassportExpiry\": -32748902,\n    \"additionalInformationRequired\": true,\n    \"hiddenAdditionalInformationRequired\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Aml/identitycheck",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Aml",
+										"identitycheck"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 1,\n    \"sessionId\": \"labore veniam\",\n    \"title\": \"sit Excepteur\",\n    \"contactId\": 73518388,\n    \"firstName\": \"ad velit quis reprehenderit Duis\",\n    \"lastName\": \"in dolor\",\n    \"dayOfBirth\": 64348844,\n    \"monthOfBirth\": -42097414,\n    \"yearOfBirth\": 84644283,\n    \"houseNumber\": \"labore sit\",\n    \"houseName\": \"Ut qui\",\n    \"flatNumber\": \"exercitation enim\",\n    \"primaryStreet\": \"est laboris dolore cillum fugiat\",\n    \"postcode\": \"Excepteur ad ut\",\n    \"addressLine1\": \"ea culpa\",\n    \"addressLine2\": \"cupidatat pariatur\",\n    \"town\": \"sit in proident officia\",\n    \"nationalInsuranceNumber\": \"quis\",\n    \"drivingLicence\": \"proident do dolor amet\",\n    \"passportNo\": \"ullamco Ut\",\n    \"passportNoPart1\": \"mollit eiusmod consequat ex voluptate\",\n    \"passportNoPart2\": \"aliquip id laboris ipsum\",\n    \"passportNoPart3\": \"laborum dolore\",\n    \"passportNoPart4\": \"in nisi\",\n    \"passportNoPart5\": \"sunt sint sed esse\",\n    \"passportNoPart6\": \"anim Lorem aliquip dolore\",\n    \"passportCountryOfIssue\": \"ut cupidatat Ut amet\",\n    \"dayOfPassportExpiry\": -8579892,\n    \"monthOfPassportExpiry\": -71715787,\n    \"yearOfPassportExpiry\": -32748902,\n    \"additionalInformationRequired\": true,\n    \"hiddenAdditionalInformationRequired\": true\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Aml/identitycheck",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Aml",
+												"identitycheck"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Bank Check",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bankAccountName\": \"ad officia culpa\",\n    \"bankAccountNumber\": \"aute laboris\",\n    \"sortCodePart2\": \"adipisi\",\n    \"sortCodePart3\": \"aliquip mollit est\",\n    \"updatedBy\": \"et pariatur in\",\n    \"performAmlCheck\": false,\n    \"contactId\": -83412496,\n    \"sortCodePart1\": \"sunt dolore\",\n    \"updatedIpAddress\": \"culpa nulla nisi enim ipsum\",\n    \"rePublishToAdminQueue\": true,\n    \"amlBankCheckRequestModel\": {\n        \"bankAccountName\": \"\",\n        \"accountNumber\": \"laboris ad elit nostrud\",\n        \"sortCodePart1\": \"irure sunt\",\n        \"sortCodePart2\": \"officia ea enim\",\n        \"sortCodePart3\": \"pariatur amet\",\n        \"source\": 1,\n        \"sessionId\": \"Ut veniam amet\",\n        \"title\": \"tempor in adipisicing\",\n        \"contactId\": -97446141,\n        \"firstName\": \"nulla culpa tempor do re\",\n        \"lastName\": \"irure voluptate Excepteur\",\n        \"dayOfBirth\": 75249137,\n        \"monthOfBirth\": 59979369,\n        \"yearOfBirth\": 33457499,\n        \"houseNumber\": \"Lorem tempor cupidatat minim pariatur\",\n        \"houseName\": \"officia Ut tempor ad\",\n        \"flatNumber\": \"\",\n        \"primaryStreet\": \"in eiusmod elit\",\n        \"postcode\": \"culpa ex officia velit\",\n        \"addressLine1\": \"anim\",\n        \"addressLine2\": \"culpa qui aliquip pariatur do\",\n        \"town\": \"quis ipsum irure dolore consectetur\",\n        \"nationalInsuranceNumber\": \"nostrud est amet sed\",\n        \"drivingLicence\": \"veniam nisi\",\n        \"passportNo\": \"ut dolor ut laboris eiusmod\",\n        \"passportNoPart1\": \"irure velit\",\n        \"passportNoPart2\": \"dolor magna eiusmod\",\n        \"passportNoPart3\": \"non\",\n        \"passportNoPart4\": \"nostrud\",\n        \"passportNoPart5\": \"proident\",\n        \"passportNoPart6\": \"veniam adipisicing dolor irure\",\n        \"passportCountryOfIssue\": \"do sed eu et\",\n        \"dayOfPassportExpiry\": -19615286,\n        \"monthOfPassportExpiry\": -53267728,\n        \"yearOfPassportExpiry\": -69481755,\n        \"additionalInformationRequired\": false,\n        \"hiddenAdditionalInformationRequired\": true\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Aml/bankcheck",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Aml",
+										"bankcheck"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Aml/bankcheck",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Aml",
+												"bankcheck"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Assets",
+					"item": [
+						{
+							"name": "assetdetail",
+							"item": [
+								{
+									"name": "Get Asset Detail",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"sedols\": [\n        \"aliquip deserunt culpa magna\",\n        \"ut dolore\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/assetdetail",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"assetdetail"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"sedols\": [\n        \"Lorem cupidatat minim\",\n        \"Excepteur ea\"\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Assets/assetdetail",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Assets",
+														"assetdetail"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Get Asset Detail",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/assetdetail/:sedol",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"assetdetail",
+												":sedol"
+											],
+											"variable": [
+												{
+													"key": "sedol",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Assets/assetdetail/:sedol",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Assets",
+														"assetdetail",
+														":sedol"
+													],
+													"variable": [
+														{
+															"key": "sedol"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Cost And Charges",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"investments\": [\n        {\n            \"sedol\": \"incididunt id ullamco dolor mollit\",\n            \"amount\": 71580952.5083895\n        },\n        {\n            \"sedol\": \"sit tempor\",\n            \"amount\": -78835056.74030755\n        }\n    ],\n    \"accountType\": \"consequat ad ex voluptate\",\n    \"portfolioValue\": -57874486.79840881\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Assets/costandcharges",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"costandcharges"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"investments\": [\n        {\n            \"sedol\": \"sint consequat ipsum dolore\",\n            \"amount\": -77644956.69410753\n        },\n        {\n            \"sedol\": \"anim Excepteur exercitation nulla\",\n            \"amount\": 38001186.51410201\n        }\n    ],\n    \"accountType\": \"ex ea\",\n    \"portfolioValue\": 98893287.42611143\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/costandcharges",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"costandcharges"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Fund Factsheet Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Assets/assetallocation/:sedol",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"assetallocation",
+										":sedol"
+									],
+									"variable": [
+										{
+											"key": "sedol",
+											"value": "eu ex amet labore commodo",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/assetallocation/:sedol",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"assetallocation",
+												":sedol"
+											],
+											"variable": [
+												{
+													"key": "sedol"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Projections",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"upfrontInvestment\": 91756010.11671647,\n    \"monthlyInvestment\": 86691783.63575107,\n    \"riskModel\": \"in ea sit aliqua elit\",\n    \"investmentPeriod\": 30409769,\n    \"sedolCode\": \"sint incididunt consectetur\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Assets/projections",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"projections"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"upfrontInvestment\": 91756010.11671647,\n    \"monthlyInvestment\": 86691783.63575107,\n    \"riskModel\": \"in ea sit aliqua elit\",\n    \"investmentPeriod\": 30409769,\n    \"sedolCode\": \"sint incididunt consectetur\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/projections",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"projections"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Standing Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Assets/readymade/standingdata",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"readymade",
+										"standingdata"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/readymade/standingdata",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"readymade",
+												"standingdata"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Fund Contributions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Assets/standingdata/contributions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"standingdata",
+										"contributions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/standingdata/contributions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"standingdata",
+												"contributions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Tilney Asset Model",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{onlineApi.baseUrl}}/api/Assets/tilney-asset-model/:riskModelName",
+									"host": [
+										"{{onlineApi.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Assets",
+										"tilney-asset-model",
+										":riskModelName"
+									],
+									"variable": [
+										{
+											"key": "riskModelName",
+											"value": "TAA1",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/tilney-asset-model/:riskModelName",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"tilney-asset-model",
+												":riskModelName"
+											],
+											"variable": [
+												{
+													"key": "riskModelName"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Assets/tilney-asset-model/:riskModelName",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"tilney-asset-model",
+												":riskModelName"
+											],
+											"variable": [
+												{
+													"key": "riskModelName"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{onlineApi.baseUrl}}/api/Assets/tilney-asset-model/:riskModelName",
+											"host": [
+												"{{onlineApi.baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Assets",
+												"tilney-asset-model",
+												":riskModelName"
+											],
+											"variable": [
+												{
+													"key": "riskModelName",
+													"value": "TAA1",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Server",
+											"value": "Kestrel"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "ASP.NET"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 May 2021 09:28:43 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 1,\n    \"riskModel\": \"TAA1\",\n    \"erValue\": 0.0333,\n    \"volatility\": 0.0537,\n    \"zScores\": {\n        \"MoreLikelyLB\": -0.037506582937548,\n        \"MoreLikelyUB\": 0.101296240386098,\n        \"LessLikleyLB\": -0.065337942794282,\n        \"LessLikelyUB\": 0.119393261342225\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Token",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"apiClaimType\": 0,\n    \"userName\": \"Excepteur magna occaecat anim\",\n    \"password\": \"aliqua cillum\",\n    \"tokenGenerationKey\": \"amet aliqui\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Auth/token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"token"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"apiClaimType\": 0,\n    \"userName\": \"Excepteur magna occaecat anim\",\n    \"password\": \"aliqua cillum\",\n    \"tokenGenerationKey\": \"amet aliqui\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Auth/token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Auth",
+												"token"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Refresh Token",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accessToken\": \"velit ea qui elit\",\n    \"refreshToken\": \"ut proident sit\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Auth/refreshtoken",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"refreshtoken"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"accessToken\": \"velit ea qui elit\",\n    \"refreshToken\": \"ut proident sit\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Auth/refreshtoken",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Auth",
+												"refreshtoken"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Best Invest Plus",
+					"item": [
+						{
+							"name": "category/{category Id}/questions",
+							"item": [
+								{
+									"name": "Get",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/category/:categoryId/questions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"category",
+												":categoryId",
+												"questions"
+											],
+											"variable": [
+												{
+													"key": "categoryId",
+													"value": "-86285773",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BestInvestPlus/category/:categoryId/questions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BestInvestPlus",
+														"category",
+														":categoryId",
+														"questions"
+													],
+													"variable": [
+														{
+															"key": "categoryId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Save Questions Answers",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"answers\": [\n        {\n            \"questionId\": 80014435,\n            \"questionKey\": \"consectetur\",\n            \"answer\": \"amet Lorem irure in\"\n        },\n        {\n            \"questionId\": 87813419,\n            \"questionKey\": \"velit magna proident\",\n            \"answer\": \"dolor dolor do\"\n        }\n    ],\n    \"contactId\": -32558584\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/category/:categoryId/questions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"category",
+												":categoryId",
+												"questions"
+											],
+											"variable": [
+												{
+													"key": "categoryId",
+													"value": "-86285773",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"answers\": [\n        {\n            \"questionId\": -52549349,\n            \"questionKey\": \"sit quis\",\n            \"answer\": \"Duis dolore exercitation\"\n        },\n        {\n            \"questionId\": -87678551,\n            \"questionKey\": \"dolor ad sit\",\n            \"answer\": \"aliquip qu\"\n        }\n    ],\n    \"contactId\": -60565963\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/BestInvestPlus/category/:categoryId/questions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BestInvestPlus",
+														"category",
+														":categoryId",
+														"questions"
+													],
+													"variable": [
+														{
+															"key": "categoryId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "client",
+							"item": [
+								{
+									"name": "Get Basic Details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/client/basicdetails?id=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"client",
+												"basicdetails"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BestInvestPlus/client/basicdetails?id=-86285773",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BestInvestPlus",
+														"client",
+														"basicdetails"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "-86285773"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Get Existing Client Baisc Details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/client/existingclient/basicdetails?id=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"client",
+												"existingclient",
+												"basicdetails"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BestInvestPlus/client/existingclient/basicdetails?id=-86285773",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BestInvestPlus",
+														"client",
+														"existingclient",
+														"basicdetails"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "-86285773"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Book An Advisor",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contactId\": -95663649,\n    \"personalDetails\": {\n        \"titleId\": 99721651,\n        \"title\": \"anim veniam\",\n        \"firstname\": \"est non consectetur\",\n        \"lastname\": \"nostrud culpa dolor\"\n    },\n    \"email\": \"veniam ullamco Duis\",\n    \"phone\": \"dolore mollit\",\n    \"callTime\": 1,\n    \"updatedBy\": \"Duis dolor\",\n    \"updatedIpAddress\": \"magna elit exercitation\",\n    \"source\": 0\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/BestInvestPlus/bookanadvisor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BestInvestPlus",
+										"bookanadvisor"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": -95663649,\n    \"personalDetails\": {\n        \"titleId\": 99721651,\n        \"title\": \"anim veniam\",\n        \"firstname\": \"est non consectetur\",\n        \"lastname\": \"nostrud culpa dolor\"\n    },\n    \"email\": \"veniam ullamco Duis\",\n    \"phone\": \"dolore mollit\",\n    \"callTime\": 1,\n    \"updatedBy\": \"Duis dolor\",\n    \"updatedIpAddress\": \"magna elit exercitation\",\n    \"source\": 0\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/bookanadvisor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"bookanadvisor"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/BestInvestPlus/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BestInvestPlus",
+										"categories"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/categories",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"categories"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Best Invest Progresss",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/BestInvestPlus/progress?contactId=-86285773",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BestInvestPlus",
+										"progress"
+									],
+									"query": [
+										{
+											"key": "contactId",
+											"value": "-86285773"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/progress?contactId=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"progress"
+											],
+											"query": [
+												{
+													"key": "contactId",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/BestInvestPlus/contact/:contactId/category/:categoryId/questionsAnswers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BestInvestPlus",
+										"contact",
+										":contactId",
+										"category",
+										":categoryId",
+										"questionsAnswers"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "-86285773",
+											"description": "(Required) "
+										},
+										{
+											"key": "categoryId",
+											"value": "-86285773",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/contact/:contactId/category/:categoryId/questionsAnswers",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"contact",
+												":contactId",
+												"category",
+												":categoryId",
+												"questionsAnswers"
+											],
+											"variable": [
+												{
+													"key": "contactId"
+												},
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Projections",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"upfrontInvestment\": 98929095.68754736,\n    \"monthlyInvestment\": 85416095.71641153,\n    \"investmentPeriod\": -87636272\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/BestInvestPlus/projections",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BestInvestPlus",
+										"projections"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"upfrontInvestment\": 98929095.68754736,\n    \"monthlyInvestment\": 85416095.71641153,\n    \"investmentPeriod\": -87636272\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/BestInvestPlus/projections",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BestInvestPlus",
+												"projections"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Fatca",
+					"item": [
+						{
+							"name": "{contact Id}/{questionnaire Type}",
+							"item": [
+								{
+									"name": "Get",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Fatca/:contactId/:questionnaireType",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Fatca",
+												":contactId",
+												":questionnaireType"
+											],
+											"variable": [
+												{
+													"key": "contactId",
+													"value": "-86285773",
+													"description": "(Required) "
+												},
+												{
+													"key": "questionnaireType",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Fatca/:contactId/:questionnaireType",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Fatca",
+														":contactId",
+														":questionnaireType"
+													],
+													"variable": [
+														{
+															"key": "contactId"
+														},
+														{
+															"key": "questionnaireType"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Fatca/:contactId/:questionnaireType",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Fatca",
+												":contactId",
+												":questionnaireType"
+											],
+											"variable": [
+												{
+													"key": "contactId",
+													"value": "-86285773",
+													"description": "(Required) "
+												},
+												{
+													"key": "questionnaireType",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Fatca/:contactId/:questionnaireType",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Fatca",
+														":contactId",
+														":questionnaireType"
+													],
+													"variable": [
+														{
+															"key": "contactId"
+														},
+														{
+															"key": "questionnaireType"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Post",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source\": 0,\n    \"contactId\": -76881302,\n    \"fatcaQuestionnaire\": {\n        \"questionAnswers\": [\n            {\n                \"question\": \"aliqua Duis\",\n                \"answer\": \"officia reprehenderit aliqua\",\n                \"subQuestionAnswer\": {\n                    \"question\": \"sit enim sint proident\",\n                    \"answer\": \"eu aliquip sit\"\n                }\n            },\n            {\n                \"question\": \"esse sed Duis\",\n                \"answer\": \"proident no\",\n                \"subQuestionAnswer\": {\n                    \"question\": \"ea Ut anim consequat\",\n                    \"answer\": \"in\"\n                }\n            }\n        ]\n    },\n    \"questionnaireType\": \"do non ad\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Fatca",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Fatca"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"source\": 0,\n    \"contactId\": -76881302,\n    \"fatcaQuestionnaire\": {\n        \"questionAnswers\": [\n            {\n                \"question\": \"aliqua Duis\",\n                \"answer\": \"officia reprehenderit aliqua\",\n                \"subQuestionAnswer\": {\n                    \"question\": \"sit enim sint proident\",\n                    \"answer\": \"eu aliquip sit\"\n                }\n            },\n            {\n                \"question\": \"esse sed Duis\",\n                \"answer\": \"proident no\",\n                \"subQuestionAnswer\": {\n                    \"question\": \"ea Ut anim consequat\",\n                    \"answer\": \"in\"\n                }\n            }\n        ]\n    },\n    \"questionnaireType\": \"do non ad\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Fatca",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Fatca"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Questions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Fatca/questions/:countryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Fatca",
+										"questions",
+										":countryId"
+									],
+									"variable": [
+										{
+											"key": "countryId",
+											"value": "-86285773",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Fatca/questions/:countryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Fatca",
+												"questions",
+												":countryId"
+											],
+											"variable": [
+												{
+													"key": "countryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Marketing Analytics",
+					"item": [
+						{
+							"name": "Insert Marketing Analytics",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contactId\": 95046472,\n    \"webUserId\": \"urn:uuid:da4e08e1-bd8d-9502-261c-ca4ff49fbdd2\",\n    \"tealiumId\": \"Excepteur ut proident\",\n    \"webActionTrackingId\": \"565ca99a-981c-4910-d783-4da65ea73ff0\",\n    \"xPlanEntityId\": -71263510,\n    \"actionTypeId\": \"3cf5353c-3374-2815-bc2e-962bc5ec1e91\",\n    \"productId\": \"urn:uuid:6525c5b6-e995-5eff-b9e6-70e52c21da8d\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/MarketingAnalytics/Insert",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MarketingAnalytics",
+										"Insert"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contactId\": 95046472,\n    \"webUserId\": \"urn:uuid:da4e08e1-bd8d-9502-261c-ca4ff49fbdd2\",\n    \"tealiumId\": \"Excepteur ut proident\",\n    \"webActionTrackingId\": \"565ca99a-981c-4910-d783-4da65ea73ff0\",\n    \"xPlanEntityId\": -71263510,\n    \"actionTypeId\": \"3cf5353c-3374-2815-bc2e-962bc5ec1e91\",\n    \"productId\": \"urn:uuid:6525c5b6-e995-5eff-b9e6-70e52c21da8d\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/MarketingAnalytics/Insert",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MarketingAnalytics",
+												"Insert"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Ping Db",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/MarketingAnalytics/ping?count=-86285773",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MarketingAnalytics",
+										"ping"
+									],
+									"query": [
+										{
+											"key": "count",
+											"value": "-86285773"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/MarketingAnalytics/ping?count=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MarketingAnalytics",
+												"ping"
+											],
+											"query": [
+												{
+													"key": "count",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Oxford Risk",
+					"item": [
+						{
+							"name": "Get Questions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/OxfordRisk/questions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"OxfordRisk",
+										"questions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/OxfordRisk/questions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"OxfordRisk",
+												"questions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Save Questions Answers",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"instrumentId\": -81010199,\n    \"contactId\": -35695356,\n    \"xplanEntityId\": 26235002,\n    \"xplanEntityFirstName\": \"dolor cupidatat\",\n    \"xplanEntityLastName\": \"ex sint\",\n    \"answers\": [\n        {\n            \"questionRefid\": \"nisi irure\",\n            \"value\": {}\n        },\n        {\n            \"questionRefid\": \"veniam consectetur\",\n            \"value\": {}\n        }\n    ],\n    \"caller\": \"deserunt eiusmod veniam aliqu\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/OxfordRisk/answers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"OxfordRisk",
+										"answers"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"instrumentId\": -28662194,\n    \"contactId\": -42327010,\n    \"xplanEntityId\": -27988277,\n    \"xplanEntityFirstName\": \"tempor ut in deserunt\",\n    \"xplanEntityLastName\": \"irure\",\n    \"answers\": [\n        {\n            \"questionRefid\": \"in tempor aute\",\n            \"value\": {}\n        },\n        {\n            \"questionRefid\": \"voluptate eu Lorem\",\n            \"value\": {}\n        }\n    ],\n    \"caller\": \"Duis est quis\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/OxfordRisk/answers",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"OxfordRisk",
+												"answers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Payment",
+					"item": [
+						{
+							"name": "Insert Rbs Transaction Details",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"basketId\": 14454340,\n    \"amount\": 84297549.7478281,\n    \"orderType\": \"non nostrud mollit proident\",\n    \"productType\": 4,\n    \"checkoutBasketId\": 95291432,\n    \"transactionData\": {\n        \"contactId\": 32644776,\n        \"accountNumber\": \"cillum cupidatat\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Payment/AccountSetup/InsertTransactionDetails",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Payment",
+										"AccountSetup",
+										"InsertTransactionDetails"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"basketId\": 14454340,\n    \"amount\": 84297549.7478281,\n    \"orderType\": \"non nostrud mollit proident\",\n    \"productType\": 4,\n    \"checkoutBasketId\": 95291432,\n    \"transactionData\": {\n        \"contactId\": 32644776,\n        \"accountNumber\": \"cillum cupidatat\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Payment/AccountSetup/InsertTransactionDetails",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Payment",
+												"AccountSetup",
+												"InsertTransactionDetails"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Audit Rbs Request Or Response",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"webPayLoadTypeOptions\": 2,\n    \"webInterfaceOptions\": 3,\n    \"payLoad\": \"commodo quis eu D\",\n    \"cartId\": \"elit\",\n    \"updatedBy\": \"ad officia\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Payment/AuditRbsRequestOrResponse",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Payment",
+										"AuditRbsRequestOrResponse"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"webPayLoadTypeOptions\": 2,\n    \"webInterfaceOptions\": 3,\n    \"payLoad\": \"commodo quis eu D\",\n    \"cartId\": \"elit\",\n    \"updatedBy\": \"ad officia\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Payment/AuditRbsRequestOrResponse",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Payment",
+												"AuditRbsRequestOrResponse"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Provider",
+					"item": [
+						{
+							"name": "Find Address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Provider/find?searchTerm=eu ex amet labore commodo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Provider",
+										"find"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "eu ex amet labore commodo"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Provider/find?searchTerm=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Provider",
+												"find"
+											],
+											"query": [
+												{
+													"key": "searchTerm",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Retrieve Address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Provider/retrieve?id=-86285773",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Provider",
+										"retrieve"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "-86285773"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Provider/retrieve?id=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Provider",
+												"retrieve"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "User Basket",
+					"item": [
+						{
+							"name": "deleteall",
+							"item": [
+								{
+									"name": "Delete Basket Db",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userName\": \"cillum\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/UserBasket/deleteall",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"UserBasket",
+												"deleteall"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"userName\": \"cillum\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/UserBasket/deleteall",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"UserBasket",
+														"deleteall"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete Basket Db",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/UserBasket/deleteall/:username",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"UserBasket",
+												"deleteall",
+												":username"
+											],
+											"variable": [
+												{
+													"key": "username",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/UserBasket/deleteall/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"UserBasket",
+														"deleteall",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Update Basket Db",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"exercitation tempor cillum in\",\n    \"ipAddress\": \"proident culpa nulla\",\n    \"basketItems\": [\n        {\n            \"sedol\": \"reprehender\",\n            \"amount\": -24987502.94990498,\n            \"reInvest\": true,\n            \"productType\": 4\n        },\n        {\n            \"sedol\": \"do\",\n            \"amount\": 64410197.35030866,\n            \"reInvest\": true,\n            \"productType\": 3\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/UserBasket/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"UserBasket",
+										"add"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userName\": \"laborum aliqua ut do\",\n    \"ipAddress\": \"ut exercitation qui quis\",\n    \"basketItems\": [\n        {\n            \"sedol\": \"anim\",\n            \"amount\": 62844496.660867184,\n            \"reInvest\": true,\n            \"productType\": 2\n        },\n        {\n            \"sedol\": \"aute labore id aliqua\",\n            \"amount\": -63540070.229643054,\n            \"reInvest\": true,\n            \"productType\": 1\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/UserBasket/add",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"UserBasket",
+												"add"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get Basket Db",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/UserBasket/get?userName=eu ex amet labore commodo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"UserBasket",
+										"get"
+									],
+									"query": [
+										{
+											"key": "userName",
+											"value": "eu ex amet labore commodo"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/UserBasket/get?userName=eu ex amet labore commodo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"UserBasket",
+												"get"
+											],
+											"query": [
+												{
+													"key": "userName",
+													"value": "eu ex amet labore commodo"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete Basket Item Db",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"ut ipsum\",\n    \"sedol\": \"ea ad\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/UserBasket/deletesingle",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"UserBasket",
+										"deletesingle"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userName\": \"ut ipsum\",\n    \"sedol\": \"ea ad\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/UserBasket/deletesingle",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"UserBasket",
+												"deletesingle"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Xplan",
+					"item": [
+						{
+							"name": "dashboard",
+							"item": [
+								{
+									"name": "Recommondations",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Xplan/dashboard/Recommondations?contactId=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Xplan",
+												"dashboard",
+												"Recommondations"
+											],
+											"query": [
+												{
+													"key": "contactId",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Xplan/dashboard/Recommondations?contactId=-86285773",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Xplan",
+														"dashboard",
+														"Recommondations"
+													],
+													"query": [
+														{
+															"key": "contactId",
+															"value": "-86285773"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Recommondations1",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Xplan/dashboard/test?entityId=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Xplan",
+												"dashboard",
+												"test"
+											],
+											"query": [
+												{
+													"key": "entityId",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Xplan/dashboard/test?entityId=-86285773",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Xplan",
+														"dashboard",
+														"test"
+													],
+													"query": [
+														{
+															"key": "entityId",
+															"value": "-86285773"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Advice Report",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Xplan/dashboard/AdviceReport?contactId=-86285773",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Xplan",
+												"dashboard",
+												"AdviceReport"
+											],
+											"query": [
+												{
+													"key": "contactId",
+													"value": "-86285773"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Xplan/dashboard/AdviceReport?contactId=-86285773",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Xplan",
+														"dashboard",
+														"AdviceReport"
+													],
+													"query": [
+														{
+															"key": "contactId",
+															"value": "-86285773"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Download Attachment",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Xplan/dashboard/download/:documentId/:fileId/:mimeType",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Xplan",
+												"dashboard",
+												"download",
+												":documentId",
+												":fileId",
+												":mimeType"
+											],
+											"variable": [
+												{
+													"key": "documentId",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												},
+												{
+													"key": "fileId",
+													"value": "-86285773",
+													"description": "(Required) "
+												},
+												{
+													"key": "mimeType",
+													"value": "eu ex amet labore commodo",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Xplan/dashboard/download/:documentId/:fileId/:mimeType",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Xplan",
+														"dashboard",
+														"download",
+														":documentId",
+														":fileId",
+														":mimeType"
+													],
+													"variable": [
+														{
+															"key": "documentId"
+														},
+														{
+															"key": "fileId"
+														},
+														{
+															"key": "mimeType"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Employment Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Xplan/IncomeAndExpenditure/EmploymentStatus",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Xplan",
+										"IncomeAndExpenditure",
+										"EmploymentStatus"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Xplan/IncomeAndExpenditure/EmploymentStatus",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Xplan",
+												"IncomeAndExpenditure",
+												"EmploymentStatus"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Save As Pdf",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pdfSaveFileName\": \"mollit magna\",\n    \"cshtmlTemplateName\": \"nulla\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Utilities/Utilities",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Utilities",
+								"Utilities"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pdfSaveFileName\": \"mollit magna\",\n    \"cshtmlTemplateName\": \"nulla\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Utilities/Utilities",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Utilities",
+										"Utilities"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
