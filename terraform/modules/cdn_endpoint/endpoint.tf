@@ -10,6 +10,46 @@ resource "azurerm_cdn_endpoint" "storage_account" {
     name      = var.origin_name
   }
 
+  // Globally add security headers to all outgoing responses
+  global_delivery_rule {
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
+    modify_response_header_action {
+      action = "Append"
+      name   = "Strict-Transport-Security"
+      value  = "max-age=31536000; includeSubDomains"
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    modify_response_header_action {
+      action = "Append"
+      name   = "Content-Security-Policy"
+      value  = "script-src 'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com; style-src 'self' 'unsafe-inline';"
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+    modify_response_header_action {
+      action = "Append"
+      name   = "X-Frame-Options"
+      value  = "SAMEORIGIN"
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+    modify_response_header_action {
+      action = "Append"
+      name   = "X-Content-Type-Options"
+      value  = "nosniff"
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+    modify_response_header_action {
+      action = "Append"
+      name   = "Referrer-Policy"
+      value  = "same-origin"
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
+    modify_response_header_action {
+      action = "Append"
+      name   = "Permissions-Policy"
+      value  = "payment=(self), geolocation=(self)"
+    }
+  }
+
   // Redirect all HTTP requests to HTTPS
   delivery_rule {
     name  = "BlockHttp"

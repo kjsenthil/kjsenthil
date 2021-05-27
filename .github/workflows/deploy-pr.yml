@@ -15,10 +15,13 @@ jobs:
               - '.github/workflows/**'
             tf_resource_group:
               - 'terraform/resource_group/**'
+              - 'terraform/modules/**'
             tf_apim:
               - 'terraform/apim/**'
+              - 'terraform/modules/**'
             tf_infra:
               - 'terraform/infra/**'
+              - 'terraform/modules/**'
             packages:
               - 'packages/**'
 
