@@ -31,7 +31,6 @@ import {
   dateAccessor,
   getPerformanceProjectionsDataMaxValue,
   goalNotMetAccessor,
-  ProjectionsChartAnnualHistoricalDatum,
   valueAccessor,
   valueBadAccessor,
   valueDefinedFactory,
@@ -42,6 +41,7 @@ import {
   ProjectionsChartProjectionDatum,
 } from '../../../services/projections';
 import { ProjectionsChartGoalDatum } from '../../../services/goal';
+import { ProjectionsChartAnnualHistoricalDatum } from '../../../services/performance';
 
 export interface PerformanceProjectionsChartProps
   extends WithParentSizeProps,

@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { renderWithTheme, screen, fireEvent } from '@tsw/test-util';
+import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChartPeriodSelection, {
   periodButtonLabel,
 } from './PerformanceChartPeriodSelection';
-import { PerformanceChartPeriod } from '../data/utils';
-import * as dataContext from '../data/dataContext';
-import { changePerformanceDataPeriod } from '../data/dataContext';
+import { PerformanceDataPeriod } from '../../../../services/performance/constants';
 
 describe('PerformanceChartPeriodSelection', () => {
   beforeEach(() => {
@@ -14,12 +12,13 @@ describe('PerformanceChartPeriodSelection', () => {
 
   test('The period selection panel renders', () => {
     renderWithTheme(
-      <dataContext.PerformanceDataContextProvider>
-        <PerformanceChartPeriodSelection />
-      </dataContext.PerformanceDataContextProvider>
+      <PerformanceChartPeriodSelection
+        currentPeriod={PerformanceDataPeriod.ALL_TIME}
+        setCurrentPeriod={() => {}}
+      />
     );
 
-    const periodButtons = Object.values(PerformanceChartPeriod).map((period) =>
+    const periodButtons = Object.values(PerformanceDataPeriod).map((period) =>
       screen.getByText(periodButtonLabel[period])
     );
 
@@ -30,39 +29,31 @@ describe('PerformanceChartPeriodSelection', () => {
 
   const testPeriodLabels = test.each`
     period
-    ${PerformanceChartPeriod['1M']}
-    ${PerformanceChartPeriod['3M']}
-    ${PerformanceChartPeriod['6M']}
-    ${PerformanceChartPeriod['1Y']}
-    ${PerformanceChartPeriod.ALL_TIME}
+    ${PerformanceDataPeriod['1M']}
+    ${PerformanceDataPeriod['3M']}
+    ${PerformanceDataPeriod['6M']}
+    ${PerformanceDataPeriod['1Y']}
+    ${PerformanceDataPeriod.ALL_TIME}
   `;
 
   testPeriodLabels(
     'The $period period button changes the period to $period when clicked',
     ({ period }) => {
-      const mockDispatch = jest.fn();
-
-      const useContextSpy = jest
-        .spyOn(dataContext, 'usePerformanceDataContext')
-        .mockImplementation(() => ({
-          state: { dataPeriod: period, dataStore: {}, dataStoreId: 0 },
-          dispatch: mockDispatch,
-        }));
+      const setCurrentPeriod = jest.fn();
 
       renderWithTheme(
-        <dataContext.PerformanceDataContextProvider>
-          <PerformanceChartPeriodSelection />
-        </dataContext.PerformanceDataContextProvider>
+        <PerformanceChartPeriodSelection
+          currentPeriod={PerformanceDataPeriod.ALL_TIME}
+          setCurrentPeriod={setCurrentPeriod}
+        />
       );
 
       const periodButton = screen.getByText(periodButtonLabel[period]);
 
       fireEvent.click(periodButton);
 
-      expect(mockDispatch).toHaveBeenCalledTimes(1);
-      expect(mockDispatch).toHaveBeenCalledWith(changePerformanceDataPeriod(period));
-
-      useContextSpy.mockRestore();
+      expect(setCurrentPeriod).toHaveBeenCalledTimes(1);
+      expect(setCurrentPeriod).toHaveBeenCalledWith(period);
     }
   );
 });

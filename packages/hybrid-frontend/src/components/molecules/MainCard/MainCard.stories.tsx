@@ -3,7 +3,9 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import MainCard, { MainCardProps } from './MainCard';
 import { Button, Icon, Typography } from '../../atoms';
 import PerformanceChart from '../../organisms/PerformanceChart';
-import { PerformanceDataContextProvider } from '../../organisms/PerformanceChart/data/dataContext';
+import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
+import { PerformanceDataPeriod } from '../../../services/performance/constants';
+import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
 
 export default {
   title: 'Digital Hybrid/Molecules/Main Card',
@@ -29,14 +31,23 @@ MainCardWithChildren.args = {
     </Button>
   ),
   children: (
-    <PerformanceDataContextProvider>
-      <div
-        style={{
-          padding: 10,
+    <div
+      style={{
+        padding: 10,
+      }}
+    >
+      <PerformanceChart
+        performanceData={getPerformanceContactMockResponseData.data.attributes.values.map(
+          mapPerformanceData
+        )}
+        contributionsData={getPerformanceContactMockResponseData.included[0].attributes.contributions.map(
+          mapContributionsData
+        )}
+        periodSelectionProps={{
+          currentPeriod: PerformanceDataPeriod.ALL_TIME,
+          setCurrentPeriod: () => {},
         }}
-      >
-        <PerformanceChart />
-      </div>
-    </PerformanceDataContextProvider>
+      />
+    </div>
   ),
 };

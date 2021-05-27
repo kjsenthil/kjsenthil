@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChart from './PerformanceChart';
-import { PerformanceDataContextProvider } from './data/dataContext';
+import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
+import { PerformanceDataPeriod } from '../../../services/performance/constants';
+import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
 
 describe('PerformanceChartChart', () => {
   const CHART_SIZE = 600;
@@ -14,13 +16,21 @@ describe('PerformanceChartChart', () => {
           height: CHART_SIZE,
         }}
       >
-        <PerformanceDataContextProvider>
-          <PerformanceChart
-            initialWidth={CHART_SIZE}
-            initialHeight={CHART_SIZE}
-            parentWidth={CHART_SIZE}
-          />
-        </PerformanceDataContextProvider>
+        <PerformanceChart
+          performanceData={getPerformanceContactMockResponseData.data.attributes.values.map(
+            mapPerformanceData
+          )}
+          contributionsData={getPerformanceContactMockResponseData.included[0].attributes.contributions.map(
+            mapContributionsData
+          )}
+          periodSelectionProps={{
+            currentPeriod: PerformanceDataPeriod.ALL_TIME,
+            setCurrentPeriod: () => {},
+          }}
+          initialWidth={CHART_SIZE}
+          initialHeight={CHART_SIZE}
+          parentWidth={CHART_SIZE}
+        />
       </div>
     );
 

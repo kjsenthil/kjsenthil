@@ -11,18 +11,24 @@ import {
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import styled from 'styled-components';
 import { Theme } from '../../atoms';
-import usePerformanceChartScales from './performanceChartScales/usePerformanceChartScales';
-import { useContributionsData, usePerformanceData } from './data/data';
+import { useTimeValueScales } from '../../../hooks/ChartHooks';
 import { usePerformanceChartStyles } from './performanceChartStyles/performanceChartStyles';
 import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartTooltip';
 import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformanceChartTooltip';
-import { getTimeSeriesMinMax, timeSeriesDateAccessor, timeSeriesValueAccessor } from './data/utils';
+import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/PerformanceChartSummaryPanel';
-import PerformanceChartPeriodSelection from './PerformanceChartPeriodSelection/PerformanceChartPeriodSelection';
+import PerformanceChartPeriodSelection, {
+  PerformanceChartPeriodSelectionProps,
+} from './PerformanceChartPeriodSelection/PerformanceChartPeriodSelection';
+import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
+import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
-  includePeriodSelection?: boolean;
+  performanceData: PerformanceDatum[];
+  contributionsData: ContributionDatum[];
+
+  periodSelectionProps: PerformanceChartPeriodSelectionProps;
 }
 
 // ---------- Utilities ---------- //
@@ -51,15 +57,17 @@ const ControlPanelContainer = styled.div`
   `}
 `;
 
-function PerformanceChart({ parentWidth = 0, includePeriodSelection }: PerformanceChartProps) {
+function PerformanceChart({
+  performanceData,
+  contributionsData,
+  periodSelectionProps,
+  parentWidth = 0,
+}: PerformanceChartProps) {
   // ----- Stylings ----- //
 
   const chartStyles = usePerformanceChartStyles();
 
   // ----- Chart data ----- //
-
-  const performanceData = usePerformanceData();
-  const contributionsData = useContributionsData();
 
   const hasData = performanceData.length > 0 && contributionsData.length > 0;
 
@@ -95,7 +103,7 @@ function PerformanceChart({ parentWidth = 0, includePeriodSelection }: Performan
   const maxChartValue = Math.max(maxContributionsValue, maxValuationsValue);
   const minChartValue = Math.min(minContributionsValue, minValuationsValue);
 
-  const { xScale, yScale } = usePerformanceChartScales({
+  const { xScale, yScale } = useTimeValueScales({
     chartDimension,
     minDate: new Date(minChartDate),
     maxDate: new Date(maxChartDate),
@@ -178,7 +186,7 @@ function PerformanceChart({ parentWidth = 0, includePeriodSelection }: Performan
           totalReturn={totalReturn}
           totalReturnPct={totalReturnPct}
         />
-        {includePeriodSelection && <PerformanceChartPeriodSelection />}
+        <PerformanceChartPeriodSelection {...periodSelectionProps} />
       </ControlPanelContainer>
 
       <svg
@@ -203,43 +211,51 @@ function PerformanceChart({ parentWidth = 0, includePeriodSelection }: Performan
           {/* Axes */}
 
           <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-          <PerformanceChartAxisBottom chartDimension={chartDimension} scale={xScale} />
+          <PerformanceChartAxisBottom
+            chartDimension={chartDimension}
+            scale={xScale}
+            currentPeriod={periodSelectionProps.currentPeriod}
+          />
 
           {/* ***** Graph paths ***** */}
 
-          {/* The performance graph has 2 components: an AreaClosed and a
+          {hasData && (
+            <Group>
+              {/* The performance graph has 2 components: an AreaClosed and a
               LinePath. The AreaClosed is used purely to create the gradient
               shading. We can't use AreaClosed with stroke because then there
               will be strokes along the chart's 2 sides and bottom, which we
               don't want. */}
-          <MemoizedAreaClosed
-            data={performanceData}
-            x={shapeXAccessor}
-            y={shapeYAccessor}
-            yScale={yScale}
-            curve={curveNatural}
-            strokeWidth={0}
-            fill="url(#historical-performance-gradient)"
-            onMouseLeave={() => hideTooltip()}
-          />
-          <MemoizedLinePath
-            data={performanceData}
-            x={shapeXAccessor}
-            y={shapeYAccessor}
-            curve={curveNatural}
-            stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
-            strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
-          />
+              <MemoizedAreaClosed
+                data={performanceData}
+                x={shapeXAccessor}
+                y={shapeYAccessor}
+                yScale={yScale}
+                curve={curveNatural}
+                strokeWidth={0}
+                fill="url(#historical-performance-gradient)"
+                onMouseLeave={() => hideTooltip()}
+              />
+              <MemoizedLinePath
+                data={performanceData}
+                x={shapeXAccessor}
+                y={shapeYAccessor}
+                curve={curveNatural}
+                stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
+                strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
+              />
 
-          {/* This is the contribution graph */}
-          <MemoizedLinePath
-            data={contributionsData}
-            x={shapeXAccessor}
-            y={shapeYAccessor}
-            stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
-            strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
-            strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
-          />
+              {/* This is the contribution graph */}
+              <MemoizedLinePath
+                data={contributionsData}
+                x={shapeXAccessor}
+                y={shapeYAccessor}
+                stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
+                strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
+                strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
+              />
+            </Group>
+          )}
 
           {/* This is the chart's tooltip hover detection area */}
           <Bar

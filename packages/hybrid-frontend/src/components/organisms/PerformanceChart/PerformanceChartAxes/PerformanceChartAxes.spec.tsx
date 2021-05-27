@@ -2,8 +2,8 @@ import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './index';
-import { PerformanceDataContextProvider } from '../data/dataContext';
 import { ChartDimension } from '../../../../config/chart';
+import { PerformanceDataPeriod } from '../../../../services/performance/constants';
 
 describe('PerformanceChartAxes', () => {
   const chartDimension: ChartDimension = {
@@ -36,12 +36,14 @@ describe('PerformanceChartAxes', () => {
     const {
       result: { container },
     } = renderWithTheme(
-      <PerformanceDataContextProvider>
-        <svg width={300} height={300}>
-          <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-          <PerformanceChartAxisBottom chartDimension={chartDimension} scale={xScale} />
-        </svg>
-      </PerformanceDataContextProvider>
+      <svg width={300} height={300}>
+        <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
+        <PerformanceChartAxisBottom
+          chartDimension={chartDimension}
+          scale={xScale}
+          currentPeriod={PerformanceDataPeriod.ALL_TIME}
+        />
+      </svg>
     );
 
     const axisLeft = container.querySelector('.visx-axis-left');

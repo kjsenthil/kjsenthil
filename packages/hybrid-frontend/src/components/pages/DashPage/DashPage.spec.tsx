@@ -1,8 +1,11 @@
 import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
-import { projectionsSlice as projectionsReducer } from '../../../services/projections';
 import DashPage from './DashPage';
+import { authSlice as authReducer } from '../../../services/auth/reducers';
+import investmentSummaryReducer from '../../../services/myAccount/reducers/investmentSummarySlice';
+import { performanceSlice as performanceReducer } from '../../../services/performance/reducers';
+import { projectionsSlice as projectionsReducer } from '../../../services/projections';
 import { mockClientResponse } from '../../../services/myAccount/mocks';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
@@ -13,6 +16,9 @@ jest.mock('../../templates/MyAccountLayout', () => ({
 describe('DashPage', () => {
   const store = configureStore({
     reducer: {
+      auth: authReducer,
+      investmentSummary: investmentSummaryReducer,
+      performance: performanceReducer,
       projections: projectionsReducer,
       client: () => mockClientResponse,
     },

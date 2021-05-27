@@ -1,0 +1,36 @@
+{
+  "data": {
+    "type": "performance",
+    "id": "283732",
+    "attributes": {
+      "accountValue": 635376.13,
+      "performance": { "value": 122249.17, "percentage": 37.07 },
+      "values": [{ "date": "2021-04-13T00:00:00", "value": 659319.57 }]
+    },
+    "links": {
+      "self": "https://myaccountsapi.demo2.bestinvest.co.uk/api/performance/283732"
+    },
+    "relationships": {
+      "contributions": {
+        "links": {
+          "related": "https://myaccountsapi.demo2.bestinvest.co.uk/api/performance/283732/contributions"
+        },
+        "data": { "type": "contributions", "id": "283732" }
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "contributions",
+      "id": "283732",
+      "attributes": {
+        "totalContributions": 200397.14,
+        "contributions": [{ "date": "2021-04-13T00:00:00", "netContributionsToDate": 262777.4 }]
+      },
+      "links": {
+        "self": "https://myaccountsapi.demo2.bestinvest.co.uk/api/contributions/283732"
+      },
+      "relationships": null
+    }
+  ]
+}

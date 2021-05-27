@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { localPoint } from '@visx/event';
 import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
-import { Bisector, bisector } from 'd3-array';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { ContributionDatum, PerformanceDatum, TimeSeriesDatum } from '../data/utils';
+import { ContributionDatum, PerformanceDatum } from '../performanceData';
 import { ChartDimension } from '../../../../config/chart';
+import { getDatumAtPosX } from '../../../../utils/chart';
+import { TimeSeriesDatum } from '../../../../utils/data';
 
 export interface UsePerformanceChartTooltipProps {
   chartDimension: ChartDimension;
@@ -26,60 +27,6 @@ export interface TooltipData {
   //  the contribution line. Is there a better way?
   contributionIndicatorPosY: number | undefined;
 }
-
-export interface DetermineTooltipPositionProps {
-  mouseX: number;
-
-  chartDimension: ChartDimension;
-
-  performanceData: PerformanceDatum[];
-  contributionsData: ContributionDatum[];
-
-  bisectDate: Bisector<TimeSeriesDatum, Date>['left'];
-
-  xAccessor: (d: TimeSeriesDatum) => Date;
-  xScale: any;
-}
-
-export const determineTooltipDataAndPosition = ({
-  mouseX,
-  chartDimension,
-  performanceData,
-  contributionsData,
-  bisectDate,
-  xAccessor,
-  xScale,
-}: DetermineTooltipPositionProps): { x: number; pd: PerformanceDatum; cd: ContributionDatum } => {
-  const x = mouseX - chartDimension.margin.left;
-
-  // TODO: Optimize / make this clearer
-  const x0 = xScale.invert(x);
-  const index = bisectDate(performanceData, x0, 1);
-  const pd0 = performanceData[index - 1];
-  const pd1 = performanceData[index];
-  let pd = pd0;
-  if (pd1 && xAccessor(pd1)) {
-    const distX1 = x0.valueOf() - xAccessor(pd0).valueOf();
-    const distX2 = xAccessor(pd1).valueOf() - x0.valueOf();
-
-    pd = distX1 > distX2 ? pd1 : pd0;
-  }
-  const cd0 = contributionsData[index - 1];
-  const cd1 = contributionsData[index];
-  let cd = cd0;
-  if (cd1 && xAccessor(cd1)) {
-    const distX1 = x0.valueOf() - xAccessor(cd0).valueOf();
-    const distX2 = xAccessor(cd1).valueOf() - x0.valueOf();
-
-    cd = distX1 > distX2 ? cd1 : cd0;
-  }
-
-  return {
-    x,
-    pd,
-    cd,
-  };
-};
 
 export default function usePerformanceChartTooltip({
   chartDimension,
@@ -119,8 +66,6 @@ export default function usePerformanceChartTooltip({
     []
   );
 
-  const bisectDate = bisector<TimeSeriesDatum, Date>((d: TimeSeriesDatum) => d.date).left;
-
   const handleShowContributionsTooltip = React.useCallback(
     (e: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>) => {
       // TooltipInPortal expects coordinates to be relative to containerRef
@@ -128,24 +73,30 @@ export default function usePerformanceChartTooltip({
       // is what containerRef is set to.
       const { x: mouseX } = localPoint(e) ?? { x: 0, y: 0 };
 
-      const { x, cd, pd } = determineTooltipDataAndPosition({
-        mouseX,
-        chartDimension,
-        performanceData,
-        contributionsData,
-        bisectDate,
-        xAccessor,
+      // Adjust the x-position for margins
+      const adjMouseX = mouseX - chartDimension.margin.left;
+
+      const performanceDatumAtPosX = getDatumAtPosX<PerformanceDatum>({
+        data: performanceData,
+        posX: adjMouseX,
         xScale,
+        dateAccessor: xAccessor,
+      });
+      const contributionDatumAtPosX = getDatumAtPosX<ContributionDatum>({
+        data: contributionsData,
+        posX: adjMouseX,
+        xScale,
+        dateAccessor: xAccessor,
       });
 
       if (performanceData.length > 0 && contributionsData.length > 0) {
         tooltip.showTooltip({
-          tooltipLeft: x,
-          tooltipTop: yScale(yAccessor(pd)),
+          tooltipLeft: adjMouseX,
+          tooltipTop: yScale(yAccessor(performanceDatumAtPosX)),
           tooltipData: {
-            performance: pd,
-            contribution: cd,
-            contributionIndicatorPosY: yScale(yAccessor(cd)),
+            performance: performanceDatumAtPosX,
+            contribution: contributionDatumAtPosX,
+            contributionIndicatorPosY: yScale(yAccessor(contributionDatumAtPosX)),
           },
         });
       }

@@ -35,9 +35,10 @@ const env = from({
 
 const isRequired = NODE_ENV !== 'test';
 
-const defaultEndpoints = {
+const defaultEndpoints: Record<ApiEndpoints, string> = {
   MYACCOUNT_BREAKDOWN_ALLOCATION: '/myaccount/breakdown-allocation/{id}',
   MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
+  MYACCOUNT_PERFORMANCE_CONTACT: '/myaccount/performance-contact/{id}',
   MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS: '/myaccount/investment-summary-account',
   MYACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',
   GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
@@ -78,6 +79,7 @@ export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION,
   API_ENDPOINTS.MYACCOUNT_CLIENTS,
   API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS,
+  API_ENDPOINTS.MYACCOUNT_PERFORMANCE_CONTACT,
   API_ENDPOINTS.PROJECTIONS_PORTFOLIO_RISK_PROFILE,
   API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION,
   API_ENDPOINTS.POST_PROJECTIONS,

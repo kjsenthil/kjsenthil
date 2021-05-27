@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
+
 import { graphql, useStaticQuery } from 'gatsby';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Box, Grid, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
@@ -13,6 +15,16 @@ import { useAnnualHistoricalDataForChart } from '../../organisms/PerformanceProj
 import useGoalsDataForChart from '../../../services/goal/hooks/useGoalsDataForChart';
 import useProjectionsMetadataForChart from '../../../services/projections/hooks/useProjectionsMetadataForChart';
 import { formatCurrency } from '../../../utils/formatters';
+import {
+  useContributionsData,
+  usePerformanceData,
+  usePerformanceDataPeriod,
+} from '../../../services/performance/hooks';
+import { usePerformanceChartStyles } from '../../organisms/PerformanceChart/performanceChartStyles/performanceChartStyles';
+import { getPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
+import PerformanceChart from '../../organisms/PerformanceChart';
+import { RootState } from '../../../store';
+import { useDispatchThunkOnRender } from '../../../hooks';
 
 const query = graphql`
   query Funds {
@@ -27,28 +39,60 @@ const query = graphql`
 `;
 
 const DashPage = () => {
+  const {
+    auth: { contactId },
+    client: { included: clientData },
+    investmentSummary: { data: investmentSummaryData },
+    performance: { status: performanceStatus, performanceError },
+    projections: { status: projectionsStatus, postProjectionsError: projectionsError },
+  } = useSelector((state: RootState) => state);
+
   const dispatch = useDispatch();
 
+  // Historical performance data
+  const performanceData = usePerformanceData();
+  const contributionsData = useContributionsData();
+  const performanceDataPeriod = usePerformanceDataPeriod();
+  const performanceChartStyles = usePerformanceChartStyles();
+  const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
+
+  // Projected performance data
   const projectionsData = useProjectionsDataForChart();
   const annualHistoricalData = useAnnualHistoricalDataForChart();
   const goalsData = useGoalsDataForChart();
   const projectionsMetadata = useProjectionsMetadataForChart();
   const performanceProjectionsChartStyles = usePerformanceProjectionsChartStyles();
-
-  const hasDataForChart =
+  const hasDataForProjectionsChart =
     projectionsData.length > 0 &&
     annualHistoricalData.length > 0 &&
     goalsData.length > 0 &&
     projectionsMetadata;
+
   const fundData = useStaticQuery<AllAssets>(query);
 
-  useEffect(() => {
-    if (projectionsMetadata) {
-      dispatch(
-        fetchProjections({ fundData, investmentPeriod: projectionsMetadata.investmentPeriod })
-      );
+  // Fetch projections data for projections chart
+  const dispatchFetchProjections = () =>
+    dispatch(
+      fetchProjections({ fundData, investmentPeriod: projectionsMetadata?.investmentPeriod ?? 0 })
+    );
+  const { maxRetriesHit: projectionsFetchMaxRetriesHit } = useDispatchThunkOnRender(
+    dispatchFetchProjections,
+    projectionsStatus,
+    {
+      enabled: fundData && clientData && investmentSummaryData && !!projectionsMetadata,
     }
-  }, []);
+  );
+
+  // Fetch performance data for performance chart
+  const dispatchGetPerformanceContact = () =>
+    dispatch(getPerformanceContact({ contactId: contactId ?? '' }));
+  const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
+    dispatchGetPerformanceContact,
+    performanceStatus,
+    {
+      enabled: !!contactId && !!performanceData,
+    }
+  );
 
   return (
     <MyAccountLayout
@@ -63,8 +107,29 @@ const DashPage = () => {
       <Typography variant="h2">XO projection spike</Typography>
       <Spacer y={2} />
       <Grid container spacing={3}>
+        {/* Performance chart */}
         <Grid item xs={12}>
-          {hasDataForChart && projectionsMetadata ? (
+          {hasDataForPerformanceChart ? (
+            <Box p={2}>
+              <PerformanceChart
+                performanceData={performanceData}
+                contributionsData={contributionsData}
+                periodSelectionProps={{
+                  currentPeriod: performanceDataPeriod,
+                  setCurrentPeriod: (newPeriod) => dispatch(setPerformanceDataPeriod(newPeriod)),
+                }}
+              />
+            </Box>
+          ) : performanceFetchMaxRetriesHit && performanceError ? (
+            <Typography>{performanceError}</Typography>
+          ) : (
+            <Skeleton height={performanceChartStyles.DIMENSION.DESKTOP.height} />
+          )}
+        </Grid>
+
+        {/* Projections chart */}
+        <Grid item xs={12}>
+          {hasDataForProjectionsChart && projectionsMetadata ? (
             <Box p={2}>
               <PerformanceProjectionsChart
                 projectionsData={projectionsData}
@@ -73,6 +138,8 @@ const DashPage = () => {
                 projectionsMetadata={projectionsMetadata}
               />
             </Box>
+          ) : projectionsFetchMaxRetriesHit && projectionsError ? (
+            <Typography>{projectionsError}</Typography>
           ) : (
             <Skeleton height={performanceProjectionsChartStyles.DIMENSION.DESKTOP.height} />
           )}

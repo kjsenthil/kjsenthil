@@ -1,4 +1,3 @@
-export { default as useAnnualHistoricalDataForChart } from './useAnnualHistoricalDataForChart';
+export { default as useAnnualHistoricalDataForChart } from '../../../../services/performance/hooks/useAnnualHistoricalDataForChart';
 
-export * from './types';
 export * from './utils';

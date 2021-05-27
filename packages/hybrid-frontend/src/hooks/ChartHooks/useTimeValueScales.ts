@@ -52,7 +52,7 @@ export default function useTimeValueScales({
         domain: [minDate, maxDate],
         range: [margin.left, innerWidth],
       }),
-    [innerWidth, margin.left]
+    [innerWidth, margin.left, minDate.getTime(), maxDate.getTime()]
   );
 
   const yScale = React.useMemo(
@@ -63,7 +63,7 @@ export default function useTimeValueScales({
 
         nice: true,
       }),
-    [innerHeight, margin.top]
+    [innerHeight, margin.top, minValue, maxValue, maxValueBuffer, minValueBuffer]
   );
 
   return {

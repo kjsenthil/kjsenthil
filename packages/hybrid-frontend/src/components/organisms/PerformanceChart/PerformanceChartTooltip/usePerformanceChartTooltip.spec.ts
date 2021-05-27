@@ -1,93 +1,113 @@
-import { bisector } from 'd3-array';
-import { scaleTime } from '@visx/scale';
-import { determineTooltipDataAndPosition } from './usePerformanceChartTooltip';
-import { ContributionDatum, PerformanceDatum, TimeSeriesDatum } from '../data/utils';
-import {
-  defaultGenerateTimeSeriesDataProps,
-  generateTimeSeriesData,
-  GenerateTimeSeriesDataProps,
-} from '../../../../utils/data';
-import { ChartDimension } from '../../../../config/chart';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { act, renderHook } from '@testing-library/react-hooks';
+import * as visxEvent from '@visx/event';
+import usePerformanceChartTooltip from './usePerformanceChartTooltip';
+import { ContributionDatum, PerformanceDatum } from '../performanceData';
+import { generateParametersForUseTooltipHook } from './PerformanceChartTooltipTestUtils';
+import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../../utils/chart/accessors';
+import { getDatumAtPosX } from '../../../../utils/chart';
+
+jest.mock('@visx/event');
 
 describe('usePerformanceChartTooltip', () => {
-  // Return an array like this: [1, 2, ..., 100];
-  const datumCounts = Array.from({ length: 10 }, (_, i) => i + 1);
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  describe('determineTooltipPosition', () => {
-    test.each(datumCounts)(
-      'The tooltip position is calculated correctly when datum count is %i',
-      (howMany: number) => {
-        const generateDataProps: GenerateTimeSeriesDataProps = {
-          ...defaultGenerateTimeSeriesDataProps,
-          howMany,
-        };
+  test("The hook doesn't call showTooltip() when there is no data", () => {
+    const {
+      chartDimension,
+      contributionsData,
+      performanceData,
+      xScale,
+      yScale,
+    } = generateParametersForUseTooltipHook(0);
 
-        const chartDimension: ChartDimension = {
-          width: 600,
-          height: 300,
-          margin: {
-            top: 10,
-            right: 20,
-            bottom: 30,
-            left: 40,
-          },
-        };
-
-        const performanceData: PerformanceDatum[] = generateTimeSeriesData({
-          ...generateDataProps,
-          firstValue: 2000,
-        });
-        const contributionsData: ContributionDatum[] = generateTimeSeriesData({
-          ...generateDataProps,
-        });
-
-        const xAccessor = (d: TimeSeriesDatum) => d.date;
-
-        const bisectDate = bisector<TimeSeriesDatum, Date>((d: TimeSeriesDatum) => d.date).left;
-
-        const xScale = scaleTime({
-          domain: [
-            new Date(
-              generateDataProps.firstYear,
-              generateDataProps.firstMonth,
-              generateDataProps.firstDate
-            ),
-            new Date(
-              generateDataProps.firstYear,
-              generateDataProps.firstMonth,
-              generateDataProps.firstDate + generateDataProps.howMany - 1
-            ),
-          ],
-          range: [
-            chartDimension.margin.left,
-            chartDimension.width - chartDimension.margin.left - chartDimension.margin.right,
-          ],
-        });
-
-        const { x, cd, pd } = determineTooltipDataAndPosition({
-          mouseX: 300,
-          xAccessor,
-          xScale,
-          bisectDate,
-          chartDimension,
-          contributionsData,
-          performanceData,
-        });
-
-        // mouseX = 300
-        // chart has left offset = 40
-        // tooltip should be 300 - 40 = 260 (relative to the start of the chart)
-        expect(x).toBe(260);
-
-        // calculate the estimated data index, which is determined by the mouse
-        // position relative to the chart's width.
-        const dataIndexRatio =
-          x / (chartDimension.width - chartDimension.margin.left - chartDimension.margin.right);
-        const dataIndex = Math.floor(dataIndexRatio * howMany);
-
-        expect(pd).toEqual(performanceData[dataIndex]);
-        expect(cd).toEqual(contributionsData[dataIndex]);
-      }
+    const { result } = renderHook(() =>
+      usePerformanceChartTooltip({
+        chartDimension,
+        performanceData,
+        contributionsData,
+        xScale,
+        yScale,
+        yAccessor: timeSeriesValueAccessor,
+        xAccessor: timeSeriesDateAccessor,
+      })
     );
+
+    const showTooltipSpy = jest.spyOn(result.current.tooltip, 'showTooltip');
+
+    act(() => {
+      // We just need to pass an event to our show tooltip handler, hence the
+      // ts-ignore. All event properties are mocked via our @visx/event module
+      // mock.
+      // @ts-ignore
+      result.current.handleShowContributionsTooltip(new Event('hover'));
+    });
+
+    expect(showTooltipSpy).not.toHaveBeenCalled();
+  });
+
+  test('The hook calls showTooltip() correctly when there is data', () => {
+    const mockMousePos = {
+      x: 100,
+      y: 100,
+    };
+
+    (visxEvent.localPoint as jest.Mock).mockImplementation(() => mockMousePos);
+
+    const {
+      chartDimension,
+      contributionsData,
+      performanceData,
+      xScale,
+      yScale,
+    } = generateParametersForUseTooltipHook(10);
+
+    const { result } = renderHook(() =>
+      usePerformanceChartTooltip({
+        chartDimension,
+        performanceData,
+        contributionsData,
+        xScale,
+        yScale,
+        yAccessor: timeSeriesValueAccessor,
+        xAccessor: timeSeriesDateAccessor,
+      })
+    );
+
+    const showTooltipSpy = jest.spyOn(result.current.tooltip, 'showTooltip');
+
+    act(() => {
+      // We just need to pass an event to our show tooltip handler, hence the
+      // ts-ignore. All event properties are mocked via our @visx/event module
+      // mock.
+      // @ts-ignore
+      result.current.handleShowContributionsTooltip(new Event('hover'));
+    });
+
+    const performanceDatum = getDatumAtPosX<PerformanceDatum>({
+      data: performanceData,
+      xScale,
+      dateAccessor: timeSeriesDateAccessor,
+      posX: mockMousePos.x - chartDimension.margin.left,
+    });
+    const contributionDatum = getDatumAtPosX<ContributionDatum>({
+      data: performanceData,
+      xScale,
+      dateAccessor: timeSeriesDateAccessor,
+      posX: mockMousePos.x - chartDimension.margin.left,
+    });
+
+    expect(showTooltipSpy).toHaveBeenCalledTimes(1);
+    expect(showTooltipSpy).toHaveBeenCalledWith({
+      tooltipLeft: mockMousePos.x - chartDimension.margin.left,
+      tooltipTop: yScale(timeSeriesValueAccessor(performanceDatum)),
+      tooltipData: {
+        performance: performanceDatum,
+        contribution: contributionDatum,
+        contributionIndicatorPosY: yScale(timeSeriesValueAccessor(contributionDatum)),
+      },
+    });
   });
 });
