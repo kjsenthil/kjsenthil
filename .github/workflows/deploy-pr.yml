@@ -567,6 +567,9 @@ jobs:
       - build_cache
       - deploy_pr_terraform
       - clear_storybook_storage_account
+    strategy:
+      matrix:
+        browser: [chrome,firefox]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -592,37 +595,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
 
-      - name: "Install Cypress binary"
-        run: npx cypress install
-
-      - name: "Create PR env file"
-        working-directory: ./packages/hybrid-frontend
-        run: |
-          touch .env.pr
-          echo 'API_ENDPOINTS=${{ needs.deploy_pr_terraform.outputs.api_endpoints }}' >> .env.pr
-          echo 'API_BASE_URL=${{ needs.deploy_pr_terraform.outputs.api_base_url }}' >> .env.pr
-          cat .env.pr
-
-      # Gatsby can run over the default number of file watchers so we need to up this value
-      - name: "Increase file watchers for Gatsby"
-        shell: bash
-        working-directory: ./packages/hybrid-frontend
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: "Update webdriver-manager"
+        run: npx webdriver-manager update
 
       - name: "Run E2E UI tests"
-        run: GATSBY_ACTIVE_ENV=pr yarn frontend test:e2e:ci
+        run : yarn test:e2e
+        env :
+             BROWSER: ${{matrix.browser}}
+             URL: ${{ needs.deploy_pr_terraform.outputs.website_endpoint }} 
+             JEST_HTML_REPORTERS_FILE_NAME: TestReport_${{matrix.browser}}.html
+             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
+             API_BASE_URL : ${{ needs.deploy_pr_terraform.outputs.api_base_url }}
+             XPLAN_APP_ID : ${{ secrets.XPLAN_APP_ID }}
+             XPLAN_USERNAME: ${{ secrets.XPLAN_USERNAME }}
+             XPLAN_PASSWORD: ${{ secrets.XPLAN_PASSWORD }}
 
       - name: "Login to Azure"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: "Deploy Cypress Report"
+      - name: "Deploy Selenium Reports"
+        if: ${{ always() }}
         uses: azure/CLI@v1
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/cypress/report -d "\$web/cypress" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
+                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/selenium" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}" --type "block"
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -1087,7 +1086,8 @@ jobs:
             **Linting Results:** \`${{ needs.deploy_storybook.outputs.url }}eslint/index.html\`
             **Unit Test Coverage Report:** \`${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html\`
             **Unit Test Report:** \`${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html\`
-            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}cypress/index.html\`
+            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}/selenium/reports/TestReport_chrome.html\`
+            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}/selenium/reports/TestReport_firefox.html\`
 
             #### Review URLs
             **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
@@ -1275,17 +1275,35 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": ":page_facing_up:   Cypress Coverage report"
+                      "text": ":page_facing_up:   Selenium Chrome report"
                     },
                     "accessory": {
                       "type": "button",
                       "text": {
                         "type": "plain_text",
-                        "text": "Cypress coverage report",
+                        "text": "Selenium Chrome report",
                         "emoji": true
                       },
                       "value": "Link to Cypress report",
-                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/cypress/index.html' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/selenium/TestReport_chrome.html' : 'https://www.google.com/404.html',
+                      "action_id": "button-action"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":page_facing_up:   Selenium Firefox report"
+                    },
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Selenium Firefox report",
+                        "emoji": true
+                      },
+                      "value": "Link to Cypress report",
+                      "url": '${{ needs.end_to_end_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/selenium/TestReport_firefox.html' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
