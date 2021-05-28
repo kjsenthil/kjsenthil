@@ -7,6 +7,7 @@ import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 import PerformanceProjectionsSimplifiedChart, {
   PerformanceProjectionsSimplifiedChartProps,
 } from '../PerformanceProjectionsSimplifiedChart';
+import { getPossessiveSuffix } from '../../../../utils/string';
 
 export interface PerformanceProjectionsSimplifiedChartCardProps {
   userFirstName: string;
@@ -35,9 +36,6 @@ export default function PerformanceProjectionsSimplifiedChartCard({
   goalDisplayProps,
   chartProps,
 }: PerformanceProjectionsSimplifiedChartCardProps) {
-  // i.e. Tom -> Tom's / Thomas -> Thomas'
-  const firstNameSuffix = userFirstName[userFirstName.length - 1] === 's' ? "'" : "'s";
-
   const formattedRetirementPerformance = formatCurrency(retirementPerformance, {
     opts: {
       minimumFractionDigits: 0,
@@ -53,7 +51,7 @@ export default function PerformanceProjectionsSimplifiedChartCard({
 
   return (
     <MainCard
-      title={`${userFirstName}${firstNameSuffix} life plan`}
+      title={`${userFirstName}${getPossessiveSuffix(userFirstName)} life plan`}
       renderActionEl={() => <CardButton />}
     >
       <InfoBox>

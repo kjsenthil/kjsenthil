@@ -32,10 +32,10 @@ export default function PerformanceProjectionsChartSummaryPanel({
   return (
     <Container>
       <Legend
-        title="Past / Projected value"
+        title="Projected value"
         value={performance}
         valueFormatter={formatCurrency}
-        chartIndicatorProps={{ variant: 'solid' }}
+        chartIndicatorProps={{ variant: 'solid', color: 'tertiary' }}
       />
 
       <Legend

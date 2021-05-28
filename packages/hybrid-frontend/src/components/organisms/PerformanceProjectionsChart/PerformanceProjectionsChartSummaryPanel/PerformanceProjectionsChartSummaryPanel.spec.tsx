@@ -14,7 +14,7 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
       />
     );
 
-    const projectedValueLabel = screen.getByText('PAST / PROJECTED VALUE');
+    const projectedValueLabel = screen.getByText('PROJECTED VALUE');
     const likelyRangeLabel = screen.getByText('LIKELY RANGE');
     const contributionsLabel = screen.getByText('CONTRIBUTIONS');
     const performanceTargetNotMetLabel = screen.getByText('TARGET VALUE');

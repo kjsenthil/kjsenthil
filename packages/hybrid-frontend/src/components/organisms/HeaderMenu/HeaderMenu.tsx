@@ -53,6 +53,8 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
     dispatch(logout());
   };
 
+  const navigateLifePlan = () => navigate('/my-account/life-plan');
+
   const navigateHome = () => {
     navigate('/');
   };
@@ -94,7 +96,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                         <MenuItem onClick={() => navigate('/my-account/accounts')}>
                           Investments
                         </MenuItem>
-                        <MenuItem onClick={navigateHome}>Life Plan</MenuItem>
+                        <MenuItem onClick={navigateLifePlan}>Life Plan</MenuItem>
                         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                       </Menu>
                     </Grid>
@@ -118,7 +120,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                       </NavLink>
                     </Grid>
                     <Grid item>
-                      <NavLink onClick={navigateHome}>
+                      <NavLink onClick={navigateLifePlan}>
                         <Typography variant="sh4" color="grey">
                           Life Plan
                         </Typography>

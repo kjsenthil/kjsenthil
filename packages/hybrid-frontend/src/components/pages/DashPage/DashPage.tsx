@@ -1,13 +1,9 @@
-/* eslint-disable no-nested-ternary */
-
-import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Box, Grid, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import { fetchProjections } from '../../../services/projections';
-import { AllAssets } from '../../../services/assets';
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
 import { usePerformanceProjectionsChartStyles } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartStyles/performanceProjectionsChartStyles';
 import useProjectionsDataForChart from '../../../services/projections/hooks/useProjectionsDataForChart';
@@ -25,18 +21,7 @@ import { getPerformanceContact, setPerformanceDataPeriod } from '../../../servic
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { RootState } from '../../../store';
 import { useDispatchThunkOnRender } from '../../../hooks';
-
-const query = graphql`
-  query Funds {
-    allAsset {
-      nodes {
-        riskModel: taamodel
-        sedol
-        equityProportion
-      }
-    }
-  }
-`;
+import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 
 const DashPage = () => {
   const {
@@ -68,7 +53,7 @@ const DashPage = () => {
     goalsData.length > 0 &&
     projectionsMetadata;
 
-  const fundData = useStaticQuery<AllAssets>(query);
+  const fundData = useAllAssets();
 
   // Fetch projections data for projections chart
   const dispatchFetchProjections = () =>
@@ -109,6 +94,7 @@ const DashPage = () => {
       <Grid container spacing={3}>
         {/* Performance chart */}
         <Grid item xs={12}>
+          {/* eslint-disable-next-line no-nested-ternary */}
           {hasDataForPerformanceChart ? (
             <Box p={2}>
               <PerformanceChart
@@ -129,6 +115,7 @@ const DashPage = () => {
 
         {/* Projections chart */}
         <Grid item xs={12}>
+          {/* eslint-disable-next-line no-nested-ternary */}
           {hasDataForProjectionsChart && projectionsMetadata ? (
             <Box p={2}>
               <PerformanceProjectionsChart

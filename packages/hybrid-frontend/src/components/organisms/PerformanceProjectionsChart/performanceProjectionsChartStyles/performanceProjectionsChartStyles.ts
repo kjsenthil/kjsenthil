@@ -47,7 +47,7 @@ export function usePerformanceProjectionsChartStyles(
   chartType: 'default' | 'simplified' = 'default'
 ) {
   const {
-    palette: { primary, tertiary, common, grey, gold },
+    palette: { primary, secondary, tertiary, common, grey, gold },
     typography: { fontFamily },
   } = useTheme();
 
@@ -86,7 +86,7 @@ export function usePerformanceProjectionsChartStyles(
       INDICATOR: grey['400'],
       HISTORICAL_GRAPH: primary.main,
       PROJECTIONS_GRAPH: tertiary.main,
-      CONTRIBUTION_GRAPH: grey['300'],
+      CONTRIBUTION_GRAPH: secondary.main,
       GOAL_NOT_MET_GRAPH: gold.main,
     },
 
