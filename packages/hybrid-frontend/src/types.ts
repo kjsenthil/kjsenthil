@@ -8,3 +8,14 @@ export interface ChildImage {
     };
   };
 }
+
+export interface SummaryValuesProps {
+  totalValue: number;
+  totalContributions: number;
+
+  totalReturn: number;
+  totalReturnPct: number;
+
+  threeMonthsReturn?: number;
+  threeMonthsReturnPct?: number;
+}

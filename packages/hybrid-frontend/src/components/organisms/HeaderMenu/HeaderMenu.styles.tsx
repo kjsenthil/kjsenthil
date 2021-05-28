@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { AppBar, Link } from '../../atoms';
+import { AppBar } from '../../atoms';
 
 export const StyledAppBar = styled(AppBar)`
   box-shadow: 1px 2px 44px 0 rgba(139, 139, 139, 0.26);
 `;
 
-export const LogoImage = styled(Link)`
+export const LogoImage = styled.div`
   ${({ theme }) => `
     padding-top: ${theme.spacing(3)}px;
     padding-right: ${theme.spacing(7)}px;

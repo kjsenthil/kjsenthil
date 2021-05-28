@@ -1,16 +1,9 @@
-import { InvestmentSummary } from '../types';
-
-interface BasicInvestmentSummary {
-  totalInvested: number;
-  totalCash: number;
-  totalGainLoss: number;
-  totalGainLossPercentage: number;
-}
+import { BasicInvestmentSummary, InvestmentSummary } from '../types';
 
 const calculateBasicInvestmentSummary = (
   accountsInvestmentSummary: InvestmentSummary[]
-): BasicInvestmentSummary =>
-  accountsInvestmentSummary.reduce(
+): BasicInvestmentSummary => {
+  const summaryData = accountsInvestmentSummary.reduce(
     (acc, account) => ({
       totalInvested:
         acc.totalInvested +
@@ -23,5 +16,7 @@ const calculateBasicInvestmentSummary = (
     }),
     { totalInvested: 0, totalCash: 0, totalGainLoss: 0, totalGainLossPercentage: 0 }
   );
+  return summaryData;
+};
 
 export default calculateBasicInvestmentSummary;

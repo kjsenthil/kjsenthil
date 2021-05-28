@@ -1,441 +1,317 @@
 {
-    "api_definitions": [
-        {
-            "operation_id": "get-risk-profile-questions",
-            "display_name": "Get Risk Profile Questions",
-            "url_template": "\/OxfordRisk\/questions",
-            "description": "This will return all questions used to profile a customer.",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET"
-                },
-                "backend_url": "bestinvest_api"
-            }
+  "api_definitions": [
+    {
+      "operation_id": "get-risk-profile-questions",
+      "display_name": "Get Risk Profile Questions",
+      "url_template": "/OxfordRisk/questions",
+      "description": "This will return all questions used to profile a customer.",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET"
         },
-        {
-            "operation_id": "get-standing-data",
-            "display_name": "Get Standing Data",
-            "url_template": "\/Assets\/readymade\/standingdata",
-            "description": "This will return the ready made portfolio sedol number for each of the risk profiles (i.e. Defensive, Balanaced, Growth etc)",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET"
-                },
-                "backend_url": "bestinvest_api"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "get-standing-data",
+      "display_name": "Get Standing Data",
+      "url_template": "/Assets/readymade/standingdata",
+      "description": "This will return the ready made portfolio sedol number for each of the risk profiles (i.e. Defensive, Balanaced, Growth etc)",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET"
         },
-        {
-            "operation_id": "get-asset-details",
-            "display_name": "Get Asset details",
-            "url_template": "\/Assets\/assetdetail\/{sedol}",
-            "description": "This will return the asset details based on sedol number.",
-            "path_params": [
-                "sedol"
-            ],
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET"
-                },
-                "backend_url": "bestinvest_api"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "get-asset-details",
+      "display_name": "Get Asset details",
+      "url_template": "/Assets/assetdetail/{sedol}",
+      "description": "This will return the asset details based on sedol number.",
+      "path_params": ["sedol"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET"
         },
-        {
-            "operation_id": "get-asset-allocation-breakdown",
-            "display_name": "Get Asset Allocation Breakdown",
-            "url_template": "\/Assets\/assetallocation\/{sedol}",
-            "description": "This will return the asset allocation breakdown based on sedol number.",
-            "path_params": [
-                "sedol"
-            ],
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET"
-                },
-                "backend_url": "bestinvest_api"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "get-asset-allocation-breakdown",
+      "display_name": "Get Asset Allocation Breakdown",
+      "url_template": "/Assets/assetallocation/{sedol}",
+      "description": "This will return the asset allocation breakdown based on sedol number.",
+      "path_params": ["sedol"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET"
         },
-        {
-            "operation_id": "post-projections",
-            "display_name": "Post Projections",
-            "url_template": "\/Assets\/projections",
-            "description": "This returns the projection of fund performance over 5 years.",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "bestinvest_api"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "post-projections",
+      "display_name": "Post Projections",
+      "url_template": "/Assets/projections",
+      "description": "This returns the projection of fund performance over 5 years.",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Authorization"]
         },
-        {
-            "operation_id": "tilney-asset-model",
-            "display_name": "tilney-asset-model",
-            "url_template": "\/Assets\/tilney-asset-model\/{riskName}",
-            "description": "This returns the TAA values like Expected return, Volatility, ZScores for the given TAA /Risk name",
-            "path_params": [
-                "riskName"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "bestinvest_api"
-            }
-        },        
-        {
-            "operation_id": "identity-login",
-            "display_name": "Identity Login",
-            "url_template": "\/login",
-            "description": "This lets the user login to Identity API.",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type"
-                    ]
-                },
-                "backend_url": "bestinvest_auth"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "tilney-asset-model",
+      "display_name": "tilney-asset-model",
+      "url_template": "/Assets/tilney-asset-model/{riskName}",
+      "description": "This returns the TAA values like Expected return, Volatility, ZScores for the given TAA /Risk name",
+      "path_params": ["riskName"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Authorization"]
         },
-        {
-            "operation_id": "identity-pin",
-            "display_name": "Identity PIN(Two Factor Auth)",
-            "url_template": "\/pin",
-            "description": "This lets the user to enter PIN for two factor authentication",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type"
-                    ]
-                },
-                "backend_url": "bestinvest_auth"
-            }
+        "backend_url": "bestinvest_api"
+      }
+    },
+    {
+      "operation_id": "identity-login",
+      "display_name": "Identity Login",
+      "url_template": "/login",
+      "description": "This lets the user login to Identity API.",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type"]
         },
-        {
-            "operation_id": "projections-portfolio-asset-allocation",
-            "display_name": "Projections - Get portfolio asset allocation",
-            "url_template": "\/projections\/portfolio-asset-allocation",
-            "description": "Connects to the projections function app and returns the asset allocation of a given portfolio",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "projections_function_app",
-                "rewrite_url": "\/portfolio-asset-allocation"
-            }
+        "backend_url": "bestinvest_auth"
+      }
+    },
+    {
+      "operation_id": "identity-pin",
+      "display_name": "Identity PIN(Two Factor Auth)",
+      "url_template": "/pin",
+      "description": "This lets the user to enter PIN for two factor authentication",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type"]
         },
-        {
-            "operation_id": "projections-portfolio-risk-profile",
-            "display_name": "Projections - Get portfolio risk profile",
-            "url_template": "\/projections\/portfolio-risk-profile",
-            "description": "Connects to the projections function app and returns the closest aligned risk profile for a given portfolio",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "projections_function_app",
-                "rewrite_url": "\/portfolio-risk-profile"
-            }
+        "backend_url": "bestinvest_auth"
+      }
+    },
+    {
+      "operation_id": "projections-portfolio-asset-allocation",
+      "display_name": "Projections - Get portfolio asset allocation",
+      "url_template": "/projections/portfolio-asset-allocation",
+      "description": "Connects to the projections function app and returns the asset allocation of a given portfolio",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "identity-refresh-token",
-            "display_name": "Refresh Token",
-            "url_template": "\/refresh-token",
-            "description": "This refreshes the generated idenity token",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "POST",
-                    "headers": [
-                        "Content-Type"
-                    ]
-                },
-                "backend_url": "bestinvest_auth"
-            }
+        "backend_url": "projections_function_app",
+        "rewrite_url": "/portfolio-asset-allocation"
+      }
+    },
+    {
+      "operation_id": "projections-portfolio-risk-profile",
+      "display_name": "Projections - Get portfolio risk profile",
+      "url_template": "/projections/portfolio-risk-profile",
+      "description": "Connects to the projections function app and returns the closest aligned risk profile for a given portfolio",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "myaccount-clients",
-            "display_name": "Myaccount get clients details",
-            "url_template": "\/myaccount\/clients\/{id}",
-            "description": "This lets the user to get client details",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/clients/{id}"
-            }
+        "backend_url": "projections_function_app",
+        "rewrite_url": "/portfolio-risk-profile"
+      }
+    },
+    {
+      "operation_id": "identity-refresh-token",
+      "display_name": "Refresh Token",
+      "url_template": "/refresh-token",
+      "description": "This refreshes the generated idenity token",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type"]
         },
-        {
-            "operation_id": "myaccount-performance-contact",
-            "display_name": "Myaccount get performance contact",
-            "url_template": "\/myaccount\/performance-contact\/{id}",
-            "description": "This lets the user to get performance",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/performance-contact/{id}"
-            }
+        "backend_url": "bestinvest_auth"
+      }
+    },
+    {
+      "operation_id": "myaccount-clients",
+      "display_name": "Myaccount get clients details",
+      "url_template": "/myaccount/clients/{id}",
+      "description": "This lets the user to get client details",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "myaccount-investment-summary-account",
-            "display_name": "Myaccount investment summary account",
-            "url_template": "\/myaccount\/investment-summary-account\/{id}",
-            "description": "This lets the user to investment summary for given account",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/investment-summary-account/{id}"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/clients/{id}"
+      }
+    },
+    {
+      "operation_id": "myaccount-performance-contact",
+      "display_name": "Myaccount get performance contact",
+      "url_template": "/myaccount/performance-contact/{id}",
+      "description": "This lets the user to get performance",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "myaccount-investment-summary-accounts",
-            "display_name": "Myaccount investment summary for accounts",
-            "url_template": "\/myaccount\/investment-summary-account",
-            "description": "This lets the user to investment summary for all given accounts ",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/investment-summary-account"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/performance-contact/{id}"
+      }
+    },
+    {
+      "operation_id": "myaccount-investment-summary-account",
+      "display_name": "Myaccount investment summary account",
+      "url_template": "/myaccount/investment-summary-account/{id}",
+      "description": "This lets the user to investment summary for given account",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "myaccount-breakdown-allocation",
-            "display_name": "Myaccount breakdown allocation",
-            "url_template": "\/myaccount\/breakdown-allocation\/{id}",
-            "description": "This lets the user to get breakdown of allocation for a given account",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/breakdown-allocation/{id}"
-            }
-        },   
-        {
-            "operation_id": "myaccount-monthly-savings",
-            "display_name": "Myaccount account monthly savings",
-            "url_template": "\/myaccount\/accounts\/{id}/monthly-savings",
-            "description": "This lets the user to get account monthly savings",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/accounts\/{id}\/monthly-savings"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/investment-summary-account/{id}"
+      }
+    },
+    {
+      "operation_id": "myaccount-investment-summary-accounts",
+      "display_name": "Myaccount investment summary for accounts",
+      "url_template": "/myaccount/investment-summary-account",
+      "description": "This lets the user to investment summary for all given accounts ",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "contribution-account",
-            "display_name": "Myaccount account contributions",
-            "url_template": "\/myaccount\/contribution-account\/{id}",
-            "description": "This lets the user to get contributions a given account",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/contribution-account/{id}"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/investment-summary-account"
+      }
+    },
+    {
+      "operation_id": "myaccount-breakdown-allocation",
+      "display_name": "Myaccount breakdown allocation",
+      "url_template": "/myaccount/breakdown-allocation/{id}",
+      "description": "This lets the user to get breakdown of allocation for a given account",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "isa-contributions",
-            "display_name": "Myaccount ISA contributions",
-            "url_template": "\/myaccount\/isa-contributions\/{id}",
-            "description": "This lets the user to get ISA contributions for the given contact",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/isa-contributions/{id}"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/breakdown-allocation/{id}"
+      }
+    },
+    {
+      "operation_id": "myaccount-monthly-savings",
+      "display_name": "Myaccount account monthly savings",
+      "url_template": "/myaccount/accounts/{id}/monthly-savings",
+      "description": "This lets the user to get account monthly savings",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "investments",
-            "display_name": "Myaccount investments",
-            "url_template": "\/myaccount\/Accounts\/{id}\/investments",
-            "description": "This lets the user to get investments for the given account",
-            "path_params": [
-                "id"
-            ],            
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/Accounts\/{id}\/investments"
-            }
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/accounts/{id}/monthly-savings"
+      }
+    },
+    {
+      "operation_id": "myaccount-contribution",
+      "display_name": "Myaccount account contributions",
+      "url_template": "/myaccount/contribution-account/{id}",
+      "description": "This lets the user to get contributions a given account",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        {
-            "operation_id": "myaccount-Aggregated-breakdown-allocation",
-            "display_name": "Myaccount Aggregated breakdown allocation for multiple accounts",
-            "url_template": "\/myaccount\/Aggregated-breakdown-allocation",
-            "description": "This lets the user to get breakdown of allocation for multiple accounts",
-            "policy": {
-                "cors": {
-                    "allowed_origins": [
-                        "*"
-                    ],
-                    "method": "GET",
-                    "headers": [
-                        "Content-Type",
-                        "Origin",
-                        "Authorization"
-                    ]
-                },
-                "backend_url": "myaccounts_api",
-                "rewrite_url": "\/api\/Aggregated-breakdown-allocation"
-            }
-        }
-    ]
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/contribution-account/{id}"
+      }
+    },
+    {
+      "operation_id": "isa-contributions",
+      "display_name": "Myaccount ISA contributions",
+      "url_template": "/myaccount/isa-contributions/{id}",
+      "description": "This lets the user to get ISA contributions for the given contact",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/isa-contributions/{id}"
+      }
+    },
+    {
+      "operation_id": "investments",
+      "display_name": "Myaccount investments",
+      "url_template": "/myaccount/Accounts/{id}/investments",
+      "description": "This lets the user to get investments for the given account",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/Accounts/{id}/investments"
+      }
+    },
+    {
+      "operation_id": "myaccount-Aggregated-breakdown-allocation",
+      "display_name": "Myaccount Aggregated breakdown allocation for multiple accounts",
+      "url_template": "/myaccount/Aggregated-breakdown-allocation",
+      "description": "This lets the user to get breakdown of allocation for multiple accounts",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/Aggregated-breakdown-allocation"
+      }
+    }
+  ]
 }

@@ -9,6 +9,7 @@ import TargetAmountsPage from '../components/pages/TargetAmountsPage/TargetAmoun
 import TargetDatePage from '../components/pages/TargetDatePage/TargetDatePage';
 import UpfrontContributionPage from '../components/pages/UpfrontContributionPage/UpfrontContributionPage';
 import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
+import BIAccountsPage from '../components/pages/BIAccountsPage/BIAccountsPage';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const MyAccount = () => {
   return (
     <Router basepath="/my-account">
       <LoginPage path="/login" />
+      <PrivateRoute path="/accounts" Component={BIAccountsPage} />
       <PrivateRoute path="/dash" Component={DashPage} />
       <PrivateRoute path="/goals" Component={SelectGoalsPage} />
       <PrivateRoute path="/target-amount" Component={TargetAmountsPage} />

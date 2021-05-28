@@ -7,24 +7,16 @@ import {
   AccountsTableHead,
   AccountsTableHeaderInfo,
 } from './AccountsTable.styles';
+import { Breakdown } from '../../../services/myAccount';
 
 export interface AccountsHeaderCell {
   value: string;
   tooltip?: string;
 }
 
-export interface AccountsRowCell {
-  accountName: string;
-  totalHoldings: number;
-  totalContributions: number;
-  cashValue: number;
-  totalReturn: number;
-  totalReturnPct: number;
-}
-
 export interface AccountsTableProps {
-  headerRow: AccountsHeaderCell[];
-  dataRow: AccountsRowCell[];
+  headerRow?: AccountsHeaderCell[];
+  dataRow?: Breakdown[];
 }
 
 const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
@@ -52,35 +44,37 @@ const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
       </AccountsTableHead>
       <TableBody>
         {dataRow &&
-          dataRow.map((row: AccountsRowCell) => (
+          dataRow.map((row: Breakdown) => (
             <TableRow key={row.accountName}>
               <AccountsTableCell>
                 <Typography variant="sh4">{row.accountName}</Typography>
               </AccountsTableCell>
               <AccountsTableCell>
                 <Typography variant="b2" color="primary">
-                  {formatCurrency(row.totalHoldings)}
+                  {formatCurrency(row.accountTotalHoldings)}
                 </Typography>
               </AccountsTableCell>
               <AccountsTableCell>
                 <Typography variant="b2" color="primary">
-                  {formatCurrency(row.totalContributions)}
+                  {formatCurrency(row.accountTotalContribution)}
                 </Typography>
               </AccountsTableCell>
               <AccountsTableCell>
                 <Typography variant="b2" color="primary">
-                  {formatCurrency(row.cashValue)}
+                  {formatCurrency(row.accountCash)}
                 </Typography>
               </AccountsTableCell>
               <AccountsTableCell align="right">
                 <Grid container spacing={1}>
                   <Grid item xs={12} md={6}>
                     <Typography variant="b2" color="primary" display="inline">
-                      {formatCurrency(row.totalReturn, { displayPlus: true })}
+                      {formatCurrency(row.accountReturn, { displayPlus: true })}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={3}>
-                    <TagBox variant="percentage">{formatPercent(row.totalReturnPct)}</TagBox>
+                    <TagBox variant="percentage">
+                      {formatPercent(row.accountReturnPercentage / 100)}
+                    </TagBox>
                   </Grid>
                   <Grid item xs={12} md={2}>
                     <Icon color="primary" name="arrowHeadRight" />

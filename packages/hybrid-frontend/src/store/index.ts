@@ -13,6 +13,7 @@ import { ACTIVE_ENV, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 import {
   clientSlice as clientReducer,
+  accountBreakdownSlice as accountBreakdownReducer,
   InvestmentSummarySlice as investmentSummaryReducer,
 } from '../services/myAccount/reducers';
 import { goalSlice as goalReducer } from '../services/goal/reducers';
@@ -21,12 +22,13 @@ import { projectionsSlice as projectionsReducer } from '../services/projections/
 import { GoalState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import { ProjectionsState } from '../services/projections';
-import { ClientState, InvestmentSummaryState } from '../services/myAccount';
+import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 
 export interface RootState {
   auth: AuthState;
   client: ClientState;
+  accountBreakdown: BreakdownState;
   investmentSummary: InvestmentSummaryState;
   goal: GoalState;
   performance: PerformanceState;
@@ -53,6 +55,7 @@ const persistConfig: PersistConfig<RootState> = {
 const reducersMap: ReducersMapObject = {
   auth: authReducer,
   client: clientReducer,
+  accountBreakdown: accountBreakdownReducer,
   investmentSummary: investmentSummaryReducer,
   goal: goalReducer,
   performance: performanceReducer,

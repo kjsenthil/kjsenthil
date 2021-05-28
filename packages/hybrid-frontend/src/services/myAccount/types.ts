@@ -1,16 +1,16 @@
-import { CommonState, SedolCode } from '../types';
+import { AccountData, ClientAccountTypes, CommonState, SedolCode } from '../types';
 
-export interface AccountData {
-  id: string;
-  accountName: string;
-  accountValue: number;
-  equityPercentage?: number;
-  monthlyInvestment?: number;
+export interface BasicInvestmentSummary {
+  totalInvested: number;
+  totalCash: number;
+  totalGainLoss: number;
+  totalGainLossPercentage: number;
 }
 
-export interface MyAccountItem {
+export interface ClientAccountItem {
   id: string;
   name: string;
+  type: string;
 }
 
 export interface ClientState
@@ -20,7 +20,7 @@ export interface InvestmentSummaryState
   extends CommonState<InvestmentSummaryResponse['data'], InvestmentSummaryResponse['included']> {}
 
 export interface ClientAccount {
-  type: 'accounts';
+  type: ClientAccountTypes;
   id: string;
   attributes: {
     accountId: number;
@@ -45,6 +45,37 @@ export interface DataRelationship {
     related?: string;
   };
   data: Record<string, unknown> | null;
+}
+
+export interface NetContributionSliceResponse {
+  date: string;
+  netContributionsToDate: number;
+}
+
+export interface ContributionResponse {
+  data: {
+    type: 'contributions';
+    id: string;
+    attributes: {
+      totalContributions: number;
+      contributions?: NetContributionSliceResponse[];
+    };
+    links?: {
+      self: string;
+    };
+    relationships?: null;
+  };
+  included?: null;
+}
+
+export interface BreakdownState extends CommonState {
+  breakdownData?: Breakdown[];
+  fetchAccountBreakdownError?: string;
+}
+
+export interface Breakdown extends AccountData {
+  accountType: string;
+  accountTotalContribution: number;
 }
 
 export interface ClientResponse {
@@ -136,7 +167,7 @@ interface BreakdownItem {
   percentage: number;
 }
 
-export interface BreakDownAllocationResponse {
+export interface BreakdownAllocationResponse {
   data: {
     attributes: {
       breakdown: BreakdownItem[];

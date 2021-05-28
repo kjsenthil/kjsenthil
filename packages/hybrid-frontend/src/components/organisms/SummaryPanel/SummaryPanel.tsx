@@ -1,18 +1,8 @@
 import * as React from 'react';
+import { SummaryValuesProps } from '../../../types';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { Divider, Box, Grid, Typography, Spacer } from '../../atoms';
 import CustomCard from './SummaryPanel.styles';
-
-export interface SummaryPanelProps {
-  totalValue: number;
-  totalContributions: number;
-
-  totalReturn: number;
-  totalReturnPct: number;
-
-  threeMonthsReturn: number;
-  threeMonthsReturnPct: number;
-}
 
 export default function SummaryPanel({
   totalValue,
@@ -21,11 +11,11 @@ export default function SummaryPanel({
   totalReturnPct,
   threeMonthsReturn,
   threeMonthsReturnPct,
-}: SummaryPanelProps) {
+}: SummaryValuesProps) {
   return (
     <CustomCard>
       <Grid container spacing={3} alignItems="center" justify="space-between">
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={threeMonthsReturn ? 6 : 12}>
           <Grid container justify="space-evenly">
             <Grid item>
               <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
@@ -63,7 +53,7 @@ export default function SummaryPanel({
                 borderRadius={2}
               >
                 <Typography variant="sh4" color="white" display="inline">
-                  {formatPercent(totalReturnPct)}
+                  {formatPercent(totalReturnPct / 100)}
                 </Typography>
               </Box>
             </Grid>
@@ -71,31 +61,35 @@ export default function SummaryPanel({
         </Grid>
 
         <Grid item xs={12} sm={3}>
-          <Grid container justify="flex-end">
-            <Divider />
-            <Spacer x={4} />
-            <Grid item>
-              <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                LAST 3 MONTHS RETURN
-              </Typography>
-
-              <Typography display="inline" variant="sh1">
-                {formatCurrency(threeMonthsReturn, { displayPlus: true })}
-              </Typography>
-              <Box
-                bgcolor={threeMonthsReturn > 0 ? 'success.main' : 'error.main'}
-                m={1}
-                paddingX={1}
-                display="inline"
-                minHeight="25%"
-                borderRadius={2}
-              >
-                <Typography variant="sh4" color="white" display="inline">
-                  {formatPercent(threeMonthsReturnPct)}
+          {threeMonthsReturn && (
+            <Grid container justify="flex-end">
+              <Divider />
+              <Spacer x={4} />
+              <Grid item>
+                <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
+                  LAST 3 MONTHS RETURN
                 </Typography>
-              </Box>
+
+                <Typography display="inline" variant="sh1">
+                  {formatCurrency(threeMonthsReturn, { displayPlus: true })}
+                </Typography>
+                <Box
+                  bgcolor={threeMonthsReturn > 0 ? 'success.main' : 'error.main'}
+                  m={1}
+                  paddingX={1}
+                  display="inline"
+                  minHeight="25%"
+                  borderRadius={2}
+                >
+                  {threeMonthsReturnPct && (
+                    <Typography variant="sh4" color="white" display="inline">
+                      {formatPercent(threeMonthsReturnPct)}
+                    </Typography>
+                  )}
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Grid>
       </Grid>
     </CustomCard>

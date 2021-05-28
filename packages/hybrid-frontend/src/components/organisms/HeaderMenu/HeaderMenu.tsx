@@ -16,6 +16,7 @@ import {
   Spacer,
   MenuIcon,
   IconButton,
+  Link,
 } from '../../atoms';
 import NavLink from '../../molecules/NavLink';
 import { LogoImage, StyledAppBar } from './HeaderMenu.styles';
@@ -64,7 +65,9 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
             <Grid item xs={12} md={8}>
               <Grid container justify="space-evenly" alignItems="center">
                 <Grid item xs={4}>
-                  <LogoImage onClick={navigateHome} />
+                  <Link onClick={navigateHome}>
+                    <LogoImage />
+                  </Link>
                 </Grid>
 
                 <Spacer x={3} />
@@ -88,7 +91,9 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                         onClose={handleMenuClose}
                       >
                         <MenuItem onClick={navigateHome}>Home</MenuItem>
-                        <MenuItem onClick={navigateHome}>Investments</MenuItem>
+                        <MenuItem onClick={() => navigate('/my-account/accounts')}>
+                          Investments
+                        </MenuItem>
                         <MenuItem onClick={navigateHome}>Life Plan</MenuItem>
                         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                       </Menu>
@@ -106,7 +111,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                       </NavLink>
                     </Grid>
                     <Grid item>
-                      <NavLink onClick={navigateHome}>
+                      <NavLink onClick={() => navigate('/my-account/accounts')}>
                         <Typography variant="sh4" color="grey">
                           Investments
                         </Typography>

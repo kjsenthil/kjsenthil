@@ -42,8 +42,11 @@ const fetchProjections = createAsyncThunk(
         return {
           id: account.id,
           accountName,
-          accountValue:
+          accountTotalHoldings:
             account.attributes.cash + account.attributes.funds + account.attributes.shares, // create util
+          accountCash: account.attributes.cash,
+          accountReturn: account.attributes.gainLoss,
+          accountReturnPercentage: account.attributes.gainLossPercent,
           equityPercentage,
           monthlyInvestment,
         };
@@ -60,7 +63,7 @@ const fetchProjections = createAsyncThunk(
     });
 
     const portfolioTotal = accountTotals.reduce(
-      (accumulator, account) => accumulator + account.accountValue,
+      (accumulator, account) => accumulator + account.accountTotalHoldings,
       0
     );
     const monthlyInvestmentTotal = accountTotals.reduce(

@@ -6,7 +6,10 @@ import getClient from './getClient';
 
 const mockAxios = new MockAdapter(axios);
 const contactId = '12345678';
-const url = `${API_ENDPOINTS.MYACCOUNT_CLIENTS.replace(/\{id\}/, contactId)}?include=accounts`;
+const url = `${API_ENDPOINTS.MYACCOUNT_CLIENTS.replace(
+  /\{id\}/,
+  contactId
+)}?include=accounts,linked-accounts`;
 
 describe('getClient', () => {
   it(`makes a call to ${url}`, async () => {

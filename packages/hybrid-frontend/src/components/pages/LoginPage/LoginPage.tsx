@@ -30,7 +30,7 @@ const LoginPage = (_: LoginPageProps) => {
 
   useEffect(() => {
     if (isPinLoggedIn) {
-      navigate('/my-account/dash');
+      navigate('/my-account/accounts');
     }
   }, [isPinLoggedIn]);
 
@@ -65,7 +65,7 @@ const LoginPage = (_: LoginPageProps) => {
         )}
 
         <Grid item>
-          <Grid contanier justify="center">
+          <Grid container justify="center">
             <Button
               color="primary"
               startIcon={<Icon name="arrowHeadLeft" fontSize="large" />}

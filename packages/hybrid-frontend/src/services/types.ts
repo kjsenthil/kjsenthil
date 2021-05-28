@@ -1,3 +1,13 @@
+export interface AccountData {
+  id: string;
+  accountName: string;
+  accountTotalHoldings: number;
+  accountCash: number;
+  accountReturn: number;
+  accountReturnPercentage: number;
+  equityPercentage?: number;
+  monthlyInvestment?: number;
+}
 export interface CommonState<D = unknown, I = unknown, E = string> {
   data?: D;
   included?: I;
@@ -22,4 +32,11 @@ export enum SedolCode {
   BYX8KW0 = 'BYX8KW0',
   BFY1PL9 = 'BFY1PL9',
   BYX8L38 = 'BYX8L38',
+}
+
+export enum ClientAccountTypes {
+  accounts = 'accounts',
+  linkedAccounts = 'linked-accounts',
+  contactSettings = 'contact-settings',
+  userBasket = 'user-basket',
 }

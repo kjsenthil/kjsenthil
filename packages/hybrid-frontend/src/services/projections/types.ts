@@ -1,13 +1,6 @@
 import { CommonState, RiskModel, SedolCode } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
 
-export interface AccountData {
-  id: string;
-  accountName: string;
-  accountValue: number;
-  equityPercentage?: number;
-}
-
 export interface ProjectionRequest {
   upfrontInvestment: number;
   monthlyInvestment: number;

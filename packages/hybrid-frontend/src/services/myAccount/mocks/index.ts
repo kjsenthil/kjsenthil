@@ -1,11 +1,76 @@
+import { AccountData, ClientAccountTypes } from '../../types';
 import {
-  AccountData,
-  BreakDownAllocationResponse,
+  BreakdownAllocationResponse,
   ClientResponse,
+  ContributionResponse,
   InvestmentSummaryResponse,
   MonthlySavingsResponse,
-  MyAccountItem,
+  ClientAccountItem,
+  Breakdown,
+  BasicInvestmentSummary,
 } from '../types';
+
+export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
+  totalCash: 183322.11000000002,
+  totalGainLoss: 122249.170119,
+  totalGainLossPercentage: 55.04,
+  totalInvested: 635376.130119,
+};
+
+export const mockAccountsBreakdown: Breakdown[] = [
+  {
+    id: '12345',
+    accountType: 'accounts',
+    accountTotalContribution: 3000,
+    accountName: 'Investment Account ',
+    accountCash: 100,
+    accountTotalHoldings: 100,
+    accountReturn: 0,
+    accountReturnPercentage: 0,
+  },
+  {
+    id: '23456',
+    accountType: 'accounts',
+    accountTotalContribution: 4000,
+    accountName: 'ISA ',
+    accountCash: 139678.85,
+    accountTotalHoldings: 545908.9554399999,
+    accountReturn: 116295.09544,
+    accountReturnPercentage: 40.11,
+  },
+  {
+    id: '34567',
+    accountType: 'linked-accounts',
+    accountTotalContribution: 5000,
+    accountName: 'SIPP ',
+    accountTotalHoldings: 89367.174679,
+    accountCash: 43543.26,
+    accountReturn: 5954.074679,
+    accountReturnPercentage: 14.93,
+  },
+];
+
+export const mockAccountsBreakdownData = {
+  accountBreakdown: mockAccountsBreakdown,
+  accountsSummary: mockBasicInvestmentSummary,
+};
+
+export const mockContributions: ContributionResponse = {
+  data: {
+    type: 'contributions',
+    id: '43751',
+    attributes: {
+      totalContributions: 40,
+      contributions: [
+        { date: '2013-03-05T00:00:00', netContributionsToDate: 2000.0 },
+        {
+          date: '2013-03-21T00:00:00',
+          netContributionsToDate: 3000.0,
+        },
+      ],
+    },
+  },
+};
 
 export const mockClientResponse: ClientResponse = {
   data: {
@@ -34,7 +99,7 @@ export const mockClientResponse: ClientResponse = {
   },
   included: [
     {
-      type: 'accounts',
+      type: ClientAccountTypes.accounts,
       id: '20500',
       attributes: {
         accountId: 20500,
@@ -54,7 +119,7 @@ export const mockClientResponse: ClientResponse = {
       relationships: null,
     },
     {
-      type: 'accounts',
+      type: ClientAccountTypes.accounts,
       id: '20871',
       attributes: {
         accountId: 20871,
@@ -100,18 +165,21 @@ export const mockMonthlySavingsResponse: MonthlySavingsResponse = {
   included: null,
 };
 
-export const mockAccounts: MyAccountItem[] = [
+export const mockAccounts: ClientAccountItem[] = [
   {
     id: '12345',
     name: 'Investment Account ',
+    type: 'accounts',
   },
   {
     id: '23456',
     name: 'ISA ',
+    type: 'accounts',
   },
   {
     id: '34567',
     name: 'SIPP ',
+    type: 'linked-accounts',
   },
 ];
 
@@ -119,17 +187,26 @@ export const mockInvestAccounts: AccountData[] = [
   {
     id: '12345',
     accountName: 'Investment Account ',
-    accountValue: 100,
+    accountCash: 100,
+    accountTotalHoldings: 100,
+    accountReturn: 0,
+    accountReturnPercentage: 0,
   },
   {
     id: '23456',
     accountName: 'ISA ',
-    accountValue: 545908.9554399999,
+    accountCash: 139678.85,
+    accountTotalHoldings: 545908.9554399999,
+    accountReturn: 116295.09544,
+    accountReturnPercentage: 40.11,
   },
   {
     id: '34567',
     accountName: 'SIPP ',
-    accountValue: 89367.174679,
+    accountTotalHoldings: 89367.174679,
+    accountCash: 43543.26,
+    accountReturn: 5954.074679,
+    accountReturnPercentage: 14.93,
   },
 ];
 
@@ -190,7 +267,7 @@ export const mockInvestSummaryResponse: InvestmentSummaryResponse = {
   included: null,
 };
 
-export const mockBreakdownAllocation: BreakDownAllocationResponse = {
+export const mockBreakdownAllocation: BreakdownAllocationResponse = {
   data: {
     type: 'breakdown-allocation',
     id: '12345',
