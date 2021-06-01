@@ -1,12 +1,12 @@
-let webdriver = require('selenium-webdriver');
 require('geckodriver');
 require('../../../hybrid-frontend/jest.config');
+let webdriver = require('selenium-webdriver');
 let firefox = require('selenium-webdriver/firefox');
-const { Builder, By, findElement, until } = require('selenium-webdriver');
+const {  By,  until } = require('selenium-webdriver');
 let driver = webdriver;
 let Firefox_options = new firefox.Options();
 let url;
-let explicitwait = 7000;
+let explicitwait = 10000;
 jest.setTimeout(30000);
 
 
@@ -61,7 +61,7 @@ test("Digital Hybrid - login with invalid credentials", async () => {
   await password.sendKeys('1111111');
   let login = await driver.findElement(By.css("button[data-testid='login']"));
   await login.click();
-  driver.sleep(2000);
+  driver.sleep(3000);
   let successmsg = driver.wait(until.elementLocated(By.xpath("//div[@class='MuiAlert-message']")), explicitwait);
   await successmsg.getText().then(async function (txt) {
     await expect(txt).toBe('Request failed with status code 404');
