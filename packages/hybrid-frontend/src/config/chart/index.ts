@@ -4,6 +4,11 @@ export interface ChartDimension {
   margin: { top: number; right: number; bottom: number; left: number };
 }
 
+export interface ChartDimensionWithExtras extends ChartDimension {
+  innerWidth: number;
+  innerHeight: number;
+}
+
 export enum ScreenSize {
   DESKTOP_HD = 'DESKTOP_HD',
   DESKTOP = 'DESKTOP',
@@ -20,4 +25,15 @@ export const defaultChartDimension: ChartDimension = {
     bottom: 0,
     left: 0,
   },
+};
+
+export type ChartDimensionByScreenSize = Record<ScreenSize, ChartDimension>;
+
+export type ChartDimensionWithExtrasByScreenSize = Record<ScreenSize, ChartDimensionWithExtras>;
+
+export const defaultChartDimensionByScreenSize: ChartDimensionByScreenSize = {
+  [ScreenSize.MOBILE]: defaultChartDimension,
+  [ScreenSize.TABLET]: defaultChartDimension,
+  [ScreenSize.DESKTOP]: defaultChartDimension,
+  [ScreenSize.DESKTOP_HD]: defaultChartDimension,
 };

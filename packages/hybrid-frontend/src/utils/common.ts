@@ -19,3 +19,7 @@ export function TypedReactMemo<C extends React.ComponentType<any>>(
 ) {
   return (React.memo(Component, propsComparator) as any) as C;
 }
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>;
+};

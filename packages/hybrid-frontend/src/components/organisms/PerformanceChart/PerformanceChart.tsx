@@ -12,7 +12,6 @@ import {
 import styled from 'styled-components';
 import { Theme } from '../../atoms';
 import { useTimeValueScales } from '../../../hooks/ChartHooks';
-import { usePerformanceChartStyles } from './performanceChartStyles/performanceChartStyles';
 import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartTooltip';
 import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformanceChartTooltip';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
@@ -23,6 +22,8 @@ import PerformanceChartPeriodSelection, {
 } from './PerformanceChartPeriodSelection/PerformanceChartPeriodSelection';
 import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
+import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
+import { usePerformanceChartDimension } from './performanceChartDimension/usePerformanceChartDimension';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
@@ -65,7 +66,7 @@ function PerformanceChart({
 }: PerformanceChartProps) {
   // ----- Stylings ----- //
 
-  const chartStyles = usePerformanceChartStyles();
+  const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
 
@@ -73,17 +74,7 @@ function PerformanceChart({
 
   // ----- Chart scales & bounds ----- //
 
-  const chartDimension = {
-    width: parentWidth,
-
-    // TODO: responsive margins
-    height: chartStyles.DIMENSION.DESKTOP.height,
-    margin: chartStyles.DIMENSION.DESKTOP.margin,
-  };
-  const chartInnerHeight =
-    chartDimension.height - chartDimension.margin.top - chartDimension.margin.bottom;
-  const chartInnerWidth =
-    chartDimension.width - chartDimension.margin.left - chartDimension.margin.right;
+  const chartDimension = usePerformanceChartDimension(parentWidth);
 
   const {
     minDate: minContributionsDate,
@@ -151,7 +142,7 @@ function PerformanceChart({
     lastPerformanceDataPoint = performanceData[performanceData.length - 1];
     lastContributionsDataPoint = contributionsData[contributionsData.length - 1];
 
-    defaultTooltipLeft = chartInnerWidth;
+    defaultTooltipLeft = chartDimension.innerWidth;
     defaultTooltipTop = yScale(timeSeriesValueAccessor(lastPerformanceDataPoint));
     defaultTooltipData = {
       performance: lastPerformanceDataPoint,
@@ -260,8 +251,8 @@ function PerformanceChart({
           {/* This is the chart's tooltip hover detection area */}
           <Bar
             x={chartDimension.margin.left}
-            width={chartInnerWidth - chartDimension.margin.left}
-            height={chartInnerHeight}
+            width={chartDimension.innerWidth - chartDimension.margin.left}
+            height={chartDimension.innerHeight}
             fill="transparent"
             onTouchStart={handleShowContributionsTooltip}
             onTouchMove={handleShowContributionsTooltip}
@@ -274,8 +265,8 @@ function PerformanceChart({
           <MemoizedGridRows
             scale={yScale}
             left={chartDimension.margin.left}
-            width={chartInnerWidth - chartDimension.margin.left}
-            height={chartInnerHeight}
+            width={chartDimension.innerWidth - chartDimension.margin.left}
+            height={chartDimension.innerHeight}
             numTicks={4}
             stroke={chartStyles.STROKE_COLOR.GRID}
             strokeWidth={chartStyles.STROKE_WIDTH.GRID}
@@ -295,7 +286,7 @@ function PerformanceChart({
                 }}
                 to={{
                   x: tooltipData ? tooltipLeft : defaultTooltipLeft,
-                  y: chartInnerHeight - chartDimension.margin.top,
+                  y: chartDimension.innerHeight - chartDimension.margin.top,
                 }}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}
@@ -331,7 +322,7 @@ function PerformanceChart({
           {hasData && (
             <TooltipInPortal
               key={Math.random()}
-              top={chartInnerHeight + 6}
+              top={chartDimension.innerHeight + 6}
               left={tooltipOpen && tooltipData ? tooltipLeft : defaultTooltipLeft}
               style={tooltipStyles}
               offsetLeft={chartDimension.margin.left}

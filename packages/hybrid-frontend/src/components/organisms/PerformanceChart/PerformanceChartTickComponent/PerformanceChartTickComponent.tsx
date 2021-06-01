@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TickRendererProps } from '@visx/axis';
 import { Text } from '@visx/text';
-import { usePerformanceChartStyles } from '../performanceChartStyles/performanceChartStyles';
+import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
 
 export interface PerformanceChartTickComponentProps extends TickRendererProps {
   // Note: we have to pass chartStyles as a prop rather than having
@@ -11,7 +11,7 @@ export interface PerformanceChartTickComponentProps extends TickRendererProps {
   // The cause for this is likely due to how d3 is handling the showing / hiding
   // of chart ticks. Unknown for sure at this point but passing the chartStyles
   // down as a prop works well enough.
-  chartStyles: ReturnType<typeof usePerformanceChartStyles>;
+  chartStyles: ReturnType<typeof useChartStyles>;
 }
 
 export default function PerformanceChartTickComponent({
@@ -27,6 +27,7 @@ export default function PerformanceChartTickComponent({
       y={y}
       {...tickLabelProps}
       fill={chartStyles.TEXT_COLOR.AXES}
+      fontFamily={chartStyles.TEXT_FONT.COMMON}
       fontSize={chartStyles.TEXT_SIZE.AXES}
       style={{ fontWeight: 'bold' }}
     >

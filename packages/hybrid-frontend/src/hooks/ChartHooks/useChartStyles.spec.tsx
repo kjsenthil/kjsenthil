@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import * as performanceChartStyles from './performanceChartStyles';
+import useChartStyles from './useChartStyles';
 
-describe('usePerformanceChartStyles', () => {
+describe('useChartStyles', () => {
   const TestComponent = () => {
-    performanceChartStyles.usePerformanceChartStyles();
+    useChartStyles();
 
     return <div>Test component</div>;
   };

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { AxisLeft, AxisScale, SharedAxisProps } from '@visx/axis';
-import { usePerformanceChartStyles } from '../performanceChartStyles/performanceChartStyles';
 import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
 import { d3ValueFormatter } from '../../../../utils/formatters';
 import { ChartDimension } from '../../../../config/chart';
+import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
 
 export interface PerformanceChartAxisLeftProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;
@@ -16,7 +16,7 @@ export default function PerformanceChartAxisLeft({
 }: PerformanceChartAxisLeftProps) {
   // Check PerformanceChartTickComponent to see why we have to pass this down
   // as a prop.
-  const chartStyles = usePerformanceChartStyles();
+  const chartStyles = useChartStyles();
 
   return (
     <AxisLeft

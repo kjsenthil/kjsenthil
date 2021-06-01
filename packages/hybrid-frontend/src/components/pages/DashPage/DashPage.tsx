@@ -16,11 +16,11 @@ import {
   usePerformanceData,
   usePerformanceDataPeriod,
 } from '../../../services/performance/hooks';
-import { usePerformanceChartStyles } from '../../organisms/PerformanceChart/performanceChartStyles/performanceChartStyles';
 import { getPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { RootState } from '../../../store';
 import { useDispatchThunkOnRender } from '../../../hooks';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 
 const DashPage = () => {
@@ -38,7 +38,7 @@ const DashPage = () => {
   const performanceData = usePerformanceData();
   const contributionsData = useContributionsData();
   const performanceDataPeriod = usePerformanceDataPeriod();
-  const performanceChartStyles = usePerformanceChartStyles();
+  const performanceChartDimension = usePerformanceChartDimension();
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
 
   // Projected performance data
@@ -109,7 +109,7 @@ const DashPage = () => {
           ) : performanceFetchMaxRetriesHit && performanceError ? (
             <Typography>{performanceError}</Typography>
           ) : (
-            <Skeleton height={performanceChartStyles.DIMENSION.DESKTOP.height} />
+            <Skeleton height={performanceChartDimension.height} />
           )}
         </Grid>
 

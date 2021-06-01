@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
-import { usePerformanceChartStyles } from '../performanceChartStyles/performanceChartStyles';
 import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../../utils/formatters';
-import { ChartDimension } from '../../../../config/chart';
+import { ChartDimensionWithExtras } from '../../../../config/chart';
 import { PerformanceDataPeriod } from '../../../../services/performance/constants';
+import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
 
 export interface PerformanceChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   currentPeriod: PerformanceDataPeriod;
-  chartDimension: ChartDimension;
+  chartDimension: ChartDimensionWithExtras;
 }
 
 const axisBottomConfig: Record<
@@ -45,13 +45,13 @@ export default function PerformanceChartAxisBottom({
 }: PerformanceChartAxisBottomProps) {
   // Check PerformanceChartTickComponent to see why we have to pass this down
   // as a prop.
-  const chartStyles = usePerformanceChartStyles();
+  const chartStyles = useChartStyles();
 
   return (
     <AxisBottom
       scale={scale}
       hideAxisLine
-      top={chartDimension.height - chartDimension.margin.bottom - chartDimension.margin.top}
+      top={chartDimension.innerHeight}
       numTicks={axisBottomConfig[currentPeriod].numTicks}
       tickLength={12}
       tickStroke="transparent"
