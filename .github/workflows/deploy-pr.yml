@@ -132,7 +132,7 @@ jobs:
 
   deploy_rg_terraform:
     name: "Deploy Resource Group"
-    if: ${{ needs.detect_changes.outputs.has_tf_resource_group_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_resource_group_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -217,7 +217,7 @@ jobs:
   # Deploys terraform APIM.
   deploy_apim_terraform:
     name: "Deploy APIM"
-    if: ${{ needs.detect_changes.outputs.has_tf_apim_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_apim_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     needs:
       - detect_changes
@@ -487,7 +487,7 @@ jobs:
 
   linting:
     name: "Checks"
-    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && needs.detect_changes.outputs.has_package_changes == 'true' }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -540,7 +540,7 @@ jobs:
 
   unit_test:
     name: "Unit test"
-    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && needs.detect_changes.outputs.has_package_changes == 'true' }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -593,7 +593,7 @@ jobs:
 
   end_to_end_test:
     name: "E2E test"
-    if: ${{ needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -723,7 +723,7 @@ jobs:
 
   get_staging_rg_outputs:
     name: "Get staging resource group outputs"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: staging
     needs:
       - detect_changes
@@ -763,7 +763,7 @@ jobs:
 
   get_staging_apim_outputs:
     name: "Get staging APIM outputs"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: staging
     needs:
       - detect_changes
@@ -809,7 +809,7 @@ jobs:
 
   plan_staging:
     name: "Terraform plan Staging"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: staging
     needs:
       - detect_changes
@@ -865,7 +865,7 @@ jobs:
 
   get_prod_rg_outputs:
     name: "Get prod resource group outputs"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true'}}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: prod
     needs:
       - detect_changes
@@ -905,7 +905,7 @@ jobs:
 
   get_prod_apim_outputs:
     name: "Get prod APIM outputs"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: prod
     needs:
       - detect_changes
@@ -951,7 +951,7 @@ jobs:
 
   plan_prod:
     name: "Terraform plan Prod"
-    if: ${{ needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: prod
     needs:
       - detect_changes
