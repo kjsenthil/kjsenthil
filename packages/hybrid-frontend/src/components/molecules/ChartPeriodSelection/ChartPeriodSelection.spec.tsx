@@ -1,25 +1,31 @@
 import * as React from 'react';
 import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
-import PerformanceChartPeriodSelection, {
-  periodButtonLabel,
-} from './PerformanceChartPeriodSelection';
-import { PerformanceDataPeriod } from '../../../../services/performance/constants';
+import ChartPeriodSelection from './ChartPeriodSelection';
 
-describe('PerformanceChartPeriodSelection', () => {
+enum PerformanceDataPeriod {
+  '1M' = '1m',
+  '3M' = '3m',
+  '6M' = '6m',
+  '1Y' = '1y',
+  'ALL_TIME' = 'alltime',
+}
+
+describe('ChartPeriodSelection', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test('The period selection panel renders', () => {
     renderWithTheme(
-      <PerformanceChartPeriodSelection
+      <ChartPeriodSelection
+        performanceDataPeriod={PerformanceDataPeriod}
         currentPeriod={PerformanceDataPeriod.ALL_TIME}
         setCurrentPeriod={() => {}}
       />
     );
 
     const periodButtons = Object.values(PerformanceDataPeriod).map((period) =>
-      screen.getByText(periodButtonLabel[period])
+      screen.getByText(period)
     );
 
     periodButtons.forEach((periodButton) => {
@@ -42,13 +48,14 @@ describe('PerformanceChartPeriodSelection', () => {
       const setCurrentPeriod = jest.fn();
 
       renderWithTheme(
-        <PerformanceChartPeriodSelection
+        <ChartPeriodSelection
+          performanceDataPeriod={PerformanceDataPeriod}
           currentPeriod={PerformanceDataPeriod.ALL_TIME}
           setCurrentPeriod={setCurrentPeriod}
         />
       );
 
-      const periodButton = screen.getByText(periodButtonLabel[period]);
+      const periodButton = screen.getByText(period);
 
       fireEvent.click(periodButton);
 

@@ -4,8 +4,11 @@ import MainCard, { MainCardProps } from './MainCard';
 import { Button, Icon, Typography } from '../../atoms';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
-import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
+import {
+  PerformanceDataPeriod,
+  mapContributionsData,
+  mapPerformanceData,
+} from '../../../services/performance';
 
 export default {
   title: 'Digital Hybrid/Molecules/Main Card',
@@ -44,7 +47,8 @@ MainCardWithChildren.args = {
           mapContributionsData
         )}
         periodSelectionProps={{
-          currentPeriod: PerformanceDataPeriod.ALL_TIME,
+          performanceDataPeriod: PerformanceDataPeriod,
+          currentPeriod: String(PerformanceDataPeriod.ALL_TIME),
           setCurrentPeriod: () => {},
         }}
       />

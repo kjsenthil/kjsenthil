@@ -17,9 +17,7 @@ import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformance
 import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/PerformanceChartSummaryPanel';
-import PerformanceChartPeriodSelection, {
-  PerformanceChartPeriodSelectionProps,
-} from './PerformanceChartPeriodSelection/PerformanceChartPeriodSelection';
+import { ChartPeriodSelection, ChartPeriodSelectionProps } from '../../molecules';
 import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
@@ -29,7 +27,7 @@ export interface PerformanceChartProps extends WithParentSizeProps, WithParentSi
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
 
-  periodSelectionProps: PerformanceChartPeriodSelectionProps;
+  periodSelectionProps: ChartPeriodSelectionProps;
 }
 
 // ---------- Utilities ---------- //
@@ -177,7 +175,7 @@ function PerformanceChart({
           totalReturn={totalReturn}
           totalReturnPct={totalReturnPct}
         />
-        <PerformanceChartPeriodSelection {...periodSelectionProps} />
+        <ChartPeriodSelection {...periodSelectionProps} />
       </ControlPanelContainer>
 
       <svg

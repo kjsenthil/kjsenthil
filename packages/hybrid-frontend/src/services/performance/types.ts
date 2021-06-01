@@ -1,6 +1,5 @@
 import { CommonState } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
-import { PerformanceDataPeriod } from './constants';
 
 export interface GetPerformanceContactResponse {
   // All numbers have 2 decimal places
@@ -48,7 +47,7 @@ export interface GetPerformanceContactResponse {
 export interface PerformanceState extends CommonState {
   performance: GetPerformanceContactResponse | undefined;
   performanceError: string | undefined;
-  performanceDataPeriod: PerformanceDataPeriod;
+  performanceDataPeriod: string;
 }
 
 export interface ProjectionsChartAnnualHistoricalDatum extends TimeSeriesDatum {

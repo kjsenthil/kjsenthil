@@ -7,7 +7,7 @@ const initialState: PerformanceState = {
   status: 'idle',
   performance: undefined,
   performanceError: undefined,
-  performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+  performanceDataPeriod: String(PerformanceDataPeriod.ALL_TIME),
 };
 
 const performanceSlice = createSlice({
@@ -18,7 +18,7 @@ const performanceSlice = createSlice({
       state.performance = action.payload;
     },
 
-    setPerformanceDataPeriod: (state, action: PayloadAction<PerformanceDataPeriod>) => {
+    setPerformanceDataPeriod: (state, action: PayloadAction<string>) => {
       state.performanceDataPeriod = action.payload;
     },
   },

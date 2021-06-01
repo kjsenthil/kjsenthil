@@ -24,7 +24,7 @@ export default {
 type TemplateProps = Omit<PerformanceChartProps, 'periodSelectionProps'>;
 
 const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ...rest }) => {
-  const [currentPeriod, setCurrentPeriod] = React.useState(PerformanceDataPeriod.ALL_TIME);
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>(PerformanceDataPeriod.ALL_TIME);
 
   const slicedPerformanceData = performanceData.slice(-sliceIndexBasedOnPeriod[currentPeriod]);
   const slicedContributionsData = contributionsData.slice(-sliceIndexBasedOnPeriod[currentPeriod]);
@@ -33,7 +33,13 @@ const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ..
     <PerformanceChart
       performanceData={slicedPerformanceData}
       contributionsData={slicedContributionsData}
-      periodSelectionProps={{ currentPeriod, setCurrentPeriod }}
+      periodSelectionProps={{
+        currentPeriod,
+        setCurrentPeriod,
+        performanceDataPeriod: PerformanceDataPeriod,
+        periodTextDisplay: (period: string) =>
+          period === PerformanceDataPeriod.ALL_TIME ? 'All Time' : period,
+      }}
       {...rest}
     />
   );

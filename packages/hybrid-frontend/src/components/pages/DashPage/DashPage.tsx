@@ -16,7 +16,11 @@ import {
   usePerformanceData,
   usePerformanceDataPeriod,
 } from '../../../services/performance/hooks';
-import { getPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
+import {
+  getPerformanceContact,
+  setPerformanceDataPeriod,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { RootState } from '../../../store';
 import { useDispatchThunkOnRender } from '../../../hooks';
@@ -101,8 +105,11 @@ const DashPage = () => {
                 performanceData={performanceData}
                 contributionsData={contributionsData}
                 periodSelectionProps={{
+                  performanceDataPeriod: PerformanceDataPeriod,
                   currentPeriod: performanceDataPeriod,
-                  setCurrentPeriod: (newPeriod) => dispatch(setPerformanceDataPeriod(newPeriod)),
+
+                  setCurrentPeriod: (newPeriod: string) =>
+                    dispatch(setPerformanceDataPeriod(newPeriod)),
                 }}
               />
             </Box>
