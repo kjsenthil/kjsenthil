@@ -54,6 +54,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
   };
 
   const navigateLifePlan = () => navigate('/my-account/life-plan');
+  const navigateAccounts = () => navigate('/my-account/accounts');
 
   const navigateHome = () => {
     navigate('/');
@@ -93,9 +94,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                         onClose={handleMenuClose}
                       >
                         <MenuItem onClick={navigateHome}>Home</MenuItem>
-                        <MenuItem onClick={() => navigate('/my-account/accounts')}>
-                          Investments
-                        </MenuItem>
+                        <MenuItem onClick={navigateAccounts}>Investments</MenuItem>
                         <MenuItem onClick={navigateLifePlan}>Life Plan</MenuItem>
                         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                       </Menu>

@@ -9,6 +9,7 @@ import {
   accountBreakdownSlice as accountBreakdownReducer,
 } from '../../../services/myAccount';
 import BIAccountsPage from './BIAccountsPage';
+import performanceReducer from '../../../services/performance/reducers/performanceSlice';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
@@ -20,6 +21,7 @@ describe('BIAccountsPage', () => {
     reducer: {
       auth: authReducer,
       client: clientReducer,
+      performance: performanceReducer,
       investmentSummary: investmentSummaryReducer,
       accountBreakdown: accountBreakdownReducer,
     },

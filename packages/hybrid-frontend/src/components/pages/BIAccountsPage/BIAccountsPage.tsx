@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Grid, Spacer } from '../../atoms';
+import { useDispatch, useSelector } from 'react-redux';
+import { Skeleton } from '@material-ui/lab';
+import { Box, Button, Grid, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import SummaryPanel from '../../organisms/SummaryPanel/SummaryPanel';
 import MainCard from '../../molecules/MainCard';
@@ -7,15 +9,48 @@ import PerformanceChart from '../../organisms/PerformanceChart';
 import { mockAccountsTableHeader } from '../../../constants/storybook';
 import AccountsTable from '../../organisms/AccountsTable';
 import useAccountBreakdownInfo from '../../../hooks/AccountBreakdownInfo/useAccountBreakdownInfo';
-import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
 import {
-  mapContributionsData,
-  mapPerformanceData,
+  usePerformanceData,
+  useContributionsData,
+  usePerformanceDataPeriod,
+} from '../../../services/performance/hooks';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
+import {
+  getPerformanceContact,
+  setPerformanceDataPeriod,
   PerformanceDataPeriod,
 } from '../../../services/performance';
+import { useDispatchThunkOnRender } from '../../../hooks';
+import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
 
 const BIAccountsPage = () => {
+  const {
+    auth: { contactId },
+    performance: { status: performanceStatus, performanceError },
+  } = useSelector((state: RootState) => state);
+
+  const dispatch = useDispatch();
+
+  // Historical performance data
+  const performanceData = usePerformanceData();
+  const contributionsData = useContributionsData();
+  const performanceDataPeriod = usePerformanceDataPeriod();
+  const performanceChartDimension = usePerformanceChartDimension();
+  const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
+
+  // Fetch performance data for performance chart
+  const dispatchGetPerformanceContact = () =>
+    dispatch(getPerformanceContact({ contactId: contactId ?? '' }));
+  const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
+    dispatchGetPerformanceContact,
+    performanceStatus,
+    {
+      enabled: !!contactId && !!performanceData,
+    }
+  );
+
+  // Account Breakdown Data
   const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
 
   const summaryContributions =
@@ -50,20 +85,26 @@ const BIAccountsPage = () => {
 
         <Grid item xs={12}>
           <MainCard>
-            <PerformanceChart
-              performanceData={getPerformanceContactMockResponseData.data.attributes.values.map(
-                mapPerformanceData
-              )}
-              contributionsData={getPerformanceContactMockResponseData.included[0].attributes.contributions.map(
-                mapContributionsData
-              )}
-              periodSelectionProps={{
-                currentPeriod: PerformanceDataPeriod.ALL_TIME,
-                performanceDataPeriod: PerformanceDataPeriod,
-                setCurrentPeriod: () => {},
-              }}
-              axisBottomConfig={axisBottomConfig}
-            />
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {hasDataForPerformanceChart ? (
+              <Box p={2}>
+                <PerformanceChart
+                  performanceData={performanceData}
+                  contributionsData={contributionsData}
+                  periodSelectionProps={{
+                    performanceDataPeriod: PerformanceDataPeriod,
+                    currentPeriod: performanceDataPeriod,
+                    setCurrentPeriod: (newPeriod: string) =>
+                      dispatch(setPerformanceDataPeriod(newPeriod)),
+                  }}
+                  axisBottomConfig={axisBottomConfig}
+                />
+              </Box>
+            ) : performanceFetchMaxRetriesHit && performanceError ? (
+              <Typography>{performanceError}</Typography>
+            ) : (
+              <Skeleton height={performanceChartDimension.height} />
+            )}
           </MainCard>
         </Grid>
 
