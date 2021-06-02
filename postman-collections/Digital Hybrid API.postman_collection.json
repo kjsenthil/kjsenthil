@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d3701c71-6bd9-4ba1-a8fd-cdaf4edcde15",
+		"_postman_id": "e747425f-2383-41b0-8e8e-48bb752196b6",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1881,6 +1881,162 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"capture_date\": {\n            \"_val\": \"2021-02-15\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 3,\n        \"xpt_external_id\": null,\n        \"owner\": \"client\"\n    },\n    \"allow_associates\": false,\n    \"allow_multiple_account_associates\": false,\n    \"index\": 2030090337\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Goals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the Goal index from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('index');\r",
+									"    pm.environment.set(\"xplan.goalIndex\", jsonData.index);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAccounts.accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals?fields.0=description&fields.1=category&fields.2=present_value&fields.3=target_amount",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client-v4",
+								"goals"
+							],
+							"query": [
+								{
+									"key": "fields.0",
+									"value": "description"
+								},
+								{
+									"key": "fields.1",
+									"value": "category"
+								},
+								{
+									"key": "fields.2",
+									"value": "present_value"
+								},
+								{
+									"key": "fields.3",
+									"value": "target_amount"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals?fields.0=description&fields.1=category&fields.2=present_value&fields.3=target_amount",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"resourceful",
+										"entity",
+										"client-v4",
+										"goals"
+									],
+									"query": [
+										{
+											"key": "fields.0",
+											"value": "description"
+										},
+										{
+											"key": "fields.1",
+											"value": "category"
+										},
+										{
+											"key": "fields.2",
+											"value": "present_value"
+										},
+										{
+											"key": "fields.3",
+											"value": "target_amount"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-store,no-cache"
+								},
+								{
+									"key": "Content-Length",
+									"value": "151"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "ETag",
+									"value": "\"fFIJBT8l84WfcUPSy8cmjQ==\""
+								},
+								{
+									"key": "X-Robots-Tag",
+									"value": "none"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31622400; includeSubDomains"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 02 Jun 2021 13:03:19 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"fields\": {\n            \"category\": 5,\n            \"present_value\": null,\n            \"description\": \"\",\n            \"target_amount\": {\n                \"_val\": {\n                    \"code\": \"GBP\",\n                    \"value\": {\n                        \"_val\": \"0\",\n                        \"_type\": \"BigDecimal\"\n                    }\n                },\n                \"_type\": \"Currency\"\n            }\n        },\n        \"allow_associates\": false,\n        \"allow_multiple_account_associates\": false,\n        \"index\": 185414472\n    }\n]"
 						}
 					]
 				},

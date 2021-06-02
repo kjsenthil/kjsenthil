@@ -338,6 +338,61 @@
 					"password": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-password\")}"
 				}
 			}
+		},
+		{
+			"operation_id": "Get-Goals",
+			"display_name": "Get Goals",
+			"url_template": "\/resourceful\/entity\/client-v4\/goals",
+			"description": "This lets the user to get  list of existing goals.",
+			"policy": {
+				"cors": {
+					"method": "GET",
+					"headers": [
+						"Content-Type",
+						"Origin",
+						"Authorization"
+					]
+				},
+				"set_header": [
+					{
+						"name": "Content-Type",
+						"exists_action": "override",
+						"value": "application/json"
+					},
+					{
+						"name": "Origin",
+						"exists_action": "override",
+						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+					},
+					{
+						"name": "Referer",
+						"exists_action": "override",
+						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+					},
+					{
+						"name": "X-Xplan-App-Id",
+						"exists_action": "override",
+						"value": "{{xplan-app-id}}"
+					},
+					{
+						"name": "Authorization",
+						"exists_action": "delete",
+						"value": ""
+					}					
+				],
+				"set_variable": [
+					{
+						"name": "xplanId",
+						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
+					}
+				],				
+				"backend_url": "xplan",
+				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
+				"authentication-basic": {
+					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
+					"password": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-password\")}"
+				}
+			}
 		}
 	]
 }
