@@ -22,12 +22,15 @@ import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
 import { usePerformanceChartDimension } from './performanceChartDimension/usePerformanceChartDimension';
+import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
 
   periodSelectionProps: ChartPeriodSelectionProps;
+
+  axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;
 }
 
 // ---------- Utilities ---------- //
@@ -60,6 +63,7 @@ function PerformanceChart({
   performanceData,
   contributionsData,
   periodSelectionProps,
+  axisBottomConfig,
   parentWidth = 0,
 }: PerformanceChartProps) {
   // ----- Stylings ----- //
@@ -106,6 +110,18 @@ function PerformanceChart({
   const shapeYAccessor = React.useCallback((d) => yScale(timeSeriesValueAccessor(d)) ?? 0, [
     yScale,
   ]);
+
+  // ----- Chart axis bottom ----- //
+
+  const {
+    numTicks: axisBottomNumTicks,
+    tickFormatterType: axisBottomTickFormatterType,
+  } = axisBottomConfig
+    ? axisBottomConfig[periodSelectionProps.currentPeriod]
+    : {
+        numTicks: 4,
+        tickFormatterType: D3TimeFormatterType.DATE_AND_MONTH,
+      };
 
   // ----- Chart tooltip ----- //
 
@@ -203,7 +219,8 @@ function PerformanceChart({
           <PerformanceChartAxisBottom
             chartDimension={chartDimension}
             scale={xScale}
-            currentPeriod={periodSelectionProps.currentPeriod}
+            numTicks={axisBottomNumTicks}
+            tickFormat={d3TimeFormatter[axisBottomTickFormatterType]}
           />
 
           {/* ***** Graph paths ***** */}

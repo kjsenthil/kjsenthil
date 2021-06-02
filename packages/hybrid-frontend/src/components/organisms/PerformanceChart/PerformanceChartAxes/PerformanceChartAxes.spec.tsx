@@ -2,11 +2,10 @@ import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './index';
-import { ChartDimension } from '../../../../config/chart';
-import { PerformanceDataPeriod } from '../../../../services/performance/constants';
+import { ChartDimensionWithExtras } from '../../../../config/chart';
 
 describe('PerformanceChartAxes', () => {
-  const chartDimension: ChartDimension = {
+  const chartDimension: ChartDimensionWithExtras = {
     width: 300,
     height: 300,
     margin: {
@@ -15,6 +14,8 @@ describe('PerformanceChartAxes', () => {
       bottom: 0,
       left: 0,
     },
+    innerWidth: 300,
+    innerHeight: 300,
   };
 
   const xScale = scaleTime({
@@ -38,11 +39,7 @@ describe('PerformanceChartAxes', () => {
     } = renderWithTheme(
       <svg width={300} height={300}>
         <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-        <PerformanceChartAxisBottom
-          chartDimension={chartDimension}
-          scale={xScale}
-          currentPeriod={PerformanceDataPeriod.ALL_TIME}
-        />
+        <PerformanceChartAxisBottom chartDimension={chartDimension} scale={xScale} />
       </svg>
     );
 

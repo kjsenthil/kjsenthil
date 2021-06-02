@@ -37,3 +37,4 @@ export const defaultChartDimensionByScreenSize: ChartDimensionByScreenSize = {
   [ScreenSize.DESKTOP]: defaultChartDimension,
   [ScreenSize.DESKTOP_HD]: defaultChartDimension,
 };
+export { axisBottomConfig } from './performanceChart';

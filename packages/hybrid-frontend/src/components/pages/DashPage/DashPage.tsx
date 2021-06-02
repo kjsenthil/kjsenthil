@@ -26,6 +26,7 @@ import { RootState } from '../../../store';
 import { useDispatchThunkOnRender } from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
+import { axisBottomConfig } from '../../../config/chart';
 
 const DashPage = () => {
   const {
@@ -107,10 +108,10 @@ const DashPage = () => {
                 periodSelectionProps={{
                   performanceDataPeriod: PerformanceDataPeriod,
                   currentPeriod: performanceDataPeriod,
-
                   setCurrentPeriod: (newPeriod: string) =>
                     dispatch(setPerformanceDataPeriod(newPeriod)),
                 }}
+                axisBottomConfig={axisBottomConfig}
               />
             </Box>
           ) : performanceFetchMaxRetriesHit && performanceError ? (

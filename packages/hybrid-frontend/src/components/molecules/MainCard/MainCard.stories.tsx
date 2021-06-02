@@ -9,6 +9,7 @@ import {
   mapContributionsData,
   mapPerformanceData,
 } from '../../../services/performance';
+import { axisBottomConfig } from '../../../config/chart';
 
 export default {
   title: 'Digital Hybrid/Molecules/Main Card',
@@ -51,6 +52,7 @@ MainCardWithChildren.args = {
           currentPeriod: String(PerformanceDataPeriod.ALL_TIME),
           setCurrentPeriod: () => {},
         }}
+        axisBottomConfig={axisBottomConfig}
       />
     </div>
   ),

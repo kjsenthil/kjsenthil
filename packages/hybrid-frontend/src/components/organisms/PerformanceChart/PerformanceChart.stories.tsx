@@ -3,10 +3,12 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import PerformanceChart, { PerformanceChartProps } from './PerformanceChart';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
 import {
+  mapContributionsData,
+  mapPerformanceData,
   PerformanceDataPeriod,
   sliceIndexBasedOnPeriod,
-} from '../../../services/performance/constants';
-import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
+} from '../../../services/performance';
+import { axisBottomConfig } from '../../../config/chart';
 
 export default {
   title: 'Digital Hybrid/Organisms/Performance Chart/Performance Chart',
@@ -40,6 +42,7 @@ const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ..
         periodTextDisplay: (period: string) =>
           period === PerformanceDataPeriod.ALL_TIME ? 'All Time' : period,
       }}
+      axisBottomConfig={axisBottomConfig}
       {...rest}
     />
   );

@@ -8,8 +8,12 @@ import { mockAccountsTableHeader } from '../../../constants/storybook';
 import AccountsTable from '../../organisms/AccountsTable';
 import useAccountBreakdownInfo from '../../../hooks/AccountBreakdownInfo/useAccountBreakdownInfo';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
-import { mapPerformanceData, mapContributionsData } from '../../../services/performance/utils';
+import {
+  mapContributionsData,
+  mapPerformanceData,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
+import { axisBottomConfig } from '../../../config/chart';
 
 const BIAccountsPage = () => {
   const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
@@ -55,8 +59,10 @@ const BIAccountsPage = () => {
               )}
               periodSelectionProps={{
                 currentPeriod: PerformanceDataPeriod.ALL_TIME,
+                performanceDataPeriod: PerformanceDataPeriod,
                 setCurrentPeriod: () => {},
               }}
+              axisBottomConfig={axisBottomConfig}
             />
           </MainCard>
         </Grid>

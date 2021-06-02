@@ -2,8 +2,11 @@ import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChart from './PerformanceChart';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
-import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
+import {
+  mapContributionsData,
+  mapPerformanceData,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
 
 describe('PerformanceChartChart', () => {
   const CHART_SIZE = 600;
