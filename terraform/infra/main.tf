@@ -102,6 +102,9 @@ module "front_end" {
   account_tier             = "Standard"
   cdn_profile_name         = var.cdn_profile_name
 
+  csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com"
+  csp_allowed_style_sources = "'self' 'unsafe-inline'"
+
   tags = merge(var.tags, local.default_tags)
 }
 
@@ -115,6 +118,9 @@ module "storybook" {
   account_replication_type = "GRS"
   account_tier             = "Standard"
   cdn_profile_name         = var.cdn_profile_name
+
+  csp_allowed_script_sources = "'self' 'unsafe-inline' 'unsafe-eval' *.tiqcdn.com *.tealiumiq.com"
+  csp_allowed_style_sources = "'self' 'unsafe-inline'"
 
   tags = merge(var.tags, local.default_tags)
 }

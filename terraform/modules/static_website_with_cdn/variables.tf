@@ -56,3 +56,15 @@ variable "error_path" {
   default     = "error.html"
   description = "The path to the error.html page."
 }
+
+variable "csp_allowed_script_sources" {
+  type = string
+  description = "Any allowed 'script-src' directives to be added to the CSP header in the CDN rules"
+  default = "'self'"
+}
+
+variable "csp_allowed_style_sources" {
+  type = string
+  description = "Any allowed 'style-src' directives to be added to the CSP header in the CDN rules"
+  default = "'self'"
+}

@@ -22,7 +22,7 @@ resource "azurerm_cdn_endpoint" "storage_account" {
     modify_response_header_action {
       action = "Append"
       name   = "Content-Security-Policy"
-      value  = "script-src 'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com; style-src 'self' 'unsafe-inline';"
+      value  = "script-src ${var.csp_allowed_script_sources}; style-src ${var.csp_allowed_style_sources};"
     }
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
     modify_response_header_action {

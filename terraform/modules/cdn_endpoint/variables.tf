@@ -27,3 +27,15 @@ variable "tags" {
   type        = map(string)
   description = "Tags to apply to the endpoint"
 }
+
+variable "csp_allowed_script_sources" {
+  type = string
+  description = "Any allowed 'script-src' directives to be added to the CSP header"
+  default = "'self'"
+}
+
+variable "csp_allowed_style_sources" {
+  type = string
+  description = "Any allowed 'style-src' directives to be added to the CSP header"
+  default = "'self'"
+}
