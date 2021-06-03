@@ -15,6 +15,7 @@ export { default as Switcher } from './Switcher';
 export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Slider } from './Slider';
+export { default as Tooltip } from './Tooltip';
 export { default as ProgressBar } from './ProgressBar';
 export { default as Link } from './Link';
 
@@ -41,7 +42,6 @@ export {
   Paper,
   Select,
   TextField,
-  Tooltip,
   Toolbar,
   useTheme,
   makeStyles,
