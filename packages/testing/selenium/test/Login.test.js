@@ -1,8 +1,10 @@
 require('geckodriver');
+let chrome = require('selenium-webdriver/chrome');
+let chrome_options = new chrome.Options();
 require('../../../hybrid-frontend/jest.config');
 let webdriver = require('selenium-webdriver');
 let firefox = require('selenium-webdriver/firefox');
-const {  By,  until } = require('selenium-webdriver');
+const { By, until } = require('selenium-webdriver');
 let driver = webdriver;
 let Firefox_options = new firefox.Options();
 let url;
@@ -32,7 +34,9 @@ beforeAll(async () => {
     }
     //chrome capabilities
     case "chrome": {
-      require("chromedriver");
+      chrome_options.addArguments('--headless');
+      chrome_options.addArguments('--disable-gpu');
+      chrome_options.addArguments('--window-size=1980,1200')
       capabilities = webdriver.Capabilities.chrome();
       capabilities.set("chromeOptions", {
         args: [
@@ -42,8 +46,9 @@ beforeAll(async () => {
           "--window-size=1980,1200"
         ]
       });
+
       // initialising chrome driver
-      driver = await new webdriver.Builder().forBrowser('chrome')
+      driver = await new webdriver.Builder().forBrowser('chrome').setChromeOptions(chrome_options)
         .withCapabilities(capabilities)
         .build();
       break;
@@ -57,7 +62,7 @@ test("Digital Hybrid - login with invalid credentials", async () => {
   await driver.get(url);
   let username = await driver.wait(until.elementLocated(By.id('username')), explicitwait);
   username.sendKeys('fsdfsdfsdfk');
-  let password = await driver.findElement(By.id('password'));
+  let password = await driver.wait(until.elementLocated(By.id('password')), explicitwait);
   await password.sendKeys('1111111');
   let login = await driver.findElement(By.css("button[data-testid='login']"));
   await login.click();
@@ -66,20 +71,19 @@ test("Digital Hybrid - login with invalid credentials", async () => {
   await successmsg.getText().then(async function (txt) {
     await expect(txt).toBe('Request failed with status code 404');
   });
-  
+
 });
 
 // test to launch digital hybrid , login with fields left blank
 test("Digital Hybrid - login with fields left blank", async () => {
   await driver.get(url);
-  let login = await driver.findElement(By.css("button[data-testid='login']"));
+  let login = await driver.wait(until.elementLocated(By.css("button[data-testid='login']")), explicitwait);
   await login.click();
-  driver.sleep(2000);
   let successmsg = driver.wait(until.elementLocated(By.xpath("//div[@class='MuiAlert-message']")), explicitwait);
   await successmsg.getText().then(async function (txt) {
     await expect(txt).toBe('Request failed with status code 400');
   });
-  
+
 });
 
 // executes after all 'tests' have run , kills the browser driver

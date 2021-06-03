@@ -4671,7 +4671,7 @@ __metadata:
   resolution: "@tsw/testing-selenium@workspace:packages/testing/selenium"
   dependencies:
     assert: ^2.0.0
-    chromedriver: ^90.0.0
+    chromedriver: 90.0.0
     cross-env: ^7.0.3
     geckodriver: ^1.22.3
     jest: ^26.6.3
@@ -8727,20 +8727,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^90.0.0":
-  version: 90.0.1
-  resolution: "chromedriver@npm:90.0.1"
+"chromedriver@npm:90.0.0":
+  version: 90.0.0
+  resolution: "chromedriver@npm:90.0.0"
   dependencies:
     "@testim/chrome-version": ^1.0.7
     axios: ^0.21.1
     del: ^6.0.0
     extract-zip: ^2.0.1
     https-proxy-agent: ^5.0.0
+    mkdirp: ^1.0.4
     proxy-from-env: ^1.1.0
     tcp-port-used: ^1.0.1
   bin:
     chromedriver: bin/chromedriver
-  checksum: 4825fbd32bc05f8393ecc28c7a673e79914a2a35f2f9a84ee750847280794d8e0593d361cff0c71a2ac876000d0a133866a068434205c292a6e5873c16cacdb0
+  checksum: 44bc22559ce5d0bd557bae6a1d2b32f96b6ac37f2ba0a44e1c662d5b7120cc0207ed55aa4d46b41dc3501d207210423e45774855fe8f13d2386152a9527a4e87
   languageName: node
   linkType: hard
 

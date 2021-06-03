@@ -629,7 +629,7 @@ jobs:
           path: ${{ needs.build_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
-
+      
       - name: "Update webdriver-manager"
         run: npx webdriver-manager update
 
@@ -657,7 +657,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: | 
-                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/selenium" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -1122,8 +1122,8 @@ jobs:
             **Linting Results:** \`${{ needs.deploy_storybook.outputs.url }}eslint/index.html\`
             **Unit Test Coverage Report:** \`${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html\`
             **Unit Test Report:** \`${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html\`
-            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}selenium/reports/TestReport_chrome.html\`
-            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}selenium/reports/TestReport_firefox.html\`
+            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}reports/TestReport_chrome.html\`
+            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}reports/TestReport_firefox.html\`
 
             #### Review URLs
             **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
@@ -1292,8 +1292,8 @@ jobs:
                     }
                   },
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":hammer_and_wrench:   Workflow run for this deployment" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Workflow run", "emoji": true }, "value": "Link to this run instance", "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "action_id": "button-action" }},
-                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Selenium Chrome report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Selenium Chrome report", "emoji": true }, "value": "Link to Selenium report", "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/selenium/TestReport_chrome.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
-                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Selenium Firefox report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Selenium Firefox report", "emoji": true },"value": "Link to Selenium report", "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/selenium/TestReport_firefox.html' : 'https://www.google.com/404.html', "action_id": "button-action"}},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Selenium Chrome report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Selenium Chrome report", "emoji": true }, "value": "Link to Selenium report", "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Selenium Firefox report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Selenium Firefox report", "emoji": true },"value": "Link to Selenium report", "url": '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html' : 'https://www.google.com/404.html', "action_id": "button-action"}},
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Jest Coverage report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Jest coverage report", "emoji": true }, "value": "Link to Jest coverage report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Jest test report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Jest test report", "emoji": true }, "value": "Link to Jest test report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   ESlint report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "eslint report", "emoji": true }, "value": "Link to ESlint report", "url": '${{ needs.linting.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/eslint/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
