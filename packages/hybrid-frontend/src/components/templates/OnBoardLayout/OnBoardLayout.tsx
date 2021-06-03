@@ -64,12 +64,7 @@ const OnBoardLayout = ({
               <Grid item xs={12}>
                 <Grid container justify="space-between">
                   <Grid item xs={3}>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      onClick={() => navigate(-1)}
-                    >
+                    <Button variant="outlined" color="primary" onClick={() => navigate(-1)}>
                       Back
                     </Button>
                   </Grid>
@@ -79,7 +74,6 @@ const OnBoardLayout = ({
                       color="primary"
                       onClick={onSubmitHandler}
                       disabled={disableCondition}
-                      fullWidth
                     >
                       Continue
                     </Button>
