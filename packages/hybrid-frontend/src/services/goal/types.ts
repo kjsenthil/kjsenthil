@@ -76,6 +76,42 @@ export interface GoalState extends CommonState {
   goalCreationError?: string;
 }
 
+export enum GoalStatus {
+  'FULFILLED' = '1',
+  'UNFULFILLED' = '2',
+  'FULFILLED_PARTIALLY' = '3',
+  'CANCELLED' = '4',
+}
+
+export interface GoalData {
+  index: number; // Looks like this is the goal's ID
+  allow_associates: boolean;
+  allow_multiple_account_associates: boolean;
+
+  // These fields can be influenced by the 'fields' query parameters. See the
+  // get goals fetcher for more details
+  fields: {
+    description: string;
+    category: number;
+    status: GoalStatus; // This is a number string
+    present_value: number | null;
+    target_amount: {
+      _val: {
+        code: string; // This is the currency code
+        value: {
+          _val: string; // This is a number string
+          _type: string; // e.g. "BigDecimal"
+        };
+      };
+      _type: string;
+    };
+  };
+}
+
+export type GetGoalsResponse = GoalData[];
+
+export interface GoalsState extends CommonState<GetGoalsResponse, undefined> {}
+
 // This kind of data is used by the projections chart
 export interface ProjectionsChartGoalDatum {
   date: Date;

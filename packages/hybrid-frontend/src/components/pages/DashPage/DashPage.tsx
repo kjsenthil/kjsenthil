@@ -27,6 +27,8 @@ import { useDispatchThunkOnRender } from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { axisBottomConfig } from '../../../config/chart';
+import { getGoals } from '../../../services/goal';
+import { useGoals } from '../../../services/goal/hooks';
 
 const DashPage = () => {
   const {
@@ -35,6 +37,7 @@ const DashPage = () => {
     investmentSummary: { data: investmentSummaryData },
     performance: { status: performanceStatus, performanceError },
     projections: { status: projectionsStatus, postProjectionsError: projectionsError },
+    goals: { status: goalsStatus },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
@@ -57,6 +60,9 @@ const DashPage = () => {
     annualHistoricalData.length > 0 &&
     goalsData.length > 0 &&
     projectionsMetadata;
+
+  // Goals data
+  const goals = useGoals();
 
   const fundData = useAllAssets();
 
@@ -83,6 +89,10 @@ const DashPage = () => {
       enabled: !!contactId && !!performanceData,
     }
   );
+
+  // Fetch goals data
+  const dispatchGetGoals = () => dispatch(getGoals());
+  useDispatchThunkOnRender(dispatchGetGoals, goalsStatus, { enabled: !goals && !!contactId });
 
   return (
     <MyAccountLayout

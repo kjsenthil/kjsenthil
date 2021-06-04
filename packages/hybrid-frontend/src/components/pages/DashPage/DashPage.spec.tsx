@@ -5,6 +5,7 @@ import DashPage from './DashPage';
 import { authSlice as authReducer } from '../../../services/auth/reducers';
 import investmentSummaryReducer from '../../../services/myAccount/reducers/investmentSummarySlice';
 import { performanceSlice as performanceReducer } from '../../../services/performance/reducers';
+import { goalsSlice as goalsReducer } from '../../../services/goal/reducers';
 import { projectionsSlice as projectionsReducer } from '../../../services/projections';
 import { mockClientResponse } from '../../../services/myAccount/mocks';
 
@@ -21,6 +22,7 @@ describe('DashPage', () => {
       performance: performanceReducer,
       projections: projectionsReducer,
       client: () => mockClientResponse,
+      goals: goalsReducer,
     },
   });
 

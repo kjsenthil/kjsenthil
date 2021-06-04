@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
 import * as api from '../api';
+import getStoreAndStateHistory from '../utils/getStoreAndStateHistory';
 import performanceReducer, {
   getPerformanceContact,
   setPerformance,
@@ -13,18 +13,8 @@ jest.mock('../api');
 
 const contactId = '12345678';
 
-function getStoreAndStateHistory() {
-  const store = configureStore({
-    reducer: performanceReducer,
-  });
-
-  const stateHistory: PerformanceState[] = [];
-
-  store.subscribe(() => {
-    stateHistory.push(store.getState());
-  });
-
-  return { store, stateHistory };
+function getPerformanceStoreAndStateHistory() {
+  return getStoreAndStateHistory<PerformanceState>(performanceReducer);
 }
 
 describe('performanceSlice', () => {
@@ -75,7 +65,7 @@ describe('performanceSlice', () => {
           },
         ];
 
-        const { store, stateHistory } = getStoreAndStateHistory();
+        const { store, stateHistory } = getPerformanceStoreAndStateHistory();
         await store.dispatch(getPerformanceAction);
 
         expectedStates.forEach((expectedState, i) => {
@@ -107,7 +97,7 @@ describe('performanceSlice', () => {
           },
         ];
 
-        const { store, stateHistory } = getStoreAndStateHistory();
+        const { store, stateHistory } = getPerformanceStoreAndStateHistory();
         await store.dispatch(getPerformanceAction);
 
         expect(stateHistory).toHaveLength(2);
@@ -133,7 +123,7 @@ describe('performanceSlice', () => {
         },
       ];
 
-      const { store, stateHistory } = getStoreAndStateHistory();
+      const { store, stateHistory } = getPerformanceStoreAndStateHistory();
       store.dispatch(setPerformanceAction);
 
       expect(stateHistory).toHaveLength(1);
@@ -156,7 +146,7 @@ describe('performanceSlice', () => {
         },
       ];
 
-      const { store, stateHistory } = getStoreAndStateHistory();
+      const { store, stateHistory } = getPerformanceStoreAndStateHistory();
       store.dispatch(setPerformanceDataPeriodAction);
 
       expect(stateHistory).toHaveLength(1);

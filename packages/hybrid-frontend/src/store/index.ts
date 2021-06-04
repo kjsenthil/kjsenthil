@@ -16,10 +16,10 @@ import {
   accountBreakdownSlice as accountBreakdownReducer,
   InvestmentSummarySlice as investmentSummaryReducer,
 } from '../services/myAccount/reducers';
-import { goalSlice as goalReducer } from '../services/goal/reducers';
+import { goalSlice as goalReducer, goalsSlice as goalsReducer } from '../services/goal/reducers';
 import { performanceSlice as performanceReducer } from '../services/performance/reducers';
 import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
-import { GoalState } from '../services/goal';
+import { GoalsState, GoalState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import { ProjectionsState } from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
@@ -31,6 +31,7 @@ export interface RootState {
   accountBreakdown: BreakdownState;
   investmentSummary: InvestmentSummaryState;
   goal: GoalState;
+  goals: GoalsState;
   performance: PerformanceState;
   projections: ProjectionsState;
 }
@@ -46,7 +47,7 @@ export interface RootState {
 const authWhitelist = createWhitelistFilter('auth', ['accessTokens', 'contactId']);
 
 const persistConfig: PersistConfig<RootState> = {
-  blacklist: ['goal', 'performance', 'projections', 'investmentSummary'],
+  blacklist: ['goal', 'goals', 'performance', 'projections', 'investmentSummary'],
   transforms: [authWhitelist],
   key: 'root',
   storage,
@@ -58,6 +59,7 @@ const reducersMap: ReducersMapObject = {
   accountBreakdown: accountBreakdownReducer,
   investmentSummary: investmentSummaryReducer,
   goal: goalReducer,
+  goals: goalsReducer,
   performance: performanceReducer,
   projections: projectionsReducer,
 };
