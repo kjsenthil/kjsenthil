@@ -20,7 +20,7 @@ describe('Legend', () => {
   });
 
   it('renders a value with percentage formatter', () => {
-    const value = '£111,000.00';
+    const value = '£111,000.10';
     renderWithTheme(
       <Legend
         title="total value"

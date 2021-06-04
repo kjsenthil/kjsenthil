@@ -3357,6 +3357,65 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-spring/animated@npm:~9.2.0":
+  version: 9.2.1
+  resolution: "@react-spring/animated@npm:9.2.1"
+  dependencies:
+    "@react-spring/shared": ~9.2.0
+    "@react-spring/types": ~9.2.0
+  peerDependencies:
+    react: ^16.8.0  || ^17.0.0
+  checksum: 40ed99d25e03c0ed149fa53da16370dddd01f4e5a799433bd2609e0a8dea551eb093bee97d49a485f3338b43f16fee57c202376264c89bb72827980f32980051
+  languageName: node
+  linkType: hard
+
+"@react-spring/core@npm:~9.2.0":
+  version: 9.2.1
+  resolution: "@react-spring/core@npm:9.2.1"
+  dependencies:
+    "@react-spring/animated": ~9.2.0
+    "@react-spring/shared": ~9.2.0
+    "@react-spring/types": ~9.2.0
+  peerDependencies:
+    react: ^16.8.0  || ^17.0.0
+  checksum: ff09398538b482f00e712468e3b74134244ac9f94632c6a2597d22cf49d54901852272253567fbc07665edc2a80ee4f1e93b2cf8f727774463dec37b26ccb567
+  languageName: node
+  linkType: hard
+
+"@react-spring/shared@npm:~9.2.0":
+  version: 9.2.1
+  resolution: "@react-spring/shared@npm:9.2.1"
+  dependencies:
+    "@react-spring/types": ~9.2.0
+    rafz: ^0.1.13
+  peerDependencies:
+    react: ^16.8.0  || ^17.0.0
+  checksum: b1ffa89e872f5afc654e768278dee778bf2b3205f85579cc0259759e8da1a4fa7bb1fc3198c17ebc3aa68daa2035ae6203b58621aae625e3f09cc8c6d14c15c2
+  languageName: node
+  linkType: hard
+
+"@react-spring/types@npm:~9.2.0":
+  version: 9.2.1
+  resolution: "@react-spring/types@npm:9.2.1"
+  checksum: 65347fb05b9c86e7cf1bf35b1cd685e57ccce7d78d2a780c4b1e632889a958c97364035b3873cf8a1104aeb365a6baeb7941f67964d1adac2e97ca9b4b76e932
+  languageName: node
+  linkType: hard
+
+"@react-spring/web@npm:^9.2.1":
+  version: 9.2.1
+  resolution: "@react-spring/web@npm:9.2.1"
+  dependencies:
+    "@react-spring/animated": ~9.2.0
+    "@react-spring/core": ~9.2.0
+    "@react-spring/shared": ~9.2.0
+    "@react-spring/types": ~9.2.0
+  peerDependencies:
+    react: ^16.8.0  || ^17.0.0
+    react-dom: ^16.8.0  || ^17.0.0
+  checksum: 70f00130c461109f5560f6d21b13e3e44da53605bc84aba982f39032d6008e713d49a717a8d47c738feffd809e773a179103f9303a960cdc5bbdb693a9d8e7ea
+  languageName: node
+  linkType: hard
+
 "@reduxjs/toolkit@npm:^1.5.1":
   version: 1.5.1
   resolution: "@reduxjs/toolkit@npm:1.5.1"
@@ -4562,6 +4621,7 @@ __metadata:
     "@material-ui/lab": ^4.0.0-alpha.57
     "@material-ui/styles": ^4.11.3
     "@reach/router": ^1.3.4
+    "@react-spring/web": ^9.2.1
     "@reduxjs/toolkit": ^1.5.1
     "@storybook/addon-actions": ^6.1.18
     "@storybook/addon-essentials": ^6.1.18
@@ -22945,6 +23005,13 @@ fsevents@^1.2.7:
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
   checksum: fafb2b2fa1a948d6f2e88d4a60571be70b316d9b0be857d24fba0ac28fc31acebf535b643fe968473d689f8c655bcb2a0e4da67912f571059a4e4eb15740b021
+  languageName: node
+  linkType: hard
+
+"rafz@npm:^0.1.13":
+  version: 0.1.14
+  resolution: "rafz@npm:0.1.14"
+  checksum: 3a0d585910f6b2610aa4bedeeb4e17a4cf25b1fb81ea24f1c288204aa31b5634b9180be73e2584c0e0368c966e4b9a06885c7dd8a1962e80c6f775659bcdc2c2
   languageName: node
   linkType: hard
 

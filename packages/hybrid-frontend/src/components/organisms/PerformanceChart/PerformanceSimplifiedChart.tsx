@@ -12,24 +12,21 @@ import {
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import { useTimeValueScales } from '../../../hooks/ChartHooks';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
-import {
-  getPerformanceSimplifiedChartBottomAxisLabel,
-  PerformanceChartAxisLeft,
-} from './PerformanceChartAxes';
+import { PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { TypedReactMemo } from '../../../utils/common';
 import PerformanceSimplifiedChartAxisBottom from './PerformanceChartAxes/PerformanceSimplifiedChartAxisBottom';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
 import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
 import { usePerformanceSimplifiedChartDimension } from './performanceChartDimension/usePerformanceChartDimension';
+import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 
 export interface PerformanceSimplifiedChartProps
   extends WithParentSizeProps,
     WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
-  dataPeriod: PerformanceDataPeriod;
+  dataPeriod: string;
 }
 
 // ---------- Utilities ---------- //
@@ -146,7 +143,9 @@ function PerformanceSimplifiedChart({
           fontFamily={chartStyles.TEXT_FONT.COMMON}
           style={{ fontWeight: 'bold' }}
         >
-          {getPerformanceSimplifiedChartBottomAxisLabel(dataPeriod)}
+          {humanizePeriodLabel(dataPeriod, (humanizedPeriod) =>
+            humanizedPeriod === 'alltime' ? 'BEGINNING' : `${humanizedPeriod.toUpperCase()} AGO`
+          )}
         </Text>
 
         {/* ***** Graph paths ***** */}

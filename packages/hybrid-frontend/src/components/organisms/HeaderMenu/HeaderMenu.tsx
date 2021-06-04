@@ -57,7 +57,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
   const navigateAccounts = () => navigate('/my-account/accounts');
 
   const navigateHome = () => {
-    navigate('/');
+    navigate('/my-account/');
   };
 
   return (

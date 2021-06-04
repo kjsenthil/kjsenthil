@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const LegendContainer = styled.div`
   ${({ theme }: { theme: Theme }) => `
-    display: inline-flex;
+    display: flex;
     gap: ${theme.spacing(1)}px;
     align-items: center;
   `}

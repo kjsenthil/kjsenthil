@@ -1,7 +1,8 @@
 import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
-import DashPage from './DashPage';
+import { useStaticQuery } from 'gatsby';
+import HomePage from './HomePage';
 import { authSlice as authReducer } from '../../../services/auth/reducers';
 import investmentSummaryReducer from '../../../services/myAccount/reducers/investmentSummarySlice';
 import { performanceSlice as performanceReducer } from '../../../services/performance/reducers';
@@ -14,7 +15,22 @@ jest.mock('../../templates/MyAccountLayout', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-describe('DashPage', () => {
+jest.mock('gatsby-image', () => ({
+  __esModule: true,
+  default: () => <img alt="life plan" />,
+}));
+
+describe('HomePage', () => {
+  beforeEach(() => {
+    (useStaticQuery as jest.Mock).mockImplementation(() => ({
+      lifePlan: {
+        childImageSharp: {
+          fluid: 'Some image',
+        },
+      },
+    }));
+  });
+
   const store = configureStore({
     reducer: {
       auth: authReducer,
@@ -26,9 +42,9 @@ describe('DashPage', () => {
     },
   });
 
-  it('renders titles successfully', async () => {
-    renderWithProviders(<DashPage />, store);
+  it('renders titles successfully', () => {
+    renderWithProviders(<HomePage />, store);
 
-    expect(screen.getByText('XO projection spike')).toBeInTheDocument();
+    expect(screen.getByText('Past performance')).toBeInTheDocument();
   });
 });

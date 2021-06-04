@@ -25,6 +25,7 @@ describe('PerformanceChartAxes', () => {
       chartDimension.width - chartDimension.margin.left - chartDimension.margin.right,
     ],
   });
+
   const yScale = scaleLinear({
     domain: [0, 100],
     range: [

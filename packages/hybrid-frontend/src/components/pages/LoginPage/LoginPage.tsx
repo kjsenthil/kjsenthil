@@ -22,17 +22,19 @@ const LoginPage = (_: LoginPageProps) => {
   const {
     status,
     isCredLoggedIn,
+    accessTokens,
     twoStepAuthCode,
-    isPinLoggedIn,
     credLoginError,
     pinLoginError,
   } = useSelector((state: RootState) => state.auth);
 
+  const hasAccessTokens = accessTokens.length > 0;
+
   useEffect(() => {
-    if (isPinLoggedIn) {
-      navigate('/my-account/accounts');
+    if (hasAccessTokens) {
+      navigate('/my-account');
     }
-  }, [isPinLoggedIn]);
+  }, [hasAccessTokens]);
 
   const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ const LoginPage = (_: LoginPageProps) => {
     dispatch(pinLogin(pinFormValues));
   };
 
-  return (
+  return !hasAccessTokens ? (
     <LayoutContainer maxWidth={false} disableGutters>
       <LoginGrid container justify="center" alignItems="center" spacing={7}>
         <Grid item xs={12}>
@@ -77,7 +79,7 @@ const LoginPage = (_: LoginPageProps) => {
         </Grid>
       </LoginGrid>
     </LayoutContainer>
-  );
+  ) : null; // TODO: display loading?
 };
 
 export default LoginPage;

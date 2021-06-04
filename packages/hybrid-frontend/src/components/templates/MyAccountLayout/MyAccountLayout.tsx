@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Divider, Spacer, Typography } from '../../atoms';
+import { Box, Divider, Spacer, Typography, useTheme, useMediaQuery } from '../../atoms';
 import { HeaderMenu, Footer } from '../../organisms';
 import { HeaderMenuProps } from '../../organisms/HeaderMenu';
 import { useBasicInfo, BasicInfo } from '../../../hooks';
@@ -30,6 +30,8 @@ const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
 );
 
 const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayoutProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
   const basicInfo = useBasicInfo();
 
   return basicInfo.isLoading ? (
@@ -37,7 +39,7 @@ const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayou
   ) : (
     <LayoutContainer maxWidth="lg" disableGutters>
       <HeaderMenu {...headerProps} profileName={`${basicInfo.firstName} ${basicInfo.lastName}`} />
-      <Box px={10} py={5}>
+      <Box px={isMobile ? 3 : 10} py={5}>
         {heading && (
           <>
             <Heading {...heading(basicInfo)} />

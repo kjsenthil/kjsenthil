@@ -8,15 +8,22 @@ import {
   ChartIndicator,
   ChartIndicatorProps,
 } from '../../atoms';
+import { Counter, CounterProps } from '../../particles';
+
+type Formatter = (num: number) => string;
+
+type Value = string | number | Array<number>;
 
 export interface LegendProps {
   title: string;
-  value?: string | number | Array<number>;
+  value?: Value;
   valueSizeVariant?: TypographyProps['variant'];
   percentageChange?: number;
   chartIndicatorProps?: ChartIndicatorProps;
-  valueFormatter?: (num: number) => string;
-  percentageFormatter?: (num: number) => string;
+  valueFormatter?: Formatter;
+  percentageFormatter?: Formatter;
+  shouldAnimate?: boolean;
+  counterProps?: Omit<CounterProps, 'valueFormatter' | 'value'>;
 }
 
 const LegendValue = ({
@@ -25,13 +32,37 @@ const LegendValue = ({
   valueFormatter,
   percentageFormatter,
   percentageChange,
+  shouldAnimate = false,
+  counterProps = {},
 }: Omit<LegendProps, 'title' | 'chartIndicatorProps' | 'value'> & {
-  value: LegendProps['value'];
+  value: Value;
 }) => {
-  const values = Array.isArray(value) ? value.slice(0, 2) : [value];
-  const legendValue = values
-    .map((val) => (valueFormatter ? valueFormatter(Number(val)) : val))
-    .join(' - ');
+  const renderWithCounter = (
+    val: string | number,
+    formatter: Formatter = (num: number) => String(num)
+  ) =>
+    /* eslint-disable no-nested-ternary */
+    shouldAnimate && typeof val === 'number' ? (
+      <Counter
+        {...counterProps}
+        valueFormatter={(num) => formatter(Number(num))}
+        value={Number(val)}
+      />
+    ) : typeof val === 'number' ? (
+      formatter(val)
+    ) : (
+      val
+    );
+
+  const legendValue = Array.isArray(value) ? (
+    <>
+      {renderWithCounter(value[0], valueFormatter)}
+      {' - '}
+      {renderWithCounter(value[1], valueFormatter)}
+    </>
+  ) : (
+    renderWithCounter(value, valueFormatter)
+  );
 
   return (
     <>
@@ -39,10 +70,14 @@ const LegendValue = ({
         <Typography variant={valueSizeVariant} color="primary" colorShade="dark2">
           {legendValue}
         </Typography>
-        {percentageChange && (
+        {percentageChange !== undefined && (
           <>
             <Spacer x={1} />
-            <TagBox variant="percentage" formatter={percentageFormatter}>
+            <TagBox
+              variant="percentage"
+              formatter={percentageFormatter}
+              shouldAnimate={shouldAnimate}
+            >
               {percentageChange}
             </TagBox>
           </>

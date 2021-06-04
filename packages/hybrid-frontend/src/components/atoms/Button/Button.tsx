@@ -5,7 +5,9 @@ import styled, { css } from 'styled-components';
 // TODO: consider allowing the use of Gatsby's Link for client side navigation
 // without contaminating this component with framework specific detail
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/
-export interface ButtonProps extends MUIButtonProps {}
+export interface ButtonProps extends Omit<MUIButtonProps, 'color'> {
+  color?: MUIButtonProps['color'] | 'gradient';
+}
 
 const determineColorStyles = ({
   color,
@@ -34,7 +36,9 @@ const determineColorStyles = ({
   return style;
 };
 
-const BaseButton = styled(({ isIcon, ...props }) => <MUIButton {...props} disableElevation />)`
+const BaseButton = styled(({ isIcon, color, ...props }) => (
+  <MUIButton {...props} disableElevation />
+))`
   ${({
     color,
     variant,

@@ -48,7 +48,9 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
     const resp = await onPinSubmit(inputs);
     return resp;
   };
+
   const isMobile = useMediaQuery(theme.breakpoints.down('xs' as any));
+
   return (
     <Grid container spacing={8} justify="center">
       <Grid item xs={12}>

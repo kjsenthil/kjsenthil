@@ -4,8 +4,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   ${({ theme }: { theme: Theme }) => `
+    width: inherit;
     display: flex;
-    gap: ${theme.spacing(1.25)}px;
+    background-color: ${theme.palette.grey['200']};
+    border-radius: 50px;
+    justify-content: space-between;
+    padding: 3px;
   `}
 `;
 
@@ -20,14 +24,14 @@ export const PeriodSelectionButton = ({ children, ...props }: PeriodSelectionBut
 
 export const StyledPeriodSelectionButton = styled(PeriodSelectionButton)`
   ${({ theme, selected }: PeriodSelectionButtonProps & { theme: Theme }) => `
-    min-width: ${theme.spacing(4)}px;
-    padding: ${theme.spacing(1)}px ${theme.spacing(0.5)}px;
+    min-width: ${theme.spacing(3)}px;
+    padding: ${theme.spacing(0.5)}px;
 
     text-transform: initial;
-    
-    background-color: ${selected ? theme.palette.primary.light2 : 'initial'};
+    border-radius: 20px;
+    background-color: ${selected ? theme.palette.common.white : 'initial'};
     &:hover {
-      background-color: ${selected ? theme.palette.primary.light2 : theme.palette.grey['100']} 
+      background-color: ${selected ? theme.palette.primary.light2 : 'transparent'} 
     }
   `}
 `;

@@ -4,7 +4,7 @@ import { trackPageView } from '@tsw/tracking-util';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import { PrivateRoute } from '../components/particles';
 import SimulationPage from '../components/pages/SimulationPage/SimulationPage';
-import DashPage from '../components/pages/DashPage/DashPage';
+import HomePage from '../components/pages/HomePage/HomePage';
 import TargetAmountsPage from '../components/pages/TargetAmountsPage/TargetAmountsPage';
 import TargetDatePage from '../components/pages/TargetDatePage/TargetDatePage';
 import UpfrontContributionPage from '../components/pages/UpfrontContributionPage/UpfrontContributionPage';
@@ -23,7 +23,7 @@ const MyAccount = () => {
     <Router basepath="/my-account">
       <LoginPage path="/login" />
       <PrivateRoute path="/accounts" Component={BIAccountsPage} />
-      <PrivateRoute path="/dash" Component={DashPage} />
+      <PrivateRoute path="/" Component={HomePage} />
       <PrivateRoute path="/goals" Component={SelectGoalsPage} />
       <PrivateRoute path="/life-plan" Component={LifePlanPage} />
       <PrivateRoute path="/target-amount" Component={TargetAmountsPage} />

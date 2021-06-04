@@ -22,8 +22,11 @@ export default function ChartPeriodSelection({
       {Object.values(performanceDataPeriod).map((period) => (
         <StyledPeriodSelectionButton
           key={period}
-          onClick={() => setCurrentPeriod(period)}
+          onClick={() => {
+            setCurrentPeriod(period);
+          }}
           selected={period === currentPeriod}
+          color="default"
         >
           <Typography variant="sh3" color="primary">
             {periodTextDisplay(period)}

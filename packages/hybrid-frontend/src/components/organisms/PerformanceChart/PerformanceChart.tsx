@@ -27,7 +27,6 @@ import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters'
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
-
   periodSelectionProps: ChartPeriodSelectionProps;
 
   axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;

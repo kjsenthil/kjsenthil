@@ -9,6 +9,7 @@ module.exports = {
     'no-param-reassign': 0,
     'prettier/prettier': ['error'],
     'comma-dangle': 'off',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: ['**/*.spec.tsx', '**/*.stories.tsx'] },

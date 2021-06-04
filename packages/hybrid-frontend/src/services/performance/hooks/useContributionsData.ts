@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { ContributionDatum } from '../../../components/organisms/PerformanceChart/performanceData';
-import { sliceIndexBasedOnPeriod } from '../constants';
 import { RootState } from '../../../store';
 import { mapContributionsData } from '../utils';
+import findDateByPeriod from '../../../utils/date/findDateByPeriod';
 
 export interface UseContributionsDataProps {
   // If true, will ignore performance data period (will always return the full
@@ -22,11 +22,15 @@ export default function useContributionsData({
     return [];
   }
 
+  const { contributions } = performance.included[0].attributes;
   if (ignorePeriod) {
-    return performance.included[0].attributes.contributions.map(mapContributionsData);
+    return contributions.map(mapContributionsData);
   }
 
-  return performance.included[0].attributes.contributions
-    .slice(-sliceIndexBasedOnPeriod[performanceDataPeriod])
-    .map(mapContributionsData);
+  const date = findDateByPeriod(
+    contributions.map((contribution) => contribution.date),
+    performanceDataPeriod
+  );
+
+  return contributions.filter((c) => !date || c.date > date).map(mapContributionsData);
 }
