@@ -1119,15 +1119,15 @@ jobs:
           script: |
             const output = `
             #### Lint & Testing results
-            **Linting Results:** \`${{ needs.deploy_storybook.outputs.url }}eslint/index.html\`
-            **Unit Test Coverage Report:** \`${{ needs.deploy_storybook.outputs.url }}coverage/lcov-report/index.html\`
-            **Unit Test Report:** \`${{ needs.deploy_storybook.outputs.url }}jesttestreport/index.html\`
-            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}reports/TestReport_chrome.html\`
-            **E2E Test Results:** \`${{ needs.deploy_storybook.outputs.url }}reports/TestReport_firefox.html\`
+            **Linting Results:** [${{ needs.deploy_storybook.outputs.url }}/eslint/index.html](${{ needs.deploy_storybook.outputs.url }}/eslint/index.html)
+            **Unit Test Coverage Report:** [${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html)
+            **Unit Test Report:** [${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html)
+            **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html)
+            **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html)
 
             #### Review URLs
-            **Storybook:** \`${{ needs.deploy_storybook.outputs.url }}\`
-            **Webpage:** \`${{ needs.deploy_gatsby.outputs.url }}\`
+            **Storybook:** [${{ needs.deploy_storybook.outputs.url }}](${{ needs.deploy_storybook.outputs.url }})
+            **Webpage:** [${{ needs.deploy_gatsby.outputs.url }}](${{ needs.deploy_gatsby.outputs.url }})
 
             #### Terraform plan - Staging
             **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome }}\`
