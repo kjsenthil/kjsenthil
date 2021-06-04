@@ -4,8 +4,11 @@ import PerformanceSimplifiedChart, {
   PerformanceSimplifiedChartProps,
 } from './PerformanceSimplifiedChart';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
-import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
+import {
+  mapContributionsData,
+  mapPerformanceData,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
 
 export default {
   title: 'Digital Hybrid/Organisms/Performance Chart/Performance Simplified Chart',
@@ -26,7 +29,7 @@ const Template: Story<PerformanceSimplifiedChartProps> = (args) => (
 );
 
 const defaultArgs: PerformanceSimplifiedChartProps = {
-  dataPeriod: PerformanceDataPeriod.ALL_TIME,
+  dataPeriod: PerformanceDataPeriod['5Y'],
   performanceData: getPerformanceContactMockResponseData.data.attributes.values.map(
     mapPerformanceData
   ),

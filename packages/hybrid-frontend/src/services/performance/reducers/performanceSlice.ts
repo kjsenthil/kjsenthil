@@ -7,7 +7,7 @@ const initialState: PerformanceState = {
   status: 'idle',
   performance: undefined,
   performanceError: undefined,
-  performanceDataPeriod: String(PerformanceDataPeriod.ALL_TIME),
+  performanceDataPeriod: String(PerformanceDataPeriod['5Y']),
 };
 
 const performanceSlice = createSlice({

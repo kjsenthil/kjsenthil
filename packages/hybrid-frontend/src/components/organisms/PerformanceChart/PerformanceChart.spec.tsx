@@ -28,10 +28,8 @@ describe('PerformanceChartChart', () => {
           )}
           periodSelectionProps={{
             performanceDataPeriod: PerformanceDataPeriod,
-            currentPeriod: PerformanceDataPeriod.ALL_TIME,
+            currentPeriod: PerformanceDataPeriod['5Y'],
             setCurrentPeriod: () => {},
-            periodTextDisplay: (period: string) =>
-              period === PerformanceDataPeriod.ALL_TIME ? 'All Time' : period,
           }}
           initialWidth={CHART_SIZE}
           initialHeight={CHART_SIZE}

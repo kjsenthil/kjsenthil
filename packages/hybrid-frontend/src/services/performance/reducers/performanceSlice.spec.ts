@@ -33,7 +33,7 @@ describe('performanceSlice', () => {
     expect(performance).toBeUndefined();
     expect(status).toBe('idle');
     expect(performanceError).toBeUndefined();
-    expect(performanceDataPeriod).toBe(PerformanceDataPeriod.ALL_TIME);
+    expect(performanceDataPeriod).toBe(PerformanceDataPeriod['5Y']);
   });
 
   describe('getPerformanceContact action', () => {
@@ -51,7 +51,7 @@ describe('performanceSlice', () => {
           // This state is the result of the 'pending' action
           {
             performance: undefined,
-            performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
             performanceError: undefined,
             status: 'loading',
           },
@@ -59,7 +59,7 @@ describe('performanceSlice', () => {
           // This state is the result of the 'success' action
           {
             performance: mockGetPerformanceResponse,
-            performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
             performanceError: undefined,
             status: 'success',
           },
@@ -83,7 +83,7 @@ describe('performanceSlice', () => {
           // This state is the result of the 'pending' action
           {
             performance: undefined,
-            performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
             performanceError: undefined,
             status: 'loading',
           },
@@ -91,7 +91,7 @@ describe('performanceSlice', () => {
           // This state is the result of the 'error' action
           {
             performance: undefined,
-            performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
             performanceError: mockError.message,
             status: 'error',
           },
@@ -117,7 +117,7 @@ describe('performanceSlice', () => {
       const expectedStates = [
         {
           performance: mockGetPerformanceResponse,
-          performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+          performanceDataPeriod: PerformanceDataPeriod['5Y'],
           performanceError: undefined,
           status: 'idle',
         },

@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
-import { mapContributionsData, mapPerformanceData } from '../../../services/performance/utils';
+import {
+  mapContributionsData,
+  mapPerformanceData,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
 import PerformanceSimplifiedChart from './PerformanceSimplifiedChart';
 
 describe('PerformanceSimplifiedChart', () => {
@@ -23,7 +26,7 @@ describe('PerformanceSimplifiedChart', () => {
           contributionsData={getPerformanceContactMockResponseData.included[0].attributes.contributions.map(
             mapContributionsData
           )}
-          dataPeriod={PerformanceDataPeriod.ALL_TIME}
+          dataPeriod={PerformanceDataPeriod['5Y']}
           initialWidth={CHART_SIZE}
           initialHeight={CHART_SIZE}
           parentWidth={CHART_SIZE}

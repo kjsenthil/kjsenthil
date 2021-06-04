@@ -112,15 +112,13 @@ function PerformanceChart({
 
   // ----- Chart axis bottom ----- //
 
-  const {
-    numTicks: axisBottomNumTicks,
-    tickFormatterType: axisBottomTickFormatterType,
-  } = axisBottomConfig
-    ? axisBottomConfig[periodSelectionProps.currentPeriod]
-    : {
-        numTicks: 4,
-        tickFormatterType: D3TimeFormatterType.DATE_AND_MONTH,
-      };
+  const { numTicks: axisBottomNumTicks, tickFormatterType: axisBottomTickFormatterType } =
+    axisBottomConfig && axisBottomConfig[periodSelectionProps.currentPeriod]
+      ? axisBottomConfig[periodSelectionProps.currentPeriod]
+      : {
+          numTicks: 4,
+          tickFormatterType: D3TimeFormatterType.DATE_AND_MONTH,
+        };
 
   // ----- Chart tooltip ----- //
 

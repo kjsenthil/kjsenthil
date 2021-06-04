@@ -22,7 +22,7 @@ export const axisBottomConfig: Record<
     numTicks: 4,
     tickFormatterType: D3TimeFormatterType.YEAR_AND_MONTH,
   },
-  [PerformanceDataPeriod.ALL_TIME]: {
+  [PerformanceDataPeriod['5Y']]: {
     numTicks: 4,
     tickFormatterType: D3TimeFormatterType.YEAR_ONLY,
   },

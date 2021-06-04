@@ -36,7 +36,7 @@ const mockProjectionsData = [
 
 const mockPerformanceData = {
   performance: mockGetPerformanceResponse,
-  performanceDataPeriod: PerformanceDataPeriod.ALL_TIME,
+  performanceDataPeriod: PerformanceDataPeriod['5Y'],
   performanceError: undefined,
   status: 'idle',
 };

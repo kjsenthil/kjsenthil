@@ -6,9 +6,9 @@ import {
   mapContributionsData,
   mapPerformanceData,
   PerformanceDataPeriod,
-  sliceIndexBasedOnPeriod,
 } from '../../../services/performance';
 import { axisBottomConfig } from '../../../config/chart';
+import findDateByPeriod from '../../../utils/date/findDateByPeriod';
 
 export default {
   title: 'Digital Hybrid/Organisms/Performance Chart/Performance Chart',
@@ -26,21 +26,24 @@ export default {
 type TemplateProps = Omit<PerformanceChartProps, 'periodSelectionProps'>;
 
 const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ...rest }) => {
-  const [currentPeriod, setCurrentPeriod] = React.useState<string>(PerformanceDataPeriod.ALL_TIME);
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>(PerformanceDataPeriod['5Y']);
 
-  const slicedPerformanceData = performanceData.slice(-sliceIndexBasedOnPeriod[currentPeriod]);
-  const slicedContributionsData = contributionsData.slice(-sliceIndexBasedOnPeriod[currentPeriod]);
+  const date = findDateByPeriod(
+    performanceData.map((data) => data.date),
+    currentPeriod
+  );
+
+  const periodPerformanceData = performanceData.filter((p) => !date || p.date > date);
+  const periodContributionsData = contributionsData.filter((c) => !date || c.date > date);
 
   return (
     <PerformanceChart
-      performanceData={slicedPerformanceData}
-      contributionsData={slicedContributionsData}
+      performanceData={periodPerformanceData}
+      contributionsData={periodContributionsData}
       periodSelectionProps={{
         currentPeriod,
         setCurrentPeriod,
         performanceDataPeriod: PerformanceDataPeriod,
-        periodTextDisplay: (period: string) =>
-          period === PerformanceDataPeriod.ALL_TIME ? 'All Time' : period,
       }}
       axisBottomConfig={axisBottomConfig}
       {...rest}
