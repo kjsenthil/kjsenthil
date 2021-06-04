@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {
-  GoalDisplayContainer,
+  GoalProgressContainer,
   GoalIcon,
   GoalIconContainer,
   LabelContainer,
-} from './GoalDisplay.styles';
-import { ProgressBar, Spacer, Typography } from '../../../atoms';
+} from './GoalProgress.styles';
+import { ProgressBar, Spacer, Typography } from '../../atoms';
 
-export interface GoalDisplayProps {
+export interface GoalProgressProps {
   iconSrc: string;
   iconAlt?: string;
 
@@ -16,17 +16,17 @@ export interface GoalDisplayProps {
   progress: number;
 }
 
-export default function GoalDisplay({
+const GoalProgress = ({
   iconSrc,
   iconAlt = 'goal image',
   label,
   remainingYears,
   progress,
-}: GoalDisplayProps) {
+}: GoalProgressProps) => {
   const yearText = remainingYears > 1 ? 'YEARS' : 'YEAR';
 
   return (
-    <GoalDisplayContainer>
+    <GoalProgressContainer>
       <GoalIconContainer>
         <GoalIcon src={iconSrc} alt={iconAlt} />
       </GoalIconContainer>
@@ -42,6 +42,8 @@ export default function GoalDisplay({
       </LabelContainer>
 
       <ProgressBar progress={progress} />
-    </GoalDisplayContainer>
+    </GoalProgressContainer>
   );
-}
+};
+
+export default GoalProgress;

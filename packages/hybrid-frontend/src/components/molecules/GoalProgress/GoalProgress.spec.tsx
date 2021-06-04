@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import GoalDisplay from './GoalDisplay';
+import GoalProgress from './GoalProgress';
 
-describe('GoalDisplay', () => {
+describe('GoalProgress', () => {
   test('The component renders correctly when remaining years are plural', () => {
-    renderWithTheme(<GoalDisplay iconSrc="" label="Retire" remainingYears={50} progress={0.5} />);
+    renderWithTheme(<GoalProgress iconSrc="" label="Retire" remainingYears={50} progress={0.5} />);
 
     expect(screen.getByAltText('goal image')).toBeVisible();
     expect(screen.getByText('Retire')).toBeVisible();
@@ -13,7 +13,7 @@ describe('GoalDisplay', () => {
 
   test('The component renders correctly when remaining year is 1', () => {
     renderWithTheme(
-      <GoalDisplay
+      <GoalProgress
         iconSrc=""
         iconAlt="some image"
         label="Retire"

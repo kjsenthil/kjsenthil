@@ -2,7 +2,7 @@ import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceProjectionsSimplifiedChartCard from './PerformanceProjectionsSimplifiedChartCard';
 import { PerformanceProjectionsSimplifiedChartProps } from '../PerformanceProjectionsSimplifiedChart';
-import { GoalDisplayProps } from '../GoalDisplay/GoalDisplay';
+import { GoalProgressProps } from '../../../molecules/GoalProgress';
 
 describe('PerformanceProjectionsSimplifiedChartCard', () => {
   const defaultFirstName = 'Ava';
@@ -10,7 +10,7 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
   const defaultRetirementPerformance = 100000;
   const defaultRetirementPerformancePercentage = 0.9;
 
-  const defaultGoalDisplayProps: GoalDisplayProps = {
+  const defaultGoalProgressProps: GoalProgressProps = {
     iconSrc: '',
     label: '',
     remainingYears: 1,
@@ -31,7 +31,7 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
         retirementAge={defaultRetirementAge}
         retirementPerformance={defaultRetirementPerformance}
         retirementPerformancePercentage={defaultRetirementPerformancePercentage}
-        goalDisplayProps={defaultGoalDisplayProps}
+        goalProgressProps={defaultGoalProgressProps}
         chartProps={defaultChartProps}
       />
     );
@@ -46,7 +46,7 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
         retirementAge={defaultRetirementAge}
         retirementPerformance={defaultRetirementPerformance}
         retirementPerformancePercentage={defaultRetirementPerformancePercentage}
-        goalDisplayProps={defaultGoalDisplayProps}
+        goalProgressProps={defaultGoalProgressProps}
         chartProps={defaultChartProps}
       />
     );
@@ -61,7 +61,7 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
         retirementAge={defaultRetirementAge}
         retirementPerformance={defaultRetirementPerformance}
         retirementPerformancePercentage={defaultRetirementPerformancePercentage}
-        goalDisplayProps={defaultGoalDisplayProps}
+        goalProgressProps={defaultGoalProgressProps}
         chartProps={defaultChartProps}
       />
     );
@@ -78,7 +78,7 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
         retirementAge={defaultRetirementAge}
         retirementPerformance={defaultRetirementPerformance}
         retirementPerformancePercentage={3}
-        goalDisplayProps={defaultGoalDisplayProps}
+        goalProgressProps={defaultGoalProgressProps}
         chartProps={defaultChartProps}
       />
     );

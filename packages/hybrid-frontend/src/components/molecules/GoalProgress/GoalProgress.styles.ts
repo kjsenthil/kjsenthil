@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Theme } from '../../../atoms';
+import { Theme } from '../../atoms';
 
-export const GoalDisplayContainer = styled.div`
+export const GoalProgressContainer = styled.div`
   ${({ theme }: { theme: Theme }) => `
     display: grid;
     grid: 20px 8px / 28px 1fr;

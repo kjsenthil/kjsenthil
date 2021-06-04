@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { MainCard } from '../../../molecules';
+import { GoalProgress, MainCard } from '../../../molecules';
 import { Button, ButtonProps, Icon, Spacer, Typography } from '../../../atoms';
-import GoalDisplay, { GoalDisplayProps } from '../GoalDisplay/GoalDisplay';
+import { GoalProgressProps } from '../../../molecules/GoalProgress';
 import { InfoBox } from './PerformanceProjectionsSimplifiedChartCard.styles';
 import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 import PerformanceProjectionsSimplifiedChart, {
@@ -14,9 +14,7 @@ export interface PerformanceProjectionsSimplifiedChartCardProps {
   retirementAge: number;
   retirementPerformance: number;
   retirementPerformancePercentage: number;
-
-  goalDisplayProps: GoalDisplayProps;
-
+  goalProgressProps: GoalProgressProps;
   chartProps: PerformanceProjectionsSimplifiedChartProps;
 }
 
@@ -33,7 +31,7 @@ export default function PerformanceProjectionsSimplifiedChartCard({
   retirementPerformance,
   retirementPerformancePercentage,
   retirementAge,
-  goalDisplayProps,
+  goalProgressProps,
   chartProps,
 }: PerformanceProjectionsSimplifiedChartCardProps) {
   const formattedRetirementPerformance = formatCurrency(retirementPerformance, {
@@ -71,7 +69,7 @@ export default function PerformanceProjectionsSimplifiedChartCard({
 
       <Spacer y={30 / 8} />
 
-      <GoalDisplay {...goalDisplayProps} />
+      <GoalProgress {...goalProgressProps} />
 
       <PerformanceProjectionsSimplifiedChart {...chartProps} />
     </MainCard>

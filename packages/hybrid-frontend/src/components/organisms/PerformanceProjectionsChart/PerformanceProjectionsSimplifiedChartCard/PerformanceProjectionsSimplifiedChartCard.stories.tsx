@@ -35,7 +35,7 @@ const defaultArgs: PerformanceProjectionsSimplifiedChartCardProps = {
   retirementAge: 65,
   retirementPerformancePercentage: 1,
   retirementPerformance: 100000,
-  goalDisplayProps: {
+  goalProgressProps: {
     iconSrc: '/goal-graphic.png',
     label: 'Retire',
     remainingYears: 50,

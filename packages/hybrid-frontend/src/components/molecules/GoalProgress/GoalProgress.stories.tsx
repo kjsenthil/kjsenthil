@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import GoalDisplay, { GoalDisplayProps } from './GoalDisplay';
+import GoalProgress, { GoalProgressProps } from './GoalProgress';
 
 export default {
-  title: 'Digital Hybrid/Organisms/Performance Projections Chart/Goal Display',
-  component: GoalDisplay,
+  title: 'Digital Hybrid/Molecules/Goal Progress',
+  component: GoalProgress,
   argTypes: {
     progress: {
       control: {
@@ -17,9 +17,9 @@ export default {
   },
 } as Meta;
 
-const Template: Story<GoalDisplayProps> = (args) => <GoalDisplay {...args} />;
+const Template: Story<GoalProgressProps> = (args) => <GoalProgress {...args} />;
 
-const defaultArgs: GoalDisplayProps = {
+const defaultArgs: GoalProgressProps = {
   iconSrc: '/goal-graphic.png',
   label: 'Retire',
   remainingYears: 50,
