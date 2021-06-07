@@ -60,11 +60,12 @@ beforeAll(async () => {
 // test to launch digital hybrid , login with invalid credentials
 test("Digital Hybrid - login with invalid credentials", async () => {
   await driver.get(url);
+  await driver.wait(until.elementIsEnabled(driver.findElement(By.css("button[data-testid='login']"))),explicitwait);
+  let login = await driver.findElement(By.css("button[data-testid='login']"));
   let username = await driver.wait(until.elementLocated(By.id('username')), explicitwait);
   username.sendKeys('fsdfsdfsdfk');
   let password = await driver.wait(until.elementLocated(By.id('password')), explicitwait);
   await password.sendKeys('1111111');
-  let login = await driver.findElement(By.css("button[data-testid='login']"));
   await login.click();
   driver.sleep(3000);
   let successmsg = driver.wait(until.elementLocated(By.xpath("//div[@class='MuiAlert-message']")), explicitwait);
@@ -77,7 +78,8 @@ test("Digital Hybrid - login with invalid credentials", async () => {
 // test to launch digital hybrid , login with fields left blank
 test("Digital Hybrid - login with fields left blank", async () => {
   await driver.get(url);
-  let login = await driver.wait(until.elementLocated(By.css("button[data-testid='login']")), explicitwait);
+  await driver.wait(until.elementIsEnabled(driver.findElement(By.css("button[data-testid='login']"))),explicitwait);
+  let login = await driver.findElement(By.css("button[data-testid='login']"));
   await login.click();
   let successmsg = driver.wait(until.elementLocated(By.xpath("//div[@class='MuiAlert-message']")), explicitwait);
   await successmsg.getText().then(async function (txt) {
