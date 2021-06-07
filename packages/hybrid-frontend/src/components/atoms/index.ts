@@ -39,6 +39,7 @@ export {
   MenuItem,
   RadioGroup,
   FormControlLabel,
+  FormLabel,
   Paper,
   Select,
   TextField,
