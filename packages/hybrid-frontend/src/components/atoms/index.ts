@@ -2,10 +2,20 @@
 import Button, { ButtonProps } from './Button';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
 import Typography, { TypographyProps } from './Typography';
+import {
+  FormattedTextFieldControlledProps,
+  FormattedTextFieldUncontrolledProps,
+} from './TextField';
 
 export { default as Icon } from './Icon';
 
-export type { ButtonProps, ChartIndicatorProps, TypographyProps };
+export type {
+  ButtonProps,
+  ChartIndicatorProps,
+  TypographyProps,
+  FormattedTextFieldControlledProps,
+  FormattedTextFieldUncontrolledProps,
+};
 
 export { Button, Typography, ChartIndicator };
 
@@ -18,6 +28,7 @@ export { default as Slider } from './Slider';
 export { default as Tooltip } from './Tooltip';
 export { default as ProgressBar } from './ProgressBar';
 export { default as Link } from './Link';
+export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './TextField';
 
 /* material-ui atoms */
 export {
