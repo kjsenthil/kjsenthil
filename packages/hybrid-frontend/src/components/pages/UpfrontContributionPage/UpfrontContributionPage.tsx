@@ -54,7 +54,7 @@ const UpfrontContributionPage = () => {
       </Grid>
       {goalCreationError && (
         <Grid item xs={12}>
-          <Alert>{goalCreationError}</Alert>
+          <Alert severity="error">{goalCreationError}</Alert>
         </Grid>
       )}
     </OnBoardLayout>

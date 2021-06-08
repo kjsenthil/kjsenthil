@@ -18,3 +18,15 @@ const defaultArgs: PinLoginProps = {
 
 export const Default = Template.bind({});
 Default.args = defaultArgs;
+
+export const Error = Template.bind({});
+Error.args = {
+  ...defaultArgs,
+  errorMessage: 'Something went wrong, please try again',
+};
+
+export const Success = Template.bind({});
+Success.args = {
+  ...defaultArgs,
+  successMessage: 'Success!',
+};

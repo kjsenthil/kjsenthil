@@ -10,8 +10,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '../../atoms';
-import { AlertBubble, AlertTypography, Form } from './LoginForm.styles';
-import { FormInput } from '../../molecules';
+import { Form } from './LoginForm.styles';
+import { Alert, FormInput } from '../../molecules';
 
 export interface LoginFormProps {
   errorMessage?: string;
@@ -101,20 +101,8 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) =
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                {successMessage && (
-                  <AlertBubble severity="success" icon={<Icon name="successTick" />}>
-                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
-                      {successMessage}
-                    </AlertTypography>
-                  </AlertBubble>
-                )}
-                {errorMessage && (
-                  <AlertBubble severity="error" icon={<Icon name="errorCircle" />}>
-                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
-                      {errorMessage}
-                    </AlertTypography>
-                  </AlertBubble>
-                )}
+                {successMessage && <Alert severity="success">{successMessage}</Alert>}
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
               </Grid>
             </Grid>
           </Box>

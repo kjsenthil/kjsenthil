@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { initStatePins } from '../../../constants';
 import { PinLoginItem } from '../../../services/auth';
-import { Grid, Typography, Button, Box, useMediaQuery, useTheme, Icon } from '../../atoms';
-import { FormInput } from '../../molecules';
-import { AlertBubble, AlertTypography } from './PinLogin.styles';
+import { Grid, Typography, Button, Box, useMediaQuery, useTheme } from '../../atoms';
+import { Alert, FormInput } from '../../molecules';
 
 const buildPinFieldLabel = (pinPosition) => {
   switch (pinPosition) {
@@ -89,20 +88,8 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
             </Grid>
             <Grid item xs={9} sm={12}>
               <Grid container justify="center">
-                {successMessage && (
-                  <AlertBubble severity="success" icon={<Icon name="successTick" />}>
-                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
-                      {successMessage}
-                    </AlertTypography>
-                  </AlertBubble>
-                )}
-                {errorMessage && (
-                  <AlertBubble severity="error" icon={<Icon name="errorCircle" />}>
-                    <AlertTypography variant="sh3" color="primary" colorShade="dark2">
-                      {errorMessage}
-                    </AlertTypography>
-                  </AlertBubble>
-                )}
+                {successMessage && <Alert severity="success">{successMessage}</Alert>}
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
               </Grid>
             </Grid>
           </Grid>
