@@ -1,16 +1,16 @@
 import * as api from '../api';
-import goalsReducer, { getGoals } from './goalsSlice';
-import { GetGoalsResponse, GoalsState } from '../types';
+import goalsReducer, { getGoals } from './currentGoalsSlice';
+import { GetCurrentGoals, CurrentGoalsState } from '../types';
 import getStoreAndStateHistory from '../../performance/utils/getStoreAndStateHistory';
 import mockGetGoalsSuccessResponse from '../mocks/get-goals-success-response.json';
 
 jest.mock('../api');
 
 function getGoalsStoreAndStateHistory() {
-  return getStoreAndStateHistory<GoalsState>(goalsReducer);
+  return getStoreAndStateHistory<CurrentGoalsState>(goalsReducer);
 }
 
-describe('goalsSlice', () => {
+describe('currentGoalsSlice', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -31,14 +31,14 @@ describe('goalsSlice', () => {
       it('performs the network fetch and store states as expected', async () => {
         (api.getGoalsFetcher as jest.Mock).mockResolvedValue(mockGetGoalsSuccessResponse);
 
-        const expectedStates: GoalsState[] = [
+        const expectedStates: CurrentGoalsState[] = [
           // This state is the result of the 'pending' action
           { status: 'loading', data: undefined, included: undefined, error: undefined },
 
           // This state is the result of the 'success' action
           {
             status: 'success',
-            data: mockGetGoalsSuccessResponse as GetGoalsResponse,
+            data: mockGetGoalsSuccessResponse as GetCurrentGoals,
             included: undefined,
             error: undefined,
           },
@@ -58,7 +58,7 @@ describe('goalsSlice', () => {
         const mockError = new Error(`Some error`);
         (api.getGoalsFetcher as jest.Mock).mockRejectedValue(mockError);
 
-        const expectedStates: GoalsState[] = [
+        const expectedStates: CurrentGoalsState[] = [
           // This state is the result of the 'pending' action
           { status: 'loading', data: undefined, included: undefined, error: undefined },
 

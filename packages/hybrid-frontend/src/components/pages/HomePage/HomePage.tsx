@@ -25,6 +25,8 @@ import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
 import { useBasicInfo, useDispatchThunkOnRender } from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
+import { GoalRequestPayload, GoalStatus } from '../../../services/goal';
+import { createGoal } from '../../../services/goal/thunks';
 
 export enum PerformanceDataPeriod {
   '1M' = '1m',
@@ -57,7 +59,7 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
-  // Historical performance dat: falsea
+  // Historical performance data: false
   const performanceData = usePerformanceData();
   const contributionsData = useContributionsData();
   const performanceChartDimension = usePerformanceChartDimension();
@@ -185,6 +187,25 @@ const HomePage = () => {
       </Grid>
     </>
   );
+
+  const createDefaultGoalHandler = () => {
+    const currDateFormat = new Date().toISOString().split('T')[0];
+
+    const defaultPayload: GoalRequestPayload = {
+      fields: {
+        description: 'just show me my projection',
+        status: GoalStatus.UNFULFILLED,
+        category: 9999,
+        capture_date: {
+          _val: currDateFormat,
+          _type: 'Date',
+        },
+        owner: 'client',
+      },
+    };
+
+    dispatch(createGoal({ payload: defaultPayload }));
+  };
 
   return (
     <MyAccountLayout
@@ -324,7 +345,9 @@ const HomePage = () => {
               <Grid item container alignItems="center" justify="center">
                 <Grid item>
                   <Spacer y={2} />
-                  <Link>I don&#39;t have a specific goal. Just show me my projections.</Link>
+                  <Link onClick={createDefaultGoalHandler}>
+                    I don&#39;t have a specific goal. Just show me my projections.
+                  </Link>
                 </Grid>
               </Grid>
             </Grid>

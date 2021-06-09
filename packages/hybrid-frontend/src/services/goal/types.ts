@@ -14,31 +14,53 @@ export interface GoalRequestPayloadValue<V = unknown, T = unknown> {
   value: GoalRequestPayloadValType<V, T>;
 }
 
-export interface GoalRequestPayload {
-  fields: {
-    status: string;
-    category: number;
-    xpt_external_id: string | null;
-    owner: string;
-    frequency: string;
-    description: string;
-    capture_date: GoalRequestPayloadValType<Date | string, 'Date'>;
-    target_date: GoalRequestPayloadValType<Date | string, 'Date'>;
-    target_amount: GoalRequestPayloadValType<
-      GoalRequestPayloadValue<number, 'BigDecimal'>,
-      'Currency'
-    >;
-    initial_investment: GoalRequestPayloadValType<
-      GoalRequestPayloadValue<number, 'BigDecimal'>,
-      'Currency'
-    >;
-    regular_saving: GoalRequestPayloadValType<
-      GoalRequestPayloadValue<number, 'BigDecimal'>,
-      'Currency'
-    >;
-    goal_level_risk_tolerance: RiskAppetites;
-  };
+export enum GoalStatus {
+  'FULFILLED' = '1',
+  'UNFULFILLED' = '2',
+  'FULFILLED_PARTIALLY' = '3',
+  'CANCELLED' = '4',
 }
+
+export interface GoalApiFields {
+  status?: GoalStatus;
+  category: number;
+  description: string;
+  owner?: string;
+  xpt_external_id?: string | null;
+  present_value?: number | null;
+  frequency?: string;
+  capture_date?: GoalRequestPayloadValType<Date | string, 'Date'>;
+  target_date?: GoalRequestPayloadValType<Date | string, 'Date'>;
+  target_amount?: GoalRequestPayloadValType<
+    GoalRequestPayloadValue<number | string, 'BigDecimal'>,
+    'Currency'
+  >;
+  initial_investment?: GoalRequestPayloadValType<
+    GoalRequestPayloadValue<number, 'BigDecimal'>,
+    'Currency'
+  >;
+  regular_saving?: GoalRequestPayloadValType<
+    GoalRequestPayloadValue<number, 'BigDecimal'>,
+    'Currency'
+  >;
+  goal_level_risk_tolerance?: RiskAppetites;
+}
+
+export interface GoalRequestPayload {
+  fields: GoalApiFields;
+}
+
+export interface GoalData {
+  index: number;
+  allow_associates: boolean;
+  allow_multiple_account_associates: boolean;
+
+  fields: GoalApiFields;
+}
+
+export type GetCurrentGoals = GoalData[] | undefined;
+
+export interface CurrentGoalsState extends CommonState<GetCurrentGoals, undefined> {}
 
 export interface CaptureGoalData {
   targetAmount: number;
@@ -55,13 +77,11 @@ export interface GoalDetails {
   description?: string;
 }
 
-export interface ApiFields {
-  description: string;
-}
-
 export interface GoalsObjectiveApiResponse {
   index: string;
-  fields: ApiFields;
+  fields: {
+    description: string;
+  };
 }
 
 export interface GoalsObjectiveLinkApiResponse {
@@ -70,47 +90,11 @@ export interface GoalsObjectiveLinkApiResponse {
   list_obj_index: string;
 }
 
-export interface GoalState extends CommonState {
+export interface GoalCreationState extends CommonState {
   goalCapture: Partial<CaptureGoalData>;
   goalDetails: GoalDetails;
-  goalCreationError?: string;
+  goalCreationError: string | undefined;
 }
-
-export enum GoalStatus {
-  'FULFILLED' = '1',
-  'UNFULFILLED' = '2',
-  'FULFILLED_PARTIALLY' = '3',
-  'CANCELLED' = '4',
-}
-
-export interface GoalData {
-  index: number; // Looks like this is the goal's ID
-  allow_associates: boolean;
-  allow_multiple_account_associates: boolean;
-
-  // These fields can be influenced by the 'fields' query parameters. See the
-  // get goals fetcher for more details
-  fields: {
-    description: string;
-    category: number;
-    status: GoalStatus; // This is a number string
-    present_value: number | null;
-    target_amount: {
-      _val: {
-        code: string; // This is the currency code
-        value: {
-          _val: string; // This is a number string
-          _type: string; // e.g. "BigDecimal"
-        };
-      };
-      _type: string;
-    };
-  };
-}
-
-export type GetGoalsResponse = GoalData[];
-
-export interface GoalsState extends CommonState<GetGoalsResponse, undefined> {}
 
 // This kind of data is used by the projections chart
 export interface ProjectionsChartGoalDatum {

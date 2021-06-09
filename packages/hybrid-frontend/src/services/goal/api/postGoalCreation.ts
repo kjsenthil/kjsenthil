@@ -1,9 +1,15 @@
+import {
+  GoalStatus,
+  CaptureGoalData,
+  GoalDetails,
+  GoalRequestPayload,
+  GoalsObjectiveApiResponse,
+} from '../types';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { CaptureGoalData, GoalRequestPayload, GoalsObjectiveApiResponse } from '../types';
 
 const goalsHardCodedPayloadValues = {
-  status: '2', // E.g from 4 options - Goal is unfulfilled
+  status: GoalStatus.UNFULFILLED, // E.g from 4 options - Goal is unfulfilled
   category: 5, // Investment category (dependent on retirements vs savings)
   advice_type: 3, // Investment advice type (dependent on retirements vs savings)
   xpt_external_id: null, // To Check
@@ -11,22 +17,25 @@ const goalsHardCodedPayloadValues = {
   frequency: '12', //  how often they will take the money out
 };
 
-export const createGoalsPayLoad = (
-  goalName: string,
-  inputs: CaptureGoalData
-): GoalRequestPayload => {
+export const createOnboardGoalsPayLoad = (onboardGoalCreationInputs): GoalRequestPayload => {
   const currDate = new Date();
   const currDateFormat = currDate.toISOString().split('T')[0];
   const currDateMonth = `${`0${currDate.getMonth() + 1}`.slice(
     -2
   )}-${`0${currDate.getDate()}`.slice(-2)}`;
 
+  const { inputs } = onboardGoalCreationInputs;
+  const { goalDetails } = onboardGoalCreationInputs;
+
   const targetDateval = inputs?.targetDate || `${inputs?.targetYear}-${currDateMonth}`;
+
+  const descVal =
+    goalDetails.description || `${goalDetails.name} Goal created on ${currDateFormat}`;
 
   return {
     fields: {
       ...goalsHardCodedPayloadValues,
-      description: `${goalName} Goal created on ${currDateFormat}`,
+      description: descVal,
       capture_date: {
         _val: currDateFormat,
         _type: 'Date',
@@ -71,12 +80,15 @@ export const createGoalsPayLoad = (
 };
 
 interface GoalCreationProps {
-  goalName: string;
-  inputs: CaptureGoalData;
+  onboardGoalCreationInputs?: {
+    goalDetails: GoalDetails;
+    inputs: CaptureGoalData;
+  };
+  payload?: GoalRequestPayload | undefined;
 }
 
-const postGoalCreation = async ({ goalName, inputs }: GoalCreationProps) => {
-  const goalsPayload = createGoalsPayLoad(goalName, inputs);
+const postGoalCreation = async ({ onboardGoalCreationInputs, payload }: GoalCreationProps) => {
+  const goalsPayload = payload || createOnboardGoalsPayLoad(onboardGoalCreationInputs);
 
   const goalsURL = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
 

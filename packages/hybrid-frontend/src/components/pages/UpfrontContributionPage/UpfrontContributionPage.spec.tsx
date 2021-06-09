@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { act, fireEvent, renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import UpfrontContributionPage, { titleText } from './UpfrontContributionPage';
-import { goalSlice } from '../../../services/goal/reducers';
+import { goalCreationSlice } from '../../../services/goal/reducers';
 import { authSlice } from '../../../services/auth/reducers';
 
 jest.mock('../../../services/goal/api', () => ({
@@ -17,7 +17,7 @@ describe('UpfrontContributionPage', () => {
   const store = configureStore({
     reducer: {
       auth: authSlice,
-      goal: goalSlice,
+      goalCreation: goalCreationSlice,
     },
   });
 
@@ -27,7 +27,7 @@ describe('UpfrontContributionPage', () => {
   });
 
   it('renderes titles and field successfully', () => {
-    const { upfrontInvestment } = store.getState().goal.goalCapture || {};
+    const { upfrontInvestment } = store.getState().goalCreation.goalCapture || {};
 
     expect(screen.getByText(titleText)).toBeInTheDocument();
     expect(inputField).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('UpfrontContributionPage', () => {
   it('captures upfront investment onChange', async () => {
     fireEvent.change(inputField, { target: { value: '200' } });
 
-    const { upfrontInvestment } = store.getState().goal.goalCapture || {};
+    const { upfrontInvestment } = store.getState().goalCreation.goalCapture || {};
     expect(upfrontInvestment).toStrictEqual(200);
   });
 

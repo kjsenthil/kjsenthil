@@ -1,5 +1,5 @@
-export { default as goalSlice } from './goalSlice';
-export * from './goalSlice';
+export { default as goalCreationSlice } from './goalCreationSlice';
+export * from './goalCreationSlice';
 
-export { default as goalsSlice } from './goalsSlice';
-export * from './goalsSlice';
+export { default as currentGoalsSlice } from './currentGoalsSlice';
+export * from './currentGoalsSlice';

@@ -16,10 +16,13 @@ import {
   accountBreakdownSlice as accountBreakdownReducer,
   InvestmentSummarySlice as investmentSummaryReducer,
 } from '../services/myAccount/reducers';
-import { goalSlice as goalReducer, goalsSlice as goalsReducer } from '../services/goal/reducers';
+import {
+  goalCreationSlice as goalCreationReducer,
+  currentGoalsSlice as currentGoalsReducer,
+} from '../services/goal/reducers';
 import { performanceSlice as performanceReducer } from '../services/performance/reducers';
 import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
-import { GoalsState, GoalState } from '../services/goal';
+import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import { ProjectionsState } from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
@@ -30,8 +33,8 @@ export interface RootState {
   client: ClientState;
   accountBreakdown: BreakdownState;
   investmentSummary: InvestmentSummaryState;
-  goal: GoalState;
-  goals: GoalsState;
+  goalCreation: GoalCreationState;
+  currentGoals: CurrentGoalsState;
   performance: PerformanceState;
   projections: ProjectionsState;
 }
@@ -47,7 +50,7 @@ export interface RootState {
 const authWhitelist = createWhitelistFilter('auth', ['accessTokens', 'contactId']);
 
 const persistConfig: PersistConfig<RootState> = {
-  blacklist: ['goal', 'goals', 'performance', 'projections', 'investmentSummary'],
+  blacklist: ['goalCreation', 'currentGoals', 'performance', 'projections', 'investmentSummary'],
   transforms: [authWhitelist],
   key: 'root',
   storage,
@@ -58,8 +61,8 @@ const reducersMap: ReducersMapObject = {
   client: clientReducer,
   accountBreakdown: accountBreakdownReducer,
   investmentSummary: investmentSummaryReducer,
-  goal: goalReducer,
-  goals: goalsReducer,
+  goalCreation: goalCreationReducer,
+  currentGoals: currentGoalsReducer,
   performance: performanceReducer,
   projections: projectionsReducer,
 };

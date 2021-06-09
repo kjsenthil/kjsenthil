@@ -8,7 +8,7 @@ import { RootState } from '../../../store';
 import { MyAccountLayout } from '../../templates';
 
 const SimulationPage = () => {
-  const { goalCapture } = useSelector((state: RootState) => state.goal);
+  const { goalCapture } = useSelector((state: RootState) => state.goalCreation);
 
   const [projections, setProjections] = useState<ProjectionResponse | undefined>(undefined);
 

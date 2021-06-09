@@ -4,14 +4,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { act, waitFor, fireEvent, renderWithProviders, screen } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import TargetAmountsPage, { titleText } from './TargetAmountsPage';
-import { goalSlice } from '../../../services/goal/reducers';
+import { goalCreationSlice } from '../../../services/goal/reducers';
+import { CaptureGoalData } from '../../../services/goal';
 
 describe('TargetAmountsPage', () => {
   let inputField: HTMLElement;
 
   const store = configureStore({
     reducer: {
-      goal: goalSlice,
+      goalCreation: goalCreationSlice,
     },
   });
 
@@ -21,7 +22,7 @@ describe('TargetAmountsPage', () => {
   });
 
   it('renders title and fields successfully', () => {
-    const { targetAmount } = store.getState().goal.goalCapture || {};
+    const { targetAmount } = (store.getState().goalCreation.goalCapture as CaptureGoalData) || {};
 
     expect(screen.getByText(titleText)).toBeInTheDocument();
     expect(inputField).toBeInTheDocument();
@@ -31,7 +32,7 @@ describe('TargetAmountsPage', () => {
   it('captures upfront investment onChange', async () => {
     fireEvent.change(inputField, { target: { value: '4000' } });
 
-    const { targetAmount } = store.getState().goal.goalCapture || {};
+    const { targetAmount } = store.getState().goalCreation.goalCapture || {};
 
     expect(targetAmount).toStrictEqual(4000);
   });

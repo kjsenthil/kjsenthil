@@ -10,7 +10,7 @@ export const titleText = 'When would you like to buy a home by?';
 const titleSubText = 'Target Date';
 
 const TargetDatePage = () => {
-  const { goalCapture } = useSelector((state: RootState) => state.goal);
+  const { goalCapture } = useSelector((state: RootState) => state.goalCreation);
 
   const dispatch = useDispatch();
 

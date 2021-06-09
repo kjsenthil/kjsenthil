@@ -10,7 +10,7 @@ export const titleText = 'Ok. Lets see how we can get you there.';
 const titleSubText = 'How much would you like to save towards buying a home?';
 
 const TargetAmountsPage = () => {
-  const { goalCapture } = useSelector((state: RootState) => state.goal);
+  const { goalCapture } = useSelector((state: RootState) => state.goalCreation);
 
   const dispatch = useDispatch();
 

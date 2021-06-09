@@ -1,24 +1,29 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { postGoalCreation } from '../api';
-import { CaptureGoalData, GoalState } from '../types';
+import { CaptureGoalData, GoalRequestPayload, GoalCreationState } from '../types';
 
 const createGoal = createAsyncThunk(
   'goal/createGoal',
-  async ({ inputs }: { inputs?: CaptureGoalData } = {}, { getState }) => {
+  (
+    { inputs, payload }: { inputs?: CaptureGoalData; payload?: GoalRequestPayload } = {},
+    { getState }
+  ) => {
     const {
-      goal: { goalDetails, goalCapture },
-    } = getState() as { goal: GoalState };
+      goalCreation: { goalDetails, goalCapture },
+    } = getState() as { goalCreation: GoalCreationState };
 
-    const response = await postGoalCreation({
-      goalName: String(goalDetails.name),
-      inputs: inputs || (goalCapture as CaptureGoalData),
+    return postGoalCreation({
+      onboardGoalCreationInputs: {
+        goalDetails,
+        inputs: inputs || (goalCapture as CaptureGoalData),
+      },
+      payload,
     });
-    return response;
   }
 );
 
 export const goalCreationActionReducerMapBuilder = (
-  builder: ActionReducerMapBuilder<GoalState>
+  builder: ActionReducerMapBuilder<GoalCreationState>
 ) => {
   builder
     .addCase(createGoal.pending, (state) => {

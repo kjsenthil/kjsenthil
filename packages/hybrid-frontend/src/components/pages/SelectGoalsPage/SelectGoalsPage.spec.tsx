@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { act, waitFor, renderWithProviders, screen } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import SelectGoalsPage from './SelectGoalsPage';
-import { goalSlice } from '../../../services/goal/reducers';
+import { goalCreationSlice } from '../../../services/goal/reducers';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
@@ -26,7 +26,7 @@ jest.mock('../../organisms', () => ({
 describe('SelectGoalsPage', () => {
   const store = configureStore({
     reducer: {
-      goal: goalSlice,
+      goalCreation: goalCreationSlice,
     },
   });
 
@@ -35,7 +35,7 @@ describe('SelectGoalsPage', () => {
   });
 
   it('does not set goal before submit', () => {
-    const { name } = store.getState().goal.goalDetails || {};
+    const { name } = store.getState().goalCreation.goalDetails || {};
 
     expect(name).toBeUndefined();
   });
@@ -49,7 +49,7 @@ describe('SelectGoalsPage', () => {
 
     await act(async () => {
       await waitFor(() => {
-        const { name } = store.getState().goal.goalDetails || {};
+        const { name } = store.getState().goalCreation.goalDetails || {};
 
         expect(name).toStrictEqual('home');
         expect(navigateSpy).toHaveBeenCalledWith('/my-account/target-amount');

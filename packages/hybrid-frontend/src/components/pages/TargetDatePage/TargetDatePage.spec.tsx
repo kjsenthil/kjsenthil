@@ -4,14 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { act, waitFor, fireEvent, renderWithProviders, screen } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import TargetDatePage, { titleText } from './TargetDatePage';
-import { goalSlice } from '../../../services/goal/reducers';
+import { goalCreationSlice } from '../../../services/goal/reducers';
 
 describe('TargetDatePage', () => {
   let inputField: HTMLElement;
 
   const store = configureStore({
     reducer: {
-      goal: goalSlice,
+      goalCreation: goalCreationSlice,
     },
   });
 
@@ -21,7 +21,7 @@ describe('TargetDatePage', () => {
   });
 
   it('renders title and fields successfully', () => {
-    const { targetDate } = store.getState().goal.goalCapture || {};
+    const { targetDate } = store.getState().goalCreation.goalCapture || {};
 
     expect(screen.getByText(titleText)).toBeInTheDocument();
     expect(inputField).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('TargetDatePage', () => {
   it('captures upfront investment onChange', async () => {
     fireEvent.change(inputField, { target: { value: '2022-05-21' } });
 
-    const { targetDate } = store.getState().goal.goalCapture || {};
+    const { targetDate } = store.getState().goalCreation.goalCapture || {};
 
     expect(targetDate).toStrictEqual('2022-05-21');
   });

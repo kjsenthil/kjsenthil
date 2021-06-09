@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GoalDetails, CaptureGoalData, GoalState } from '../types';
+import { GoalDetails, CaptureGoalData, GoalCreationState } from '../types';
 import { createGoal, goalCreationActionReducerMapBuilder } from '../thunks';
 import { calcRegularSavings } from '../utils';
 
-const initialState: GoalState = {
+const initialState: GoalCreationState = {
   status: 'idle',
   goalCapture: {},
   goalDetails: {},
+  goalCreationError: undefined,
 };
 
-const goalSlice = createSlice({
-  name: 'goals',
+const goalCreationSlice = createSlice({
+  name: 'goalCreation',
   initialState,
   reducers: {
     reset: () => initialState,
@@ -31,6 +32,6 @@ const goalSlice = createSlice({
 });
 
 export { createGoal };
-export const { setGoalCapture, setGoalDetails, reset } = goalSlice.actions;
+export const { setGoalCapture, setGoalDetails, reset } = goalCreationSlice.actions;
 
-export default goalSlice.reducer;
+export default goalCreationSlice.reducer;

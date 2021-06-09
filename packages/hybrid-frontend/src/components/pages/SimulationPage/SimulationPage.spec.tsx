@@ -5,7 +5,7 @@ import { renderWithProviders, screen, waitFor } from '@tsw/test-util';
 import userEvent from '@testing-library/user-event';
 import SimulationPage from './SimulationPage';
 import { postProjections } from '../../../services/projections/api';
-import { goalSlice, setGoalCapture } from '../../../services/goal/reducers';
+import { goalCreationSlice, setGoalCapture } from '../../../services/goal/reducers';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
@@ -43,7 +43,7 @@ const mockProjectResponse = {
 describe('SimulationPage', () => {
   const store = configureStore({
     reducer: {
-      goal: goalSlice,
+      goalCreation: goalCreationSlice,
     },
   });
 
