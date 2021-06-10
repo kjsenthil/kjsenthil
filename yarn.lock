@@ -4702,6 +4702,7 @@ __metadata:
     mockdate: ^3.0.5
     react: ^16.12.0
     react-chartjs-2: ^2.11.1
+    react-disable: ^0.1.0
     react-dom: ^16.12.0
     react-error-boundary: ^3.1.1
     react-redux: ^7.2.4
@@ -23191,6 +23192,15 @@ fsevents@^1.2.7:
     strip-ansi: 3.0.1
     text-table: 0.2.0
   checksum: 33648fed0f76573e9ed840964f45ae3f606be22cb1e1429fd11f414a2ca12633adf67b4fdcbc8d804d0a623dd02f4c971cd92bcf5cebde7aab0fdbe822264c44
+  languageName: node
+  linkType: hard
+
+"react-disable@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "react-disable@npm:0.1.0"
+  peerDependencies:
+    react: ">=16"
+  checksum: 169cd515848e6c9bd0874958231f8cb519350c9fe2b74688158482f2bc0f21a7c339e92795c30e64bddc049473c2a1f968a152d946b545ad0ede4cabdbf09d0d
   languageName: node
   linkType: hard
 
