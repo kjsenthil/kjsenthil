@@ -5424,6 +5424,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/reach__router@npm:^1.3.8":
+  version: 1.3.8
+  resolution: "@types/reach__router@npm:1.3.8"
+  dependencies:
+    "@types/react": "*"
+  checksum: 52cdde63e520101179a2f83f504906a8eb389220b9e0e9de2330d806230f83a7ca17889f8f69aa2ee3f4800727c1f236de59ef55e1b52b307d62487f937aba43
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:*, @types/react-dom@npm:>=16.9.0, @types/react-dom@npm:^17.0.0":
   version: 17.0.3
   resolution: "@types/react-dom@npm:17.0.3"
@@ -11018,6 +11027,8 @@ __metadata:
 "digital-hybrid@workspace:.":
   version: 0.0.0-use.local
   resolution: "digital-hybrid@workspace:."
+  dependencies:
+    "@types/reach__router": ^1.3.8
   languageName: unknown
   linkType: soft
 

@@ -11,6 +11,7 @@ import UpfrontContributionPage from '../components/pages/UpfrontContributionPage
 import SelectGoalsPage from '../components/pages/SelectGoalsPage/SelectGoalsPage';
 import BIAccountsPage from '../components/pages/BIAccountsPage/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage/LifePlanPage';
+import NotFoundPage from '../components/pages/NotFoundPage/NotFoundPage';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const MyAccount = () => {
       <PrivateRoute path="/target-date" Component={TargetDatePage} />
       <PrivateRoute path="/upfront-investment" Component={UpfrontContributionPage} />
       <PrivateRoute path="/sim" Component={SimulationPage} />
+      <NotFoundPage default />
     </Router>
   );
 };
