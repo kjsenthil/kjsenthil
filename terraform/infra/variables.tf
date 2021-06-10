@@ -50,3 +50,8 @@ variable "cdn_profile_name" {
   type        = string
   description = "Name of the CDN profile to create endpoints on"
 }
+
+variable "app_insights_name" {
+  type        = string
+  description = "name of the Application insights"
+}

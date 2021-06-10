@@ -10,6 +10,8 @@
     "portfolio-asset-allocation/index.ts",
     "portfolio-asset-allocation/function.json",
     "portfolio-risk-profile/index.ts",
-    "portfolio-risk-profile/function.json"
+    "portfolio-risk-profile/function.json",
+    "validate-goal-request/index.ts",
+    "validate-goal-request/function.json"
   ]
 }

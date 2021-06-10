@@ -1,6 +1,10 @@
 <policies>
     <inbound>
         <base />
+        <!--Allow max 10K body content-->
+        <validate-content unspecified-content-type-action="prevent" max-size="10240" size-exceeded-action="prevent" errors-variable-name="requestBodyValidation">
+            <content type="application/json" validate-as="json" action="detect" />
+        </validate-content>        
          <!-- check Authorization header for access token-->
         <check-header name="Authorization" failed-check-httpcode="401" failed-check-error-message="Not authorized - missing bearer token" ignore-case="false" />
         <cache-lookup-value key="cached-myaccount-signing-key" variable-name="myaccount-signing-key" />
@@ -81,9 +85,38 @@
                 <claim name="xplan_id" match="all" />
             </required-claims>
         </validate-jwt>
+
+         %{ if config.validate_request != null }
+            <send-request mode="new" response-variable-name="validationResponse" timeout="20" ignore-error="false">
+                <set-url>${config.validate_request_url}</set-url>
+                <set-method>${config.validate_request.method}</set-method>
+                <set-body>${config.validate_request.body}</set-body>
+            </send-request>
+
+         %{ if config.validate_request.when != null }
+            <choose>
+                <when condition="${config.validate_request.when.condition}">
+                %{ if config.validate_request.when.returnResponse != null}            
+                    <return-response>
+                        <set-status code="${config.validate_request.when.returnResponse.status}" reason="${config.validate_request.when.returnResponse.reason}" />
+                        <set-body>${config.validate_request.when.returnResponse.body}</set-body>
+                    </return-response>
+                %{ endif ~}  
+                </when>
+            </choose>
+         %{ endif ~}   
+         %{ endif ~} 
+
+         %{ if config.body != null}    
+        <set-body>
+            ${config.body}
+        </set-body>
+        %{ endif ~}             
+        
         %{ if config.backend_url != ""}
         <set-backend-service base-url="${config.backend_url}" />
-        %{ endif ~}        
+        %{ endif ~}  
+
         <cors allow-credentials="${config.allow-credentials}">
 
             %{ if config.cors_allowed_origins != null }
@@ -158,6 +191,18 @@
   </outbound>
     <on-error>
         <base />
+        <choose>
+            <when condition="@(context.LastError.Message.Contains("INPUT_VALIDATION_FAILED")==true)">
+                <set-status code="400" reason="Bad request" />
+            </when>
+            <otherwise>
+                <set-status code="500" reason="Error" />
+            </otherwise>
+        </choose>
+        <set-body template="none">@{
+         return context.LastError.Message.Replace("Expression evaluation failed.","").Replace("INPUT_VALIDATION_FAILED","").Trim(); 
+         }
+         </set-body>
         <set-header name="ErrorSource" exists-action="override">
             <value>@(context.LastError.Source)</value>
         </set-header>

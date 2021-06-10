@@ -208,12 +208,14 @@ jobs:
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
           echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
+          echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
       cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
+      app_insights_name: ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
 
   # Deploys terraform PR contents.
   deploy_staging_terraform:
@@ -271,6 +273,7 @@ jobs:
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_app_insights_name: ${{ needs.deploy_staging_apim_terraform.outputs.app_insights_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -282,6 +285,7 @@ jobs:
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_app_insights_name: ${{ needs.deploy_staging_apim_terraform.outputs.app_insights_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -584,12 +588,16 @@ jobs:
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
           echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
+          echo ::set-output name=app-insights_name::$( terraform output -json | jq -r .app_insights_name.value )
+          echo ::set-output name=app-insights_id::$( terraform output -json | jq -r .app_insights_id.value )
+          echo ::set-output name=app-insights-instrumentation-key::$( terraform output -json | jq -r .app_insights_instrumentation_key.value )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
       cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
+      app_insights_name : ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
 
   # Deploys terraform PR contents.
   deploy_production_terraform:
@@ -648,6 +656,7 @@ jobs:
           TF_VAR_apim_vnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_app_insights_name: ${{ needs.deploy_production_apim_terraform.outputs.app_insights_name }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -659,6 +668,7 @@ jobs:
           TF_VAR_apim_vnet_name : ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name : ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
+          TF_VAR_app_insights_name: ${{ needs.deploy_production_apim_terraform.outputs.app_insights_name }}
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs

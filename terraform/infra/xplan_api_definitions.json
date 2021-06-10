@@ -102,6 +102,20 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],
+				"validate_request": {
+					"url":"{{function-app-baseurl}}/validate-goal-request",
+					"method":"POST",
+					"body":"@{return context.Request.Body.As<string>(true);}",
+					"when":{
+						"condition" :"@(((IResponse)context.Variables[\"validationResponse\"]).StatusCode != 200)",
+						"returnResponse":{
+							"status" : "400",
+							"reason" : "Bad Request",
+							"body" : "@(((IResponse)context.Variables[\"validationResponse\"]).Body.As<JObject>(preserveContent: true).ToString())"
+						}
+					}
+				}, 	
+				"body" :"@{ var inbountPayload = context.Request.Body.As<JObject>(true); inbountPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inbountPayload[\"fields\"][\"drawdown_frequency\"] = 12; inbountPayload[\"fields\"][\"owner\"] = \"client\"; return inbountPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
 				"backend_url": "xplan",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
 				"authentication-basic": {

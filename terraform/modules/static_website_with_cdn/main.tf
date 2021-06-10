@@ -47,7 +47,7 @@ module "cdn" {
   origin_hostname = azurerm_storage_account.this.primary_web_host
 
   csp_allowed_script_sources = var.csp_allowed_script_sources
-  csp_allowed_style_sources = var.csp_allowed_style_sources
+  csp_allowed_style_sources  = var.csp_allowed_style_sources
 
   tags = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
 }

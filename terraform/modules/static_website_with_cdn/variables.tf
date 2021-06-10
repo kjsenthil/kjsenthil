@@ -58,13 +58,13 @@ variable "error_path" {
 }
 
 variable "csp_allowed_script_sources" {
-  type = string
+  type        = string
   description = "Any allowed 'script-src' directives to be added to the CSP header in the CDN rules"
-  default = "'self'"
+  default     = "'self'"
 }
 
 variable "csp_allowed_style_sources" {
-  type = string
+  type        = string
   description = "Any allowed 'style-src' directives to be added to the CSP header in the CDN rules"
-  default = "'self'"
+  default     = "'self'"
 }

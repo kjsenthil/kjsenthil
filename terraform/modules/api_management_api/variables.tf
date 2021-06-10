@@ -46,3 +46,19 @@ variable "api_management_name" {
   type        = string
   description = "API management name"
 }
+
+variable "api_management_logger_name" {
+  type        = string
+  description = "API management logger name"
+}
+
+variable "app_insights_id" {
+  type        = string
+  description = "Application insights id"
+}
+
+variable "app_insights_instrumentation_key" {
+  type        = string
+  description = "Application insights instrumentation key"
+}
+

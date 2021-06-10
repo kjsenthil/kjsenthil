@@ -1,14 +1,17 @@
 module "apima" {
-  source                = "../modules/api_management_api"
-  name                  = "${var.environment_prefix}-${var.app_name}"
-  resource_group_name   = data.azurerm_resource_group.resource_group.name
-  api_management_name   = data.azurerm_api_management.apim.name
-  display_name          = "${var.environment_prefix}-${var.app_name}"
-  revision              = 1
-  path                  = var.environment_prefix
-  protocols             = ["https"]
-  subscription_required = false
-  description           = "${var.app_name} API."
+  source                           = "../modules/api_management_api"
+  name                             = "${var.environment_prefix}-${var.app_name}"
+  resource_group_name              = data.azurerm_resource_group.resource_group.name
+  api_management_name              = data.azurerm_api_management.apim.name
+  display_name                     = "${var.environment_prefix}-${var.app_name}"
+  revision                         = 1
+  path                             = var.environment_prefix
+  protocols                        = ["https"]
+  subscription_required            = false
+  description                      = "${var.app_name} API."
+  api_management_logger_name       = "apim-${local.short_location}-${var.environment_prefix}-logger"
+  app_insights_id                  = data.azurerm_application_insights.app_insights.id
+  app_insights_instrumentation_key = data.azurerm_application_insights.app_insights.instrumentation_key
 }
 
 module "api_operation" {
@@ -49,6 +52,7 @@ module "api_management_policy" {
     }
   })
   depends_on = [module.api_operation, module.function_app_projections]
+
 }
 
 
@@ -86,7 +90,10 @@ module "api_management_policy_xplan" {
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
       rewrite_url          = lookup(each.value.policy, "rewrite_url", null),
       variables            = lookup(each.value.policy, "set_variable", null),
-      authentication-basic = lookup(each.value.policy, "authentication-basic", null)
+      authentication-basic = lookup(each.value.policy, "authentication-basic", null),
+      validate_request     = lookup(each.value.policy, "validate_request", null),
+      validate_request_url = replace(lookup(lookup(each.value.policy, "validate_request", {}), "url", ""), "{{function-app-baseurl}}", local.api_backends.projections_function_app),
+      body                 = lookup(each.value.policy, "body", null)
     }
   })
   depends_on = [module.api_operation, module.function_app_projections]
@@ -103,7 +110,7 @@ module "front_end" {
   cdn_profile_name         = var.cdn_profile_name
 
   csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com"
-  csp_allowed_style_sources = "'self' 'unsafe-inline'"
+  csp_allowed_style_sources  = "'self' 'unsafe-inline'"
 
   tags = merge(var.tags, local.default_tags)
 }
@@ -120,7 +127,7 @@ module "storybook" {
   cdn_profile_name         = var.cdn_profile_name
 
   csp_allowed_script_sources = "'self' 'unsafe-inline' 'unsafe-eval' *.tiqcdn.com *.tealiumiq.com"
-  csp_allowed_style_sources = "'self' 'unsafe-inline'"
+  csp_allowed_style_sources  = "'self' 'unsafe-inline'"
 
   tags = merge(var.tags, local.default_tags)
 }
