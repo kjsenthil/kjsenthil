@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { Grid, Icon, IconButton, Tooltip, Typography } from '../../atoms';
+import { Grid, Icon, IconButton, Spacer, Tooltip, Typography } from '../../atoms';
 import {
   AccountsTableCell,
   AccountsTableHead,
@@ -30,13 +30,15 @@ const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
                 <Typography variant="sh3" display="inline">
                   {headerRowItem.value}
                 </Typography>
-
                 {headerRowItem.tooltip && (
-                  <Tooltip title={headerRowItem.tooltip}>
-                    <IconButton aria-label={`${headerRowItem.value} Info`} size="small">
-                      <AccountsTableHeaderInfo name="infoCircleIcon" />
-                    </IconButton>
-                  </Tooltip>
+                  <>
+                    <Spacer x={0.5} inline />
+                    <Tooltip title={headerRowItem.tooltip}>
+                      <IconButton aria-label={`${headerRowItem.value} Info`} size="small">
+                        <AccountsTableHeaderInfo name="infoCircleIcon" />
+                      </IconButton>
+                    </Tooltip>
+                  </>
                 )}
               </AccountsTableCell>
             ))}

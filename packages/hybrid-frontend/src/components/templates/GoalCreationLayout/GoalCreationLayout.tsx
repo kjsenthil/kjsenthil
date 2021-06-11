@@ -78,7 +78,7 @@ const GoalCreationLayout = ({
                 onClick={onDeleteHandler}
                 variant="outlined"
                 color="error"
-                startIcon={<Icon name="delete" fontSize="large" viewBox="0 0 15 15" />}
+                startIcon={<Icon name="delete" fontSize="large" />}
               >
                 Delete
               </Button>

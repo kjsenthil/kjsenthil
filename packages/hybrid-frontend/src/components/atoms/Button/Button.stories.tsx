@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import Icon from '../Icon';
+import Icon, { IconProps } from '../Icon/Icon';
+import icons from '../Icon/icons';
 import Button, { ButtonProps } from './Button';
 
 export default {
@@ -37,12 +38,23 @@ export default {
       },
       options: ['True', 'False'],
     },
+    startIcon: {
+      name: 'icon',
+      control: { type: 'select' },
+      options: [undefined, ...Object.keys(icons).sort()],
+    },
   },
 } as Meta;
 
-const Template: Story<ButtonProps> = (args) => <Button {...args} />;
+interface ButtonStoryProps extends ButtonProps {
+  startIcon?: IconProps['name'];
+}
 
-const defaultArgs: ButtonProps = {
+const Template: Story<ButtonStoryProps> = ({ startIcon, ...rest }) => (
+  <Button {...rest} startIcon={startIcon ? <Icon name={startIcon} /> : undefined} />
+);
+
+const defaultArgs: ButtonStoryProps = {
   children: 'Button',
   color: 'primary',
   variant: 'contained',
@@ -61,5 +73,5 @@ export const ButtonWithIcon = Template.bind({});
 ButtonWithIcon.args = {
   ...defaultArgs,
   children: 'Button',
-  startIcon: <Icon name="account" fontSize="inherit" />,
+  startIcon: 'account',
 };

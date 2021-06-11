@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Grid, Typography, Link, Icon } from '../../atoms';
+import { Grid, Typography, Link, Icon, Spacer } from '../../atoms';
 
 const Footer = () => (
   <Grid container spacing={2} justify="flex-start">
     <Grid item xs={12}>
       <Grid container alignContent="center">
-        <Icon name="infoCircleIcon" />
+        <Typography variant="sh3" color="grey" colorShade="dark1" display="inline" gutterBottom>
+          <Icon name="infoCircleIcon" fontSize="inherit" />
+        </Typography>
+        <Spacer x={1} />
         <Typography variant="sh3" color="grey" colorShade="dark1" display="inline" gutterBottom>
           The value of your investment can go down as well as up, and you can get back less than
           your originally invested.

@@ -16,8 +16,8 @@ export const AccountsTableCell = styled(TableCell)`
 
 export const AccountsTableHeaderInfo = styled(Icon)`
   ${({ theme }) => `
-    padding-top: 5px;
-    padding-left: 5px;
-    color: ${theme.palette.grey.main}
+    color: ${theme.palette.grey.main};
+    font-size: 12px;
+    margin-bottom: 4px;
   `}
 `;

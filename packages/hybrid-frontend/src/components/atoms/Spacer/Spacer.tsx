@@ -19,9 +19,13 @@ export type SpacerProps = BoxProps & {
   // Setting this to true will apply a default width, border radius, and
   // background color to the Box
   asDivider?: boolean;
+
+  // Setting this to true will change the display to 'inline-flex' rather than
+  // the default 'flex'.
+  inline?: boolean;
 };
 
-const Spacer = ({ x, y, basis, asDivider, ...restProps }: SpacerProps) => {
+const Spacer = ({ x, y, basis, asDivider, inline, ...restProps }: SpacerProps) => {
   const theme = useTheme();
 
   return (
@@ -33,7 +37,7 @@ const Spacer = ({ x, y, basis, asDivider, ...restProps }: SpacerProps) => {
       flexGrow={0}
       flexShrink={0}
       {...restProps}
-      display="flex"
+      display={inline ? 'inline-flex' : 'flex'}
       justifyContent="center"
       alignItems="center"
     >
