@@ -12,6 +12,7 @@ export { default as TagBox } from './TagBox';
 export { default as Legend } from './Legend';
 export { default as Modal } from './Modal';
 export { default as DisabledComponent } from './DisabledComponent';
+export { default as RadioGroup } from './RadioGroup';
 
 /* material-ui molecules */
 export {

@@ -26,8 +26,5 @@
     "frontend": "yarn workspace @tsw/hybrid-frontend",
     "fe": "yarn workspace @tsw/hybrid-frontend",
     "test:e2e": "yarn workspace @tsw/testing-selenium run test:e2e:ci"
-  },
-  "dependencies": {
-    "@types/reach__router": "^1.3.8"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField, { TextFieldProps } from '../../atoms/TextField';
+import { TextField, TextFieldProps } from '../../atoms';
 import { FormInputWrapper } from '../../particles';
 
 export interface FormInputProps extends TextFieldProps {

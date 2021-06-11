@@ -2,25 +2,26 @@
 import Button, { ButtonProps } from './Button';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
 import Typography, { TypographyProps } from './Typography';
-import {
+import TextField, {
   FormattedTextFieldControlledProps,
   FormattedTextFieldUncontrolledProps,
+  TextFieldProps,
 } from './TextField';
 
-export { default as Icon } from './Icon';
+export { Button, TextField, Typography, ChartIndicator };
 
 export type {
   ButtonProps,
   ChartIndicatorProps,
   TypographyProps,
+  TextFieldProps,
   FormattedTextFieldControlledProps,
   FormattedTextFieldUncontrolledProps,
 };
 
-export { Button, Typography, ChartIndicator };
-
 export { default as Spacer } from './Spacer';
 export { Divider } from './Spacer';
+export { default as Icon } from './Icon';
 export { default as Switcher } from './Switcher';
 export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
@@ -57,7 +58,6 @@ export {
   FormLabel,
   Paper,
   Select,
-  TextField,
   Toolbar,
   useTheme,
   makeStyles,

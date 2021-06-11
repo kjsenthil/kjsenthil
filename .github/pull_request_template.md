@@ -1,8 +1,8 @@
 ## Description:
-[//]: Write a brief description describing what the change is all about
+<!-- Write a brief description describing what the change is all about -->
 
 ## Jira Ticket:
-<!-- : A link to the Jira Ticket -->
+<!-- A link to the Jira Ticket -->
 [DH-XXX](https://tilneygroup.atlassian.net/browse/DH-XXX)
 
 ## Steps to replicate:
