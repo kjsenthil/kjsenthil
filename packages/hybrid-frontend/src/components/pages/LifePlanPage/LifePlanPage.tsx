@@ -4,20 +4,26 @@ import { Skeleton } from '@material-ui/lab';
 import { Link, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import { fetchProjections } from '../../../services/projections';
+
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
 import { usePerformanceProjectionsChartStyles } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import useProjectionsDataForChart from '../../../services/projections/hooks/useProjectionsDataForChart';
 import { useAnnualHistoricalDataForChart } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData';
+import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalContent/ProjectionCalculateModalContent';
+
+import useProjectionsDataForChart from '../../../services/projections/hooks/useProjectionsDataForChart';
+
 import useGoalsDataForChart from '../../../services/goal/hooks/useGoalsDataForChart';
 import useProjectionsMetadataForChart from '../../../services/projections/hooks/useProjectionsMetadataForChart';
 import { Disclaimer } from './LifePlanPage.styles';
-import { MainCard } from '../../molecules';
+import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
 import { useDispatchThunkOnRender } from '../../../hooks';
 import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 
 const LifePlanPage = () => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   const {
     client: { included: clientData },
     investmentSummary: { data: investmentSummaryData },
@@ -53,6 +59,9 @@ const LifePlanPage = () => {
     }
   );
 
+  const linkClickHandler = () => setIsModalOpen(true);
+  const modalCloseHandler = () => setIsModalOpen(false);
+
   return (
     <MyAccountLayout
       heading={(basicInfo) => ({
@@ -76,7 +85,9 @@ const LifePlanPage = () => {
             <Typography display="inline" variant="b3" color="grey" colorShade="dark1">
               Such forecasts are not a reliable indicator of future performance
             </Typography>
-            <Link href="#">Tell me more</Link>
+            <Link component="button" onClick={linkClickHandler}>
+              Tell me more
+            </Link>
           </Disclaimer>
         </>
       ) : projectionsFetchMaxRetriesHit && projectionsError ? (
@@ -86,6 +97,13 @@ const LifePlanPage = () => {
       )}
       <Spacer y={5} />
       <MainCard title="Your important moments">Coming soon</MainCard>
+      <Modal
+        open={isModalOpen}
+        onClose={modalCloseHandler}
+        modalTitle="How was this projection calculated?"
+      >
+        <ProjectionCalculateModal />
+      </Modal>
     </MyAccountLayout>
   );
 };

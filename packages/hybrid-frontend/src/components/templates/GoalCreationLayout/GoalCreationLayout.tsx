@@ -48,7 +48,7 @@ const GoalCreationLayout = ({
           <Grid item xs={12} md={6}>
             <Grid container justify="flex-end">
               <Grid item>
-                <IconButton aria-label="close" color="grey" onClick={onCancelHandler}>
+                <IconButton aria-label="close" onClick={onCancelHandler}>
                   <Icon name="cross" />
                 </IconButton>
               </Grid>

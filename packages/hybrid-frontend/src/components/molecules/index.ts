@@ -10,6 +10,7 @@ export { default as GoalProgress } from './GoalProgress';
 export { default as MainCard } from './MainCard';
 export { default as TagBox } from './TagBox';
 export { default as Legend } from './Legend';
+export { default as Modal } from './Modal';
 export { default as DisabledComponent } from './DisabledComponent';
 
 /* material-ui molecules */
