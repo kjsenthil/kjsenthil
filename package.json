@@ -9,7 +9,8 @@
     "packages/utils/test",
     "packages/utils/tracking",
     "packages/function-apps/projections",
-    "packages/testing/selenium"
+    "packages/testing/selenium",
+    "packages/testing/apitest"
   ],
   "scripts": {
     "all:format": "yarn workspaces foreach -ptv run format",
@@ -25,6 +26,7 @@
     "clean": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;",
     "frontend": "yarn workspace @tsw/hybrid-frontend",
     "fe": "yarn workspace @tsw/hybrid-frontend",
-    "test:e2e": "yarn workspace @tsw/testing-selenium run test:e2e:ci"
+    "test:e2e": "yarn workspace @tsw/testing-selenium run test:e2e:ci",
+    "test:api:ci": "yarn workspace @tsw/testing-apitest run test:api:ci"
   }
 }

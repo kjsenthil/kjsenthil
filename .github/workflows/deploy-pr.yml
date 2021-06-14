@@ -595,6 +595,74 @@ jobs:
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
+  api_test_suite:
+    name: "API test suite"
+    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    environment: development
+    runs-on: ubuntu-latest
+    needs:
+      - detect_changes
+      - build_cache
+      - get_pr_terraform_outputs
+      - clear_storybook_storage_account
+      - deploy_gatsby
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      
+      - name: "Create PR env file"
+        working-directory: ./packages/testing
+        run: |
+          touch .env.pr
+          echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
+          echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
+          cat .env.pr
+
+      - name: "Run API tests"
+        run : yarn test:api:ci
+        env :
+             JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
+             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
+             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+             API_ENDPOINTS : ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
+             MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
+             MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
+
+      - name: "Login to Azure"
+        if: always()
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy API Reports"
+        if: always()
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: | 
+                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+
 #  Temporarily disabled until tests can be fixed to not fail intermittently
 #
 #  end_to_end_test:
@@ -1134,6 +1202,7 @@ jobs:
             **Linting Results:** [${{ needs.deploy_storybook.outputs.url }}/eslint/index.html](${{ needs.deploy_storybook.outputs.url }}/eslint/index.html)
             **Unit Test Coverage Report:** [${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html)
             **Unit Test Report:** [${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html)
+            **API Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html](${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html)
             **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html)
             **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html)
 

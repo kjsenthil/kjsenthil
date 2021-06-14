@@ -77,6 +77,9 @@ build/Release
 .env.development
 .env.production
 .env.staging
+.env.test
+.env.pr
+.env
 
 # gatsby files
 .cache/

@@ -1,0 +1,33 @@
+{
+  "name": "@tsw/testing-apitest",
+  "version": "1.0.0",
+  "description": "all dependencies required to run api tests",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "format": "yarn g:format --write src/**/*.{js,ts,md,json}; yarn lint:fix",
+    "lint": "mkdir -p eslintreport && yarn lint:check --format html > eslintreport/index.html",
+    "lint:check": "yarn g:lint src/**/*.{js,ts}",
+    "lint:fix": "yarn lint:check --fix",
+    "typecheck": "yarn g:typecheck",
+    "typecheck:watch": "yarn typecheck -w --pretty",
+    "test:api:ci": "jest src/test/* --reporters jest-html-reporters"
+  },
+  "dependencies": {
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "babel-jest": "^26.6.3",
+    "dotenv": "^8.2.0",
+    "env-var": "^7.0.0",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
