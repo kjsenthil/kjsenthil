@@ -9,6 +9,11 @@ jest.mock('../../organisms', () => ({
   Footer: () => <div data-testid="footer" />,
 }));
 
+jest.mock('../../atoms/LinearProgress', () => ({
+  __esModule: true,
+  default: () => <div data-testid="linear-progress-bar" />,
+}));
+
 const basicInfo = {
   isLoading: false,
   firstName: 'Ava',
@@ -71,6 +76,26 @@ describe('MyAccountLayout', () => {
       );
 
       expect(pageHeading).toBeInTheDocument();
+    });
+  });
+
+  describe('with loading state', () => {
+    const basicInfoIsLoading = {
+      ...basicInfo,
+      isLoading: true,
+    };
+
+    beforeEach(() => {
+      useBasicInfoSpy = jest.spyOn(hooks, 'useBasicInfo').mockReturnValue(basicInfoIsLoading);
+    });
+
+    it('renders a loading progess bar', async () => {
+      renderWithTheme(
+        <MyAccountLayout>
+          <div data-testid="some-child-element" />
+        </MyAccountLayout>
+      );
+      expect(await screen.findByTestId('linear-progress-bar')).toBeInTheDocument();
     });
   });
 });

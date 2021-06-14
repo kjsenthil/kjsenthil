@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Divider, Spacer, Typography, useTheme, useMediaQuery } from '../../atoms';
+import {
+  Box,
+  Divider,
+  Spacer,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  LinearProgress,
+} from '../../atoms';
 import { HeaderMenu, Footer } from '../../organisms';
 import { HeaderMenuProps } from '../../organisms/HeaderMenu';
 import { useBasicInfo, BasicInfo } from '../../../hooks';
@@ -34,23 +42,25 @@ const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayou
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
   const basicInfo = useBasicInfo();
 
-  return basicInfo.isLoading ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <LayoutContainer maxWidth="lg" disableGutters>
       <HeaderMenu {...headerProps} profileName={`${basicInfo.firstName} ${basicInfo.lastName}`} />
-      <Box px={isMobile ? 3 : 10} py={5}>
-        {heading && (
-          <>
-            <Heading {...heading(basicInfo)} />
-            <Spacer y={6} />
-          </>
-        )}
-        {children}
-        <Spacer y={3} />
-        <Divider y={6} />
-        <Footer />
-      </Box>
+      {basicInfo.isLoading ? (
+        <LinearProgress color="primary" />
+      ) : (
+        <Box px={isMobile ? 3 : 10} py={5}>
+          {heading && (
+            <>
+              <Heading {...heading(basicInfo)} />
+              <Spacer y={6} />
+            </>
+          )}
+          {children}
+          <Spacer y={3} />
+          <Divider y={6} />
+          <Footer />
+        </Box>
+      )}
     </LayoutContainer>
   );
 };

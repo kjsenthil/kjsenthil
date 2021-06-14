@@ -1,6 +1,7 @@
 /* custom atoms */
 import Button, { ButtonProps } from './Button';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
+import LinearProgress, { LinearProgressProps } from './LinearProgress';
 import Typography, { TypographyProps } from './Typography';
 import TextField, {
   FormattedTextFieldControlledProps,
@@ -11,11 +12,12 @@ import { TooltipProps } from './Tooltip';
 import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
 
-export { Button, TextField, Typography, ChartIndicator };
+export { Button, LinearProgress, TextField, Typography, ChartIndicator };
 
 export type {
   ButtonProps,
   ChartIndicatorProps,
+  LinearProgressProps,
   TypographyProps,
   TextFieldProps,
   FormattedTextFieldControlledProps,
