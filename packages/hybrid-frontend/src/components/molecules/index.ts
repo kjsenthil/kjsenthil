@@ -1,5 +1,6 @@
 /* custom molecules */
 import ChartPeriodSelection, { ChartPeriodSelectionProps } from './ChartPeriodSelection';
+import { TypographyWithTooltipProps } from './TypographyWithInfoTooltip';
 
 export { default as SliderWithInput } from './SliderWithInput';
 export { default as Alert } from './Alert';
@@ -13,6 +14,7 @@ export { default as Legend } from './Legend';
 export { default as Modal } from './Modal';
 export { default as DisabledComponent } from './DisabledComponent';
 export { default as RadioGroup } from './RadioGroup';
+export { default as TypographyWithInfoTooltip } from './TypographyWithInfoTooltip';
 
 /* material-ui molecules */
 export {
@@ -24,5 +26,5 @@ export {
   TableCell,
 } from '@material-ui/core';
 
-export type { ChartPeriodSelectionProps };
+export type { ChartPeriodSelectionProps, TypographyWithTooltipProps };
 export { ChartPeriodSelection };

@@ -7,6 +7,9 @@ import TextField, {
   FormattedTextFieldUncontrolledProps,
   TextFieldProps,
 } from './TextField';
+import { TooltipProps } from './Tooltip';
+import { SpacerProps } from './Spacer/Spacer';
+import { IconProps } from './Icon';
 
 export { Button, TextField, Typography, ChartIndicator };
 
@@ -17,6 +20,9 @@ export type {
   TextFieldProps,
   FormattedTextFieldControlledProps,
   FormattedTextFieldUncontrolledProps,
+  TooltipProps,
+  IconProps,
+  SpacerProps,
 };
 
 export { default as Spacer } from './Spacer';
