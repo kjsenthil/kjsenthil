@@ -57,6 +57,7 @@ const Template: Story<ButtonStoryProps> = ({ startIcon, ...rest }) => (
 const defaultArgs: ButtonStoryProps = {
   children: 'Button',
   color: 'primary',
+  isLoading: false,
   variant: 'contained',
 };
 
@@ -74,4 +75,11 @@ ButtonWithIcon.args = {
   ...defaultArgs,
   children: 'Button',
   startIcon: 'account',
+};
+
+export const ButtonLoading = Template.bind({});
+ButtonLoading.args = {
+  ...defaultArgs,
+  children: 'Button',
+  isLoading: true,
 };

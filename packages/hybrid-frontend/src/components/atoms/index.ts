@@ -37,7 +37,6 @@ export {
   Box,
   Card,
   colors,
-  CircularProgress,
   CardActionArea,
   CardContent,
   Container,

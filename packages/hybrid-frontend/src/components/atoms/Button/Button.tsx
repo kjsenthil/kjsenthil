@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button as MUIButton, ButtonProps as MUIButtonProps, Theme } from '@material-ui/core';
 import styled, { css } from 'styled-components';
+import CircularProgress from '../CircularProgress';
 
 // TODO: consider allowing the use of Gatsby's Link for client side navigation
 // without contaminating this component with framework specific detail
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/
 export interface ButtonProps extends Omit<MUIButtonProps, 'color'> {
   color?: MUIButtonProps['color'] | 'gradient';
+  isLoading?: boolean;
 }
 
 const determineColorStyles = ({
@@ -35,6 +37,12 @@ const determineColorStyles = ({
 
   return style;
 };
+
+const StyledCircularProgress = styled(CircularProgress)`
+  ${({ theme: { palette } }) => css`
+    color: ${palette.common.white};
+  `}
+`;
 
 const BaseButton = styled(({ isIcon, color, ...props }) => (
   <MUIButton {...props} disableElevation />
@@ -70,7 +78,7 @@ const BaseButton = styled(({ isIcon, color, ...props }) => (
       font-weight: bold;
       height: ${size === 'small' ? '28px' : '40px'};
       border-radius: 6px;
-      min-width: 40px;
+      min-width: ${isIcon ? '40px' : '80px'};
       ${isIcon ? 'width: 40px' : ''};
       padding: ${isIcon ? '8px' : '12px 16px'};
       padding: ${size === 'small' ? '6px 24px' : '12px 16px'};
@@ -79,14 +87,14 @@ const BaseButton = styled(({ isIcon, color, ...props }) => (
   }}
 `;
 
-const Button: React.FC<ButtonProps> = ({ children, superstar, ...props }) => (
+const Button: React.FC<ButtonProps> = ({ children, isLoading, superstar, ...props }) => (
   <BaseButton
     variant="contained"
     isIcon={typeof children !== 'string'}
     {...props}
     color={props.color || 'primary'}
   >
-    {children}
+    {isLoading ? <StyledCircularProgress size={20} /> : children}
   </BaseButton>
 );
 
