@@ -2,6 +2,7 @@ import {
   GoalStatus,
   CaptureGoalData,
   GoalDetails,
+  GoalCategory,
   GoalRequestPayload,
   GoalsObjectiveApiResponse,
 } from '../types';
@@ -10,7 +11,7 @@ import { API_ENDPOINTS } from '../../../config';
 
 const goalsHardCodedPayloadValues = {
   status: GoalStatus.UNFULFILLED, // E.g from 4 options - Goal is unfulfilled
-  category: 5, // Investment category (dependent on retirements vs savings)
+  category: GoalCategory.RETIREMENT, // Investment category (dependent on retirements vs savings)
   advice_type: 3, // Investment advice type (dependent on retirements vs savings)
   xpt_external_id: null, // To Check
   owner: 'client',

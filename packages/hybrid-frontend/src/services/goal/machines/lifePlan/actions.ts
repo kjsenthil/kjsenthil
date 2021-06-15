@@ -9,6 +9,7 @@ import {
   LifePlanMachineContext,
   LifePlanMachineEvents,
   SetAgesDrawdownEvent,
+  SetErrorsEvent,
   SetIncomeEvent,
   SetLaterLifeLeftOverEvent,
   SetLumpSumEvent,
@@ -25,17 +26,19 @@ const setDrawdownAges = assign<LifePlanMachineContext, SetAgesDrawdownEvent>(
 const setIncome = assign<LifePlanMachineContext, SetIncomeEvent>(
   (ctx, { payload: { annualIncome, monthlyIncome } }) => {
     if (annualIncome !== undefined && monthlyIncome === undefined) {
+      const absoluteAnnualIncome = Math.round(Math.abs(annualIncome) * 100) / 100;
       return {
         ...ctx,
-        annualIncome,
-        monthlyIncome: annualIncome / 12,
+        annualIncome: absoluteAnnualIncome,
+        monthlyIncome: Math.round((absoluteAnnualIncome / 12) * 100) / 100,
       };
     }
     if (annualIncome === undefined && monthlyIncome !== undefined) {
+      const absoluteMonthlyIncome = Math.round(Math.abs(monthlyIncome) * 100) / 100;
       return {
         ...ctx,
-        monthlyIncome,
-        annualIncome: monthlyIncome * 12,
+        monthlyIncome: absoluteMonthlyIncome,
+        annualIncome: Math.round(absoluteMonthlyIncome * 12 * 100) / 100,
       };
     }
     return {};
@@ -62,7 +65,11 @@ const calculateRetirementPotValue = assign<LifePlanMachineContext>({
 });
 
 const calculateAge = assign<LifePlanMachineContext>({
-  userAge: ({ userDateOfBirth }) => (userDateOfBirth ? calculateAgeToday(userDateOfBirth) : 0),
+  clientAge: ({ userDateOfBirth }) => (userDateOfBirth ? calculateAgeToday(userDateOfBirth) : 0),
+});
+
+const reEvaluateDrawdownStartAge = assign<LifePlanMachineContext>({
+  drawdownStartAge: ({ clientAge, drawdownStartAge }) => Math.max(clientAge, drawdownStartAge),
 });
 
 const calculateAnnualNetExpectedReturn = assign<LifePlanMachineContext>({
@@ -74,25 +81,23 @@ const calculateMonthlyNetExpectedReturn = assign<LifePlanMachineContext>({
     math.calculateMonthlyNetExpectedReturn({ annualNetExpectedReturn }),
 });
 
-const calculateDrawdownPeriodLength = assign<LifePlanMachineContext>(
-  (ctx: LifePlanMachineContext): Partial<LifePlanMachineContext> => {
-    if (ctx.drawdownStartDate && ctx.drawdownEndDate) {
-      let drawdownStartDate = new Date(ctx.drawdownStartDate);
+const calculateDrawdownPeriodLength = assign<LifePlanMachineContext>((ctx) => {
+  if (ctx.drawdownStartDate && ctx.drawdownEndDate) {
+    let drawdownStartDate = new Date(ctx.drawdownStartDate);
 
-      if (ctx.userAge > ctx.drawdownStartAge) {
-        drawdownStartDate = new Date();
-      }
-
-      return {
-        drawdownPeriodLengthYears: Math.abs(yearDifference(ctx.drawdownEndDate, drawdownStartDate)),
-        drawdownPeriodLengthMonths: Math.abs(
-          monthDifference(ctx.drawdownEndDate, drawdownStartDate) + 1
-        ),
-      };
+    if (ctx.clientAge > ctx.drawdownStartAge) {
+      drawdownStartDate = new Date();
     }
-    return ctx;
+
+    return {
+      drawdownPeriodLengthYears: Math.abs(yearDifference(ctx.drawdownEndDate, drawdownStartDate)),
+      drawdownPeriodLengthMonths: Math.abs(
+        monthDifference(ctx.drawdownEndDate, drawdownStartDate) + 1
+      ),
+    };
   }
-);
+  return ctx;
+});
 
 const calculateTargetDrawdownAmount = assign<LifePlanMachineContext>({
   targetDrawdownAmount: (ctx) => ctx.monthlyIncome * ctx.drawdownPeriodLengthMonths,
@@ -102,24 +107,36 @@ const calculateTomorrowsMoney = assign<LifePlanMachineContext>(
   ({ inflation, drawdownStartDate, annualIncome }) => {
     const timePeriodInYears =
       (drawdownStartDate || new Date()).getFullYear() - new Date().getFullYear();
-    const annualIncomeIntomorrowsMoney = math.calculateAnnualReturnAfterInflation({
-      annualIncome,
-      inflation,
-      timePeriodInYears,
-    });
-    const monthlyIncomeIntomorrowsMoney = Math.round(annualIncomeIntomorrowsMoney / 12);
+
+    const annualIncomeInTomorrowsMoney = Math.round(
+      math.calculateAnnualReturnAfterInflation({
+        annualIncome,
+        inflation,
+        timePeriodInYears,
+      })
+    );
+    const monthlyIncomeInTomorrowsMoney = Math.round(annualIncomeInTomorrowsMoney / 12);
     return {
-      annualIncomeIntomorrowsMoney,
-      monthlyIncomeIntomorrowsMoney,
+      annualIncomeInTomorrowsMoney,
+      monthlyIncomeInTomorrowsMoney,
     };
   }
 );
 
+const setErrors = assign<LifePlanMachineContext, SetErrorsEvent>((ctx, evt) => ({
+  errors: { ...ctx.errors, ...evt.data },
+}));
+
+const resetErrors = assign({ errors: null });
+
 export default ({
+  setErrors,
+  resetErrors,
   setIncome,
   setLumpSum,
   setDrawdownAges,
   setLaterLifeLeftOver,
+  reEvaluateDrawdownStartAge,
   calculateAge,
   calculateDrawdownDates,
   calculateTomorrowsMoney,

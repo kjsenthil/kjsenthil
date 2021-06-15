@@ -1,53 +1,37 @@
 import * as React from 'react';
+import { navigate } from 'gatsby';
 import { useMachine } from '@xstate/react';
 import { useSelector } from 'react-redux';
 import pluralize from 'pluralize';
+import styled from 'styled-components';
 import { Grid, Spacer, Typography, FormControlLabel, Radio, Tooltip } from '../../atoms';
-import { FormInput, MainCard, RadioGroup } from '../../molecules';
+import { FormInput, StepCard, RadioGroup, TypographyWithInfoTooltip } from '../../molecules';
 import { GoalCreationLayout } from '../../templates';
 import { RootState } from '../../../store';
 import {
+  InputFieldsKeys,
   lifePlanContext,
   lifePlanMachine,
   lifePlanMachineActions,
+  lifePlanMachineGuards,
   lifePlanMachineServices,
 } from '../../../services/goal/machines/lifePlan';
 import { formatCurrency } from '../../../utils/formatters';
 
 const AVERAGE_DRAWDOWN_PERIOD_IN_YEARS = 22;
-const FROM_AGE = 65;
-const TO_AGE = 87;
-
-interface FormCardProps {
-  step: number;
-  title: string;
-  children: React.ReactNode;
-}
-
-const FormCard = ({ step, title, children }: FormCardProps) => (
-  <MainCard>
-    <Grid container direction="row" spacing={3}>
-      <Grid item xs={1}>
-        <Typography variant="h3" component="h2" color="primary">
-          {step}.
-        </Typography>
-      </Grid>
-      <Grid item xs={5}>
-        <Typography variant="h4" component="h3">
-          {title}
-        </Typography>
-      </Grid>
-      <Grid item xs={6} container direction="column" spacing={2}>
-        {children}
-      </Grid>
-    </Grid>
-  </MainCard>
-);
+const DEFAULT_DRAWDOWN_START_AGE = 65;
+const DEFAULT_DRAWDOWN_END_AGE = 87;
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
-  <Typography variant="b3">That&#39;s {formatCurrency(amount)} in tomorrow&#39;s money</Typography>
+  <TypographyWithInfoTooltip tooltip="Some description">
+    That&#39;s {formatCurrency(amount, { opts: { maximumFractionDigits: 0 } })} in tomorrow&#39;s
+    money
+  </TypographyWithInfoTooltip>
 );
 
+const EqualSignWrapper = styled(Grid)`
+  text-align: center;
+`;
 const LifePlanManagementPage = () => {
   const { client } = useSelector((state: RootState) => ({
     client: state.client.data,
@@ -55,12 +39,25 @@ const LifePlanManagementPage = () => {
 
   const [current, send] = useMachine(
     lifePlanMachine
-      .withConfig({ actions: lifePlanMachineActions, services: lifePlanMachineServices })
+      .withConfig({
+        actions: lifePlanMachineActions,
+        guards: lifePlanMachineGuards,
+        services: {
+          updateCurrentProjections: lifePlanMachineServices.updateCurrentProjections(() =>
+            // Placeholder: Dispatch /Projections/current-projection here
+            Promise.resolve()
+          ),
+          saveRetirementPlan: lifePlanMachineServices.saveRetirementPlan(() =>
+            // Placeholder: Dispatch to save retirement plan goal
+            Promise.resolve()
+          ),
+        },
+      })
       .withContext({
         ...lifePlanContext,
         userDateOfBirth: new Date(client?.attributes.dateOfBirth!),
-        drawdownStartAge: FROM_AGE,
-        drawdownEndAge: TO_AGE,
+        drawdownStartAge: DEFAULT_DRAWDOWN_START_AGE,
+        drawdownEndAge: DEFAULT_DRAWDOWN_END_AGE,
         expectedReturnOfTAA: 0.043,
         inflation: 0.02,
       }),
@@ -75,8 +72,9 @@ const LifePlanManagementPage = () => {
     drawdownPeriodLengthYears,
     annualIncome,
     monthlyIncome,
-    annualIncomeIntomorrowsMoney,
-    monthlyIncomeIntomorrowsMoney,
+    annualIncomeInTomorrowsMoney,
+    monthlyIncomeInTomorrowsMoney,
+    errors,
   } = current.context;
 
   const drawdownPeriodDeviationFromAverage =
@@ -130,88 +128,112 @@ const LifePlanManagementPage = () => {
     });
   };
 
+  const displayError = (field: InputFieldsKeys) =>
+    current.matches('planningYourRetirement.invalid') ? errors?.[field] : undefined;
+
   return (
     <GoalCreationLayout
       iconAlt="goal image"
       iconSrc="/goal-graphic.png"
-      onCancelHandler={() => {}}
+      onCancelHandler={() => navigate(-1)}
       onDeleteHandler={() => {}}
       progressButtonTitle="Next"
       progressEventHandler={() => send('SAVE')}
       title="Your life after work"
     >
       <Grid container justify="center">
-        <Grid item xs={10}>
-          <FormCard title="When would you like to take your retirement income?" step={1}>
-            <Grid item container direction="row">
-              <FormInput
-                label="From age"
-                name="from-age"
-                type="number"
-                onChange={handleFromAgeChange}
-                value={drawdownStartAge || undefined}
-              />
-              <Spacer x={3} />
-              <FormInput
-                label="To age"
-                name="to-age"
-                type="number"
-                onChange={handleToAgeChange}
-                value={drawdownEndAge || undefined}
-              />
+        <Grid item xs={12} md={10}>
+          <StepCard title="When would you like to take your retirement income?" step={1}>
+            <Grid item container direction="column" spacing={1}>
+              <Grid item container justify="space-between" spacing={2}>
+                <Grid item xs={6}>
+                  <FormInput
+                    label="From age"
+                    name="from-age"
+                    type="number"
+                    hideNumberSpinButton
+                    fullWidth
+                    onChange={handleFromAgeChange}
+                    error={displayError('drawdownStartAge')}
+                    value={drawdownStartAge || undefined}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormInput
+                    label="To age"
+                    name="to-age"
+                    type="number"
+                    hideNumberSpinButton
+                    fullWidth
+                    onChange={handleToAgeChange}
+                    error={displayError('drawdownEndAge')}
+                    value={drawdownEndAge || undefined}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                {drawdownStartDate &&
+                  drawdownEndDate &&
+                  !current.matches('planningYourRetirement.invalid') && (
+                    <TypographyWithInfoTooltip tooltip="Some description">
+                      From {drawdownStartDate.getFullYear()} to {drawdownEndDate.getFullYear()}.
+                      That&#39;s {pluralize('year', drawdownPeriodLengthYears, true)}, which is{' '}
+                      {drawdownPeriodDeviationFromAverageComparision} most people.
+                    </TypographyWithInfoTooltip>
+                  )}
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              {drawdownStartDate && drawdownEndDate && (
-                <Typography variant="b3">
-                  From {drawdownStartDate.getFullYear()} to {drawdownEndDate.getFullYear()}.
-                  That&#39;s {pluralize('year', drawdownPeriodLengthYears, true)}, which is{' '}
-                  {drawdownPeriodDeviationFromAverageComparision} most people.
-                </Typography>
-              )}
-            </Grid>
-          </FormCard>
+          </StepCard>
         </Grid>
-        <Grid item xs={10} container>
+        <Grid item xs={12} md={10}>
           <Spacer y={3} />
-          <FormCard title="How much would you like your retirement to be?" step={2}>
-            <Grid item container direction="row" alignItems="baseline" justify="space-between">
-              <Grid item xs={5}>
-                <FormInput
-                  label="Annual income"
-                  name="annual-income"
-                  type="number"
-                  onChange={handleAnnualIncomeChange}
-                  value={String(Math.round(annualIncome * 100) / 100 || '')}
-                />
-                <Spacer y={1} />
-                {!!annualIncome && (
-                  <InflationAdjustedIncomeDescription amount={annualIncomeIntomorrowsMoney} />
-                )}
-              </Grid>
-              <Grid item>
-                <Typography variant="h4" color="grey" component="span">
-                  =
-                </Typography>
-              </Grid>
-              <Grid item xs={5}>
-                <FormInput
-                  label="Monthly income"
-                  name="monthly-income"
-                  type="number"
-                  onChange={handleMonthlyIncomeChange}
-                  value={String(annualIncome > 0 ? Math.round(monthlyIncome * 100) / 100 : '')}
-                />
-                <Spacer y={1} />
-                {!!monthlyIncome && (
-                  <InflationAdjustedIncomeDescription amount={monthlyIncomeIntomorrowsMoney} />
-                )}
+          <StepCard title="How much would you like your retirement to be?" step={2}>
+            <Grid item container direction="column" spacing={2}>
+              <Grid item container alignItems="baseline" justify="space-between">
+                <Grid item xs={12} md={5}>
+                  <FormInput
+                    label="Annual income"
+                    name="annual-income"
+                    type="number"
+                    hideNumberSpinButton
+                    onChange={handleAnnualIncomeChange}
+                    fullWidth
+                    error={displayError('annualIncome')}
+                    value={String(annualIncome || '')}
+                  />
+                  <Spacer y={1} />
+                  {!!annualIncome && (
+                    <InflationAdjustedIncomeDescription amount={annualIncomeInTomorrowsMoney} />
+                  )}
+                </Grid>
+                <EqualSignWrapper item xs={1}>
+                  <Typography center variant="h4" color="grey" component="span">
+                    =
+                  </Typography>
+                </EqualSignWrapper>
+                <Grid item xs={12} md={5}>
+                  <FormInput
+                    label="Monthly income"
+                    name="monthly-income"
+                    type="number"
+                    hideNumberSpinButton
+                    onChange={handleMonthlyIncomeChange}
+                    fullWidth
+                    error={displayError('monthlyIncome')}
+                    value={String(annualIncome > 0 ? monthlyIncome : '')}
+                  />
+                  <Spacer y={1} />
+                  {!!monthlyIncome && (
+                    <InflationAdjustedIncomeDescription amount={monthlyIncomeInTomorrowsMoney} />
+                  )}
+                </Grid>
               </Grid>
             </Grid>
-          </FormCard>
+          </StepCard>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={12} md={10}>
           <Spacer y={3} />
-          <FormCard
+          <StepCard
             title="Would you like to include the full State Pension in your estimated income?"
             step={3}
           >
@@ -227,7 +249,7 @@ const LifePlanManagementPage = () => {
                 </span>
               </Tooltip>
             </Grid>
-          </FormCard>
+          </StepCard>
         </Grid>
       </Grid>
     </GoalCreationLayout>

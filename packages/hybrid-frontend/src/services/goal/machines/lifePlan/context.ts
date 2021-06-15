@@ -3,7 +3,7 @@ import { LifePlanMachineContext } from './types';
 const context: LifePlanMachineContext = {
   fees: 0,
   inflation: 0,
-  userAge: 0,
+  clientAge: 0,
   userDateOfBirth: new Date(0),
   expectedReturnOfTAA: 0,
   annualNetExpectedReturn: 0,
@@ -19,14 +19,14 @@ const context: LifePlanMachineContext = {
   targetDrawdownAmount: 0,
   annualIncome: 0,
   monthlyIncome: 0,
-  annualIncomeIntomorrowsMoney: 0,
-  monthlyIncomeIntomorrowsMoney: 0,
+  annualIncomeInTomorrowsMoney: 0,
+  monthlyIncomeInTomorrowsMoney: 0,
   lumpSum: 0,
   laterLifeLeftOver: 0,
   retirementPotValue: 0,
   shouldIncludeStatePension: false,
   remainingValue: 0,
-  error: null,
+  errors: null,
 };
 
 export default context;

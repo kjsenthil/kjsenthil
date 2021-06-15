@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, navigate, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
@@ -123,6 +123,7 @@ const HomePage = () => {
     <Button
       color="gradient"
       startIcon={<Icon fontSize="inherit" name="statistics" />}
+      onClick={() => navigate('/my-account/life-plan-management')}
       variant="contained"
       fullWidth={fullWidth}
     >

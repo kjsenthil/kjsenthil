@@ -1,6 +1,6 @@
 export interface LifePlanMachineContext {
   fees: number;
-  userAge: number;
+  clientAge: number;
   inflation: number;
   userDateOfBirth: Date;
   expectedReturnOfTAA: number;
@@ -17,20 +17,38 @@ export interface LifePlanMachineContext {
   targetDrawdownAmount: number;
   annualIncome: number;
   monthlyIncome: number;
-  annualIncomeIntomorrowsMoney: number;
-  monthlyIncomeIntomorrowsMoney: number;
+  annualIncomeInTomorrowsMoney: number;
+  monthlyIncomeInTomorrowsMoney: number;
   lumpSum: number;
   laterLifeLeftOver: number;
   retirementPotValue: number;
   shouldIncludeStatePension: boolean;
   remainingValue: number;
-  error: Record<string, string> | null;
+  errors: Record<InputFieldsKeys, string> | null;
 }
+
+export type InputFields = Pick<
+  LifePlanMachineContext,
+  | 'drawdownStartAge'
+  | 'drawdownEndAge'
+  | 'annualIncome'
+  | 'monthlyIncome'
+  | 'lumpSum'
+  | 'laterLifeLeftOver'
+>;
+
+export type InputFieldsKeys = keyof InputFields;
 
 export interface LifePlanMachineSchema {
   states: {
-    planningYourRetirement: {};
-    saving: {};
+    planningYourRetirement: {
+      states: {
+        normal: {};
+        invalid: {};
+        processingInput: {};
+        saving: {};
+      };
+    };
     fundingYourRetirement: {};
   };
 }
@@ -57,9 +75,15 @@ export type SetLaterLifeLeftOverEvent = {
   payload: { laterLifeLeftOver: number };
 };
 
+export type SetErrorsEvent = {
+  type: 'error.platform.updateCurrentProjection';
+  data: Record<InputFieldsKeys, string>;
+};
+
 export type LifePlanMachineEvents =
   | SetAgesDrawdownEvent
   | SetIncomeEvent
   | SetLumpSumEvent
   | SetLaterLifeLeftOverEvent
+  | SetErrorsEvent
   | { type: 'SAVE' };

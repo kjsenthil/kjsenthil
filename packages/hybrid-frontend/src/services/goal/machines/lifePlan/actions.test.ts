@@ -3,6 +3,7 @@ import { Interpreter } from 'xstate/lib/interpreter';
 import actions from './actions';
 import context from './context';
 import { LifePlanMachineContext } from './types';
+import * as math from '../../../../utils/math';
 
 const DummyMachine = Machine<LifePlanMachineContext, any, any>({
   id: 'dummy',
@@ -31,6 +32,9 @@ const DummyMachine = Machine<LifePlanMachineContext, any, any>({
     CALCULATE_DRAWDOWN_PERIOD_LENGTH: {
       actions: [actions.calculateDrawdownPeriodLength],
     },
+    CALCULATE_INCOME_AFTER_INFLATION: {
+      actions: [actions.calculateTomorrowsMoney],
+    },
     CALCULATE_AGE: {
       actions: [actions.calculateAge],
     },
@@ -43,6 +47,7 @@ const DummyMachine = Machine<LifePlanMachineContext, any, any>({
 const initialContext = {
   userDateOfBirth: new Date('1980-03-10T00:00:00.000Z'),
   expectedReturnOfTAA: 0.043,
+  inflation: 0.02,
 };
 
 describe('lifePlan actions', () => {
@@ -133,41 +138,56 @@ describe('lifePlan actions', () => {
   });
 
   describe('Setting income', () => {
-    describe('when annualIncome is provided', () => {
-      beforeAll(() => {
-        service = interpret(
-          DummyMachine.withContext({
-            ...context,
-            ...initialContext,
-          })
-        ).start();
+    describe.each`
+      annualIncome | monthlyIncome
+      ${72000}     | ${6000}
+      ${-72000}    | ${6000}
+      ${100000}    | ${8333.33}
+    `(
+      'when annualIncome is provided with value: $annualIncome',
+      ({ annualIncome, monthlyIncome }: { annualIncome: number; monthlyIncome: number }) => {
+        beforeAll(() => {
+          service = interpret(
+            DummyMachine.withContext({
+              ...context,
+              ...initialContext,
+            })
+          ).start();
 
-        service.send('SET_INCOME', { payload: { annualIncome: 72000 } });
-      });
+          service.send('SET_INCOME', { payload: { annualIncome } });
+        });
 
-      it('sets annual income and calculates and sets monthly income', () => {
-        expect(service.state.context.annualIncome).toStrictEqual(72000);
-        expect(service.state.context.monthlyIncome).toStrictEqual(72000 / 12);
-      });
-    });
+        it('sets annual income and calculates and sets monthly income', () => {
+          expect(service.state.context.annualIncome).toStrictEqual(Math.abs(annualIncome));
+          expect(service.state.context.monthlyIncome).toStrictEqual(Math.abs(monthlyIncome));
+        });
+      }
+    );
 
-    describe('when monthlyIncome is provided', () => {
-      beforeAll(() => {
-        service = interpret(
-          DummyMachine.withContext({
-            ...context,
-            ...initialContext,
-          })
-        ).start();
+    describe.each`
+      annualIncome | monthlyIncome
+      ${72000}     | ${-6000}
+      ${72000}     | ${6000}
+    `(
+      'when monthlyIncome is provided',
+      ({ annualIncome, monthlyIncome }: { annualIncome: number; monthlyIncome: number }) => {
+        beforeAll(() => {
+          service = interpret(
+            DummyMachine.withContext({
+              ...context,
+              ...initialContext,
+            })
+          ).start();
 
-        service.send('SET_INCOME', { payload: { monthlyIncome: 6000 } });
-      });
+          service.send('SET_INCOME', { payload: { monthlyIncome: 6000 } });
+        });
 
-      it('sets annual income and calculates and sets monthly income', () => {
-        expect(service.state.context.annualIncome).toStrictEqual(6000 * 12);
-        expect(service.state.context.monthlyIncome).toStrictEqual(6000);
-      });
-    });
+        it('sets annual income and calculates and sets monthly income', () => {
+          expect(service.state.context.annualIncome).toStrictEqual(Math.abs(annualIncome));
+          expect(service.state.context.monthlyIncome).toStrictEqual(Math.abs(monthlyIncome));
+        });
+      }
+    );
   });
 
   describe('setLaterLifeLeftOver', () => {
@@ -221,6 +241,42 @@ describe('lifePlan actions', () => {
 
     it('sets retirement pot value by adding up targetDrawdownAmount, lumpSum and desiredAmountAtRetirementEnd', () => {
       expect(service.state.context.retirementPotValue).toStrictEqual(700000);
+    });
+  });
+
+  describe('calculateRetirementPotValue', () => {
+    const prerequestContext = {
+      ...initialContext,
+      annualIncome: 72000,
+      drawdownStartDate: new Date(2025, 1, 10),
+    };
+
+    beforeAll(() => {
+      service = interpret(
+        DummyMachine.withContext({
+          ...context,
+          ...prerequestContext,
+        })
+      ).start();
+
+      service.send('CALCULATE_INCOME_AFTER_INFLATION');
+    });
+
+    it('calculates the annual and monthly income after inflation', () => {
+      const annualIncomeAfterInflation = Math.round(
+        math.calculateAnnualReturnAfterInflation({
+          inflation: prerequestContext.inflation,
+          annualIncome: prerequestContext.annualIncome,
+          timePeriodInYears: 4,
+        })
+      );
+
+      expect(service.state.context.annualIncomeInTomorrowsMoney).toStrictEqual(
+        annualIncomeAfterInflation
+      );
+      expect(service.state.context.monthlyIncomeInTomorrowsMoney).toStrictEqual(
+        Math.round(annualIncomeAfterInflation / 12)
+      );
     });
   });
 });

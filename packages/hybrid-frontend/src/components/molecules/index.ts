@@ -9,6 +9,7 @@ export { default as FormInput } from './FormInput';
 export { default as FormSelect } from './FormSelect';
 export { default as GoalProgress } from './GoalProgress';
 export { default as MainCard } from './MainCard';
+export { default as StepCard } from './StepCard';
 export { default as TagBox } from './TagBox';
 export { default as Legend } from './Legend';
 export { default as Modal } from './Modal';

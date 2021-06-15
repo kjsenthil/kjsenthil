@@ -10,33 +10,32 @@ const lifePlanConfig: MachineConfig<
   id: 'lifePlan',
   initial: 'planningYourRetirement',
   entry: [
+    'calculateAge',
+    'reEvaluateDrawdownStartAge',
     'calculateAnnualNetExpectedReturn',
     'calculateMonthlyNetExpectedReturn',
     'calculateDrawdownDates',
     'calculateDrawdownPeriodLength',
-    'calculateAge',
   ],
   context,
   states: {
     planningYourRetirement: {
+      id: 'planningYourRetirement',
+      initial: 'processingInput',
       on: {
-        SAVE: 'saving',
-        SET_DRAWDOWN_AGES: {
-          actions: [
-            'setDrawdownAges',
-            'calculateTomorrowsMoney',
-            'calculateDrawdownDates',
-            'calculateDrawdownPeriodLength',
-          ],
-        },
-        SET_INCOME: {
-          actions: [
-            'setIncome',
-            'calculateTargetDrawdownAmount',
-            'calculateRetirementPotValue',
-            'calculateTomorrowsMoney',
-          ],
-        },
+        SAVE: '.saving',
+        SET_DRAWDOWN_AGES: [
+          {
+            target: '.processingInput',
+            actions: ['resetErrors', 'setDrawdownAges'],
+          },
+        ],
+        SET_INCOME: [
+          {
+            target: '.processingInput',
+            actions: ['resetErrors', 'setIncome'],
+          },
+        ],
         SET_LUMP_SUM: {
           actions: ['takeLumpSum', 'calculateRetirementPotValue'],
         },
@@ -44,17 +43,43 @@ const lifePlanConfig: MachineConfig<
           actions: ['setLaterLifeLeftOver', 'calculateRetirementPotValue'],
         },
       },
-    },
-    saving: {
-      invoke: {
-        id: 'getUser',
-        src: 'saveRetirementPlan',
-        onDone: {
-          target: 'fundingYourRetirement',
+      states: {
+        processingInput: {
+          invoke: {
+            id: 'processingInput',
+            src: 'updateCurrentProjections',
+            onDone: {
+              target: 'normal',
+              actions: [
+                'calculateTomorrowsMoney',
+                'calculateDrawdownDates',
+                'calculateDrawdownPeriodLength',
+                'calculateTargetDrawdownAmount',
+                'calculateRetirementPotValue',
+                'calculateTomorrowsMoney',
+              ],
+            },
+
+            onError: {
+              target: 'invalid',
+              actions: ['setErrors'],
+            },
+          },
         },
-        onError: {
-          target: 'planningYourRetirement',
-          actions: ['setErrors'],
+        normal: {},
+        invalid: {},
+        saving: {
+          invoke: {
+            id: 'saveRetirementPlan',
+            src: 'saveRetirementPlan',
+            onDone: {
+              target: '#lifePlan.fundingYourRetirement',
+            },
+            onError: {
+              target: 'invalid',
+              actions: ['setErrors'],
+            },
+          },
         },
       },
     },

@@ -15,10 +15,23 @@ export interface GoalRequestPayloadValue<V = unknown, T = unknown> {
 }
 
 export enum GoalStatus {
-  'FULFILLED' = '1',
-  'UNFULFILLED' = '2',
-  'FULFILLED_PARTIALLY' = '3',
-  'CANCELLED' = '4',
+  FULFILLED = 1,
+  UNFULFILLED = 2,
+  FULFILLED_PARTIALLY = 3,
+  CANCELLED = 4,
+}
+
+export enum GoalCategory {
+  ESTATE_PLANNING = 0,
+  MORTGAGE = 1,
+  PROTECTION = 2,
+  INVESTMENT = 3,
+  RETIREMENT = 5,
+  GENERAL_INSURANCE = 6,
+  MEDICAL_INUTRANCE = 7,
+  LONG_TERM_CARE = 9,
+  CLIENT_INITIATED = 10,
+  UNCATEGORIZED = 9999,
 }
 
 export interface GoalApiFields {
