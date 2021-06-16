@@ -5,27 +5,38 @@ import { ActionElementContainer, CardContainer } from './MainCard.styles';
 export interface MainCardProps {
   title?: string;
   children: React.ReactNode;
+  isLoading?: boolean;
   respondTo?: 'xs' | 'sm';
   renderActionEl?: (fullWidth: boolean) => React.ReactElement;
+  style?: React.CSSProperties;
 }
 
-const MainCard = ({ title, children, respondTo, renderActionEl }: MainCardProps) => {
+const MainCard = ({
+  title,
+  children,
+  isLoading = false,
+  respondTo,
+  renderActionEl,
+  style,
+}: MainCardProps) => {
   const theme = useTheme();
   const isMobile = respondTo ? useMediaQuery(theme.breakpoints.down(respondTo as any)) : false;
 
   return (
-    <CardContainer isMobile={isMobile}>
+    <CardContainer isLoading={isLoading} isMobile={isMobile} style={style}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {title && <Typography variant="h4">{title}</Typography>}
-            {!isMobile && renderActionEl && (
-              <ActionElementContainer>{renderActionEl(false)}</ActionElementContainer>
-            )}
-          </Box>
+          {!isLoading && (
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              {title && <Typography variant="h4">{title}</Typography>}
+              {!isMobile && renderActionEl && (
+                <ActionElementContainer>{renderActionEl(false)}</ActionElementContainer>
+              )}
+            </Box>
+          )}
         </Grid>
         <Grid item xs={12}>
-          {children}
+          {!isLoading && children}
         </Grid>
         {isMobile && renderActionEl && renderActionEl(true)}
       </Grid>

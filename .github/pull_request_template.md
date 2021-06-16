@@ -17,4 +17,4 @@
 - [ ] I have added the relevant screenshots (if applicable)
 - [ ] I have written sufficient unit tests
 - [ ] I have labelled this PR with `ready-for-review`
-- [ ] I have labelled this PR as `design-review-needed` (If applicable)
+- [ ] I have labelled this PR as `ready-for-design-review` (If applicable)

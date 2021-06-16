@@ -57,3 +57,12 @@ MainCardWithChildren.args = {
     </div>
   ),
 };
+
+export const MainCardLoading = Template.bind({});
+MainCardLoading.args = {
+  title: 'Test Title',
+  renderActionEl: () => <Button>Click Me</Button>,
+  children: <Typography variant="h1">Test Content</Typography>,
+  isLoading: true,
+  style: { minHeight: '196px' },
+};
