@@ -183,4 +183,3 @@ module "function_app_projections" {
   subnet_id              = data.azurerm_subnet.apim_subnet.id
   tags                   = local.default_tags
 }
-

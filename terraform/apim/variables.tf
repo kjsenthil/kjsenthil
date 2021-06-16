@@ -56,3 +56,34 @@ variable "xplan_password" {
   description = "xplan basic auth password"
   sensitive   = true
 }
+
+variable "private_dns_zone" {
+  type        = string
+  description = "The private DNS Zone for the APIM."
+}
+
+variable "dns_a_records" {
+  type        = list(string)
+  description = "The records to associate with the A record."
+}
+
+# variable "myaccounts_ip_address" {
+#   type        = string
+#   description = "The IP address of MyAccounts."
+# }
+
+variable "sg_rules" {
+  type = list(object({
+    name                       = string
+    description                = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_address_prefix      = string
+    source_port_range          = string
+    destination_address_prefix = string
+    destination_port_range     = number
+  }))
+  description = "The environment specific sg rules to be added to the security group."
+}

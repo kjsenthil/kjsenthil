@@ -13,6 +13,7 @@ variable "publisher_name" {
   default     = "digitalhybrid"
   description = "Publisher name for the API"
 }
+
 variable "publisher_email" {
   type        = string
   default     = "digitalhybrid@credera.co.uk"

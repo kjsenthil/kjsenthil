@@ -3,18 +3,15 @@ output "name" {
   description = "Name of the API management service."
 }
 
-
 output "id" {
   value       = azurerm_api_management.api.id
   description = "ID of the API management service."
 }
 
-
 output "management_api_url" {
   value       = azurerm_api_management.api.management_api_url
   description = "Management API URL of the API management service."
 }
-
 
 output "public_ip_addresses" {
   value       = azurerm_api_management.api.public_ip_addresses
@@ -22,12 +19,10 @@ output "public_ip_addresses" {
   description = "Public IP addresses of the API management service."
 }
 
-
 output "publisher_email" {
   value       = azurerm_api_management.api.publisher_email
   description = "Publishers email for the API management service."
 }
-
 
 output "publisher_name" {
   value       = azurerm_api_management.api.publisher_name
