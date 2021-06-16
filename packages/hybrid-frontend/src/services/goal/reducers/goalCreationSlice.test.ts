@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Store } from 'redux';
+import { AnyAction, Store } from 'redux';
 import goalReducer, { createGoal, setGoalDetails } from './goalCreationSlice';
 import * as api from '../api';
 import { authSlice as authReducer } from '../../auth';
 import { RiskAppetites } from '../constants';
+import { GoalType } from '../types';
 
 jest.mock('../api', () => ({
   postGoalCreation: jest.fn(),
@@ -35,7 +36,10 @@ describe('goalCreationSlice', () => {
   });
 
   describe('dispatch createGoal', () => {
-    const createGoalAction = createGoal({ inputs }) as any;
+    const createGoalAction = (createGoal({
+      inputs,
+      goalType: GoalType.ONBOARDING,
+    }) as unknown) as AnyAction;
 
     beforeEach(() => {
       (api.postGoalCreation as jest.Mock).mockResolvedValue({
@@ -44,45 +48,45 @@ describe('goalCreationSlice', () => {
     });
 
     it('starts with sensible defaults', () => {
-      const { status, goalCreationError } = store.getState().goalCreation;
+      const { status, error } = store.getState().goalCreation;
 
       expect(status).toStrictEqual('idle');
-      expect(goalCreationError).toBeUndefined();
+      expect(error).toBeUndefined();
     });
 
     describe('when call is still pending', () => {
       it('sets status to loading', () => {
         store.dispatch(createGoalAction);
-        const { status, goalCreationError } = store.getState().goalCreation;
+        const { status, error } = store.getState().goalCreation;
 
         expect(api.postGoalCreation).toHaveBeenCalledWith({
-          onboardGoalCreationInputs: { goalDetails: mockGoalDetails, inputs },
-          payload: undefined,
+          inputs,
+          goalType: 'onboarding',
         });
         expect(status).toStrictEqual('loading');
-        expect(goalCreationError).toBeUndefined();
+        expect(error).toBeUndefined();
       });
     });
 
     describe('when call is fulfilled', () => {
       it('sets status to success', async () => {
         await store.dispatch(createGoalAction);
-        const { status, goalCreationError } = store.getState().goalCreation;
+        const { status, error } = store.getState().goalCreation;
 
         expect(status).toStrictEqual('success');
-        expect(goalCreationError).toBeUndefined();
+        expect(error).toBeUndefined();
       });
     });
 
     describe('when call is rejected', () => {
       it('sets createGoalError', async () => {
-        const error = 'Something went wrong';
-        (api.postGoalCreation as jest.Mock).mockRejectedValue(error);
+        const goalCreationError = 'Something went wrong';
+        (api.postGoalCreation as jest.Mock).mockRejectedValue(goalCreationError);
         await store.dispatch(createGoalAction);
-        const { status, goalCreationError } = store.getState().goalCreation;
+        const { status, error } = store.getState().goalCreation;
 
         expect(status).toStrictEqual('error');
-        expect(goalCreationError).toStrictEqual(error);
+        expect(error).toStrictEqual(goalCreationError);
       });
     });
   });

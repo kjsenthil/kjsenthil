@@ -5,7 +5,6 @@ export const StyledAppBar = styled(AppBar)`
   ${({ theme }) => `
     background-color: ${theme.palette.common.white};
     box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.07);
-    margin-bottom: ${theme.spacing(4)}px;
     padding: ${theme.spacing(2)}px;
   `}
 `;

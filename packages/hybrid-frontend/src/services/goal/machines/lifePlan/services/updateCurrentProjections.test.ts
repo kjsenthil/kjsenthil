@@ -20,8 +20,8 @@ describe('services', () => {
       mockIsDrawdownEndAgeGreaterThanStartAge.mockReturnValue(false);
 
       await expect(service(context)).rejects.toStrictEqual({
-        drawdownEndAge: 'Please pick an age of less than 100',
-        drawdownStartAge: 'Please pick an age of greater than your current age',
+        drawdownEndAge: 'Please pick an age less than 100',
+        drawdownStartAge: 'Please pick an age greater than your current age',
       });
 
       expect(callback).toHaveBeenCalledTimes(0);

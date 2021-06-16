@@ -2,8 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
 import postGoalCreation, { createOnboardGoalsPayLoad } from './postGoalCreation';
-import { Goals, RiskAppetites } from '../constants';
-import { CaptureGoalData, GoalDetails, GoalsObjectiveApiResponse } from '../types';
+import { RiskAppetites } from '../constants';
+import { CaptureGoalData, GoalsObjectiveApiResponse, GoalType } from '../types';
 
 const mockAxios = new MockAdapter(axios);
 const url = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
@@ -19,18 +19,17 @@ describe('postGoalCreation', () => {
       riskAppetite: RiskAppetites.CAUTIOUS,
     };
 
-    const goalDetails: GoalDetails = { name: Goals.HOUSE };
-
     const data: GoalsObjectiveApiResponse = {
       index: '1',
       fields: { description: 'home goal' },
     };
 
-    const onboardGoalCreationInputs = { goalDetails, inputs };
+    mockAxios.onPost(url, createOnboardGoalsPayLoad(inputs)).reply(201, data);
 
-    mockAxios.onPost(url, createOnboardGoalsPayLoad(onboardGoalCreationInputs)).reply(200, data);
-
-    const response = await postGoalCreation({ onboardGoalCreationInputs });
+    const response = await postGoalCreation({
+      inputs,
+      goalType: GoalType.ONBOARDING,
+    });
 
     expect(response).toStrictEqual(data);
   });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { navigate } from 'gatsby';
 
@@ -6,14 +6,16 @@ import { RootState } from '../../../store';
 import { Grid } from '../../atoms';
 import { Alert, FormInput } from '../../molecules';
 import OnBoardLayout from '../../templates/OnBoardLayout';
-import { createGoal, setGoalCapture } from '../../../services/goal';
+import { createGoal, GoalType, setGoalCapture } from '../../../services/goal';
 
 export const titleText = 'How much could you invest today?';
 const titleSubText =
   'Do consider both transferring an existing product and depositing additional money';
 
 const UpfrontContributionPage = () => {
-  const { goalCapture, goalCreationError } = useSelector((state: RootState) => state.goalCreation);
+  const { goalCapture, error: goalCreationError } = useSelector(
+    (state: RootState) => state.goalCreation
+  );
 
   const dispatch = useDispatch();
 
@@ -27,13 +29,15 @@ const UpfrontContributionPage = () => {
     );
   };
 
-  const onCreateGoals = async () => {
-    await dispatch(createGoal({}));
+  const onCreateGoals = () => {
+    dispatch(createGoal({ goalType: GoalType.UNCATEGORIZED }));
+  };
 
+  useEffect(() => {
     if (!goalCreationError) {
       navigate('/my-account/sim');
     }
-  };
+  }, [goalCreationError]);
 
   return (
     <OnBoardLayout

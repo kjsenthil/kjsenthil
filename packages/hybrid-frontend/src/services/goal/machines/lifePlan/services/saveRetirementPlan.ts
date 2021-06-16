@@ -1,4 +1,5 @@
 import { LifePlanMachineContext } from '../types';
+import tryInvokeService from './tryInvokeService';
 
 const fields = {
   drawdownStartAge: 'Drawdown start age',
@@ -7,27 +8,22 @@ const fields = {
   monthlyIncome: 'Monthly income',
 };
 
-const saveRetirementPlan = <T = unknown>(callback: () => Promise<T>) => (
+const saveRetirementPlan = <T = unknown>(callback: (ctx: LifePlanMachineContext) => Promise<T>) => (
   ctx: LifePlanMachineContext
 ): Promise<T> =>
-  new Promise((resolve, reject) => {
-    const errors: Record<string, string> = {};
+  tryInvokeService<T>(
+    () => {
+      const errors: Record<string, string> = {};
 
-    Object.keys(fields).forEach((field) => {
-      if (!ctx[field]) {
-        errors[field] = `${fields[field]} is required`;
-      }
-    });
+      Object.keys(fields).forEach((field) => {
+        if (!ctx[field]) {
+          errors[field] = `${fields[field]} is required`;
+        }
+      });
 
-    if (Object.keys(errors).length > 0) {
-      reject(errors);
-    } else {
-      try {
-        resolve(callback());
-      } catch (error) {
-        reject(error);
-      }
-    }
-  });
+      return errors;
+    },
+    () => callback(ctx)
+  );
 
 export default saveRetirementPlan;

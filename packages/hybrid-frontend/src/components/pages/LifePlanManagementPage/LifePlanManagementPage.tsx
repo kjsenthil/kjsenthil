@@ -13,10 +13,12 @@ import {
   lifePlanContext,
   lifePlanMachine,
   lifePlanMachineActions,
+  LifePlanMachineContext,
   lifePlanMachineGuards,
   lifePlanMachineServices,
 } from '../../../services/goal/machines/lifePlan';
 import { formatCurrency } from '../../../utils/formatters';
+import { GoalType, postGoalCreation } from '../../../services/goal';
 
 const AVERAGE_DRAWDOWN_PERIOD_IN_YEARS = 22;
 const DEFAULT_DRAWDOWN_START_AGE = 65;
@@ -32,12 +34,14 @@ const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
 const EqualSignWrapper = styled(Grid)`
   text-align: center;
 `;
+
 const LifePlanManagementPage = () => {
   const { client } = useSelector((state: RootState) => ({
     client: state.client.data,
   }));
 
-  const [current, send] = useMachine(
+  const goToHome = () => navigate('/my-account');
+  const [current, send, service] = useMachine(
     lifePlanMachine
       .withConfig({
         actions: lifePlanMachineActions,
@@ -47,9 +51,16 @@ const LifePlanManagementPage = () => {
             // Placeholder: Dispatch /Projections/current-projection here
             Promise.resolve()
           ),
-          saveRetirementPlan: lifePlanMachineServices.saveRetirementPlan(() =>
-            // Placeholder: Dispatch to save retirement plan goal
-            Promise.resolve()
+          saveRetirementPlan: lifePlanMachineServices.saveRetirementPlan(
+            async ({ drawdownStartAge, drawdownEndAge, monthlyIncome }: LifePlanMachineContext) =>
+              postGoalCreation({
+                goalType: GoalType.RETIREMENT,
+                inputs: {
+                  drawdownStartAge,
+                  drawdownEndAge,
+                  regularDrawdown: monthlyIncome,
+                },
+              })
           ),
         },
       })
@@ -63,6 +74,12 @@ const LifePlanManagementPage = () => {
       }),
     { devTools: true }
   );
+
+  service.onTransition((state) => {
+    if (state.matches('fundingYourRetirement')) {
+      goToHome();
+    }
+  });
 
   const {
     drawdownStartDate,
@@ -135,9 +152,9 @@ const LifePlanManagementPage = () => {
     <GoalCreationLayout
       iconAlt="goal image"
       iconSrc="/goal-graphic.png"
-      onCancelHandler={() => navigate(-1)}
-      onDeleteHandler={() => {}}
-      progressButtonTitle="Next"
+      onCancelHandler={goToHome}
+      progressButtonTitle="Save"
+      isLoading={current.matches('planningYourRetirement.saving')}
       progressEventHandler={() => send('SAVE')}
       title="Your life after work"
     >

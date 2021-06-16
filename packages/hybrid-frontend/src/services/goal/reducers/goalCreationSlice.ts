@@ -7,7 +7,7 @@ const initialState: GoalCreationState = {
   status: 'idle',
   goalCapture: {},
   goalDetails: {},
-  goalCreationError: undefined,
+  error: undefined,
 };
 
 const goalCreationSlice = createSlice({

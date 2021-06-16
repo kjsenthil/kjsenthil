@@ -1,24 +1,17 @@
 import { CommonState } from '../types';
 import { RiskAppetites } from './constants';
 
-export interface GoalRequestPayloadValType<
-  V = GoalRequestPayloadValue | string | number | Date,
-  T = 'Date' | 'Currency' | 'BigDecimal'
-> {
-  _val: V;
-  _type: T;
-}
-
-export interface GoalRequestPayloadValue<V = unknown, T = unknown> {
-  code: string;
-  value: GoalRequestPayloadValType<V, T>;
+export enum GoalType {
+  UNCATEGORIZED = 'uncategorised',
+  RETIREMENT = 'retirement',
+  ONBOARDING = 'onboarding',
 }
 
 export enum GoalStatus {
-  FULFILLED = 1,
-  UNFULFILLED = 2,
-  FULFILLED_PARTIALLY = 3,
-  CANCELLED = 4,
+  FULFILLED = '1',
+  UNFULFILLED = '2',
+  FULFILLED_PARTIALLY = '3',
+  CANCELLED = '4',
 }
 
 export enum GoalCategory {
@@ -34,16 +27,46 @@ export enum GoalCategory {
   UNCATEGORIZED = 9999,
 }
 
+export enum GoalAdviceType {
+  ESTATE_PLANNING = 0,
+  MORTGAGE = 1,
+  PROTECTION = 2,
+  INVESTMENT = 3,
+  RETIREMENT = 5,
+  GENERAL_INSURANCE = 6,
+  MEDICAL_INUTRANCE = 7,
+  LONG_TERM_CARE = 9,
+  CLIENT_INITIATED = 10,
+}
+
+export interface GoalRequestPayload {
+  fields: GoalApiFields;
+}
+
+export interface GoalRequestPayloadValType<
+  V = GoalRequestPayloadValue | string | number,
+  T = 'Date' | 'Currency' | 'BigDecimal'
+> {
+  _val: V;
+  _type: T;
+}
+
+export interface GoalRequestPayloadValue<V = unknown, T = unknown> {
+  code: string;
+  value: GoalRequestPayloadValType<V, T>;
+}
+
 export interface GoalApiFields {
-  status?: GoalStatus;
-  category: number;
+  status: GoalStatus;
+  category: GoalCategory;
+  advice_type?: GoalAdviceType;
   description: string;
-  owner?: string;
+  owner: 'client';
   xpt_external_id?: string | null;
   present_value?: number | null;
-  frequency?: string;
-  capture_date?: GoalRequestPayloadValType<Date | string, 'Date'>;
-  target_date?: GoalRequestPayloadValType<Date | string, 'Date'>;
+  frequency?: number;
+  capture_date: GoalRequestPayloadValType<string, 'Date'>;
+  target_date?: GoalRequestPayloadValType<string, 'Date'>;
   target_amount?: GoalRequestPayloadValType<
     GoalRequestPayloadValue<number | string, 'BigDecimal'>,
     'Currency'
@@ -57,10 +80,6 @@ export interface GoalApiFields {
     'Currency'
   >;
   goal_level_risk_tolerance?: RiskAppetites;
-}
-
-export interface GoalRequestPayload {
-  fields: GoalApiFields;
 }
 
 export interface GoalData {
@@ -84,6 +103,45 @@ export interface CaptureGoalData {
   riskAppetite: RiskAppetites;
 }
 
+export interface OnboardingGoalInputs extends CaptureGoalData {
+  description?: string;
+}
+
+export interface RetirementInputs {
+  drawdownEndAge: number;
+  drawdownStartAge: number;
+  regularDrawdown: number;
+  description?: string;
+}
+
+export type CreateGoalParams =
+  | {
+      goalType: GoalType.ONBOARDING;
+      inputs?: OnboardingGoalInputs;
+    }
+  | {
+      goalType: GoalType.RETIREMENT;
+      inputs: RetirementInputs;
+    }
+  | {
+      goalType: GoalType.UNCATEGORIZED;
+      inputs?: undefined;
+    };
+
+export type PostGoalParams =
+  | {
+      goalType: GoalType.ONBOARDING;
+      inputs: OnboardingGoalInputs;
+    }
+  | {
+      goalType: GoalType.RETIREMENT;
+      inputs: RetirementInputs;
+    }
+  | {
+      goalType: GoalType.UNCATEGORIZED;
+      inputs: undefined;
+    };
+
 export interface GoalDetails {
   id?: string;
   name?: string;
@@ -106,7 +164,7 @@ export interface GoalsObjectiveLinkApiResponse {
 export interface GoalCreationState extends CommonState {
   goalCapture: Partial<CaptureGoalData>;
   goalDetails: GoalDetails;
-  goalCreationError: string | undefined;
+  error: string | undefined;
 }
 
 // This kind of data is used by the projections chart

@@ -8,6 +8,7 @@ export interface AccountData {
   equityPercentage?: number;
   monthlyInvestment?: number;
 }
+
 export interface CommonState<D = unknown, I = unknown, E = string | undefined> {
   data?: D;
   included?: I;

@@ -1,7 +1,6 @@
 import { navigate } from 'gatsby';
 import React from 'react';
-import { Button, Divider, Grid, Icon, IconButton, Spacer } from '../../atoms';
-
+import { LinearProgress, Button, Divider, Grid, Icon, IconButton, Spacer } from '../../atoms';
 import LayoutContainer from '../LayoutContainer';
 import { GoalTitle, GoalTitleIcon, StyledAppBar, StyledToolBar } from './GoalCreationLayout.styles';
 
@@ -13,6 +12,7 @@ export interface GoalCreationLayoutProps {
   progressButtonTitle?: string;
   onDeleteHandler?: () => void;
   disableProgress?: boolean;
+  isLoading?: boolean;
   progressEventHandler?: () => void;
   onCancelHandler?: () => void;
 }
@@ -26,6 +26,7 @@ const GoalCreationLayout = ({
   iconAlt = 'goal image',
   progressButtonTitle = 'Next',
   onDeleteHandler,
+  isLoading = false,
   disableProgress = false,
   progressEventHandler,
   onCancelHandler = navigateBack,
@@ -57,6 +58,8 @@ const GoalCreationLayout = ({
         </Grid>
       </StyledToolBar>
     </StyledAppBar>
+    {isLoading && <LinearProgress color="primary" />}
+    <Spacer y={4} />
     {children}
     <Spacer y={1} />
     <Divider y={6} />
@@ -67,6 +70,7 @@ const GoalCreationLayout = ({
             <Button
               onClick={onCancelHandler}
               variant="outlined"
+              disabled={isLoading}
               startIcon={<Icon name="cross" fontSize="large" />}
             >
               Cancel
@@ -77,6 +81,7 @@ const GoalCreationLayout = ({
               <Button
                 onClick={onDeleteHandler}
                 variant="outlined"
+                disabled={isLoading}
                 color="error"
                 startIcon={<Icon name="delete" fontSize="large" />}
               >
@@ -91,7 +96,11 @@ const GoalCreationLayout = ({
         {progressEventHandler && (
           <Grid container justify="flex-end">
             <Grid item xs={12} sm={4}>
-              <Button onClick={progressEventHandler} fullWidth disabled={disableProgress}>
+              <Button
+                onClick={progressEventHandler}
+                fullWidth
+                disabled={disableProgress || isLoading}
+              >
                 {progressButtonTitle}
               </Button>
             </Grid>
