@@ -2,8 +2,7 @@
     <inbound>
         <base />
         <!--Allow max 10K body content-->
-        <validate-content unspecified-content-type-action="prevent" max-size="10240" size-exceeded-action="prevent" errors-variable-name="requestBodyValidation">
-            <content type="application/json" validate-as="json" action="detect" />
+        <validate-content unspecified-content-type-action="ignore" max-size="10240" size-exceeded-action="prevent" errors-variable-name="requestBodyValidation">
         </validate-content>        
          <!-- check Authorization header for access token-->
         <check-header name="Authorization" failed-check-httpcode="401" failed-check-error-message="Not authorized - missing bearer token" ignore-case="false" />
