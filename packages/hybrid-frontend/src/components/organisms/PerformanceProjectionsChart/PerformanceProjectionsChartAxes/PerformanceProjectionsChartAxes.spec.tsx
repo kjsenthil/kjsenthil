@@ -4,7 +4,7 @@ import {
   PerformanceProjectionsChartAxisBottom,
   PerformanceProjectionsChartAxisLeft,
 } from './index';
-import { useTimeValueScales } from '../../../../hooks/ChartHooks';
+import { useTimeValueScales } from '../../../../hooks';
 import { ChartDimension } from '../../../../config/chart';
 
 describe('PerformanceProjectionsChartAxes', () => {

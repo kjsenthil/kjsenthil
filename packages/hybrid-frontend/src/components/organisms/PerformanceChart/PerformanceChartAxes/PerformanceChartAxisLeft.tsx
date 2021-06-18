@@ -3,7 +3,7 @@ import { AxisLeft, AxisScale, SharedAxisProps } from '@visx/axis';
 import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
 import { d3ValueFormatter } from '../../../../utils/formatters';
 import { ChartDimension } from '../../../../config/chart';
-import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 export interface PerformanceChartAxisLeftProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;

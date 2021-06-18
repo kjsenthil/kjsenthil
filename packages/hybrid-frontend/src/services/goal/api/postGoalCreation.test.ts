@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
 import postGoalCreation, { createOnboardGoalsPayLoad } from './postGoalCreation';
 import { RiskAppetites } from '../constants';
-import { CaptureGoalData, GoalsObjectiveApiResponse, GoalType } from '../types';
+import { CaptureGoalData, GoalCategory, GoalsApiResponse, GoalStatus, GoalType } from '../types';
 
 const mockAxios = new MockAdapter(axios);
 const url = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
@@ -19,9 +19,15 @@ describe('postGoalCreation', () => {
       riskAppetite: RiskAppetites.CAUTIOUS,
     };
 
-    const data: GoalsObjectiveApiResponse = {
-      index: '1',
-      fields: { description: 'home goal' },
+    const data: GoalsApiResponse = {
+      index: 1,
+      allowAssociates: true,
+      allowMultipleAccountAssociates: true,
+      fields: {
+        description: 'home goal',
+        status: GoalStatus.UNFULFILLED,
+        category: GoalCategory.MORTGAGE,
+      },
     };
 
     mockAxios.onPost(url, createOnboardGoalsPayLoad(inputs)).reply(201, data);

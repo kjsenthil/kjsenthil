@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChartTickComponent from './PerformanceChartTickComponent';
-import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 describe('PerformanceChartTickComponent', () => {
   // PerformanceChartTickComponent needs to receive chartStyles as a prop

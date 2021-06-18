@@ -24,7 +24,7 @@ import PerformanceSimplifiedChart from '../../organisms/PerformanceChart/Perform
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
 import { useBasicInfo, useDispatchThunkOnRender } from '../../../hooks';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
 import { createGoal } from '../../../services/goal/thunks';
 import { GoalType } from '../../../services/goal';
 

@@ -1,2 +1,2 @@
 export { default as createGoal, goalCreationActionReducerMapBuilder } from './createGoal';
-export { default as getGoals } from './getGoals';
+export { default as fetchGoals } from './fetchGoals';

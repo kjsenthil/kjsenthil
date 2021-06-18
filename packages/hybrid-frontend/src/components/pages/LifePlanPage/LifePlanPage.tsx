@@ -12,12 +12,11 @@ import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalCo
 
 import useProjectionsDataForChart from '../../../services/projections/hooks/useProjectionsDataForChart';
 
-import useGoalsDataForChart from '../../../services/goal/hooks/useGoalsDataForChart';
+import { useDispatchThunkOnRender, useGoalsDataForChart } from '../../../hooks';
 import useProjectionsMetadataForChart from '../../../services/projections/hooks/useProjectionsMetadataForChart';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
-import { useDispatchThunkOnRender } from '../../../hooks';
 import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 

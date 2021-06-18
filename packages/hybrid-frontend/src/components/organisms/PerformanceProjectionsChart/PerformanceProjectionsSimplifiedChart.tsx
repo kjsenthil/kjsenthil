@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { curveNatural } from '@visx/curve';
 import { Theme } from '../../atoms';
 import { usePerformanceProjectionsChartStyles } from './performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import { useTimeValueScales } from '../../../hooks/ChartHooks';
+import { useTimeValueScales } from '../../../hooks';
 import { PerformanceProjectionsChartAxisBottom } from './PerformanceProjectionsChartAxes';
 import PerformanceProjectionsChartGoalIndicator from './PerformanceProjectionsChartGoalIndicator/PerformanceProjectionsChartGoalIndicator';
 import { getDatumAtPosX } from '../../../utils/chart';

@@ -10,15 +10,14 @@ import {
   WithParentSizeProps,
   WithParentSizeProvidedProps,
 } from '@visx/responsive/lib/enhancers/withParentSize';
-import { useTimeValueScales } from '../../../hooks/ChartHooks';
+import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { TypedReactMemo } from '../../../utils/common';
 import PerformanceSimplifiedChartAxisBottom from './PerformanceChartAxes/PerformanceSimplifiedChartAxisBottom';
-import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
-import { usePerformanceSimplifiedChartDimension } from './performanceChartDimension/usePerformanceChartDimension';
+import { usePerformanceSimplifiedChartDimension } from './hooks/usePerformanceChartDimension';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 
 export interface PerformanceSimplifiedChartProps

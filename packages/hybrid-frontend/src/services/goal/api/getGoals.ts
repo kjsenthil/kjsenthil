@@ -1,12 +1,12 @@
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { GetCurrentGoals } from '../types';
+import { CurrentGoals } from '../types';
 
 function getGetGoalsFieldsQueryParams(fields: string[]) {
   return fields.map((fieldName, i) => `fields.${i}=${fieldName}`).join('&');
 }
 
-export default async function getGoalsFetcher() {
+const getGoals = async () => {
   const baseUrl = API_ENDPOINTS.GET_GOALS;
 
   // NOTE: the intention is to keep these fields static. If these are changed or
@@ -18,10 +18,16 @@ export default async function getGoalsFetcher() {
     'status',
     'present_value',
     'target_amount',
+    'objective_frequency_start_age',
+    'objective_frequency_end_age',
+    'target_date',
+    'regular_drawdown',
   ]);
-  const url = `${baseUrl}?${fieldsQueryParams}`;
 
-  const response = await api.get<GetCurrentGoals>(url);
+  const url = `${baseUrl}?${fieldsQueryParams}`;
+  const response = await api.get<CurrentGoals>(url);
 
   return response.data;
-}
+};
+
+export default getGoals;

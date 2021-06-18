@@ -1,702 +1,752 @@
 [
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 233999074
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 629975497
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1212509315
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1588467509
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 633416695
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1423075578
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1572331033
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1820124382
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 16503648
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1402562364
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 797881069
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 919369775
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1288089357
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 350155793
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1396173441
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 899724022
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1644973354
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1817060610
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 990281929
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 25201788
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 432809998
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 47570016
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1658073815
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 587829151
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 51482336
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 70858286
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 572310455
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1888234844
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 973248876
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1337082282
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1975700710
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1944242524
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1238477070
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "Retirement goal",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "100000", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "100000", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1147685310
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1065713066
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 451131525
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 433736889
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 7428624
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 906687923
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 1572943414
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 136359728
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 548837157
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 725052498
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 2115546030
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 823226282
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 2076309838
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 2020101709
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 938032930
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 131972214
   },
   {
     "fields": {
+      "status": "2",
       "category": 5,
-      "present_value": null,
+      "presentValue": null,
       "description": "",
-      "target_amount": {
-        "_val": { "code": "GBP", "value": { "_val": "0", "_type": "BigDecimal" } },
-        "_type": "Currency"
+      "targetAmount": {
+        "val": { "code": "GBP", "value": { "val": "0", "type": "BigDecimal" } },
+        "type": "Currency"
       }
     },
-    "allow_associates": false,
-    "allow_multiple_account_associates": false,
+    "allowAssociates": false,
+    "allowMultipleAccountAssociates": false,
     "index": 850627106
   }
 ]

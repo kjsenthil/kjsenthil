@@ -8,13 +8,13 @@ import MainCard from '../../molecules/MainCard';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { mockAccountsTableHeader } from '../../../constants/storybook';
 import AccountsTable from '../../organisms/AccountsTable';
-import useAccountBreakdownInfo from '../../../hooks/AccountBreakdownInfo/useAccountBreakdownInfo';
+import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import {
   usePerformanceData,
   useContributionsData,
   usePerformanceDataPeriod,
 } from '../../../services/performance/hooks';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/performanceChartDimension/usePerformanceChartDimension';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
 import {
   getPerformanceContact,
   setPerformanceDataPeriod,

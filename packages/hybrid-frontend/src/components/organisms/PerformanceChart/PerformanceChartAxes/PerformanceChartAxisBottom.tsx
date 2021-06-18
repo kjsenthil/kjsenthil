@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
 import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
 import { ChartDimensionWithExtras } from '../../../../config/chart';
-import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 export interface PerformanceChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimensionWithExtras;

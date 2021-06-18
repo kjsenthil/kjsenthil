@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useFeatureFlag } from '../../../hooks/FeatureFlagsHooks';
+import { useFeatureFlag } from '../../../hooks';
 
 export interface FeatureToggleProps {
   name: string;

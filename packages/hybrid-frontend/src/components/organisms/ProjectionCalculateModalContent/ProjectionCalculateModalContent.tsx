@@ -3,22 +3,22 @@ import { DialogContentText } from '../../atoms';
 
 const ProjectionCalculateModal = () => (
   <>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       We have taken your current asset allocation and mapped it to the closest ready-made portfolio
       as a proxy to project forward a range of projected investment returns. The investment outcome
       for your portfolio is not guaranteed, and these forecasts should be considered indicative
       returns.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       We have also factored in monthly contributions, as shown in the table, making the assumption
       these will be invested based on an equivalent asset allocation to your existing portfolio.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       The calculation includes all fees and charges, and is based on your specified investment
       amounts and selected investment style. It shows the total return - it does not include the
       impact on your investment of inflation or any taxes you may be liable for.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       The projections illustrate the potential investment growth your investments can make in
       different circumstances. Investment returns are not guaranteed or completely predictable.
       However, different asset types have different levels of risk and different levels of expected
@@ -28,11 +28,11 @@ const ProjectionCalculateModal = () => (
       10% - one time in ten we’d expect a poorer outcome. Similarly just 10% of the time the chance
       of return will be better than the top line on the fan-chart.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       The fan chart factors in your initial lump sum, and assumes you continue to make regular
       investments at the level you have specified through the period.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       The projected values do not factor in inflation - it is important to recognise that inflation
       over time means that your investment will not have the same value in real terms as today. By
       way of illustration £1000 in 2008 is the equivalent of around £1,300 today in real terms with
@@ -41,7 +41,7 @@ const ProjectionCalculateModal = () => (
       income or capital gains tax if you sell. These taxes only apply if you invest in a General
       Investment Account – they don’t apply to ISAs.
     </DialogContentText>
-    <DialogContentText variant="sh4" color="primary">
+    <DialogContentText variant="body2" color="primary">
       The calculations do include all of our costs and charges, and all fund costs.
     </DialogContentText>
   </>

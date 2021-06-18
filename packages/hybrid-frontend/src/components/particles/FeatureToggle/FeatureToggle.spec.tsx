@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import FeatureToggle from '.';
-import { useFeatureFlag } from '../../../hooks/FeatureFlagsHooks';
+import { useFeatureFlag } from '../../../hooks';
 
-jest.mock('../../../hooks/FeatureFlagsHooks/useFeatureFlag');
+jest.mock('../../../hooks');
 
 describe('FeatureToggle', () => {
   beforeEach(() => {

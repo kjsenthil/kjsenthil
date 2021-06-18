@@ -2,7 +2,7 @@ import {
   GoalStatus,
   GoalCategory,
   GoalRequestPayload,
-  GoalsObjectiveApiResponse,
+  GoalsApiResponse,
   GoalAdviceType,
   PostGoalParams,
   RetirementInputs,
@@ -93,7 +93,7 @@ const postGoalCreation = async ({ inputs, goalType }: PostGoalParams) => {
 
   const goalsURL = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
 
-  const response = await api.post<GoalsObjectiveApiResponse>(goalsURL, goalsPayload);
+  const response = await api.post<GoalsApiResponse>(goalsURL, goalsPayload);
 
   return response.data;
 };

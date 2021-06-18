@@ -13,7 +13,7 @@ import { curveNatural } from '@visx/curve';
 import { GridRows } from '@visx/grid';
 import { Theme } from '../../atoms';
 import { usePerformanceProjectionsChartStyles } from './performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import { useTimeValueScales } from '../../../hooks/ChartHooks';
+import { useTimeValueScales } from '../../../hooks';
 import {
   PerformanceProjectionsChartAxisBottom,
   PerformanceProjectionsChartAxisLeft,

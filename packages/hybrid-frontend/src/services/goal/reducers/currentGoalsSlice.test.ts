@@ -1,10 +1,15 @@
 import * as api from '../api';
-import goalsReducer, { getGoals } from './currentGoalsSlice';
-import { GetCurrentGoals, CurrentGoalsState } from '../types';
+import goalsReducer, { fetchGoals } from './currentGoalsSlice';
+import { CurrentGoals, CurrentGoalsState } from '../types';
 import getStoreAndStateHistory from '../../performance/utils/getStoreAndStateHistory';
 import mockGetGoalsSuccessResponse from '../mocks/get-goals-success-response.json';
 
 jest.mock('../api');
+
+jest.mock('../utils/filterGoals', () => ({
+  __esModule: true,
+  default: (goals: unknown) => goals,
+}));
 
 function getGoalsStoreAndStateHistory() {
   return getStoreAndStateHistory<CurrentGoalsState>(goalsReducer);
@@ -24,12 +29,12 @@ describe('currentGoalsSlice', () => {
     expect(included).toBeUndefined();
   });
 
-  describe('getGoals action', () => {
-    const getGoalsAction = getGoals();
+  describe('fetchGoals action', () => {
+    const getGoalsAction = fetchGoals();
 
     describe('network success case', () => {
       it('performs the network fetch and store states as expected', async () => {
-        (api.getGoalsFetcher as jest.Mock).mockResolvedValue(mockGetGoalsSuccessResponse);
+        (api.getGoals as jest.Mock).mockResolvedValue(mockGetGoalsSuccessResponse);
 
         const expectedStates: CurrentGoalsState[] = [
           // This state is the result of the 'pending' action
@@ -38,7 +43,7 @@ describe('currentGoalsSlice', () => {
           // This state is the result of the 'success' action
           {
             status: 'success',
-            data: mockGetGoalsSuccessResponse as GetCurrentGoals,
+            data: (mockGetGoalsSuccessResponse as unknown) as CurrentGoals,
             included: undefined,
             error: undefined,
           },
@@ -56,7 +61,7 @@ describe('currentGoalsSlice', () => {
     describe('network failure case', () => {
       it('performs the network fetch and store states as expected', async () => {
         const mockError = new Error(`Some error`);
-        (api.getGoalsFetcher as jest.Mock).mockRejectedValue(mockError);
+        (api.getGoals as jest.Mock).mockRejectedValue(mockError);
 
         const expectedStates: CurrentGoalsState[] = [
           // This state is the result of the 'pending' action

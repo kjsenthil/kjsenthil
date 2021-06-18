@@ -8,7 +8,7 @@ const shine = keyframes`
     }
 `;
 
-export const CardContainer = styled(({ isMobile, ...props }) => <Card {...props} />)`
+export const CardContainer = styled(({ isLoading, isMobile, ...props }) => <Card {...props} />)`
   ${({
     isLoading,
     isMobile,

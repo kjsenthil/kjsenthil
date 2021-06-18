@@ -11,7 +11,7 @@ import {
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import styled from 'styled-components';
 import { Theme } from '../../atoms';
-import { useTimeValueScales } from '../../../hooks/ChartHooks';
+import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartTooltip';
 import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformanceChartTooltip';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
@@ -20,8 +20,7 @@ import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/Perform
 import { ChartPeriodSelection, ChartPeriodSelectionProps } from '../../molecules';
 import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
-import useChartStyles from '../../../hooks/ChartHooks/useChartStyles';
-import { usePerformanceChartDimension } from './performanceChartDimension/usePerformanceChartDimension';
+import { usePerformanceChartDimension } from './hooks';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {

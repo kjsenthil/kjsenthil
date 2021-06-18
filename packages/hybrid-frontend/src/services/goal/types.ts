@@ -43,18 +43,28 @@ export interface GoalRequestPayload {
   fields: GoalApiFields;
 }
 
-export interface GoalRequestPayloadValType<
-  V = GoalRequestPayloadValue | string | number,
+export type GoalPayloadValType<
+  V = GoalPayloadValue | string | number,
   T = 'Date' | 'Currency' | 'BigDecimal'
-> {
-  _val: V;
-  _type: T;
+> =
+  | {
+      _val: V;
+      _type: T;
+    }
+  | {
+      val: V;
+      type: T;
+    };
+
+export interface GoalPayloadValue<V = unknown, T = unknown> {
+  code: string;
+  value: GoalPayloadValType<V, T>;
 }
 
-export interface GoalRequestPayloadValue<V = unknown, T = unknown> {
-  code: string;
-  value: GoalRequestPayloadValType<V, T>;
-}
+export type GoalAmountPayload = GoalPayloadValType<
+  GoalPayloadValue<number | string, 'BigDecimal'>,
+  'Currency'
+>;
 
 export interface GoalApiFields {
   status: GoalStatus;
@@ -65,34 +75,17 @@ export interface GoalApiFields {
   xpt_external_id?: string | null;
   present_value?: number | null;
   frequency?: number;
-  capture_date: GoalRequestPayloadValType<string, 'Date'>;
-  target_date?: GoalRequestPayloadValType<string, 'Date'>;
-  target_amount?: GoalRequestPayloadValType<
-    GoalRequestPayloadValue<number | string, 'BigDecimal'>,
-    'Currency'
-  >;
-  initial_investment?: GoalRequestPayloadValType<
-    GoalRequestPayloadValue<number, 'BigDecimal'>,
-    'Currency'
-  >;
-  regular_saving?: GoalRequestPayloadValType<
-    GoalRequestPayloadValue<number, 'BigDecimal'>,
-    'Currency'
-  >;
+  capture_date: GoalPayloadValType<string, 'Date'>;
+  target_date?: GoalPayloadValType<string, 'Date'>;
+  target_amount?: GoalPayloadValType<GoalPayloadValue<number | string, 'BigDecimal'>, 'Currency'>;
+  initial_investment?: GoalPayloadValType<GoalPayloadValue<number, 'BigDecimal'>, 'Currency'>;
+  regular_saving?: GoalPayloadValType<GoalPayloadValue<number, 'BigDecimal'>, 'Currency'>;
   goal_level_risk_tolerance?: RiskAppetites;
 }
 
-export interface GoalData {
-  index: number;
-  allow_associates: boolean;
-  allow_multiple_account_associates: boolean;
+export type CurrentGoals = GoalsApiResponse[];
 
-  fields: GoalApiFields;
-}
-
-export type GetCurrentGoals = GoalData[] | undefined;
-
-export interface CurrentGoalsState extends CommonState<GetCurrentGoals, undefined> {}
+export interface CurrentGoalsState extends CommonState<CurrentGoals, undefined> {}
 
 export interface CaptureGoalData {
   targetAmount: number;
@@ -148,10 +141,20 @@ export interface GoalDetails {
   description?: string;
 }
 
-export interface GoalsObjectiveApiResponse {
-  index: string;
+export interface GoalsApiResponse {
+  index: number;
+  allowAssociates: boolean;
+  allowMultipleAccountAssociates: boolean;
   fields: {
     description: string;
+    status: GoalStatus;
+    category: GoalCategory;
+    objectiveFrequencyEndAge?: number;
+    objectiveFrequencyStartAge?: number;
+    regularDrawdown?: GoalPayloadValType<
+      GoalPayloadValue<number | string, 'BigDecimal'>,
+      'Currency'
+    >;
   };
 }
 

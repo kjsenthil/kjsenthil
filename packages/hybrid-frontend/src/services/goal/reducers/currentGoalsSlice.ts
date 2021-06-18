@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GetCurrentGoals, CurrentGoalsState } from '../types';
-import { getGoals } from '../thunks';
+import { CurrentGoals, CurrentGoalsState } from '../types';
+import { fetchGoals } from '../thunks';
 import { commonActionReducerMapBuilder } from '../../utils';
 
 const initialState: CurrentGoalsState = {
@@ -12,11 +12,11 @@ const currentGoalsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: commonActionReducerMapBuilder<
-    { data: GetCurrentGoals; included: undefined },
+    { data: CurrentGoals; included: undefined },
     CurrentGoalsState
-  >(getGoals),
+  >(fetchGoals),
 });
 
-export { getGoals };
+export { fetchGoals };
 
 export default currentGoalsSlice.reducer;

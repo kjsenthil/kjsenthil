@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TickRendererProps } from '@visx/axis';
 import { Text } from '@visx/text';
-import useChartStyles from '../../../../hooks/ChartHooks/useChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 export interface PerformanceChartTickComponentProps extends TickRendererProps {
   // Note: we have to pass chartStyles as a prop rather than having
