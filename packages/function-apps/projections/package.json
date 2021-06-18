@@ -10,14 +10,17 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@azure/functions": "1.2.3",
+    "@azure/functions": "^1.2.3",
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
     "@tsw/test-util": "workspace:packages/utils/test",
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@types/jest": "^26.0.23",
     "azure-functions-core-tools": "^2.7.3188",
     "babel-jest": "^26.6.3",
     "bestzip": "^2.2.0",
     "copyfiles": "^2.4.1",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "jest-html-reporter": "^3.4.1"
   }
+
 }

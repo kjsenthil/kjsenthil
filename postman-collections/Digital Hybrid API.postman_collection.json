@@ -2062,12 +2062,15 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement goal\",\n        \"capture_date\": {\n            \"_val\": \"2021-02-14\",\n            \"_type\": \"Date\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"advice_type\": 3,\n        \"xpt_external_id\": null,\n        \"target_amount\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"100000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"target_age\": \"80\",\n        \"regular_saving\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"1000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
+							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirementl\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2160,6 +2163,54 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement goal\",\n        \"capture_date\": {\n            \"_val\": \"2021-02-14\",\n            \"_type\": \"Date\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"advice_type\": 3,\n        \"frequency\": 12,\n        \"xpt_external_id\": null,\n        \"target_amount\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"100000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"owner\": \"client\",\n        \"regular_saving\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"1000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"target_age\": 80\n    },\n    \"allow_associates\": false,\n    \"allow_multiple_account_associates\": false,\n    \"index\": 1971863369\n}"
+						},
+						{
+							"name": "Bad request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client/goals",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"resourceful",
+										"entity",
+										"client",
+										"goals"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "911"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:f65f4845-7f60-42c1-a75b-b9d7ddff7500"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jun 2021 13:26:57 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"errors\": [\r\n    {\r\n      \"code\": \"val-goal-001\",\r\n      \"property\": \"description\",\r\n      \"message\": \"description_cannot_be_empty\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-002\",\r\n      \"property\": \"category\",\r\n      \"message\": \"category_not_valid\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-003\",\r\n      \"property\": \"status\",\r\n      \"message\": \"status_not_valid\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-004\",\r\n      \"property\": \"advice_type\",\r\n      \"message\": \"adviceType_not_valid\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-005\",\r\n      \"property\": \"objective_frequency_start_age\",\r\n      \"message\": \"startAge_not_valid\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-006\",\r\n      \"property\": \"objective_frequency_end_age\",\r\n      \"message\": \"endAge_not_valid\"\r\n    },\r\n    {\r\n      \"code\": \"val-goal-007\",\r\n      \"property\": \"drawdownAmount\",\r\n      \"message\": \"drawdownAmount_must_be_more_than_zero\"\r\n    }\r\n  ]\r\n}"
 						}
 					]
 				},
@@ -2773,6 +2824,188 @@
 								"{{apiPath}}",
 								"Assets",
 								"Projections"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"riskModel\": \"TAA5\",\r\n    \"sedolCode\": \"BYX8KR5\",\r\n    \"upfrontInvestment\": 635376.130119,\r\n    \"monthlyInvestment\": 0,\r\n    \"investmentPeriod\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/Projections",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"Assets",
+										"Projections"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:32:41 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contributions\": 635376.130119,\n    \"projections\": [\n        {\n            \"year\": 0,\n            \"low\": 635376.130119,\n            \"medium\": 635376.130119,\n            \"high\": 635376.130119,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 1,\n            \"low\": 551666.044963693678889527002,\n            \"medium\": 655326.9406047366,\n            \"high\": 755171.20006902099514093914,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 2,\n            \"low\": 529305.562036420256827118556,\n            \"medium\": 675904.20653972532924,\n            \"high\": 817105.3123992108729513966,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 3,\n            \"low\": 517581.660616691560208590185,\n            \"medium\": 697127.598625072704578136,\n            \"high\": 870062.92886129092226433054,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 4,\n            \"low\": 511695.613939812493303005165,\n            \"medium\": 719017.40522189897090008128,\n            \"high\": 918705.92415045505365935718,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 5,\n            \"low\": 509801.742483985979815188258,\n            \"medium\": 741594.55174587043117516071,\n            \"high\": 964853.10307112932263626226,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 6,\n            \"low\": 510964.320070236579246574506,\n            \"medium\": 764880.62067068896714111704,\n            \"high\": 1009448.1101042412520151655,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 7,\n            \"low\": 514636.92161132551933559652,\n            \"medium\": 788897.87215974617103102654,\n            \"high\": 1053060.95253965113231924977,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 8,\n            \"low\": 520471.976338952993790805941,\n            \"medium\": 813669.26534556250324043871,\n            \"high\": 1096071.47706452723690193072,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 9,\n            \"low\": 528235.793354283369389181918,\n            \"medium\": 839218.48027741340347286115,\n            \"high\": 1138751.25867020940504396786,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 10,\n            \"low\": 537765.406039410072884104077,\n            \"medium\": 865569.94055812882894142016,\n            \"high\": 1181305.21175809106623548201,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 11,\n            \"low\": 548944.540418123206440208002,\n            \"medium\": 892748.8366916499467668395,\n            \"high\": 1223894.78280557032872122973,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 12,\n            \"low\": 561689.27414700946922584638,\n            \"medium\": 920781.15016377175796493801,\n            \"high\": 1266651.81063622090085992947,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 13,\n            \"low\": 575939.003784609454185697677,\n            \"medium\": 949693.67827891342490142414,\n            \"high\": 1309687.27533813353950954881,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 14,\n            \"low\": 591650.503881957188050660281,\n            \"medium\": 979514.05977686998231947369,\n            \"high\": 1353097.07072844658364676213,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 15,\n            \"low\": 608793.878783152755883553967,\n            \"medium\": 1010270.80125386127643974489,\n            \"high\": 1396965.95537350324642923177,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 16,\n            \"low\": 627349.721849057319906556809,\n            \"medium\": 1041993.30441323599348588011,\n            \"high\": 1441370.34227032909772052834,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 17,\n            \"low\": 647307.07219761049611429813,\n            \"medium\": 1074711.89417181130759606011,\n            \"high\": 1486380.32205456199594843224,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 18,\n            \"low\": 668661.91413894149942106495,\n            \"medium\": 1108457.84764880715732156,\n            \"high\": 1532061.16522721931212664147,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 19,\n            \"low\": 691416.05556878305881507027,\n            \"medium\": 1143263.42406497588980467627,\n            \"high\": 1578474.46116231484124243349,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 20,\n            \"low\": 715576.27705679858435732403,\n            \"medium\": 1179161.89558062085867219893,\n            \"high\": 1625678.99823101792012967942,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 21,\n            \"low\": 741153.67821988838998344342,\n            \"medium\": 1216187.57910185199909462537,\n            \"high\": 1673731.45580364793970833824,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 22,\n            \"low\": 768163.17049348917164076657,\n            \"medium\": 1254375.86908564632563114103,\n            \"high\": 1722686.95720476838861866846,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 23,\n            \"low\": 796623.08032484030871606672,\n            \"medium\": 1293763.27137493573589441454,\n            \"high\": 1772599.51833535226390205915,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 24,\n            \"low\": 826554.83689527998148616221,\n            \"medium\": 1334387.43809611359514867395,\n            \"high\": 1823522.4169630720283868435,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 25,\n            \"low\": 857982.72544718534201686203,\n            \"medium\": 1376287.20365233005619491393,\n            \"high\": 1875508.50097391087593213938,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 26,\n            \"low\": 890933.69217680042206621932,\n            \"medium\": 1419502.62184701350079568374,\n            \"high\": 1928610.44917550480851657335,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 27,\n            \"low\": 925437.19014787465062039861,\n            \"medium\": 1464075.00417300855308708427,\n            \"high\": 1982880.99488144717826142743,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 28,\n            \"low\": 961525.05820732846961141373,\n            \"medium\": 1510046.95930404269777624997,\n            \"high\": 2038373.12006408770952084046,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 29,\n            \"low\": 999231.42674409908206334202,\n            \"medium\": 1557462.43382618660011776999,\n            \"high\": 2095140.22608760245395381349,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 30,\n            \"low\": 1038592.64551037394800611719,\n            \"medium\": 1606366.75424833292958095751,\n            \"high\": 2153236.28570811681102650961,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 31,\n            \"low\": 1079647.22976245904231661824,\n            \"medium\": 1656806.67033172873716676545,\n            \"high\": 2212715.98001022324171118155,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 32,\n            \"low\": 1122435.82176702431236314966,\n            \"medium\": 1708830.39978014675409063711,\n            \"high\": 2273634.82321825412673005445,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 33,\n            \"low\": 1167001.16532706379956389228,\n            \"medium\": 1762487.67433324039750405998,\n            \"high\": 2336049.27772314344664468003,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 34,\n            \"low\": 1213388.09144772119124404661,\n            \"medium\": 1817829.78730730466191110512,\n            \"high\": 2400016.86121975316288335467,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 35,\n            \"low\": 1261643.51362892785533278802,\n            \"medium\": 1874909.642628751568118738,\n            \"high\": 2465596.24750399722419527695,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 36,\n            \"low\": 1311816.43156111257752953857,\n            \"medium\": 1933781.80540729894206580323,\n            \"high\": 2532847.36219339289235081066,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 37,\n            \"low\": 1363957.9422343783245179118,\n            \"medium\": 1994502.5540970848642841129,\n            \"high\": 2601831.47443166640733419879,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 38,\n            \"low\": 1418121.25764583138305862968,\n            \"medium\": 2057129.93429573730647720859,\n            \"high\": 2672611.2854535331378498176,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 39,\n            \"low\": 1474361.72844232744867948758,\n            \"medium\": 2121723.81423262297882699083,\n            \"high\": 2745251.01473882892535043874,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 40,\n            \"low\": 1532736.87296234544133542531,\n            \"medium\": 2188345.9419995262614934894,\n            \"high\": 2819816.48439946979736551667,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 41,\n            \"low\": 1593306.41122493163898163811,\n            \"medium\": 2257060.00457831161483979181,\n            \"high\": 2896375.20232223085035305266,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 42,\n            \"low\": 1656132.30350771780230547823,\n            \"medium\": 2327931.68872207346763361263,\n            \"high\": 2974996.44453522257677206459,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 43,\n            \"low\": 1721278.79320785094855800576,\n            \"medium\": 2401028.74374794226793789812,\n            \"high\": 3055751.33718929113473513561,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 44,\n            \"low\": 1788812.45375451338679276438,\n            \"medium\": 2476421.0463016278635545188,\n            \"high\": 3138712.93852926530710166118,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 45,\n            \"low\": 1858802.23937008752479047224,\n            \"medium\": 2554180.66715550324819772509,\n            \"high\": 3223956.32113091140442556072,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 46,\n            \"low\": 1931319.53952007939828648281,\n            \"medium\": 2634381.94010418563465514456,\n            \"high\": 3311558.65471120075763196534,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 47,\n            \"low\": 2006438.23693979681828363838,\n            \"medium\": 2717101.53302345888330055276,\n            \"high\": 3401599.28974311588169578813,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 48,\n            \"low\": 2084234.76912694712431255785,\n            \"medium\": 2802418.52116038910289382564,\n            \"high\": 3494159.8421051984360255919,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 49,\n            \"low\": 2164788.19323756364106133612,\n            \"medium\": 2890414.46272482977852362068,\n            \"high\": 3589324.27897550675073072318,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 50,\n            \"low\": 2248180.25433748055338970628,\n            \"medium\": 2981173.4768543871411321849,\n            \"high\": 3687179.00615265355618092498,\n            \"actual\": 635376.130119\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Current Projection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timeToAge100\": 900,\r\n    \"riskModel1\": \"TAA1\",\r\n    \"monthlyContributionTotal\":624,\r\n    \"portfolioValue\":250000,\r\n    \"drawdownAmount\": 700,\r\n    \"drawDownStartDate\": \"2055-04-10\",\r\n    \"drawDownEndDate\": \"2076-04-10\",\r\n    \"upfrontContribution\" :0,\r\n    \"riskModel1ExpectedReturn\":0.043,\r\n    \"riskModel1ExpectedVolatility\":0.1637,\r\n    \"riskModel1UpperConfidenceLevel\" :0.2501,\r\n    \"riskModel1lowerConfidenceLevel\" :-0.1781,\r\n    \"feesPercentage\": 0.004,\r\n    \"riskModel2\": \"TAA3\",\r\n    \"retirementLumpSum\": 0.10,\r\n    \"statePensionAmount\": 0,\r\n    \"retirementDesiredAmount\": 0,\r\n    \"riskModel2ExpectedReturn\":0.0298,\r\n    \"riskModel2ExpectedVolatility\":0.0927,\r\n    \"riskModel2UpperConfidenceLevel\" :0.1489,\r\n    \"riskModel2lowerConfidenceLevel\" :-0.0905,\r\n    \"netContribution\":1000,\r\n    \"isCoreGraph\":true,\r\n    \"includeStatePension\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/currentprojection",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"Projections",
+								"currentprojection"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"riskModel\": \"TAA5\",\r\n    \"sedolCode\": \"BYX8KR5\",\r\n    \"upfrontInvestment\": 635376.130119,\r\n    \"monthlyInvestment\": 0,\r\n    \"investmentPeriod\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/Projections",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"Assets",
+										"Projections"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:32:41 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contributions\": 635376.130119,\n    \"projections\": [\n        {\n            \"year\": 0,\n            \"low\": 635376.130119,\n            \"medium\": 635376.130119,\n            \"high\": 635376.130119,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 1,\n            \"low\": 551666.044963693678889527002,\n            \"medium\": 655326.9406047366,\n            \"high\": 755171.20006902099514093914,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 2,\n            \"low\": 529305.562036420256827118556,\n            \"medium\": 675904.20653972532924,\n            \"high\": 817105.3123992108729513966,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 3,\n            \"low\": 517581.660616691560208590185,\n            \"medium\": 697127.598625072704578136,\n            \"high\": 870062.92886129092226433054,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 4,\n            \"low\": 511695.613939812493303005165,\n            \"medium\": 719017.40522189897090008128,\n            \"high\": 918705.92415045505365935718,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 5,\n            \"low\": 509801.742483985979815188258,\n            \"medium\": 741594.55174587043117516071,\n            \"high\": 964853.10307112932263626226,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 6,\n            \"low\": 510964.320070236579246574506,\n            \"medium\": 764880.62067068896714111704,\n            \"high\": 1009448.1101042412520151655,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 7,\n            \"low\": 514636.92161132551933559652,\n            \"medium\": 788897.87215974617103102654,\n            \"high\": 1053060.95253965113231924977,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 8,\n            \"low\": 520471.976338952993790805941,\n            \"medium\": 813669.26534556250324043871,\n            \"high\": 1096071.47706452723690193072,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 9,\n            \"low\": 528235.793354283369389181918,\n            \"medium\": 839218.48027741340347286115,\n            \"high\": 1138751.25867020940504396786,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 10,\n            \"low\": 537765.406039410072884104077,\n            \"medium\": 865569.94055812882894142016,\n            \"high\": 1181305.21175809106623548201,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 11,\n            \"low\": 548944.540418123206440208002,\n            \"medium\": 892748.8366916499467668395,\n            \"high\": 1223894.78280557032872122973,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 12,\n            \"low\": 561689.27414700946922584638,\n            \"medium\": 920781.15016377175796493801,\n            \"high\": 1266651.81063622090085992947,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 13,\n            \"low\": 575939.003784609454185697677,\n            \"medium\": 949693.67827891342490142414,\n            \"high\": 1309687.27533813353950954881,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 14,\n            \"low\": 591650.503881957188050660281,\n            \"medium\": 979514.05977686998231947369,\n            \"high\": 1353097.07072844658364676213,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 15,\n            \"low\": 608793.878783152755883553967,\n            \"medium\": 1010270.80125386127643974489,\n            \"high\": 1396965.95537350324642923177,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 16,\n            \"low\": 627349.721849057319906556809,\n            \"medium\": 1041993.30441323599348588011,\n            \"high\": 1441370.34227032909772052834,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 17,\n            \"low\": 647307.07219761049611429813,\n            \"medium\": 1074711.89417181130759606011,\n            \"high\": 1486380.32205456199594843224,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 18,\n            \"low\": 668661.91413894149942106495,\n            \"medium\": 1108457.84764880715732156,\n            \"high\": 1532061.16522721931212664147,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 19,\n            \"low\": 691416.05556878305881507027,\n            \"medium\": 1143263.42406497588980467627,\n            \"high\": 1578474.46116231484124243349,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 20,\n            \"low\": 715576.27705679858435732403,\n            \"medium\": 1179161.89558062085867219893,\n            \"high\": 1625678.99823101792012967942,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 21,\n            \"low\": 741153.67821988838998344342,\n            \"medium\": 1216187.57910185199909462537,\n            \"high\": 1673731.45580364793970833824,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 22,\n            \"low\": 768163.17049348917164076657,\n            \"medium\": 1254375.86908564632563114103,\n            \"high\": 1722686.95720476838861866846,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 23,\n            \"low\": 796623.08032484030871606672,\n            \"medium\": 1293763.27137493573589441454,\n            \"high\": 1772599.51833535226390205915,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 24,\n            \"low\": 826554.83689527998148616221,\n            \"medium\": 1334387.43809611359514867395,\n            \"high\": 1823522.4169630720283868435,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 25,\n            \"low\": 857982.72544718534201686203,\n            \"medium\": 1376287.20365233005619491393,\n            \"high\": 1875508.50097391087593213938,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 26,\n            \"low\": 890933.69217680042206621932,\n            \"medium\": 1419502.62184701350079568374,\n            \"high\": 1928610.44917550480851657335,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 27,\n            \"low\": 925437.19014787465062039861,\n            \"medium\": 1464075.00417300855308708427,\n            \"high\": 1982880.99488144717826142743,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 28,\n            \"low\": 961525.05820732846961141373,\n            \"medium\": 1510046.95930404269777624997,\n            \"high\": 2038373.12006408770952084046,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 29,\n            \"low\": 999231.42674409908206334202,\n            \"medium\": 1557462.43382618660011776999,\n            \"high\": 2095140.22608760245395381349,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 30,\n            \"low\": 1038592.64551037394800611719,\n            \"medium\": 1606366.75424833292958095751,\n            \"high\": 2153236.28570811681102650961,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 31,\n            \"low\": 1079647.22976245904231661824,\n            \"medium\": 1656806.67033172873716676545,\n            \"high\": 2212715.98001022324171118155,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 32,\n            \"low\": 1122435.82176702431236314966,\n            \"medium\": 1708830.39978014675409063711,\n            \"high\": 2273634.82321825412673005445,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 33,\n            \"low\": 1167001.16532706379956389228,\n            \"medium\": 1762487.67433324039750405998,\n            \"high\": 2336049.27772314344664468003,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 34,\n            \"low\": 1213388.09144772119124404661,\n            \"medium\": 1817829.78730730466191110512,\n            \"high\": 2400016.86121975316288335467,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 35,\n            \"low\": 1261643.51362892785533278802,\n            \"medium\": 1874909.642628751568118738,\n            \"high\": 2465596.24750399722419527695,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 36,\n            \"low\": 1311816.43156111257752953857,\n            \"medium\": 1933781.80540729894206580323,\n            \"high\": 2532847.36219339289235081066,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 37,\n            \"low\": 1363957.9422343783245179118,\n            \"medium\": 1994502.5540970848642841129,\n            \"high\": 2601831.47443166640733419879,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 38,\n            \"low\": 1418121.25764583138305862968,\n            \"medium\": 2057129.93429573730647720859,\n            \"high\": 2672611.2854535331378498176,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 39,\n            \"low\": 1474361.72844232744867948758,\n            \"medium\": 2121723.81423262297882699083,\n            \"high\": 2745251.01473882892535043874,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 40,\n            \"low\": 1532736.87296234544133542531,\n            \"medium\": 2188345.9419995262614934894,\n            \"high\": 2819816.48439946979736551667,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 41,\n            \"low\": 1593306.41122493163898163811,\n            \"medium\": 2257060.00457831161483979181,\n            \"high\": 2896375.20232223085035305266,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 42,\n            \"low\": 1656132.30350771780230547823,\n            \"medium\": 2327931.68872207346763361263,\n            \"high\": 2974996.44453522257677206459,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 43,\n            \"low\": 1721278.79320785094855800576,\n            \"medium\": 2401028.74374794226793789812,\n            \"high\": 3055751.33718929113473513561,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 44,\n            \"low\": 1788812.45375451338679276438,\n            \"medium\": 2476421.0463016278635545188,\n            \"high\": 3138712.93852926530710166118,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 45,\n            \"low\": 1858802.23937008752479047224,\n            \"medium\": 2554180.66715550324819772509,\n            \"high\": 3223956.32113091140442556072,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 46,\n            \"low\": 1931319.53952007939828648281,\n            \"medium\": 2634381.94010418563465514456,\n            \"high\": 3311558.65471120075763196534,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 47,\n            \"low\": 2006438.23693979681828363838,\n            \"medium\": 2717101.53302345888330055276,\n            \"high\": 3401599.28974311588169578813,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 48,\n            \"low\": 2084234.76912694712431255785,\n            \"medium\": 2802418.52116038910289382564,\n            \"high\": 3494159.8421051984360255919,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 49,\n            \"low\": 2164788.19323756364106133612,\n            \"medium\": 2890414.46272482977852362068,\n            \"high\": 3589324.27897550675073072318,\n            \"actual\": 635376.130119\n        },\n        {\n            \"year\": 50,\n            \"low\": 2248180.25433748055338970628,\n            \"medium\": 2981173.4768543871411321849,\n            \"high\": 3687179.00615265355618092498,\n            \"actual\": 635376.130119\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Target Projection (Gold)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timeToAge100\": 900,\r\n    \"riskModel1\": \"TAA1\",\r\n    \"monthlyContributionTotal\":624,\r\n    \"portfolioValue\":250000,\r\n    \"drawdownAmount\": 700,\r\n    \"drawDownStartDate\": \"2055-04-10\",\r\n    \"drawDownEndDate\": \"2076-04-10\",\r\n    \"upfrontContribution\" :0,\r\n    \"riskModel1ExpectedReturn\":0.043,\r\n    \"riskModel1ExpectedVolatility\":0.1637,\r\n    \"riskModel1UpperConfidenceLevel\" :0.2501,\r\n    \"riskModel1lowerConfidenceLevel\" :-0.1781,\r\n    \"feesPercentage\": 0.004,\r\n    \"riskModel2\": \"TAA3\",\r\n    \"retirementLumpSum\": 0.10,\r\n    \"statePensionAmount\": 0,\r\n    \"retirementDesiredAmount\": 0,\r\n    \"riskModel2ExpectedReturn\":0.0298,\r\n    \"riskModel2ExpectedVolatility\":0.0927,\r\n    \"riskModel2UpperConfidenceLevel\" :0.1489,\r\n    \"riskModel2lowerConfidenceLevel\" :-0.0905,\r\n    \"netContribution\":1000,\r\n    \"isCoreGraph\":true,\r\n    \"includeStatePension\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/TargetProjection",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"Projections",
+								"TargetProjection"
 							]
 						}
 					},

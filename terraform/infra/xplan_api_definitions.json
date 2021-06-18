@@ -115,7 +115,7 @@
 						}
 					}
 				}, 	
-				"body" :"@{ var inbountPayload = context.Request.Body.As<JObject>(true); inbountPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inbountPayload[\"fields\"][\"drawdown_frequency\"] = 12; inbountPayload[\"fields\"][\"owner\"] = \"client\"; return inbountPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
+				"body" :"@{ var inboundPayload = context.Request.Body.As<JObject>(true); inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12; inboundPayload[\"fields\"][\"owner\"] = \"client\"; return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
 				"backend_url": "xplan",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
 				"authentication-basic": {

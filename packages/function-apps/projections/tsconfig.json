@@ -11,6 +11,9 @@
     "portfolio-asset-allocation/function.json",
     "portfolio-risk-profile/index.ts",
     "portfolio-risk-profile/function.json",
+    "current-projection/index.ts",
+    "current-projection/function.json",
+    "current-projection/types.ts",
     "validate-goal-request/index.ts",
     "validate-goal-request/function.json"
   ]
