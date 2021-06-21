@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import TypographyWithTooltip from './TypographyWithTooltip';
 
-describe('TypographyWithInfoTooltip', () => {
+describe('TypographyWithTooltip', () => {
   it('renders percentage tag with formatter', () => {
     renderWithTheme(<TypographyWithTooltip tooltip="some text">lorem ipsum</TypographyWithTooltip>);
 

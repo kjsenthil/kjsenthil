@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import StepCard, { StepCardProps } from './StepCard';
-import { RadioGroup, TypographyWithInfoTooltip } from '..';
+import { RadioGroup, TypographyWithTooltip } from '..';
 import { Grid, Radio, FormControlLabel } from '../../atoms';
 
 export default {
@@ -19,11 +19,11 @@ Default.args = {
   children: (
     <Grid container xs={12}>
       <Grid item>
-        <TypographyWithInfoTooltip tooltip="Some explaination">
+        <TypographyWithTooltip tooltip="Some explaination">
           Since the government will provide your state pension, wet&#39;ll deduct this from your
           target retirement pot. We use todayt&#39;s maximum figure of £9,371.27 a year assuming you
           contribute National Insurance for 30 years.
-        </TypographyWithInfoTooltip>
+        </TypographyWithTooltip>
       </Grid>
       <Grid item>
         <RadioGroup row>

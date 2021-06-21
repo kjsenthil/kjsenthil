@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import pluralize from 'pluralize';
 import styled from 'styled-components';
 import { Grid, Spacer, Typography, FormControlLabel, Radio, Tooltip } from '../../atoms';
-import { FormInput, StepCard, RadioGroup, TypographyWithInfoTooltip } from '../../molecules';
+import { FormInput, StepCard, RadioGroup, TypographyWithTooltip } from '../../molecules';
 import { GoalCreationLayout } from '../../templates';
 import { RootState } from '../../../store';
 import {
@@ -25,10 +25,10 @@ const DEFAULT_DRAWDOWN_START_AGE = 65;
 const DEFAULT_DRAWDOWN_END_AGE = 87;
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
-  <TypographyWithInfoTooltip tooltip="Some description">
+  <TypographyWithTooltip tooltip="Some description">
     That&#39;s {formatCurrency(amount, { opts: { maximumFractionDigits: 0 } })} in tomorrow&#39;s
     money
-  </TypographyWithInfoTooltip>
+  </TypographyWithTooltip>
 );
 
 const EqualSignWrapper = styled(Grid)`
@@ -192,11 +192,11 @@ const LifePlanManagementPage = () => {
                 {drawdownStartDate &&
                   drawdownEndDate &&
                   !current.matches('planningYourRetirement.invalid') && (
-                    <TypographyWithInfoTooltip tooltip="Some description">
+                    <TypographyWithTooltip tooltip="Some description">
                       From {drawdownStartDate.getFullYear()} to {drawdownEndDate.getFullYear()}.
                       That&#39;s {pluralize('year', drawdownPeriodLengthYears, true)}, which is{' '}
                       {drawdownPeriodDeviationFromAverageComparision} most people.
-                    </TypographyWithInfoTooltip>
+                    </TypographyWithTooltip>
                   )}
               </Grid>
             </Grid>

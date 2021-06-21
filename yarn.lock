@@ -14,7 +14,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/functions@npm:1.2.3":
+"@azure/functions@npm:^1.2.3":
   version: 1.2.3
   resolution: "@azure/functions@npm:1.2.3"
   checksum: 047cffda9211596857751c1d5852167f05660e3ad2ec94973f4835eb7b2eab7a2d569866e01041f7bd847513c8b9c6ec1ca9173df6275e9b72c4c04c250452d9
@@ -2578,7 +2578,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:^26.6.2":
+"@jest/types@npm:^26.0.23, @jest/types@npm:^26.6.2":
   version: 26.6.2
   resolution: "@jest/types@npm:26.6.2"
   dependencies:
@@ -4605,15 +4605,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tsw/function-app-projections@workspace:packages/function-apps/projections"
   dependencies:
-    "@azure/functions": 1.2.3
+    "@azure/functions": ^1.2.3
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
     "@tsw/test-util": "workspace:packages/utils/test"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@types/jest": ^26.0.23
     azure-functions-core-tools: ^2.7.3188
     babel-jest: ^26.6.3
     bestzip: ^2.2.0
     copyfiles: ^2.4.1
     jest: ^26.6.3
+    jest-html-reporter: ^3.4.1
   languageName: unknown
   linkType: soft
 
@@ -4710,7 +4712,6 @@ __metadata:
     mockdate: ^3.0.5
     pluralize: ^8.0.0
     react: ^16.12.0
-    react-chartjs-2: ^2.11.1
     react-disable: ^0.1.0
     react-dom: ^16.12.0
     react-error-boundary: ^3.1.1
@@ -5234,6 +5235,16 @@ __metadata:
     jest-diff: ^25.2.1
     pretty-format: ^25.2.1
   checksum: fe92624fd7b3b5358ffba8e59108b484de1d01df08dfc66bb597d59d09900db1950717adb8d42ce5f81ba615fa0b8de55fd5446808d92f75b45e08fcbe4cec6e
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:^26.0.23":
+  version: 26.0.23
+  resolution: "@types/jest@npm:26.0.23"
+  dependencies:
+    jest-diff: ^26.0.0
+    pretty-format: ^26.0.0
+  checksum: a015676b78bdc51be6f6315acef10d9106ea8064e3e49143bca3c75b834b61285b45c5f5ccfd049a80107f1e2869a9183cdb5be85816c073ea8dd05852fafdc6
   languageName: node
   linkType: hard
 
@@ -17469,6 +17480,32 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"jest-html-reporter@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "jest-html-reporter@npm:3.4.1"
+  dependencies:
+    "@babel/core": ^7.9.0
+    "@babel/preset-env": ^7.8.7
+    "@babel/preset-typescript": ^7.8.3
+    "@jest/console": ^25.1.0
+    "@jest/test-result": ^25.1.0
+    "@jest/types": ^26.0.23
+    "@types/dateformat": ^3.0.1
+    "@types/jest": ^25.1.4
+    "@types/mkdirp": ^1.0.0
+    "@types/node": ^12.12.7
+    "@types/sinon": ^7.5.2
+    dateformat: 3.0.2
+    mkdirp: ^1.0.3
+    sinon: ^9.0.1
+    strip-ansi: 6.0.0
+    xmlbuilder: 15.0.0
+  peerDependencies:
+    jest: 19.x - 27.x
+  checksum: ad7c542432a087344d79a36193ac6b06b344bc59b9009722656e07fb2bce2f7fe1f1e9e98c11e61fa8a2b86d04fe6600d0a0bc4b77250840e671415f92e8f989
+  languageName: node
+  linkType: hard
+
 "jest-html-reporters@npm:^2.1.6":
   version: 2.1.6
   resolution: "jest-html-reporters@npm:2.1.6"
@@ -23155,20 +23192,6 @@ fsevents@^1.2.7:
   bin:
     rc: ./cli.js
   checksum: ea2b7f7cee201a67923a2240de594a5d9b59bd312b814b06536d3d609a416dfd6fb9b85ea2abfd3b8a4eb5ed33eaff946ee75a8f2b7fb10941073c5cfee6b7a5
-  languageName: node
-  linkType: hard
-
-"react-chartjs-2@npm:^2.11.1":
-  version: 2.11.1
-  resolution: "react-chartjs-2@npm:2.11.1"
-  dependencies:
-    lodash: ^4.17.19
-    prop-types: ^15.7.2
-  peerDependencies:
-    chart.js: ^2.3
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 81886664cc61f0cce666267311b6ca730686d22e848d93a2b08d818284e53da6d24a332ac41eae329c57ab03e867af5c8aec65fa2da41fe5226bf7004692827e
   languageName: node
   linkType: hard
 
