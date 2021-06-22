@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { InvestmentSummaryState, InvestmentSummaryResponse } from '../types';
 import { fetchInvestmentSummary } from '../thunks';
-import { commonActionReducerMapBuilder } from '../../utils';
+import commonActionReducerMapBuilder from '../../utils/commonActionReducerMapBuilder';
 
 const initialState: InvestmentSummaryState = {
   status: 'idle',

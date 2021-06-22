@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ClientState, ClientResponse } from '../types';
 import { fetchClient } from '../thunks';
-import { commonActionReducerMapBuilder } from '../../utils';
+import commonActionReducerMapBuilder from '../../utils/commonActionReducerMapBuilder';
 
 const initialState: ClientState = {
   status: 'idle',

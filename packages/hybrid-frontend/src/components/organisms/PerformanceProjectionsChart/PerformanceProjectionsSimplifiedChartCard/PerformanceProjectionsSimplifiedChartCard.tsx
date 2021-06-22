@@ -14,7 +14,7 @@ export interface PerformanceProjectionsSimplifiedChartCardProps {
   retirementAge: number;
   retirementPerformance: number;
   retirementPerformancePercentage: number;
-  goalProgressProps: GoalProgressProps;
+  goalProgressProps?: GoalProgressProps;
   chartProps: PerformanceProjectionsSimplifiedChartProps;
 }
 
@@ -69,7 +69,7 @@ export default function PerformanceProjectionsSimplifiedChartCard({
 
       <Spacer y={30 / 8} />
 
-      <GoalProgress {...goalProgressProps} />
+      {goalProgressProps && <GoalProgress {...goalProgressProps} />}
 
       <PerformanceProjectionsSimplifiedChart {...chartProps} />
     </MainCard>

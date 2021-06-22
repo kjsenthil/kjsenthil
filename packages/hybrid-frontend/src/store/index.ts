@@ -21,10 +21,13 @@ import {
   currentGoalsSlice as currentGoalsReducer,
 } from '../services/goal/reducers';
 import { performanceSlice as performanceReducer } from '../services/performance/reducers';
-import { projectionsSlice as projectionsReducer } from '../services/projections/reducers';
+import {
+  projectionsSlice as projectionsReducer,
+  goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
+} from '../services/projections/reducers';
 import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
-import { ProjectionsState } from '../services/projections';
+import { GoalCurrentProjectionsState, ProjectionsState } from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 
@@ -37,6 +40,7 @@ export interface RootState {
   currentGoals: CurrentGoalsState;
   performance: PerformanceState;
   projections: ProjectionsState;
+  goalCurrentProjections: GoalCurrentProjectionsState;
 }
 
 /*
@@ -50,7 +54,13 @@ export interface RootState {
 const authWhitelist = createWhitelistFilter('auth', ['accessTokens', 'contactId']);
 
 const persistConfig: PersistConfig<RootState> = {
-  blacklist: ['goalCreation', 'currentGoals', 'performance', 'projections', 'investmentSummary'],
+  blacklist: [
+    'goalCreation',
+    'currentGoals',
+    'performance',
+    'projections',
+    'goalCurrentProjections',
+  ],
   transforms: [authWhitelist],
   key: 'root',
   storage,
@@ -65,6 +75,7 @@ const reducersMap: ReducersMapObject = {
   currentGoals: currentGoalsReducer,
   performance: performanceReducer,
   projections: projectionsReducer,
+  goalCurrentProjections: goalCurrentProjectionsReducer,
 };
 
 const reducers = combineReducers(reducersMap);

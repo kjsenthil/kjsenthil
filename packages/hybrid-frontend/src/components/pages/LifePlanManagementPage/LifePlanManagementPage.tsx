@@ -1,10 +1,19 @@
 import * as React from 'react';
 import { navigate } from 'gatsby';
 import { useMachine } from '@xstate/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import pluralize from 'pluralize';
 import styled from 'styled-components';
-import { Grid, Spacer, Typography, FormControlLabel, Radio, Tooltip } from '../../atoms';
+import {
+  Grid,
+  Spacer,
+  Typography,
+  FormControlLabel,
+  Radio,
+  Tooltip,
+  Divider,
+  Box,
+} from '../../atoms';
 import { FormInput, StepCard, RadioGroup, TypographyWithTooltip } from '../../molecules';
 import { GoalCreationLayout } from '../../templates';
 import { RootState } from '../../../store';
@@ -19,6 +28,15 @@ import {
 } from '../../../services/goal/machines/lifePlan';
 import { formatCurrency } from '../../../utils/formatters';
 import { GoalType, postGoalCreation } from '../../../services/goal';
+
+import useAllAssets from '../../../services/assets/hooks/useAllAssets';
+import callPostUpdateCurrentProjections from '../../../services/projections/asyncCallers';
+import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
+
+import AccountsTable from '../../organisms/AccountsTable';
+import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
+import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
+import { monthlyDataArgs } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart.stories';
 
 const AVERAGE_DRAWDOWN_PERIOD_IN_YEARS = 22;
 const DEFAULT_DRAWDOWN_START_AGE = 65;
@@ -36,20 +54,48 @@ const EqualSignWrapper = styled(Grid)`
 `;
 
 const LifePlanManagementPage = () => {
-  const { client } = useSelector((state: RootState) => ({
-    client: state.client.data,
+  const { client, investmentSummary, goalCurrentProjections } = useSelector((state: RootState) => ({
+    client: state.client,
+    investmentSummary: state.investmentSummary,
+    goalCurrentProjections: state.goalCurrentProjections,
   }));
 
+  // Account Breakdown Data
+  const { accountBreakdown } = useAccountBreakdownInfo();
+
+  const dispatch = useDispatch();
+
+  const fundData = useAllAssets();
+
   const goToHome = () => navigate('/my-account');
+
   const [current, send, service] = useMachine(
     lifePlanMachine
       .withConfig({
         actions: lifePlanMachineActions,
         guards: lifePlanMachineGuards,
         services: {
-          updateCurrentProjections: lifePlanMachineServices.updateCurrentProjections(() =>
-            // Placeholder: Dispatch /Projections/current-projection here
-            Promise.resolve()
+          updateCurrentProjections: lifePlanMachineServices.updateCurrentProjections(
+            async ({
+              clientAge,
+              drawdownStartDate,
+              drawdownEndDate,
+              monthlyIncome,
+              shouldIncludeStatePension,
+              fees,
+            }: LifePlanMachineContext) =>
+              callPostUpdateCurrentProjections(dispatch)({
+                clientAge,
+                drawdownStartDate,
+                drawdownEndDate,
+                drawdownAmount: monthlyIncome,
+                shouldIncludeStatePension,
+                fees,
+                accountBreakdown,
+                investmentSummary: investmentSummary.data,
+                includedClientAccounts: client.included,
+                fundData,
+              })
           ),
           saveRetirementPlan: lifePlanMachineServices.saveRetirementPlan(
             async ({ drawdownStartAge, drawdownEndAge, monthlyIncome }: LifePlanMachineContext) =>
@@ -66,7 +112,7 @@ const LifePlanManagementPage = () => {
       })
       .withContext({
         ...lifePlanContext,
-        userDateOfBirth: new Date(client?.attributes.dateOfBirth!),
+        userDateOfBirth: new Date(client.data?.attributes.dateOfBirth!),
         drawdownStartAge: DEFAULT_DRAWDOWN_START_AGE,
         drawdownEndAge: DEFAULT_DRAWDOWN_END_AGE,
         expectedReturnOfTAA: 0.043,
@@ -93,6 +139,20 @@ const LifePlanManagementPage = () => {
     monthlyIncomeInTomorrowsMoney,
     errors,
   } = current.context;
+
+  // requires target api to be implemented
+  // projected goal age total / required goal age total
+  const shortFallPercentage = 72;
+  // required goal age total - projected goal age total
+  const shortFallAmount = 580641;
+
+  const tableData =
+    accountBreakdown?.map((breakdownItem) => ({
+      accountType: breakdownItem.accountName || '',
+      accountName: breakdownItem.accountName || '',
+      accountTotalContribution: breakdownItem.accountTotalContribution,
+      monthlyInvestment: breakdownItem.monthlyInvestment || 0,
+    })) || [];
 
   const drawdownPeriodDeviationFromAverage =
     drawdownPeriodLengthYears - AVERAGE_DRAWDOWN_PERIOD_IN_YEARS;
@@ -265,6 +325,52 @@ const LifePlanManagementPage = () => {
                   </RadioGroup>
                 </span>
               </Tooltip>
+            </Grid>
+          </StepCard>
+        </Grid>
+        <Grid item xs={12} md={10}>
+          <Spacer y={3} />
+          <StepCard
+            title="Which accounts would you like to contribute to your retirement pot?"
+            step={4}
+            horizontalLayout={false}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Box marginY={1}>
+                  <InfoBox>
+                    <Typography variant="b2" color="grey" colorShade="dark1">
+                      {"You're on track to have "}
+                      <b>{shortFallPercentage}%</b>
+                      {" of your target by the time you're "}
+                      <b>{drawdownStartAge}</b>.{" That's a shortfall of "}
+                      <b>£{shortFallAmount}</b>.
+                    </Typography>
+                    <Box marginY={1}>
+                      <Divider />
+                    </Box>
+                    <Typography variant="b2" color="grey" colorShade="dark1">
+                      {"You're likely to have "}
+                      <b>{goalCurrentProjections?.data?.possibleDrawdown}</b>
+                      {' to spend each month, or '}
+                      <b>{goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform}</b>
+                      {' if market underperforms '}
+                    </Typography>
+                  </InfoBox>
+                </Box>
+
+                <PerformanceProjectionsSimplifiedChart {...monthlyDataArgs} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <AccountsTable
+                  headerRow={[
+                    { value: 'ACCOUNT' },
+                    { value: 'TOTAL HOLDINGS' },
+                    { value: 'MONTHLY CONTRIBUTION' },
+                  ]}
+                  dataRow={tableData}
+                />
+              </Grid>
             </Grid>
           </StepCard>
         </Grid>

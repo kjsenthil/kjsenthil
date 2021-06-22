@@ -15,8 +15,8 @@ export interface AccountsHeaderCell {
 }
 
 export interface AccountsTableProps {
-  headerRow?: AccountsHeaderCell[];
-  dataRow?: Breakdown[];
+  headerRow: AccountsHeaderCell[];
+  dataRow: Breakdown[];
 }
 
 const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
@@ -51,38 +51,65 @@ const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
               <AccountsTableCell>
                 <Typography variant="sh4">{row.accountName}</Typography>
               </AccountsTableCell>
-              <AccountsTableCell>
-                <Typography variant="b2" color="primary">
-                  {formatCurrency(row.accountTotalHoldings)}
-                </Typography>
-              </AccountsTableCell>
+
+              {row.accountTotalHoldings !== undefined && (
+                <AccountsTableCell>
+                  <Typography variant="b2" color="primary">
+                    {formatCurrency(row.accountTotalHoldings)}
+                  </Typography>
+                </AccountsTableCell>
+              )}
+
               <AccountsTableCell>
                 <Typography variant="b2" color="primary">
                   {formatCurrency(row.accountTotalContribution)}
                 </Typography>
               </AccountsTableCell>
-              <AccountsTableCell>
-                <Typography variant="b2" color="primary">
-                  {formatCurrency(row.accountCash)}
-                </Typography>
-              </AccountsTableCell>
-              <AccountsTableCell align="right">
-                <Grid container spacing={1}>
-                  <Grid item xs={12} md={6}>
-                    <Typography variant="b2" color="primary" display="inline">
-                      {formatCurrency(row.accountReturn, { displayPlus: true })}
+
+              {row.accountCash !== undefined && (
+                <AccountsTableCell>
+                  <Grid container alignItems="center">
+                    <Typography variant="b2" color="primary">
+                      {formatCurrency(row.accountCash)}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={3}>
-                    <TagBox variant="percentage">
-                      {formatPercent(row.accountReturnPercentage / 100)}
-                    </TagBox>
+                </AccountsTableCell>
+              )}
+
+              {row.monthlyInvestment !== undefined && (
+                <AccountsTableCell>
+                  <Grid container alignItems="center">
+                    <Typography variant="b2" color="secondary">
+                      {formatCurrency(row.monthlyInvestment)}
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Icon color="primary" name="arrowHeadRight" />
+                </AccountsTableCell>
+              )}
+
+              {row.accountReturn !== undefined && (
+                <AccountsTableCell align="right">
+                  <Grid container spacing={1} alignItems="center">
+                    <Grid item xs={12} md={6}>
+                      <Typography variant="b2" color="primary" display="inline">
+                        {formatCurrency(row.accountReturn, { displayPlus: true })}
+                      </Typography>
+                    </Grid>
+                    {row.accountReturnPercentage !== undefined && (
+                      <>
+                        <Grid item xs={12} md={3}>
+                          <TagBox variant="percentage">
+                            {formatPercent(row.accountReturnPercentage / 100)}
+                          </TagBox>
+                        </Grid>
+
+                        <Grid item xs={12} md={2}>
+                          <Icon color="primary" name="arrowHeadRight" />
+                        </Grid>
+                      </>
+                    )}
                   </Grid>
-                </Grid>
-              </AccountsTableCell>
+                </AccountsTableCell>
+              )}
             </TableRow>
           ))}
       </TableBody>

@@ -1,5 +1,7 @@
 import { CommonState, RiskModel, SedolCode } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
+import { Breakdown, ClientResponse, InvestmentSummary } from '../myAccount';
+import { AllAssets } from '../assets';
 
 export interface ProjectionRequest {
   upfrontInvestment: number;
@@ -80,13 +82,78 @@ export interface ProjectionsChartProjectionTargetDatum extends TimeSeriesDatum {
   metadata?: Record<string, unknown>;
 }
 
-// The response received when projecting based on a goal
-export interface GoalProjectionResponse {
-  projectedRetirementAgeTotal: number;
+export interface GoalCurrentProjectionsState extends CommonState<GoalCurrentProjectionsResponse> {}
+
+export interface GoalCurrentProjectionsRequestPayload {
+  timeHorizon: number;
+  preGoalRiskModel: string;
+  monthlyContributions: number;
+  portfolioCurrentValue: number;
+  desiredMonthlyDrawdown: number;
+  drawdownStartDate: string;
+  drawdownEndDate: string;
+  upfrontContribution: number;
+  preGoalExpectedReturn: number;
+  preGoalExpectedVolatility: number;
+  preGoalZScoreLowerBound: number;
+  preGoalZScoreUpperBound: number;
+  feesPercentage: number;
+  postGoalRiskModel: string;
+  lumpSumAmount: number;
+  statePensionAmount: number;
+  desiredAmount: number;
+  postGoalExpectedReturn: number;
+  postGoalExpectedVolatility: number;
+  postGoalZScoreLowerBound: number;
+  postGoalZScoreUpperBound: number;
+  netContribution: number;
+  isConeGraph: boolean;
+  includeStatePension: boolean;
+}
+export interface GoalCurrentProjectionsResponse {
+  projectedGoalAgeTotal: number;
   possibleDrawdown: number;
   possibleDrawdownWithSP: number;
-  projectedRetirementAgeTotalWhenMarketUnderperform: number;
+  projectedGoalAgeTotalWhenMarketUnderperform: number;
   possibleDrawdownWhenMarketUnderperform: number;
   possibleDrawdownWhenMarketUnderperformWithSP: number;
-  projections: ProjectionMonth[];
+  projections: GoalCurrentProjectionMonth[];
+}
+export interface GoalCurrentProjectionMonth {
+  month: number;
+  lowerBound: number;
+  upperBound: number;
+  projectedValue: number;
+  contributionLine: number;
+}
+export interface GoalCurrentValidationError {
+  property: string;
+  message: string;
+  code: string;
+}
+
+export interface FetchGoalCurrentProjectionsParams {
+  clientAge: number;
+  drawdownAmount: number;
+  drawdownStartDate: Date | null;
+  drawdownEndDate: Date | null;
+  shouldIncludeStatePension: boolean;
+  fees: number;
+  accountBreakdown?: Breakdown[];
+  investmentSummary?: InvestmentSummary[];
+  includedClientAccounts?: ClientResponse['included'];
+  fundData: AllAssets;
+}
+
+export interface AssetModelResponse {
+  id: number;
+  riskModel: string;
+  erValue: number;
+  volatility: number;
+  zScores: {
+    MoreLikelyLB: number;
+    MoreLikelyUB: number;
+    LessLikelyLB: number;
+    LessLikelyUB: number;
+  };
 }

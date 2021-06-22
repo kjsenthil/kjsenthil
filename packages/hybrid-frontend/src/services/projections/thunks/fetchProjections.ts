@@ -1,14 +1,9 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections } from '../api';
-import {
-  extractClientAccounts,
-  getEquityAllocation,
-  getMonthlySavingsAmount,
-  ClientState,
-  InvestmentSummaryResponse,
-} from '../../myAccount';
+import { extractClientAccounts, ClientState, InvestmentSummaryResponse } from '../../myAccount';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
+import extractPercentageEquityAllocationsByAccounts from '../../utils/extractPercentageEquityAllocationsByAccounts';
 
 const fetchProjections = createAsyncThunk(
   'projections/fetchProjections',
@@ -29,28 +24,9 @@ const fetchProjections = createAsyncThunk(
     const accounts = extractClientAccounts(client.included);
 
     // get a percentage equity allocation for each account
-    const accountTotals = await Promise.all(
-      investmentSummary.data.map(async (account) => {
-        const accountName =
-          accounts.find((clientAccount) => clientAccount.id === account.id)?.name || '';
-
-        const [equityPercentage, monthlyInvestment] = await Promise.all([
-          getEquityAllocation(account.id),
-          getMonthlySavingsAmount(account.id),
-        ]);
-
-        return {
-          id: account.id,
-          accountName,
-          accountTotalHoldings:
-            account.attributes.cash + account.attributes.funds + account.attributes.shares, // create util
-          accountCash: account.attributes.cash,
-          accountReturn: account.attributes.gainLoss,
-          accountReturnPercentage: account.attributes.gainLossPercent,
-          equityPercentage,
-          monthlyInvestment,
-        };
-      })
+    const accountTotals = await extractPercentageEquityAllocationsByAccounts(
+      investmentSummary.data,
+      accounts
     );
 
     // get the percentage equity allocation for the customer's entire portfolio
@@ -63,11 +39,11 @@ const fetchProjections = createAsyncThunk(
     });
 
     const portfolioTotal = accountTotals.reduce(
-      (accumulator, account) => accumulator + account.accountTotalHoldings,
+      (accumulator, account) => accumulator + (account.accountTotalHoldings || 0),
       0
     );
     const monthlyInvestmentTotal = accountTotals.reduce(
-      (accumulator, account) => accumulator + account.monthlyInvestment,
+      (accumulator, account) => accumulator + (account.monthlyInvestment || 0),
       0
     );
 

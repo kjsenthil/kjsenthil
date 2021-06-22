@@ -37,7 +37,7 @@ const Template: Story<PerformanceProjectionsSimplifiedChartProps> = (args) => (
 
 // Monthly data variants
 
-const monthlyDataArgs: PerformanceProjectionsSimplifiedChartProps = {
+export const monthlyDataArgs: PerformanceProjectionsSimplifiedChartProps = {
   projectionsData: mockProjectionsMonthlyData.map(mapDate),
   historicalData: mockHistoricalMonthlyData.map(mapDate),
   goalsData: mockGoalsMonthlyData.data.map(mapDate),
