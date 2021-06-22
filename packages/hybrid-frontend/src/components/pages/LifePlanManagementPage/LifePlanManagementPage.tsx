@@ -36,7 +36,14 @@ import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
 import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
-import { monthlyDataArgs } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart.stories';
+
+// TODO: these are placeholder stuff to render a static chart.
+//  Will remove and integrate with API
+import mockProjectionsMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-projections-monthly-data.json';
+import mockHistoricalMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-historical-monthly-data.json';
+import mockGoalsMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-goals-monthly-data.json';
+import mockProjectionsMetadata from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-projections-metadata.json';
+import { mapDate } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData';
 
 const AVERAGE_DRAWDOWN_PERIOD_IN_YEARS = 22;
 const DEFAULT_DRAWDOWN_START_AGE = 65;
@@ -359,7 +366,12 @@ const LifePlanManagementPage = () => {
                   </InfoBox>
                 </Box>
 
-                <PerformanceProjectionsSimplifiedChart {...monthlyDataArgs} />
+                <PerformanceProjectionsSimplifiedChart
+                  projectionsData={mockProjectionsMonthlyData.map(mapDate)}
+                  historicalData={mockHistoricalMonthlyData.map(mapDate)}
+                  goalsData={mockGoalsMonthlyData.data.map(mapDate)}
+                  projectionsMetadata={mockProjectionsMetadata}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <AccountsTable
