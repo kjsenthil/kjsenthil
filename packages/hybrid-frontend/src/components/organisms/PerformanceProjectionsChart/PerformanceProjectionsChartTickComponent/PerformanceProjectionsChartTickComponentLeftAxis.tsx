@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TickRendererProps } from '@visx/axis';
 import { Text } from '@visx/text';
-import { usePerformanceProjectionsChartStyles } from '../performanceProjectionsChartStyles/performanceProjectionsChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 export interface PerformanceProjectionsChartTickComponentLeftAxisProps extends TickRendererProps {
   // Note: we have to pass chartStyles as a prop rather than having
@@ -11,7 +11,7 @@ export interface PerformanceProjectionsChartTickComponentLeftAxisProps extends T
   // The cause for this is likely due to how d3 is handling the showing / hiding
   // of chart ticks. Unknown for sure at this point but passing the chartStyles
   // down as a prop works well enough.
-  chartStyles: ReturnType<typeof usePerformanceProjectionsChartStyles>;
+  chartStyles: ReturnType<typeof useChartStyles>;
 }
 
 export default function PerformanceProjectionsChartTickComponentLeftAxis({

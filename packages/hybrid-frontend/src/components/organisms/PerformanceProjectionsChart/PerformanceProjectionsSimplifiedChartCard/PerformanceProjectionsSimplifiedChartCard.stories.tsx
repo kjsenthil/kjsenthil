@@ -3,13 +3,14 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import PerformanceProjectionsSimplifiedChartCard, {
   PerformanceProjectionsSimplifiedChartCardProps,
 } from './PerformanceProjectionsSimplifiedChartCard';
-import mockProjectionsData from '../performanceProjectionsData/mocks/mock-projections-data.json';
 import { mapDate } from '../performanceProjectionsData';
-import mockAnnualHistoricalData from '../performanceProjectionsData/mocks/mock-annual-historical-data.json';
-import mockGoalsData from '../performanceProjectionsData/mocks/mock-goals-data.json';
+
+import mockProjectionsAnnualData from '../performanceProjectionsData/mocks/mock-projections-annual-data.json';
+import mockProjectionsTargetAnnualData from '../performanceProjectionsData/mocks/mock-projections-target-annual-data.json';
+import mockHistoricalAnnualData from '../performanceProjectionsData/mocks/mock-historical-annual-data.json';
+import mockGoalsAnnualData from '../performanceProjectionsData/mocks/mock-goals-annual-data.json';
+
 import mockProjectionsMetadata from '../performanceProjectionsData/mocks/mock-projections-metadata.json';
-import mockProjectionsGoalNotMetData from '../performanceProjectionsData/mocks/mock-projections-data-goal-not-met.json';
-import mockProjectionsMetadataGoalNotMet from '../performanceProjectionsData/mocks/mock-projections-metadata-goal-not-met.json';
 
 export default {
   title:
@@ -42,9 +43,9 @@ const defaultArgs: PerformanceProjectionsSimplifiedChartCardProps = {
     progress: 0.5,
   },
   chartProps: {
-    projectionsData: mockProjectionsData.data.map(mapDate),
-    annualHistoricalData: mockAnnualHistoricalData.data.map(mapDate),
-    goalsData: mockGoalsData.data.map(mapDate),
+    projectionsData: mockProjectionsAnnualData.map(mapDate),
+    historicalData: mockHistoricalAnnualData.map(mapDate),
+    goalsData: mockGoalsAnnualData.data.map(mapDate),
     projectionsMetadata: mockProjectionsMetadata,
   },
 };
@@ -57,7 +58,16 @@ GoalNotMet.args = {
   ...defaultArgs,
   chartProps: {
     ...defaultArgs.chartProps,
-    projectionsData: mockProjectionsGoalNotMetData.data.map(mapDate),
-    projectionsMetadata: mockProjectionsMetadataGoalNotMet,
+    projectionsTargetData: mockProjectionsTargetAnnualData.map(mapDate),
+  },
+};
+
+export const NoData = Template.bind({});
+NoData.args = {
+  ...defaultArgs,
+  chartProps: {
+    ...defaultArgs.chartProps,
+    historicalData: [],
+    projectionsData: [],
   },
 };

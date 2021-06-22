@@ -6,19 +6,18 @@ import { MyAccountLayout } from '../../templates';
 import { fetchProjections } from '../../../services/projections';
 
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
-import { usePerformanceProjectionsChartStyles } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import { useAnnualHistoricalDataForChart } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData';
+import { useHistoricalDataForProjectionsChart } from '../../../services/performance/hooks';
 import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalContent/ProjectionCalculateModalContent';
+import useProjectionsDataForProjectionsChart from '../../../services/projections/hooks/useProjectionsDataForProjectionsChart';
 
-import useProjectionsDataForChart from '../../../services/projections/hooks/useProjectionsDataForChart';
-
+import useProjectionsMetadataForProjectionsChart from '../../../services/projections/hooks/useProjectionsMetadataForProjectionsChart';
 import { useDispatchThunkOnRender, useGoalsDataForChart } from '../../../hooks';
-import useProjectionsMetadataForChart from '../../../services/projections/hooks/useProjectionsMetadataForChart';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
 import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
+import { usePerformanceProjectionsChartDimension } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 
 const LifePlanPage = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -31,14 +30,16 @@ const LifePlanPage = () => {
 
   const dispatch = useDispatch();
 
-  // Projected performance data
-  const projectionsData = useProjectionsDataForChart();
-  const annualHistoricalData = useAnnualHistoricalDataForChart();
+  // TODO: this is annual data at the moment. When the new projection data is
+  //  available, this probably will be monthly data.
+  const annualProjectionsData = useProjectionsDataForProjectionsChart();
+
+  const annualHistoricalData = useHistoricalDataForProjectionsChart('annual');
   const goalsData = useGoalsDataForChart();
-  const projectionsMetadata = useProjectionsMetadataForChart();
-  const performanceProjectionsChartStyles = usePerformanceProjectionsChartStyles();
+  const projectionsMetadata = useProjectionsMetadataForProjectionsChart();
+  const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
   const hasDataForProjectionsChart =
-    projectionsData.length > 0 &&
+    annualProjectionsData.length > 0 &&
     annualHistoricalData.length > 0 &&
     goalsData.length > 0 &&
     projectionsMetadata;
@@ -73,8 +74,8 @@ const LifePlanPage = () => {
         <>
           <MainCard>
             <PerformanceProjectionsChart
-              projectionsData={projectionsData}
-              annualHistoricalData={annualHistoricalData}
+              projectionsData={annualProjectionsData}
+              historicalData={annualHistoricalData}
               goalsData={goalsData}
               projectionsMetadata={projectionsMetadata}
             />
@@ -92,7 +93,7 @@ const LifePlanPage = () => {
       ) : projectionsFetchMaxRetriesHit && projectionsError ? (
         <Typography>{projectionsError}</Typography>
       ) : (
-        <Skeleton height={performanceProjectionsChartStyles.DIMENSION.DESKTOP.height} />
+        <Skeleton height={performanceProjectionsChartDimension.height} />
       )}
       <Spacer y={5} />
       <MainCard title="Your important moments">Coming soon</MainCard>

@@ -3,13 +3,19 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import PerformanceProjectionsChart, {
   PerformanceProjectionsChartProps,
 } from './PerformanceProjectionsChart';
-import mockProjectionsData from './performanceProjectionsData/mocks/mock-projections-data.json';
-import mockProjectionsGoalNotMetData from './performanceProjectionsData/mocks/mock-projections-data-goal-not-met.json';
-import mockAnnualHistoricalData from './performanceProjectionsData/mocks/mock-annual-historical-data.json';
-import mockGoalsData from './performanceProjectionsData/mocks/mock-goals-data.json';
-import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
-import mockProjectionsMetadataGoalNotMet from './performanceProjectionsData/mocks/mock-projections-metadata-goal-not-met.json';
 import { mapDate } from './performanceProjectionsData';
+
+import mockProjectionsMonthlyData from './performanceProjectionsData/mocks/mock-projections-monthly-data.json';
+import mockProjectionsTargetMonthlyData from './performanceProjectionsData/mocks/mock-projections-target-monthly-data.json';
+import mockHistoricalMonthlyData from './performanceProjectionsData/mocks/mock-historical-monthly-data.json';
+import mockGoalsMonthlyData from './performanceProjectionsData/mocks/mock-goals-monthly-data.json';
+
+import mockProjectionsAnnualData from './performanceProjectionsData/mocks/mock-projections-annual-data.json';
+import mockProjectionsTargetAnnualData from './performanceProjectionsData/mocks/mock-projections-target-annual-data.json';
+import mockHistoricalAnnualData from './performanceProjectionsData/mocks/mock-historical-annual-data.json';
+import mockGoalsAnnualData from './performanceProjectionsData/mocks/mock-goals-annual-data.json';
+
+import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
 
 export default {
   title: 'Digital Hybrid/Organisms/Performance Projections Chart/Performance Projections Chart',
@@ -28,19 +34,48 @@ const Template: Story<PerformanceProjectionsChartProps> = (args) => (
   <PerformanceProjectionsChart {...args} />
 );
 
-const defaultArgs: PerformanceProjectionsChartProps = {
-  projectionsData: mockProjectionsData.data.map(mapDate),
-  annualHistoricalData: mockAnnualHistoricalData.data.map(mapDate),
-  goalsData: mockGoalsData.data.map(mapDate),
+// Monthly data variants
+
+const monthlyDataArgs: PerformanceProjectionsChartProps = {
+  projectionsData: mockProjectionsMonthlyData.map(mapDate),
+  historicalData: mockHistoricalMonthlyData.map(mapDate),
+  goalsData: mockGoalsMonthlyData.data.map(mapDate),
   projectionsMetadata: mockProjectionsMetadata,
 };
 
-export const Default = Template.bind({});
-Default.args = defaultArgs;
+export const MonthlyData = Template.bind({});
+MonthlyData.args = monthlyDataArgs;
 
-export const GoalNotMet = Template.bind({});
-GoalNotMet.args = {
-  ...defaultArgs,
-  projectionsData: mockProjectionsGoalNotMetData.data.map(mapDate),
-  projectionsMetadata: mockProjectionsMetadataGoalNotMet,
+export const GoalNotMetMonthlyData = Template.bind({});
+GoalNotMetMonthlyData.args = {
+  ...monthlyDataArgs,
+  projectionsTargetData: mockProjectionsTargetMonthlyData.map(mapDate),
+};
+
+// Annual data variants
+
+const annualDataArgs: PerformanceProjectionsChartProps = {
+  projectionsData: mockProjectionsAnnualData.map(mapDate),
+  historicalData: mockHistoricalAnnualData.map(mapDate),
+  goalsData: mockGoalsAnnualData.data.map(mapDate),
+  projectionsMetadata: mockProjectionsMetadata,
+};
+
+export const AnnualData = Template.bind({});
+AnnualData.args = annualDataArgs;
+
+export const GoalNotMetAnnualData = Template.bind({});
+GoalNotMetAnnualData.args = {
+  ...annualDataArgs,
+  projectionsTargetData: mockProjectionsTargetAnnualData.map(mapDate),
+};
+
+// No data variant
+
+export const NoData = Template.bind({});
+NoData.args = {
+  projectionsData: [],
+  historicalData: [],
+  goalsData: [],
+  projectionsMetadata: mockProjectionsMetadata,
 };

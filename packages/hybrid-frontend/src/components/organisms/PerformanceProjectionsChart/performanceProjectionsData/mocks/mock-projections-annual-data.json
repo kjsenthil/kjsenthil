@@ -1,0 +1,464 @@
+[
+  {
+    "date": "2021-01-01T00:00:00.000Z",
+    "upperBound": 607799.82,
+    "lowerBound": 607799.82,
+    "value": 607799.82,
+    "netContributionsToDate": 267777.4
+  },
+  {
+    "date": "2022-01-01T00:00:00.000Z",
+    "upperBound": 632234.9344783352,
+    "lowerBound": 621552.7593184293,
+    "value": 625113.4843717313,
+    "netContributionsToDate": 272777.4
+  },
+  {
+    "date": "2023-01-01T00:00:00.000Z",
+    "upperBound": 665916.6439870845,
+    "lowerBound": 640510.0065793537,
+    "value": 648978.885715264,
+    "netContributionsToDate": 277777.4
+  },
+  {
+    "date": "2024-01-01T00:00:00.000Z",
+    "upperBound": 704275.0775053685,
+    "lowerBound": 662099.4781160924,
+    "value": 676158.011245851,
+    "netContributionsToDate": 282777.4
+  },
+  {
+    "date": "2025-01-01T00:00:00.000Z",
+    "upperBound": 746025.7011736033,
+    "lowerBound": 685598.193226468,
+    "value": 705740.6958755131,
+    "netContributionsToDate": 287777.4
+  },
+  {
+    "date": "2026-01-01T00:00:00.000Z",
+    "upperBound": 790494.9132708979,
+    "lowerBound": 710627.0252401138,
+    "value": 737249.6545837085,
+    "netContributionsToDate": 292777.4
+  },
+  {
+    "date": "2027-01-01T00:00:00.000Z",
+    "upperBound": 837257.9452942079,
+    "lowerBound": 736946.8995477447,
+    "value": 770383.9147965658,
+    "netContributionsToDate": 297777.4
+  },
+  {
+    "date": "2028-01-01T00:00:00.000Z",
+    "upperBound": 886018.9114500361,
+    "lowerBound": 764391.281248664,
+    "value": 804933.8246491214,
+    "netContributionsToDate": 302777.4
+  },
+  {
+    "date": "2029-01-01T00:00:00.000Z",
+    "upperBound": 936558.2227383397,
+    "lowerBound": 792836.577953106,
+    "value": 840743.7928815172,
+    "netContributionsToDate": 307777.4
+  },
+  {
+    "date": "2030-01-01T00:00:00.000Z",
+    "upperBound": 988705.5578871465,
+    "lowerBound": 822186.9268763822,
+    "value": 877693.1372133037,
+    "netContributionsToDate": 312777.4
+  },
+  {
+    "date": "2031-01-01T00:00:00.000Z",
+    "upperBound": 1042324.429587675,
+    "lowerBound": 852365.5081747769,
+    "value": 915685.148645743,
+    "netContributionsToDate": 317777.4
+  },
+  {
+    "date": "2032-01-01T00:00:00.000Z",
+    "upperBound": 1097302.6810150933,
+    "lowerBound": 883309.1960541615,
+    "value": 954640.3577078055,
+    "netContributionsToDate": 322777.4
+  },
+  {
+    "date": "2033-01-01T00:00:00.000Z",
+    "upperBound": 1153546.290390116,
+    "lowerBound": 914965.0717600007,
+    "value": 994492.1446367058,
+    "netContributionsToDate": 327777.4
+  },
+  {
+    "date": "2034-01-01T00:00:00.000Z",
+    "upperBound": 1210975.1471268,
+    "lowerBound": 947288.0462452096,
+    "value": 1035183.7465390732,
+    "netContributionsToDate": 332777.4
+  },
+  {
+    "date": "2035-01-01T00:00:00.000Z",
+    "upperBound": 1269520.0661639513,
+    "lowerBound": 980239.1797311682,
+    "value": 1076666.1418754293,
+    "netContributionsToDate": 337777.4
+  },
+  {
+    "date": "2036-01-01T00:00:00.000Z",
+    "upperBound": 1329120.6136432816,
+    "lowerBound": 1013784.4579231386,
+    "value": 1118896.509829853,
+    "netContributionsToDate": 342777.4
+  },
+  {
+    "date": "2037-01-01T00:00:00.000Z",
+    "upperBound": 1389723.4833067274,
+    "lowerBound": 1047893.87818974,
+    "value": 1161837.0798954023,
+    "netContributionsToDate": 347777.4
+  },
+  {
+    "date": "2038-01-01T00:00:00.000Z",
+    "upperBound": 1451281.2579830876,
+    "lowerBound": 1082540.7524841963,
+    "value": 1205454.2543171602,
+    "netContributionsToDate": 352777.4
+  },
+  {
+    "date": "2039-01-01T00:00:00.000Z",
+    "upperBound": 1513751.4472815124,
+    "lowerBound": 1117701.1657244852,
+    "value": 1249717.9262434943,
+    "netContributionsToDate": 357777.4
+  },
+  {
+    "date": "2040-01-01T00:00:00.000Z",
+    "upperBound": 1577095.7278037213,
+    "lowerBound": 1153353.5481581304,
+    "value": 1294600.9413733273,
+    "netContributionsToDate": 362777.4
+  },
+  {
+    "date": "2041-01-01T00:00:00.000Z",
+    "upperBound": 1641279.3347308855,
+    "lowerBound": 1189478.3329259632,
+    "value": 1340078.6668609374,
+    "netContributionsToDate": 367777.4
+  },
+  {
+    "date": "2042-01-01T00:00:00.000Z",
+    "upperBound": 1706270.5684939367,
+    "lowerBound": 1226057.6783988718,
+    "value": 1386128.6417638934,
+    "netContributionsToDate": 372777.4
+  },
+  {
+    "date": "2043-01-01T00:00:00.000Z",
+    "upperBound": 1772040.390266674,
+    "lowerBound": 1263075.2405071384,
+    "value": 1432730.2904269837,
+    "netContributionsToDate": 377777.4
+  },
+  {
+    "date": "2044-01-01T00:00:00.000Z",
+    "upperBound": 1838562.0869451677,
+    "lowerBound": 1300515.9841790958,
+    "value": 1479864.6851011198,
+    "netContributionsToDate": 382777.4
+  },
+  {
+    "date": "2045-01-01T00:00:00.000Z",
+    "upperBound": 1905810.9911510954,
+    "lowerBound": 1338366.0257491898,
+    "value": 1527514.347549825,
+    "netContributionsToDate": 387777.4
+  },
+  {
+    "date": "2046-01-01T00:00:00.000Z",
+    "upperBound": 1973764.2452886724,
+    "lowerBound": 1376612.5001609428,
+    "value": 1575663.0818701861,
+    "netContributionsToDate": 392777.4
+  },
+  {
+    "date": "2047-01-01T00:00:00.000Z",
+    "upperBound": 2042400.6012265687,
+    "lowerBound": 1415243.4482209138,
+    "value": 1624295.8325561322,
+    "netContributionsToDate": 397777.4
+  },
+  {
+    "date": "2048-01-01T00:00:00.000Z",
+    "upperBound": 2111700.2490533018,
+    "lowerBound": 1454247.720216226,
+    "value": 1673398.563161918,
+    "netContributionsToDate": 402777.4
+  },
+  {
+    "date": "2049-01-01T00:00:00.000Z",
+    "upperBound": 2181644.669759046,
+    "lowerBound": 1493614.8929987266,
+    "value": 1722958.1519188331,
+    "netContributionsToDate": 407777.4
+  },
+  {
+    "date": "2050-01-01T00:00:00.000Z",
+    "upperBound": 2252216.5077605085,
+    "lowerBound": 1533335.1982375118,
+    "value": 1772962.3014118443,
+    "netContributionsToDate": 412777.4
+  },
+  {
+    "date": "2051-01-01T00:00:00.000Z",
+    "upperBound": 2323399.46,
+    "lowerBound": 1573399.46,
+    "value": 1823399.46,
+    "netContributionsToDate": 400983.76
+  },
+  {
+    "date": "2052-01-01T00:00:00.000Z",
+    "upperBound": 2323373.9631609325,
+    "lowerBound": 1573298.76243456,
+    "value": 1823356.9317327114,
+    "netContributionsToDate": 389190.12
+  },
+  {
+    "date": "2053-01-01T00:00:00.000Z",
+    "upperBound": 2323195.4852874624,
+    "lowerBound": 1572593.87947648,
+    "value": 1823059.233861691,
+    "netContributionsToDate": 377396.48
+  },
+  {
+    "date": "2054-01-01T00:00:00.000Z",
+    "upperBound": 2322711.045345185,
+    "lowerBound": 1570680.6257331201,
+    "value": 1822251.196783207,
+    "netContributionsToDate": 365602.83999999997
+  },
+  {
+    "date": "2055-01-01T00:00:00.000Z",
+    "upperBound": 2321767.662299698,
+    "lowerBound": 1566954.81581184,
+    "value": 1820677.6508935275,
+    "netContributionsToDate": 353809.19999999995
+  },
+  {
+    "date": "2056-01-01T00:00:00.000Z",
+    "upperBound": 2320212.3551165983,
+    "lowerBound": 1560812.2643199998,
+    "value": 1818083.4265889213,
+    "netContributionsToDate": 342015.55999999994
+  },
+  {
+    "date": "2057-01-01T00:00:00.000Z",
+    "upperBound": 2317892.1427614815,
+    "lowerBound": 1551648.78586496,
+    "value": 1814213.354265656,
+    "netContributionsToDate": 330221.9199999999
+  },
+  {
+    "date": "2058-01-01T00:00:00.000Z",
+    "upperBound": 2314654.044199945,
+    "lowerBound": 1538860.19505408,
+    "value": 1808812.2643199998,
+    "netContributionsToDate": 318428.2799999999
+  },
+  {
+    "date": "2059-01-01T00:00:00.000Z",
+    "upperBound": 2310345.0783975855,
+    "lowerBound": 1521842.30649472,
+    "value": 1801624.9871482216,
+    "netContributionsToDate": 306634.6399999999
+  },
+  {
+    "date": "2060-01-01T00:00:00.000Z",
+    "upperBound": 2304812.26432,
+    "lowerBound": 1499990.93479424,
+    "value": 1792396.353146589,
+    "netContributionsToDate": 294840.9999999999
+  },
+  {
+    "date": "2061-01-01T00:00:00.000Z",
+    "upperBound": 2297902.6209327844,
+    "lowerBound": 1472701.89456,
+    "value": 1780871.1927113703,
+    "netContributionsToDate": 283047.35999999987
+  },
+  {
+    "date": "2062-01-01T00:00:00.000Z",
+    "upperBound": 2289463.1672015362,
+    "lowerBound": 1439371.00039936,
+    "value": 1766794.3362388338,
+    "netContributionsToDate": 271253.71999999986
+  },
+  {
+    "date": "2063-01-01T00:00:00.000Z",
+    "upperBound": 2279340.922091852,
+    "lowerBound": 1399394.06691968,
+    "value": 1749910.6141252478,
+    "netContributionsToDate": 259460.07999999987
+  },
+  {
+    "date": "2064-01-01T00:00:00.000Z",
+    "upperBound": 2267382.904569328,
+    "lowerBound": 1352166.90872832,
+    "value": 1729964.8567668805,
+    "netContributionsToDate": 247666.4399999999
+  },
+  {
+    "date": "2065-01-01T00:00:00.000Z",
+    "upperBound": 2253436.133599561,
+    "lowerBound": 1297085.34043264,
+    "value": 1706701.89456,
+    "netContributionsToDate": 235872.7999999999
+  },
+  {
+    "date": "2066-01-01T00:00:00.000Z",
+    "upperBound": 2237347.6281481483,
+    "lowerBound": 1233545.17664,
+    "value": 1679866.5579008746,
+    "netContributionsToDate": 224079.15999999992
+  },
+  {
+    "date": "2067-01-01T00:00:00.000Z",
+    "upperBound": 2218964.407180686,
+    "lowerBound": 1160942.23195776,
+    "value": 1649203.6771857725,
+    "netContributionsToDate": 212285.51999999993
+  },
+  {
+    "date": "2068-01-01T00:00:00.000Z",
+    "upperBound": 2198133.4896627706,
+    "lowerBound": 1078672.3209932798,
+    "value": 1614458.082810962,
+    "netContributionsToDate": 200491.87999999995
+  },
+  {
+    "date": "2069-01-01T00:00:00.000Z",
+    "upperBound": 2174701.89456,
+    "lowerBound": 986131.25835392,
+    "value": 1575374.6051727114,
+    "netContributionsToDate": 188698.23999999996
+  },
+  {
+    "date": "2070-01-01T00:00:00.000Z",
+    "upperBound": 2148516.6408379697,
+    "lowerBound": 882714.85864704,
+    "value": 1531698.0746672887,
+    "netContributionsToDate": 176904.59999999998
+  },
+  {
+    "date": "2071-01-01T00:00:00.000Z",
+    "upperBound": 2119424.747462277,
+    "lowerBound": 767818.9364799998,
+    "value": 1483173.3216909622,
+    "netContributionsToDate": 165110.96
+  },
+  {
+    "date": "2072-01-01T00:00:00.000Z",
+    "upperBound": 2087273.2333985185,
+    "lowerBound": 640839.3064601602,
+    "value": 1429545.17664,
+    "netContributionsToDate": 153317.32
+  },
+  {
+    "date": "2073-01-01T00:00:00.000Z",
+    "upperBound": 2051909.1176122907,
+    "lowerBound": 501171.7831948799,
+    "value": 1370558.4699106705,
+    "netContributionsToDate": 141523.68
+  },
+  {
+    "date": "2074-01-01T00:00:00.000Z",
+    "upperBound": 2013179.4190691907,
+    "lowerBound": 348212.1812915199,
+    "value": 1305958.031899242,
+    "netContributionsToDate": 129730.04
+  },
+  {
+    "date": "2075-01-01T00:00:00.000Z",
+    "upperBound": 1970931.1567348149,
+    "lowerBound": 181356.3153574402,
+    "value": 1235488.6930019825,
+    "netContributionsToDate": 117936.4
+  },
+  {
+    "date": "2076-01-01T00:00:00.000Z",
+    "upperBound": 1925011.3495747598,
+    "lowerBound": 0,
+    "value": 1158895.2836151603,
+    "netContributionsToDate": 106142.76
+  },
+  {
+    "date": "2077-01-01T00:00:00.000Z",
+    "upperBound": 1875267.0165546227,
+    "lowerBound": 0,
+    "value": 1075922.6341350437,
+    "netContributionsToDate": 94349.12
+  },
+  {
+    "date": "2078-01-01T00:00:00.000Z",
+    "upperBound": 1821545.17664,
+    "lowerBound": 0,
+    "value": 986315.5749579008,
+    "netContributionsToDate": 82555.48
+  },
+  {
+    "date": "2079-01-01T00:00:00.000Z",
+    "upperBound": 1763692.8487964883,
+    "lowerBound": 0,
+    "value": 889818.9364799998,
+    "netContributionsToDate": 70761.84
+  },
+  {
+    "date": "2080-01-01T00:00:00.000Z",
+    "upperBound": 1701557.0519896846,
+    "lowerBound": 0,
+    "value": 786177.5490976092,
+    "netContributionsToDate": 58968.2
+  },
+  {
+    "date": "2081-01-01T00:00:00.000Z",
+    "upperBound": 1634984.8051851853,
+    "lowerBound": 0,
+    "value": 675136.2432069972,
+    "netContributionsToDate": 47174.56
+  },
+  {
+    "date": "2082-01-01T00:00:00.000Z",
+    "upperBound": 1563823.127348587,
+    "lowerBound": 0,
+    "value": 556439.8492044316,
+    "netContributionsToDate": 35380.92
+  },
+  {
+    "date": "2083-01-01T00:00:00.000Z",
+    "upperBound": 1487919.0374454868,
+    "lowerBound": 0,
+    "value": 429833.1974861809,
+    "netContributionsToDate": 23587.28
+  },
+  {
+    "date": "2084-01-01T00:00:00.000Z",
+    "upperBound": 1407119.5544414818,
+    "lowerBound": 0,
+    "value": 295061.11844851315,
+    "netContributionsToDate": 11793.64
+  },
+  {
+    "date": "2085-01-01T00:00:00.000Z",
+    "upperBound": 1321271.6973021675,
+    "lowerBound": 0,
+    "value": 151868.44248769677,
+    "netContributionsToDate": 0
+  },
+  {
+    "date": "2086-01-01T00:00:00.000Z",
+    "upperBound": 1230222.4849931411,
+    "lowerBound": 0,
+    "value": 0,
+    "netContributionsToDate": 0
+  }
+]

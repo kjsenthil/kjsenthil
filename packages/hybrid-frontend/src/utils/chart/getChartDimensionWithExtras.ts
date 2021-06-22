@@ -1,4 +1,4 @@
-import { ChartDimension, ChartDimensionWithExtras } from '../../../../config/chart';
+import { ChartDimension, ChartDimensionWithExtras } from '../../config/chart';
 
 /**
  * This function calculates and injects certain extra figures (like inner width

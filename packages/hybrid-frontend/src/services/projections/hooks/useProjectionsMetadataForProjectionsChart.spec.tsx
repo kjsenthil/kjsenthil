@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import MockDate from 'mockdate';
-import useProjectionsMetadataForChart from './useProjectionsMetadataForChart';
+import useProjectionsMetadataForProjectionsChart from './useProjectionsMetadataForProjectionsChart';
 
 function getWrapperWithMockStore(dateOfBirth?: string) {
   const mockStore = configureStore({
@@ -17,7 +17,7 @@ function getWrapperWithMockStore(dateOfBirth?: string) {
   return ({ children }) => <Provider store={mockStore}>{children}</Provider>;
 }
 
-describe('useProjectionsMetadataForChart', () => {
+describe('useProjectionsMetadataForProjectionsChart', () => {
   beforeEach(() => {
     MockDate.set('2021-12-21');
   });
@@ -29,7 +29,7 @@ describe('useProjectionsMetadataForChart', () => {
   describe('There is no client data', () => {
     it('returns undefined if client data is not available', () => {
       const wrapper = getWrapperWithMockStore();
-      const { result } = renderHook(() => useProjectionsMetadataForChart(), { wrapper });
+      const { result } = renderHook(() => useProjectionsMetadataForProjectionsChart(), { wrapper });
 
       expect(result.current).toBeUndefined();
     });
@@ -38,10 +38,9 @@ describe('useProjectionsMetadataForChart', () => {
   describe('There is client data', () => {
     it('returns correct metadata when yearsUntilRetirement > 0', () => {
       const wrapper = getWrapperWithMockStore('1971-12-21T00:00:00');
-      const { result } = renderHook(() => useProjectionsMetadataForChart(), { wrapper });
+      const { result } = renderHook(() => useProjectionsMetadataForProjectionsChart(), { wrapper });
 
       expect(result.current).toEqual({
-        goalMet: true,
         investmentPeriod: 50,
         todayAge: 50,
       });
@@ -49,10 +48,9 @@ describe('useProjectionsMetadataForChart', () => {
 
     it('returns correct metadata when yearsUntilRetirement <= 0', () => {
       const wrapper = getWrapperWithMockStore('1900-12-21T00:00:00');
-      const { result } = renderHook(() => useProjectionsMetadataForChart(), { wrapper });
+      const { result } = renderHook(() => useProjectionsMetadataForProjectionsChart(), { wrapper });
 
       expect(result.current).toEqual({
-        goalMet: true,
         investmentPeriod: 50,
         todayAge: 121,
       });

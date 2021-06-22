@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { ProjectionsChartProjectionDatum, ProjectionYear } from '../index';
 
-export default function useProjectionsDataForChart(): ProjectionsChartProjectionDatum[] {
+export default function useProjectionsDataForProjectionsChart(): ProjectionsChartProjectionDatum[] {
   const { projections } = useSelector((state: RootState) => state.projections.projections);
 
   if (!projections) {
@@ -15,8 +15,8 @@ export default function useProjectionsDataForChart(): ProjectionsChartProjection
     d: ProjectionYear
   ): ProjectionsChartProjectionDatum => ({
     value: d.medium,
-    valueBad: d.low,
-    valueGood: d.high,
+    lowerBound: d.low,
+    upperBound: d.high,
 
     // 'actual' is actually projected net contributions. It's just poorly named
     netContributionsToDate: d.actual,

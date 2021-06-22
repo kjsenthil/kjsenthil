@@ -4,7 +4,9 @@ import { calculateAgeToday } from '../../../utils/date';
 import { TARGET_RETIREMENT_AGE } from '../constants';
 import { ProjectionsChartMetadata } from '../types';
 
-export default function useProjectionsMetadataForChart(): ProjectionsChartMetadata | undefined {
+export default function useProjectionsMetadataForProjectionsChart():
+  | ProjectionsChartMetadata
+  | undefined {
   const { data: client } = useSelector((state: RootState) => state.client);
 
   if (!client) {
@@ -18,5 +20,5 @@ export default function useProjectionsMetadataForChart(): ProjectionsChartMetada
 
   const investmentPeriod = yearsUntilRetirement > 0 ? yearsUntilRetirement : 50;
 
-  return { goalMet: true, investmentPeriod, todayAge: age };
+  return { investmentPeriod, todayAge: age };
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChartDimension, ChartDimensionWithExtras, ScreenSize } from '../../../../config/chart';
-import { getChartDimensionWithExtras } from '../utils';
+import { getChartDimensionWithExtras } from '../../../../utils/chart';
 import { useScreenSize } from '../../../../hooks';
 
 const basePerformanceChartDimension: ChartDimension = {

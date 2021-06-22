@@ -1,0 +1,3074 @@
+[
+  {
+    "date": "2021-05-31T23:00:00.000Z",
+    "upperBound": 250000,
+    "lowerBound": 250000,
+    "value": 250000
+  },
+  {
+    "date": "2021-06-30T23:00:00.000Z",
+    "upperBound": 267087,
+    "lowerBound": 236184,
+    "value": 252141
+  },
+  {
+    "date": "2021-07-31T23:00:00.000Z",
+    "upperBound": 275481,
+    "lowerBound": 231660,
+    "value": 254288
+  },
+  {
+    "date": "2021-08-31T23:00:00.000Z",
+    "upperBound": 282465,
+    "lowerBound": 228653,
+    "value": 256442
+  },
+  {
+    "date": "2021-09-30T23:00:00.000Z",
+    "upperBound": 288730,
+    "lowerBound": 226428,
+    "value": 258603
+  },
+  {
+    "date": "2021-11-01T00:00:00.000Z",
+    "upperBound": 294540,
+    "lowerBound": 224700,
+    "value": 260772
+  },
+  {
+    "date": "2021-12-01T00:00:00.000Z",
+    "upperBound": 300032,
+    "lowerBound": 223324,
+    "value": 262947
+  },
+  {
+    "date": "2022-01-01T00:00:00.000Z",
+    "upperBound": 305287,
+    "lowerBound": 222214,
+    "value": 265129
+  },
+  {
+    "date": "2022-02-01T00:00:00.000Z",
+    "upperBound": 310356,
+    "lowerBound": 221315,
+    "value": 267317
+  },
+  {
+    "date": "2022-03-01T00:00:00.000Z",
+    "upperBound": 315276,
+    "lowerBound": 220588,
+    "value": 269513
+  },
+  {
+    "date": "2022-03-31T23:00:00.000Z",
+    "upperBound": 320074,
+    "lowerBound": 220004,
+    "value": 271716
+  },
+  {
+    "date": "2022-04-30T23:00:00.000Z",
+    "upperBound": 324769,
+    "lowerBound": 219544,
+    "value": 273926
+  },
+  {
+    "date": "2022-05-31T23:00:00.000Z",
+    "upperBound": 329377,
+    "lowerBound": 219189,
+    "value": 276143
+  },
+  {
+    "date": "2022-06-30T23:00:00.000Z",
+    "upperBound": 333909,
+    "lowerBound": 218928,
+    "value": 278367
+  },
+  {
+    "date": "2022-07-31T23:00:00.000Z",
+    "upperBound": 338377,
+    "lowerBound": 218750,
+    "value": 280598
+  },
+  {
+    "date": "2022-08-31T23:00:00.000Z",
+    "upperBound": 342787,
+    "lowerBound": 218646,
+    "value": 282837
+  },
+  {
+    "date": "2022-09-30T23:00:00.000Z",
+    "upperBound": 347146,
+    "lowerBound": 218609,
+    "value": 285082
+  },
+  {
+    "date": "2022-11-01T00:00:00.000Z",
+    "upperBound": 351461,
+    "lowerBound": 218633,
+    "value": 287335
+  },
+  {
+    "date": "2022-12-01T00:00:00.000Z",
+    "upperBound": 355736,
+    "lowerBound": 218713,
+    "value": 289595
+  },
+  {
+    "date": "2023-01-01T00:00:00.000Z",
+    "upperBound": 359975,
+    "lowerBound": 218845,
+    "value": 291862
+  },
+  {
+    "date": "2023-02-01T00:00:00.000Z",
+    "upperBound": 364182,
+    "lowerBound": 219024,
+    "value": 294136
+  },
+  {
+    "date": "2023-03-01T00:00:00.000Z",
+    "upperBound": 368361,
+    "lowerBound": 219248,
+    "value": 296418
+  },
+  {
+    "date": "2023-03-31T23:00:00.000Z",
+    "upperBound": 372513,
+    "lowerBound": 219514,
+    "value": 298706
+  },
+  {
+    "date": "2023-04-30T23:00:00.000Z",
+    "upperBound": 376641,
+    "lowerBound": 219818,
+    "value": 301002
+  },
+  {
+    "date": "2023-05-31T23:00:00.000Z",
+    "upperBound": 380749,
+    "lowerBound": 220159,
+    "value": 303306
+  },
+  {
+    "date": "2023-06-30T23:00:00.000Z",
+    "upperBound": 384837,
+    "lowerBound": 220535,
+    "value": 305617
+  },
+  {
+    "date": "2023-07-31T23:00:00.000Z",
+    "upperBound": 388907,
+    "lowerBound": 220943,
+    "value": 307935
+  },
+  {
+    "date": "2023-08-31T23:00:00.000Z",
+    "upperBound": 392961,
+    "lowerBound": 221383,
+    "value": 310261
+  },
+  {
+    "date": "2023-09-30T23:00:00.000Z",
+    "upperBound": 397001,
+    "lowerBound": 221852,
+    "value": 312594
+  },
+  {
+    "date": "2023-11-01T00:00:00.000Z",
+    "upperBound": 401027,
+    "lowerBound": 222349,
+    "value": 314934
+  },
+  {
+    "date": "2023-12-01T00:00:00.000Z",
+    "upperBound": 405041,
+    "lowerBound": 222874,
+    "value": 317282
+  },
+  {
+    "date": "2024-01-01T00:00:00.000Z",
+    "upperBound": 409045,
+    "lowerBound": 223424,
+    "value": 319637
+  },
+  {
+    "date": "2024-02-01T00:00:00.000Z",
+    "upperBound": 413038,
+    "lowerBound": 223999,
+    "value": 322000
+  },
+  {
+    "date": "2024-03-01T00:00:00.000Z",
+    "upperBound": 417023,
+    "lowerBound": 224598,
+    "value": 324371
+  },
+  {
+    "date": "2024-03-31T23:00:00.000Z",
+    "upperBound": 420999,
+    "lowerBound": 225221,
+    "value": 326749
+  },
+  {
+    "date": "2024-04-30T23:00:00.000Z",
+    "upperBound": 424968,
+    "lowerBound": 225865,
+    "value": 329135
+  },
+  {
+    "date": "2024-05-31T23:00:00.000Z",
+    "upperBound": 428931,
+    "lowerBound": 226532,
+    "value": 331528
+  },
+  {
+    "date": "2024-06-30T23:00:00.000Z",
+    "upperBound": 432888,
+    "lowerBound": 227219,
+    "value": 333929
+  },
+  {
+    "date": "2024-07-31T23:00:00.000Z",
+    "upperBound": 436839,
+    "lowerBound": 227926,
+    "value": 336338
+  },
+  {
+    "date": "2024-08-31T23:00:00.000Z",
+    "upperBound": 440786,
+    "lowerBound": 228653,
+    "value": 338754
+  },
+  {
+    "date": "2024-09-30T23:00:00.000Z",
+    "upperBound": 444729,
+    "lowerBound": 229400,
+    "value": 341178
+  },
+  {
+    "date": "2024-11-01T00:00:00.000Z",
+    "upperBound": 448669,
+    "lowerBound": 230165,
+    "value": 343610
+  },
+  {
+    "date": "2024-12-01T00:00:00.000Z",
+    "upperBound": 452605,
+    "lowerBound": 230948,
+    "value": 346049
+  },
+  {
+    "date": "2025-01-01T00:00:00.000Z",
+    "upperBound": 456539,
+    "lowerBound": 231749,
+    "value": 348497
+  },
+  {
+    "date": "2025-02-01T00:00:00.000Z",
+    "upperBound": 460471,
+    "lowerBound": 232567,
+    "value": 350952
+  },
+  {
+    "date": "2025-03-01T00:00:00.000Z",
+    "upperBound": 464401,
+    "lowerBound": 233403,
+    "value": 353415
+  },
+  {
+    "date": "2025-03-31T23:00:00.000Z",
+    "upperBound": 468330,
+    "lowerBound": 234255,
+    "value": 355885
+  },
+  {
+    "date": "2025-04-30T23:00:00.000Z",
+    "upperBound": 472257,
+    "lowerBound": 235123,
+    "value": 358364
+  },
+  {
+    "date": "2025-05-31T23:00:00.000Z",
+    "upperBound": 476185,
+    "lowerBound": 236007,
+    "value": 360851
+  },
+  {
+    "date": "2025-06-30T23:00:00.000Z",
+    "upperBound": 480112,
+    "lowerBound": 236908,
+    "value": 363345
+  },
+  {
+    "date": "2025-07-31T23:00:00.000Z",
+    "upperBound": 484039,
+    "lowerBound": 237823,
+    "value": 365848
+  },
+  {
+    "date": "2025-08-31T23:00:00.000Z",
+    "upperBound": 487967,
+    "lowerBound": 238754,
+    "value": 368358
+  },
+  {
+    "date": "2025-09-30T23:00:00.000Z",
+    "upperBound": 491895,
+    "lowerBound": 239700,
+    "value": 370877
+  },
+  {
+    "date": "2025-11-01T00:00:00.000Z",
+    "upperBound": 495825,
+    "lowerBound": 240660,
+    "value": 373404
+  },
+  {
+    "date": "2025-12-01T00:00:00.000Z",
+    "upperBound": 499755,
+    "lowerBound": 241635,
+    "value": 375938
+  },
+  {
+    "date": "2026-01-01T00:00:00.000Z",
+    "upperBound": 503687,
+    "lowerBound": 242624,
+    "value": 378481
+  },
+  {
+    "date": "2026-02-01T00:00:00.000Z",
+    "upperBound": 507621,
+    "lowerBound": 243628,
+    "value": 381032
+  },
+  {
+    "date": "2026-03-01T00:00:00.000Z",
+    "upperBound": 511557,
+    "lowerBound": 244645,
+    "value": 383591
+  },
+  {
+    "date": "2026-03-31T23:00:00.000Z",
+    "upperBound": 515495,
+    "lowerBound": 245676,
+    "value": 386158
+  },
+  {
+    "date": "2026-04-30T23:00:00.000Z",
+    "upperBound": 519435,
+    "lowerBound": 246721,
+    "value": 388734
+  },
+  {
+    "date": "2026-05-31T23:00:00.000Z",
+    "upperBound": 523378,
+    "lowerBound": 247779,
+    "value": 391317
+  },
+  {
+    "date": "2026-06-30T23:00:00.000Z",
+    "upperBound": 527324,
+    "lowerBound": 248851,
+    "value": 393909
+  },
+  {
+    "date": "2026-07-31T23:00:00.000Z",
+    "upperBound": 531272,
+    "lowerBound": 249935,
+    "value": 396509
+  },
+  {
+    "date": "2026-08-31T23:00:00.000Z",
+    "upperBound": 535224,
+    "lowerBound": 251033,
+    "value": 399118
+  },
+  {
+    "date": "2026-09-30T23:00:00.000Z",
+    "upperBound": 539179,
+    "lowerBound": 252144,
+    "value": 401734
+  },
+  {
+    "date": "2026-11-01T00:00:00.000Z",
+    "upperBound": 543138,
+    "lowerBound": 253268,
+    "value": 404360
+  },
+  {
+    "date": "2026-12-01T00:00:00.000Z",
+    "upperBound": 547100,
+    "lowerBound": 254404,
+    "value": 406993
+  },
+  {
+    "date": "2027-01-01T00:00:00.000Z",
+    "upperBound": 551066,
+    "lowerBound": 255554,
+    "value": 409635
+  },
+  {
+    "date": "2027-02-01T00:00:00.000Z",
+    "upperBound": 555037,
+    "lowerBound": 256715,
+    "value": 412285
+  },
+  {
+    "date": "2027-03-01T00:00:00.000Z",
+    "upperBound": 559011,
+    "lowerBound": 257889,
+    "value": 414944
+  },
+  {
+    "date": "2027-03-31T23:00:00.000Z",
+    "upperBound": 562989,
+    "lowerBound": 259076,
+    "value": 417612
+  },
+  {
+    "date": "2027-04-30T23:00:00.000Z",
+    "upperBound": 566972,
+    "lowerBound": 260275,
+    "value": 420287
+  },
+  {
+    "date": "2027-05-31T23:00:00.000Z",
+    "upperBound": 570960,
+    "lowerBound": 261486,
+    "value": 422972
+  },
+  {
+    "date": "2027-06-30T23:00:00.000Z",
+    "upperBound": 574952,
+    "lowerBound": 262709,
+    "value": 425665
+  },
+  {
+    "date": "2027-07-31T23:00:00.000Z",
+    "upperBound": 578949,
+    "lowerBound": 263945,
+    "value": 428366
+  },
+  {
+    "date": "2027-08-31T23:00:00.000Z",
+    "upperBound": 582950,
+    "lowerBound": 265192,
+    "value": 431076
+  },
+  {
+    "date": "2027-09-30T23:00:00.000Z",
+    "upperBound": 586957,
+    "lowerBound": 266452,
+    "value": 433795
+  },
+  {
+    "date": "2027-11-01T00:00:00.000Z",
+    "upperBound": 590969,
+    "lowerBound": 267723,
+    "value": 436523
+  },
+  {
+    "date": "2027-12-01T00:00:00.000Z",
+    "upperBound": 594987,
+    "lowerBound": 269007,
+    "value": 439259
+  },
+  {
+    "date": "2028-01-01T00:00:00.000Z",
+    "upperBound": 599009,
+    "lowerBound": 270302,
+    "value": 442004
+  },
+  {
+    "date": "2028-02-01T00:00:00.000Z",
+    "upperBound": 603037,
+    "lowerBound": 271609,
+    "value": 444758
+  },
+  {
+    "date": "2028-03-01T00:00:00.000Z",
+    "upperBound": 607071,
+    "lowerBound": 272928,
+    "value": 447520
+  },
+  {
+    "date": "2028-03-31T23:00:00.000Z",
+    "upperBound": 611110,
+    "lowerBound": 274258,
+    "value": 450292
+  },
+  {
+    "date": "2028-04-30T23:00:00.000Z",
+    "upperBound": 615155,
+    "lowerBound": 275601,
+    "value": 453072
+  },
+  {
+    "date": "2028-05-31T23:00:00.000Z",
+    "upperBound": 619207,
+    "lowerBound": 276955,
+    "value": 455861
+  },
+  {
+    "date": "2028-06-30T23:00:00.000Z",
+    "upperBound": 623264,
+    "lowerBound": 278320,
+    "value": 458659
+  },
+  {
+    "date": "2028-07-31T23:00:00.000Z",
+    "upperBound": 627327,
+    "lowerBound": 279697,
+    "value": 461466
+  },
+  {
+    "date": "2028-08-31T23:00:00.000Z",
+    "upperBound": 631396,
+    "lowerBound": 281086,
+    "value": 464282
+  },
+  {
+    "date": "2028-09-30T23:00:00.000Z",
+    "upperBound": 635471,
+    "lowerBound": 282486,
+    "value": 467106
+  },
+  {
+    "date": "2028-11-01T00:00:00.000Z",
+    "upperBound": 639553,
+    "lowerBound": 283898,
+    "value": 469940
+  },
+  {
+    "date": "2028-12-01T00:00:00.000Z",
+    "upperBound": 643641,
+    "lowerBound": 285322,
+    "value": 472783
+  },
+  {
+    "date": "2029-01-01T00:00:00.000Z",
+    "upperBound": 647736,
+    "lowerBound": 286757,
+    "value": 475635
+  },
+  {
+    "date": "2029-02-01T00:00:00.000Z",
+    "upperBound": 651837,
+    "lowerBound": 288203,
+    "value": 478496
+  },
+  {
+    "date": "2029-03-01T00:00:00.000Z",
+    "upperBound": 655945,
+    "lowerBound": 289661,
+    "value": 481367
+  },
+  {
+    "date": "2029-03-31T23:00:00.000Z",
+    "upperBound": 660060,
+    "lowerBound": 291130,
+    "value": 484246
+  },
+  {
+    "date": "2029-04-30T23:00:00.000Z",
+    "upperBound": 664181,
+    "lowerBound": 292611,
+    "value": 487135
+  },
+  {
+    "date": "2029-05-31T23:00:00.000Z",
+    "upperBound": 668310,
+    "lowerBound": 294103,
+    "value": 490033
+  },
+  {
+    "date": "2029-06-30T23:00:00.000Z",
+    "upperBound": 672445,
+    "lowerBound": 295607,
+    "value": 492940
+  },
+  {
+    "date": "2029-07-31T23:00:00.000Z",
+    "upperBound": 676588,
+    "lowerBound": 297122,
+    "value": 495856
+  },
+  {
+    "date": "2029-08-31T23:00:00.000Z",
+    "upperBound": 680737,
+    "lowerBound": 298648,
+    "value": 498782
+  },
+  {
+    "date": "2029-09-30T23:00:00.000Z",
+    "upperBound": 684894,
+    "lowerBound": 300186,
+    "value": 501717
+  },
+  {
+    "date": "2029-11-01T00:00:00.000Z",
+    "upperBound": 689058,
+    "lowerBound": 301736,
+    "value": 504661
+  },
+  {
+    "date": "2029-12-01T00:00:00.000Z",
+    "upperBound": 693229,
+    "lowerBound": 303296,
+    "value": 507615
+  },
+  {
+    "date": "2030-01-01T00:00:00.000Z",
+    "upperBound": 697408,
+    "lowerBound": 304869,
+    "value": 510578
+  },
+  {
+    "date": "2030-02-01T00:00:00.000Z",
+    "upperBound": 701594,
+    "lowerBound": 306452,
+    "value": 513551
+  },
+  {
+    "date": "2030-03-01T00:00:00.000Z",
+    "upperBound": 705788,
+    "lowerBound": 308047,
+    "value": 516533
+  },
+  {
+    "date": "2030-03-31T23:00:00.000Z",
+    "upperBound": 709989,
+    "lowerBound": 309654,
+    "value": 519525
+  },
+  {
+    "date": "2030-04-30T23:00:00.000Z",
+    "upperBound": 714198,
+    "lowerBound": 311272,
+    "value": 522526
+  },
+  {
+    "date": "2030-05-31T23:00:00.000Z",
+    "upperBound": 718414,
+    "lowerBound": 312901,
+    "value": 525537
+  },
+  {
+    "date": "2030-06-30T23:00:00.000Z",
+    "upperBound": 722639,
+    "lowerBound": 314542,
+    "value": 528557
+  },
+  {
+    "date": "2030-07-31T23:00:00.000Z",
+    "upperBound": 726871,
+    "lowerBound": 316194,
+    "value": 531588
+  },
+  {
+    "date": "2030-08-31T23:00:00.000Z",
+    "upperBound": 731111,
+    "lowerBound": 317858,
+    "value": 534627
+  },
+  {
+    "date": "2030-09-30T23:00:00.000Z",
+    "upperBound": 735359,
+    "lowerBound": 319533,
+    "value": 537677
+  },
+  {
+    "date": "2030-11-01T00:00:00.000Z",
+    "upperBound": 739615,
+    "lowerBound": 321220,
+    "value": 540736
+  },
+  {
+    "date": "2030-12-01T00:00:00.000Z",
+    "upperBound": 743880,
+    "lowerBound": 322918,
+    "value": 543805
+  },
+  {
+    "date": "2031-01-01T00:00:00.000Z",
+    "upperBound": 748152,
+    "lowerBound": 324628,
+    "value": 546884
+  },
+  {
+    "date": "2031-02-01T00:00:00.000Z",
+    "upperBound": 752432,
+    "lowerBound": 326349,
+    "value": 549973
+  },
+  {
+    "date": "2031-03-01T00:00:00.000Z",
+    "upperBound": 756721,
+    "lowerBound": 328082,
+    "value": 553071
+  },
+  {
+    "date": "2031-03-31T23:00:00.000Z",
+    "upperBound": 761018,
+    "lowerBound": 329826,
+    "value": 556180
+  },
+  {
+    "date": "2031-04-30T23:00:00.000Z",
+    "upperBound": 765324,
+    "lowerBound": 331582,
+    "value": 559298
+  },
+  {
+    "date": "2031-05-31T23:00:00.000Z",
+    "upperBound": 769638,
+    "lowerBound": 333349,
+    "value": 562426
+  },
+  {
+    "date": "2031-06-30T23:00:00.000Z",
+    "upperBound": 773960,
+    "lowerBound": 335128,
+    "value": 565564
+  },
+  {
+    "date": "2031-07-31T23:00:00.000Z",
+    "upperBound": 778291,
+    "lowerBound": 336919,
+    "value": 568713
+  },
+  {
+    "date": "2031-08-31T23:00:00.000Z",
+    "upperBound": 782630,
+    "lowerBound": 338721,
+    "value": 571871
+  },
+  {
+    "date": "2031-09-30T23:00:00.000Z",
+    "upperBound": 786978,
+    "lowerBound": 340535,
+    "value": 575039
+  },
+  {
+    "date": "2031-11-01T00:00:00.000Z",
+    "upperBound": 791335,
+    "lowerBound": 342360,
+    "value": 578218
+  },
+  {
+    "date": "2031-12-01T00:00:00.000Z",
+    "upperBound": 795701,
+    "lowerBound": 344198,
+    "value": 581407
+  },
+  {
+    "date": "2032-01-01T00:00:00.000Z",
+    "upperBound": 800075,
+    "lowerBound": 346047,
+    "value": 584606
+  },
+  {
+    "date": "2032-02-01T00:00:00.000Z",
+    "upperBound": 804458,
+    "lowerBound": 347907,
+    "value": 587815
+  },
+  {
+    "date": "2032-03-01T00:00:00.000Z",
+    "upperBound": 808850,
+    "lowerBound": 349780,
+    "value": 591034
+  },
+  {
+    "date": "2032-03-31T23:00:00.000Z",
+    "upperBound": 813251,
+    "lowerBound": 351664,
+    "value": 594264
+  },
+  {
+    "date": "2032-04-30T23:00:00.000Z",
+    "upperBound": 817661,
+    "lowerBound": 353560,
+    "value": 597504
+  },
+  {
+    "date": "2032-05-31T23:00:00.000Z",
+    "upperBound": 822080,
+    "lowerBound": 355467,
+    "value": 600754
+  },
+  {
+    "date": "2032-06-30T23:00:00.000Z",
+    "upperBound": 826508,
+    "lowerBound": 357387,
+    "value": 604015
+  },
+  {
+    "date": "2032-07-31T23:00:00.000Z",
+    "upperBound": 830946,
+    "lowerBound": 359318,
+    "value": 607286
+  },
+  {
+    "date": "2032-08-31T23:00:00.000Z",
+    "upperBound": 835392,
+    "lowerBound": 361261,
+    "value": 610567
+  },
+  {
+    "date": "2032-09-30T23:00:00.000Z",
+    "upperBound": 839848,
+    "lowerBound": 363216,
+    "value": 613859
+  },
+  {
+    "date": "2032-11-01T00:00:00.000Z",
+    "upperBound": 844313,
+    "lowerBound": 365183,
+    "value": 617162
+  },
+  {
+    "date": "2032-12-01T00:00:00.000Z",
+    "upperBound": 848787,
+    "lowerBound": 367162,
+    "value": 620475
+  },
+  {
+    "date": "2033-01-01T00:00:00.000Z",
+    "upperBound": 853271,
+    "lowerBound": 369153,
+    "value": 623798
+  },
+  {
+    "date": "2033-02-01T00:00:00.000Z",
+    "upperBound": 857764,
+    "lowerBound": 371156,
+    "value": 627133
+  },
+  {
+    "date": "2033-03-01T00:00:00.000Z",
+    "upperBound": 862267,
+    "lowerBound": 373171,
+    "value": 630478
+  },
+  {
+    "date": "2033-03-31T23:00:00.000Z",
+    "upperBound": 866779,
+    "lowerBound": 375198,
+    "value": 633833
+  },
+  {
+    "date": "2033-04-30T23:00:00.000Z",
+    "upperBound": 871301,
+    "lowerBound": 377237,
+    "value": 637199
+  },
+  {
+    "date": "2033-05-31T23:00:00.000Z",
+    "upperBound": 875833,
+    "lowerBound": 379288,
+    "value": 640577
+  },
+  {
+    "date": "2033-06-30T23:00:00.000Z",
+    "upperBound": 880374,
+    "lowerBound": 381351,
+    "value": 643964
+  },
+  {
+    "date": "2033-07-31T23:00:00.000Z",
+    "upperBound": 884925,
+    "lowerBound": 383427,
+    "value": 647363
+  },
+  {
+    "date": "2033-08-31T23:00:00.000Z",
+    "upperBound": 889486,
+    "lowerBound": 385514,
+    "value": 650773
+  },
+  {
+    "date": "2033-09-30T23:00:00.000Z",
+    "upperBound": 894056,
+    "lowerBound": 387614,
+    "value": 654193
+  },
+  {
+    "date": "2033-11-01T00:00:00.000Z",
+    "upperBound": 898637,
+    "lowerBound": 389726,
+    "value": 657624
+  },
+  {
+    "date": "2033-12-01T00:00:00.000Z",
+    "upperBound": 903227,
+    "lowerBound": 391850,
+    "value": 661066
+  },
+  {
+    "date": "2034-01-01T00:00:00.000Z",
+    "upperBound": 907827,
+    "lowerBound": 393987,
+    "value": 664520
+  },
+  {
+    "date": "2034-02-01T00:00:00.000Z",
+    "upperBound": 912437,
+    "lowerBound": 396136,
+    "value": 667984
+  },
+  {
+    "date": "2034-03-01T00:00:00.000Z",
+    "upperBound": 917058,
+    "lowerBound": 398297,
+    "value": 671459
+  },
+  {
+    "date": "2034-03-31T23:00:00.000Z",
+    "upperBound": 921688,
+    "lowerBound": 400470,
+    "value": 674946
+  },
+  {
+    "date": "2034-04-30T23:00:00.000Z",
+    "upperBound": 926329,
+    "lowerBound": 402656,
+    "value": 678443
+  },
+  {
+    "date": "2034-05-31T23:00:00.000Z",
+    "upperBound": 930979,
+    "lowerBound": 404854,
+    "value": 681952
+  },
+  {
+    "date": "2034-06-30T23:00:00.000Z",
+    "upperBound": 935641,
+    "lowerBound": 407065,
+    "value": 685472
+  },
+  {
+    "date": "2034-07-31T23:00:00.000Z",
+    "upperBound": 940312,
+    "lowerBound": 409289,
+    "value": 689003
+  },
+  {
+    "date": "2034-08-31T23:00:00.000Z",
+    "upperBound": 944993,
+    "lowerBound": 411524,
+    "value": 692546
+  },
+  {
+    "date": "2034-09-30T23:00:00.000Z",
+    "upperBound": 949685,
+    "lowerBound": 413773,
+    "value": 696100
+  },
+  {
+    "date": "2034-11-01T00:00:00.000Z",
+    "upperBound": 954388,
+    "lowerBound": 416034,
+    "value": 699665
+  },
+  {
+    "date": "2034-12-01T00:00:00.000Z",
+    "upperBound": 959101,
+    "lowerBound": 418307,
+    "value": 703241
+  },
+  {
+    "date": "2035-01-01T00:00:00.000Z",
+    "upperBound": 963824,
+    "lowerBound": 420593,
+    "value": 706829
+  },
+  {
+    "date": "2035-02-01T00:00:00.000Z",
+    "upperBound": 968558,
+    "lowerBound": 422892,
+    "value": 710429
+  },
+  {
+    "date": "2035-03-01T00:00:00.000Z",
+    "upperBound": 973303,
+    "lowerBound": 425204,
+    "value": 714039
+  },
+  {
+    "date": "2035-03-31T23:00:00.000Z",
+    "upperBound": 978058,
+    "lowerBound": 427528,
+    "value": 717662
+  },
+  {
+    "date": "2035-04-30T23:00:00.000Z",
+    "upperBound": 982824,
+    "lowerBound": 429865,
+    "value": 721296
+  },
+  {
+    "date": "2035-05-31T23:00:00.000Z",
+    "upperBound": 987600,
+    "lowerBound": 432215,
+    "value": 724941
+  },
+  {
+    "date": "2035-06-30T23:00:00.000Z",
+    "upperBound": 992388,
+    "lowerBound": 434578,
+    "value": 728599
+  },
+  {
+    "date": "2035-07-31T23:00:00.000Z",
+    "upperBound": 997186,
+    "lowerBound": 436954,
+    "value": 732268
+  },
+  {
+    "date": "2035-08-31T23:00:00.000Z",
+    "upperBound": 1001995,
+    "lowerBound": 439342,
+    "value": 735948
+  },
+  {
+    "date": "2035-09-30T23:00:00.000Z",
+    "upperBound": 1006815,
+    "lowerBound": 441744,
+    "value": 739641
+  },
+  {
+    "date": "2035-11-01T00:00:00.000Z",
+    "upperBound": 1011646,
+    "lowerBound": 444158,
+    "value": 743345
+  },
+  {
+    "date": "2035-12-01T00:00:00.000Z",
+    "upperBound": 1016488,
+    "lowerBound": 446585,
+    "value": 747061
+  },
+  {
+    "date": "2036-01-01T00:00:00.000Z",
+    "upperBound": 1021341,
+    "lowerBound": 449026,
+    "value": 750789
+  },
+  {
+    "date": "2036-02-01T00:00:00.000Z",
+    "upperBound": 1026205,
+    "lowerBound": 451480,
+    "value": 754528
+  },
+  {
+    "date": "2036-03-01T00:00:00.000Z",
+    "upperBound": 1031080,
+    "lowerBound": 453946,
+    "value": 758280
+  },
+  {
+    "date": "2036-03-31T23:00:00.000Z",
+    "upperBound": 1035967,
+    "lowerBound": 456426,
+    "value": 762044
+  },
+  {
+    "date": "2036-04-30T23:00:00.000Z",
+    "upperBound": 1040864,
+    "lowerBound": 458919,
+    "value": 765820
+  },
+  {
+    "date": "2036-05-31T23:00:00.000Z",
+    "upperBound": 1045773,
+    "lowerBound": 461425,
+    "value": 769607
+  },
+  {
+    "date": "2036-06-30T23:00:00.000Z",
+    "upperBound": 1050693,
+    "lowerBound": 463945,
+    "value": 773407
+  },
+  {
+    "date": "2036-07-31T23:00:00.000Z",
+    "upperBound": 1055625,
+    "lowerBound": 466477,
+    "value": 777219
+  },
+  {
+    "date": "2036-08-31T23:00:00.000Z",
+    "upperBound": 1060568,
+    "lowerBound": 469023,
+    "value": 781043
+  },
+  {
+    "date": "2036-09-30T23:00:00.000Z",
+    "upperBound": 1065522,
+    "lowerBound": 471583,
+    "value": 784880
+  },
+  {
+    "date": "2036-11-01T00:00:00.000Z",
+    "upperBound": 1070488,
+    "lowerBound": 474156,
+    "value": 788728
+  },
+  {
+    "date": "2036-12-01T00:00:00.000Z",
+    "upperBound": 1075466,
+    "lowerBound": 476742,
+    "value": 792589
+  },
+  {
+    "date": "2037-01-01T00:00:00.000Z",
+    "upperBound": 1080455,
+    "lowerBound": 479342,
+    "value": 796463
+  },
+  {
+    "date": "2037-02-01T00:00:00.000Z",
+    "upperBound": 1085456,
+    "lowerBound": 481955,
+    "value": 800348
+  },
+  {
+    "date": "2037-03-01T00:00:00.000Z",
+    "upperBound": 1090468,
+    "lowerBound": 484581,
+    "value": 804246
+  },
+  {
+    "date": "2037-03-31T23:00:00.000Z",
+    "upperBound": 1095492,
+    "lowerBound": 487222,
+    "value": 808157
+  },
+  {
+    "date": "2037-04-30T23:00:00.000Z",
+    "upperBound": 1100528,
+    "lowerBound": 489876,
+    "value": 812080
+  },
+  {
+    "date": "2037-05-31T23:00:00.000Z",
+    "upperBound": 1105575,
+    "lowerBound": 492543,
+    "value": 816015
+  },
+  {
+    "date": "2037-06-30T23:00:00.000Z",
+    "upperBound": 1110635,
+    "lowerBound": 495224,
+    "value": 819963
+  },
+  {
+    "date": "2037-07-31T23:00:00.000Z",
+    "upperBound": 1115706,
+    "lowerBound": 497919,
+    "value": 823924
+  },
+  {
+    "date": "2037-08-31T23:00:00.000Z",
+    "upperBound": 1120790,
+    "lowerBound": 500628,
+    "value": 827897
+  },
+  {
+    "date": "2037-09-30T23:00:00.000Z",
+    "upperBound": 1125885,
+    "lowerBound": 503351,
+    "value": 831883
+  },
+  {
+    "date": "2037-11-01T00:00:00.000Z",
+    "upperBound": 1130992,
+    "lowerBound": 506087,
+    "value": 835882
+  },
+  {
+    "date": "2037-12-01T00:00:00.000Z",
+    "upperBound": 1136112,
+    "lowerBound": 508837,
+    "value": 839894
+  },
+  {
+    "date": "2038-01-01T00:00:00.000Z",
+    "upperBound": 1141243,
+    "lowerBound": 511601,
+    "value": 843918
+  },
+  {
+    "date": "2038-02-01T00:00:00.000Z",
+    "upperBound": 1146387,
+    "lowerBound": 514380,
+    "value": 847955
+  },
+  {
+    "date": "2038-03-01T00:00:00.000Z",
+    "upperBound": 1151543,
+    "lowerBound": 517172,
+    "value": 852005
+  },
+  {
+    "date": "2038-03-31T23:00:00.000Z",
+    "upperBound": 1156711,
+    "lowerBound": 519978,
+    "value": 856068
+  },
+  {
+    "date": "2038-04-30T23:00:00.000Z",
+    "upperBound": 1161891,
+    "lowerBound": 522798,
+    "value": 860144
+  },
+  {
+    "date": "2038-05-31T23:00:00.000Z",
+    "upperBound": 1167084,
+    "lowerBound": 525632,
+    "value": 864233
+  },
+  {
+    "date": "2038-06-30T23:00:00.000Z",
+    "upperBound": 1172289,
+    "lowerBound": 528481,
+    "value": 868335
+  },
+  {
+    "date": "2038-07-31T23:00:00.000Z",
+    "upperBound": 1177507,
+    "lowerBound": 531343,
+    "value": 872450
+  },
+  {
+    "date": "2038-08-31T23:00:00.000Z",
+    "upperBound": 1182737,
+    "lowerBound": 534220,
+    "value": 876578
+  },
+  {
+    "date": "2038-09-30T23:00:00.000Z",
+    "upperBound": 1187980,
+    "lowerBound": 537111,
+    "value": 880720
+  },
+  {
+    "date": "2038-11-01T00:00:00.000Z",
+    "upperBound": 1193235,
+    "lowerBound": 540017,
+    "value": 884875
+  },
+  {
+    "date": "2038-12-01T00:00:00.000Z",
+    "upperBound": 1198502,
+    "lowerBound": 542937,
+    "value": 889043
+  },
+  {
+    "date": "2039-01-01T00:00:00.000Z",
+    "upperBound": 1203783,
+    "lowerBound": 545871,
+    "value": 893224
+  },
+  {
+    "date": "2039-02-01T00:00:00.000Z",
+    "upperBound": 1209076,
+    "lowerBound": 548819,
+    "value": 897418
+  },
+  {
+    "date": "2039-03-01T00:00:00.000Z",
+    "upperBound": 1214382,
+    "lowerBound": 551782,
+    "value": 901626
+  },
+  {
+    "date": "2039-03-31T23:00:00.000Z",
+    "upperBound": 1219701,
+    "lowerBound": 554760,
+    "value": 905848
+  },
+  {
+    "date": "2039-04-30T23:00:00.000Z",
+    "upperBound": 1225032,
+    "lowerBound": 557752,
+    "value": 910083
+  },
+  {
+    "date": "2039-05-31T23:00:00.000Z",
+    "upperBound": 1230377,
+    "lowerBound": 560759,
+    "value": 914331
+  },
+  {
+    "date": "2039-06-30T23:00:00.000Z",
+    "upperBound": 1235734,
+    "lowerBound": 563780,
+    "value": 918593
+  },
+  {
+    "date": "2039-07-31T23:00:00.000Z",
+    "upperBound": 1241105,
+    "lowerBound": 566816,
+    "value": 922869
+  },
+  {
+    "date": "2039-08-31T23:00:00.000Z",
+    "upperBound": 1246488,
+    "lowerBound": 569867,
+    "value": 927158
+  },
+  {
+    "date": "2039-09-30T23:00:00.000Z",
+    "upperBound": 1251885,
+    "lowerBound": 572932,
+    "value": 931461
+  },
+  {
+    "date": "2039-11-01T00:00:00.000Z",
+    "upperBound": 1257294,
+    "lowerBound": 576012,
+    "value": 935778
+  },
+  {
+    "date": "2039-12-01T00:00:00.000Z",
+    "upperBound": 1262717,
+    "lowerBound": 579108,
+    "value": 940108
+  },
+  {
+    "date": "2040-01-01T00:00:00.000Z",
+    "upperBound": 1268153,
+    "lowerBound": 582217,
+    "value": 944453
+  },
+  {
+    "date": "2040-02-01T00:00:00.000Z",
+    "upperBound": 1273602,
+    "lowerBound": 585342,
+    "value": 948811
+  },
+  {
+    "date": "2040-03-01T00:00:00.000Z",
+    "upperBound": 1279065,
+    "lowerBound": 588482,
+    "value": 953183
+  },
+  {
+    "date": "2040-03-31T23:00:00.000Z",
+    "upperBound": 1284541,
+    "lowerBound": 591637,
+    "value": 957569
+  },
+  {
+    "date": "2040-04-30T23:00:00.000Z",
+    "upperBound": 1290030,
+    "lowerBound": 594807,
+    "value": 961969
+  },
+  {
+    "date": "2040-05-31T23:00:00.000Z",
+    "upperBound": 1295533,
+    "lowerBound": 597992,
+    "value": 966383
+  },
+  {
+    "date": "2040-06-30T23:00:00.000Z",
+    "upperBound": 1301049,
+    "lowerBound": 601192,
+    "value": 970812
+  },
+  {
+    "date": "2040-07-31T23:00:00.000Z",
+    "upperBound": 1306579,
+    "lowerBound": 604408,
+    "value": 975254
+  },
+  {
+    "date": "2040-08-31T23:00:00.000Z",
+    "upperBound": 1312123,
+    "lowerBound": 607638,
+    "value": 979711
+  },
+  {
+    "date": "2040-09-30T23:00:00.000Z",
+    "upperBound": 1317680,
+    "lowerBound": 610884,
+    "value": 984181
+  },
+  {
+    "date": "2040-11-01T00:00:00.000Z",
+    "upperBound": 1323250,
+    "lowerBound": 614145,
+    "value": 988666
+  },
+  {
+    "date": "2040-12-01T00:00:00.000Z",
+    "upperBound": 1328835,
+    "lowerBound": 617422,
+    "value": 993166
+  },
+  {
+    "date": "2041-01-01T00:00:00.000Z",
+    "upperBound": 1334433,
+    "lowerBound": 620713,
+    "value": 997680
+  },
+  {
+    "date": "2041-02-01T00:00:00.000Z",
+    "upperBound": 1340045,
+    "lowerBound": 624021,
+    "value": 1002208
+  },
+  {
+    "date": "2041-03-01T00:00:00.000Z",
+    "upperBound": 1345671,
+    "lowerBound": 627344,
+    "value": 1006750
+  },
+  {
+    "date": "2041-03-31T23:00:00.000Z",
+    "upperBound": 1351311,
+    "lowerBound": 630682,
+    "value": 1011308
+  },
+  {
+    "date": "2041-04-30T23:00:00.000Z",
+    "upperBound": 1356965,
+    "lowerBound": 634036,
+    "value": 1015879
+  },
+  {
+    "date": "2041-05-31T23:00:00.000Z",
+    "upperBound": 1362633,
+    "lowerBound": 637405,
+    "value": 1020466
+  },
+  {
+    "date": "2041-06-30T23:00:00.000Z",
+    "upperBound": 1368315,
+    "lowerBound": 640791,
+    "value": 1025066
+  },
+  {
+    "date": "2041-07-31T23:00:00.000Z",
+    "upperBound": 1374011,
+    "lowerBound": 644191,
+    "value": 1029682
+  },
+  {
+    "date": "2041-08-31T23:00:00.000Z",
+    "upperBound": 1379722,
+    "lowerBound": 647608,
+    "value": 1034312
+  },
+  {
+    "date": "2041-09-30T23:00:00.000Z",
+    "upperBound": 1385446,
+    "lowerBound": 651041,
+    "value": 1038958
+  },
+  {
+    "date": "2041-11-01T00:00:00.000Z",
+    "upperBound": 1391185,
+    "lowerBound": 654489,
+    "value": 1043618
+  },
+  {
+    "date": "2041-12-01T00:00:00.000Z",
+    "upperBound": 1396938,
+    "lowerBound": 657953,
+    "value": 1048292
+  },
+  {
+    "date": "2042-01-01T00:00:00.000Z",
+    "upperBound": 1402706,
+    "lowerBound": 661433,
+    "value": 1052982
+  },
+  {
+    "date": "2042-02-01T00:00:00.000Z",
+    "upperBound": 1408487,
+    "lowerBound": 664929,
+    "value": 1057687
+  },
+  {
+    "date": "2042-03-01T00:00:00.000Z",
+    "upperBound": 1414284,
+    "lowerBound": 668442,
+    "value": 1062407
+  },
+  {
+    "date": "2042-03-31T23:00:00.000Z",
+    "upperBound": 1420095,
+    "lowerBound": 671970,
+    "value": 1067142
+  },
+  {
+    "date": "2042-04-30T23:00:00.000Z",
+    "upperBound": 1425920,
+    "lowerBound": 675514,
+    "value": 1071892
+  },
+  {
+    "date": "2042-05-31T23:00:00.000Z",
+    "upperBound": 1431760,
+    "lowerBound": 679075,
+    "value": 1076657
+  },
+  {
+    "date": "2042-06-30T23:00:00.000Z",
+    "upperBound": 1437615,
+    "lowerBound": 682651,
+    "value": 1081437
+  },
+  {
+    "date": "2042-07-31T23:00:00.000Z",
+    "upperBound": 1443484,
+    "lowerBound": 686244,
+    "value": 1086233
+  },
+  {
+    "date": "2042-08-31T23:00:00.000Z",
+    "upperBound": 1449368,
+    "lowerBound": 689854,
+    "value": 1091044
+  },
+  {
+    "date": "2042-09-30T23:00:00.000Z",
+    "upperBound": 1455268,
+    "lowerBound": 693479,
+    "value": 1095870
+  },
+  {
+    "date": "2042-11-01T00:00:00.000Z",
+    "upperBound": 1461181,
+    "lowerBound": 697121,
+    "value": 1100712
+  },
+  {
+    "date": "2042-12-01T00:00:00.000Z",
+    "upperBound": 1467110,
+    "lowerBound": 700780,
+    "value": 1105569
+  },
+  {
+    "date": "2043-01-01T00:00:00.000Z",
+    "upperBound": 1473054,
+    "lowerBound": 704455,
+    "value": 1110442
+  },
+  {
+    "date": "2043-02-01T00:00:00.000Z",
+    "upperBound": 1479013,
+    "lowerBound": 708147,
+    "value": 1115330
+  },
+  {
+    "date": "2043-03-01T00:00:00.000Z",
+    "upperBound": 1484987,
+    "lowerBound": 711855,
+    "value": 1120234
+  },
+  {
+    "date": "2043-03-31T23:00:00.000Z",
+    "upperBound": 1490976,
+    "lowerBound": 715579,
+    "value": 1125153
+  },
+  {
+    "date": "2043-04-30T23:00:00.000Z",
+    "upperBound": 1496980,
+    "lowerBound": 719321,
+    "value": 1130089
+  },
+  {
+    "date": "2043-05-31T23:00:00.000Z",
+    "upperBound": 1502999,
+    "lowerBound": 723079,
+    "value": 1135040
+  },
+  {
+    "date": "2043-06-30T23:00:00.000Z",
+    "upperBound": 1509034,
+    "lowerBound": 726854,
+    "value": 1140006
+  },
+  {
+    "date": "2043-07-31T23:00:00.000Z",
+    "upperBound": 1515084,
+    "lowerBound": 730646,
+    "value": 1144989
+  },
+  {
+    "date": "2043-08-31T23:00:00.000Z",
+    "upperBound": 1521149,
+    "lowerBound": 734455,
+    "value": 1149988
+  },
+  {
+    "date": "2043-09-30T23:00:00.000Z",
+    "upperBound": 1527230,
+    "lowerBound": 738281,
+    "value": 1155002
+  },
+  {
+    "date": "2043-11-01T00:00:00.000Z",
+    "upperBound": 1533326,
+    "lowerBound": 742123,
+    "value": 1160033
+  },
+  {
+    "date": "2043-12-01T00:00:00.000Z",
+    "upperBound": 1539438,
+    "lowerBound": 745983,
+    "value": 1165079
+  },
+  {
+    "date": "2044-01-01T00:00:00.000Z",
+    "upperBound": 1545565,
+    "lowerBound": 749860,
+    "value": 1170142
+  },
+  {
+    "date": "2044-02-01T00:00:00.000Z",
+    "upperBound": 1551708,
+    "lowerBound": 753754,
+    "value": 1175221
+  },
+  {
+    "date": "2044-03-01T00:00:00.000Z",
+    "upperBound": 1557867,
+    "lowerBound": 757665,
+    "value": 1180316
+  },
+  {
+    "date": "2044-03-31T23:00:00.000Z",
+    "upperBound": 1564041,
+    "lowerBound": 761593,
+    "value": 1185428
+  },
+  {
+    "date": "2044-04-30T23:00:00.000Z",
+    "upperBound": 1570232,
+    "lowerBound": 765539,
+    "value": 1190555
+  },
+  {
+    "date": "2044-05-31T23:00:00.000Z",
+    "upperBound": 1576438,
+    "lowerBound": 769502,
+    "value": 1195699
+  },
+  {
+    "date": "2044-06-30T23:00:00.000Z",
+    "upperBound": 1582660,
+    "lowerBound": 773482,
+    "value": 1200860
+  },
+  {
+    "date": "2044-07-31T23:00:00.000Z",
+    "upperBound": 1588898,
+    "lowerBound": 777480,
+    "value": 1206037
+  },
+  {
+    "date": "2044-08-31T23:00:00.000Z",
+    "upperBound": 1595152,
+    "lowerBound": 781495,
+    "value": 1211230
+  },
+  {
+    "date": "2044-09-30T23:00:00.000Z",
+    "upperBound": 1601422,
+    "lowerBound": 785528,
+    "value": 1216441
+  },
+  {
+    "date": "2044-11-01T00:00:00.000Z",
+    "upperBound": 1607708,
+    "lowerBound": 789578,
+    "value": 1221667
+  },
+  {
+    "date": "2044-12-01T00:00:00.000Z",
+    "upperBound": 1614010,
+    "lowerBound": 793646,
+    "value": 1226911
+  },
+  {
+    "date": "2045-01-01T00:00:00.000Z",
+    "upperBound": 1620329,
+    "lowerBound": 797732,
+    "value": 1232171
+  },
+  {
+    "date": "2045-02-01T00:00:00.000Z",
+    "upperBound": 1626663,
+    "lowerBound": 801836,
+    "value": 1237448
+  },
+  {
+    "date": "2045-03-01T00:00:00.000Z",
+    "upperBound": 1633014,
+    "lowerBound": 805957,
+    "value": 1242742
+  },
+  {
+    "date": "2045-03-31T23:00:00.000Z",
+    "upperBound": 1639382,
+    "lowerBound": 810096,
+    "value": 1248052
+  },
+  {
+    "date": "2045-04-30T23:00:00.000Z",
+    "upperBound": 1645766,
+    "lowerBound": 814253,
+    "value": 1253380
+  },
+  {
+    "date": "2045-05-31T23:00:00.000Z",
+    "upperBound": 1652166,
+    "lowerBound": 818428,
+    "value": 1258725
+  },
+  {
+    "date": "2045-06-30T23:00:00.000Z",
+    "upperBound": 1658584,
+    "lowerBound": 822621,
+    "value": 1264087
+  },
+  {
+    "date": "2045-07-31T23:00:00.000Z",
+    "upperBound": 1665017,
+    "lowerBound": 826832,
+    "value": 1269466
+  },
+  {
+    "date": "2045-08-31T23:00:00.000Z",
+    "upperBound": 1671467,
+    "lowerBound": 831061,
+    "value": 1274862
+  },
+  {
+    "date": "2045-09-30T23:00:00.000Z",
+    "upperBound": 1677934,
+    "lowerBound": 835309,
+    "value": 1280275
+  },
+  {
+    "date": "2045-11-01T00:00:00.000Z",
+    "upperBound": 1684418,
+    "lowerBound": 839574,
+    "value": 1285705
+  },
+  {
+    "date": "2045-12-01T00:00:00.000Z",
+    "upperBound": 1690919,
+    "lowerBound": 843858,
+    "value": 1291153
+  },
+  {
+    "date": "2046-01-01T00:00:00.000Z",
+    "upperBound": 1697436,
+    "lowerBound": 848160,
+    "value": 1296619
+  },
+  {
+    "date": "2046-02-01T00:00:00.000Z",
+    "upperBound": 1703971,
+    "lowerBound": 852481,
+    "value": 1302102
+  },
+  {
+    "date": "2046-03-01T00:00:00.000Z",
+    "upperBound": 1710522,
+    "lowerBound": 856820,
+    "value": 1307602
+  },
+  {
+    "date": "2046-03-31T23:00:00.000Z",
+    "upperBound": 1717091,
+    "lowerBound": 861178,
+    "value": 1313120
+  },
+  {
+    "date": "2046-04-30T23:00:00.000Z",
+    "upperBound": 1723676,
+    "lowerBound": 865554,
+    "value": 1318655
+  },
+  {
+    "date": "2046-05-31T23:00:00.000Z",
+    "upperBound": 1730279,
+    "lowerBound": 869948,
+    "value": 1324208
+  },
+  {
+    "date": "2046-06-30T23:00:00.000Z",
+    "upperBound": 1736899,
+    "lowerBound": 874361,
+    "value": 1329779
+  },
+  {
+    "date": "2046-07-31T23:00:00.000Z",
+    "upperBound": 1743537,
+    "lowerBound": 878793,
+    "value": 1335368
+  },
+  {
+    "date": "2046-08-31T23:00:00.000Z",
+    "upperBound": 1750191,
+    "lowerBound": 883244,
+    "value": 1340974
+  },
+  {
+    "date": "2046-09-30T23:00:00.000Z",
+    "upperBound": 1756863,
+    "lowerBound": 887714,
+    "value": 1346599
+  },
+  {
+    "date": "2046-11-01T00:00:00.000Z",
+    "upperBound": 1763553,
+    "lowerBound": 892202,
+    "value": 1352241
+  },
+  {
+    "date": "2046-12-01T00:00:00.000Z",
+    "upperBound": 1770260,
+    "lowerBound": 896710,
+    "value": 1357902
+  },
+  {
+    "date": "2047-01-01T00:00:00.000Z",
+    "upperBound": 1776984,
+    "lowerBound": 901236,
+    "value": 1363580
+  },
+  {
+    "date": "2047-02-01T00:00:00.000Z",
+    "upperBound": 1783727,
+    "lowerBound": 905782,
+    "value": 1369277
+  },
+  {
+    "date": "2047-03-01T00:00:00.000Z",
+    "upperBound": 1790486,
+    "lowerBound": 910346,
+    "value": 1374991
+  },
+  {
+    "date": "2047-03-31T23:00:00.000Z",
+    "upperBound": 1797264,
+    "lowerBound": 914930,
+    "value": 1380725
+  },
+  {
+    "date": "2047-04-30T23:00:00.000Z",
+    "upperBound": 1804060,
+    "lowerBound": 919533,
+    "value": 1386476
+  },
+  {
+    "date": "2047-05-31T23:00:00.000Z",
+    "upperBound": 1810873,
+    "lowerBound": 924155,
+    "value": 1392246
+  },
+  {
+    "date": "2047-06-30T23:00:00.000Z",
+    "upperBound": 1817704,
+    "lowerBound": 928796,
+    "value": 1398034
+  },
+  {
+    "date": "2047-07-31T23:00:00.000Z",
+    "upperBound": 1824553,
+    "lowerBound": 933457,
+    "value": 1403840
+  },
+  {
+    "date": "2047-08-31T23:00:00.000Z",
+    "upperBound": 1831421,
+    "lowerBound": 938138,
+    "value": 1409666
+  },
+  {
+    "date": "2047-09-30T23:00:00.000Z",
+    "upperBound": 1838306,
+    "lowerBound": 942837,
+    "value": 1415509
+  },
+  {
+    "date": "2047-11-01T00:00:00.000Z",
+    "upperBound": 1845209,
+    "lowerBound": 947557,
+    "value": 1421372
+  },
+  {
+    "date": "2047-12-01T00:00:00.000Z",
+    "upperBound": 1852131,
+    "lowerBound": 952296,
+    "value": 1427253
+  },
+  {
+    "date": "2048-01-01T00:00:00.000Z",
+    "upperBound": 1859071,
+    "lowerBound": 957055,
+    "value": 1433153
+  },
+  {
+    "date": "2048-02-01T00:00:00.000Z",
+    "upperBound": 1866030,
+    "lowerBound": 961833,
+    "value": 1439072
+  },
+  {
+    "date": "2048-03-01T00:00:00.000Z",
+    "upperBound": 1873006,
+    "lowerBound": 966631,
+    "value": 1445009
+  },
+  {
+    "date": "2048-03-31T23:00:00.000Z",
+    "upperBound": 1880002,
+    "lowerBound": 971449,
+    "value": 1450966
+  },
+  {
+    "date": "2048-04-30T23:00:00.000Z",
+    "upperBound": 1887015,
+    "lowerBound": 976287,
+    "value": 1456942
+  },
+  {
+    "date": "2048-05-31T23:00:00.000Z",
+    "upperBound": 1894048,
+    "lowerBound": 981145,
+    "value": 1462936
+  },
+  {
+    "date": "2048-06-30T23:00:00.000Z",
+    "upperBound": 1901099,
+    "lowerBound": 986023,
+    "value": 1468950
+  },
+  {
+    "date": "2048-07-31T23:00:00.000Z",
+    "upperBound": 1908168,
+    "lowerBound": 990921,
+    "value": 1474983
+  },
+  {
+    "date": "2048-08-31T23:00:00.000Z",
+    "upperBound": 1915257,
+    "lowerBound": 995840,
+    "value": 1481036
+  },
+  {
+    "date": "2048-09-30T23:00:00.000Z",
+    "upperBound": 1922364,
+    "lowerBound": 1000778,
+    "value": 1487107
+  },
+  {
+    "date": "2048-11-01T00:00:00.000Z",
+    "upperBound": 1929490,
+    "lowerBound": 1005737,
+    "value": 1493198
+  },
+  {
+    "date": "2048-12-01T00:00:00.000Z",
+    "upperBound": 1936635,
+    "lowerBound": 1010716,
+    "value": 1499309
+  },
+  {
+    "date": "2049-01-01T00:00:00.000Z",
+    "upperBound": 1943800,
+    "lowerBound": 1015715,
+    "value": 1505439
+  },
+  {
+    "date": "2049-02-01T00:00:00.000Z",
+    "upperBound": 1950983,
+    "lowerBound": 1020735,
+    "value": 1511589
+  },
+  {
+    "date": "2049-03-01T00:00:00.000Z",
+    "upperBound": 1958185,
+    "lowerBound": 1025775,
+    "value": 1517758
+  },
+  {
+    "date": "2049-03-31T23:00:00.000Z",
+    "upperBound": 1965407,
+    "lowerBound": 1030836,
+    "value": 1523947
+  },
+  {
+    "date": "2049-04-30T23:00:00.000Z",
+    "upperBound": 1972648,
+    "lowerBound": 1035918,
+    "value": 1530155
+  },
+  {
+    "date": "2049-05-31T23:00:00.000Z",
+    "upperBound": 1979908,
+    "lowerBound": 1041020,
+    "value": 1536384
+  },
+  {
+    "date": "2049-06-30T23:00:00.000Z",
+    "upperBound": 1987188,
+    "lowerBound": 1046143,
+    "value": 1542632
+  },
+  {
+    "date": "2049-07-31T23:00:00.000Z",
+    "upperBound": 1994487,
+    "lowerBound": 1051287,
+    "value": 1548901
+  },
+  {
+    "date": "2049-08-31T23:00:00.000Z",
+    "upperBound": 2001805,
+    "lowerBound": 1056452,
+    "value": 1555189
+  },
+  {
+    "date": "2049-09-30T23:00:00.000Z",
+    "upperBound": 2009143,
+    "lowerBound": 1061638,
+    "value": 1561498
+  },
+  {
+    "date": "2049-11-01T00:00:00.000Z",
+    "upperBound": 2016501,
+    "lowerBound": 1066844,
+    "value": 1567826
+  },
+  {
+    "date": "2049-12-01T00:00:00.000Z",
+    "upperBound": 2023879,
+    "lowerBound": 1072072,
+    "value": 1574175
+  },
+  {
+    "date": "2050-01-01T00:00:00.000Z",
+    "upperBound": 2031276,
+    "lowerBound": 1077321,
+    "value": 1580544
+  },
+  {
+    "date": "2050-02-01T00:00:00.000Z",
+    "upperBound": 2038693,
+    "lowerBound": 1082591,
+    "value": 1586934
+  },
+  {
+    "date": "2050-03-01T00:00:00.000Z",
+    "upperBound": 2046130,
+    "lowerBound": 1087883,
+    "value": 1593344
+  },
+  {
+    "date": "2050-03-31T23:00:00.000Z",
+    "upperBound": 2053587,
+    "lowerBound": 1093195,
+    "value": 1599774
+  },
+  {
+    "date": "2050-04-30T23:00:00.000Z",
+    "upperBound": 2061064,
+    "lowerBound": 1098529,
+    "value": 1606225
+  },
+  {
+    "date": "2050-05-31T23:00:00.000Z",
+    "upperBound": 2068562,
+    "lowerBound": 1103885,
+    "value": 1612696
+  },
+  {
+    "date": "2050-06-30T23:00:00.000Z",
+    "upperBound": 2076079,
+    "lowerBound": 1109262,
+    "value": 1619188
+  },
+  {
+    "date": "2050-07-31T23:00:00.000Z",
+    "upperBound": 2083617,
+    "lowerBound": 1114661,
+    "value": 1625701
+  },
+  {
+    "date": "2050-08-31T23:00:00.000Z",
+    "upperBound": 2091175,
+    "lowerBound": 1120081,
+    "value": 1632235
+  },
+  {
+    "date": "2050-09-30T23:00:00.000Z",
+    "upperBound": 2098753,
+    "lowerBound": 1125523,
+    "value": 1638789
+  },
+  {
+    "date": "2050-11-01T00:00:00.000Z",
+    "upperBound": 2106352,
+    "lowerBound": 1130987,
+    "value": 1645365
+  },
+  {
+    "date": "2050-12-01T00:00:00.000Z",
+    "upperBound": 2113971,
+    "lowerBound": 1136472,
+    "value": 1651961
+  },
+  {
+    "date": "2051-01-01T00:00:00.000Z",
+    "upperBound": 2121611,
+    "lowerBound": 1141980,
+    "value": 1658579
+  },
+  {
+    "date": "2051-02-01T00:00:00.000Z",
+    "upperBound": 2129271,
+    "lowerBound": 1147509,
+    "value": 1665217
+  },
+  {
+    "date": "2051-03-01T00:00:00.000Z",
+    "upperBound": 2136952,
+    "lowerBound": 1153061,
+    "value": 1671877
+  },
+  {
+    "date": "2051-03-31T23:00:00.000Z",
+    "upperBound": 2144654,
+    "lowerBound": 1158635,
+    "value": 1678558
+  },
+  {
+    "date": "2051-04-30T23:00:00.000Z",
+    "upperBound": 2152377,
+    "lowerBound": 1164230,
+    "value": 1685261
+  },
+  {
+    "date": "2051-05-31T23:00:00.000Z",
+    "upperBound": 2160121,
+    "lowerBound": 1169848,
+    "value": 1691985
+  },
+  {
+    "date": "2051-06-30T23:00:00.000Z",
+    "upperBound": 2167885,
+    "lowerBound": 1175489,
+    "value": 1698730
+  },
+  {
+    "date": "2051-07-31T23:00:00.000Z",
+    "upperBound": 2175671,
+    "lowerBound": 1181152,
+    "value": 1705497
+  },
+  {
+    "date": "2051-08-31T23:00:00.000Z",
+    "upperBound": 2183478,
+    "lowerBound": 1186837,
+    "value": 1712285
+  },
+  {
+    "date": "2051-09-30T23:00:00.000Z",
+    "upperBound": 2191306,
+    "lowerBound": 1192544,
+    "value": 1719095
+  },
+  {
+    "date": "2051-11-01T00:00:00.000Z",
+    "upperBound": 2199155,
+    "lowerBound": 1198275,
+    "value": 1725927
+  },
+  {
+    "date": "2051-12-01T00:00:00.000Z",
+    "upperBound": 2207026,
+    "lowerBound": 1204028,
+    "value": 1732781
+  },
+  {
+    "date": "2052-01-01T00:00:00.000Z",
+    "upperBound": 2214918,
+    "lowerBound": 1209803,
+    "value": 1739656
+  },
+  {
+    "date": "2052-02-01T00:00:00.000Z",
+    "upperBound": 2222832,
+    "lowerBound": 1215602,
+    "value": 1746554
+  },
+  {
+    "date": "2052-03-01T00:00:00.000Z",
+    "upperBound": 2230767,
+    "lowerBound": 1221423,
+    "value": 1753474
+  },
+  {
+    "date": "2052-03-31T23:00:00.000Z",
+    "upperBound": 2238723,
+    "lowerBound": 1227267,
+    "value": 1760415
+  },
+  {
+    "date": "2052-04-30T23:00:00.000Z",
+    "upperBound": 2246702,
+    "lowerBound": 1233134,
+    "value": 1767379
+  },
+  {
+    "date": "2052-05-31T23:00:00.000Z",
+    "upperBound": 2254702,
+    "lowerBound": 1239024,
+    "value": 1774365
+  },
+  {
+    "date": "2052-06-30T23:00:00.000Z",
+    "upperBound": 2262723,
+    "lowerBound": 1244938,
+    "value": 1781373
+  },
+  {
+    "date": "2052-07-31T23:00:00.000Z",
+    "upperBound": 2270767,
+    "lowerBound": 1250874,
+    "value": 1788404
+  },
+  {
+    "date": "2052-08-31T23:00:00.000Z",
+    "upperBound": 2278833,
+    "lowerBound": 1256834,
+    "value": 1795457
+  },
+  {
+    "date": "2052-09-30T23:00:00.000Z",
+    "upperBound": 2286921,
+    "lowerBound": 1262817,
+    "value": 1802533
+  },
+  {
+    "date": "2052-11-01T00:00:00.000Z",
+    "upperBound": 2295031,
+    "lowerBound": 1268824,
+    "value": 1809631
+  },
+  {
+    "date": "2052-12-01T00:00:00.000Z",
+    "upperBound": 2303163,
+    "lowerBound": 1274854,
+    "value": 1816752
+  },
+  {
+    "date": "2053-01-01T00:00:00.000Z",
+    "upperBound": 2311317,
+    "lowerBound": 1280907,
+    "value": 1823896
+  },
+  {
+    "date": "2053-02-01T00:00:00.000Z",
+    "upperBound": 2319494,
+    "lowerBound": 1286985,
+    "value": 1831063
+  },
+  {
+    "date": "2053-03-01T00:00:00.000Z",
+    "upperBound": 2327693,
+    "lowerBound": 1293085,
+    "value": 1838252
+  },
+  {
+    "date": "2053-03-31T23:00:00.000Z",
+    "upperBound": 2335914,
+    "lowerBound": 1299210,
+    "value": 1845465
+  },
+  {
+    "date": "2053-04-30T23:00:00.000Z",
+    "upperBound": 2344158,
+    "lowerBound": 1305359,
+    "value": 1852700
+  },
+  {
+    "date": "2053-05-31T23:00:00.000Z",
+    "upperBound": 2352425,
+    "lowerBound": 1311531,
+    "value": 1859959
+  },
+  {
+    "date": "2053-06-30T23:00:00.000Z",
+    "upperBound": 2360714,
+    "lowerBound": 1317727,
+    "value": 1867240
+  },
+  {
+    "date": "2053-07-31T23:00:00.000Z",
+    "upperBound": 2369026,
+    "lowerBound": 1323948,
+    "value": 1874545
+  },
+  {
+    "date": "2053-08-31T23:00:00.000Z",
+    "upperBound": 2377361,
+    "lowerBound": 1330192,
+    "value": 1881873
+  },
+  {
+    "date": "2053-09-30T23:00:00.000Z",
+    "upperBound": 2385719,
+    "lowerBound": 1336461,
+    "value": 1889225
+  },
+  {
+    "date": "2053-11-01T00:00:00.000Z",
+    "upperBound": 2394100,
+    "lowerBound": 1342754,
+    "value": 1896600
+  },
+  {
+    "date": "2053-12-01T00:00:00.000Z",
+    "upperBound": 2402504,
+    "lowerBound": 1349072,
+    "value": 1903999
+  },
+  {
+    "date": "2054-01-01T00:00:00.000Z",
+    "upperBound": 2410931,
+    "lowerBound": 1355413,
+    "value": 1911421
+  },
+  {
+    "date": "2054-02-01T00:00:00.000Z",
+    "upperBound": 2419381,
+    "lowerBound": 1361780,
+    "value": 1918867
+  },
+  {
+    "date": "2054-03-01T00:00:00.000Z",
+    "upperBound": 2427855,
+    "lowerBound": 1368171,
+    "value": 1926337
+  },
+  {
+    "date": "2054-03-31T23:00:00.000Z",
+    "upperBound": 2436352,
+    "lowerBound": 1374586,
+    "value": 1933831
+  },
+  {
+    "date": "2054-04-30T23:00:00.000Z",
+    "upperBound": 2444872,
+    "lowerBound": 1381026,
+    "value": 1941348
+  },
+  {
+    "date": "2054-05-31T23:00:00.000Z",
+    "upperBound": 2453416,
+    "lowerBound": 1387491,
+    "value": 1948890
+  },
+  {
+    "date": "2054-06-30T23:00:00.000Z",
+    "upperBound": 2461984,
+    "lowerBound": 1393981,
+    "value": 1956456
+  },
+  {
+    "date": "2054-07-31T23:00:00.000Z",
+    "upperBound": 2470575,
+    "lowerBound": 1400496,
+    "value": 1964046
+  },
+  {
+    "date": "2054-08-31T23:00:00.000Z",
+    "upperBound": 2479190,
+    "lowerBound": 1407036,
+    "value": 1971660
+  },
+  {
+    "date": "2054-09-30T23:00:00.000Z",
+    "upperBound": 2487829,
+    "lowerBound": 1413601,
+    "value": 1979298
+  },
+  {
+    "date": "2054-11-01T00:00:00.000Z",
+    "upperBound": 2496491,
+    "lowerBound": 1420191,
+    "value": 1986961
+  },
+  {
+    "date": "2054-12-01T00:00:00.000Z",
+    "upperBound": 2505178,
+    "lowerBound": 1426806,
+    "value": 1994648
+  },
+  {
+    "date": "2055-01-01T00:00:00.000Z",
+    "upperBound": 2513888,
+    "lowerBound": 1433447,
+    "value": 2002360
+  },
+  {
+    "date": "2055-02-01T00:00:00.000Z",
+    "upperBound": 2522623,
+    "lowerBound": 1440113,
+    "value": 2010096
+  },
+  {
+    "date": "2055-03-01T00:00:00.000Z",
+    "upperBound": 2269181,
+    "lowerBound": 1288823,
+    "value": 1804833
+  },
+  {
+    "date": "2055-03-31T23:00:00.000Z",
+    "upperBound": 2265414,
+    "lowerBound": 1280436,
+    "value": 1798648
+  },
+  {
+    "date": "2055-04-30T23:00:00.000Z",
+    "upperBound": 2261632,
+    "lowerBound": 1272042,
+    "value": 1792450
+  },
+  {
+    "date": "2055-05-31T23:00:00.000Z",
+    "upperBound": 2257836,
+    "lowerBound": 1263642,
+    "value": 1786238
+  },
+  {
+    "date": "2055-06-30T23:00:00.000Z",
+    "upperBound": 2254024,
+    "lowerBound": 1255235,
+    "value": 1780014
+  },
+  {
+    "date": "2055-07-31T23:00:00.000Z",
+    "upperBound": 2250197,
+    "lowerBound": 1246820,
+    "value": 1773776
+  },
+  {
+    "date": "2055-08-31T23:00:00.000Z",
+    "upperBound": 2246356,
+    "lowerBound": 1238399,
+    "value": 1767525
+  },
+  {
+    "date": "2055-09-30T23:00:00.000Z",
+    "upperBound": 2242499,
+    "lowerBound": 1229971,
+    "value": 1761261
+  },
+  {
+    "date": "2055-11-01T00:00:00.000Z",
+    "upperBound": 2238627,
+    "lowerBound": 1221535,
+    "value": 1754983
+  },
+  {
+    "date": "2055-12-01T00:00:00.000Z",
+    "upperBound": 2234740,
+    "lowerBound": 1213093,
+    "value": 1748692
+  },
+  {
+    "date": "2056-01-01T00:00:00.000Z",
+    "upperBound": 2230838,
+    "lowerBound": 1204643,
+    "value": 1742388
+  },
+  {
+    "date": "2056-02-01T00:00:00.000Z",
+    "upperBound": 2226921,
+    "lowerBound": 1196185,
+    "value": 1736070
+  },
+  {
+    "date": "2056-03-01T00:00:00.000Z",
+    "upperBound": 2222989,
+    "lowerBound": 1187720,
+    "value": 1729739
+  },
+  {
+    "date": "2056-03-31T23:00:00.000Z",
+    "upperBound": 2219041,
+    "lowerBound": 1179248,
+    "value": 1723395
+  },
+  {
+    "date": "2056-04-30T23:00:00.000Z",
+    "upperBound": 2215079,
+    "lowerBound": 1170768,
+    "value": 1717037
+  },
+  {
+    "date": "2056-05-31T23:00:00.000Z",
+    "upperBound": 2211101,
+    "lowerBound": 1162280,
+    "value": 1710665
+  },
+  {
+    "date": "2056-06-30T23:00:00.000Z",
+    "upperBound": 2207109,
+    "lowerBound": 1153785,
+    "value": 1704280
+  },
+  {
+    "date": "2056-07-31T23:00:00.000Z",
+    "upperBound": 2203101,
+    "lowerBound": 1145282,
+    "value": 1697881
+  },
+  {
+    "date": "2056-08-31T23:00:00.000Z",
+    "upperBound": 2199078,
+    "lowerBound": 1136771,
+    "value": 1691469
+  },
+  {
+    "date": "2056-09-30T23:00:00.000Z",
+    "upperBound": 2195040,
+    "lowerBound": 1128252,
+    "value": 1685043
+  },
+  {
+    "date": "2056-11-01T00:00:00.000Z",
+    "upperBound": 2190987,
+    "lowerBound": 1119725,
+    "value": 1678603
+  },
+  {
+    "date": "2056-12-01T00:00:00.000Z",
+    "upperBound": 2186918,
+    "lowerBound": 1111189,
+    "value": 1672150
+  },
+  {
+    "date": "2057-01-01T00:00:00.000Z",
+    "upperBound": 2182835,
+    "lowerBound": 1102646,
+    "value": 1665683
+  },
+  {
+    "date": "2057-02-01T00:00:00.000Z",
+    "upperBound": 2178736,
+    "lowerBound": 1094094,
+    "value": 1659203
+  },
+  {
+    "date": "2057-03-01T00:00:00.000Z",
+    "upperBound": 2174622,
+    "lowerBound": 1085535,
+    "value": 1652708
+  },
+  {
+    "date": "2057-03-31T23:00:00.000Z",
+    "upperBound": 2170493,
+    "lowerBound": 1076966,
+    "value": 1646200
+  },
+  {
+    "date": "2057-04-30T23:00:00.000Z",
+    "upperBound": 2166348,
+    "lowerBound": 1068389,
+    "value": 1639678
+  },
+  {
+    "date": "2057-05-31T23:00:00.000Z",
+    "upperBound": 2162189,
+    "lowerBound": 1059804,
+    "value": 1633142
+  },
+  {
+    "date": "2057-06-30T23:00:00.000Z",
+    "upperBound": 2158014,
+    "lowerBound": 1051210,
+    "value": 1626592
+  },
+  {
+    "date": "2057-07-31T23:00:00.000Z",
+    "upperBound": 2153824,
+    "lowerBound": 1042608,
+    "value": 1620028
+  },
+  {
+    "date": "2057-08-31T23:00:00.000Z",
+    "upperBound": 2149618,
+    "lowerBound": 1033996,
+    "value": 1613451
+  },
+  {
+    "date": "2057-09-30T23:00:00.000Z",
+    "upperBound": 2145398,
+    "lowerBound": 1025376,
+    "value": 1606859
+  },
+  {
+    "date": "2057-11-01T00:00:00.000Z",
+    "upperBound": 2141162,
+    "lowerBound": 1016747,
+    "value": 1600253
+  },
+  {
+    "date": "2057-12-01T00:00:00.000Z",
+    "upperBound": 2136911,
+    "lowerBound": 1008109,
+    "value": 1593633
+  },
+  {
+    "date": "2058-01-01T00:00:00.000Z",
+    "upperBound": 2132644,
+    "lowerBound": 999462,
+    "value": 1587000
+  },
+  {
+    "date": "2058-02-01T00:00:00.000Z",
+    "upperBound": 2128362,
+    "lowerBound": 990806,
+    "value": 1580352
+  },
+  {
+    "date": "2058-03-01T00:00:00.000Z",
+    "upperBound": 2124065,
+    "lowerBound": 982141,
+    "value": 1573690
+  },
+  {
+    "date": "2058-03-31T23:00:00.000Z",
+    "upperBound": 2119753,
+    "lowerBound": 973466,
+    "value": 1567014
+  },
+  {
+    "date": "2058-04-30T23:00:00.000Z",
+    "upperBound": 2115425,
+    "lowerBound": 964782,
+    "value": 1560323
+  },
+  {
+    "date": "2058-05-31T23:00:00.000Z",
+    "upperBound": 2111082,
+    "lowerBound": 956089,
+    "value": 1553619
+  },
+  {
+    "date": "2058-06-30T23:00:00.000Z",
+    "upperBound": 2106724,
+    "lowerBound": 947387,
+    "value": 1546900
+  },
+  {
+    "date": "2058-07-31T23:00:00.000Z",
+    "upperBound": 2102350,
+    "lowerBound": 938674,
+    "value": 1540167
+  },
+  {
+    "date": "2058-08-31T23:00:00.000Z",
+    "upperBound": 2097961,
+    "lowerBound": 929953,
+    "value": 1533419
+  },
+  {
+    "date": "2058-09-30T23:00:00.000Z",
+    "upperBound": 2093556,
+    "lowerBound": 921221,
+    "value": 1526657
+  },
+  {
+    "date": "2058-11-01T00:00:00.000Z",
+    "upperBound": 2089136,
+    "lowerBound": 912480,
+    "value": 1519881
+  },
+  {
+    "date": "2058-12-01T00:00:00.000Z",
+    "upperBound": 2084701,
+    "lowerBound": 903730,
+    "value": 1513091
+  },
+  {
+    "date": "2059-01-01T00:00:00.000Z",
+    "upperBound": 2080250,
+    "lowerBound": 894969,
+    "value": 1506286
+  },
+  {
+    "date": "2059-02-01T00:00:00.000Z",
+    "upperBound": 2075783,
+    "lowerBound": 886199,
+    "value": 1499467
+  },
+  {
+    "date": "2059-03-01T00:00:00.000Z",
+    "upperBound": 2071302,
+    "lowerBound": 877418,
+    "value": 1492633
+  },
+  {
+    "date": "2059-03-31T23:00:00.000Z",
+    "upperBound": 2066805,
+    "lowerBound": 868627,
+    "value": 1485784
+  },
+  {
+    "date": "2059-04-30T23:00:00.000Z",
+    "upperBound": 2062292,
+    "lowerBound": 859827,
+    "value": 1478921
+  },
+  {
+    "date": "2059-05-31T23:00:00.000Z",
+    "upperBound": 2057764,
+    "lowerBound": 851016,
+    "value": 1472044
+  },
+  {
+    "date": "2059-06-30T23:00:00.000Z",
+    "upperBound": 2053220,
+    "lowerBound": 842195,
+    "value": 1465151
+  },
+  {
+    "date": "2059-07-31T23:00:00.000Z",
+    "upperBound": 2048661,
+    "lowerBound": 833364,
+    "value": 1458245
+  },
+  {
+    "date": "2059-08-31T23:00:00.000Z",
+    "upperBound": 2044086,
+    "lowerBound": 824522,
+    "value": 1451323
+  },
+  {
+    "date": "2059-09-30T23:00:00.000Z",
+    "upperBound": 2039496,
+    "lowerBound": 815670,
+    "value": 1444387
+  },
+  {
+    "date": "2059-11-01T00:00:00.000Z",
+    "upperBound": 2034890,
+    "lowerBound": 806807,
+    "value": 1437436
+  },
+  {
+    "date": "2059-12-01T00:00:00.000Z",
+    "upperBound": 2030269,
+    "lowerBound": 797934,
+    "value": 1430470
+  },
+  {
+    "date": "2060-01-01T00:00:00.000Z",
+    "upperBound": 2025632,
+    "lowerBound": 789050,
+    "value": 1423490
+  },
+  {
+    "date": "2060-02-01T00:00:00.000Z",
+    "upperBound": 2020979,
+    "lowerBound": 780155,
+    "value": 1416494
+  },
+  {
+    "date": "2060-03-01T00:00:00.000Z",
+    "upperBound": 2016311,
+    "lowerBound": 771250,
+    "value": 1409484
+  },
+  {
+    "date": "2060-03-31T23:00:00.000Z",
+    "upperBound": 2011628,
+    "lowerBound": 762334,
+    "value": 1402459
+  },
+  {
+    "date": "2060-04-30T23:00:00.000Z",
+    "upperBound": 2006928,
+    "lowerBound": 753407,
+    "value": 1395419
+  },
+  {
+    "date": "2060-05-31T23:00:00.000Z",
+    "upperBound": 2002213,
+    "lowerBound": 744469,
+    "value": 1388364
+  },
+  {
+    "date": "2060-06-30T23:00:00.000Z",
+    "upperBound": 1997482,
+    "lowerBound": 735520,
+    "value": 1381294
+  },
+  {
+    "date": "2060-07-31T23:00:00.000Z",
+    "upperBound": 1992736,
+    "lowerBound": 726559,
+    "value": 1374209
+  },
+  {
+    "date": "2060-08-31T23:00:00.000Z",
+    "upperBound": 1987974,
+    "lowerBound": 717588,
+    "value": 1367109
+  },
+  {
+    "date": "2060-09-30T23:00:00.000Z",
+    "upperBound": 1983196,
+    "lowerBound": 708606,
+    "value": 1359994
+  },
+  {
+    "date": "2060-11-01T00:00:00.000Z",
+    "upperBound": 1978403,
+    "lowerBound": 699612,
+    "value": 1352864
+  },
+  {
+    "date": "2060-12-01T00:00:00.000Z",
+    "upperBound": 1973594,
+    "lowerBound": 690607,
+    "value": 1345718
+  },
+  {
+    "date": "2061-01-01T00:00:00.000Z",
+    "upperBound": 1968769,
+    "lowerBound": 681590,
+    "value": 1338558
+  },
+  {
+    "date": "2061-02-01T00:00:00.000Z",
+    "upperBound": 1963928,
+    "lowerBound": 672562,
+    "value": 1331382
+  },
+  {
+    "date": "2061-03-01T00:00:00.000Z",
+    "upperBound": 1959071,
+    "lowerBound": 663522,
+    "value": 1324191
+  },
+  {
+    "date": "2061-03-31T23:00:00.000Z",
+    "upperBound": 1954199,
+    "lowerBound": 654471,
+    "value": 1316984
+  },
+  {
+    "date": "2061-04-30T23:00:00.000Z",
+    "upperBound": 1949311,
+    "lowerBound": 645408,
+    "value": 1309763
+  },
+  {
+    "date": "2061-05-31T23:00:00.000Z",
+    "upperBound": 1944407,
+    "lowerBound": 636334,
+    "value": 1302526
+  },
+  {
+    "date": "2061-06-30T23:00:00.000Z",
+    "upperBound": 1939487,
+    "lowerBound": 627247,
+    "value": 1295273
+  },
+  {
+    "date": "2061-07-31T23:00:00.000Z",
+    "upperBound": 1934552,
+    "lowerBound": 618149,
+    "value": 1288005
+  },
+  {
+    "date": "2061-08-31T23:00:00.000Z",
+    "upperBound": 1929600,
+    "lowerBound": 609039,
+    "value": 1280722
+  },
+  {
+    "date": "2061-09-30T23:00:00.000Z",
+    "upperBound": 1924633,
+    "lowerBound": 599917,
+    "value": 1273423
+  },
+  {
+    "date": "2061-11-01T00:00:00.000Z",
+    "upperBound": 1919650,
+    "lowerBound": 590783,
+    "value": 1266109
+  },
+  {
+    "date": "2061-12-01T00:00:00.000Z",
+    "upperBound": 1914651,
+    "lowerBound": 581636,
+    "value": 1258779
+  },
+  {
+    "date": "2062-01-01T00:00:00.000Z",
+    "upperBound": 1909636,
+    "lowerBound": 572478,
+    "value": 1251434
+  },
+  {
+    "date": "2062-02-01T00:00:00.000Z",
+    "upperBound": 1904605,
+    "lowerBound": 563307,
+    "value": 1244073
+  },
+  {
+    "date": "2062-03-01T00:00:00.000Z",
+    "upperBound": 1899558,
+    "lowerBound": 554124,
+    "value": 1236696
+  },
+  {
+    "date": "2062-03-31T23:00:00.000Z",
+    "upperBound": 1894495,
+    "lowerBound": 544929,
+    "value": 1229304
+  },
+  {
+    "date": "2062-04-30T23:00:00.000Z",
+    "upperBound": 1889416,
+    "lowerBound": 535721,
+    "value": 1221896
+  },
+  {
+    "date": "2062-05-31T23:00:00.000Z",
+    "upperBound": 1884321,
+    "lowerBound": 526500,
+    "value": 1214472
+  },
+  {
+    "date": "2062-06-30T23:00:00.000Z",
+    "upperBound": 1879210,
+    "lowerBound": 517268,
+    "value": 1207033
+  },
+  {
+    "date": "2062-07-31T23:00:00.000Z",
+    "upperBound": 1874083,
+    "lowerBound": 508022,
+    "value": 1199578
+  },
+  {
+    "date": "2062-08-31T23:00:00.000Z",
+    "upperBound": 1868939,
+    "lowerBound": 498764,
+    "value": 1192106
+  },
+  {
+    "date": "2062-09-30T23:00:00.000Z",
+    "upperBound": 1863780,
+    "lowerBound": 489493,
+    "value": 1184619
+  },
+  {
+    "date": "2062-11-01T00:00:00.000Z",
+    "upperBound": 1858605,
+    "lowerBound": 480209,
+    "value": 1177116
+  },
+  {
+    "date": "2062-12-01T00:00:00.000Z",
+    "upperBound": 1853413,
+    "lowerBound": 470913,
+    "value": 1169598
+  },
+  {
+    "date": "2063-01-01T00:00:00.000Z",
+    "upperBound": 1848206,
+    "lowerBound": 461603,
+    "value": 1162063
+  },
+  {
+    "date": "2063-02-01T00:00:00.000Z",
+    "upperBound": 1842982,
+    "lowerBound": 452281,
+    "value": 1154512
+  },
+  {
+    "date": "2063-03-01T00:00:00.000Z",
+    "upperBound": 1837742,
+    "lowerBound": 442945,
+    "value": 1146945
+  },
+  {
+    "date": "2063-03-31T23:00:00.000Z",
+    "upperBound": 1832486,
+    "lowerBound": 433597,
+    "value": 1139362
+  },
+  {
+    "date": "2063-04-30T23:00:00.000Z",
+    "upperBound": 1827214,
+    "lowerBound": 424235,
+    "value": 1131763
+  },
+  {
+    "date": "2063-05-31T23:00:00.000Z",
+    "upperBound": 1821926,
+    "lowerBound": 414860,
+    "value": 1124147
+  },
+  {
+    "date": "2063-06-30T23:00:00.000Z",
+    "upperBound": 1816621,
+    "lowerBound": 405472,
+    "value": 1116516
+  },
+  {
+    "date": "2063-07-31T23:00:00.000Z",
+    "upperBound": 1811300,
+    "lowerBound": 396070,
+    "value": 1108868
+  },
+  {
+    "date": "2063-08-31T23:00:00.000Z",
+    "upperBound": 1805963,
+    "lowerBound": 386655,
+    "value": 1101204
+  },
+  {
+    "date": "2063-09-30T23:00:00.000Z",
+    "upperBound": 1800609,
+    "lowerBound": 377226,
+    "value": 1093524
+  },
+  {
+    "date": "2063-11-01T00:00:00.000Z",
+    "upperBound": 1795239,
+    "lowerBound": 367784,
+    "value": 1085828
+  },
+  {
+    "date": "2063-12-01T00:00:00.000Z",
+    "upperBound": 1789853,
+    "lowerBound": 358329,
+    "value": 1078115
+  },
+  {
+    "date": "2064-01-01T00:00:00.000Z",
+    "upperBound": 1784451,
+    "lowerBound": 348859,
+    "value": 1070386
+  }
+]

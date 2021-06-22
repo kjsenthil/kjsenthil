@@ -1,37 +1,35 @@
-import { goalNotMetAccessor, valueBadAccessor, valueGoodAccessor } from './accessors';
-import { ProjectionsChartProjectionDatum } from '../../../../../services/projections';
+import { valueTargetAccessor, lowerBoundAccessor, upperBoundAccessor } from './accessors';
+import {
+  ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
+} from '../../../../../services/projections';
 
-const mockDatum: ProjectionsChartProjectionDatum = {
+const mockProjectionDatum: ProjectionsChartProjectionDatum = {
   netContributionsToDate: 10000,
-  valueGood: 20000,
-  valueBad: 5000,
+  upperBound: 20000,
+  lowerBound: 5000,
   value: 12000,
   date: new Date(2029, 0, 1),
 };
-const mockDatumGoalNotMet: ProjectionsChartProjectionDatum = {
-  netContributionsToDate: 10000,
-  valueGood: 20000,
-  valueBad: 5000,
-  value: 12000,
+const mockProjectionTargetDatum: ProjectionsChartProjectionTargetDatum = {
+  value: 30000,
   date: new Date(2029, 0, 1),
-  valueGoalNotMet: 30000,
 };
 
-describe('valueGoodAccessor', () => {
+describe('upperBoundAccessor', () => {
   it('works as expected', () => {
-    expect(valueGoodAccessor(mockDatum)).toBe(20000);
+    expect(upperBoundAccessor(mockProjectionDatum)).toBe(20000);
   });
 });
 
-describe('valueBadAccessor', () => {
+describe('lowerBoundAccessor', () => {
   it('works as expected', () => {
-    expect(valueBadAccessor(mockDatum)).toBe(5000);
+    expect(lowerBoundAccessor(mockProjectionDatum)).toBe(5000);
   });
 });
 
-describe('goalNotMetAccessor', () => {
+describe('valueTargetAccessor', () => {
   it('works as expected', () => {
-    expect(goalNotMetAccessor(mockDatumGoalNotMet)).toBe(30000);
-    expect(goalNotMetAccessor(mockDatum)).toBe(0);
+    expect(valueTargetAccessor(mockProjectionTargetDatum)).toBe(30000);
   });
 });

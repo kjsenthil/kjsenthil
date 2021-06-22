@@ -1,55 +1,67 @@
-import { ProjectionsChartProjectionDatum } from '../../../../../services/projections';
+import {
+  ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
+} from '../../../../../services/projections';
 
-interface GetPerformanceProjectionsDataMinMaxValueOptions {
-  // If this is true, will not take into account the valueGood (high band) and
-  // valueBad (low band) values.
+interface GetPerformanceProjectionsDataMinMaxValueProps {
+  projectionsData: ProjectionsChartProjectionDatum[];
+  projectionsTargetData?: ProjectionsChartProjectionTargetDatum[];
+
+  // If this is true, will not take into account the upper and lower bound value
+  // ranges. Use this when the chart does not display the band.
   noValueRange?: boolean;
 }
 
-export function getPerformanceProjectionsDataMinValue(
-  data: ProjectionsChartProjectionDatum[],
-  { noValueRange }: GetPerformanceProjectionsDataMinMaxValueOptions = {}
-): number {
-  return data.reduce(
-    (currentMin, { valueGood, value, valueBad, netContributionsToDate, valueGoalNotMet }) => {
-      const valueGoalNotMetNumber = valueGoalNotMet === undefined ? Infinity : valueGoalNotMet;
+export function getPerformanceProjectionsDataMinValue({
+  projectionsData,
+  projectionsTargetData,
+  noValueRange,
+}: GetPerformanceProjectionsDataMinMaxValueProps): number {
+  return projectionsData.reduce(
+    (currentMin, { upperBound, value, lowerBound, netContributionsToDate }, i) => {
+      const valueTarget = projectionsTargetData
+        ? projectionsTargetData[i]?.value ?? Infinity
+        : Infinity;
 
       if (noValueRange) {
-        return Math.min(currentMin, value, netContributionsToDate, valueGoalNotMetNumber);
+        return Math.min(currentMin, value, netContributionsToDate, valueTarget);
       }
 
       return Math.min(
         currentMin,
-        valueGood,
+        upperBound,
         value,
-        valueBad,
+        lowerBound,
         netContributionsToDate,
-        valueGoalNotMetNumber
+        valueTarget
       );
     },
     Infinity
   );
 }
 
-export function getPerformanceProjectionsDataMaxValue(
-  data: ProjectionsChartProjectionDatum[],
-  { noValueRange }: GetPerformanceProjectionsDataMinMaxValueOptions = {}
-): number {
-  return data.reduce(
-    (currentMax, { valueGood, value, valueBad, netContributionsToDate, valueGoalNotMet }) => {
-      const valueGoalNotMetNumber = valueGoalNotMet === undefined ? -Infinity : valueGoalNotMet;
+export function getPerformanceProjectionsDataMaxValue({
+  projectionsData,
+  projectionsTargetData,
+  noValueRange,
+}: GetPerformanceProjectionsDataMinMaxValueProps): number {
+  return projectionsData.reduce(
+    (currentMax, { upperBound, value, lowerBound, netContributionsToDate }, i) => {
+      const valueTarget = projectionsTargetData
+        ? projectionsTargetData[i]?.value ?? -Infinity
+        : -Infinity;
 
       if (noValueRange) {
-        return Math.max(currentMax, value, netContributionsToDate, valueGoalNotMetNumber);
+        return Math.max(currentMax, value, netContributionsToDate, valueTarget);
       }
 
       return Math.max(
         currentMax,
-        valueGood,
+        upperBound,
         value,
-        valueBad,
+        lowerBound,
         netContributionsToDate,
-        valueGoalNotMetNumber
+        valueTarget
       );
     },
     -Infinity

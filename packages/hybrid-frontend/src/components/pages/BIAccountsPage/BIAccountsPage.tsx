@@ -14,7 +14,7 @@ import {
   useContributionsData,
   usePerformanceDataPeriod,
 } from '../../../services/performance/hooks';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
   getPerformanceContact,
   setPerformanceDataPeriod,

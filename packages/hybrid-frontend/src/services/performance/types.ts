@@ -50,7 +50,7 @@ export interface PerformanceState extends CommonState {
   performanceDataPeriod: string;
 }
 
-export interface ProjectionsChartAnnualHistoricalDatum extends TimeSeriesDatum {
+export interface ProjectionsChartHistoricalDatum extends TimeSeriesDatum {
   netContributionsToDate: number;
   metadata?: Record<string, unknown>;
 }

@@ -17,6 +17,16 @@ export interface ProjectionYear {
   year: number;
 }
 
+export interface ProjectionMonth {
+  month: number;
+  lowerBound: number;
+  upperBound: number;
+  projectedValue: number;
+  contributionLine: number;
+}
+
+export type ProjectionTargetMonth = Omit<ProjectionMonth, 'contributionLine'>;
+
 export interface ProjectionResponse {
   contributions?: number;
   projections?: ProjectionYear[];
@@ -43,17 +53,9 @@ export interface ProjectionsState extends CommonState {
   postProjectionsError?: string;
 }
 
-// This kind of data is used by the projections chart
+// This kind of data is used by the projections (and its simplified version)
+// chart
 export interface ProjectionsChartMetadata {
-  // If the goal is not met, an orange line will be visible, indicating the
-  // targeted goal line
-  goalMet: boolean;
-
-  // This is used to "hide" the portion of the value line after it hits zero
-  // (all drawdowns made). This could be undefined in which case all points will
-  // be defined
-  zeroValueYear?: number | undefined;
-
   // The age of the user as of today. Used to calculate future ages.
   todayAge: number;
 
@@ -61,14 +63,30 @@ export interface ProjectionsChartMetadata {
   investmentPeriod: number;
 }
 
-// This kind of data is used by the projections chart
+// This kind of data is used by the projections chart to draw the projected
+// portfolio value. The upperBound and lowerBound is used to draw a band around
+// the main projections line.
 export interface ProjectionsChartProjectionDatum extends TimeSeriesDatum {
-  valueGood: number;
-  valueBad: number;
+  upperBound: number;
+  lowerBound: number;
   netContributionsToDate: number;
 
-  // This is the datum for the orange "goals not met" line
-  valueGoalNotMet?: number;
-
   metadata?: Record<string, unknown>;
+}
+
+// This kind of data is used by the projection. It's displayed only if the user
+// is projected to not meet their goal.
+export interface ProjectionsChartProjectionTargetDatum extends TimeSeriesDatum {
+  metadata?: Record<string, unknown>;
+}
+
+// The response received when projecting based on a goal
+export interface GoalProjectionResponse {
+  projectedRetirementAgeTotal: number;
+  possibleDrawdown: number;
+  possibleDrawdownWithSP: number;
+  projectedRetirementAgeTotalWhenMarketUnderperform: number;
+  possibleDrawdownWhenMarketUnderperform: number;
+  possibleDrawdownWhenMarketUnderperformWithSP: number;
+  projections: ProjectionMonth[];
 }

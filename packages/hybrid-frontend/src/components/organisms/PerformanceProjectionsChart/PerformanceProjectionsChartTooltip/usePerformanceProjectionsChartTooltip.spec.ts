@@ -5,7 +5,7 @@ import usePerformanceProjectionsChartTooltip from './usePerformanceProjectionsCh
 import {
   contributionsAccessor,
   dateAccessor,
-  goalNotMetAccessor,
+  valueTargetAccessor,
   valueAccessor,
 } from '../performanceProjectionsData';
 import { getDatumAtPosX } from '../../../../utils/chart';
@@ -20,20 +20,17 @@ describe('usePerformanceProjectionsChartTooltip', () => {
   });
 
   test("The hook doesn't call showTooltip() when there is no data", () => {
-    const { chartDimension, data, xScale, yScale, goalMet } = generateParametersForUseTooltipHook(
-      0
-    );
+    const { chartDimension, data, xScale, yScale } = generateParametersForUseTooltipHook(0);
 
     const { result } = renderHook(() =>
       usePerformanceProjectionsChartTooltip({
         chartDimension,
         projectionsData: data,
-        goalMet,
         xScale,
         yScale,
         contributionAccessor: contributionsAccessor,
         performanceAccessor: valueAccessor,
-        goalNotMetAccessor,
+        projectionTargetAccessor: valueTargetAccessor,
         dateAccessor,
       })
     );
@@ -59,20 +56,17 @@ describe('usePerformanceProjectionsChartTooltip', () => {
 
     (visxEvent.localPoint as jest.Mock).mockImplementation(() => mockMousePos);
 
-    const { chartDimension, data, xScale, yScale, goalMet } = generateParametersForUseTooltipHook(
-      10
-    );
+    const { chartDimension, data, xScale, yScale } = generateParametersForUseTooltipHook(10);
 
     const { result } = renderHook(() =>
       usePerformanceProjectionsChartTooltip({
         chartDimension,
         projectionsData: data,
-        goalMet,
         xScale,
         yScale,
         contributionAccessor: contributionsAccessor,
         performanceAccessor: valueAccessor,
-        goalNotMetAccessor,
+        projectionTargetAccessor: valueTargetAccessor,
         dateAccessor,
       })
     );
@@ -102,7 +96,7 @@ describe('usePerformanceProjectionsChartTooltip', () => {
         performanceProjection: datum,
         performanceIndicatorPosY: yScale(valueAccessor(datum)),
         contributionIndicatorPosY: yScale(contributionsAccessor(datum)),
-        goalNotMetIndicatorPosY: 0,
+        goalNotMetIndicatorPosY: undefined,
       },
     });
   });

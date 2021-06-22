@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceProjectionsChartTickComponentLeftAxis from './PerformanceProjectionsChartTickComponentLeftAxis';
-import { usePerformanceProjectionsChartStyles } from '../performanceProjectionsChartStyles/performanceProjectionsChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 describe('PerformanceProjectionsChartTickComponentLeftAxis', () => {
   // The TickComponent needs to receive chartStyles as a prop
   const ComponentWithChartStyles = () => {
-    const chartStyles = usePerformanceProjectionsChartStyles();
+    const chartStyles = useChartStyles();
 
     return (
       <PerformanceProjectionsChartTickComponentLeftAxis

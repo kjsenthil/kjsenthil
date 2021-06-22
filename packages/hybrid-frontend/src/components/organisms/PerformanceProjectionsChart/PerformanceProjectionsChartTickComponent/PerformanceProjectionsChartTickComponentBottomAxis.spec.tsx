@@ -4,7 +4,7 @@ import PerformanceProjectionsChartTickComponentBottomAxis, {
   getAgeText,
   PerformanceProjectionsChartTickComponentBottomAxisProps,
 } from './PerformanceProjectionsChartTickComponentBottomAxis';
-import { usePerformanceProjectionsChartStyles } from '../performanceProjectionsChartStyles/performanceProjectionsChartStyles';
+import { useChartStyles } from '../../../../hooks';
 
 describe('PerformanceProjectionsChartTickComponentBottomAxis', () => {
   describe('PerformanceProjectionsChartTickComponentBottomAxis component', () => {
@@ -19,7 +19,7 @@ describe('PerformanceProjectionsChartTickComponentBottomAxis', () => {
         'displayMode' | 'formattedValue'
       >
     ) => {
-      const chartStyles = usePerformanceProjectionsChartStyles();
+      const chartStyles = useChartStyles();
 
       return (
         <PerformanceProjectionsChartTickComponentBottomAxis

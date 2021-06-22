@@ -2,9 +2,9 @@ import * as React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import useProjectionsDataForChart from './useProjectionsDataForChart';
+import useProjectionsDataForProjectionsChart from './useProjectionsDataForProjectionsChart';
 
-describe('useProjectionsDataForChart', () => {
+describe('useProjectionsDataForProjectionsChart', () => {
   it('returns an empty array if projections data is not available', () => {
     const mockStore = configureStore({
       reducer: {
@@ -15,7 +15,7 @@ describe('useProjectionsDataForChart', () => {
     });
     const wrapper = ({ children }) => <Provider store={mockStore}>{children}</Provider>;
 
-    const { result } = renderHook(() => useProjectionsDataForChart(), { wrapper });
+    const { result } = renderHook(() => useProjectionsDataForProjectionsChart(), { wrapper });
 
     expect(result.current).toHaveLength(0);
   });
@@ -41,15 +41,15 @@ describe('useProjectionsDataForChart', () => {
     const mockExpected = [
       {
         netContributionsToDate: 10000,
-        valueGood: 20000,
-        valueBad: 5000,
+        upperBound: 20000,
+        lowerBound: 5000,
         value: 12000,
         date: new Date(currentYear, 0, 1),
       },
       {
         netContributionsToDate: 11000,
-        valueGood: 21000,
-        valueBad: 6000,
+        upperBound: 21000,
+        lowerBound: 6000,
         value: 13000,
         date: new Date(currentYear + 1, 0, 1),
       },
@@ -66,7 +66,7 @@ describe('useProjectionsDataForChart', () => {
     });
     const wrapper = ({ children }) => <Provider store={mockStore}>{children}</Provider>;
 
-    const { result } = renderHook(() => useProjectionsDataForChart(), { wrapper });
+    const { result } = renderHook(() => useProjectionsDataForProjectionsChart(), { wrapper });
 
     expect(result.current).toEqual(mockExpected);
   });

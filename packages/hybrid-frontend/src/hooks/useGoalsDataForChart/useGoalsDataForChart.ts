@@ -1,4 +1,4 @@
-import mockGoalsData from '../../components/organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-goals-data.json';
+import mockGoalsData from '../../components/organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-goals-annual-data.json';
 import { mapDate } from '../../components/organisms/PerformanceProjectionsChart/performanceProjectionsData/utils';
 import { ProjectionsChartGoalDatum } from '../../services/goal';
 

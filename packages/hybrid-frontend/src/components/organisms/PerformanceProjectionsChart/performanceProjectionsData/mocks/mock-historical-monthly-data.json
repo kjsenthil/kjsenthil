@@ -1,0 +1,307 @@
+[
+  {
+    "date": "2021-05-17T00:00:00",
+    "value": 635376.13,
+    "netContributionsToDate": 263877.14
+  },
+  {
+    "date": "2021-04-13T00:00:00",
+    "value": 659319.57,
+    "netContributionsToDate": 262777.4
+  },
+  {
+    "date": "2021-03-31T00:00:00",
+    "value": 631190.45,
+    "netContributionsToDate": 262777.4
+  },
+  {
+    "date": "2021-02-26T00:00:00",
+    "value": 643885.39,
+    "netContributionsToDate": 262777.4
+  },
+  {
+    "date": "2021-01-29T00:00:00",
+    "value": 667044.3,
+    "netContributionsToDate": 262777.4
+  },
+  {
+    "date": "2020-12-31T00:00:00",
+    "value": 666570.08,
+    "netContributionsToDate": 262777.4
+  },
+  {
+    "date": "2020-11-30T00:00:00",
+    "value": 645212.66,
+    "netContributionsToDate": 261750.26
+  },
+  {
+    "date": "2020-10-30T00:00:00",
+    "value": 600282.5,
+    "netContributionsToDate": 259798.85
+  },
+  {
+    "date": "2020-09-30T00:00:00",
+    "value": 600354.4,
+    "netContributionsToDate": 259798.85
+  },
+  {
+    "date": "2020-08-31T00:00:00",
+    "value": 569298.05,
+    "netContributionsToDate": 259798.85
+  },
+  {
+    "date": "2020-07-31T00:00:00",
+    "value": 543275.8,
+    "netContributionsToDate": 259798.85
+  },
+  {
+    "date": "2020-06-30T00:00:00",
+    "value": 534084.72,
+    "netContributionsToDate": 259798.85
+  },
+  {
+    "date": "2020-05-29T00:00:00",
+    "value": 500032.48,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2020-04-30T00:00:00",
+    "value": 458352.3,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2020-03-31T00:00:00",
+    "value": 402053.6,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2020-02-28T00:00:00",
+    "value": 421378.83,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2020-01-31T00:00:00",
+    "value": 451971.93,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-12-31T00:00:00",
+    "value": 464266.07,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-11-29T00:00:00",
+    "value": 458127.33,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-10-31T00:00:00",
+    "value": 446252.88,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-09-30T00:00:00",
+    "value": 453158.6,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-08-30T00:00:00",
+    "value": 459734.39,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-07-31T00:00:00",
+    "value": 476115.41,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-06-28T00:00:00",
+    "value": 455822.88,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-05-31T00:00:00",
+    "value": 442910,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-04-30T00:00:00",
+    "value": 454617.71,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-03-29T00:00:00",
+    "value": 437231.94,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-02-28T00:00:00",
+    "value": 421677.94,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2019-01-31T00:00:00",
+    "value": 412423.32,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-12-31T00:00:00",
+    "value": 400410.36,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-11-30T00:00:00",
+    "value": 425925.32,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-10-31T00:00:00",
+    "value": 411735.15,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-09-28T00:00:00",
+    "value": 455172.61,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-08-31T00:00:00",
+    "value": 461623.5,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-07-31T00:00:00",
+    "value": 459258.95,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-06-29T00:00:00",
+    "value": 454325.2,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-05-31T00:00:00",
+    "value": 458104.13,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-04-30T00:00:00",
+    "value": 438103.47,
+    "netContributionsToDate": 249798.85
+  },
+  {
+    "date": "2018-03-30T00:00:00",
+    "value": 426406.51,
+    "netContributionsToDate": 239798.85
+  },
+  {
+    "date": "2018-02-28T00:00:00",
+    "value": 411666.12,
+    "netContributionsToDate": 239798.85
+  },
+  {
+    "date": "2018-01-31T00:00:00",
+    "value": 410403.13,
+    "netContributionsToDate": 239798.85
+  },
+  {
+    "date": "2017-12-29T00:00:00",
+    "value": 401092.25,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-11-30T00:00:00",
+    "value": 392103.87,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-10-31T00:00:00",
+    "value": 387742.73,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-09-29T00:00:00",
+    "value": 374853.34,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-08-31T00:00:00",
+    "value": 386967.21,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-07-31T00:00:00",
+    "value": 370914.85,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-06-30T00:00:00",
+    "value": 365025.19,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-05-31T00:00:00",
+    "value": 367214.36,
+    "netContributionsToDate": 234798.85
+  },
+  {
+    "date": "2017-04-28T00:00:00",
+    "value": 348029.74,
+    "netContributionsToDate": 229798.85
+  },
+  {
+    "date": "2017-03-31T00:00:00",
+    "value": 349148.34,
+    "netContributionsToDate": 229798.85
+  },
+  {
+    "date": "2017-02-28T00:00:00",
+    "value": 342758.93,
+    "netContributionsToDate": 229798.85
+  },
+  {
+    "date": "2017-01-31T00:00:00",
+    "value": 335565.52,
+    "netContributionsToDate": 229771.95
+  },
+  {
+    "date": "2016-12-30T00:00:00",
+    "value": 328381.08,
+    "netContributionsToDate": 229768.06
+  },
+  {
+    "date": "2016-11-30T00:00:00",
+    "value": 323885.33,
+    "netContributionsToDate": 229768.06
+  },
+  {
+    "date": "2016-10-31T00:00:00",
+    "value": 329615.62,
+    "netContributionsToDate": 229764.62
+  },
+  {
+    "date": "2016-09-30T00:00:00",
+    "value": 320104.42,
+    "netContributionsToDate": 229760.08
+  },
+  {
+    "date": "2016-08-31T00:00:00",
+    "value": 305588.68,
+    "netContributionsToDate": 229757.2
+  },
+  {
+    "date": "2016-07-29T00:00:00",
+    "value": 311111.71,
+    "netContributionsToDate": 229753.76
+  },
+  {
+    "date": "2016-06-30T00:00:00",
+    "value": 298077.11,
+    "netContributionsToDate": 229750.39
+  },
+  {
+    "date": "2016-05-31T00:00:00",
+    "value": 277401,
+    "netContributionsToDate": 229747.19
+  }
+]

@@ -11,9 +11,8 @@ import { max as d3ArrayMax, min as d3ArrayMin } from 'd3-array';
 import styled from 'styled-components';
 import { curveNatural } from '@visx/curve';
 import { GridRows } from '@visx/grid';
-import { Theme } from '../../atoms';
-import { usePerformanceProjectionsChartStyles } from './performanceProjectionsChartStyles/performanceProjectionsChartStyles';
-import { useTimeValueScales } from '../../../hooks';
+import { Theme, Typography } from '../../atoms';
+import { useTimeValueScales, useChartStyles } from '../../../hooks';
 import {
   PerformanceProjectionsChartAxisBottom,
   PerformanceProjectionsChartAxisLeft,
@@ -30,24 +29,30 @@ import {
   contributionsAccessor,
   dateAccessor,
   getPerformanceProjectionsDataMaxValue,
-  goalNotMetAccessor,
+  valueTargetAccessor,
   valueAccessor,
-  valueBadAccessor,
-  valueDefinedFactory,
-  valueGoodAccessor,
+  lowerBoundAccessor,
+  upperBoundAccessor,
+  getPerformanceProjectionsDataMinValue,
 } from './performanceProjectionsData';
 import {
   ProjectionsChartMetadata,
   ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
 } from '../../../services/projections';
 import { ProjectionsChartGoalDatum } from '../../../services/goal';
-import { ProjectionsChartAnnualHistoricalDatum } from '../../../services/performance';
+import { ProjectionsChartHistoricalDatum } from '../../../services/performance';
+import contributionsDefined from './performanceProjectionsData/utils/contributionsDefined';
+
+import { usePerformanceProjectionsChartDimension } from './performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 
 export interface PerformanceProjectionsChartProps
   extends WithParentSizeProps,
     WithParentSizeProvidedProps {
   projectionsData: ProjectionsChartProjectionDatum[];
-  annualHistoricalData: ProjectionsChartAnnualHistoricalDatum[];
+  projectionsTargetData?: ProjectionsChartProjectionTargetDatum[];
+
+  historicalData: ProjectionsChartHistoricalDatum[];
   goalsData: ProjectionsChartGoalDatum[];
   projectionsMetadata: ProjectionsChartMetadata;
 }
@@ -72,43 +77,52 @@ const Container = styled.div`
 
 function PerformanceProjectionsChart({
   projectionsData,
-  annualHistoricalData,
+  projectionsTargetData,
+  historicalData,
   goalsData,
   projectionsMetadata,
   parentWidth = 0,
 }: PerformanceProjectionsChartProps) {
   // ----- Stylings ----- //
 
-  const chartStyles = usePerformanceProjectionsChartStyles();
+  const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
 
+  const hasHistoricalData = historicalData.length > 0;
   const hasProjectionsData = projectionsData.length > 0;
-  const { goalMet, zeroValueYear, todayAge } = projectionsMetadata;
+  const hasProjectionsTargetData = projectionsTargetData && projectionsTargetData.length > 0;
+  const { todayAge } = projectionsMetadata;
 
   // ----- Chart scales & bounds ----- //
 
-  const chartDimension = {
-    width: parentWidth,
+  const chartDimension = usePerformanceProjectionsChartDimension(parentWidth);
 
-    // TODO: responsive margins
-    height: chartStyles.DIMENSION.DESKTOP.height,
-    margin: chartStyles.DIMENSION.DESKTOP.margin,
-  };
-  const chartInnerHeight =
-    chartDimension.height - chartDimension.margin.top - chartDimension.margin.bottom;
-  const chartInnerWidth =
-    chartDimension.width - chartDimension.margin.left - chartDimension.margin.right;
+  const minChartDate = d3ArrayMin(historicalData, dateAccessor);
 
-  const minChartDate = d3ArrayMin(annualHistoricalData, dateAccessor);
-  const maxChartDate = d3ArrayMax(projectionsData, dateAccessor);
-  const minChartValue = 0;
-  const maxChartValue = getPerformanceProjectionsDataMaxValue(projectionsData);
+  // We need to combine projection and projection target data to get the
+  // appropriate max chart date.
+  const maxProjectionsDate = d3ArrayMax(projectionsData, dateAccessor);
+  const maxProjectionsTargetDate = d3ArrayMax(projectionsTargetData ?? [], dateAccessor);
+  const maxChartDate = d3ArrayMax(
+    [maxProjectionsDate, maxProjectionsTargetDate].filter(
+      (date: Date | undefined): date is Date => !!date
+    )
+  );
+
+  const minChartValue = getPerformanceProjectionsDataMinValue({
+    projectionsData,
+    projectionsTargetData,
+  });
+  const maxChartValue = getPerformanceProjectionsDataMaxValue({
+    projectionsData,
+    projectionsTargetData,
+  });
 
   const { xScale, yScale } = useTimeValueScales({
     chartDimension,
-    minDate: minChartDate ?? new Date(0),
-    maxDate: maxChartDate ?? new Date(0),
+    minDate: minChartDate,
+    maxDate: maxChartDate,
     minValue: minChartValue,
     maxValue: maxChartValue,
     maxValueBuffer: 0.75,
@@ -122,11 +136,11 @@ function PerformanceProjectionsChart({
     [yScale]
   );
   const graphProjectedPerformanceGoodAccessor = React.useCallback(
-    (d) => yScale(valueGoodAccessor(d)) ?? 0,
+    (d) => yScale(upperBoundAccessor(d)) ?? 0,
     [yScale]
   );
   const graphProjectedPerformanceBadAccessor = React.useCallback(
-    (d) => yScale(valueBadAccessor(d)) ?? 0,
+    (d) => yScale(lowerBoundAccessor(d)) ?? 0,
     [yScale]
   );
   const graphContributionsAccessor = React.useCallback(
@@ -137,14 +151,9 @@ function PerformanceProjectionsChart({
     (d) => yScale(valueAccessor(d)) ?? 0,
     [yScale]
   );
-  const graphGoalNotMetAccessor = React.useCallback((d) => yScale(goalNotMetAccessor(d)) ?? 0, [
-    yScale,
-  ]);
-
-  // If zeroValueYear is undefined, we defined all values in our chart
-  const graphProjectedPerformanceDefined = React.useMemo(
-    () => (zeroValueYear === undefined ? undefined : valueDefinedFactory(zeroValueYear)),
-    [zeroValueYear]
+  const graphProjectionTargetAccessor = React.useCallback(
+    (d) => yScale(valueTargetAccessor(d)) ?? 0,
+    [yScale]
   );
 
   // ----- Chart tooltip ----- //
@@ -157,11 +166,11 @@ function PerformanceProjectionsChart({
   } = usePerformanceProjectionsChartTooltip({
     chartDimension,
     projectionsData,
-    goalMet,
+    projectionsTargetData,
     dateAccessor,
     performanceAccessor: valueAccessor,
     contributionAccessor: contributionsAccessor,
-    goalNotMetAccessor,
+    projectionTargetAccessor: valueTargetAccessor,
     xScale,
     yScale,
   });
@@ -170,23 +179,31 @@ function PerformanceProjectionsChart({
   // first (earliest) data point
 
   let firstPerformanceProjectionsDataPoint: ProjectionsChartProjectionDatum | undefined;
+  let firstPerformanceProjectionsTargetDataPoint: ProjectionsChartProjectionTargetDatum | undefined;
   let defaultTooltipLeft = 0;
   let defaultTooltipTop = 0;
   let defaultTooltipData: TooltipData | undefined;
 
   if (hasProjectionsData) {
-    // eslint-disable-next-line prefer-destructuring
-    firstPerformanceProjectionsDataPoint = projectionsData[0];
+    [firstPerformanceProjectionsDataPoint] = projectionsData;
+
+    if (hasProjectionsTargetData) {
+      // Need this "!" post-fix operator else TypeScript doesn't know that we've
+      // already checked for projectionsTargetData's existence via
+      // hasProjectionsTargetData
+      [firstPerformanceProjectionsTargetDataPoint] = projectionsTargetData!;
+    }
 
     defaultTooltipLeft = graphDateAccessor(firstPerformanceProjectionsDataPoint);
     defaultTooltipTop = graphProjectedPerformanceGoodAccessor(firstPerformanceProjectionsDataPoint);
     defaultTooltipData = {
       performanceProjection: firstPerformanceProjectionsDataPoint,
+      performanceProjectionTarget: firstPerformanceProjectionsTargetDataPoint,
       performanceIndicatorPosY: yScale(valueAccessor(firstPerformanceProjectionsDataPoint)),
       contributionIndicatorPosY: yScale(
         contributionsAccessor(firstPerformanceProjectionsDataPoint)
       ),
-      goalNotMetIndicatorPosY: yScale(goalNotMetAccessor(firstPerformanceProjectionsDataPoint)),
+      goalNotMetIndicatorPosY: yScale(valueTargetAccessor(firstPerformanceProjectionsDataPoint)),
     };
   }
 
@@ -200,16 +217,16 @@ function PerformanceProjectionsChart({
 
   if (tooltipData) {
     performance = tooltipData.performanceProjection.value;
-    performanceLowEnd = tooltipData.performanceProjection.valueBad;
-    performanceHighEnd = tooltipData.performanceProjection.valueGood;
+    performanceLowEnd = tooltipData.performanceProjection.lowerBound;
+    performanceHighEnd = tooltipData.performanceProjection.upperBound;
     contributions = tooltipData.performanceProjection.netContributionsToDate;
-    performanceTargetNotMet = tooltipData.performanceProjection.valueGoalNotMet;
+    performanceTargetNotMet = tooltipData.performanceProjectionTarget?.value;
   } else if (firstPerformanceProjectionsDataPoint) {
     performance = firstPerformanceProjectionsDataPoint.value;
-    performanceLowEnd = firstPerformanceProjectionsDataPoint.valueBad;
-    performanceHighEnd = firstPerformanceProjectionsDataPoint.valueGood;
+    performanceLowEnd = firstPerformanceProjectionsDataPoint.lowerBound;
+    performanceHighEnd = firstPerformanceProjectionsDataPoint.upperBound;
     contributions = firstPerformanceProjectionsDataPoint.netContributionsToDate;
-    performanceTargetNotMet = firstPerformanceProjectionsDataPoint.valueGoalNotMet;
+    performanceTargetNotMet = firstPerformanceProjectionsTargetDataPoint?.value;
   }
 
   // ----- Goal indicators ----- //
@@ -218,7 +235,7 @@ function PerformanceProjectionsChart({
 
   if (hasProjectionsData) {
     goalIndicators = goalsData.map(({ date, progress, icon, label }) => {
-      const posX = xScale(date) + chartDimension.margin.left;
+      const posX = xScale(date);
 
       const correspondingProjectionsDatum = getDatumAtPosX<ProjectionsChartProjectionDatum>({
         data: projectionsData,
@@ -226,15 +243,24 @@ function PerformanceProjectionsChart({
         xScale,
         posX,
       });
+      const correspondingProjectionsTargetDatum =
+        projectionsTargetData &&
+        getDatumAtPosX<ProjectionsChartProjectionTargetDatum>({
+          data: projectionsTargetData,
+          dateAccessor,
+          xScale,
+          posX,
+        });
 
-      const { valueGood, valueGoalNotMet } = correspondingProjectionsDatum;
-
-      const maxYDataPoint = !goalMet && valueGoalNotMet ? valueGoalNotMet : valueGood;
+      // The highest value of the projections dataset is the "top-range" value.
+      const { upperBound: highestProjectionValue } = correspondingProjectionsDatum;
+      const projectionTargetValue = correspondingProjectionsTargetDatum?.value ?? 0;
+      const maxYDataPoint = Math.max(highestProjectionValue, projectionTargetValue);
 
       return (
         <PerformanceProjectionsChartGoalIndicator
           key={date.valueOf()}
-          left={posX}
+          left={posX + chartDimension.margin.left}
           top={yScale(maxYDataPoint) - 20}
           label={label}
           icon={icon}
@@ -244,6 +270,20 @@ function PerformanceProjectionsChart({
     });
   }
 
+  // ----- Render ----- //
+
+  // Throw some sort of error when there is no historical or projections data.
+  if (!hasHistoricalData || !hasProjectionsData) {
+    return (
+      <Container>
+        <Typography>
+          The chart needs both historical and projections data to render and one of these or both
+          are missing!
+        </Typography>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <PerformanceProjectionsChartSummaryPanel
@@ -251,7 +291,7 @@ function PerformanceProjectionsChart({
         performanceLowEnd={performanceLowEnd}
         performanceHighEnd={performanceHighEnd}
         contributions={contributions}
-        performanceTargetNotMet={!goalMet ? performanceTargetNotMet : undefined}
+        performanceTargetNotMet={performanceTargetNotMet}
       />
 
       <svg
@@ -264,10 +304,10 @@ function PerformanceProjectionsChart({
 
         <LinearGradient
           id="performance-historical-gradient"
-          from={chartStyles.GRADIENT.HISTORICAL_GRAPH.from}
-          to={chartStyles.GRADIENT.HISTORICAL_GRAPH.to}
-          toOffset={chartStyles.GRADIENT.HISTORICAL_GRAPH.toOffset}
-          toOpacity={chartStyles.GRADIENT.HISTORICAL_GRAPH.toOpacity}
+          from={chartStyles.GRADIENT.PERFORMANCE_GRAPH.from}
+          to={chartStyles.GRADIENT.PERFORMANCE_GRAPH.to}
+          toOffset={chartStyles.GRADIENT.PERFORMANCE_GRAPH.toOffset}
+          toOpacity={chartStyles.GRADIENT.PERFORMANCE_GRAPH.toOpacity}
         />
         <LinearGradient
           id="performance-projections-gradient"
@@ -296,8 +336,8 @@ function PerformanceProjectionsChart({
               shading. We can't use AreaClosed with stroke because then there
               will be strokes along the chart's 2 sides and bottom, which we
               don't want. */}
-          <MemoizedAreaClosed<ProjectionsChartAnnualHistoricalDatum>
-            data={annualHistoricalData}
+          <MemoizedAreaClosed<ProjectionsChartHistoricalDatum>
+            data={historicalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             yScale={yScale}
@@ -305,18 +345,18 @@ function PerformanceProjectionsChart({
             strokeWidth={0}
             fill="url(#performance-historical-gradient)"
           />
-          <MemoizedLinePath<ProjectionsChartAnnualHistoricalDatum>
-            data={annualHistoricalData}
+          <MemoizedLinePath<ProjectionsChartHistoricalDatum>
+            data={historicalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             curve={curveNatural}
-            stroke={chartStyles.STROKE_COLOR.HISTORICAL_GRAPH}
-            strokeWidth={chartStyles.STROKE_WIDTH.HISTORICAL_GRAPH}
+            stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
+            strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
           />
 
           {/* This path represents historical contributions */}
-          <MemoizedLinePath<ProjectionsChartAnnualHistoricalDatum>
-            data={annualHistoricalData}
+          <MemoizedLinePath<ProjectionsChartHistoricalDatum>
+            data={historicalData}
             x={graphDateAccessor}
             y={graphContributionsAccessor}
             curve={curveNatural}
@@ -345,7 +385,6 @@ function PerformanceProjectionsChart({
             data={projectionsData}
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
-            defined={graphProjectedPerformanceDefined}
             curve={curveNatural}
             stroke={chartStyles.STROKE_COLOR.PROJECTIONS_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.PROJECTIONS_GRAPH}
@@ -369,23 +408,24 @@ function PerformanceProjectionsChart({
             data={projectionsData}
             x={graphDateAccessor}
             y={graphContributionsAccessor}
-            defined={graphProjectedPerformanceDefined}
+            defined={contributionsDefined}
             curve={curveNatural}
             stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
             strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
           />
 
-          {/* ----- Graph paths - Goal not met ----- */}
+          {/* ----- Graph paths - Projection target ----- */}
 
-          {/* This line represents the goal-not-met portion of the chart. It
-              only appears when performance is projected to not meet the goal
+          {/* This line represents the projection target portion of the chart.
+              It only appears when performance is projected to not meet the
+              goal.
            */}
-          {!goalMet && (
-            <MemoizedLinePath<ProjectionsChartProjectionDatum>
-              data={projectionsData}
+          {hasProjectionsTargetData && (
+            <MemoizedLinePath<ProjectionsChartProjectionTargetDatum>
+              data={projectionsTargetData}
               x={graphDateAccessor}
-              y={graphGoalNotMetAccessor}
+              y={graphProjectionTargetAccessor}
               curve={curveNatural}
               stroke={chartStyles.STROKE_COLOR.GOAL_NOT_MET_GRAPH}
               strokeWidth={chartStyles.STROKE_WIDTH.GOAL_NOT_MET_GRAPH}
@@ -401,8 +441,10 @@ function PerformanceProjectionsChart({
           {hasProjectionsData && (
             <MemoizedBar
               x={graphDateAccessor(firstPerformanceProjectionsDataPoint)}
-              width={chartInnerWidth - graphDateAccessor(firstPerformanceProjectionsDataPoint)}
-              height={chartInnerHeight}
+              width={
+                chartDimension.innerWidth - graphDateAccessor(firstPerformanceProjectionsDataPoint)
+              }
+              height={chartDimension.innerHeight}
               fill="transparent"
               onTouchStart={handleShowContributionsTooltip}
               onTouchMove={handleShowContributionsTooltip}
@@ -416,8 +458,8 @@ function PerformanceProjectionsChart({
           <MemoizedGridRows
             scale={yScale}
             left={chartDimension.margin.left}
-            width={chartInnerWidth - chartDimension.margin.left}
-            height={chartInnerHeight}
+            width={chartDimension.innerWidth - chartDimension.margin.left}
+            height={chartDimension.innerHeight}
             numTicks={6}
             stroke={chartStyles.STROKE_COLOR.GRID}
             strokeWidth={chartStyles.STROKE_WIDTH.GRID}
@@ -437,7 +479,7 @@ function PerformanceProjectionsChart({
                 }}
                 to={{
                   x: tooltipData ? tooltipLeft : defaultTooltipLeft,
-                  y: chartInnerHeight - chartDimension.margin.top,
+                  y: chartDimension.innerHeight - chartDimension.margin.top,
                 }}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}
@@ -469,7 +511,7 @@ function PerformanceProjectionsChart({
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_CIRCLE}
                 pointerEvents="none"
               />
-              {!goalMet && (
+              {hasProjectionsTargetData && tooltipData?.goalNotMetIndicatorPosY !== undefined && (
                 <Circle
                   cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
                   cy={
@@ -492,7 +534,7 @@ function PerformanceProjectionsChart({
           {hasProjectionsData && defaultTooltipData && (
             <TooltipInPortal
               key={Math.random()}
-              top={chartInnerHeight - chartDimension.margin.top + 5}
+              top={chartDimension.innerHeight - chartDimension.margin.top + 5}
               left={tooltipOpen && tooltipData ? tooltipLeft : defaultTooltipLeft}
               style={tooltipStyles}
               offsetLeft={chartDimension.margin.left}

@@ -20,8 +20,8 @@ describe('PerformanceProjectionsSimplifiedChartCard', () => {
   const defaultChartProps: PerformanceProjectionsSimplifiedChartProps = {
     projectionsData: [],
     goalsData: [],
-    annualHistoricalData: [],
-    projectionsMetadata: { todayAge: 30, goalMet: true, investmentPeriod: 50 },
+    historicalData: [],
+    projectionsMetadata: { todayAge: 30, investmentPeriod: 50 },
   };
 
   test("The component renders correctly when first name doesn't end with an 's'", () => {

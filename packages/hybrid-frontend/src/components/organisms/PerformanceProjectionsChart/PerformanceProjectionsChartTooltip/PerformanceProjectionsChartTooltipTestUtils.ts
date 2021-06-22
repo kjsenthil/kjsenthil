@@ -14,9 +14,9 @@ function generatePerformanceProjectionsData(howMany: number): ProjectionsChartPr
   for (let i = 0; i < howMany; i += 1) {
     data.push({
       date: new Date(firstYear + i, 0, 1),
-      valueGood: 110 * i,
+      upperBound: 110 * i,
       value: 100 * i,
-      valueBad: 90 * i,
+      lowerBound: 90 * i,
       netContributionsToDate: 50 * i,
     });
   }
@@ -57,7 +57,7 @@ export function generateParametersForUseTooltipHook(dataLength: number) {
   // real-world scenarios where min / max calculations are used to determine
   // this).
   const minY = hasData ? data[0].netContributionsToDate : 0;
-  const maxY = hasData ? data[dataLength - 1].valueGood : 0;
+  const maxY = hasData ? data[dataLength - 1].upperBound : 0;
   const yScale = scaleLinear({
     domain: [minY, maxY],
     range: [chartDimension.margin.top, chartInnerHeight],
@@ -68,6 +68,5 @@ export function generateParametersForUseTooltipHook(dataLength: number) {
     chartDimension,
     xScale,
     yScale,
-    goalMet: true,
   };
 }

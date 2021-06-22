@@ -5,18 +5,23 @@ import { ResizeObserver } from '@juggle/resize-observer';
 import { ScaleLinear, ScaleTime } from 'd3-scale';
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { ChartDimension } from '../../../../config/chart';
-import { ProjectionsChartProjectionDatum } from '../../../../services/projections';
+import {
+  ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
+} from '../../../../services/projections';
+import { TimeSeriesDatum } from '../../../../utils/data';
+import { monthDifference } from '../../../../utils/date';
 
 export interface UsePerformanceProjectionsChartTooltipProps {
   chartDimension: ChartDimension;
 
   projectionsData: ProjectionsChartProjectionDatum[];
-  goalMet: boolean;
+  projectionsTargetData?: ProjectionsChartProjectionTargetDatum[];
 
-  dateAccessor: (d: ProjectionsChartProjectionDatum) => Date;
+  dateAccessor: (d: TimeSeriesDatum) => Date;
   performanceAccessor: (d: ProjectionsChartProjectionDatum) => number;
   contributionAccessor: (d: ProjectionsChartProjectionDatum) => number;
-  goalNotMetAccessor: (d: ProjectionsChartProjectionDatum) => number;
+  projectionTargetAccessor: (d: ProjectionsChartProjectionTargetDatum) => number;
 
   xScale: ScaleTime<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -24,6 +29,7 @@ export interface UsePerformanceProjectionsChartTooltipProps {
 
 export interface TooltipData {
   performanceProjection: ProjectionsChartProjectionDatum;
+  performanceProjectionTarget: ProjectionsChartProjectionTargetDatum | undefined;
 
   performanceIndicatorPosY: number | undefined;
   contributionIndicatorPosY: number | undefined;
@@ -33,11 +39,11 @@ export interface TooltipData {
 export default function usePerformanceProjectionsChartTooltip({
   chartDimension,
   projectionsData,
-  goalMet,
+  projectionsTargetData,
   dateAccessor,
   performanceAccessor,
   contributionAccessor,
-  goalNotMetAccessor,
+  projectionTargetAccessor,
   xScale,
   yScale,
 }: UsePerformanceProjectionsChartTooltipProps) {
@@ -80,24 +86,51 @@ export default function usePerformanceProjectionsChartTooltip({
       // Adjust the x-position for margins
       const adjMouseX = mouseX - chartDimension.margin.left;
 
-      const datumAtPosX = getDatumAtPosX<ProjectionsChartProjectionDatum>({
+      const projectionDatumAtPosX = getDatumAtPosX<ProjectionsChartProjectionDatum>({
         data: projectionsData,
         posX: adjMouseX,
         xScale,
         dateAccessor,
       });
+      const projectionTargetDatumAtPosX =
+        projectionsTargetData &&
+        getDatumAtPosX<ProjectionsChartProjectionTargetDatum>({
+          data: projectionsTargetData,
+          posX: adjMouseX,
+          xScale,
+          dateAccessor,
+        });
+
+      // The additional month difference check is to protect against cases when
+      // projection target data ends before projection data. We don't want to
+      // show tooltip indicators related to projection target data in this
+      // case.
+      const projectionTargetDatumAtPosXExist = !!(
+        projectionTargetDatumAtPosX &&
+        monthDifference(projectionDatumAtPosX.date, projectionTargetDatumAtPosX.date) < 1
+      );
 
       if (projectionsData.length > 0) {
         tooltip.showTooltip({
           tooltipLeft: adjMouseX,
-          tooltipTop: goalMet
-            ? yScale(performanceAccessor(datumAtPosX))
-            : yScale(goalNotMetAccessor(datumAtPosX)),
+          tooltipTop: projectionTargetDatumAtPosXExist
+            ? // The exclamation mark is necessary else TypeScript can't infer
+              // that 'projectionTargetDatumAtPosX' exists at this point
+              yScale(projectionTargetAccessor(projectionTargetDatumAtPosX!))
+            : yScale(performanceAccessor(projectionDatumAtPosX)),
           tooltipData: {
-            performanceProjection: datumAtPosX,
-            performanceIndicatorPosY: yScale(performanceAccessor(datumAtPosX)),
-            contributionIndicatorPosY: yScale(contributionAccessor(datumAtPosX)),
-            goalNotMetIndicatorPosY: goalMet ? 0 : yScale(goalNotMetAccessor(datumAtPosX)),
+            performanceProjection: projectionDatumAtPosX,
+            performanceProjectionTarget: projectionTargetDatumAtPosXExist
+              ? projectionTargetDatumAtPosX
+              : undefined,
+
+            performanceIndicatorPosY: yScale(performanceAccessor(projectionDatumAtPosX)),
+            contributionIndicatorPosY: yScale(contributionAccessor(projectionDatumAtPosX)),
+            goalNotMetIndicatorPosY: projectionTargetDatumAtPosXExist
+              ? // The exclamation mark is necessary else TypeScript can't infer
+                // that 'projectionTargetDatumAtPosX' exists at this point
+                yScale(projectionTargetAccessor(projectionTargetDatumAtPosX!))
+              : undefined,
           },
         });
       }
@@ -108,11 +141,11 @@ export default function usePerformanceProjectionsChartTooltip({
       yScale,
       chartDimension.margin.left,
       projectionsData,
-      goalMet,
+      projectionsTargetData,
       dateAccessor,
       performanceAccessor,
       contributionAccessor,
-      goalNotMetAccessor,
+      projectionTargetAccessor,
     ]
   );
 

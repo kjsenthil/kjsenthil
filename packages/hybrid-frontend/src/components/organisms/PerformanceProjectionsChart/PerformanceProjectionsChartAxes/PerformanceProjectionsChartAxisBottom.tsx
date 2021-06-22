@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
-import { usePerformanceProjectionsChartStyles } from '../performanceProjectionsChartStyles/performanceProjectionsChartStyles';
 import PerformanceProjectionsChartTickComponentBottomAxis, {
   PerformanceProjectionsChartTickComponentBottomAxisProps,
 } from '../PerformanceProjectionsChartTickComponent/PerformanceProjectionsChartTickComponentBottomAxis';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../../utils/formatters';
 import { ChartDimension } from '../../../../config/chart';
+import { useChartStyles } from '../../../../hooks';
 
 export interface PerformanceProjectionsChartAxisBottomProps extends SharedAxisProps<AxisScale> {
   chartDimension: ChartDimension;
@@ -24,7 +24,7 @@ export default function PerformanceProjectionsChartAxisBottom({
 }: PerformanceProjectionsChartAxisBottomProps) {
   // Check PerformanceProjectionsChartTickComponent to see why we have to pass this down
   // as a prop.
-  const chartStyles = usePerformanceProjectionsChartStyles();
+  const chartStyles = useChartStyles();
 
   return (
     <AxisBottom

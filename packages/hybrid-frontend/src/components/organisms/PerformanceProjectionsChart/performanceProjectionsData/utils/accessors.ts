@@ -1,16 +1,19 @@
 import { TimeSeriesDatum } from '../../../../../utils/data';
-import { ProjectionsChartProjectionDatum } from '../../../../../services/projections';
+import {
+  ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
+} from '../../../../../services/projections';
 
 export function dateAccessor(d: TimeSeriesDatum): Date {
   return d.date;
 }
 
-export function valueGoodAccessor(d: ProjectionsChartProjectionDatum): number {
-  return d.valueGood;
+export function upperBoundAccessor(d: ProjectionsChartProjectionDatum): number {
+  return d.upperBound;
 }
 
-export function valueBadAccessor(d: ProjectionsChartProjectionDatum): number {
-  return d.valueBad;
+export function lowerBoundAccessor(d: ProjectionsChartProjectionDatum): number {
+  return d.lowerBound;
 }
 
 export function valueAccessor(d: ProjectionsChartProjectionDatum): number {
@@ -21,6 +24,6 @@ export function contributionsAccessor(d: ProjectionsChartProjectionDatum): numbe
   return d.netContributionsToDate;
 }
 
-export function goalNotMetAccessor(d: ProjectionsChartProjectionDatum): number {
-  return d.valueGoalNotMet ?? 0;
+export function valueTargetAccessor(d: ProjectionsChartProjectionTargetDatum): number {
+  return d.value;
 }
