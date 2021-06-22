@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import DigitalCoachBox, { DigitalCoachBoxProps } from './DigitalCoachBox';
 
-jest.mock('../../molecules/TypographyWithInfoTooltip', () => ({
+jest.mock('../../molecules/TypographyWithTooltip', () => ({
   __esModule: true,
   default: ({ children }) => <div role="tooltip">{children}</div>,
 }));
