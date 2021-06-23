@@ -157,6 +157,21 @@
       }
     },    
     {
+      "operation_id": "projections-target-projection",
+      "display_name": "Projections - Get target projection",
+      "url_template": "/projections/target-projection",
+      "description": "Connects to the target-projection function app and returns the current projection for the given inputs",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "projections_function_app",
+        "rewrite_url": "/target-projection"
+      }
+    },
+    {
       "operation_id": "identity-refresh-token",
       "display_name": "Refresh Token",
       "url_template": "/refresh-token",
