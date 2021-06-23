@@ -9,6 +9,7 @@ import mockProjectionsAnnualData from '../performanceProjectionsData/mocks/mock-
 import mockProjectionsTargetAnnualData from '../performanceProjectionsData/mocks/mock-projections-target-annual-data.json';
 import mockHistoricalAnnualData from '../performanceProjectionsData/mocks/mock-historical-annual-data.json';
 import mockGoalsAnnualData from '../performanceProjectionsData/mocks/mock-goals-annual-data.json';
+import mockGoalsMultiData from '../performanceProjectionsData/mocks/mock-goals-multiple-data.json';
 
 import mockProjectionsMetadata from '../performanceProjectionsData/mocks/mock-projections-metadata.json';
 
@@ -69,5 +70,14 @@ NoData.args = {
     ...defaultArgs.chartProps,
     historicalData: [],
     projectionsData: [],
+  },
+};
+
+export const MultipleGoals = Template.bind({});
+MultipleGoals.args = {
+  ...defaultArgs,
+  chartProps: {
+    ...defaultArgs.chartProps,
+    goalsData: mockGoalsMultiData.data.map(mapDate),
   },
 };

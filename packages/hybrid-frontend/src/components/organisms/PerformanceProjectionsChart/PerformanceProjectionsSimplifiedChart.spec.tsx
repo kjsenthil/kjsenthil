@@ -9,6 +9,15 @@ import mockProjectionsMonthlyData from './performanceProjectionsData/mocks/mock-
 import mockHistoricalMonthlyData from './performanceProjectionsData/mocks/mock-historical-monthly-data.json';
 import mockGoalsMonthlyData from './performanceProjectionsData/mocks/mock-goals-monthly-data.json';
 import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
+import mockGoalsMultiData from './performanceProjectionsData/mocks/mock-goals-multiple-data.json';
+
+jest.mock(
+  './PerformanceProjectionsChartGoalIndicator/PerformanceProjectionsChartGoalIndicator',
+  () => ({
+    __esModule: true,
+    default: ({ label }) => <div data-testid="goalIndicator">{label}</div>,
+  })
+);
 
 describe('PerformanceProjectionsSimplifiedChartChart', () => {
   const CHART_SIZE = 600;
@@ -78,4 +87,25 @@ describe('PerformanceProjectionsSimplifiedChartChart', () => {
       ).toBeVisible();
     }
   );
+
+  test('renders with multiple goal indicators', () => {
+    renderWithTheme(
+      <div>
+        <PerformanceProjectionsSimplifiedChart
+          initialWidth={CHART_SIZE}
+          initialHeight={CHART_SIZE}
+          parentWidth={CHART_SIZE}
+          projectionsData={mockProjectionsData}
+          historicalData={mockHistoricalData}
+          goalsData={mockGoalsMultiData.data.map(mapDate)}
+          projectionsMetadata={mockProjectionsMetadata}
+        />
+      </div>
+    );
+
+    expect(screen.getAllByTestId('goalIndicator')).toHaveLength(3);
+    expect(screen.getByText('Lump sum')).toBeVisible();
+    expect(screen.getByText('Retirement')).toBeVisible();
+    expect(screen.getByText('Remaining')).toBeVisible();
+  });
 });

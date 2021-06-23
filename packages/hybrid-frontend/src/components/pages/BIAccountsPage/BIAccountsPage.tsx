@@ -69,7 +69,7 @@ const BIAccountsPage = () => {
     <MyAccountLayout
       heading={(basicInfo) => ({
         primary: `${basicInfo.firstName}'s`,
-        secondary: `Invesments`,
+        secondary: `Investments`,
       })}
     >
       <Spacer y={3} />

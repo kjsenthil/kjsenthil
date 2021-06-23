@@ -14,6 +14,7 @@ import mockProjectionsAnnualData from './performanceProjectionsData/mocks/mock-p
 import mockProjectionsTargetAnnualData from './performanceProjectionsData/mocks/mock-projections-target-annual-data.json';
 import mockHistoricalAnnualData from './performanceProjectionsData/mocks/mock-historical-annual-data.json';
 import mockGoalsAnnualData from './performanceProjectionsData/mocks/mock-goals-annual-data.json';
+import mockGoalsMultiData from './performanceProjectionsData/mocks/mock-goals-multiple-data.json';
 
 import mockProjectionsMetadata from './performanceProjectionsData/mocks/mock-projections-metadata.json';
 
@@ -80,35 +81,9 @@ NoData.args = {
   projectionsMetadata: mockProjectionsMetadata,
 };
 
-const multipleMockGoals = {
-  data: [
-    {
-      date: '2038-01-01T00:00:00.000Z',
-      progress: 0.3,
-      icon: '/goal-graphic.png',
-      label: 'Lump sum',
-      targetAmount: 2500000,
-    },
-    {
-      date: '2051-01-01T00:00:00.000Z',
-      progress: 0.3,
-      icon: '/goal-graphic.png',
-      label: 'Retirement',
-      targetAmount: 2500000,
-    },
-    {
-      date: '2086-01-01T00:00:00.000Z',
-      progress: 0.8,
-      icon: '/goal-graphic.png',
-      label: 'Remaining',
-      targetAmount: 1500000,
-    },
-  ],
-};
-
 export const MultipleGoals = Template.bind({});
 MultipleGoals.args = {
   ...annualDataArgs,
   projectionsTargetData: mockProjectionsTargetAnnualData.map(mapDate),
-  goalsData: multipleMockGoals.data.map(mapDate),
+  goalsData: mockGoalsMultiData.data.map(mapDate),
 };
