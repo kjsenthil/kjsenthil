@@ -5,8 +5,8 @@ import GoalImage from './GoalImage';
 
 export interface PerformanceProjectionsChartGoalIndicatorProps {
   // Determine the position of the indicator, in px, relative to top left
-  top?: number | undefined;
-  left?: number | undefined;
+  top?: number;
+  left?: number;
 
   label: string;
   icon: string;
@@ -22,7 +22,7 @@ export default function PerformanceProjectionsChartGoalIndicator({
 }: PerformanceProjectionsChartGoalIndicatorProps) {
   return (
     <Container top={top} left={left}>
-      <Typography variant="sh4" color="grey" align="center">
+      <Typography noWrap variant="sh4" color="grey" align="center">
         {label}
       </Typography>
 
