@@ -342,6 +342,36 @@
         "backend_url": "myaccounts_api",
         "rewrite_url": "/api/Aggregated-breakdown-allocation"
       }
+    },
+    {
+      "operation_id": "myaccount-performance-accounts-aggregated",
+      "display_name": "Myaccount performance aggregated for multiple accounts",
+      "url_template": "/myaccount/performance-accounts-aggregated",
+      "description": "This lets the user to get performance aggregated for multiple accounts",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/performance-accounts-aggregated"
+      }
+    },
+    {
+      "operation_id": "myaccount-netcontribution-accounts-aggregated",
+      "display_name": "Myaccount netcontribution aggregated for multiple accounts",
+      "url_template": "/myaccount/netcontribution-accounts-aggregated",
+      "description": "This lets the user to get net contributions for multiple accounts",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "myaccounts_api",
+        "rewrite_url": "/api/netcontribution-accounts-aggregated"
+      }
     }
   ]
 }
