@@ -207,9 +207,9 @@ export interface AssetModelResponse {
   erValue: number;
   volatility: number;
   zScores: {
-    MoreLikelyLB: number;
-    MoreLikelyUB: number;
-    LessLikelyLB: number;
-    LessLikelyUB: number;
+    moreLikelyLb: number;
+    moreLikelyUb: number;
+    lessLikleyLb: number; // TYPO to be corrected in Tilney DB first
+    lessLikelyUb: number;
   };
 }

@@ -91,13 +91,13 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
       preGoalRiskModel: riskProfile.riskModel,
       preGoalExpectedReturn: erValue,
       preGoalExpectedVolatility: volatility,
-      preGoalZScoreLowerBound: zScores.LessLikelyUB,
-      preGoalZScoreUpperBound: zScores.LessLikelyLB,
+      preGoalZScoreLowerBound: zScores.lessLikleyLb,
+      preGoalZScoreUpperBound: zScores.lessLikelyUb,
       postGoalRiskModel: riskProfile.riskModel,
       postGoalExpectedReturn: erValue,
       postGoalExpectedVolatility: volatility,
-      postGoalZScoreLowerBound: zScores.LessLikelyUB,
-      postGoalZScoreUpperBound: zScores.LessLikelyLB,
+      postGoalZScoreLowerBound: zScores.moreLikelyLb,
+      postGoalZScoreUpperBound: zScores.moreLikelyUb,
     });
 
     const targetProjectionsPromise = postGoalTargetProjectionsFetcher({

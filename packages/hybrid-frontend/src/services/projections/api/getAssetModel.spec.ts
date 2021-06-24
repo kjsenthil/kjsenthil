@@ -15,10 +15,10 @@ describe('getAssetModel', () => {
       erValue: 0.0333,
       volatility: 0.0537,
       zScores: {
-        MoreLikelyLB: -0.037506582937548,
-        MoreLikelyUB: 0.101296240386098,
-        LessLikelyLB: -0.065337942794282,
-        LessLikelyUB: 0.119393261342225,
+        moreLikelyLb: -0.037506582937548,
+        moreLikelyUb: 0.101296240386098,
+        lessLikleyLb: -0.065337942794282,
+        lessLikelyUb: 0.119393261342225,
       },
     };
 
