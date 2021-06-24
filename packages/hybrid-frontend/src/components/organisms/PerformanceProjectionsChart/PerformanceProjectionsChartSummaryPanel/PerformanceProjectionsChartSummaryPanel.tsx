@@ -43,6 +43,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
         value={[performanceLowEnd, performanceHighEnd]}
         valueFormatter={(val) => formatCurrency(val, valueFormatterOptions)}
         chartIndicatorProps={{ variant: 'rectangle', color: 'tertiary' }}
+        tooltip="The future is uncertain, so ‘likely range’ shows a spectrum of possible outcomes for how much money you could have over time. There’s a 10% chance you could end up with less but there’s also a 10% chance you could end up with more."
       />
 
       {performanceTargetNotMet !== undefined && (
@@ -59,6 +60,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
         value={contributions}
         valueFormatter={formatCurrency}
         chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
+        tooltip="Contributions minus withdrawals"
       />
     </Container>
   );

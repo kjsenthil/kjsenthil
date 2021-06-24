@@ -32,4 +32,11 @@ describe('Legend', () => {
     expect(screen.getByText(value)).toBeInTheDocument();
     expect(screen.getByText(formattedPercentage)).toBeInTheDocument();
   });
+
+  it('has a tooltip when a tooltip is provided', () => {
+    const tooltipText = 'some tooltip';
+    renderWithTheme(<Legend title="some title" tooltip={tooltipText} />);
+
+    expect(screen.getByTitle(tooltipText)).toBeInTheDocument();
+  });
 });

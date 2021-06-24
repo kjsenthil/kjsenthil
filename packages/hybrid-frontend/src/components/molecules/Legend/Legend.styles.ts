@@ -14,3 +14,10 @@ export const ValueContainer = styled.div`
   align-items: center;
   flex-direction: row;
 `;
+
+export const IconWrapper = styled.span`
+  ${({ theme }: { theme: Theme }) => `
+    color: ${theme.palette.grey['300']};
+    vertical-align: middle;
+  `}
+`;

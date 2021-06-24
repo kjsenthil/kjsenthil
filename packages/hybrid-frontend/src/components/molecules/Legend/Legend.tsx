@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LegendContainer, ValueContainer } from './Legend.styles';
+import { LegendContainer, IconWrapper, ValueContainer } from './Legend.styles';
 import TagBox from '../TagBox';
 import {
   Spacer,
@@ -7,6 +7,8 @@ import {
   TypographyProps,
   ChartIndicator,
   ChartIndicatorProps,
+  Tooltip,
+  Icon,
 } from '../../atoms';
 import { Counter, CounterProps } from '../../particles';
 
@@ -24,6 +26,7 @@ export interface LegendProps {
   percentageFormatter?: Formatter;
   shouldAnimate?: boolean;
   counterProps?: Omit<CounterProps, 'valueFormatter' | 'value'>;
+  tooltip?: string;
 }
 
 const LegendValue = ({
@@ -65,34 +68,49 @@ const LegendValue = ({
   );
 
   return (
-    <>
-      <ValueContainer>
-        <Typography variant={valueSizeVariant} color="primary" colorShade="dark2">
-          {legendValue}
-        </Typography>
-        {percentageChange !== undefined && (
-          <>
-            <Spacer x={1} />
-            <TagBox
-              variant="percentage"
-              formatter={percentageFormatter}
-              shouldAnimate={shouldAnimate}
-            >
-              {percentageChange}
-            </TagBox>
-          </>
-        )}
-      </ValueContainer>
-    </>
+    <ValueContainer>
+      <Typography variant={valueSizeVariant} color="primary" colorShade="dark2">
+        {legendValue}
+      </Typography>
+      {percentageChange !== undefined && (
+        <>
+          <Spacer x={1} />
+          <TagBox
+            variant="percentage"
+            formatter={percentageFormatter}
+            shouldAnimate={shouldAnimate}
+          >
+            {percentageChange}
+          </TagBox>
+        </>
+      )}
+    </ValueContainer>
   );
 };
 
-const Legend = ({ title, chartIndicatorProps, ...props }: LegendProps) => (
+const LegendTooltip = ({ tooltip }) => (
+  <>
+    <Spacer inline x={0.5} />
+    <Tooltip title={tooltip}>
+      <IconWrapper>
+        <Icon
+          name="infoCircleIcon"
+          aria-label="more information"
+          color="inherit"
+          fontSize="inherit"
+        />
+      </IconWrapper>
+    </Tooltip>
+  </>
+);
+
+const Legend = ({ title, chartIndicatorProps, tooltip, ...props }: LegendProps) => (
   <LegendContainer>
     {chartIndicatorProps && <ChartIndicator {...chartIndicatorProps} />}
     <div>
       <Typography variant="sh4" color="grey" colorShade="dark1">
         {title.toUpperCase()}
+        {tooltip && <LegendTooltip tooltip={tooltip} />}
       </Typography>
       {typeof props.value !== 'undefined' && <LegendValue {...props} value={props.value} />}
     </div>
