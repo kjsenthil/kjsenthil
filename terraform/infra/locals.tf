@@ -26,7 +26,7 @@ locals {
 
 
   api_backends = {
-    bestinvest_api           = "https://online.bestinvest.co.uk/api/"
+    bestinvest_api           = "https://online.demo2.bestinvest.co.uk/api/"
     bestinvest_auth          = "https://identityapi.demo2.bestinvest.co.uk/api/"
     xplan                    = "https://tbigroupuat2.xplan.iress.co.uk/"
     projections_function_app = "https://${module.function_app_projections.url}/api/"
