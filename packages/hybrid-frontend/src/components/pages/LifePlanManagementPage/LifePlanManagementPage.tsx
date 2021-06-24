@@ -30,7 +30,7 @@ import { formatCurrency } from '../../../utils/formatters';
 import { GoalType, postGoalCreation } from '../../../services/goal';
 
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
-import callPostUpdateCurrentProjections from '../../../services/projections/asyncCallers';
+import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
 import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 
 import AccountsTable from '../../organisms/AccountsTable';

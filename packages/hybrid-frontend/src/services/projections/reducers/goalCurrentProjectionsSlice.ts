@@ -13,6 +13,10 @@ const GoalCurrentProjectionsSlice = createSlice({
     setGoalCurrentProjections: (state, action: PayloadAction<GoalCurrentProjectionsResponse>) => {
       state.data = action.payload;
     },
+    setGoalCurrentProjectionsSuccess: (state) => {
+      state.status = 'success';
+      state.error = undefined;
+    },
     setGoalCurrentProjectionsLoading: (state) => {
       state.status = 'loading';
       state.error = undefined;
@@ -26,6 +30,7 @@ const GoalCurrentProjectionsSlice = createSlice({
 
 export const {
   setGoalCurrentProjections,
+  setGoalCurrentProjectionsSuccess,
   setGoalCurrentProjectionsLoading,
   setGoalCurrentProjectionsError,
 } = GoalCurrentProjectionsSlice.actions;

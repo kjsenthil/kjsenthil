@@ -1,1 +1,2 @@
-export { default } from './callPostUpdateCurrentProjections';
+// eslint-disable-next-line import/prefer-default-export
+export { default as callPostUpdateCurrentProjections } from './callPostUpdateCurrentProjections';

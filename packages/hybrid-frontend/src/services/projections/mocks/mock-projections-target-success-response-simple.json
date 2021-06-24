@@ -1,0 +1,18 @@
+{
+  "targetGoalAmount": 243017.1446264885,
+  "monthlyContributionsRequiredToFundDrawdown": -806.8208820475061,
+  "projections": [
+    {
+      "month": 0,
+      "projectedValue": 250000
+    },
+    {
+      "month": 1,
+      "projectedValue": 249991.50756992304
+    },
+    {
+      "month": 2,
+      "projectedValue": 249982.9880208518
+    }
+  ]
+}

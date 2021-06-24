@@ -82,7 +82,12 @@ export interface ProjectionsChartProjectionTargetDatum extends TimeSeriesDatum {
   metadata?: Record<string, unknown>;
 }
 
-export interface GoalCurrentProjectionsState extends CommonState<GoalCurrentProjectionsResponse> {}
+export interface GoalValidationError {
+  property: string;
+  message: string;
+  code: string;
+}
+export type GoalCurrentProjectionsState = CommonState<GoalCurrentProjectionsResponse>;
 
 export interface GoalCurrentProjectionsRequestPayload {
   timeHorizon: number;
@@ -110,6 +115,7 @@ export interface GoalCurrentProjectionsRequestPayload {
   isConeGraph: boolean;
   includeStatePension: boolean;
 }
+
 export interface GoalCurrentProjectionsResponse {
   projectedGoalAgeTotal: number;
   possibleDrawdown: number;
@@ -119,17 +125,13 @@ export interface GoalCurrentProjectionsResponse {
   possibleDrawdownWhenMarketUnderperformWithSP: number;
   projections: GoalCurrentProjectionMonth[];
 }
+
 export interface GoalCurrentProjectionMonth {
   month: number;
   lowerBound: number;
   upperBound: number;
   projectedValue: number;
   contributionLine: number;
-}
-export interface GoalCurrentValidationError {
-  property: string;
-  message: string;
-  code: string;
 }
 
 export interface FetchGoalCurrentProjectionsParams {
@@ -143,6 +145,60 @@ export interface FetchGoalCurrentProjectionsParams {
   investmentSummary?: InvestmentSummary[];
   includedClientAccounts?: ClientResponse['included'];
   fundData: AllAssets;
+}
+
+export type GoalTargetProjectionsState = CommonState<GoalTargetProjectionsResponse>;
+
+export interface FetchGoalTargetProjectionsParams {
+  clientAge: number;
+  drawdownAmount: number;
+  desiredValueAtEndOfDrawdown: number;
+  drawdownStartDate: Date;
+  drawdownEndDate: Date;
+  shouldIncludeStatePension: boolean;
+  fees: number;
+  lumpSumDate: Date;
+  goalLumpSum: number;
+  investmentSummary?: InvestmentSummary[];
+  includedClientAccounts?: ClientResponse['included'];
+  fundData: AllAssets;
+}
+
+export interface GoalTargetProjectionsRequestPayload {
+  timeToAge100: number;
+
+  portfolioValue: number;
+  upfrontContribution: number;
+
+  feesPercentage: number;
+  goalLumpSum: number;
+  lumpSumDate: string;
+
+  preGoalRiskModel: RiskModel;
+  postGoalRiskModel: RiskModel;
+  preGoalExpectedReturn: number;
+  postGoalExpectedReturn: number;
+  preGoalVolatility: number;
+  postGoalVolatility: number;
+
+  drawdownStartDate: string;
+  drawdownEndDate: string;
+  desiredMonthlyDrawdown: number;
+  desiredValueAtEndOfDrawdown: number;
+
+  includeStatePension: boolean;
+  statePensionAmount: number;
+}
+
+export interface GoalTargetProjectionsResponse {
+  targetGoalAmount: number;
+  monthlyContributionsRequiredToFundDrawdown: number;
+  projections: GoalTargetProjectionMonth[];
+}
+
+export interface GoalTargetProjectionMonth {
+  month: number; // This starts from 0
+  projectedValue: number;
 }
 
 export interface AssetModelResponse {

@@ -24,10 +24,15 @@ import { performanceSlice as performanceReducer } from '../services/performance/
 import {
   projectionsSlice as projectionsReducer,
   goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
+  goalTargetProjectionsSlice as goalTargetProjectionsReducer,
 } from '../services/projections/reducers';
 import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
-import { GoalCurrentProjectionsState, ProjectionsState } from '../services/projections';
+import {
+  GoalCurrentProjectionsState,
+  GoalTargetProjectionsState,
+  ProjectionsState,
+} from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 
@@ -41,13 +46,12 @@ export interface RootState {
   performance: PerformanceState;
   projections: ProjectionsState;
   goalCurrentProjections: GoalCurrentProjectionsState;
+  goalTargetProjections: GoalTargetProjectionsState;
 }
 
 /*
  * To whitelist or blacklist nested data you can use createBlacklistFilter or createWhitelistFilter in this way:
- *
  * const clientWhitelist = createWhitelistFilter('client', ['data.attributes.firstName', 'data.attributes.lastName']);
- *
  * then add the filter to the transforms array
  */
 
@@ -60,6 +64,7 @@ const persistConfig: PersistConfig<RootState> = {
     'performance',
     'projections',
     'goalCurrentProjections',
+    'goalTargetProjections',
   ],
   transforms: [authWhitelist],
   key: 'root',
@@ -76,6 +81,7 @@ const reducersMap: ReducersMapObject = {
   performance: performanceReducer,
   projections: projectionsReducer,
   goalCurrentProjections: goalCurrentProjectionsReducer,
+  goalTargetProjections: goalTargetProjectionsReducer,
 };
 
 const reducers = combineReducers(reducersMap);

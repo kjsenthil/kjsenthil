@@ -2,17 +2,22 @@ import { Dispatch } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile } from '..';
 import { extractClientAccounts } from '../../myAccount';
-
+import {
+  getAssetModel,
+  postGoalCurrentProjections,
+  postGoalTargetProjectionsFetcher,
+} from '../api';
 import extractPercentageEquityAllocationsByAccounts from '../../utils/extractPercentageEquityAllocationsByAccounts';
-import getAssetModel from '../api/getAssetModel';
-
-import postGoalCurrentProjections from '../api/postGoalCurrentProjections';
 import {
   setGoalCurrentProjections,
   setGoalCurrentProjectionsError,
   setGoalCurrentProjectionsLoading,
+  setGoalCurrentProjectionsSuccess,
+  setGoalTargetProjections,
+  setGoalTargetProjectionsError,
+  setGoalTargetProjectionsLoading,
+  setGoalTargetProjectionsSuccess,
 } from '../reducers';
-
 import { FetchGoalCurrentProjectionsParams } from '../types';
 
 const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
@@ -29,6 +34,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
 }: FetchGoalCurrentProjectionsParams) => {
   try {
     dispatch(setGoalCurrentProjectionsLoading());
+    dispatch(setGoalTargetProjectionsLoading());
 
     const ageDiffto100 = clientAge < 100 ? 100 - clientAge : 0;
     const dob100 = dayjs().add(ageDiffto100, 'year');
@@ -67,7 +73,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
 
     const { erValue, volatility, zScores } = await getAssetModel(riskProfile.riskModel);
 
-    const response = await postGoalCurrentProjections({
+    const currentProjectionsPromise = postGoalCurrentProjections({
       timeHorizon,
       drawdownStartDate: drawdownStartDate?.toString() || '',
       desiredMonthlyDrawdown: drawdownAmount,
@@ -94,13 +100,48 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
       postGoalZScoreUpperBound: zScores.LessLikelyLB,
     });
 
-    dispatch(setGoalCurrentProjectionsLoading());
+    const targetProjectionsPromise = postGoalTargetProjectionsFetcher({
+      timeToAge100: timeHorizon,
+      preGoalRiskModel: riskProfile.riskModel,
+      portfolioValue: portfolioCurrentValue,
+      desiredMonthlyDrawdown: drawdownAmount,
+      drawdownStartDate: drawdownStartDate?.toString() || '',
+      drawdownEndDate: drawdownEndDate?.toString() || '',
+      preGoalExpectedReturn: erValue,
+      preGoalVolatility: volatility,
+      feesPercentage: fees / 100,
+      postGoalRiskModel: riskProfile.riskModel,
+      postGoalExpectedReturn: erValue,
+      postGoalVolatility: volatility,
+      includeStatePension: shouldIncludeStatePension,
+      statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
 
-    dispatch(setGoalCurrentProjections(response));
+      // TODO: To be provided by the state machine
+      goalLumpSum: 100000,
+      lumpSumDate: '2079-01-01',
+      upfrontContribution: 0,
+      desiredValueAtEndOfDrawdown: 10000,
+    });
 
-    return response;
+    const [currentProjectionsResponse, targetProjectionsResponse] = await Promise.all([
+      currentProjectionsPromise,
+      targetProjectionsPromise,
+    ]);
+
+    dispatch(setGoalCurrentProjectionsSuccess());
+    dispatch(setGoalTargetProjectionsSuccess());
+
+    dispatch(setGoalCurrentProjections(currentProjectionsResponse));
+    dispatch(setGoalTargetProjections(targetProjectionsResponse));
+
+    return {
+      currentProjectionsResponse,
+      targetProjectionsResponse,
+    };
   } catch (error) {
     dispatch(setGoalCurrentProjectionsError(error));
+    dispatch(setGoalTargetProjectionsError(error));
+
     return error;
   }
 };
