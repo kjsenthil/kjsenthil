@@ -11,13 +11,19 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
         performanceHighEnd={11000.789}
         contributions={20000}
         performanceTargetNotMet={40000}
+        showLikelyRange
+        toggleLikelyRange={() => {}}
       />
     );
 
     const projectedValueLabel = screen.getByText('PROJECTED VALUE');
-    const likelyRangeLabel = screen.getByText('LIKELY RANGE');
+
     const contributionsLabel = screen.getByText('CONTRIBUTIONS');
     const performanceTargetNotMetLabel = screen.getByText('TARGET VALUE');
+
+    // There are 2 "Likely Range" labels, one for the chart legend, and one for
+    // the likely range toggle.
+    const likelyRangeLabels = screen.getAllByText('LIKELY RANGE');
 
     const projectedValueText = screen.getByText('£10,000.12');
     const likelyRangeText = screen.getByText('£9,000 - £11,001');
@@ -25,9 +31,12 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
     const performanceTargetNotMetText = screen.getByText('£40,000');
 
     expect(projectedValueLabel).toBeVisible();
-    expect(likelyRangeLabel).toBeVisible();
     expect(contributionsLabel).toBeVisible();
     expect(performanceTargetNotMetLabel).toBeVisible();
+
+    expect(likelyRangeLabels).toHaveLength(2);
+    expect(likelyRangeLabels[0]).toBeVisible();
+    expect(likelyRangeLabels[1]).toBeVisible();
 
     expect(projectedValueText).toBeVisible();
     expect(likelyRangeText).toBeVisible();

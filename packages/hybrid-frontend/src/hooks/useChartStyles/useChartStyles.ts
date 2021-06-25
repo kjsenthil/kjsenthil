@@ -78,5 +78,12 @@ export default function useChartStyles() {
     RADIUS: {
       INDICATOR: 5,
     },
+
+    WIDTH: {
+      // This is the width of the likely range band's mask. It restricts the
+      // display of the likely range to an area of this width only. Effect only
+      // shows up on hover and when likely range is toggled to not always show.
+      PROJECTIONS_LIKELY_RANGE_BAND_MASK: 100,
+    },
   };
 }

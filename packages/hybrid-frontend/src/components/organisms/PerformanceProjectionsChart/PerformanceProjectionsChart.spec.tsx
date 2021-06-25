@@ -32,6 +32,8 @@ describe('PerformanceProjectionsChartChart', () => {
           historicalData={mockHistoricalMonthlyData.map(mapDate)}
           goalsData={mockGoalsData.data.map(mapDate)}
           projectionsMetadata={mockProjectionsMetadata}
+          showLikelyRange
+          toggleLikelyRange={() => {}}
         />
       </div>
     );
@@ -50,6 +52,8 @@ describe('PerformanceProjectionsChartChart', () => {
           historicalData={[]}
           goalsData={mockGoalsData.data.map(mapDate)}
           projectionsMetadata={mockProjectionsMetadata}
+          showLikelyRange
+          toggleLikelyRange={() => {}}
         />
       </div>
     );
@@ -73,6 +77,8 @@ describe('PerformanceProjectionsChartChart', () => {
           historicalData={mockHistoricalMonthlyData.map(mapDate)}
           goalsData={mockGoalsMultiData.data.map(mapDate)}
           projectionsMetadata={mockProjectionsMetadata}
+          showLikelyRange
+          toggleLikelyRange={() => {}}
         />
       </div>
     );

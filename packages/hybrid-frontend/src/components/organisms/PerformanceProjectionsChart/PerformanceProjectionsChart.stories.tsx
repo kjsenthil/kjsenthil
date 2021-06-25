@@ -31,13 +31,26 @@ export default {
   argTypes: {},
 } as Meta;
 
-const Template: Story<PerformanceProjectionsChartProps> = (args) => (
-  <PerformanceProjectionsChart {...args} />
-);
+type StoryTemplateProps = Omit<
+  PerformanceProjectionsChartProps,
+  'showLikelyRange' | 'toggleLikelyRange'
+>;
+
+const Template: Story<StoryTemplateProps> = (args) => {
+  const [showLikelyRange, setShowLikelyRange] = React.useState(true);
+
+  return (
+    <PerformanceProjectionsChart
+      {...args}
+      showLikelyRange={showLikelyRange}
+      toggleLikelyRange={() => setShowLikelyRange((prev) => !prev)}
+    />
+  );
+};
 
 // Monthly data variants
 
-const monthlyDataArgs: PerformanceProjectionsChartProps = {
+const monthlyDataArgs: StoryTemplateProps = {
   projectionsData: mockProjectionsMonthlyData.map(mapDate),
   historicalData: mockHistoricalMonthlyData.map(mapDate),
   goalsData: mockGoalsMonthlyData.data.map(mapDate),
@@ -55,7 +68,7 @@ GoalNotMetMonthlyData.args = {
 
 // Annual data variants
 
-const annualDataArgs: PerformanceProjectionsChartProps = {
+const annualDataArgs: StoryTemplateProps = {
   projectionsData: mockProjectionsAnnualData.map(mapDate),
   historicalData: mockHistoricalAnnualData.map(mapDate),
   goalsData: mockGoalsAnnualData.data.map(mapDate),

@@ -44,6 +44,11 @@ const LifePlanPage = () => {
     goalsData.length > 0 &&
     projectionsMetadata;
 
+  // TODO: this should probably live in Redux so it persists. May be a metadata
+  //  state that holds user-configured stuff?
+  const [showLifePlanChartLikelyRange, setShowLifePlanChartLikelyRange] = React.useState(true);
+  const toggleLifePlanChartLikelyRange = () => setShowLifePlanChartLikelyRange((prev) => !prev);
+
   const fundData = useAllAssets();
 
   // Fetch projections data for projections chart
@@ -78,6 +83,8 @@ const LifePlanPage = () => {
               historicalData={annualHistoricalData}
               goalsData={goalsData}
               projectionsMetadata={projectionsMetadata}
+              showLikelyRange={showLifePlanChartLikelyRange}
+              toggleLikelyRange={toggleLifePlanChartLikelyRange}
             />
           </MainCard>
           <Spacer y={1.5} />

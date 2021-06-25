@@ -43,7 +43,6 @@ import {
 import { ProjectionsChartGoalDatum } from '../../../services/goal';
 import { ProjectionsChartHistoricalDatum } from '../../../services/performance';
 import contributionsDefined from './performanceProjectionsData/utils/contributionsDefined';
-
 import { usePerformanceProjectionsChartDimension } from './performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 
 export interface PerformanceProjectionsChartProps
@@ -55,6 +54,13 @@ export interface PerformanceProjectionsChartProps
   historicalData: ProjectionsChartHistoricalDatum[];
   goalsData: ProjectionsChartGoalDatum[];
   projectionsMetadata: ProjectionsChartMetadata;
+
+  // If true, will always show the projections likely range band. Otherwise,
+  // will only show the band on hover.
+  showLikelyRange: boolean;
+
+  // A function used by the likely range toggle to toggle likely range
+  toggleLikelyRange: () => void;
 }
 
 // ---------- Utilities ---------- //
@@ -81,6 +87,8 @@ function PerformanceProjectionsChart({
   historicalData,
   goalsData,
   projectionsMetadata,
+  showLikelyRange,
+  toggleLikelyRange,
   parentWidth = 0,
 }: PerformanceProjectionsChartProps) {
   // ----- Stylings ----- //
@@ -292,6 +300,8 @@ function PerformanceProjectionsChart({
         performanceHighEnd={performanceHighEnd}
         contributions={contributions}
         performanceTargetNotMet={performanceTargetNotMet}
+        showLikelyRange={showLikelyRange}
+        toggleLikelyRange={toggleLikelyRange}
       />
 
       <svg
@@ -316,6 +326,18 @@ function PerformanceProjectionsChart({
           toOffset={chartStyles.GRADIENT.PROJECTIONS_GRAPH.toOffset}
           toOpacity={chartStyles.GRADIENT.PROJECTIONS_GRAPH.toOpacity}
         />
+        {/* This is the gradient for the projections likely range band hover
+            mask. It helps the mask achieve the opacity effect on its left and
+            right side (if the opacity effect is not needed, simply use a
+            <clipPath>). */}
+        <LinearGradient
+          id="performance-projections-likely-range-band-mask-gradient"
+          vertical={false}
+        >
+          <stop offset="0%" stopColor="white" stopOpacity={0} />
+          <stop offset="50%" stopColor="white" stopOpacity={1} />
+          <stop offset="100%" stopColor="white" stopOpacity={0} />
+        </LinearGradient>
 
         {/* **** Main components **** */}
 
@@ -390,8 +412,26 @@ function PerformanceProjectionsChart({
             strokeWidth={chartStyles.STROKE_WIDTH.PROJECTIONS_GRAPH}
           />
 
-          {/* The projection band is just an AreaClosed. It has a transparent
-              fill with no stroke color */}
+          {/* ----- Graph paths - Projection likely range band ----- */}
+
+          {/* This mask "hides" all portions of the graph outside the bar's
+              area. This is only used when the chart is in "hide likely range"
+              mode (hence the height tooltipData / height = 0 check - when the
+              mask's height is 0, the likely range band won't be drawn). */}
+          <mask id="performance-projections-likely-range-band-mask">
+            <MemoizedBar
+              x={tooltipLeft - chartStyles.WIDTH.PROJECTIONS_LIKELY_RANGE_BAND_MASK / 2}
+              width={chartStyles.WIDTH.PROJECTIONS_LIKELY_RANGE_BAND_MASK}
+              height={tooltipData ? chartDimension.innerHeight : 0}
+              fill="url(#performance-projections-likely-range-band-mask-gradient)"
+            />
+          </mask>
+
+          {/* The projection likely range band is just an AreaClosed. It has a
+              transparent fill with no stroke color. In addition, if the chart
+              is in "hide likely range" mode, a mask effect is applied so that
+              the band is hidden by default and only portions of it is shown on
+              hover. */}
           <MemoizedAreaClosed<ProjectionsChartProjectionDatum>
             data={projectionsData}
             x={graphDateAccessor}
@@ -401,6 +441,9 @@ function PerformanceProjectionsChart({
             curve={curveNatural}
             fill={chartStyles.FILL.PROJECTIONS_VARIANCE_BAND_GRAPH}
             opacity={chartStyles.FILL_OPACITY.PROJECTIONS_VARIANCE_BAND_GRAPH}
+            mask={
+              showLikelyRange ? undefined : 'url(#performance-projections-likely-range-band-mask)'
+            }
           />
 
           {/* This path represents projected contributions */}
