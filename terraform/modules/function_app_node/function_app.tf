@@ -12,10 +12,11 @@ resource "azurerm_function_app" "this" {
   os_type    = var.os_type
 
   app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.this.name}.blob.core.windows.net/${azurerm_storage_container.this.name}/${azurerm_storage_blob.this.name}${data.azurerm_storage_account_sas.this.sas}"
-    FUNCTIONS_WORKER_RUNTIME = "node"
-    FUNCTION_APP_EDIT_MODE   = "readonly"
-    HASH                     = base64encode(filesha256(var.app_code_path))
+    WEBSITE_RUN_FROM_PACKAGE         = "https://${azurerm_storage_account.this.name}.blob.core.windows.net/${azurerm_storage_container.this.name}/${azurerm_storage_blob.this.name}${data.azurerm_storage_account_sas.this.sas}"
+    FUNCTIONS_WORKER_RUNTIME         = "node"
+    FUNCTION_APP_EDIT_MODE           = "readonly"
+    HASH                             = base64encode(filesha256(var.app_code_path))
+    APPINSIGHTS_INSTRUMENTATIONKEY = var.app_insights_instrumentation_key
   }
 
   auth_settings {
