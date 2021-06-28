@@ -4,7 +4,7 @@ import authReducer, { credLogin, pinLogin, refreshToken } from './authSlice';
 import * as api from '../api';
 import { tokens } from '../mocks';
 
-const contactId = 'contact-id';
+const contactId = 1234567;
 
 jest.mock('../api', () => ({
   postLogin: jest.fn(),

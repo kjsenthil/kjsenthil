@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export { default as getPerformanceContactFetcher } from './getPerformanceContactFetcher';
+export { default as getPerformanceContact } from './getPerformanceContact';

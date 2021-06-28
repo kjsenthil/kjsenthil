@@ -18,7 +18,7 @@ export type CredLoginRequest = GenericRequestPayload<
 
 export type PinLoginResponse = GenericResponseData<{
   tokens: TokenItem[];
-  contactId: string;
+  contactId: number;
 }>;
 
 export type PinLoginRequest = GenericRequestPayload<{
@@ -56,7 +56,7 @@ export interface AuthState extends Omit<CommonState, 'data' | 'error'> {
   isCredLoggedIn: boolean;
   isPinLoggedIn: boolean;
   accessTokens: TokenItem[];
-  contactId?: string;
+  contactId?: number;
   twoStepAuthCode?: string;
   credLoginError?: string;
   pinLoginError?: string;

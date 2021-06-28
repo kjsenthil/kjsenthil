@@ -1,21 +1,36 @@
+import { ReducersMapObject } from 'redux';
 import * as api from '../api';
 import getStoreAndStateHistory from '../utils/getStoreAndStateHistory';
 import performanceReducer, {
-  getPerformanceContact,
-  setPerformance,
+  fetchPerformanceContact,
   setPerformanceDataPeriod,
 } from './performanceSlice';
 import { PerformanceDataPeriod } from '../constants';
 import { GetPerformanceContactResponse, PerformanceState } from '../types';
 import mockGetPerformanceResponse from '../mocks/mock-get-performance-contact-sucess-response-simple.json';
+import { AuthState } from '../../auth';
 
 jest.mock('../api');
 
-const contactId = '12345678';
+type StateMap = { auth: AuthState; performance: PerformanceState };
 
 function getPerformanceStoreAndStateHistory() {
-  return getStoreAndStateHistory<PerformanceState>(performanceReducer);
+  return getStoreAndStateHistory<StateMap, ReducersMapObject>({
+    auth: () => ({
+      contactId: 12345678,
+    }),
+    performance: performanceReducer,
+  });
 }
+
+const expectStateMatchesUpdated = (
+  expectedStates: Array<PerformanceState>,
+  stateHistory: Array<StateMap>
+) => {
+  expectedStates.forEach((expectedState, i) => {
+    expect(stateHistory[i].performance).toEqual(expectedState);
+  });
+};
 
 describe('performanceSlice', () => {
   beforeEach(() => {
@@ -23,112 +38,80 @@ describe('performanceSlice', () => {
   });
 
   test('The initial performance state is as expected', () => {
-    const {
-      status,
-      performance,
-      performanceError,
-      performanceDataPeriod,
-    } = performanceReducer(undefined, { type: 'whatever' });
+    const { status, data, error, performanceDataPeriod } = performanceReducer(undefined, {
+      type: 'whatever',
+    });
 
-    expect(performance).toBeUndefined();
+    expect(data).toBeUndefined();
     expect(status).toBe('idle');
-    expect(performanceError).toBeUndefined();
+    expect(error).toBeUndefined();
     expect(performanceDataPeriod).toBe(PerformanceDataPeriod['5Y']);
   });
 
-  describe('getPerformanceContact action', () => {
-    const getPerformanceAction = getPerformanceContact({
-      contactId,
-    });
+  describe('fetchPerformanceContact action', () => {
+    const fetchPerformanceAction = fetchPerformanceContact();
 
     describe('network fetch success case', () => {
       it('performs the network fetch and store states as expected', async () => {
-        (api.getPerformanceContactFetcher as jest.Mock).mockResolvedValue(
-          mockGetPerformanceResponse
-        );
+        (api.getPerformanceContact as jest.Mock).mockResolvedValue(mockGetPerformanceResponse);
 
-        const expectedStates = [
+        const expectedStates: Array<PerformanceState> = [
           // This state is the result of the 'pending' action
           {
-            performance: undefined,
+            data: undefined,
+            included: undefined,
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
-            performanceError: undefined,
+            error: undefined,
             status: 'loading',
           },
 
           // This state is the result of the 'success' action
           {
-            performance: mockGetPerformanceResponse,
+            data: mockGetPerformanceResponse.data as GetPerformanceContactResponse['data'],
+            included: mockGetPerformanceResponse.included as GetPerformanceContactResponse['included'],
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
-            performanceError: undefined,
+            error: undefined,
             status: 'success',
           },
         ];
 
         const { store, stateHistory } = getPerformanceStoreAndStateHistory();
-        await store.dispatch(getPerformanceAction);
+        await store.dispatch(fetchPerformanceAction);
 
-        expectedStates.forEach((expectedState, i) => {
-          expect(stateHistory[i]).toEqual(expectedStates[i]);
-        });
+        expectStateMatchesUpdated(expectedStates, stateHistory);
       });
     });
 
     describe('network fetch failure case', () => {
       it('performs the network fetch and store states as expected', async () => {
         const mockError = new Error(`Some error`);
-        (api.getPerformanceContactFetcher as jest.Mock).mockRejectedValue(mockError);
+        (api.getPerformanceContact as jest.Mock).mockRejectedValue(mockError);
 
-        const expectedStates = [
+        const expectedStates: Array<PerformanceState> = [
           // This state is the result of the 'pending' action
           {
-            performance: undefined,
+            data: undefined,
+            included: undefined,
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
-            performanceError: undefined,
+            error: undefined,
             status: 'loading',
           },
 
           // This state is the result of the 'error' action
           {
-            performance: undefined,
+            data: undefined,
+            included: undefined,
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
-            performanceError: mockError.message,
+            error: mockError.message,
             status: 'error',
           },
         ];
 
         const { store, stateHistory } = getPerformanceStoreAndStateHistory();
-        await store.dispatch(getPerformanceAction);
+        await store.dispatch(fetchPerformanceAction);
 
         expect(stateHistory).toHaveLength(2);
-        expectedStates.forEach((expectedState, i) => {
-          expect(stateHistory[i]).toEqual(expectedStates[i]);
-        });
-      });
-    });
-  });
-
-  describe('setPerformance action', () => {
-    const setPerformanceAction = setPerformance(
-      mockGetPerformanceResponse as GetPerformanceContactResponse
-    );
-
-    it('updates states as expected', () => {
-      const expectedStates = [
-        {
-          performance: mockGetPerformanceResponse,
-          performanceDataPeriod: PerformanceDataPeriod['5Y'],
-          performanceError: undefined,
-          status: 'idle',
-        },
-      ];
-
-      const { store, stateHistory } = getPerformanceStoreAndStateHistory();
-      store.dispatch(setPerformanceAction);
-
-      expect(stateHistory).toHaveLength(1);
-      expectedStates.forEach((expectedState, i) => {
-        expect(stateHistory[i]).toEqual(expectedStates[i]);
+        expectStateMatchesUpdated(expectedStates, stateHistory);
       });
     });
   });
@@ -137,11 +120,12 @@ describe('performanceSlice', () => {
     const setPerformanceDataPeriodAction = setPerformanceDataPeriod(PerformanceDataPeriod['1M']);
 
     it('updates states as expected', () => {
-      const expectedStates = [
+      const expectedStates: Array<PerformanceState> = [
         {
-          performance: undefined,
+          data: undefined,
+          included: undefined,
           performanceDataPeriod: PerformanceDataPeriod['1M'],
-          performanceError: undefined,
+          error: undefined,
           status: 'idle',
         },
       ];
@@ -150,9 +134,7 @@ describe('performanceSlice', () => {
       store.dispatch(setPerformanceDataPeriodAction);
 
       expect(stateHistory).toHaveLength(1);
-      expectedStates.forEach((expectedState, i) => {
-        expect(stateHistory[i]).toEqual(expectedStates[i]);
-      });
+      expectStateMatchesUpdated(expectedStates, stateHistory);
     });
   });
 });

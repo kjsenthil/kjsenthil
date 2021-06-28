@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { PerformanceDatum } from '../../components/organisms/PerformanceChart/performanceData/types';
-import { mapPerformanceData, PerformanceState } from '../../services/performance';
+import { mapPerformanceData } from '../../services/performance';
+import { RootState } from '../../store';
 import findDateByPeriod from '../../utils/date/findDateByPeriod/index';
 
 export interface UsePerformanceDataProps {
@@ -13,15 +14,15 @@ export interface UsePerformanceDataProps {
 export default function usePerformanceData({
   ignorePeriod,
 }: UsePerformanceDataProps = {}): PerformanceDatum[] {
-  const { performance, performanceDataPeriod } = useSelector(
-    (state: { performance: PerformanceState }) => state.performance
+  const { data: performance, performanceDataPeriod } = useSelector(
+    (state: RootState) => state.performance
   );
 
   if (!performance) {
     return [];
   }
 
-  const performanceData = performance.data.attributes.values;
+  const performanceData = performance.attributes.values;
 
   if (ignorePeriod) {
     return performanceData.map(mapPerformanceData);

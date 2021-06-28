@@ -4,7 +4,7 @@ import { AuthState } from '../../auth';
 
 export const fetchClient = createAsyncThunk('client/fetchClient', async (_, { getState }) => {
   const {
-    auth: { contactId = '' },
+    auth: { contactId = 0 },
   } = getState() as { auth: AuthState };
   return getClient(contactId);
 });

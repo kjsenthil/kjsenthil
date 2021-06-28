@@ -1,2 +1,2 @@
-export { default as getPerformanceContact } from './getPerformanceContact';
-export * from './getPerformanceContact';
+/* eslint-disable import/prefer-default-export */
+export { default as fetchPerformanceContact } from './fetchPerformanceContact';

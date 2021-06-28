@@ -11,7 +11,7 @@ jest.mock('../api', () => ({
 describe('clientSlice', () => {
   let store: Store;
 
-  const contactId = '12345';
+  const contactId = 12345;
   beforeEach(() => {
     store = configureStore({
       reducer: {

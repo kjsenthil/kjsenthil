@@ -6,7 +6,6 @@ import { MyAccountLayout } from '../../templates';
 import { fetchProjections } from '../../../services/projections';
 
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
-import { useHistoricalDataForProjectionsChart } from '../../../services/performance/hooks';
 import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalContent/ProjectionCalculateModalContent';
 
 import {
@@ -14,6 +13,7 @@ import {
   useDispatchThunkOnRender,
   useGoalsDataForChart,
   useProjectionsMetadataForProjectionsChart,
+  useHistoricalDataForProjectionsChart,
 } from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
@@ -21,6 +21,7 @@ import { getPossessiveSuffix } from '../../../utils/string';
 import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { usePerformanceProjectionsChartDimension } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
+import { fetchPerformanceContact } from '../../../services/performance';
 
 const LifePlanPage = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -28,6 +29,7 @@ const LifePlanPage = () => {
   const {
     client: { included: clientData },
     investmentSummary: { data: investmentSummaryData },
+    performance: { status: performanceStatus },
     goalCurrentProjections: { status: projectionsStatus, error: projectionsError },
   } = useSelector((state: RootState) => state);
 
@@ -41,8 +43,7 @@ const LifePlanPage = () => {
   const annualHistoricalData = useHistoricalDataForProjectionsChart('annual');
   const goalsData = useGoalsDataForChart();
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
-  const hasDataForProjectionsChart =
-    annualProjectionsData.length > 0 && annualHistoricalData.length > 0 && goalsData.length > 0;
+  const hasDataForProjectionsChart = annualHistoricalData.length > 0 && goalsData.length > 0;
 
   // TODO: this should probably live in Redux so it persists. May be a metadata
   //  state that holds user-configured stuff?
@@ -64,6 +65,10 @@ const LifePlanPage = () => {
     }
   );
 
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
+  useDispatchThunkOnRender(dispatchGetPerformanceContact, performanceStatus, {
+    enabled: !!annualHistoricalData,
+  });
   const linkClickHandler = () => setIsModalOpen(true);
   const modalCloseHandler = () => setIsModalOpen(false);
 

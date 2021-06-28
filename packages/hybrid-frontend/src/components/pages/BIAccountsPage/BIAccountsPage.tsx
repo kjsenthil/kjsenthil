@@ -9,25 +9,24 @@ import PerformanceChart from '../../organisms/PerformanceChart';
 import { mockAccountsTableHeader } from '../../../constants/storybook';
 import AccountsTable from '../../organisms/AccountsTable';
 import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
-import {
-  usePerformanceData,
-  useContributionsData,
-  usePerformanceDataPeriod,
-} from '../../../services/performance/hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
-  getPerformanceContact,
+  fetchPerformanceContact,
   setPerformanceDataPeriod,
   PerformanceDataPeriod,
 } from '../../../services/performance';
-import { useDispatchThunkOnRender } from '../../../hooks';
+import {
+  useDispatchThunkOnRender,
+  usePerformanceData,
+  useContributionsData,
+  usePerformanceDataPeriod,
+} from '../../../hooks';
 import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
 
 const BIAccountsPage = () => {
   const {
-    auth: { contactId },
-    performance: { status: performanceStatus, performanceError },
+    performance: { status: performanceStatus, error: performanceError },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
@@ -40,13 +39,12 @@ const BIAccountsPage = () => {
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
 
   // Fetch performance data for performance chart
-  const dispatchGetPerformanceContact = () =>
-    dispatch(getPerformanceContact({ contactId: contactId ?? '' }));
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
   const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
     dispatchGetPerformanceContact,
     performanceStatus,
     {
-      enabled: !!contactId && !!performanceData,
+      enabled: !!performanceData,
     }
   );
 

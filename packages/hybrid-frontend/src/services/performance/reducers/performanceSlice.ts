@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GetPerformanceContactResponse, PerformanceState } from '../types';
-import { getPerformanceContact, getPerformanceContactActionReducerMapBuilder } from '../thunks';
+import { fetchPerformanceContact } from '../thunks';
 import { PerformanceDataPeriod } from '../constants';
+import { commonActionReducerMapBuilder } from '../../utils';
 
 const initialState: PerformanceState = {
   status: 'idle',
-  performance: undefined,
-  performanceError: undefined,
   performanceDataPeriod: String(PerformanceDataPeriod['5Y']),
 };
 
@@ -14,22 +13,18 @@ const performanceSlice = createSlice({
   name: 'performance',
   initialState,
   reducers: {
-    setPerformance: (state, action: PayloadAction<GetPerformanceContactResponse>) => {
-      state.performance = action.payload;
-    },
-
     setPerformanceDataPeriod: (state, action: PayloadAction<string>) => {
       state.performanceDataPeriod = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    getPerformanceContactActionReducerMapBuilder(builder);
-  },
+  extraReducers: commonActionReducerMapBuilder<GetPerformanceContactResponse, PerformanceState>(
+    fetchPerformanceContact
+  ),
 });
 
 const performanceReducer = performanceSlice.reducer;
 
-export { getPerformanceContact };
-export const { setPerformance, setPerformanceDataPeriod } = performanceSlice.actions;
+export { fetchPerformanceContact };
+export const { setPerformanceDataPeriod } = performanceSlice.actions;
 
 export default performanceReducer;

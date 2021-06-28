@@ -32,7 +32,7 @@ describe('postPin', () => {
       data: {
         attributes: {
           tokens,
-          contactId: '1234567',
+          contactId: 1234567,
         },
       },
     };

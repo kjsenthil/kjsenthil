@@ -46,9 +46,9 @@ const mockTargetProjectionsData = [
 ];
 
 const mockPerformanceData = {
-  performance: mockGetPerformanceResponse,
+  ...mockGetPerformanceResponse,
   performanceDataPeriod: PerformanceDataPeriod['5Y'],
-  performanceError: undefined,
+  error: undefined,
 };
 
 describe('LifePlanPage', () => {
@@ -70,7 +70,6 @@ describe('LifePlanPage', () => {
         status: 'success',
         data: mockCurrentGoalsResponse,
       }),
-
       goalCurrentProjections: () => ({
         status: 'success',
         data: {

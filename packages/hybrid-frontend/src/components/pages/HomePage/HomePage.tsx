@@ -4,29 +4,23 @@ import { navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import {
-  Box,
-  Button,
-  Link,
-  Icon,
-  Grid,
-  Typography,
-  Spacer,
-  useTheme,
-  useMediaQuery,
-} from '../../atoms';
+import { Box, Button, Icon, Grid, Typography, Spacer, useTheme, useMediaQuery } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import { ChartPeriodSelection, Legend, MainCard } from '../../molecules';
+import { PerformanceSimplifiedChart, GoalMainCardPlaceholder } from '../../organisms';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { useContributionsData, usePerformanceData } from '../../../services/performance/hooks';
-import { getPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
-import PerformanceSimplifiedChart from '../../organisms/PerformanceChart/PerformanceSimplifiedChart';
+import { fetchPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
-import { useBasicInfo, useDispatchThunkOnRender, useGoalImages } from '../../../hooks';
+import {
+  useBasicInfo,
+  useDispatchThunkOnRender,
+  useGoalImages,
+  usePerformanceData,
+  useContributionsData,
+} from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
-import { createGoal } from '../../../services/goal/thunks';
-import { GoalType } from '../../../services/goal';
+import { createGoal, GoalType } from '../../../services/goal';
 
 export enum PerformanceDataPeriod {
   '1M' = '1m',
@@ -38,8 +32,7 @@ export enum PerformanceDataPeriod {
 
 const HomePage = () => {
   const {
-    auth: { contactId },
-    performance: { status: performanceStatus, performanceDataPeriod, performanceError },
+    performance: { status: performanceStatus, performanceDataPeriod, error: performanceError },
   } = useSelector((state: RootState) => state);
 
   const images = useGoalImages();
@@ -59,13 +52,12 @@ const HomePage = () => {
   const basicInfo = useBasicInfo();
 
   // Fetch performance data for performance chart
-  const dispatchGetPerformanceContact = () =>
-    dispatch(getPerformanceContact({ contactId: contactId ?? '' }));
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
   const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
     dispatchGetPerformanceContact,
     performanceStatus,
     {
-      enabled: !!contactId && !!performanceData,
+      enabled: !!performanceData,
     }
   );
 
@@ -74,7 +66,7 @@ const HomePage = () => {
     : 0;
 
   const totalPerformance = performanceData.length
-    ? performanceData[contributionsData.length - 1].value - performanceData[0].value
+    ? performanceData[performanceData.length - 1].value - performanceData[0].value
     : 0;
 
   const totalReturn = totalPerformance - totalContributed;
@@ -82,7 +74,7 @@ const HomePage = () => {
   const totalReturnPercentage =
     totalPerformance && totalContributed ? totalPerformance / totalContributed - 1 : 0;
 
-  const setDataPediod = (period: string) => {
+  const setDataPeriod = (period: string) => {
     dispatch(setPerformanceDataPeriod(period));
   };
 
@@ -90,12 +82,12 @@ const HomePage = () => {
     <ChartPeriodSelection
       currentPeriod={performanceDataPeriod}
       performanceDataPeriod={PerformanceDataPeriod}
-      setCurrentPeriod={setDataPediod}
+      setCurrentPeriod={setDataPeriod}
     />
   );
 
   React.useEffect(() => {
-    setDataPediod(PerformanceDataPeriod['5Y']);
+    setDataPeriod(PerformanceDataPeriod['5Y']);
   }, []);
 
   const renderManageMyInvestmentButton = (fullWidth: boolean) => (
@@ -113,7 +105,7 @@ const HomePage = () => {
     <Button
       color="gradient"
       startIcon={<Icon fontSize="inherit" name="statistics" />}
-      onClick={() => navigate('/my-account/life-plan-management')}
+      onClick={() => navigate('/my-account/life-plan')}
       variant="contained"
       fullWidth={fullWidth}
     >
@@ -258,76 +250,15 @@ const HomePage = () => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <MainCard
-            title={`${basicInfo.firstName}'s life plan`}
-            respondTo="sm"
+          <GoalMainCardPlaceholder
             renderActionEl={renderManageMyLifePlan}
-          >
-            <Grid item container xs={12}>
-              <Grid item xs={12}>
-                <Typography variant="b2" color="primary" colorShade="dark2">
-                  Save enough money for your most important moments by adding them to your life
-                  plan.
-                </Typography>
-                <Spacer y={3} />
-                <Img
-                  fluid={images.lifePlan.childImageSharp.fluid}
-                  alt="Lifeplan chart placeholder"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Spacer y={3} />
-                <Typography variant="sh3" color="primary" colorShade="dark2">
-                  What&#39;s important to you
-                </Typography>
-                <Spacer y={3} />
-              </Grid>
-
-              <Grid container item justify="space-between" spacing={1}>
-                <Grid item xs={4}>
-                  <Button fullWidth variant="outlined" color="primary">
-                    Retirement
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button fullWidth variant="outlined" color="primary">
-                    Buying a home
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button fullWidth variant="outlined" color="primary">
-                    My Child&#39;s education
-                  </Button>
-                </Grid>
-                <Grid container item justify="space-between" spacing={1}>
-                  <Grid item xs={4}>
-                    <Button fullWidth variant="outlined" color="primary">
-                      Starting a business
-                    </Button>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Button fullWidth variant="outlined" color="primary">
-                      Emergency fund
-                    </Button>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Button fullWidth variant="outlined" color="primary">
-                      Something else
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item container alignItems="center" justify="center">
-                <Grid item>
-                  <Spacer y={2} />
-                  <Link onClick={createDefaultGoalHandler}>
-                    I don&#39;t have a specific goal. Just show me my projections.
-                  </Link>
-                </Grid>
-              </Grid>
-            </Grid>
-          </MainCard>
+            title={`${basicInfo.firstName}'s life plan`}
+            imageElement={
+              <Img fluid={images.lifePlan.childImageSharp.fluid} alt="Lifeplan chart placeholder" />
+            }
+            onRetirementClick={() => navigate('/my-account/life-plan-management')}
+            onCreateDefaultGoal={createDefaultGoalHandler}
+          />
         </Grid>
       </Grid>
     </MyAccountLayout>

@@ -44,9 +44,11 @@ export interface GetPerformanceContactResponse {
   }>;
 }
 
-export interface PerformanceState extends CommonState {
-  performance: GetPerformanceContactResponse | undefined;
-  performanceError: string | undefined;
+export interface PerformanceState
+  extends CommonState<
+    GetPerformanceContactResponse['data'],
+    GetPerformanceContactResponse['included']
+  > {
   performanceDataPeriod: string;
 }
 

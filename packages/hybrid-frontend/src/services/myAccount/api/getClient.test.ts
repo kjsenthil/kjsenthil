@@ -5,10 +5,10 @@ import { mockClientResponse } from '../mocks';
 import getClient from './getClient';
 
 const mockAxios = new MockAdapter(axios);
-const contactId = '12345678';
+const contactId = 12345678;
 const url = `${API_ENDPOINTS.MYACCOUNT_CLIENTS.replace(
   /\{id\}/,
-  contactId
+  String(contactId)
 )}?include=accounts,linked-accounts`;
 
 describe('getClient', () => {

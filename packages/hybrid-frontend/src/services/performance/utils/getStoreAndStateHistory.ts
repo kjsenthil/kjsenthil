@@ -1,5 +1,4 @@
-import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
-
+import { configureStore, Reducer, ReducersMapObject, AnyAction } from '@reduxjs/toolkit';
 /**
  * A helper function used to test reducers.
  *
@@ -13,7 +12,7 @@ import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
  */
 export default function getStoreAndStateHistory<
   S,
-  R extends Reducer<S, AnyAction> = Reducer<S, AnyAction>
+  R extends Reducer<S, AnyAction> | ReducersMapObject<S, AnyAction> = Reducer<S, AnyAction>
 >(reducer: R) {
   const store = configureStore({
     reducer,

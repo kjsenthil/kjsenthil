@@ -14,15 +14,13 @@ export interface UseContributionsDataProps {
 export default function useContributionsData({
   ignorePeriod,
 }: UseContributionsDataProps = {}): ContributionDatum[] {
-  const { performance, performanceDataPeriod } = useSelector(
-    (state: RootState) => state.performance
-  );
+  const { included, performanceDataPeriod } = useSelector((state: RootState) => state.performance);
 
-  if (!performance) {
+  if (!included) {
     return [];
   }
 
-  const { contributions } = performance.included[0].attributes;
+  const { contributions } = included[0].attributes;
   if (ignorePeriod) {
     return contributions.map(mapContributionsData);
   }
