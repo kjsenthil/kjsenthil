@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
+import calculateAgeToday from '../../utils/date/calculateAgeToday/index';
 import {
   calculateBasicInvestmentSummary,
   fetchClient,
@@ -10,6 +11,8 @@ import {
 export interface BasicInfo {
   totalInvested: number;
   totalGainLoss: number;
+  dateOfBirth: string;
+  clientAge: number;
   firstName: string;
   lastName: string;
   isLoading: boolean;
@@ -40,6 +43,8 @@ const useBasicInfo = (): BasicInfo => {
       totalInvested: 0,
       firstName: '',
       lastName: '',
+      dateOfBirth: '',
+      clientAge: 31,
       isLoading: true,
     };
   }
@@ -50,6 +55,8 @@ const useBasicInfo = (): BasicInfo => {
     totalGainLoss,
     firstName: client.attributes.firstName,
     lastName: client.attributes.lastName,
+    dateOfBirth: client.attributes.dateOfBirth,
+    clientAge: calculateAgeToday(new Date(client.attributes.dateOfBirth)),
     isLoading: false,
   };
 };

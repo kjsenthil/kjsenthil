@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoals, CurrentGoalsState } from '../../services/goal';
+import { fetchGoals, CurrentGoalsState, CurrentGoals } from '../../services/goal';
 
-export default function useGoals(forceDispatch: boolean = false) {
+export default function useGoals(forceDispatch: boolean = false): undefined | CurrentGoals {
   const dispatch = useDispatch();
   const { data } = useSelector((state: { currentGoals: CurrentGoalsState }) => state.currentGoals);
 

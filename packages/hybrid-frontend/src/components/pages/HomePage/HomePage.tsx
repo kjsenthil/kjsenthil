@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import { useStaticQuery, navigate, graphql } from 'gatsby';
+import { navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
@@ -23,7 +23,7 @@ import { getPerformanceContact, setPerformanceDataPeriod } from '../../../servic
 import PerformanceSimplifiedChart from '../../organisms/PerformanceChart/PerformanceSimplifiedChart';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
-import { useBasicInfo, useDispatchThunkOnRender } from '../../../hooks';
+import { useBasicInfo, useDispatchThunkOnRender, useGoalImages } from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
 import { createGoal } from '../../../services/goal/thunks';
 import { GoalType } from '../../../services/goal';
@@ -42,17 +42,7 @@ const HomePage = () => {
     performance: { status: performanceStatus, performanceDataPeriod, performanceError },
   } = useSelector((state: RootState) => state);
 
-  const images = useStaticQuery(graphql`
-    query AssetsImages {
-      lifePlan: file(relativePath: { eq: "lifePlan.png" }) {
-        childImageSharp {
-          fluid(maxHeight: 525, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
-        }
-      }
-    }
-  `);
+  const images = useGoalImages();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));

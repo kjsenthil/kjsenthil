@@ -44,6 +44,8 @@ describe('useBasicInfo', () => {
         firstName: '',
         lastName: '',
         isLoading: true,
+        clientAge: 31,
+        dateOfBirth: '',
         totalGainLoss: 0,
         totalInvested: 0,
       });
@@ -55,6 +57,8 @@ describe('useBasicInfo', () => {
       const result = {
         firstName: mockClientResponse.data.attributes.firstName,
         lastName: mockClientResponse.data.attributes.lastName,
+        dateOfBirth: mockClientResponse.data.attributes.dateOfBirth,
+        clientAge: 48,
         totalInvested: 1000,
         totalGainLoss: 100,
         isLoading: false,

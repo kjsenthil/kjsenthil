@@ -8,10 +8,13 @@ import { fetchProjections } from '../../../services/projections';
 import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
 import { useHistoricalDataForProjectionsChart } from '../../../services/performance/hooks';
 import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalContent/ProjectionCalculateModalContent';
-import useProjectionsDataForProjectionsChart from '../../../services/projections/hooks/useProjectionsDataForProjectionsChart';
 
-import useProjectionsMetadataForProjectionsChart from '../../../services/projections/hooks/useProjectionsMetadataForProjectionsChart';
-import { useDispatchThunkOnRender, useGoalsDataForChart } from '../../../hooks';
+import {
+  useCurrentProjectionsDataForProjectionsChart,
+  useDispatchThunkOnRender,
+  useGoalsDataForChart,
+  useProjectionsMetadataForProjectionsChart,
+} from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
@@ -25,24 +28,21 @@ const LifePlanPage = () => {
   const {
     client: { included: clientData },
     investmentSummary: { data: investmentSummaryData },
-    projections: { status: projectionsStatus, postProjectionsError: projectionsError },
+    goalCurrentProjections: { status: projectionsStatus, error: projectionsError },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
 
   // TODO: this is annual data at the moment. When the new projection data is
   //  available, this probably will be monthly data.
-  const annualProjectionsData = useProjectionsDataForProjectionsChart();
+  const annualProjectionsData = useCurrentProjectionsDataForProjectionsChart();
 
+  const projectionsMetadata = useProjectionsMetadataForProjectionsChart();
   const annualHistoricalData = useHistoricalDataForProjectionsChart('annual');
   const goalsData = useGoalsDataForChart();
-  const projectionsMetadata = useProjectionsMetadataForProjectionsChart();
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
   const hasDataForProjectionsChart =
-    annualProjectionsData.length > 0 &&
-    annualHistoricalData.length > 0 &&
-    goalsData.length > 0 &&
-    projectionsMetadata;
+    annualProjectionsData.length > 0 && annualHistoricalData.length > 0 && goalsData.length > 0;
 
   // TODO: this should probably live in Redux so it persists. May be a metadata
   //  state that holds user-configured stuff?

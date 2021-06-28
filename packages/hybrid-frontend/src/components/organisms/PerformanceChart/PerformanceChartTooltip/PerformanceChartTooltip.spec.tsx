@@ -1,31 +1,20 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import PerformanceChartTooltip from './PerformanceChartTooltip';
+import * as dateUtil from '../../../../utils/date';
+
+jest.mock('../../../../utils/date', () => ({
+  formatDate: jest.fn(),
+}));
+
+const mockFormatDate = dateUtil.formatDate as jest.Mock;
 
 describe('PerformanceChartTooltip', () => {
-  const locale = 'en-GB';
+  it('The tooltip renders correctly with formatted date', () => {
+    const expected = 'Jan1 , 2021';
+    mockFormatDate.mockReturnValue(expected);
+    renderWithTheme(<PerformanceChartTooltip date={new Date(2010, 1, 1)} />);
 
-  const date1 = new Date(2020, 0, 1);
-  const date2 = new Date();
-
-  const testCases: [Date, string][] = [
-    [
-      date1,
-      date1.toLocaleString(locale, {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      }),
-    ],
-    [date2, 'Today'],
-  ];
-
-  test.each<[Date, string]>(testCases)(
-    'The tooltip renders correctly when date is %p',
-    (date, expected: string) => {
-      renderWithTheme(<PerformanceChartTooltip date={date} />);
-
-      expect(screen.getByText(expected, { exact: false })).toBeVisible();
-    }
-  );
+    expect(screen.getByText(expected, { exact: false })).toBeVisible();
+  });
 });

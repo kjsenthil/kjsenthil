@@ -2,8 +2,8 @@ import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import LifePlanPage from './LifePlanPage';
-import investmentSummaryReducer from '../../../services/myAccount/reducers/investmentSummarySlice';
-import { mockClientResponse } from '../../../services/myAccount/mocks';
+import { mockClientResponse, mockInvestSummaryResponse } from '../../../services/myAccount/mocks';
+import mockCurrentGoalsResponse from '../../../services/goal/mocks/get-goals-success-response.json';
 import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-contact-sucess-response-simple.json';
 import { PerformanceDataPeriod } from '../../../services/performance/constants';
 
@@ -17,20 +17,31 @@ jest.mock('../../organisms/PerformanceProjectionsChart/PerformanceProjectionsCha
   default: () => <div>Projections Chart</div>,
 }));
 
-const mockProjectionsData = [
+const mockCurrentProjectionsData = [
   {
-    actual: 10000,
-    high: 20000,
-    low: 5000,
-    medium: 12000,
-    year: 0,
+    contributionLine: 10000,
+    upperBound: 20000,
+    lowerBound: 5000,
+    projectedValue: 12000,
+    month: 1,
   },
   {
-    actual: 11000,
-    high: 21000,
-    low: 6000,
-    medium: 13000,
-    year: 1,
+    contributionLine: 11000,
+    upperBound: 21000,
+    lowerBound: 6000,
+    projectedValue: 13000,
+    month: 10,
+  },
+];
+
+const mockTargetProjectionsData = [
+  {
+    month: 0,
+    projectedValue: 1000,
+  },
+  {
+    month: 1,
+    projectedValue: 2000,
   },
 ];
 
@@ -38,18 +49,38 @@ const mockPerformanceData = {
   performance: mockGetPerformanceResponse,
   performanceDataPeriod: PerformanceDataPeriod['5Y'],
   performanceError: undefined,
-  status: 'idle',
 };
 
 describe('LifePlanPage', () => {
   const store = configureStore({
     reducer: {
-      client: () => mockClientResponse,
-      investmentSummary: investmentSummaryReducer,
-      performance: () => mockPerformanceData,
-      projections: () => ({
-        projections: {
-          projections: mockProjectionsData,
+      client: () => ({
+        status: 'success',
+        ...mockClientResponse,
+      }),
+      investmentSummary: () => ({
+        status: 'success',
+        ...mockInvestSummaryResponse,
+      }),
+      performance: () => ({
+        status: 'success',
+        ...mockPerformanceData,
+      }),
+      currentGoals: () => ({
+        status: 'success',
+        data: mockCurrentGoalsResponse,
+      }),
+
+      goalCurrentProjections: () => ({
+        status: 'success',
+        data: {
+          projections: mockCurrentProjectionsData,
+        },
+      }),
+      goalTargetProjections: () => ({
+        status: 'success',
+        data: {
+          projections: mockTargetProjectionsData,
         },
       }),
     },

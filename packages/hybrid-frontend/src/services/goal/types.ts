@@ -21,7 +21,7 @@ export enum GoalCategory {
   INVESTMENT = 3,
   RETIREMENT = 5,
   GENERAL_INSURANCE = 6,
-  MEDICAL_INUTRANCE = 7,
+  MEDICAL_INSURANCE = 7,
   LONG_TERM_CARE = 9,
   CLIENT_INITIATED = 10,
   UNCATEGORIZED = 9999,
@@ -34,7 +34,7 @@ export enum GoalAdviceType {
   INVESTMENT = 3,
   RETIREMENT = 5,
   GENERAL_INSURANCE = 6,
-  MEDICAL_INUTRANCE = 7,
+  MEDICAL_INSURANCE = 7,
   LONG_TERM_CARE = 9,
   CLIENT_INITIATED = 10,
 }
@@ -176,4 +176,12 @@ export interface ProjectionsChartGoalDatum {
   progress: number;
   label: string;
   icon: string;
+}
+
+export interface GoalDatum {
+  date: Date;
+  progress: number;
+  icon: string;
+  label: string;
+  targetAmount: number;
 }

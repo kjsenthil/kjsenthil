@@ -18,6 +18,8 @@ const basicInfo = {
   isLoading: false,
   firstName: 'Ava',
   lastName: 'Garcia',
+  dateOfBirth: '1984-01-01',
+  clientAge: 37,
   totalInvested: 148238.52,
   totalGainLoss: 7632.04,
 };
