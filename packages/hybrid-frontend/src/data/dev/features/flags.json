@@ -1,5 +1,9 @@
 [
   {
+    "name": "expFeature",
+    "isEnabled": false
+  },
+  {
     "name": "featureA",
     "isEnabled": true
   },

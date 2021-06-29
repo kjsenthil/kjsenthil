@@ -2,7 +2,8 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import FeatureToggle from '.';
-import { useFeatureFlag } from '../../../hooks';
+import { FeatureFlagNames } from '../../../constants';
+import { useFeatureFlagToggle } from '../../../hooks';
 
 jest.mock('../../../hooks');
 
@@ -12,10 +13,16 @@ describe('FeatureToggle', () => {
   });
 
   test('The enabled feature renders the new version and does not render the old version', () => {
-    (useFeatureFlag as jest.Mock).mockReturnValue(true);
+    (useFeatureFlagToggle as jest.Mock).mockReturnValue({
+      name: FeatureFlagNames.EXP_FEATURE,
+      isEnabled: true,
+    });
 
     renderWithTheme(
-      <FeatureToggle name="FeatureA" fallback={<div>Enabled feature - Old</div>}>
+      <FeatureToggle
+        flagName={FeatureFlagNames.EXP_FEATURE}
+        fallback={<div>Enabled feature - Old</div>}
+      >
         <div>Enabled feature - New</div>
       </FeatureToggle>
     );
@@ -25,10 +32,13 @@ describe('FeatureToggle', () => {
   });
 
   test('The disabled feature renders the old version and does not render the new version', () => {
-    (useFeatureFlag as jest.Mock).mockReturnValue(false);
+    (useFeatureFlagToggle as jest.Mock).mockReturnValue({
+      name: FeatureFlagNames.FEATURE_B,
+      isEnabled: false,
+    });
 
     renderWithTheme(
-      <FeatureToggle name="FeatureB" fallback={<div>Disabled feature - Old</div>}>
+      <FeatureToggle flagName="FeatureB" fallback={<div>Disabled feature - Old</div>}>
         <div>Disabled feature - New</div>
       </FeatureToggle>
     );
@@ -42,12 +52,12 @@ describe('FeatureToggle', () => {
     const consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    (useFeatureFlag as jest.Mock).mockImplementation(() => {
+    (useFeatureFlagToggle as jest.Mock).mockImplementation(() => {
       throw new Error();
     });
 
     renderWithTheme(
-      <FeatureToggle name="FeatureC" fallback={<div>Enabled feature - Old</div>}>
+      <FeatureToggle flagName="FeatureC" fallback={<div>Enabled feature - Old</div>}>
         <div>Enabled feature - New</div>
       </FeatureToggle>
     );

@@ -3,7 +3,8 @@ export enum AccountType {
   GIA = 'gia',
 }
 
-export enum FeatureFlags {
+export enum FeatureFlagNames {
+  EXP_FEATURE = 'expFeature',
   FEATURE_A = 'featureA',
   FEATURE_B = 'featureB',
 }

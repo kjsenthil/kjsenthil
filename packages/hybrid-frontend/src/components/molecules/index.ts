@@ -16,6 +16,8 @@ export { default as Modal } from './Modal';
 export { default as DisabledComponent } from './DisabledComponent';
 export { default as RadioGroup } from './RadioGroup';
 export { default as TypographyWithTooltip } from './TypographyWithTooltip';
+export { default as SubHeader } from './SubHeader';
+export { default as NavLink } from './NavLink';
 
 /* material-ui molecules */
 export {

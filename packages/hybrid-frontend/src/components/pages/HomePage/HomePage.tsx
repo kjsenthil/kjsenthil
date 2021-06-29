@@ -20,6 +20,9 @@ import {
   useContributionsData,
 } from '../../../hooks';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
+
+import { FeatureToggle } from '../../particles';
+import { FeatureFlagNames } from '../../../constants';
 import { createGoal, GoalType } from '../../../services/goal';
 
 export enum PerformanceDataPeriod {
@@ -260,6 +263,14 @@ const HomePage = () => {
             onCreateDefaultGoal={createDefaultGoalHandler}
           />
         </Grid>
+
+        <FeatureToggle flagName={FeatureFlagNames.EXP_FEATURE}>
+          <Grid item xs={12}>
+            <MainCard title="Experimental Title">
+              <Typography>Experimental Content</Typography>
+            </MainCard>
+          </Grid>
+        </FeatureToggle>
       </Grid>
     </MyAccountLayout>
   );

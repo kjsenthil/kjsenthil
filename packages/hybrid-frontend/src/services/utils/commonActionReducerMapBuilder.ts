@@ -1,11 +1,7 @@
 import { ActionReducerMapBuilder, AsyncThunk, CaseReducer } from '@reduxjs/toolkit';
 import { CommonState } from '../types';
 
-const commonActionReducerMapBuilder = <
-  Returned extends { data: unknown; included: unknown },
-  State extends CommonState,
-  ThunkArgs = void
->(
+const commonActionReducerMapBuilder = <Returned, State extends CommonState, ThunkArgs = void>(
   fetcher: AsyncThunk<Returned, ThunkArgs, {}>,
   onFulfilled?: CaseReducer
 ) => (builder: ActionReducerMapBuilder<State>) => {

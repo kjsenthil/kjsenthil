@@ -26,6 +26,7 @@ import {
   goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
   goalTargetProjectionsSlice as goalTargetProjectionsReducer,
 } from '../services/projections/reducers';
+import { featureToggleSlice as featureToggleReducer } from '../services/featureToggle/reducers';
 import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import {
@@ -35,6 +36,7 @@ import {
 } from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
+import { FeatureToggleState } from '../services/featureToggle';
 
 export interface RootState {
   auth: AuthState;
@@ -47,6 +49,7 @@ export interface RootState {
   projections: ProjectionsState;
   goalCurrentProjections: GoalCurrentProjectionsState;
   goalTargetProjections: GoalTargetProjectionsState;
+  featureToggle: FeatureToggleState;
 }
 
 /*
@@ -82,6 +85,7 @@ const reducersMap: ReducersMapObject = {
   projections: projectionsReducer,
   goalCurrentProjections: goalCurrentProjectionsReducer,
   goalTargetProjections: goalTargetProjectionsReducer,
+  featureToggle: featureToggleReducer,
 };
 
 const reducers = combineReducers(reducersMap);

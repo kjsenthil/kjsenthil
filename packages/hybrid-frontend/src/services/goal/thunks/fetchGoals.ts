@@ -7,7 +7,6 @@ const fetchGoals = createAsyncThunk('goal/fetchGoals', async () => {
 
   return {
     data: filterGoals(goalsData),
-    included: undefined,
   };
 });
 

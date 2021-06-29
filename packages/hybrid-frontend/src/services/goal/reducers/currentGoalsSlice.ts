@@ -11,10 +11,9 @@ const currentGoalsSlice = createSlice({
   name: 'currentGoals',
   initialState,
   reducers: {},
-  extraReducers: commonActionReducerMapBuilder<
-    { data: CurrentGoals; included: undefined },
-    CurrentGoalsState
-  >(fetchGoals),
+  extraReducers: commonActionReducerMapBuilder<{ data: CurrentGoals }, CurrentGoalsState>(
+    fetchGoals
+  ),
 });
 
 export { fetchGoals };

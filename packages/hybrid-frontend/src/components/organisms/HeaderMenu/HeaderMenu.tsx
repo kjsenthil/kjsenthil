@@ -2,8 +2,12 @@ import { useMediaQuery } from '@material-ui/core';
 import { navigate } from 'gatsby';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ACTIVE_ENV } from '../../../config';
+import { FeatureFlagNames } from '../../../constants';
+import { useFeatureFlagToggle } from '../../../hooks';
 
 import { logout } from '../../../services/auth';
+import { setFeatureToggleFlag } from '../../../services/featureToggle';
 import {
   Toolbar,
   Button,
@@ -17,8 +21,11 @@ import {
   MenuIcon,
   IconButton,
   Link,
+  Switcher,
+  FormControlLabel,
+  Divider,
 } from '../../atoms';
-import NavLink from '../../molecules/NavLink';
+import { NavLink, SubHeader } from '../../molecules';
 import { LogoImage, StyledAppBar } from './HeaderMenu.styles';
 
 export interface HeaderMenuProps {
@@ -27,8 +34,10 @@ export interface HeaderMenuProps {
 
 const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
   const dispatch = useDispatch();
-
+  const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
   const isLargerScreen = useMediaQuery('(min-width: 800px)');
+
+  const isNonProd = ACTIVE_ENV !== 'production';
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,6 +67,12 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
 
   const navigateHome = () => {
     navigate('/my-account/');
+  };
+
+  const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled: evt.target.checked })
+    );
   };
 
   return (
@@ -161,6 +176,31 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
             )}
           </Grid>
         </Toolbar>
+
+        {isNonProd && (
+          <>
+            <Divider />
+            <SubHeader>
+              <Grid container justify="center">
+                <Grid item xs={4}>
+                  <FormControlLabel
+                    control={
+                      <Box mr={1}>
+                        <Switcher
+                          size="small"
+                          withInnerLabel
+                          checked={expFeatureFlag?.isEnabled}
+                          onClick={switchHandler}
+                        />
+                      </Box>
+                    }
+                    label="Experimental Features"
+                  />
+                </Grid>
+              </Grid>
+            </SubHeader>
+          </>
+        )}
       </StyledAppBar>
     </Box>
   );

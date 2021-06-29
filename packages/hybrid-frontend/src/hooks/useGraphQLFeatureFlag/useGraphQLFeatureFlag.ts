@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { graphql, useStaticQuery } from 'gatsby';
-import { FeatureFlag } from './types';
+import { FeatureFlagItem } from '../../services/featureToggle';
 
 interface QueryData {
   allFlagsJson: {
-    nodes: Array<FeatureFlag>;
+    nodes: Array<FeatureFlagItem>;
   };
 }
 
@@ -22,12 +22,12 @@ const query = graphql`
 /**
  * Return whether a feature is enabled or not.
  */
-export default function useFeatureFlag(name: string): boolean {
+export default function useGraphQLFeatureFlag(name: string): boolean {
   const data = useStaticQuery<QueryData>(query);
 
   if (!data) {
     console.error(
-      '`useFeatureFlag` could not retrieve any data from `useStaticQuery`. All feature flags are disabled. Make sure Gatsby has been setup correctly and a feature flag JSON file is available.'
+      '`useGraphQLFeatureFlag` could not retrieve any data from `useStaticQuery`. All feature flags are disabled. Make sure Gatsby has been setup correctly and a feature flag JSON file is available.'
     );
 
     return false;
@@ -37,7 +37,7 @@ export default function useFeatureFlag(name: string): boolean {
 
   if (featureFlag === undefined) {
     console.warn(
-      `\`useFeatureFlag\` could not find feature flag with name "${name}". Features involving this feature flag will be disabled.`
+      `\`useGraphQLFeatureFlag\` could not find feature flag with name "${name}". Features involving this feature flag will be disabled.`
     );
 
     return false;

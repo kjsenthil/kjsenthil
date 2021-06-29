@@ -5,41 +5,38 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useFeatureFlag } from '../../../hooks';
+import { useFeatureFlagToggle } from '../../../hooks';
 
 export interface FeatureToggleProps {
-  name: string;
-  fallback: React.ReactNode;
-  children?: React.ReactNode;
+  flagName: string;
+  fallback?: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const FeatureToggleWithoutErrorHandling: React.FC<FeatureToggleProps> = ({
-  name,
+const FeatureToggleWithoutErrorHandling = ({
+  flagName,
   fallback = null,
   children,
-}) => {
-  const feature = useFeatureFlag(name);
+}: FeatureToggleProps) => {
+  const featureFlag = useFeatureFlagToggle(flagName);
 
-  // TODO:
-  // Check user is beta
-
-  if (!feature) {
+  if (featureFlag && !featureFlag.isEnabled) {
     return <>{fallback}</>;
   }
 
   return <>{children}</>;
 };
 
-const FeatureToggle: React.FC<FeatureToggleProps> = ({ children, name, fallback }) => (
+const FeatureToggle = ({ children, flagName, fallback }: FeatureToggleProps) => (
   <ErrorBoundary
     fallbackRender={({ error }) => {
-      console.error(`An error occurred when retrieving feature flag with name "${name}"`);
+      console.error(`An error occurred when retrieving feature flag with name "${flagName}"`);
       console.error(error);
 
       return <>{fallback}</>;
     }}
   >
-    <FeatureToggleWithoutErrorHandling name={name} fallback={fallback}>
+    <FeatureToggleWithoutErrorHandling flagName={flagName} fallback={fallback}>
       {children}
     </FeatureToggleWithoutErrorHandling>
   </ErrorBoundary>
