@@ -19,10 +19,14 @@ export interface BasicInfo {
 }
 
 const useBasicInfo = (): BasicInfo => {
-  const { client, investmentSummary } = useSelector((state: RootState) => ({
-    client: state.client.data,
-    investmentSummary: state.investmentSummary.data,
-  }));
+  const { client, investmentSummary, clientStatus, investmentStatus } = useSelector(
+    (state: RootState) => ({
+      client: state.client.data,
+      clientStatus: state.client.status,
+      investmentSummary: state.investmentSummary.data,
+      investmentStatus: state.investmentSummary.status,
+    })
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,6 +41,8 @@ const useBasicInfo = (): BasicInfo => {
     }
   }, []);
 
+  const isBasicInfoLoading = clientStatus === 'loading' || investmentStatus === 'loading';
+
   if (!client || !investmentSummary) {
     return {
       totalGainLoss: 0,
@@ -45,11 +51,12 @@ const useBasicInfo = (): BasicInfo => {
       lastName: '',
       dateOfBirth: '',
       clientAge: 31,
-      isLoading: true,
+      isLoading: isBasicInfoLoading,
     };
   }
 
   const { totalInvested, totalGainLoss } = calculateBasicInvestmentSummary(investmentSummary);
+
   return {
     totalInvested,
     totalGainLoss,
@@ -57,7 +64,7 @@ const useBasicInfo = (): BasicInfo => {
     lastName: client.attributes.lastName,
     dateOfBirth: client.attributes.dateOfBirth,
     clientAge: calculateAgeToday(new Date(client.attributes.dateOfBirth)),
-    isLoading: false,
+    isLoading: isBasicInfoLoading,
   };
 };
 

@@ -43,7 +43,7 @@ describe('useBasicInfo', () => {
       expect(renderedHook.result.current).toStrictEqual({
         firstName: '',
         lastName: '',
-        isLoading: true,
+        isLoading: false,
         clientAge: 31,
         dateOfBirth: '',
         totalGainLoss: 0,
