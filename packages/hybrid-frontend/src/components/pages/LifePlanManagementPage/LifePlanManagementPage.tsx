@@ -167,6 +167,16 @@ const LifePlanManagementPage = () => {
       monthlyInvestment: breakdownItem.monthlyInvestment || 0,
     })) || [];
 
+  const footerData = [
+    'TOTAL',
+    formatCurrency(
+      tableData.reduce((totalVal, currVal) => totalVal + currVal.accountTotalContribution, 0)
+    ),
+    formatCurrency(
+      tableData.reduce((totalVal, currVal) => totalVal + currVal.monthlyInvestment, 0)
+    ),
+  ];
+
   const drawdownPeriodDeviationFromAverage =
     drawdownPeriodLengthYears - GoalDefaults.AVERAGE_DRAW_DOWN_PERIOD_IN_YEARS;
 
@@ -391,6 +401,7 @@ const LifePlanManagementPage = () => {
                     { value: 'MONTHLY CONTRIBUTION' },
                   ]}
                   dataRow={tableData}
+                  footerRow={footerData}
                 />
               </Grid>
             </Grid>

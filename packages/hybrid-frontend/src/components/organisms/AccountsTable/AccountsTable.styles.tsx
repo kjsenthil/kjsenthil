@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Icon } from '../../atoms';
-import { TableCell, TableHead } from '../../molecules';
+import { TableCell, TableHead, TableFooter } from '../../molecules';
 
 export const AccountsTableHead = styled(TableHead)`
   ${({ theme }) => `
@@ -19,5 +19,11 @@ export const AccountsTableHeaderInfo = styled(Icon)`
     color: ${theme.palette.grey.main};
     font-size: 12px;
     margin-bottom: 4px;
+  `}
+`;
+
+export const AccountsTableFooter = styled(TableFooter)`
+  ${({ theme }) => `
+    border-top: 2px solid ${theme.palette.grey.main};
   `}
 `;

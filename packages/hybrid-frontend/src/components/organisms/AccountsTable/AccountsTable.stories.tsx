@@ -1,7 +1,11 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import AccountsTable, { AccountsTableProps } from './AccountsTable';
-import { mockAccountsTableData, mockAccountsTableHeader } from '../../../constants/storybook';
+import {
+  mockAccountsTableData,
+  mockAccountsTableFooterData,
+  mockAccountsTableHeader,
+} from '../../../constants/storybook';
 
 export default {
   title: 'Digital Hybrid/Organisms/Accounts Table',
@@ -15,4 +19,5 @@ export const Default = Template.bind({});
 Default.args = {
   headerRow: mockAccountsTableHeader,
   dataRow: mockAccountsTableData,
+  footerRow: mockAccountsTableFooterData,
 };

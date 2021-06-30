@@ -1,4 +1,7 @@
-import { AccountsHeaderCell } from '../components/organisms/AccountsTable/AccountsTable';
+import {
+  AccountsHeaderCell,
+  AccountsFooterCell,
+} from '../components/organisms/AccountsTable/AccountsTable';
 import { Breakdown } from '../services/myAccount/types';
 
 export const mockAccountsTableHeader: AccountsHeaderCell[] = [
@@ -54,4 +57,11 @@ export const mockAccountsTableData: Breakdown[] = [
     accountReturn: 15292.74,
     accountReturnPercentage: 1.761,
   },
+];
+
+export const mockAccountsTableFooterData: AccountsFooterCell[] = [
+  'TOTAL',
+  '£150000',
+  '$100000',
+  '600%',
 ];

@@ -27,6 +27,7 @@ export {
   TableHead,
   TableRow,
   TableCell,
+  TableFooter,
 } from '@material-ui/core';
 
 export type { ChartPeriodSelectionProps, TypographyWithTooltipProps };

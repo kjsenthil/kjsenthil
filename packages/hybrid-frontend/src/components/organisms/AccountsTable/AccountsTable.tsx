@@ -4,6 +4,7 @@ import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { Grid, Icon, IconButton, Spacer, Tooltip, Typography } from '../../atoms';
 import {
   AccountsTableCell,
+  AccountsTableFooter,
   AccountsTableHead,
   AccountsTableHeaderInfo,
 } from './AccountsTable.styles';
@@ -14,19 +15,22 @@ export interface AccountsHeaderCell {
   tooltip?: string;
 }
 
+export type AccountsFooterCell = string;
+
 export interface AccountsTableProps {
   headerRow: AccountsHeaderCell[];
   dataRow: Breakdown[];
+  footerRow?: AccountsFooterCell[];
 }
 
-const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
+const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) => (
   <TableContainer>
     <Table aria-label="accounts table">
       <AccountsTableHead>
         <TableRow>
           {headerRow &&
             headerRow.map((headerRowItem: AccountsHeaderCell) => (
-              <AccountsTableCell key={`${headerRowItem.value} Key`}>
+              <AccountsTableCell key={`${headerRowItem.value}-key`}>
                 <Typography variant="sh3" display="inline">
                   {headerRowItem.value}
                 </Typography>
@@ -47,7 +51,7 @@ const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
       <TableBody>
         {dataRow &&
           dataRow.map((row: Breakdown) => (
-            <TableRow key={row.accountName}>
+            <TableRow key={row.id}>
               <AccountsTableCell>
                 <Typography variant="sh4">{row.accountName}</Typography>
               </AccountsTableCell>
@@ -113,6 +117,19 @@ const AccountsTable = ({ headerRow, dataRow }: AccountsTableProps) => (
             </TableRow>
           ))}
       </TableBody>
+      {footerRow && (
+        <AccountsTableFooter>
+          <TableRow>
+            {footerRow.map((footerRowItem: AccountsFooterCell) => (
+              <AccountsTableCell key={`${footerRowItem}-key`}>
+                <Typography variant="sh3" display="inline">
+                  {footerRowItem}
+                </Typography>
+              </AccountsTableCell>
+            ))}
+          </TableRow>
+        </AccountsTableFooter>
+      )}
     </Table>
   </TableContainer>
 );
