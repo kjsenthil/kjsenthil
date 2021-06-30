@@ -3,7 +3,7 @@ import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections }
 import { extractClientAccounts, ClientState, InvestmentSummaryResponse } from '../../myAccount';
 import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
-import extractPercentageEquityAllocationsByAccounts from '../../utils/extractPercentageEquityAllocationsByAccounts';
+import extractPercentageEquityAllocationsByAccounts from '../../myAccount/utils/extractPercentageEquityAllocationsByAccounts';
 
 const fetchProjections = createAsyncThunk(
   'projections/fetchProjections',

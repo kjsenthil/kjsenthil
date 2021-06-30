@@ -7,7 +7,7 @@ import {
   postGoalCurrentProjections,
   postGoalTargetProjectionsFetcher,
 } from '../api';
-import extractPercentageEquityAllocationsByAccounts from '../../utils/extractPercentageEquityAllocationsByAccounts';
+import extractPercentageEquityAllocationsByAccounts from '../../myAccount/utils/extractPercentageEquityAllocationsByAccounts';
 import {
   setGoalCurrentProjections,
   setGoalCurrentProjectionsError,

@@ -68,10 +68,7 @@ export interface ContributionResponse {
   included?: null;
 }
 
-export interface BreakdownState extends CommonState {
-  breakdownData?: Breakdown[];
-  fetchAccountBreakdownError?: string;
-}
+export interface BreakdownState extends CommonState<Array<Breakdown>> {}
 
 export interface Breakdown extends AccountData {
   accountType: string;

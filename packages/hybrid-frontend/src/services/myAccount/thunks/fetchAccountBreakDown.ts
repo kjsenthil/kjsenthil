@@ -1,17 +1,11 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getContributions } from '../api';
-import {
-  Breakdown,
-  BreakdownState,
-  ClientState,
-  InvestmentSummary,
-  InvestmentSummaryResponse,
-} from '../types';
+import { Breakdown, ClientState, InvestmentSummary, InvestmentSummaryResponse } from '../types';
 import { extractClientAccounts } from '../utils';
 
 const fetchAccountBreakdown = createAsyncThunk(
   'client/fetchAccountBreakdown',
-  async (_, { getState }): Promise<Array<Breakdown>> => {
+  async (_, { getState }): Promise<{ data: Array<Breakdown> }> => {
     const { client, investmentSummary } = getState() as {
       client: ClientState;
       investmentSummary: InvestmentSummaryResponse;
@@ -56,27 +50,8 @@ const fetchAccountBreakdown = createAsyncThunk(
 
     const investmentAccountsBreakdown = await Promise.all(investmentAccountsBreakdownPromises);
 
-    return investmentAccountsBreakdown;
+    return { data: investmentAccountsBreakdown };
   }
 );
-
-export const fetchAccountBreakdownActionReducerMapBuilder = (
-  builder: ActionReducerMapBuilder<BreakdownState>
-) => {
-  builder
-    .addCase(fetchAccountBreakdown.pending, (state) => {
-      state.status = 'loading';
-      state.fetchAccountBreakdownError = undefined;
-    })
-    .addCase(fetchAccountBreakdown.fulfilled, (state, { payload }) => {
-      state.status = 'success';
-      state.fetchAccountBreakdownError = undefined;
-      state.breakdownData = payload;
-    })
-    .addCase(fetchAccountBreakdown.rejected, (state, action) => {
-      state.status = 'error';
-      state.fetchAccountBreakdownError = action.error.message;
-    });
-};
 
 export default fetchAccountBreakdown;

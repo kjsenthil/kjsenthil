@@ -1,4 +1,4 @@
-import { GoalDataForChart } from './useGoalsDataForChart';
+import { GoalOptionsForChart, GoalDataForChart } from './useGoalsDataForChart';
 
 export { default } from './useGoalsDataForChart';
-export type { GoalDataForChart };
+export type { GoalOptionsForChart, GoalDataForChart };

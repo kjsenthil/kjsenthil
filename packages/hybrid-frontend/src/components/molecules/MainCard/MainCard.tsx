@@ -2,9 +2,11 @@ import React from 'react';
 import { Box, Grid, Typography, useTheme, useMediaQuery } from '../../atoms';
 import { ActionElementContainer, CardContainer } from './MainCard.styles';
 
+type FunctionAsChild = (isMobile: boolean) => React.ReactNode;
+
 export interface MainCardProps {
   title?: string;
-  children: React.ReactNode;
+  children: React.ReactNode | FunctionAsChild;
   isLoading?: boolean;
   respondTo?: 'xs' | 'sm';
   renderActionEl?: (fullWidth: boolean) => React.ReactElement;
@@ -36,9 +38,9 @@ const MainCard = ({
           )}
         </Grid>
         <Grid item xs={12}>
-          {!isLoading && children}
+          {!isLoading && (typeof children === 'function' ? children(isMobile) : children)}
         </Grid>
-        {isMobile && renderActionEl && renderActionEl(true)}
+        {!isLoading && isMobile && renderActionEl && renderActionEl(true)}
       </Grid>
     </CardContainer>
   );

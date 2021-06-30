@@ -1,10 +1,12 @@
-import { ProjectionsChartGoalDatum } from '../../services/goal';
 import useProjectionsMetadataForProjectionsChart from '../useProjectionsMetadataForProjectionsChart';
 import useProjectionsTargetDataForProjectionsChart from '../useProjectionsTargetDataForProjectionsChart';
 import useCurrentProjectionsDataForProjectionsChart from '../useCurrentProjectionsDataForProjectionsChart';
 import { ProjectionsChartHistoricalDatum } from '../../services/performance';
 import useHistoricalDataForProjectionsChart from '../useHistoricalDataForProjectionsChart';
-import useGoalsDataForChart, { GoalDataForChart } from '../useGoalsDataForChart';
+import useGoalsDataForChart, {
+  GoalOptionsForChart,
+  GoalDataForChart,
+} from '../useGoalsDataForChart';
 import {
   ProjectionsChartMetadata,
   ProjectionsChartProjectionDatum,
@@ -15,11 +17,11 @@ interface ProjectionsChartData {
   projectionsData: ProjectionsChartProjectionDatum[];
   projectionsTargetData: ProjectionsChartProjectionTargetDatum[];
   historicalData: ProjectionsChartHistoricalDatum[];
-  goalsData: ProjectionsChartGoalDatum[];
+  goalsData: GoalDataForChart[];
   projectionsMetadata: ProjectionsChartMetadata;
 }
 
-const useProjectionsChartData = (goalDataForChart: GoalDataForChart): ProjectionsChartData => ({
+const useProjectionsChartData = (goalDataForChart: GoalOptionsForChart): ProjectionsChartData => ({
   projectionsMetadata: useProjectionsMetadataForProjectionsChart(),
   historicalData: useHistoricalDataForProjectionsChart(),
   projectionsTargetData: useProjectionsTargetDataForProjectionsChart(), // might wanna specify goal

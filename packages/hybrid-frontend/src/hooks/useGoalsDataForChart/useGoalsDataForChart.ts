@@ -1,31 +1,28 @@
 import { useSelector } from 'react-redux';
-import {
-  ProjectionsChartGoalDatum,
-  goalDataForChart,
-  GoalDefaults,
-  GoalCategory,
-} from '../../services/goal';
+import { GoalDatum, goalDataForChart, GoalDefaults, GoalCategory } from '../../services/goal';
 import useBasicInfo from '../useBasicInfo';
 import useGoals from '../useGoals';
 import { calculateDateAfterYears } from '../../utils/date';
 import { RootState } from '../../store';
 import { calculateGoalOnTrack } from '../../utils/math';
 
-export interface GoalDataForChart {
+export interface GoalOptionsForChart {
   goalCategory: GoalCategory;
   shouldFallbackToUncategorized?: boolean;
   fallbackGoalData?: {
-    objectiveFrequencyEndAge: number;
+    objectiveFrequencyStartAge: number;
   };
 }
 
-const useGoalsDataForChart = (
-  {
-    goalCategory: category,
-    shouldFallbackToUncategorized = false,
-    fallbackGoalData,
-  }: GoalDataForChart = { goalCategory: GoalCategory.RETIREMENT }
-): ProjectionsChartGoalDatum[] => {
+export interface GoalDataForChart extends GoalDatum {
+  category: GoalCategory;
+}
+
+const useGoalsDataForChart = ({
+  goalCategory: category,
+  shouldFallbackToUncategorized = false,
+  fallbackGoalData,
+}: GoalOptionsForChart): GoalDataForChart[] => {
   // TODO: replace with actual API data when it's ready
   let goals = [
     {
@@ -36,6 +33,7 @@ const useGoalsDataForChart = (
   if (!fallbackGoalData) {
     const goalsFromState = useGoals() || [];
     goals = goalsFromState.filter(({ fields }) => fields.category === category);
+
     if (shouldFallbackToUncategorized && goals.length === 0) {
       goals = goalsFromState.filter(({ fields }) => fields.category === GoalCategory.UNCATEGORIZED);
     }
@@ -55,13 +53,14 @@ const useGoalsDataForChart = (
     ...goalDataForChart[fields.category],
     date: calculateDateAfterYears(
       dateOfBirth,
-      fields.objectiveFrequencyEndAge || GoalDefaults.DRAW_DOWN_END_AGE
+      fields.objectiveFrequencyStartAge || GoalDefaults.DRAW_DOWN_START_AGE
     ),
     progress: calculateGoalOnTrack(
       goalCurrentProjections?.data?.projectedGoalAgeTotal || 0,
       goalTargetProjections?.data?.targetGoalAmount || 0
     ),
     targetAmount: goalCurrentProjections?.data?.projectedGoalAgeTotal || 0,
+    category: fields.category,
   }));
 };
 

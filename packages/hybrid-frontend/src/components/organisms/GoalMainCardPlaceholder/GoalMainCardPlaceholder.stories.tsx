@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import GoalMainCardPlaceholder, { GoalMainCardPlaceholderProps } from './GoalMainCardPlaceholder';
 
 import imageFile from '../../../assets/img/lifePlan.png';
+import { goalCreationPaths } from '../../../config/paths';
 
 export default {
   title: 'Digital Hybrid/Organisms/Goal Main Card Placeholder',
@@ -17,9 +18,11 @@ const Template: Story<GoalMainCardPlaceholderProps> = (args) => (
 
 const defaultArgs: GoalMainCardPlaceholderProps = {
   title: "Ava's life plan",
+  buttons: goalCreationPaths,
   imageElement: <img src={imageFile} alt="Goal placeholder" width="100%" />,
+  vertical: false,
   // eslint-disable-next-line no-alert
-  onRetirementClick: () => alert('Navigating to life plan management page'),
+  onAddGoal: (path) => alert(`Navigating to ${path}`),
   // eslint-disable-next-line no-alert
   onCreateDefaultGoal: () => alert('Creating default goal'),
 };

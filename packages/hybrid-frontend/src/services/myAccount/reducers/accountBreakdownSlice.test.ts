@@ -30,44 +30,47 @@ describe('accountBreakdownSlice', () => {
 
   describe('dispatch fetchAccountBreakdown', () => {
     it('starts with sensible defaults', () => {
-      const { status, fetchAccountBreakdownError } = store.getState().accountBreakdown;
+      const { status, data, error } = store.getState().accountBreakdown;
 
-      expect(['fetchAccountBreakdownError', 'loading']).not.toContain(status);
+      expect(['data', 'loading']).not.toContain(status);
 
-      expect(fetchAccountBreakdownError).toBeUndefined();
+      expect(error).toBeUndefined();
+      expect(data).toBeUndefined();
     });
 
     describe('when call is still pending', () => {
       it('sets status to loading', async () => {
         store.dispatch(fetchAccountBreakdownAction);
-        const { status, fetchAccountBreakdownError } = store.getState().accountBreakdown;
+        const { status, data, error } = store.getState().accountBreakdown;
 
         expect(mockGetContributions).toHaveBeenCalledTimes(3);
 
         expect(status).toStrictEqual('loading');
-        expect(fetchAccountBreakdownError).toBeUndefined();
+        expect(error).toBeUndefined();
+        expect(data).toBeUndefined();
       });
     });
 
     describe('when call is fulfilled', () => {
       it('sets status to success', async () => {
         await store.dispatch(fetchAccountBreakdownAction);
-        const { status, fetchAccountBreakdownError } = store.getState().accountBreakdown;
+        const { status, data, error } = store.getState().accountBreakdown;
 
         expect(status).toStrictEqual('success');
-        expect(fetchAccountBreakdownError).toBeUndefined();
+        expect(error).toBeUndefined();
+        expect(data).not.toBeUndefined();
       });
     });
 
     describe('when call is rejected', () => {
-      it('sets fetchAccountBreakdownError', async () => {
-        const error = 'Could not find client data.';
-        (api.getContributions as jest.Mock).mockRejectedValue(error);
+      it('sets error', async () => {
+        const errorMessage = 'Could not find client data.';
+        (api.getContributions as jest.Mock).mockRejectedValue(errorMessage);
         await store.dispatch(fetchAccountBreakdownAction);
-        const { status, fetchAccountBreakdownError } = store.getState().accountBreakdown;
+        const { status, error } = store.getState().accountBreakdown;
 
         expect(status).toStrictEqual('error');
-        expect(fetchAccountBreakdownError).toStrictEqual(error);
+        expect(error).toStrictEqual(errorMessage);
       });
     });
   });

@@ -5,13 +5,10 @@ import { PrivateRoute } from '../components/particles';
 import NotFoundPage from '../components/pages/NotFoundPage';
 import LoginPage from '../components/pages/LoginPage';
 import HomePage from '../components/pages/HomePage';
-import TargetAmountsPage from '../components/pages/TargetAmountsPage';
-import TargetDatePage from '../components/pages/TargetDatePage';
-import UpfrontContributionPage from '../components/pages/UpfrontContributionPage';
-import SelectGoalsPage from '../components/pages/SelectGoalsPage';
 import BIAccountsPage from '../components/pages/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage';
 import LifePlanManagementPage from '../components/pages/LifePlanManagementPage';
+import { NavPaths } from '../config/paths';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -20,17 +17,17 @@ const MyAccount = () => {
     trackPageView(location.pathname);
   }, [location]);
 
+  const getBasePath = (path: NavPaths) => path.replace(NavPaths.ROOT_PAGE, '');
   return (
-    <Router basepath="/my-account">
-      <LoginPage path="/login" />
-      <PrivateRoute path="/accounts" Component={BIAccountsPage} />
-      <PrivateRoute path="/" Component={HomePage} />
-      <PrivateRoute path="/goals" Component={SelectGoalsPage} />
-      <PrivateRoute path="/life-plan" Component={LifePlanPage} />
-      <PrivateRoute path="/target-amount" Component={TargetAmountsPage} />
-      <PrivateRoute path="/target-date" Component={TargetDatePage} />
-      <PrivateRoute path="/upfront-investment" Component={UpfrontContributionPage} />
-      <PrivateRoute path="/life-plan-management" Component={LifePlanManagementPage} />
+    <Router basepath={NavPaths.ROOT_PAGE}>
+      <LoginPage path={getBasePath(NavPaths.LOGIN_PAGE)} />
+      <PrivateRoute path={getBasePath(NavPaths.HOME_PAGE)} Component={HomePage} />
+      <PrivateRoute path={getBasePath(NavPaths.ACCOUNTS_PAGE)} Component={BIAccountsPage} />
+      <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPage} />
+      <PrivateRoute
+        path={getBasePath(NavPaths.LIFE_PLAN_MANAGEMENT)}
+        Component={LifePlanManagementPage}
+      />
       <NotFoundPage default />
     </Router>
   );

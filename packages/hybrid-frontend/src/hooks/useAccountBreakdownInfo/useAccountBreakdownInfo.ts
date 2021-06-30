@@ -16,13 +16,11 @@ export interface AccountBreakdownInfoProps {
 }
 
 const useAccountBreakdownInfo = (): AccountBreakdownInfoProps => {
-  const { client, investmentSummary = undefined, accountBreakdown = undefined } = useSelector(
-    (state: RootState) => ({
-      client: state.client.data,
-      investmentSummary: state.investmentSummary.data,
-      accountBreakdown: state.accountBreakdown.breakdownData,
-    })
-  );
+  const { client, investmentSummary, accountBreakdown } = useSelector((state: RootState) => ({
+    client: state.client.data,
+    investmentSummary: state.investmentSummary.data,
+    accountBreakdown: state.accountBreakdown.data,
+  }));
 
   const dispatch = useDispatch();
 
@@ -39,7 +37,7 @@ const useAccountBreakdownInfo = (): AccountBreakdownInfoProps => {
   }, [client, investmentSummary]);
 
   useEffect(() => {
-    if (client && investmentSummary && (!accountBreakdown || accountBreakdown.length <= 0)) {
+    if (client && investmentSummary && investmentSummary.length && !accountBreakdown) {
       dispatch(fetchAccountBreakdown());
     }
   }, [client, investmentSummary, accountBreakdown]);

@@ -57,7 +57,7 @@ describe('useAccountBreakdownInfo', () => {
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestSummaryResponse,
           accountBreakdown: () => ({
-            breakdownData: mockAccountsBreakdownData.accountBreakdown,
+            data: mockAccountsBreakdownData.accountBreakdown,
           }),
         },
       });

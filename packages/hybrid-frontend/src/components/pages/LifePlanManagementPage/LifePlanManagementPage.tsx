@@ -26,8 +26,8 @@ import {
   lifePlanMachineGuards,
   lifePlanMachineServices,
 } from '../../../services/goal/machines/lifePlan';
-import { formatCurrency } from '../../../utils/formatters';
-import { GoalType, postGoalCreation } from '../../../services/goal';
+import { formatCurrency, formatPercent } from '../../../utils/formatters';
+import { GoalCategory, GoalDefaults, GoalType, postGoalCreation } from '../../../services/goal';
 
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
@@ -36,18 +36,9 @@ import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
 import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
-
-// TODO: these are placeholder stuff to render a static chart.
-//  Will remove and integrate with API
-import mockProjectionsMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-projections-monthly-data.json';
-import mockHistoricalMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-historical-monthly-data.json';
-import mockGoalsMonthlyData from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-goals-monthly-data.json';
-import mockProjectionsMetadata from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData/mocks/mock-projections-metadata.json';
-import { mapDate } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsData';
-
-const AVERAGE_DRAWDOWN_PERIOD_IN_YEARS = 22;
-const DEFAULT_DRAWDOWN_START_AGE = 65;
-const DEFAULT_DRAWDOWN_END_AGE = 87;
+import { fetchPerformanceContact } from '../../../services/performance';
+import { useProjectionsChartData, useDispatchThunkOnRender } from '../../../hooks';
+import { NavPaths } from '../../../config/paths';
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
   <TypographyWithTooltip tooltip="Some description">
@@ -60,21 +51,24 @@ const EqualSignWrapper = styled(Grid)`
   text-align: center;
 `;
 
+const goToLifePlanPage = () => navigate(NavPaths.LIFE_PLAN_PAGE);
+
 const LifePlanManagementPage = () => {
-  const { client, investmentSummary, goalCurrentProjections } = useSelector((state: RootState) => ({
-    client: state.client,
-    investmentSummary: state.investmentSummary,
-    goalCurrentProjections: state.goalCurrentProjections,
-  }));
-
-  // Account Breakdown Data
-  const { accountBreakdown } = useAccountBreakdownInfo();
-
   const dispatch = useDispatch();
 
-  const fundData = useAllAssets();
+  const {
+    client,
+    performance: { status: performanceStatus },
+    investmentSummary,
+    goalCurrentProjections,
+    goalTargetProjections,
+  } = useSelector((state: RootState) => state);
 
-  const goToHome = () => navigate('/my-account');
+  const dateOfBirth = client.data?.attributes.dateOfBirth!;
+
+  const { accountBreakdown } = useAccountBreakdownInfo();
+
+  const fundData = useAllAssets();
 
   const [current, send, service] = useMachine(
     lifePlanMachine
@@ -119,18 +113,18 @@ const LifePlanManagementPage = () => {
       })
       .withContext({
         ...lifePlanContext,
-        userDateOfBirth: new Date(client.data?.attributes.dateOfBirth!),
-        drawdownStartAge: DEFAULT_DRAWDOWN_START_AGE,
-        drawdownEndAge: DEFAULT_DRAWDOWN_END_AGE,
-        expectedReturnOfTAA: 0.043,
-        inflation: 0.02,
+        userDateOfBirth: new Date(dateOfBirth),
+        drawdownStartAge: GoalDefaults.DRAW_DOWN_START_AGE,
+        drawdownEndAge: GoalDefaults.DRAW_DOWN_END_AGE,
+        expectedReturnOfTAA: GoalDefaults.EXPECTED_RETURN_OF_TAA,
+        inflation: GoalDefaults.INFLATION,
       }),
     { devTools: true }
   );
 
   service.onTransition((state) => {
     if (state.matches('fundingYourRetirement')) {
-      goToHome();
+      goToLifePlanPage();
     }
   });
 
@@ -147,11 +141,23 @@ const LifePlanManagementPage = () => {
     errors,
   } = current.context;
 
-  // requires target api to be implemented
-  // projected goal age total / required goal age total
-  const shortFallPercentage = 72;
-  // required goal age total - projected goal age total
-  const shortFallAmount = 580641;
+  const projectionsData = useProjectionsChartData({
+    goalCategory: GoalCategory.RETIREMENT,
+    fallbackGoalData: {
+      objectiveFrequencyStartAge: drawdownStartAge,
+    },
+  });
+
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
+
+  useDispatchThunkOnRender(dispatchGetPerformanceContact, performanceStatus, {
+    enabled: !!projectionsData.projectionsData,
+  });
+
+  const onTrackProgress = projectionsData.goalsData[0].progress;
+  const onTrackDiffAmount =
+    (goalTargetProjections.data?.targetGoalAmount || 0) -
+    (goalCurrentProjections.data?.projectedGoalAgeTotal || 0);
 
   const tableData =
     accountBreakdown?.map((breakdownItem) => ({
@@ -162,18 +168,18 @@ const LifePlanManagementPage = () => {
     })) || [];
 
   const drawdownPeriodDeviationFromAverage =
-    drawdownPeriodLengthYears - AVERAGE_DRAWDOWN_PERIOD_IN_YEARS;
+    drawdownPeriodLengthYears - GoalDefaults.AVERAGE_DRAW_DOWN_PERIOD_IN_YEARS;
 
-  let drawdownPeriodDeviationFromAverageComparision = '';
+  let drawdownPeriodDeviationFromAverageComparison = '';
 
   if (drawdownPeriodDeviationFromAverage === 0) {
-    drawdownPeriodDeviationFromAverageComparision = 'the same as';
+    drawdownPeriodDeviationFromAverageComparison = 'the same as';
   } else if (drawdownPeriodDeviationFromAverage > 0) {
-    drawdownPeriodDeviationFromAverageComparision = `${Math.abs(
+    drawdownPeriodDeviationFromAverageComparison = `${Math.abs(
       drawdownPeriodDeviationFromAverage
     )} more than`;
   } else {
-    drawdownPeriodDeviationFromAverageComparision = `${Math.abs(
+    drawdownPeriodDeviationFromAverageComparison = `${Math.abs(
       drawdownPeriodDeviationFromAverage
     )} less than`;
   }
@@ -219,7 +225,7 @@ const LifePlanManagementPage = () => {
     <GoalCreationLayout
       iconAlt="goal image"
       iconSrc="/goal-graphic.png"
-      onCancelHandler={goToHome}
+      onCancelHandler={goToLifePlanPage}
       progressButtonTitle="Save"
       isLoading={current.matches('planningYourRetirement.saving')}
       progressEventHandler={() => send('SAVE')}
@@ -262,7 +268,7 @@ const LifePlanManagementPage = () => {
                     <TypographyWithTooltip tooltip="Some description">
                       From {drawdownStartDate.getFullYear()} to {drawdownEndDate.getFullYear()}.
                       That&#39;s {pluralize('year', drawdownPeriodLengthYears, true)}, which is{' '}
-                      {drawdownPeriodDeviationFromAverageComparision} most people.
+                      {drawdownPeriodDeviationFromAverageComparison} most people.
                     </TypographyWithTooltip>
                   )}
               </Grid>
@@ -348,30 +354,34 @@ const LifePlanManagementPage = () => {
                   <InfoBox>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're on track to have "}
-                      <b>{shortFallPercentage}%</b>
+                      <b>{formatPercent(onTrackProgress)}</b>
                       {" of your target by the time you're "}
-                      <b>{drawdownStartAge}</b>.{" That's a shortfall of "}
-                      <b>£{shortFallAmount}</b>.
+                      <b>{drawdownStartAge}</b>.
+                      {onTrackDiffAmount === 0 && (
+                        <>
+                          {` That's a ${onTrackDiffAmount > 0 ? 'surplus' : 'shortfall'} of `}
+                          <b>{formatCurrency(onTrackDiffAmount)}</b>.
+                        </>
+                      )}
                     </Typography>
                     <Box marginY={1}>
                       <Divider />
                     </Box>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're likely to have "}
-                      <b>{goalCurrentProjections?.data?.possibleDrawdown}</b>
+                      <b>{formatCurrency(goalCurrentProjections?.data?.possibleDrawdown || 0)}</b>
                       {' to spend each month, or '}
-                      <b>{goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform}</b>
+                      <b>
+                        {formatCurrency(
+                          goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform || 0
+                        )}
+                      </b>
                       {' if market underperforms '}
                     </Typography>
                   </InfoBox>
                 </Box>
 
-                <PerformanceProjectionsSimplifiedChart
-                  projectionsData={mockProjectionsMonthlyData.map(mapDate)}
-                  historicalData={mockHistoricalMonthlyData.map(mapDate)}
-                  goalsData={mockGoalsMonthlyData.data.map(mapDate)}
-                  projectionsMetadata={mockProjectionsMetadata}
-                />
+                <PerformanceProjectionsSimplifiedChart {...projectionsData} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <AccountsTable

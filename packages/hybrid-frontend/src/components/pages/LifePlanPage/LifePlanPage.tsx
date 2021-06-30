@@ -22,6 +22,7 @@ import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { usePerformanceProjectionsChartDimension } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 import { fetchPerformanceContact } from '../../../services/performance';
+import { GoalCategory } from '../../../services/goal';
 
 const LifePlanPage = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -41,7 +42,9 @@ const LifePlanPage = () => {
 
   const projectionsMetadata = useProjectionsMetadataForProjectionsChart();
   const annualHistoricalData = useHistoricalDataForProjectionsChart('annual');
-  const goalsData = useGoalsDataForChart();
+  const goalsData = useGoalsDataForChart({
+    goalCategory: GoalCategory.RETIREMENT,
+  });
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
   const hasDataForProjectionsChart = annualHistoricalData.length > 0 && goalsData.length > 0;
 

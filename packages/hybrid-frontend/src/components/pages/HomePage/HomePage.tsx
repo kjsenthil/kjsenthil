@@ -14,7 +14,6 @@ import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
 import {
   useBasicInfo,
-  useDispatchThunkOnRender,
   useGoalImages,
   usePerformanceData,
   useContributionsData,
@@ -24,6 +23,7 @@ import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/h
 import { FeatureToggle } from '../../particles';
 import { FeatureFlagNames } from '../../../constants';
 import { createGoal, GoalType } from '../../../services/goal';
+import { goalCreationPaths, NavPaths } from '../../../config/paths';
 
 export enum PerformanceDataPeriod {
   '1M' = '1m',
@@ -35,15 +35,24 @@ export enum PerformanceDataPeriod {
 
 const HomePage = () => {
   const {
-    performance: { status: performanceStatus, performanceDataPeriod, error: performanceError },
+    performance: { performanceDataPeriod, error: performanceError },
   } = useSelector((state: RootState) => state);
+
+  const dispatch = useDispatch();
+
+  const setDataPeriod = (period: string) => {
+    dispatch(setPerformanceDataPeriod(period));
+  };
+
+  React.useEffect(() => {
+    dispatch(fetchPerformanceContact());
+    setDataPeriod(PerformanceDataPeriod['5Y']);
+  }, []);
 
   const images = useGoalImages();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
-
-  const dispatch = useDispatch();
 
   // Historical performance data: false
   const performanceData = usePerformanceData();
@@ -53,16 +62,6 @@ const HomePage = () => {
 
   // Projected performance data
   const basicInfo = useBasicInfo();
-
-  // Fetch performance data for performance chart
-  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
-  const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
-    dispatchGetPerformanceContact,
-    performanceStatus,
-    {
-      enabled: !!performanceData,
-    }
-  );
 
   const totalContributed = contributionsData.length
     ? contributionsData[contributionsData.length - 1].value - contributionsData[0].value
@@ -77,10 +76,6 @@ const HomePage = () => {
   const totalReturnPercentage =
     totalPerformance && totalContributed ? totalPerformance / totalContributed - 1 : 0;
 
-  const setDataPeriod = (period: string) => {
-    dispatch(setPerformanceDataPeriod(period));
-  };
-
   const renderChartPeriodSelection = (
     <ChartPeriodSelection
       currentPeriod={performanceDataPeriod}
@@ -88,10 +83,6 @@ const HomePage = () => {
       setCurrentPeriod={setDataPeriod}
     />
   );
-
-  React.useEffect(() => {
-    setDataPeriod(PerformanceDataPeriod['5Y']);
-  }, []);
 
   const renderManageMyInvestmentButton = (fullWidth: boolean) => (
     <Button
@@ -108,7 +99,7 @@ const HomePage = () => {
     <Button
       color="gradient"
       startIcon={<Icon fontSize="inherit" name="statistics" />}
-      onClick={() => navigate('/my-account/life-plan')}
+      onClick={() => navigate(NavPaths.LIFE_PLAN_PAGE)}
       variant="contained"
       fullWidth={fullWidth}
     >
@@ -242,7 +233,7 @@ const HomePage = () => {
                       contributionsData={contributionsData}
                     />
                   </Box>
-                ) : performanceFetchMaxRetriesHit && performanceError ? (
+                ) : performanceError ? (
                   <Typography>{performanceError}</Typography>
                 ) : (
                   <Skeleton height={performanceChartDimension.height} />
@@ -254,12 +245,14 @@ const HomePage = () => {
 
         <Grid item xs={12} sm={6}>
           <GoalMainCardPlaceholder
+            vertical
             renderActionEl={renderManageMyLifePlan}
             title={`${basicInfo.firstName}'s life plan`}
+            buttons={goalCreationPaths}
             imageElement={
               <Img fluid={images.lifePlan.childImageSharp.fluid} alt="Lifeplan chart placeholder" />
             }
-            onRetirementClick={() => navigate('/my-account/life-plan-management')}
+            onAddGoal={(path) => navigate(path)}
             onCreateDefaultGoal={createDefaultGoalHandler}
           />
         </Grid>
