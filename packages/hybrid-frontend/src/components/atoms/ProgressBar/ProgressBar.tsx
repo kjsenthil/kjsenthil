@@ -1,59 +1,82 @@
 import * as React from 'react';
-import { Theme } from '@material-ui/core';
-import styled, { keyframes, css } from 'styled-components';
+import { useTheme } from '@material-ui/core';
+import {
+  ProgressBarContainer,
+  ProgressBarFill,
+  ProgressBarInnerBorder,
+} from './ProgressBar.styles';
 
 export interface ProgressBarProps {
-  progress: number;
+  progress: number | number[];
+  borderRadius?: number;
+  height?: number;
 }
 
-const ProgressBarContainer = styled.div`
-  ${({ theme }: { theme: Theme }) => `
-    position: relative;
-   
-    width: 100%;
-    height: ${theme.typography.pxToRem(8)};
-    border-radius: 4px;
-    
-    overflow: hidden;
-    
-    background-color: ${theme.palette.grey['200']};
-  `}
-`;
+export default function ProgressBar({ borderRadius = 4, height = 8, progress }: ProgressBarProps) {
+  const isMultiValue = Array.isArray(progress);
 
-const ProgressBarFill = styled.div`
-  ${({ theme, progress }: { theme: Theme } & ProgressBarProps) => {
-    const bgColor = theme.palette.tertiary.main;
-    const bgLightColor = theme.palette.tertiary.light1;
-    const width = progress * 100;
+  // reluct casting to reassure TypeScript compiler
+  const progressValueNow = isMultiValue
+    ? (progress as number[]).reduce((a, b) => a + b, 0) * 100
+    : (progress as number) * 100;
 
-    const fillAnimation = keyframes`
-      from {
-        width: 0;
-      }
-      to {
-        width: ${width}%;
-      }
-    `;
+  const renderProgressBars = () => {
+    const theme = useTheme();
+    const linearGradient = `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
 
-    return css`
-      position: absolute;
-      top: 0;
-      left: 0;
+    if (isMultiValue) {
+      const barBackgrounds = [
+        theme.palette.tertiary.dark1,
+        linearGradient,
+        theme.palette.tertiary.light2,
+      ];
+      const barBackgroundsLength = barBackgrounds.length;
 
-      height: ${theme.typography.pxToRem(8)};
-      width: ${width}%;
-      border-radius: 4px;
+      let totalWidth = 0;
 
-      background-image: linear-gradient(to left, ${bgLightColor}, ${bgColor} 50%);
-      animation: ${fillAnimation} 1s ease-out;
-    `;
-  }}
-`;
+      // reluctantly casting to reassure TypeScript compiler
+      return (progress as number[])
+        .map((progressValue, index) => {
+          const barWidth = progressValue * 100;
+          totalWidth += barWidth;
 
-export default function ProgressBar({ progress }: ProgressBarProps) {
+          // fallback to a linear gradient fill
+          const selectedBackground =
+            index < barBackgroundsLength ? barBackgrounds[index] : linearGradient;
+
+          return (
+            <ProgressBarFill
+              barBackground={selectedBackground}
+              key={totalWidth}
+              barHeight={height}
+              barWidth={totalWidth}
+              borderRadius={borderRadius}
+            />
+          );
+        })
+        .reverse();
+    }
+
+    return (
+      <ProgressBarFill
+        borderRadius={borderRadius}
+        barBackground={linearGradient}
+        barHeight={height}
+        barWidth={(progress as number) * 100}
+      />
+    );
+  };
+
   return (
-    <ProgressBarContainer>
-      <ProgressBarFill progress={progress} />
+    <ProgressBarContainer
+      borderRadius={borderRadius}
+      isMultiValue={isMultiValue}
+      barHeight={height}
+      role="progressbar"
+      aria-valuenow={progressValueNow}
+    >
+      <ProgressBarInnerBorder borderRadius={borderRadius} isMultiValue={isMultiValue} />
+      {renderProgressBars()}
     </ProgressBarContainer>
   );
 }

@@ -5,16 +5,7 @@ import ProgressBar, { ProgressBarProps } from '.';
 export default {
   title: 'Digital Hybrid/Atoms/ProgressBar',
   component: ProgressBar,
-  argTypes: {
-    progress: {
-      control: {
-        type: 'number',
-        min: 0,
-        max: 1,
-        step: 0.1,
-      },
-    },
-  },
+  argTypes: {},
 } as Meta;
 
 const Template: Story<ProgressBarProps> = (args) => <ProgressBar {...args} />;
@@ -22,4 +13,12 @@ const Template: Story<ProgressBarProps> = (args) => <ProgressBar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   progress: 0.5,
+  borderRadius: 4,
+};
+
+export const MultiValue = Template.bind({});
+MultiValue.args = {
+  height: 28,
+  progress: [0.5, 0.2, 0.1],
+  borderRadius: 4,
 };
