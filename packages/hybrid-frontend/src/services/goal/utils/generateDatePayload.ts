@@ -1,6 +1,6 @@
 import { GoalPayloadValType } from '../types';
 
-const generateDatePayload = (date?: string): GoalPayloadValType<string, 'Date'> => {
+const generateDatePayload = (date?: string): GoalPayloadValType<string, 'Date', '_val'> => {
   const currDate = new Date();
 
   return {

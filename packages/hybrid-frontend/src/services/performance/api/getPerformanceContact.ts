@@ -12,7 +12,7 @@ export default async function getPerformanceContact({
   const urlPath = API_ENDPOINTS.MYACCOUNT_PERFORMANCE_CONTACT?.replace(/{id}/, String(contactId));
   const url = `${urlPath}?include=contributions`;
 
-  const getPerformanceContactRes = await api.get<GetPerformanceContactResponse>(url);
+  const response = await api.get<GetPerformanceContactResponse>(url);
 
-  return getPerformanceContactRes.data;
+  return response.data;
 }

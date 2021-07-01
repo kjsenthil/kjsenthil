@@ -1,14 +1,13 @@
 import * as api from '../api';
 import getStoreAndStateHistory from '../../performance/utils/getStoreAndStateHistory';
 import goalTargetProjectionsReducer, {
-  postGoalTargetProjections,
-  setGoalTargetProjections,
   setGoalTargetProjectionsSuccess,
   setGoalTargetProjectionsLoading,
   setGoalTargetProjectionsError,
 } from './goalTargetProjectionsSlice';
 import { GoalTargetProjectionsRequestPayload, GoalTargetProjectionsState } from '../types';
 import mockProjectionsTargetSuccessResponse from '../mocks/mock-projections-target-success-response-simple.json';
+import { fetchTargetProjections } from '../thunks';
 
 jest.mock('../api');
 
@@ -30,7 +29,7 @@ describe('goalTargetProjectionsSlice', () => {
   });
 
   describe('postGoalTargetProjections action', () => {
-    const postGoalTargetProjectionsAction = postGoalTargetProjections(
+    const postGoalTargetProjectionsAction = fetchTargetProjections(
       {} as GoalTargetProjectionsRequestPayload
     );
 
@@ -59,6 +58,7 @@ describe('goalTargetProjectionsSlice', () => {
         const { store, stateHistory } = getGoalTargetProjectionsStoreAndStateHistory();
         await store.dispatch(postGoalTargetProjectionsAction);
 
+        expect(api.postGoalTargetProjectionsFetcher).toHaveBeenCalledTimes(1);
         expectedStates.forEach((expectedState, i) => {
           expect(stateHistory[i]).toEqual(expectedStates[i]);
         });
@@ -97,37 +97,15 @@ describe('goalTargetProjectionsSlice', () => {
     });
   });
 
-  describe('setGoalTargetProjections action', () => {
-    const setGoalTargetProjectionsAction = setGoalTargetProjections(
-      mockProjectionsTargetSuccessResponse
-    );
+  describe('setGoalTargetProjectionsSuccess action', () => {
+    const setGoalTargetProjectionsSuccessAction = setGoalTargetProjectionsSuccess({
+      data: mockProjectionsTargetSuccessResponse,
+    });
 
     it('updates states as expected', () => {
       const expectedStates: GoalTargetProjectionsState[] = [
         {
           data: mockProjectionsTargetSuccessResponse,
-          status: 'idle',
-          error: undefined,
-        },
-      ];
-
-      const { store, stateHistory } = getGoalTargetProjectionsStoreAndStateHistory();
-      store.dispatch(setGoalTargetProjectionsAction);
-
-      expect(stateHistory).toHaveLength(1);
-      expectedStates.forEach((expectedState, i) => {
-        expect(stateHistory[i]).toEqual(expectedStates[i]);
-      });
-    });
-  });
-
-  describe('setGoalTargetProjectionsSuccess action', () => {
-    const setGoalTargetProjectionsSuccessAction = setGoalTargetProjectionsSuccess();
-
-    it('updates states as expected', () => {
-      const expectedStates: GoalTargetProjectionsState[] = [
-        {
-          data: undefined,
           status: 'success',
           error: undefined,
         },

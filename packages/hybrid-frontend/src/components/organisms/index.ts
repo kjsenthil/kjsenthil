@@ -8,4 +8,6 @@ export { default as AccountTypeSelection } from './AccountTypeSelection';
 export { default as SimulationForm } from './SimulationForm';
 export { default as StatusComponent } from './StatusComponent';
 export { default as GoalMainCardPlaceholder } from './GoalMainCardPlaceholder';
+export { default as PerformanceProjectionsChart } from './PerformanceProjectionsChart/PerformanceProjectionsChart';
+export { default as ProjectionCalculateModal } from './ProjectionCalculateModalContent/ProjectionCalculateModalContent';
 export { default as PerformanceSimplifiedChart } from './PerformanceChart/PerformanceSimplifiedChart';

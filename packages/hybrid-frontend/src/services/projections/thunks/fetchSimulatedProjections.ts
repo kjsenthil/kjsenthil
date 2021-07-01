@@ -1,12 +1,11 @@
-import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile, postProjections } from '../api';
 import { extractClientAccounts, ClientState, InvestmentSummaryResponse } from '../../myAccount';
-import { ProjectionsState } from '../types';
 import { AllAssets } from '../../assets';
-import extractPercentageEquityAllocationsByAccounts from '../../myAccount/utils/extractPercentageEquityAllocationsByAccounts';
+import { extractPercentageEquityAllocationsByAccounts } from '../../myAccount/utils';
 
-const fetchProjections = createAsyncThunk(
-  'projections/fetchProjections',
+const fetchSimulatedProjections = createAsyncThunk(
+  'projections/fetchSimulatedProjections',
   async (params: { fundData: AllAssets; investmentPeriod: number }, { getState }) => {
     const { client, investmentSummary } = getState() as {
       client: ClientState;
@@ -47,33 +46,16 @@ const fetchProjections = createAsyncThunk(
       0
     );
 
-    return postProjections({
-      upfrontInvestment: portfolioTotal,
-      monthlyInvestment: monthlyInvestmentTotal,
-      investmentPeriod: params.investmentPeriod,
-      sedolCode: riskProfile.sedol,
-      riskModel: riskProfile.riskModel,
-    });
+    return {
+      data: await postProjections({
+        upfrontInvestment: portfolioTotal,
+        monthlyInvestment: monthlyInvestmentTotal,
+        investmentPeriod: params.investmentPeriod,
+        sedolCode: riskProfile.sedol,
+        riskModel: riskProfile.riskModel,
+      }),
+    };
   }
 );
 
-export const fetchProjectionsActionReducerMapBuilder = (
-  builder: ActionReducerMapBuilder<ProjectionsState>
-) => {
-  builder
-    .addCase(fetchProjections.pending, (state) => {
-      state.status = 'loading';
-      state.postProjectionsError = undefined;
-    })
-    .addCase(fetchProjections.fulfilled, (state, { payload }) => {
-      state.status = 'success';
-      state.postProjectionsError = undefined;
-      state.projections = payload;
-    })
-    .addCase(fetchProjections.rejected, (state, action) => {
-      state.status = 'error';
-      state.postProjectionsError = action.error.message;
-    });
-};
-
-export default fetchProjections;
+export default fetchSimulatedProjections;

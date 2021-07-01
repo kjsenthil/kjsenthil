@@ -8,7 +8,7 @@ import { calculateGoalOnTrack } from '../../utils/math';
 
 export interface GoalOptionsForChart {
   goalCategory: GoalCategory;
-  shouldFallbackToUncategorized?: boolean;
+  shouldFallbackToUncategorised?: boolean;
   fallbackGoalData?: {
     objectiveFrequencyStartAge: number;
   };
@@ -20,7 +20,7 @@ export interface GoalDataForChart extends GoalDatum {
 
 const useGoalsDataForChart = ({
   goalCategory: category,
-  shouldFallbackToUncategorized = false,
+  shouldFallbackToUncategorised = false,
   fallbackGoalData,
 }: GoalOptionsForChart): GoalDataForChart[] => {
   // TODO: replace with actual API data when it's ready
@@ -31,10 +31,10 @@ const useGoalsDataForChart = ({
   ];
 
   if (!fallbackGoalData) {
-    const goalsFromState = useGoals() || [];
+    const goalsFromState = useGoals(true) || [];
     goals = goalsFromState.filter(({ fields }) => fields.category === category);
 
-    if (shouldFallbackToUncategorized && goals.length === 0) {
+    if (shouldFallbackToUncategorised && goals.length === 0) {
       goals = goalsFromState.filter(({ fields }) => fields.category === GoalCategory.UNCATEGORIZED);
     }
   }

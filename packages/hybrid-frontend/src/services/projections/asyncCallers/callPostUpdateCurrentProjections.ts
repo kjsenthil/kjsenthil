@@ -1,25 +1,34 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
 import { getPortfolioAssetAllocation, getPortfolioRiskProfile } from '..';
+import { calculateDateAfterYears, formatDate, monthDifference } from '../../../utils/date';
+import { GoalDefaults } from '../../goal';
 import { extractClientAccounts } from '../../myAccount';
 import {
   getAssetModel,
   postGoalCurrentProjections,
   postGoalTargetProjectionsFetcher,
 } from '../api';
-import extractPercentageEquityAllocationsByAccounts from '../../myAccount/utils/extractPercentageEquityAllocationsByAccounts';
+import { extractPercentageEquityAllocationsByAccounts } from '../../myAccount/utils';
 import {
-  setGoalCurrentProjections,
   setGoalCurrentProjectionsError,
   setGoalCurrentProjectionsLoading,
   setGoalCurrentProjectionsSuccess,
-  setGoalTargetProjections,
   setGoalTargetProjectionsError,
   setGoalTargetProjectionsLoading,
   setGoalTargetProjectionsSuccess,
 } from '../reducers';
 import { FetchGoalCurrentProjectionsParams } from '../types';
 
+/**
+ * This function prepares the requests for two APIs, the goal current projections and goal target projections
+ * The payload for both APIs do not specify what goal, but some of the params imply retirement goal
+ * such as includeStatePension & statePensionAmount. But ultimately we might need to explicitly
+ * specify what goal to get the projections for, or set specify groups of partial payloads that
+ * represent goal specific payload items so we know what we are querying the API for.
+ * This is pending decisions on API design. For now, there's way to use this function to get
+ * projections for other goals, so the implmication is retirement.
+ *
+ */
 const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
   clientAge,
   drawdownAmount,
@@ -27,123 +36,128 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
   drawdownEndDate,
   shouldIncludeStatePension,
   accountBreakdown,
+  lumpSum,
+  laterLifeLeftOver,
   fees,
   investmentSummary = [],
   includedClientAccounts = [],
   fundData,
 }: FetchGoalCurrentProjectionsParams) => {
-  try {
-    dispatch(setGoalCurrentProjectionsLoading());
-    dispatch(setGoalTargetProjectionsLoading());
+  dispatch(setGoalCurrentProjectionsLoading());
+  dispatch(setGoalTargetProjectionsLoading());
 
-    const ageDiffto100 = clientAge < 100 ? 100 - clientAge : 0;
-    const dob100 = dayjs().add(ageDiffto100, 'year');
-    const timeHorizon = dob100.diff(dayjs(), 'month');
+  const ageDiffTo100 = 100 - clientAge;
+  const dob100 = calculateDateAfterYears(new Date(), ageDiffTo100);
+  const defaultDrawDownStartDate = calculateDateAfterYears(
+    clientAge,
+    GoalDefaults.DRAW_DOWN_START_AGE
+  );
+  const defaultDrawDownEndDate = calculateDateAfterYears(clientAge, GoalDefaults.DRAW_DOWN_END_AGE);
 
-    const totalContributions =
-      accountBreakdown?.reduce(
-        (totalContr, acctObj) => acctObj.accountTotalContribution + totalContr,
-        0
-      ) || 0;
+  const timeHorizon = monthDifference(dob100, new Date());
 
-    const accounts = extractClientAccounts(includedClientAccounts);
-
-    const accountTotals = await extractPercentageEquityAllocationsByAccounts(
-      investmentSummary,
-      accounts
-    );
-
-    // get the percentage equity allocation for the customer's entire portfolio
-    const portfolioEquityPercentage = await getPortfolioAssetAllocation(accountTotals);
-
-    // get the TAA that the client's portfolio is most aligned to
-    const riskProfile = await getPortfolioRiskProfile({
-      portfolioEquityPercentage,
-      equityFunds: fundData.allAsset.nodes,
-    });
-
-    const portfolioCurrentValue = accountTotals.reduce(
-      (accumulator, account) => accumulator + (account.accountTotalHoldings || 0),
+  const totalContributions =
+    (accountBreakdown || []).reduce(
+      (totalContr, acctObj) => acctObj.accountTotalContribution + totalContr,
       0
-    );
-    const monthlyContributions = accountTotals.reduce(
-      (accumulator, account) => accumulator + (account.monthlyInvestment || 0),
-      0
-    );
+    ) || 0;
 
-    const { erValue, volatility, zScores } = await getAssetModel(riskProfile.riskModel);
+  const accounts = extractClientAccounts(includedClientAccounts);
 
-    const currentProjectionsPromise = postGoalCurrentProjections({
-      timeHorizon,
-      drawdownStartDate: drawdownStartDate?.toString() || '',
-      desiredMonthlyDrawdown: drawdownAmount,
-      drawdownEndDate: drawdownEndDate?.toString() || '',
-      includeStatePension: shouldIncludeStatePension,
-      statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
-      isConeGraph: true,
-      lumpSumAmount: 0,
-      desiredAmount: 0,
-      netContribution: totalContributions,
-      monthlyContributions,
-      portfolioCurrentValue,
-      upfrontContribution: 0,
-      feesPercentage: fees / 100,
-      preGoalRiskModel: riskProfile.riskModel,
-      preGoalExpectedReturn: erValue,
-      preGoalExpectedVolatility: volatility,
-      preGoalZScoreLowerBound: zScores.lessLikleyLb,
-      preGoalZScoreUpperBound: zScores.lessLikelyUb,
-      postGoalRiskModel: riskProfile.riskModel,
-      postGoalExpectedReturn: erValue,
-      postGoalExpectedVolatility: volatility,
-      postGoalZScoreLowerBound: zScores.moreLikelyLb,
-      postGoalZScoreUpperBound: zScores.moreLikelyUb,
-    });
+  const accountTotals = await extractPercentageEquityAllocationsByAccounts(
+    investmentSummary,
+    accounts
+  );
 
-    const targetProjectionsPromise = postGoalTargetProjectionsFetcher({
-      timeToAge100: timeHorizon,
-      preGoalRiskModel: riskProfile.riskModel,
-      portfolioValue: portfolioCurrentValue,
-      desiredMonthlyDrawdown: drawdownAmount,
-      drawdownStartDate: drawdownStartDate?.toString() || '',
-      drawdownEndDate: drawdownEndDate?.toString() || '',
-      preGoalExpectedReturn: erValue,
-      preGoalVolatility: volatility,
-      feesPercentage: fees / 100,
-      postGoalRiskModel: riskProfile.riskModel,
-      postGoalExpectedReturn: erValue,
-      postGoalVolatility: volatility,
-      includeStatePension: shouldIncludeStatePension,
-      statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
+  // get the percentage equity allocation for the customer's entire portfolio
+  const portfolioEquityPercentage = await getPortfolioAssetAllocation(accountTotals);
 
-      // TODO: To be provided by the state machine
-      goalLumpSum: 100000,
-      lumpSumDate: '2079-01-01',
-      upfrontContribution: 0,
-      desiredValueAtEndOfDrawdown: 10000,
-    });
+  // get the TAA that the client's portfolio is most aligned to
+  const riskProfile = await getPortfolioRiskProfile({
+    portfolioEquityPercentage,
+    equityFunds: fundData.allAsset.nodes,
+  });
 
-    const [currentProjectionsResponse, targetProjectionsResponse] = await Promise.all([
-      currentProjectionsPromise,
-      targetProjectionsPromise,
-    ]);
+  const portfolioCurrentValue = accountTotals.reduce(
+    (accumulator, account) => accumulator + (account.accountTotalHoldings || 0),
+    0
+  );
+  const monthlyContributions = accountTotals.reduce(
+    (accumulator, account) => accumulator + (account.monthlyInvestment || 0),
+    0
+  );
 
-    dispatch(setGoalCurrentProjectionsSuccess());
-    dispatch(setGoalTargetProjectionsSuccess());
+  const { erValue, volatility, zScores } = await getAssetModel(riskProfile.riskModel);
 
-    dispatch(setGoalCurrentProjections(currentProjectionsResponse));
-    dispatch(setGoalTargetProjections(targetProjectionsResponse));
+  const formatDrawdownDate = (date: Date) => formatDate(date, 'YYYY-MM-DD', false);
 
-    return {
-      currentProjectionsResponse,
-      targetProjectionsResponse,
-    };
-  } catch (error) {
-    dispatch(setGoalCurrentProjectionsError(error));
-    dispatch(setGoalTargetProjectionsError(error));
+  const commonPayload = {
+    postGoalRiskModel: riskProfile.riskModel,
+    postGoalExpectedReturn: erValue,
+    preGoalRiskModel: riskProfile.riskModel,
+    preGoalExpectedReturn: erValue,
+    feesPercentage: fees / 100,
+    includeStatePension: shouldIncludeStatePension,
+    desiredMonthlyDrawdown: drawdownAmount,
+    drawdownStartDate: formatDrawdownDate(drawdownStartDate || defaultDrawDownStartDate),
+    drawdownEndDate: formatDrawdownDate(drawdownEndDate || defaultDrawDownEndDate),
+    upfrontContribution: 0,
+    statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
+  };
 
-    return error;
+  const currentProjectionsPayload = {
+    timeHorizon,
+    isConeGraph: true,
+    lumpSumAmount: lumpSum,
+    desiredAmount: 0,
+    netContribution: totalContributions,
+    monthlyContributions,
+    portfolioCurrentValue,
+    preGoalExpectedVolatility: volatility,
+    preGoalZScoreLowerBound: zScores.lessLikleyLb,
+    preGoalZScoreUpperBound: zScores.lessLikelyUb,
+    postGoalExpectedVolatility: volatility,
+    postGoalZScoreLowerBound: zScores.moreLikelyLb,
+    postGoalZScoreUpperBound: zScores.moreLikelyUb,
+    ...commonPayload,
+  };
+
+  const targetProjectionsPayload = {
+    timeToAge100: timeHorizon,
+    portfolioValue: portfolioCurrentValue,
+    preGoalVolatility: volatility,
+    postGoalVolatility: volatility,
+    goalLumpSum: lumpSum,
+    desiredValueAtEndOfDrawdown: laterLifeLeftOver,
+    // TODO: To be provided by the state machine
+    lumpSumDate: '2079-01-01', // To be specified once the goal state machine has it
+    ...commonPayload,
+  };
+
+  const currentProjectionsPromise = postGoalCurrentProjections(currentProjectionsPayload);
+  const targetProjectionsPromise = postGoalTargetProjectionsFetcher(targetProjectionsPayload);
+
+  const [currentProjectionsResponse, targetProjectionsResponse] = await Promise.allSettled([
+    currentProjectionsPromise,
+    targetProjectionsPromise,
+  ]);
+
+  if (currentProjectionsResponse.status === 'fulfilled') {
+    dispatch(setGoalCurrentProjectionsSuccess({ data: currentProjectionsResponse.value }));
+  } else {
+    dispatch(setGoalCurrentProjectionsError(new Error(currentProjectionsResponse.reason)));
   }
+
+  if (targetProjectionsResponse.status === 'fulfilled') {
+    dispatch(setGoalTargetProjectionsSuccess({ data: targetProjectionsResponse.value }));
+  } else {
+    dispatch(setGoalTargetProjectionsError(new Error(targetProjectionsResponse.reason)));
+  }
+
+  return {
+    currentProjectionsResponse,
+    targetProjectionsResponse,
+  };
 };
 
 export default callPostUpdateCurrentProjections;

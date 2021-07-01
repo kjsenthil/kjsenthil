@@ -1,6 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { commonActionReducerMapBuilder, setLoadingAction } from '../../utils';
+import fetchGoalCurrentProjections from '../thunks/fetchCurrentProjections';
+import setDataAction from '../../utils/setDataAction';
+import setErrorAction from '../../utils/setErrorAction';
 
-import { GoalCurrentProjectionsState, GoalCurrentProjectionsResponse } from '../types';
+import {
+  GoalCurrentProjectionsState,
+  GoalCurrentProjectionsResponse,
+  GoalCurrentProjectionsRequestPayload,
+} from '../types';
 
 const initialState: GoalCurrentProjectionsState = {
   status: 'idle',
@@ -10,29 +18,22 @@ const GoalCurrentProjectionsSlice = createSlice({
   name: 'goalCurrentProjections',
   initialState,
   reducers: {
-    setGoalCurrentProjections: (state, action: PayloadAction<GoalCurrentProjectionsResponse>) => {
-      state.data = action.payload;
-    },
-    setGoalCurrentProjectionsSuccess: (state) => {
-      state.status = 'success';
-      state.error = undefined;
-    },
-    setGoalCurrentProjectionsLoading: (state) => {
-      state.status = 'loading';
-      state.error = undefined;
-    },
-    setGoalCurrentProjectionsError: (state, action) => {
-      state.status = 'error';
-      state.error = action.payload.error;
-    },
+    setGoalCurrentProjectionsSuccess: setDataAction(),
+    setGoalCurrentProjectionsLoading: setLoadingAction,
+    setGoalCurrentProjectionsError: (...props) => setErrorAction<PayloadAction>(...props),
   },
+  extraReducers: commonActionReducerMapBuilder<
+    GoalCurrentProjectionsResponse,
+    GoalCurrentProjectionsState,
+    GoalCurrentProjectionsRequestPayload
+  >(fetchGoalCurrentProjections),
 });
 
 export const {
-  setGoalCurrentProjections,
   setGoalCurrentProjectionsSuccess,
   setGoalCurrentProjectionsLoading,
   setGoalCurrentProjectionsError,
 } = GoalCurrentProjectionsSlice.actions;
 
+export { fetchGoalCurrentProjections };
 export default GoalCurrentProjectionsSlice.reducer;

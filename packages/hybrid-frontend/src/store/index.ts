@@ -22,7 +22,7 @@ import {
 } from '../services/goal/reducers';
 import { performanceSlice as performanceReducer } from '../services/performance/reducers';
 import {
-  projectionsSlice as projectionsReducer,
+  simulatedProjectionsSlice as simulatedProjectionsReducer,
   goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
   goalTargetProjectionsSlice as goalTargetProjectionsReducer,
 } from '../services/projections/reducers';
@@ -32,7 +32,7 @@ import { AuthState } from '../services/auth';
 import {
   GoalCurrentProjectionsState,
   GoalTargetProjectionsState,
-  ProjectionsState,
+  SimulatedProjectionsState,
 } from '../services/projections';
 import { BreakdownState, ClientState, InvestmentSummaryState } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
@@ -46,7 +46,7 @@ export interface RootState {
   goalCreation: GoalCreationState;
   currentGoals: CurrentGoalsState;
   performance: PerformanceState;
-  projections: ProjectionsState;
+  simulatedProjections: SimulatedProjectionsState;
   goalCurrentProjections: GoalCurrentProjectionsState;
   goalTargetProjections: GoalTargetProjectionsState;
   featureToggle: FeatureToggleState;
@@ -65,7 +65,7 @@ const persistConfig: PersistConfig<RootState> = {
     'goalCreation',
     'currentGoals',
     'performance',
-    'projections',
+    'simulatedProjections',
     'goalCurrentProjections',
     'goalTargetProjections',
   ],
@@ -82,7 +82,7 @@ const reducersMap: ReducersMapObject = {
   goalCreation: goalCreationReducer,
   currentGoals: currentGoalsReducer,
   performance: performanceReducer,
-  projections: projectionsReducer,
+  simulatedProjections: simulatedProjectionsReducer,
   goalCurrentProjections: goalCurrentProjectionsReducer,
   goalTargetProjections: goalTargetProjectionsReducer,
   featureToggle: featureToggleReducer,

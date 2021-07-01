@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
-import projectionsReducer, { fetchProjections } from './projectionsSlice';
+import projectionsReducer, { fetchSimulatedProjections } from './simulatedProjectionsSlice';
 import * as api from '../api';
 import { getEquityAllocation, getMonthlySavingsAmount } from '../../myAccount/api';
 import { mockClientResponse, mockInvestSummaryResponse } from '../../myAccount/mocks';
@@ -19,21 +19,21 @@ jest.mock('../api', () => ({
   postProjections: jest.fn(),
 }));
 
-describe('projectionsSlice', () => {
+describe('simulatedProjectionsSlice', () => {
   let store: Store;
 
   beforeEach(() => {
     store = configureStore({
       reducer: {
-        projections: projectionsReducer,
+        simulatedProjections: projectionsReducer,
         client: () => mockClientResponse,
         investmentSummary: () => mockInvestSummaryResponse,
       },
     });
   });
 
-  describe('dispatch fetchProjections', () => {
-    const fetchProjectionsAction = fetchProjections({
+  describe('dispatch fetchSimulatedProjections', () => {
+    const fetchSimulatedProjectionsAction = fetchSimulatedProjections({
       fundData: mockAssets,
       investmentPeriod: 50,
     }) as any;
@@ -50,41 +50,41 @@ describe('projectionsSlice', () => {
     });
 
     it('starts with sensible defaults', () => {
-      const { status, postProjectionsError } = store.getState().projections;
+      const { status, error } = store.getState().simulatedProjections;
 
       expect(status).toStrictEqual('idle');
-      expect(postProjectionsError).toBeUndefined();
+      expect(error).toBeUndefined();
     });
 
     describe('when call is still pending', () => {
       it('sets status to loading', async () => {
-        store.dispatch(fetchProjectionsAction);
-        const { status, postProjectionsError } = store.getState().projections;
+        store.dispatch(fetchSimulatedProjectionsAction);
+        const { status, error } = store.getState().simulatedProjections;
 
         expect(status).toStrictEqual('loading');
-        expect(postProjectionsError).toBeUndefined();
+        expect(error).toBeUndefined();
       });
     });
 
     describe('when call is fulfilled', () => {
       it('sets status to success', async () => {
-        await store.dispatch(fetchProjectionsAction);
-        const { status, postProjectionsError } = store.getState().projections;
+        await store.dispatch(fetchSimulatedProjectionsAction);
+        const { status, error } = store.getState().simulatedProjections;
 
         expect(status).toStrictEqual('success');
-        expect(postProjectionsError).toBeUndefined();
+        expect(error).toBeUndefined();
       });
     });
 
     describe('when call is rejected', () => {
       it('sets postProjectionsError', async () => {
-        const error = 'Something went wrong';
-        (api.postProjections as jest.Mock).mockRejectedValue(error);
-        await store.dispatch(fetchProjectionsAction);
-        const { status, postProjectionsError } = store.getState().projections;
+        const postProjectionsError = 'Something went wrong';
+        (api.postProjections as jest.Mock).mockRejectedValue(postProjectionsError);
+        await store.dispatch(fetchSimulatedProjectionsAction);
+        const { status, error } = store.getState().simulatedProjections;
 
         expect(status).toStrictEqual('error');
-        expect(postProjectionsError).toStrictEqual(error);
+        expect(error).toStrictEqual(postProjectionsError);
       });
     });
   });

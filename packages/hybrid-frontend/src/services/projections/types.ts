@@ -50,10 +50,7 @@ export interface PortfolioRiskProfile {
   sedol: SedolCode;
 }
 
-export interface ProjectionsState extends CommonState {
-  projections: ProjectionResponse;
-  postProjectionsError?: string;
-}
+export interface SimulatedProjectionsState extends CommonState<ProjectionResponse> {}
 
 // This kind of data is used by the projections (and its simplified version)
 // chart
@@ -68,11 +65,12 @@ export interface ProjectionsChartMetadata {
 // This kind of data is used by the projections chart to draw the projected
 // portfolio value. The upperBound and lowerBound is used to draw a band around
 // the main projections line.
-export interface ProjectionsChartProjectionDatum extends TimeSeriesDatum {
+export interface ProjectionsChartProjectionDatum {
   upperBound: number;
   lowerBound: number;
   netContributionsToDate: number;
-
+  date: Date;
+  value: number;
   metadata?: Record<string, unknown>;
 }
 
@@ -140,6 +138,8 @@ export interface FetchGoalCurrentProjectionsParams {
   drawdownStartDate: Date | null;
   drawdownEndDate: Date | null;
   shouldIncludeStatePension: boolean;
+  lumpSum: number;
+  laterLifeLeftOver: number;
   fees: number;
   accountBreakdown?: Breakdown[];
   investmentSummary?: InvestmentSummary[];
@@ -166,26 +166,21 @@ export interface FetchGoalTargetProjectionsParams {
 
 export interface GoalTargetProjectionsRequestPayload {
   timeToAge100: number;
-
   portfolioValue: number;
   upfrontContribution: number;
-
   feesPercentage: number;
   goalLumpSum: number;
   lumpSumDate: string;
-
   preGoalRiskModel: RiskModel;
   postGoalRiskModel: RiskModel;
   preGoalExpectedReturn: number;
   postGoalExpectedReturn: number;
   preGoalVolatility: number;
   postGoalVolatility: number;
-
   drawdownStartDate: string;
   drawdownEndDate: string;
   desiredMonthlyDrawdown: number;
   desiredValueAtEndOfDrawdown: number;
-
   includeStatePension: boolean;
   statePensionAmount: number;
 }

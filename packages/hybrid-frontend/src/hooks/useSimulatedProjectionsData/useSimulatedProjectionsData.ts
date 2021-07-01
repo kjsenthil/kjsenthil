@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
-import { ProjectionsChartProjectionDatum, ProjectionYear } from '../index';
+import { RootState } from '../../store';
+import { ProjectionsChartProjectionDatum, ProjectionYear } from '../../services/projections';
 
-export default function useProjectionsDataForProjectionsChart(): ProjectionsChartProjectionDatum[] {
-  const { projections } = useSelector((state: RootState) => state.projections.projections);
+export default function useSimulatedProjectionsData(): ProjectionsChartProjectionDatum[] {
+  const { data } = useSelector((state: RootState) => state.simulatedProjections);
 
-  if (!projections) {
+  if (!data) {
     return [];
   }
 
@@ -27,5 +27,5 @@ export default function useProjectionsDataForProjectionsChart(): ProjectionsChar
     date: new Date(currentYear + d.year, 0, 1),
   });
 
-  return projections.map(mapProjectionYearToProjectionDatum);
+  return (data.projections || []).map(mapProjectionYearToProjectionDatum);
 }

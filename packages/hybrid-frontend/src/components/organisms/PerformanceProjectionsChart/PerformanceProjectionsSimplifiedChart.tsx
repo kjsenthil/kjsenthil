@@ -31,8 +31,8 @@ import {
 } from '../../../services/projections';
 import { ProjectionsChartGoalDatum } from '../../../services/goal';
 import { ProjectionsChartHistoricalDatum } from '../../../services/performance';
-import { usePerformanceProjectionsSimplifiedChartDimension } from './performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 import contributionsDefined from './performanceProjectionsData/utils/contributionsDefined';
+import usePerformanceProjectionsSimplifiedChartDimension from './hooks/usePerformanceProjectionsSimplifiedChartDimension';
 
 export interface PerformanceProjectionsSimplifiedChartProps
   extends WithParentSizeProps,

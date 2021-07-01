@@ -62,6 +62,10 @@ describe('LifePlanPage', () => {
         status: 'success',
         ...mockInvestSummaryResponse,
       }),
+      accountBreakdown: () => ({
+        status: 'success',
+        data: [],
+      }),
       performance: () => ({
         status: 'success',
         ...mockPerformanceData,
@@ -81,6 +85,10 @@ describe('LifePlanPage', () => {
         data: {
           projections: mockTargetProjectionsData,
         },
+      }),
+      simulatedProjections: () => ({
+        status: 'idle',
+        data: [],
       }),
     },
   });

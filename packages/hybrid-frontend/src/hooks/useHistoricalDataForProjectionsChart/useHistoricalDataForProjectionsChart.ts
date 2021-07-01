@@ -35,7 +35,7 @@ export default function useHistoricalDataForProjectionsChart(
   const historicalData: ProjectionsChartHistoricalDatum[] = sortedPerformanceData.map((d, i) => ({
     date: d.date,
     value: d.value,
-    netContributionsToDate: sortedContributionsData[i].value,
+    netContributionsToDate: sortedContributionsData[i] ? sortedContributionsData[i].value : 0,
   }));
 
   return variant === 'monthly'

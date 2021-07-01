@@ -38,7 +38,6 @@ const BIAccountsPage = () => {
   const performanceChartDimension = usePerformanceChartDimension();
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
 
-  // Fetch performance data for performance chart
   const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
   const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
     dispatchGetPerformanceContact,

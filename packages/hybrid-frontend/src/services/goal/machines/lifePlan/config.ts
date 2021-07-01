@@ -45,19 +45,19 @@ const lifePlanConfig: MachineConfig<
       },
       states: {
         processingInput: {
+          entry: [
+            'calculateTomorrowsMoney',
+            'calculateDrawdownDates',
+            'calculateDrawdownPeriodLength',
+            'calculateTargetDrawdownAmount',
+            'calculateRetirementPotValue',
+            'calculateTomorrowsMoney',
+          ],
           invoke: {
             id: 'processingInput',
             src: 'updateCurrentProjections',
             onDone: {
               target: 'normal',
-              actions: [
-                'calculateTomorrowsMoney',
-                'calculateDrawdownDates',
-                'calculateDrawdownPeriodLength',
-                'calculateTargetDrawdownAmount',
-                'calculateRetirementPotValue',
-                'calculateTomorrowsMoney',
-              ],
             },
 
             onError: {

@@ -27,6 +27,7 @@ import {
 } from '../../atoms';
 import { NavLink, SubHeader } from '../../molecules';
 import { LogoImage, StyledAppBar } from './HeaderMenu.styles';
+import { NavPaths } from '../../../config/paths';
 
 export interface HeaderMenuProps {
   profileName: string;
@@ -62,11 +63,12 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
     dispatch(logout());
   };
 
-  const navigateLifePlan = () => navigate('/my-account/life-plan');
-  const navigateAccounts = () => navigate('/my-account/accounts');
+  const navigateLifePlan = () => navigate(NavPaths.LIFE_PLAN_PAGE);
+
+  const navigateAccounts = () => navigate(NavPaths.ACCOUNTS_PAGE);
 
   const navigateHome = () => {
-    navigate('/my-account/');
+    navigate(NavPaths.HOME_PAGE);
   };
 
   const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +129,7 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                       </NavLink>
                     </Grid>
                     <Grid item>
-                      <NavLink onClick={() => navigate('/my-account/accounts')}>
+                      <NavLink onClick={navigateAccounts}>
                         <Typography variant="sh4" color="grey">
                           Investments
                         </Typography>

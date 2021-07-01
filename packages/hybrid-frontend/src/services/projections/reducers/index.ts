@@ -4,5 +4,5 @@ export * from './goalCurrentProjectionsSlice';
 export { default as goalTargetProjectionsSlice } from './goalTargetProjectionsSlice';
 export * from './goalTargetProjectionsSlice';
 
-export { default as projectionsSlice } from './projectionsSlice';
-export * from './projectionsSlice';
+export { default as simulatedProjectionsSlice } from './simulatedProjectionsSlice';
+export * from './simulatedProjectionsSlice';

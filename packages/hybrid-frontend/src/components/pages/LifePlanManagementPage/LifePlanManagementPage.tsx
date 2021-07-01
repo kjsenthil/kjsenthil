@@ -82,6 +82,8 @@ const LifePlanManagementPage = () => {
               drawdownStartDate,
               drawdownEndDate,
               monthlyIncome,
+              lumpSum,
+              laterLifeLeftOver,
               shouldIncludeStatePension,
               fees,
             }: LifePlanMachineContext) =>
@@ -90,6 +92,8 @@ const LifePlanManagementPage = () => {
                 drawdownStartDate,
                 drawdownEndDate,
                 drawdownAmount: monthlyIncome,
+                lumpSum,
+                laterLifeLeftOver,
                 shouldIncludeStatePension,
                 fees,
                 accountBreakdown,

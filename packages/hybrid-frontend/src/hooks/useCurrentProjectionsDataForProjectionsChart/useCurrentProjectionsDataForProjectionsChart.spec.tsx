@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import useCurrentProjectionsDataForProjectionsChart from './useCurrentProjectionsDataForProjectionsChart';
 
-describe('useProjectionsDataForProjectionsChart', () => {
+describe('useCurrentProjectionsDataForProjectionsChart', () => {
   it('returns an empty array if projections data is not available', () => {
     const mockStore = configureStore({
       reducer: {

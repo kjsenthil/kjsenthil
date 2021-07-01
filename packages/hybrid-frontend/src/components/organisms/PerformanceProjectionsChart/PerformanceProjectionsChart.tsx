@@ -43,14 +43,13 @@ import {
 import { ProjectionsChartGoalDatum } from '../../../services/goal';
 import { ProjectionsChartHistoricalDatum } from '../../../services/performance';
 import contributionsDefined from './performanceProjectionsData/utils/contributionsDefined';
-import { usePerformanceProjectionsChartDimension } from './performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
+import usePerformanceProjectionsChartDimension from './hooks/usePerformanceProjectionsChartDimension';
 
 export interface PerformanceProjectionsChartProps
   extends WithParentSizeProps,
     WithParentSizeProvidedProps {
   projectionsData: ProjectionsChartProjectionDatum[];
   projectionsTargetData?: ProjectionsChartProjectionTargetDatum[];
-
   historicalData: ProjectionsChartHistoricalDatum[];
   goalsData: ProjectionsChartGoalDatum[];
   projectionsMetadata: ProjectionsChartMetadata;

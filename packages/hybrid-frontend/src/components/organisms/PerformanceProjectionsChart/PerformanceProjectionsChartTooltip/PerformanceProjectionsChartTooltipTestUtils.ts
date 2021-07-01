@@ -10,7 +10,6 @@ function generatePerformanceProjectionsData(howMany: number): ProjectionsChartPr
   const data: ProjectionsChartProjectionDatum[] = [];
 
   const firstYear = 2020;
-
   for (let i = 0; i < howMany; i += 1) {
     data.push({
       date: new Date(firstYear + i, 0, 1),

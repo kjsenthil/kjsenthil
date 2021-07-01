@@ -8,6 +8,7 @@ import PinLogin from '../../organisms/PinLogin';
 import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
+import { NavPaths } from '../../../config/paths';
 
 export const LoginGrid = styled(Grid)`
   padding-top: 10rem;
@@ -32,7 +33,7 @@ const LoginPage = (_: LoginPageProps) => {
 
   useEffect(() => {
     if (hasAccessTokens) {
-      navigate('/my-account');
+      navigate(NavPaths.HOME_PAGE);
     }
   }, [hasAccessTokens]);
 

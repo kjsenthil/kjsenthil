@@ -3,6 +3,7 @@ import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { NavPaths } from '../../../config/paths';
 
 interface PrivateRouteProps extends RouteComponentProps {
   Component: ComponentType<RouteComponentProps>;
@@ -11,7 +12,7 @@ interface PrivateRouteProps extends RouteComponentProps {
 const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
   const { accessTokens } = useSelector((state: RootState) => state.auth);
 
-  const loginPath = '/my-account/login';
+  const loginPath = NavPaths.LOGIN_PAGE;
   const isNotLoggedIn = accessTokens.length === 0;
 
   useEffect(() => {

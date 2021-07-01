@@ -7,10 +7,11 @@ import {
   RetirementInputs,
   GoalType,
 } from '../types';
+import fetchGoals from './fetchGoals';
 
 const createGoal = createAsyncThunk(
   'goal/createGoal',
-  ({ inputs, goalType }: CreateGoalParams, { getState }) => {
+  async ({ inputs, goalType }: CreateGoalParams, { getState, dispatch }) => {
     const {
       goalCreation: { goalDetails, goalCapture },
     } = getState() as { goalCreation: GoalCreationState };
@@ -30,10 +31,13 @@ const createGoal = createAsyncThunk(
       goalInputs = undefined;
     }
 
-    return postGoalCreation({
+    const result = await postGoalCreation({
       goalType,
       inputs: goalInputs,
     });
+
+    dispatch(fetchGoals());
+    return result;
   }
 );
 

@@ -19,5 +19,6 @@ export { default as useHistoricalDataForProjectionsChart } from './useHistorical
 export { default as useProjectionsMetadataForProjectionsChart } from './useProjectionsMetadataForProjectionsChart';
 export { default as useProjectionsTargetDataForProjectionsChart } from './useProjectionsTargetDataForProjectionsChart';
 export { default as useCurrentProjectionsDataForProjectionsChart } from './useCurrentProjectionsDataForProjectionsChart';
+export { default as useSimulatedProjectionsData } from './useSimulatedProjectionsData';
 
 export type { BasicInfo };

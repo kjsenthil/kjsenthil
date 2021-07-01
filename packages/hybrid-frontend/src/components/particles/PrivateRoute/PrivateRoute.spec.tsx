@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import { authSlice, pinLogin } from '../../../services/auth';
 import * as api from '../../../services/auth/api';
 import { tokens } from '../../../services/auth/mocks';
+import { NavPaths } from '../../../config/paths';
 
 jest.mock('../../../services/auth/api', () => ({
   postPin: jest.fn(),
@@ -34,7 +35,7 @@ describe('Private Route Components', () => {
     it('navigate to login page ', () => {
       renderWithStore(<Component />, store);
 
-      expect(mockNavigate).toHaveBeenCalledWith('/my-account/login');
+      expect(mockNavigate).toHaveBeenCalledWith(NavPaths.LOGIN_PAGE);
     });
   });
 
@@ -52,7 +53,7 @@ describe('Private Route Components', () => {
 
       renderWithStore(<Component />, store);
 
-      expect(mockNavigate).not.toHaveBeenCalledWith('/my-account/login');
+      expect(mockNavigate).not.toHaveBeenCalledWith(NavPaths.LOGIN_PAGE);
       expect(screen.getByText(contentText)).toBeInTheDocument();
     });
   });

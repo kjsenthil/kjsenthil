@@ -1,79 +1,161 @@
 import React from 'react';
+import Img from 'gatsby-image';
+import { navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Link, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
-import { fetchProjections } from '../../../services/projections';
-
-import PerformanceProjectionsChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart';
-import ProjectionCalculateModal from '../../organisms/ProjectionCalculateModalContent/ProjectionCalculateModalContent';
+import {
+  ProjectionCalculateModal,
+  PerformanceProjectionsChart,
+  GoalMainCardPlaceholder,
+} from '../../organisms';
 
 import {
-  useCurrentProjectionsDataForProjectionsChart,
+  useBasicInfo,
+  useGoalImages,
+  useProjectionsChartData,
+  useStateIsAvailable,
+  useSimulatedProjectionsData,
   useDispatchThunkOnRender,
-  useGoalsDataForChart,
-  useProjectionsMetadataForProjectionsChart,
-  useHistoricalDataForProjectionsChart,
 } from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
 import { RootState } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
-import { usePerformanceProjectionsChartDimension } from '../../organisms/PerformanceProjectionsChart/performanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
+import { createGoal, GoalCategory, GoalDefaults, GoalType } from '../../../services/goal';
+import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
+import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
+import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
+import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceContact } from '../../../services/performance';
-import { GoalCategory } from '../../../services/goal';
+import { goalCreationPaths } from '../../../config/paths';
+import { fetchSimulatedProjections } from '../../../services/projections';
 
 const LifePlanPage = () => {
+  const images = useGoalImages();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const [showLifePlanChartLikelyRange, setShowLifePlanChartLikelyRange] = React.useState(true);
+  const toggleLifePlanChartLikelyRange = () => setShowLifePlanChartLikelyRange((prev) => !prev);
 
   const {
     client: { included: clientData },
     investmentSummary: { data: investmentSummaryData },
+    currentGoals: { data: currentGoals = [] },
+    simulatedProjections: { status: simulatedProjectionsStatus },
+    goalCurrentProjections: { status: goalCurrentProjectionsStatus },
+    goalTargetProjections: { status: goalTargetProjectionsStatus },
     performance: { status: performanceStatus },
-    goalCurrentProjections: { status: projectionsStatus, error: projectionsError },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
 
-  // TODO: this is annual data at the moment. When the new projection data is
-  //  available, this probably will be monthly data.
-  const annualProjectionsData = useCurrentProjectionsDataForProjectionsChart();
-
-  const projectionsMetadata = useProjectionsMetadataForProjectionsChart();
-  const annualHistoricalData = useHistoricalDataForProjectionsChart('annual');
-  const goalsData = useGoalsDataForChart({
-    goalCategory: GoalCategory.RETIREMENT,
-  });
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
-  const hasDataForProjectionsChart = annualHistoricalData.length > 0 && goalsData.length > 0;
 
-  // TODO: this should probably live in Redux so it persists. May be a metadata
-  //  state that holds user-configured stuff?
-  const [showLifePlanChartLikelyRange, setShowLifePlanChartLikelyRange] = React.useState(true);
-  const toggleLifePlanChartLikelyRange = () => setShowLifePlanChartLikelyRange((prev) => !prev);
+  const {
+    goalsData,
+    projectionsData,
+    historicalData,
+    projectionsTargetData,
+    projectionsMetadata,
+  } = useProjectionsChartData({
+    goalCategory: GoalCategory.RETIREMENT,
+    shouldFallbackToUncategorised: true,
+  });
 
+  const isUncategorisedGoal = goalsData[0] && goalsData[0].category === GoalCategory.UNCATEGORIZED;
+  const simulatedProjectionsData = useSimulatedProjectionsData();
+
+  const stateIsReady = useStateIsAvailable(['currentGoals']);
+
+  const hasDataForSimulatedProjectionsChart =
+    isUncategorisedGoal &&
+    !!historicalData.length &&
+    !!goalsData.length &&
+    !!simulatedProjectionsData.length;
+
+  const hasDataForGoalProjectionsChart =
+    !isUncategorisedGoal &&
+    !!historicalData.length &&
+    !!goalsData.length &&
+    !!projectionsData.length &&
+    !!projectionsTargetData.length;
+
+  const { accountBreakdown } = useAccountBreakdownInfo();
+  const { dateOfBirth } = useBasicInfo();
   const fundData = useAllAssets();
 
-  // Fetch projections data for projections chart
-  const dispatchFetchProjections = () =>
-    dispatch(
-      fetchProjections({ fundData, investmentPeriod: projectionsMetadata?.investmentPeriod ?? 0 })
-    );
-  const { maxRetriesHit: projectionsFetchMaxRetriesHit } = useDispatchThunkOnRender(
-    dispatchFetchProjections,
-    projectionsStatus,
+  const retirementGoal = currentGoals.find(
+    (goal) => goal.fields.category === GoalCategory.RETIREMENT
+  );
+
+  useDispatchThunkOnRender(
+    () => {
+      dispatch(fetchPerformanceContact());
+    },
+    performanceStatus,
     {
-      enabled: fundData && clientData && investmentSummaryData && !!projectionsMetadata,
+      enabled: !historicalData.length,
     }
   );
 
-  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
-  useDispatchThunkOnRender(dispatchGetPerformanceContact, performanceStatus, {
-    enabled: !!annualHistoricalData,
-  });
+  useDispatchThunkOnRender(
+    () => {
+      dispatch(
+        fetchSimulatedProjections({
+          fundData,
+          investmentPeriod: projectionsMetadata.investmentPeriod,
+        })
+      );
+    },
+    simulatedProjectionsStatus,
+    {
+      enabled: isUncategorisedGoal,
+    }
+  );
+
+  const shouldFetchProjections =
+    clientData &&
+    investmentSummaryData &&
+    retirementGoal &&
+    !['success', 'loading'].includes(goalTargetProjectionsStatus) &&
+    !projectionsTargetData.length &&
+    !['success', 'loading'].includes(goalCurrentProjectionsStatus) &&
+    !projectionsData.length;
+
+  React.useEffect(() => {
+    if (shouldFetchProjections) {
+      callPostUpdateCurrentProjections(dispatch)({
+        clientAge: projectionsMetadata.todayAge,
+        drawdownStartDate: calculateDateAfterYears(
+          dateOfBirth,
+          retirementGoal?.fields?.objectiveFrequencyStartAge || GoalDefaults.DRAW_DOWN_START_AGE
+        ),
+        drawdownEndDate: calculateDateAfterYears(
+          dateOfBirth,
+          retirementGoal?.fields?.objectiveFrequencyEndAge || GoalDefaults.DRAW_DOWN_END_AGE
+        ),
+        drawdownAmount: Number(retirementGoal?.fields?.regularDrawdown?.val?.value?.val),
+        lumpSum: 0, // determine if needed
+        laterLifeLeftOver: 0, // determine if needed
+        shouldIncludeStatePension: false, // determine if needed,
+        fees: 0,
+        accountBreakdown,
+        investmentSummary: investmentSummaryData,
+        includedClientAccounts: clientData,
+        fundData,
+      });
+    }
+  }, [fundData, clientData, retirementGoal, investmentSummaryData, shouldFetchProjections]);
+
   const linkClickHandler = () => setIsModalOpen(true);
   const modalCloseHandler = () => setIsModalOpen(false);
+
+  const createDefaultGoalHandler = () => {
+    dispatch(createGoal({ goalType: GoalType.UNCATEGORIZED }));
+  };
 
   return (
     <MyAccountLayout
@@ -82,17 +164,18 @@ const LifePlanPage = () => {
         secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
       })}
     >
-      {/* eslint-disable-next-line no-nested-ternary */}
-      {hasDataForProjectionsChart && projectionsMetadata ? (
+      {/* eslint-disable no-nested-ternary */}
+      {hasDataForGoalProjectionsChart || hasDataForSimulatedProjectionsChart ? (
         <>
           <MainCard>
             <PerformanceProjectionsChart
-              projectionsData={annualProjectionsData}
-              historicalData={annualHistoricalData}
-              goalsData={goalsData}
-              projectionsMetadata={projectionsMetadata}
               showLikelyRange={showLifePlanChartLikelyRange}
               toggleLikelyRange={toggleLifePlanChartLikelyRange}
+              projectionsData={isUncategorisedGoal ? simulatedProjectionsData : projectionsData}
+              projectionsTargetData={projectionsTargetData}
+              historicalData={historicalData}
+              projectionsMetadata={projectionsMetadata}
+              goalsData={isUncategorisedGoal ? [] : goalsData}
             />
           </MainCard>
           <Spacer y={1.5} />
@@ -105,12 +188,22 @@ const LifePlanPage = () => {
             </Link>
           </Disclaimer>
         </>
-      ) : projectionsFetchMaxRetriesHit && projectionsError ? (
-        <Typography>{projectionsError}</Typography>
+      ) : stateIsReady && goalsData.length === 0 ? (
+        <GoalMainCardPlaceholder
+          vertical={false}
+          title="What's important to you?"
+          buttons={goalCreationPaths}
+          imageElement={
+            <Img fluid={images.lifePlan.childImageSharp.fluid} alt="Lifeplan chart placeholder" />
+          }
+          onAddGoal={(path) => navigate(path)}
+          onCreateDefaultGoal={createDefaultGoalHandler}
+        />
       ) : (
         <Skeleton height={performanceProjectionsChartDimension.height} />
       )}
       <Spacer y={5} />
+
       <MainCard title="Your important moments">Coming soon</MainCard>
       <Modal
         open={isModalOpen}

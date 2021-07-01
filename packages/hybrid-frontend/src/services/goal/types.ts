@@ -45,25 +45,27 @@ export interface GoalRequestPayload {
 
 export type GoalPayloadValType<
   V = GoalPayloadValue | string | number,
-  T = 'Date' | 'Currency' | 'BigDecimal'
-> =
-  | {
+  T = 'Date' | 'Currency' | 'BigDecimal',
+  R = '_val' | 'val'
+> = R extends '_val'
+  ? {
       _val: V;
       _type: T;
     }
-  | {
+  : {
       val: V;
       type: T;
     };
 
-export interface GoalPayloadValue<V = unknown, T = unknown> {
+export interface GoalPayloadValue<V = unknown, T = unknown, R = '_val' | 'val'> {
   code: string;
-  value: GoalPayloadValType<V, T>;
+  value: GoalPayloadValType<V, T, R>;
 }
 
 export type GoalAmountPayload = GoalPayloadValType<
-  GoalPayloadValue<number | string, 'BigDecimal'>,
-  'Currency'
+  GoalPayloadValue<number | string, 'BigDecimal', '_val'>,
+  'Currency',
+  '_val'
 >;
 
 export interface GoalApiFields {
@@ -75,11 +77,23 @@ export interface GoalApiFields {
   xpt_external_id?: string | null;
   present_value?: number | null;
   frequency?: number;
-  capture_date: GoalPayloadValType<string, 'Date'>;
-  target_date?: GoalPayloadValType<string, 'Date'>;
-  target_amount?: GoalPayloadValType<GoalPayloadValue<number | string, 'BigDecimal'>, 'Currency'>;
-  initial_investment?: GoalPayloadValType<GoalPayloadValue<number, 'BigDecimal'>, 'Currency'>;
-  regular_saving?: GoalPayloadValType<GoalPayloadValue<number, 'BigDecimal'>, 'Currency'>;
+  capture_date: GoalPayloadValType<string, 'Date', '_val'>;
+  target_date?: GoalPayloadValType<string, 'Date', '_val'>;
+  target_amount?: GoalPayloadValType<
+    GoalPayloadValue<number | string, 'BigDecimal', '_val'>,
+    'Currency',
+    '_val'
+  >;
+  initial_investment?: GoalPayloadValType<
+    GoalPayloadValue<number, 'BigDecimal', '_val'>,
+    'Currency',
+    '_val'
+  >;
+  regular_saving?: GoalPayloadValType<
+    GoalPayloadValue<number, 'BigDecimal', '_val'>,
+    'Currency',
+    '_val'
+  >;
   goal_level_risk_tolerance?: RiskAppetites;
 }
 
@@ -149,11 +163,18 @@ export interface GoalsApiResponse {
     description: string;
     status: GoalStatus;
     category: GoalCategory;
+    targetDate?: GoalPayloadValType<string, 'Date', 'val'>;
+    targetAmount?: GoalPayloadValType<
+      GoalPayloadValue<number | string, 'BigDecimal', 'val'>,
+      'Currency',
+      'val'
+    >;
     objectiveFrequencyEndAge?: number;
     objectiveFrequencyStartAge?: number;
     regularDrawdown?: GoalPayloadValType<
-      GoalPayloadValue<number | string, 'BigDecimal'>,
-      'Currency'
+      GoalPayloadValue<number | string, 'BigDecimal', 'val'>,
+      'Currency',
+      'val'
     >;
   };
 }
