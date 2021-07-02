@@ -33,3 +33,8 @@ output "api_base_url" {
   description = "A concat of the APIM gateway URL and the API path."
 }
 
+output "myaccounts_home_url" {
+  value       = "https://my.demo2.bestinvest.co.uk/dashboard"
+  description = "My Accounts Home Page"
+}
+

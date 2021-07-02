@@ -261,7 +261,6 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
-          
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
@@ -436,6 +435,7 @@ jobs:
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
+          echo ::set-output name=myaccounts-home-url::$( terraform output -json | jq -r .myaccounts_home_url.value )
 
     outputs:
       frontend_storage_account_name: ${{ steps.set-terraform-outputs.outputs.frontend-storage-account-name }}
@@ -444,7 +444,7 @@ jobs:
       storybook_web_endpoint: ${{ steps.set-terraform-outputs.outputs.storybook-web-endpoint }}
       api_base_url: ${{ steps.set-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.set-terraform-outputs.outputs.api-endpoints }}
-
+      myaccounts_home_url: ${{ steps.set-terraform-outputs.outputs.myaccounts-home-url }}
 
   open_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
@@ -630,24 +630,26 @@ jobs:
           path: ${{ needs.build_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      
+
       - name: "Create PR env file"
         working-directory: ./packages/testing
         run: |
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
           echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
+          echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
           cat .env.pr
 
       - name: "Run API tests"
-        run : yarn test:api:ci
-        env :
-             JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
-             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
-             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-             API_ENDPOINTS : ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
-             MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
-             MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
+        run: yarn test:api:ci
+        env:
+          JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
+          JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
+          API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+          API_ENDPOINTS: ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
+          MYACCOUNTS_HOME_URL: ${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}
+          MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
+          MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
 
       - name: "Login to Azure"
         if: always()
@@ -660,78 +662,78 @@ jobs:
         uses: azure/CLI@v1
         with:
           azcliversion: latest
-          inlineScript: | 
-                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
-#  Temporarily disabled until tests can be fixed to not fail intermittently
-#
-#  end_to_end_test:
-#    name: "E2E test"
-#    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
-#    environment: development
-#    runs-on: ubuntu-latest
-#    needs:
-#      - detect_changes
-#      - build_cache
-#      - get_pr_terraform_outputs
-#      - clear_storybook_storage_account
-#      - deploy_gatsby
-#    strategy:
-#      matrix:
-#        browser: [chrome,firefox]
-#    steps:
-#      - name: "Checkout"
-#        uses: actions/checkout@v2
-#
-#      - name: "Use Node.js 14.x"
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: 14.x
-#
-#      - name: "Get yarn cache"
-#        uses: actions/cache@v2
-#        with:
-#          key: ${{ needs.build_cache.outputs.key }}
-#          path: ${{ needs.build_cache.outputs.yarn-path }}
-#          restore-keys: |
-#            ${{ runner.os }}-yarn-
-#
-#      - name: "Get node modules cache"
-#        uses: actions/cache@v2
-#        with:
-#          key: ${{ needs.build_cache.outputs.key }}
-#          path: ${{ needs.build_cache.outputs.modules-path }}
-#          restore-keys: |
-#            ${{ runner.os }}-modules-
-#
-#      - name: "Update webdriver-manager"
-#        run: npx webdriver-manager update
-#
-#      - name: "Run E2E UI tests"
-#        run : yarn test:e2e
-#        env :
-#             BROWSER: ${{matrix.browser}}
-#             URL: ${{ needs.deploy_gatsby.outputs.url }}
-#             JEST_HTML_REPORTERS_FILE_NAME: TestReport_${{matrix.browser}}.html
-#             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
-#             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-#             XPLAN_APP_ID : ${{ secrets.XPLAN_APP_ID }}
-#             XPLAN_USERNAME: ${{ secrets.XPLAN_USERNAME }}
-#             XPLAN_PASSWORD: ${{ secrets.XPLAN_PASSWORD }}
-#
-#      - name: "Login to Azure"
-#        if: always()
-#        uses: Azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
-#
-#      - name: "Deploy Selenium Reports"
-#        if: always()
-#        uses: azure/CLI@v1
-#        with:
-#          azcliversion: latest
-#          inlineScript: |
-#                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+  #  Temporarily disabled until tests can be fixed to not fail intermittently
+  #
+  #  end_to_end_test:
+  #    name: "E2E test"
+  #    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+  #    environment: development
+  #    runs-on: ubuntu-latest
+  #    needs:
+  #      - detect_changes
+  #      - build_cache
+  #      - get_pr_terraform_outputs
+  #      - clear_storybook_storage_account
+  #      - deploy_gatsby
+  #    strategy:
+  #      matrix:
+  #        browser: [chrome,firefox]
+  #    steps:
+  #      - name: "Checkout"
+  #        uses: actions/checkout@v2
+  #
+  #      - name: "Use Node.js 14.x"
+  #        uses: actions/setup-node@v1
+  #        with:
+  #          node-version: 14.x
+  #
+  #      - name: "Get yarn cache"
+  #        uses: actions/cache@v2
+  #        with:
+  #          key: ${{ needs.build_cache.outputs.key }}
+  #          path: ${{ needs.build_cache.outputs.yarn-path }}
+  #          restore-keys: |
+  #            ${{ runner.os }}-yarn-
+  #
+  #      - name: "Get node modules cache"
+  #        uses: actions/cache@v2
+  #        with:
+  #          key: ${{ needs.build_cache.outputs.key }}
+  #          path: ${{ needs.build_cache.outputs.modules-path }}
+  #          restore-keys: |
+  #            ${{ runner.os }}-modules-
+  #
+  #      - name: "Update webdriver-manager"
+  #        run: npx webdriver-manager update
+  #
+  #      - name: "Run E2E UI tests"
+  #        run : yarn test:e2e
+  #        env :
+  #             BROWSER: ${{matrix.browser}}
+  #             URL: ${{ needs.deploy_gatsby.outputs.url }}
+  #             JEST_HTML_REPORTERS_FILE_NAME: TestReport_${{matrix.browser}}.html
+  #             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
+  #             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+  #             XPLAN_APP_ID : ${{ secrets.XPLAN_APP_ID }}
+  #             XPLAN_USERNAME: ${{ secrets.XPLAN_USERNAME }}
+  #             XPLAN_PASSWORD: ${{ secrets.XPLAN_PASSWORD }}
+  #
+  #      - name: "Login to Azure"
+  #        if: always()
+  #        uses: Azure/login@v1
+  #        with:
+  #          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #
+  #      - name: "Deploy Selenium Reports"
+  #        if: always()
+  #        uses: azure/CLI@v1
+  #        with:
+  #          azcliversion: latest
+  #          inlineScript: |
+  #                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -775,6 +777,7 @@ jobs:
           touch .env.pr
           echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
           echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
+          echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
           cat .env.pr
 
       - name: "Gatsby build"
@@ -882,8 +885,7 @@ jobs:
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
       cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
-      app_insights_name : ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
-
+      app_insights_name: ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
 
   plan_staging:
     name: "Terraform plan Staging"
@@ -1028,7 +1030,7 @@ jobs:
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
       cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
-      app_insights_name : ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
+      app_insights_name: ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
 
   plan_prod:
     name: "Terraform plan Prod"
@@ -1085,7 +1087,6 @@ jobs:
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_cdn_profile_name: ${{ needs.get_prod_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_prod_apim_outputs.outputs.app_insights_name }}
-          
 
     outputs:
       plan_outcome: ${{ steps.plan.outcome }}
@@ -1133,8 +1134,8 @@ jobs:
           touch .env.production
           echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.production
           echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.production
+          echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.production
           cat .env.production
-
 
       - name: "Build Storybook"
         run: yarn frontend build-storybook -o "./storybook-static"

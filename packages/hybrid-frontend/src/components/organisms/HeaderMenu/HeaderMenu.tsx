@@ -2,7 +2,7 @@ import { useMediaQuery } from '@material-ui/core';
 import { navigate } from 'gatsby';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ACTIVE_ENV } from '../../../config';
+import { ACTIVE_ENV, MYACCOUNTS_HOME_URL } from '../../../config';
 import { FeatureFlagNames } from '../../../constants';
 import { useFeatureFlagToggle } from '../../../hooks';
 
@@ -179,30 +179,35 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
           </Grid>
         </Toolbar>
 
-        {isNonProd && (
-          <>
-            <Divider />
-            <SubHeader>
-              <Grid container justify="center">
-                <Grid item xs={4}>
-                  <FormControlLabel
-                    control={
-                      <Box mr={1}>
-                        <Switcher
-                          size="small"
-                          withInnerLabel
-                          checked={expFeatureFlag?.isEnabled}
-                          onClick={switchHandler}
-                        />
-                      </Box>
-                    }
-                    label="Experimental Features"
-                  />
-                </Grid>
-              </Grid>
-            </SubHeader>
-          </>
-        )}
+        <Divider />
+
+        <SubHeader>
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item>
+              {isNonProd && (
+                <FormControlLabel
+                  control={
+                    <Box mr={1}>
+                      <Switcher
+                        size="small"
+                        withInnerLabel
+                        checked={expFeatureFlag?.isEnabled}
+                        onClick={switchHandler}
+                      />
+                    </Box>
+                  }
+                  label="Experimental Features"
+                />
+              )}
+            </Grid>
+
+            <Grid item>
+              <Button color="secondary" href={MYACCOUNTS_HOME_URL}>
+                My Accounts Login
+              </Button>
+            </Grid>
+          </Grid>
+        </SubHeader>
       </StyledAppBar>
     </Box>
   );

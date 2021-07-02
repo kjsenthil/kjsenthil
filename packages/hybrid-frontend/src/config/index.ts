@@ -31,6 +31,7 @@ if (IS_SSR) {
 const env = from({
   API_ENDPOINTS: process.env.API_ENDPOINTS,
   API_BASE_URL: process.env.API_BASE_URL,
+  MYACCOUNTS_HOME_URL: process.env.MYACCOUNTS_HOME_URL,
 });
 
 const isRequired = NODE_ENV !== 'test';
@@ -65,6 +66,11 @@ const defaultEndpoints: Record<ApiEndpoints, string> = {
 };
 
 export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
+
+export const MYACCOUNTS_HOME_URL = env
+  .get('MYACCOUNTS_HOME_URL')
+  .required(isRequired)
+  .asUrlString();
 
 export const API_ENDPOINTS = env
   .get('API_ENDPOINTS')

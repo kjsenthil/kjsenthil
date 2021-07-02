@@ -9,6 +9,7 @@ dotenv.config({
 const env = from(process.env);
 
 export const API_BASE_URL = env.get('API_BASE_URL').required().asUrlString();
+export const MYACCOUNTS_HOME_URL = env.get('MYACCOUNTS_HOME_URL').required().asUrlString();
 export const CLIENT_ID = 'myaccount-spa';
 export const MYACCOUNTS_PASSWORD = env.get('MYACCOUNTS_PASSWORD').required().asString();
 export const MYACCOUNTS_USERNAME = env.get('MYACCOUNTS_USERNAME').required().asString();

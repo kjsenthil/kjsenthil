@@ -1,7 +1,12 @@
 import React from 'react';
 import { DialogProps } from '@material-ui/core';
-import { Icon, IconButton, Typography, Grid, DialogContent, DialogTitle } from '../../atoms';
-import StyledDialogContainer from './Modal.styles';
+import { Icon, IconButton, Typography, Grid } from '../../atoms';
+import {
+  StyledDialogContainer,
+  StyledDialogContent,
+  StyledDialogTitle,
+  StyledIcon,
+} from './Modal.styles';
 
 export interface ModalProps extends DialogProps {
   modalTitle: string;
@@ -9,23 +14,24 @@ export interface ModalProps extends DialogProps {
 
 const Modal = ({ modalTitle, modalBody, onClose, children, ...props }: ModalProps) => (
   <StyledDialogContainer {...props}>
-    <DialogTitle disableTypography onClose={onClose}>
+    <StyledDialogTitle disableTypography onClose={onClose}>
       <Grid container alignItems="center" justify="space-between">
-        <Grid item xs={10}>
+        <Grid item xs={10} container alignItems="center">
+          <StyledIcon name="infoCircleIcon" aria-label="more information" color="primary" />
           <Typography variant="h5" display="inline">
             {modalTitle}
           </Typography>
         </Grid>
 
-        <Grid item xs={2} container justify="center">
+        <Grid item xs={2} container justify="flex-end">
           <IconButton aria-label="close" onClick={onClose}>
             <Icon name="cross" />
           </IconButton>
         </Grid>
       </Grid>
-    </DialogTitle>
+    </StyledDialogTitle>
 
-    <DialogContent dividers>{children}</DialogContent>
+    <StyledDialogContent>{children}</StyledDialogContent>
   </StyledDialogContainer>
 );
 export default Modal;
