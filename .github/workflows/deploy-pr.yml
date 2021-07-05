@@ -581,76 +581,78 @@ jobs:
           inlineScript: |
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+  
+  #  Temporarily disabled until tests can be fixed to not fail intermittently
+  # api_test_suite:
+  #   name: "API test suite"
+  #   if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+  #   environment: development
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - detect_changes
+  #     - build_cache
+  #     - get_pr_terraform_outputs
+  #     - clear_storybook_storage_account
+  #     - deploy_gatsby
+  #     - open_storage_account_firewalls
+  #   steps:
+  #     - name: "Checkout"
+  #       uses: actions/checkout@v2
 
-  api_test_suite:
-    name: "API test suite"
-    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
-    environment: development
-    runs-on: ubuntu-latest
-    needs:
-      - detect_changes
-      - build_cache
-      - get_pr_terraform_outputs
-      - clear_storybook_storage_account
-      - deploy_gatsby
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v2
+  #     - name: "Use Node.js 14.x"
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
 
-      - name: "Use Node.js 14.x"
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
+  #     - name: "Get yarn cache"
+  #       uses: actions/cache@v2
+  #       with:
+  #         key: ${{ needs.build_cache.outputs.key }}
+  #         path: ${{ needs.build_cache.outputs.yarn-path }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-yarn-
 
-      - name: "Get yarn cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.yarn-path }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+  #     - name: "Get node modules cache"
+  #       uses: actions/cache@v2
+  #       with:
+  #         key: ${{ needs.build_cache.outputs.key }}
+  #         path: ${{ needs.build_cache.outputs.modules-path }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-modules-
 
-      - name: "Get node modules cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.modules-path }}
-          restore-keys: |
-            ${{ runner.os }}-modules-
+  #     - name: "Create PR env file"
+  #       working-directory: ./packages/testing
+  #       run: |
+  #         touch .env.pr
+  #         echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
+  #         echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
+  #         echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
+  #         cat .env.pr
 
-      - name: "Create PR env file"
-        working-directory: ./packages/testing
-        run: |
-          touch .env.pr
-          echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
-          echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
-          echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
-          cat .env.pr
+  #     - name: "Run API tests"
+  #       run: yarn test:api:ci
+  #       env:
+  #         JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
+  #         JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
+  #         API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+  #         API_ENDPOINTS: ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
+  #         MYACCOUNTS_HOME_URL: ${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}
+  #         MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
+  #         MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
 
-      - name: "Run API tests"
-        run: yarn test:api:ci
-        env:
-          JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
-          JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
-          API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-          API_ENDPOINTS: ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
-          MYACCOUNTS_HOME_URL: ${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}
-          MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
-          MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
+  #     - name: "Login to Azure"
+  #       if: always()
+  #       uses: Azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: "Login to Azure"
-        if: always()
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: "Deploy API Reports"
-        if: always()
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+  #     - name: "Deploy API Reports"
+  #       if: always()
+  #       uses: azure/CLI@v1
+  #       with:
+  #         azcliversion: latest
+  #         inlineScript: |
+  #           az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
   #  Temporarily disabled until tests can be fixed to not fail intermittently
   #
@@ -730,7 +732,7 @@ jobs:
     needs:
       - build_cache
       - get_pr_terraform_outputs
-      - open_storage_account_firewalls
+      - clear_storybook_storage_account
     runs-on: ubuntu-latest
 
     steps:
@@ -832,6 +834,7 @@ jobs:
     environment: staging
     needs:
       - detect_changes
+      - get_staging_rg_outputs
     runs-on: ubuntu-latest
 
     defaults:
@@ -885,10 +888,6 @@ jobs:
       - get_staging_apim_outputs
     runs-on: ubuntu-latest
     concurrency: staging_infra_terraform_deployment
-
-    defaults:
-      run:
-        working-directory: ./terraform/infra
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -911,12 +910,38 @@ jobs:
         with:
           terraform_version: 0.14.7
 
-      - name: "Terraform Init"
+      - name: "Terraform Resource Group Init"
         run: terraform init -backend-config="./backends/staging.backend"
+        working-directory: ./terraform/resource_group
 
-      - name: "Terraform Plan"
-        id: plan
+      - name: "Terraform Resource Group Plan"
+        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
+        id: plan-rg
+        working-directory: ./terraform/resource_group
+
+      - name: "Terraform APIM Init"
+        run: terraform init -backend-config="./backends/staging.backend"
+        working-directory: ./terraform/apim
+
+      - name: "Terraform APIM Plan"
+        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
+        id: plan-apim
+        working-directory: ./terraform/apim
+        env:
+          TF_VAR_resource_group_name: ${{ needs.get_staging_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
+      - name: "Terraform Infra Init"
+        run: terraform init -backend-config="./backends/staging.backend"
+        working-directory: ./terraform/infra
+
+      - name: "Terraform Infra Plan"
+        id: plan-infra
         run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
+        working-directory: ./terraform/infra
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
           TF_VAR_resource_group_name: ${{ needs.get_staging_rg_outputs.outputs.resource_group_name }}
@@ -928,8 +953,12 @@ jobs:
           TF_VAR_app_insights_name: ${{ needs.get_staging_apim_outputs.outputs.app_insights_name }}
 
     outputs:
-      plan_outcome: ${{ steps.plan.outcome }}
-      plan: ${{ steps.plan.outputs.stdout }}
+      plan_outcome_rg: ${{ steps.plan-rg.outcome }}
+      plan_rg: ${{ steps.plan-rg.outputs.stdout }}
+      plan_outcome_apim: ${{ steps.plan-apim.outcome }}
+      plan_apim: ${{ steps.plan-apim.outputs.stdout }}
+      plan_outcome_infra: ${{ steps.plan-infra.outcome }}
+      plan_infra: ${{ steps.plan-infra.outputs.stdout }}
 
   get_prod_rg_outputs:
     name: "Get prod resource group outputs"
@@ -1030,10 +1059,6 @@ jobs:
       - get_prod_apim_outputs
     runs-on: ubuntu-latest
     concurrency: prod_infra_terraform_deployment
-
-    defaults:
-      run:
-        working-directory: ./terraform/infra
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -1056,12 +1081,38 @@ jobs:
         with:
           terraform_version: 0.14.7
 
-      - name: "Terraform Init"
+      - name: "Terraform Resource Group Init"
         run: terraform init -backend-config="./backends/prod.backend"
+        working-directory: ./terraform/resource_group
 
-      - name: "Terraform Plan"
-        id: plan
+      - name: "Terraform Resource Group Plan"
+        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
+        id: plan-rg
+        working-directory: ./terraform/resource_group
+
+      - name: "Terraform APIM Init"
+        run: terraform init -backend-config="./backends/prod.backend"
+        working-directory: ./terraform/apim
+
+      - name: "Terraform APIM Plan"
+        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
+        id: plan-apim
+        working-directory: ./terraform/apim
+        env:
+          TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
+          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
+          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+
+      - name: "Terraform Infra Init"
+        run: terraform init -backend-config="./backends/prod.backend"
+        working-directory: ./terraform/infra
+
+      - name: "Terraform Infra Plan"
+        id: plan-infra
         run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
+        working-directory: ./terraform/infra
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
           TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
@@ -1076,8 +1127,12 @@ jobs:
           TF_VAR_app_insights_name: ${{ needs.get_prod_apim_outputs.outputs.app_insights_name }}
 
     outputs:
-      plan_outcome: ${{ steps.plan.outcome }}
-      plan: ${{ steps.plan.outputs.stdout }}
+      plan_outcome_rg: ${{ steps.plan-rg.outcome }}
+      plan_rg: ${{ steps.plan-rg.outputs.stdout }}
+      plan_outcome_apim: ${{ steps.plan-apim.outcome }}
+      plan_apim: ${{ steps.plan-apim.outputs.stdout }}
+      plan_outcome_infra: ${{ steps.plan-infra.outcome }}
+      plan_infra: ${{ steps.plan-infra.outputs.stdout }}
 
   # Deploys storybook.
   deploy_storybook:
@@ -1154,6 +1209,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
+      #- api_test_suite
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -1178,11 +1234,13 @@ jobs:
       - deploy_storybook
       - plan_staging
       - plan_prod
+      - get_staging_apim_outputs
+      - get_prod_apim_outputs
     runs-on: ubuntu-latest
 
     steps:
       - name: "Comment on PR"
-        uses: actions/github-script@v3
+        uses: actions/github-script@v4
         with:
           script: |
             const output = `
@@ -1198,21 +1256,60 @@ jobs:
             **Storybook:** [${{ needs.deploy_storybook.outputs.url }}](${{ needs.deploy_storybook.outputs.url }})
             **Webpage:** [${{ needs.deploy_gatsby.outputs.url }}](${{ needs.deploy_gatsby.outputs.url }})
 
-            #### Terraform plan - Staging
-            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome }}\`
+            #### Resource Group Terraform plan - Staging
+
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_rg }}\`
             <details><summary>Show Plan</summary>
 
-            \`\`\`${{ needs.plan_staging.outputs.plan }}\`\`\`
+            \`\`\`${{ needs.plan_staging.outputs.plan_rg  }}\`\`\`
+            
+            </details>
+
+            #### APIM Terraform plan - Staging
+
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_apim }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_staging.outputs.plan_apim  }}\`\`\`
 
             </details>
 
-            #### Terraform plan - Prod
-            **Outcome** \`${{ needs.plan_prod.outputs.plan_outcome }}\`
+            #### Infra Terraform plan - Staging
+
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_infra }}\`
             <details><summary>Show Plan</summary>
 
-            \`\`\`${{ needs.plan_prod.outputs.plan }}\`\`\`
+            \`\`\`${{ needs.plan_staging.outputs.plan_infra  }}\`\`\`
 
             </details>
+
+            #### Resource Group Terraform plan - Prod
+
+            **Outcome:** \`${{ needs.plan_prod.outputs.plan_outcome_rg }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_prod.outputs.plan_rg  }}\`\`\`
+
+            </details>
+
+            #### APIM Terraform plan - Prod
+
+            **Outcome:** \`${{ needs.plan_prod.outputs.plan_outcome_apim }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_prod.outputs.plan_apim  }}\`\`\`
+
+            </details>
+
+            #### Infra Terraform plan - Prod
+
+            **Outcome:** \`${{ needs.plan_prod.outputs.plan_outcome_infra }}\`
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${{ needs.plan_prod.outputs.plan_infra  }}\`\`\`
+
+            </details>
+
             `;
 
             github.issues.createComment({

@@ -62,6 +62,14 @@ variable "private_dns_zone" {
   description = "The private DNS Zone for the APIM."
 }
 
+variable "public_dns_zones" {
+  type = list(object({
+    public_dns_parent_zone     = string
+    public_dns_child_zones     = list(string)
+  }))
+  description = "The public DNS zone object containing parent and child DNS subzone for the subscription"
+}
+
 variable "dns_a_records" {
   type        = list(string)
   description = "The records to associate with the A record."

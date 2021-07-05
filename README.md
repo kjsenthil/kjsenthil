@@ -4,8 +4,10 @@
 
 ## Build status
 
-![Deploy PR in DEV](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20terraform%20and%20frontend%20to%20PR%20environment/badge.svg)
-![Deploy to Production](https://github.com/dmwgroup/digital-hybrid/workflows/Deploy%20all%20the%20way%20to%20the%20PRODUCTION%20environment/badge.svg)
+[![Deploy PR environment](https://github.com/TSWDTS/digital-hybrid/actions/workflows/deploy-pr.yml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/deploy-pr.yml)
+[![Deploy to production](https://github.com/TSWDTS/digital-hybrid/actions/workflows/deploy-to-prod.yml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/deploy-to-prod.yml)
+[![Destroy PR environment](https://github.com/TSWDTS/digital-hybrid/actions/workflows/destroy-pr.yaml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/destroy-pr.yaml)
+[![Upload workflow metrics to Influx DB](https://github.com/TSWDTS/digital-hybrid/actions/workflows/upload-to-influx.yml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/upload-to-influx.yml)
 
 ## Test coverage
 

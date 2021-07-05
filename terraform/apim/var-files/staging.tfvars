@@ -3,6 +3,12 @@ location                = "UK South"
 vnet_cidr               = "10.233.25.0/24"
 api_management_sku_name = "Developer_1"
 private_dns_zone        = "uat3.bestinvest.co.uk"
+public_dns_zones        = [ 
+  {
+  public_dns_parent_zone     = "bi-digital.co.uk"
+  public_dns_child_zones     = ["dev.bi-digital.co.uk", "alpha.bi-digital.co.uk"]
+  }
+]
 dns_a_records           = ["10.1.63.5"]
 
 sg_rules = [
