@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { GoalRequestPayload, ValidationError } from "./types";
+import { GoalStatus, GoalCategory, GoalAdviceType, GoalRequestPayload, ValidationError } from "./types";
 
 const validateGoalRequestMain: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     let responseBody = {}
@@ -25,9 +25,8 @@ const validateGoalRequestMain: AzureFunction = async function (context: Context,
 }
 
 function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
-    let validCategories = [5, 3, 999];
-    let validStatuses = ["1", "2", "3", "4"];
-    let validAdviceTypes = [5, 3];
+    let validCategories = [GoalCategory.RETIREMENT.valueOf(), GoalCategory.INVESTMENT.valueOf(), GoalCategory.UNCATEGORIZED.valueOf()];
+    let validAdviceTypes = [GoalAdviceType.RETIREMENT.valueOf(), GoalAdviceType.INVESTMENT.valueOf()];
     let errors = Array<ValidationError>();
 
     if (typeof inboundPayload.fields?.description?.trim == 'undefined') {
@@ -39,7 +38,7 @@ function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
         errors.push(error)
     }
 
-    if (typeof inboundPayload.fields?.category == 'undefined' || !validCategories.includes(inboundPayload.fields.category)) {
+    if (typeof inboundPayload.fields?.category == 'undefined' || !validCategories.includes(inboundPayload.fields?.category)) {
         const error: ValidationError = {
             "code": "val-goal-002",
             "property": "category",
@@ -47,7 +46,7 @@ function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
         }
         errors.push(error)
     }
-    if (typeof inboundPayload.fields?.status == 'undefined' || !validStatuses.includes(inboundPayload.fields.status)) {
+    if (typeof inboundPayload.fields?.status == 'undefined' || !Object.values(GoalStatus).includes(inboundPayload.fields.status)) {
         const error: ValidationError = {
             "code": "val-goal-003",
             "property": "status",
@@ -55,7 +54,7 @@ function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
         }
         errors.push(error)
     }
-    if (typeof inboundPayload.fields?.advice_type == 'undefined' || !validAdviceTypes.includes(inboundPayload.fields.advice_type)) {
+    if (typeof inboundPayload.fields?.advice_type == 'undefined'  || !validAdviceTypes.includes(inboundPayload.fields?.advice_type)) {
         const error: ValidationError = {
             "code": "val-goal-004",
             "property": "advice_type",

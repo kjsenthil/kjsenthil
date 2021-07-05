@@ -62,18 +62,44 @@ describe("tests for validate function", () => {
             ] as ValidationError[])
     });
 
+    it("when advice type is a valid AdviceType but not allowed one , validate error must be thrown", () => {
+        let invalidStatusGoal = createGoal("Test description", 3, "1", 9, 65, 77, 100)
+        expect(
+            validateInput(invalidStatusGoal))
+            .toEqual([
+                {
+                    "code": "val-goal-004",
+                    "message": "adviceType_not_valid",
+                    "property": "advice_type"
+                }
+            ] as ValidationError[])
+    });
+
+    it("when category is a valid category but not allowed one , validate error must be thrown", () => {
+        let invalidStatusGoal = createGoal("Test description", 10, "1", 5, 65, 77, 100)
+        expect(
+            validateInput(invalidStatusGoal))
+            .toEqual([
+                {
+                    "code": "val-goal-002",
+                    "message": "category_not_valid",
+                    "property": "category"
+                }
+            ] as ValidationError[])
+    });    
+
     it("when start age is not above 65 error must be thrown", () => {
         let invalidStatusGoal = createGoal("Test description", 3, "1", 3, 64, 77, 100)
         expect(
             validateInput(invalidStatusGoal))
             .toEqual(
-                 [
+                [
                     {
                         "code": "val-goal-005",
                         "message": "startAge_not_valid",
                         "property": "objective_frequency_start_age"
                     }
-                ]  as ValidationError[])
+                ] as ValidationError[])
     });
 
     it("when end age is below start age error must be thrown", () => {
@@ -106,7 +132,7 @@ describe("tests for validate function", () => {
     it("when all data is valid no validation error is thrown", () => {
         expect(
             validateInput(validGoal))
-            .toEqual( [] as ValidationError[])
+            .toEqual([] as ValidationError[])
     });
 
 });
@@ -173,7 +199,7 @@ describe("Tests for GoalRequestValidation Function", () => {
 
 });
 
-function createGoal(description: string, category: number, status: string, advice_type: number, objective_frequency_start_age: number, objective_frequency_end_age: number, drawdownAmount: number): GoalRequestPayload {
+function createGoal(description: string, category: number, status: string, advice_type: number, objective_frequency_start_age: number, objective_frequency_end_age: number, drawdownAmount: number): any {
     const date = new Date();
     return {
         fields: {

@@ -169,39 +169,28 @@ test('POST call to create a goal with additional fields', async () => {
 test('PATCH call to update a goal', async () => {
   payload = JSON.stringify({
     fields: {
-      description: 'savings goal',
-      target_amount: {
+      status: '2',
+      category: 5,
+      description: 'Patch retirement goal',
+      capture_date: {
+        _val: '2021-06-03',
+        _type: 'Date',
+      },
+      advice_type: 5,
+      regular_drawdown: {
         _val: {
           code: 'GBP',
           value: {
-            _val: '100000',
+            _val: 5000,
             _type: 'BigDecimal',
           },
         },
         _type: 'Currency',
       },
-      initial_investment: {
-        _val: {
-          code: 'GBP',
-          value: {
-            _val: '5000',
-            _type: 'BigDecimal',
-          },
-        },
-        _type: 'Currency',
-      },
-      term_timeframe: 'medium_term',
-      regular_saving: {
-        _val: {
-          code: 'GBP',
-          value: {
-            _val: '5000',
-            _type: 'BigDecimal',
-          },
-        },
-        _type: 'Currency',
-      },
-      frequency: 12,
+      objective_frequency_start_age: 65,
+      objective_frequency_end_age: 67,
+      drawdown_frequency: 12,
+      owner: 'client',
     },
   });
   const updateGoalUrl = API_ENDPOINTS.UPDATE_GOAL.replace('{goal-index}', goalIndex);

@@ -1636,7 +1636,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/netcontribution-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/netcontribution-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
@@ -1648,7 +1648,7 @@
 							"query": [
 								{
 									"key": "filter[id]",
-									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}"
+									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
 								}
 							]
 						}
@@ -1730,7 +1730,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
@@ -1742,7 +1742,7 @@
 							"query": [
 								{
 									"key": "filter[id]",
-									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}"
+									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
 								}
 							]
 						}
@@ -1879,7 +1879,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}&include=netcontribution-accounts-aggregated",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/performance-accounts-aggregated?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}&include=netcontribution-accounts-aggregated",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
@@ -1891,7 +1891,7 @@
 							"query": [
 								{
 									"key": "filter[id]",
-									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}},{{myAccounts.SippAccountId}}"
+									"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
 								},
 								{
 									"key": "include",
@@ -2297,22 +2297,18 @@
 									"    pm.environment.set(\"myAccounts.riskModel\", jsonData.riskModel);\r",
 									"\r",
 									"    pm.expect(jsonData).to.have.a.property('erValue');\r",
-									"    pm.expect(jsonData.erValue).to.be.not.empty;\r",
 									"    pm.environment.set(\"myAccounts.erValue\", jsonData.erValue);\r",
 									"\r",
 									"    pm.expect(jsonData).to.have.a.property('volatility');\r",
-									"    pm.expect(jsonData.volatility).to.be.not.empty;\r",
 									"    pm.environment.set(\"myAccounts.volatility\", jsonData.volatility);\r",
 									"\r",
 									"    pm.expect(jsonData).to.have.a.property('zScores');\r",
 									"    pm.expect(jsonData.zScores).to.be.not.empty;\r",
 									"\r",
 									"    pm.expect(jsonData.zScores).to.have.a.property('MoreLikelyLB');\r",
-									"    pm.expect(jsonData.zScores.MoreLikelyLB).to.be.not.empty;\r",
 									"    pm.environment.set(\"myAccounts.zScores.MoreLikelyLB\", jsonData.zScores.MoreLikelyLB);\r",
 									"\r",
 									"    pm.expect(jsonData.zScores).to.have.a.property('MoreLikelyUB');\r",
-									"    pm.expect(jsonData.zScores.MoreLikelyUB).to.be.not.empty;\r",
 									"    pm.environment.set(\"myAccounts.zScores.MoreLikelyUB\", jsonData.zScores.MoreLikelyUB);\r",
 									"\r",
 									"\r",
@@ -2587,12 +2583,34 @@
 				},
 				{
 					"name": "Target Projection",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//calculate months to age to 100\r",
+									"var moment = require('moment');\r",
+									"\r",
+									"var today = moment();\r",
+									"var dob = pm.environment.get('myAccounts.DateOfBirth');\r",
+									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
+									"\r",
+									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + dateOfBirth.month().toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.day().toString()).slice(-2);\r",
+									"var dateTo100 = moment(dateTo100String,\"YYYY-MM-DD\");\r",
+									"var timeHorizon= dateTo100.diff(today, 'months');\r",
+									"pm.environment.set('timeHorizon',timeHorizon );\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n      \"timeHorizon\": {{timeHorizon}},\r\n      \"preGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n      \"monthlyContributions\": 624,\r\n      \"portfolioCurrentValue\": {{myAccounts.portfolioValue}},\r\n      \"desiredMonthlyDrawdown\": 700,\r\n      \"drawdownStartDate\": \"2055-04-10\",\r\n      \"drawdownEndDate\": \"2076-04-10\",\r\n      \"upfrontContribution\": 0,\r\n      \"preGoalExpectedReturn\":{{myAccounts.erValue}},\r\n      \"preGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"preGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"preGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"feesPercentage\": 0.004,\r\n      \"postGoalRiskModel\":  {{myAccounts.riskModel}},\r\n      \"lumpSumAmount\": 0.0,\r\n      \"statePensionAmount\": 0,\r\n      \"desiredAmount\": 0,\r\n      \"postGoalExpectedReturn\": {{myAccounts.erValue}},\r\n      \"postGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"postGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"postGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"netContribution\": {{myAccounts.netContribution}},\r\n      \"isConeGraph\": true,\r\n      \"includeStatePension\": true\r\n    } \r\n",
+							"raw": "{\r\n    \"timeToAge100\": {{timeHorizon}},\r\n    \"preGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n    \"portfolioValue\": {{myAccounts.portfolioValue}},\r\n    \"desiredMonthlyDrawdown\": 10000,\r\n    \"drawdownStartDate\": \"2055-04-10\",\r\n    \"drawdownEndDate\": \"2076-04-10\",\r\n    \"upfrontContribution\": 10000,\r\n    \"preGoalExpectedReturn\": {{myAccounts.erValue}},\r\n    \"preGoalVolatility\": {{myAccounts.volatility}},\r\n    \"feesPercentage\": 0.004,\r\n    \"postGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n    \"goalLumpSum\": 100000,\r\n    \"lumpSumDate\": \"2055-04-10\",\r\n    \"statePensionAmount\": 0,\r\n    \"postGoalExpectedReturn\":{{myAccounts.erValue}},\r\n    \"postGoalVolatility\":  {{myAccounts.volatility}},\r\n    \"desiredValueAtEndOfDrawdown\": 100000,\r\n    \"includeStatePension\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2600,14 +2618,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/TargetProjection",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/Target-Projection",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
 								"{{apiPath}}",
 								"Projections",
-								"TargetProjection"
+								"Target-Projection"
 							]
 						}
 					},
@@ -3142,7 +3160,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirementl\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
+							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3611,7 +3629,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fields\": {\n        \"description\": \"savings goal\",\n        \"target_amount\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"100000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"initial_investment\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"20000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"term_timeframe\": \"medium_term\",\n        \"regular_saving\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"5000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"frequency\": \"12\"\n    }\n}",
+							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3619,7 +3637,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals/:list_obj_index",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals/:goalIndex",
 							"host": [
 								"{{digitalHybrid.baseUrl}}"
 							],
@@ -3629,11 +3647,11 @@
 								"entity",
 								"client-v4",
 								"goals",
-								":list_obj_index"
+								":goalIndex"
 							],
 							"variable": [
 								{
-									"key": "list_obj_index",
+									"key": "goalIndex",
 									"value": "{{xplan.goalIndex}}"
 								}
 							]
@@ -4377,4 +4395,3 @@
 		}
 	]
 }
-

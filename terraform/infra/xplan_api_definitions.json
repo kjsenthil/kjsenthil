@@ -111,7 +111,8 @@
 						"returnResponse":{
 							"status" : "400",
 							"reason" : "Bad Request",
-							"body" : "@(((IResponse)context.Variables[\"validationResponse\"]).Body.As<JObject>(preserveContent: true).ToString())"
+							"body" : "@(((IResponse)context.Variables[\"validationResponse\"]).Body.As<string>())"
+
 						}
 					}
 				}, 	
@@ -287,6 +288,20 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],
+				"validate_request": {
+					"url":"{{function-app-baseurl}}/validate-goal-request",
+					"method":"POST",
+					"body":"@{return context.Request.Body.As<string>(true);}",
+					"when":{
+						"condition" :"@(((IResponse)context.Variables[\"validationResponse\"]).StatusCode != 200)",
+						"returnResponse":{
+							"status" : "400",
+							"reason" : "Bad Request",
+							"body" : "@(((IResponse)context.Variables[\"validationResponse\"]).Body.As<string>())"
+						}
+					}
+				},
+				"body" :"@{ var inboundPayload = context.Request.Body.As<JObject>(true); inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12; inboundPayload[\"fields\"][\"owner\"] = \"client\"; return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
 				"backend_url": "xplan",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\/\" + \"{goal-index}\";}",
 				"authentication-basic": {
