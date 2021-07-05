@@ -112,7 +112,7 @@ function calculateDrawdown(preGoalMonthlyNetExpectedReturn: number, goalContribu
     const remainingAmountAtGoalAge = remainingAmount / (1 + postGoalMonthlyNetExpectedReturn) ** goalDrawdownPeriod;
     const possibleDrawdown = (projectedGoalAgeTotal - lumpSumAmount - remainingAmountAtGoalAge) / monthlyCompoundInterestMultiplePostGoal;
 
-    const possibleDrawdownsp = includeStatePension ? possibleDrawdown + statePensionAmount / 12 : possibleDrawdown / 12;
+    const possibleDrawdownsp = includeStatePension ? possibleDrawdown + statePensionAmount / 12 : possibleDrawdown ;
     return { possibleDrawdownsp, possibleDrawdown, projectedGoalAgeTotal, remainingAmountAtGoalAge };
 }
 
@@ -424,4 +424,4 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
     return errors;
 }
 
-export { currentProjectionMain, getCurrentProjection, validateInput, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedreturn }
+export { currentProjectionMain, getCurrentProjection, calculateDrawdown, validateInput, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedreturn }

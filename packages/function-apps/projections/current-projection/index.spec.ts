@@ -1,5 +1,5 @@
-import { ProjectionMonth, RequestPayload, ValidationError } from "./types";
-import { validateInput, currentProjectionMain, getCurrentProjection, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedreturn } from "./index";
+import { Drawdown, ProjectionMonth, RequestPayload, ValidationError } from "./types";
+import { validateInput, currentProjectionMain, getCurrentProjection, calculateDrawdown, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedreturn } from "./index";
 import { Context } from "@azure/functions";
 
 describe("tests for validate function", () => {
@@ -329,8 +329,277 @@ describe("Tests for getCurrentProjection Function", () => {
       } as ProjectionMonth);
   });
 
+  it("should return expected results when state pension is false", async () => {
+    // Arrange
+    const inbountPayload = {
+      timeHorizon: 900,
+      preGoalRiskModel: "TAA1",
+      monthlyContributions: 624,
+      portfolioCurrentValue: 250000,
+      desiredMonthlyDrawdown: 700,
+      drawdownStartDate: "2055-04-10",
+      drawdownEndDate: "2076-04-10",
+      upfrontContribution: 0,
+      preGoalExpectedReturn: 0.043,
+      preGoalExpectedVolatility: 0.1637,
+      preGoalZScoreLowerBound: -1.350641417,
+      preGoalZScoreUpperBound: 1.26511912,
+      feesPercentage: 0.004,
+      postGoalRiskModel: "TAA3",
+      lumpSumAmount: 0.10,
+      statePensionAmount: 0,
+      desiredAmount: 0,
+      postGoalExpectedReturn: 0.0298,
+      postGoalExpectedVolatility: 0.0927,
+      postGoalZScoreLowerBound: -1.297734628,
+      postGoalZScoreUpperBound: 1.284789644,
+      netContribution: 1000,
+      isConeGraph: true,
+      includeStatePension: false
+    } as RequestPayload;
+
+    // Action
+    const result = getCurrentProjection(inbountPayload, new Date("June 10,2021"));
+
+    // Assertion
+    //first row
+    expect(result.projectedGoalAgeTotal).toEqual(1424658.9051612173);
+    expect(result.possibleDrawdown).toEqual(7270.127009539294);
+    expect(result.possibleDrawdownWithSP).toEqual(7270.127009539294);
+    expect(result.projectedGoalAgeTotalWhenMarketUnderperform).toEqual(987349.9562431246);
+    expect(result.possibleDrawdownWhenMarketUnderperform).toEqual(4552.9466918780145);
+    expect(result.possibleDrawdownWhenMarketUnderperformWithSP).toEqual(4552.9466918780145);
+
+    expect(result.projections[0]).toEqual(
+      {
+        month: 0,
+        contributionLine: 1000,
+        lowerBound: 250000,
+        projectedValue: 250000,
+        upperBound: 250000
+      } as ProjectionMonth);
+
+    expect(result.projections[1]).toEqual(
+      {
+        contributionLine: 1624,
+        lowerBound: 235465.81038991973,
+        month: 1,
+        projectedValue: 251422.32845197053,
+        upperBound: 266368.48354157555
+      } as ProjectionMonth);
+
+    //when drawdown start
+    expect(result.projections[405]).toEqual({
+      contributionLine: 245825.7729904607,
+      lowerBound: 977695.5965752011,
+      month: 405,
+      projectedValue: 1416741.4620353822,
+      upperBound: 1818320.0762484258
+    } as ProjectionMonth);
+
+    expect(result.projections.length).toEqual(901);
+
+    expect(result.projections[806]).toEqual(
+      {
+        month: 806,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0,
+      } as ProjectionMonth);
+
+    expect(result.projections[898]).toEqual(
+      {
+        month: 898,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0
+      } as ProjectionMonth);
+
+    expect(result.projections[900]).toEqual(
+      {
+        month: 900,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0,
+      } as ProjectionMonth);
+  });
+
+  it("should return expected results when state pension is true and amount is more than 0", async () => {
+    // Arrange
+    const inbountPayload = {
+      timeHorizon: 900,
+      preGoalRiskModel: "TAA1",
+      monthlyContributions: 624,
+      portfolioCurrentValue: 250000,
+      desiredMonthlyDrawdown: 700,
+      drawdownStartDate: "2055-04-10",
+      drawdownEndDate: "2076-04-10",
+      upfrontContribution: 0,
+      preGoalExpectedReturn: 0.043,
+      preGoalExpectedVolatility: 0.1637,
+      preGoalZScoreLowerBound: -1.350641417,
+      preGoalZScoreUpperBound: 1.26511912,
+      feesPercentage: 0.004,
+      postGoalRiskModel: "TAA3",
+      lumpSumAmount: 0.10,
+      statePensionAmount: 10000,
+      desiredAmount: 0,
+      postGoalExpectedReturn: 0.0298,
+      postGoalExpectedVolatility: 0.0927,
+      postGoalZScoreLowerBound: -1.297734628,
+      postGoalZScoreUpperBound: 1.284789644,
+      netContribution: 1000,
+      isConeGraph: true,
+      includeStatePension: true
+    } as RequestPayload;
+
+    // Action
+    const result = getCurrentProjection(inbountPayload, new Date("June 10,2021"));
+
+    // Assertion
+    //first row
+    expect(result.projectedGoalAgeTotal).toEqual(1424658.9051612173);
+    expect(result.possibleDrawdown).toEqual(7270.127009539294);
+    expect(result.possibleDrawdownWithSP).toEqual(8103.460342872627);
+    expect(result.projectedGoalAgeTotalWhenMarketUnderperform).toEqual(987349.9562431246);
+    expect(result.possibleDrawdownWhenMarketUnderperform).toEqual(4552.9466918780145);
+    expect(result.possibleDrawdownWhenMarketUnderperformWithSP).toEqual(5386.2800252113475);
+
+    expect(result.projections[0]).toEqual(
+      {
+        month: 0,
+        contributionLine: 1000,
+        lowerBound: 250000,
+        projectedValue: 250000,
+        upperBound: 250000
+      } as ProjectionMonth);
+
+    expect(result.projections[1]).toEqual(
+      {
+        contributionLine: 1624,
+        lowerBound: 235465.81038991973,
+        month: 1,
+        projectedValue: 251422.32845197053,
+        upperBound: 266368.48354157555
+      } as ProjectionMonth);
+
+    //when drawdown start
+    expect(result.projections[405]).toEqual({
+      contributionLine: 245825.7729904607,
+      lowerBound: 976860.5008847989,
+      month: 405,
+      projectedValue: 1415905.467607209,
+      upperBound: 1817483.491736571
+    } as ProjectionMonth);
+
+    expect(result.projections.length).toEqual(901);
+
+    expect(result.projections[806]).toEqual(
+      {
+        month: 806,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0,
+      } as ProjectionMonth);
+
+    expect(result.projections[898]).toEqual(
+      {
+        month: 898,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0
+      } as ProjectionMonth);
+
+    expect(result.projections[900]).toEqual(
+      {
+        month: 900,
+        upperBound: 0,
+        lowerBound: 0,
+        contributionLine: 0,
+        projectedValue: 0,
+      } as ProjectionMonth);
+  });
+
 })
 
+describe("tests for calculateDrawdown function", () => {
+  it("should return exepected value when statepension is false", () => {
+    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
+    const goalContributingPeriod = 404;
+    const portfolioCurrentValue = 250000;
+    const upfrontContribution = 0;
+    const monthlyContributions = 624;
+    const remainingAmount = 0;
+    const lumpSumAmount = 0.1;
+    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
+    const goalDrawdownPeriod = 253;
+    const includeStatePension = false;
+    const statePensionAmount = 0;
+    expect(
+      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, includeStatePension, statePensionAmount))
+      .toEqual(
+        {
+          possibleDrawdownsp: 7243.810933644129,
+          possibleDrawdown: 7243.810933644129,
+          projectedGoalAgeTotal: 1419501.989856692,
+          remainingAmountAtGoalAge: 0
+        } as Drawdown);
+  });
+
+  it("should return exepected value when statepension is true with zero state pension amount", () => {
+    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
+    const goalContributingPeriod = 404;
+    const portfolioCurrentValue = 250000;
+    const upfrontContribution = 0;
+    const monthlyContributions = 624;
+    const remainingAmount = 0;
+    const lumpSumAmount = 0.1;
+    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
+    const goalDrawdownPeriod = 253;
+    const includeStatePension = true;
+    const statePensionAmount = 0;
+    expect(
+      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, includeStatePension, statePensionAmount))
+      .toEqual(
+        {
+          possibleDrawdownsp: 7243.810933644129,
+          possibleDrawdown: 7243.810933644129,
+          projectedGoalAgeTotal: 1419501.989856692,
+          remainingAmountAtGoalAge: 0
+        } as Drawdown);
+  });
+
+  it("should return exepected value when statepension is true with state pension amount more than zero", () => {
+    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
+    const goalContributingPeriod = 404;
+    const portfolioCurrentValue = 250000;
+    const upfrontContribution = 0;
+    const monthlyContributions = 624;
+    const remainingAmount = 0;
+    const lumpSumAmount = 0.1;
+    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
+    const goalDrawdownPeriod = 253;
+    const includeStatePension = true;
+    const statePensionAmount = 10000;
+    expect(
+      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, includeStatePension, statePensionAmount))
+      .toEqual(
+        {
+          possibleDrawdownsp: 8077.144266977462,
+          possibleDrawdown: 7243.810933644129,
+          projectedGoalAgeTotal: 1419501.989856692,
+          remainingAmountAtGoalAge: 0
+        } as Drawdown);
+  });
+
+
+
+});
 describe("tests for monthDiff function", () => {
   it("should return months difference for given dates", () => {
     expect(
