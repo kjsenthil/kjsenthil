@@ -15,6 +15,12 @@ variable "projections_function_app_code_path" {
   description = "Path to the function app code."
 }
 
+variable "features_function_app_code_path" {
+  type        = string
+  default     = "./zips/features.zip"
+  description = "Path to the function app code."
+}
+
 variable "app_name" {
   type        = string
   default     = "digital-hybrid"

@@ -38,3 +38,6 @@ output "myaccounts_home_url" {
   description = "My Accounts Home Page"
 }
 
+output "app_conf_keys" {
+  value = azurerm_app_configuration.app_config.primary_read_key
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noEmit": false,
+    "outDir": "dist"
+  },
+  "files": [
+    "get-all/index.ts",
+    "get-all/function.json",
+    "shared-code/http.ts",
+    "shared-code/utils.ts",
+    "shared-code/types.ts"
+  ]
+}

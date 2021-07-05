@@ -9,6 +9,7 @@
     "packages/utils/test",
     "packages/utils/tracking",
     "packages/function-apps/projections",
+    "packages/function-apps/features",
     "packages/testing/selenium",
     "packages/testing/apitest"
   ],
@@ -20,6 +21,7 @@
     "all:lint": "yarn workspaces foreach -ptv run lint",
     "all:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "all:test:e2e": "yarn workspaces foreach -ptv run test:e2e",
+    "all:fa:install": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run install-only",
     "all:fa:build": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build",
     "all:fa:build:zip": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build:zip",
     "all:fa:copy-zip": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run copy-zip",

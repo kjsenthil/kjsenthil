@@ -53,3 +53,9 @@ variable "app_insights_instrumentation_key" {
   type        = string
   description = "Application insights instrumentation key"
 }
+
+variable "app_settings" {
+  type        = map(string)
+  default     = {}
+  description = "Custom app settings to apply to the function app"
+}
