@@ -23,9 +23,9 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            ::set-output name=branch-prefix::$(echo ${{ github.head_ref }} | md5sum | awk '{print tolower(substr( $0, 1, 7))}')
+            echo ::set-output name=branch-prefix::$(echo ${{ github.head_ref }} | md5sum | awk '{print tolower(substr( $0, 1, 7))}')
           else
-            ::set-output name=branch-prefix::$(echo ${{ github.event.inputs.branch-prefix }})
+            echo ::set-output name=branch-prefix::$(echo ${{ github.event.inputs.branch-prefix }})
           fi
 
       - name: "Print environment prefix"
