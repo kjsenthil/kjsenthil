@@ -20,7 +20,7 @@ export const mockAccountsTableHeader: AccountsHeaderCell[] = [
     value: 'CASH',
   },
   {
-    value: 'TOTAL RETURN',
+    value: 'LIFETIME RETURN',
     tooltip:
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
   },

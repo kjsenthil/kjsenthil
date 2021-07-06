@@ -1,12 +1,15 @@
 import React from 'react';
 import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { Grid, Icon, IconButton, Spacer, Tooltip, Typography } from '../../atoms';
+import { Grid, IconButton, Spacer, Tooltip, Typography } from '../../atoms';
 import {
+  AccountReturn,
   AccountsTableCell,
   AccountsTableFooter,
   AccountsTableHead,
   AccountsTableHeaderInfo,
+  AccountsTableRow,
+  StyledActionIcon,
 } from './AccountsTable.styles';
 import { Breakdown } from '../../../services/myAccount';
 
@@ -51,21 +54,21 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
       <TableBody>
         {dataRow &&
           dataRow.map((row: Breakdown) => (
-            <TableRow key={row.id}>
+            <AccountsTableRow key={row.id}>
               <AccountsTableCell>
-                <Typography variant="sh4">{row.accountName}</Typography>
+                <Typography variant="sh3">{row.accountName}</Typography>
               </AccountsTableCell>
 
               {row.accountTotalHoldings !== undefined && (
                 <AccountsTableCell>
-                  <Typography variant="b2" color="primary">
+                  <Typography variant="b2" color="primary" colorShade="dark2">
                     {formatCurrency(row.accountTotalHoldings)}
                   </Typography>
                 </AccountsTableCell>
               )}
 
               <AccountsTableCell>
-                <Typography variant="b2" color="primary">
+                <Typography variant="b2" color="primary" colorShade="dark2">
                   {formatCurrency(row.accountTotalContribution)}
                 </Typography>
               </AccountsTableCell>
@@ -73,7 +76,7 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
               {row.accountCash !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
-                    <Typography variant="b2" color="primary">
+                    <Typography variant="b2" color="primary" colorShade="dark2">
                       {formatCurrency(row.accountCash)}
                     </Typography>
                   </Grid>
@@ -83,7 +86,7 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
               {row.monthlyInvestment !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
-                    <Typography variant="b2" color="secondary">
+                    <Typography variant="b2" color="secondary" colorShade="dark2">
                       {formatCurrency(row.monthlyInvestment)}
                     </Typography>
                   </Grid>
@@ -91,30 +94,25 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
               )}
 
               {row.accountReturn !== undefined && (
-                <AccountsTableCell align="right">
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="b2" color="primary" display="inline">
-                        {formatCurrency(row.accountReturn, { displayPlus: true })}
-                      </Typography>
-                    </Grid>
+                <AccountsTableCell>
+                  <AccountReturn>
+                    <Typography variant="b2" color="primary" colorShade="dark2" noWrap>
+                      {formatCurrency(row.accountReturn, { displayPlus: true })}
+                    </Typography>
+
                     {row.accountReturnPercentage !== undefined && (
                       <>
-                        <Grid item xs={12} md={3}>
-                          <TagBox variant="percentage">
-                            {formatPercent(row.accountReturnPercentage / 100)}
-                          </TagBox>
-                        </Grid>
-
-                        <Grid item xs={12} md={2}>
-                          <Icon color="primary" name="arrowHeadRight" />
-                        </Grid>
+                        <Spacer x={2} />
+                        <TagBox variant="percentage" formatter={formatPercent}>
+                          {row.accountReturnPercentage / 100}
+                        </TagBox>
+                        <StyledActionIcon color="primary" name="arrowHeadRight" />
                       </>
                     )}
-                  </Grid>
+                  </AccountReturn>
                 </AccountsTableCell>
               )}
-            </TableRow>
+            </AccountsTableRow>
           ))}
       </TableBody>
       {footerRow && (

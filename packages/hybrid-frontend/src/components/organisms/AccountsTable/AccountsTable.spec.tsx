@@ -15,7 +15,7 @@ describe('AccountsTable', () => {
     const headerCell2Text = screen.getByText('TOTAL HOLDINGS');
     const headerCell3Text = screen.getByText('TOTAL CONTRIBUTIONS');
     const headerCell4Text = screen.getByText('CASH');
-    const headerCell5Text = screen.getByText('TOTAL RETURN');
+    const headerCell5Text = screen.getByText('LIFETIME RETURN');
 
     const rowCell1Text = screen.getByText(mockAccountsTableData[0].accountName || '');
     const rowCell2Text = screen.getByText('£38,382.29');

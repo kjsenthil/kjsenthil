@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import { Box, Button, Grid, Spacer, Typography } from '../../atoms';
+import { Box, Button, Grid, Icon, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import SummaryPanel from '../../organisms/SummaryPanel/SummaryPanel';
 import MainCard from '../../molecules/MainCard';
@@ -23,6 +23,7 @@ import {
 } from '../../../hooks';
 import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
+import { DisabledComponent } from '../../molecules';
 
 const BIAccountsPage = () => {
   const {
@@ -110,11 +111,14 @@ const BIAccountsPage = () => {
             <MainCard
               title="Your Accounts"
               renderActionEl={() => (
-                <Button variant="outlined" disabled>
-                  Open New Account
-                </Button>
+                <DisabledComponent arrow placement="top" title="Coming soon">
+                  <Button variant="outlined" startIcon={<Icon name="plus" />}>
+                    Open an account
+                  </Button>
+                </DisabledComponent>
               )}
             >
+              <Spacer y={2.5} />
               <AccountsTable headerRow={mockAccountsTableHeader} dataRow={accountsTableData} />
             </MainCard>
           </Grid>
@@ -125,11 +129,14 @@ const BIAccountsPage = () => {
             <MainCard
               title="Linked Accounts"
               renderActionEl={() => (
-                <Button variant="outlined" disabled>
-                  Link An Account
-                </Button>
+                <DisabledComponent arrow placement="top" title="Coming soon">
+                  <Button variant="outlined" startIcon={<Icon name="plus" />}>
+                    Link an account
+                  </Button>
+                </DisabledComponent>
               )}
             >
+              <Spacer y={2.5} />
               <AccountsTable
                 headerRow={mockAccountsTableHeader}
                 dataRow={linkedAccountsTableData}
