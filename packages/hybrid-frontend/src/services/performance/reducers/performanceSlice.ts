@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetPerformanceContactResponse, PerformanceState } from '../types';
-import { fetchPerformanceContact } from '../thunks';
+import { GetPerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
+import { fetchPerformanceAccountsAggregated } from '../thunks';
 import { PerformanceDataPeriod } from '../constants';
 import { commonActionReducerMapBuilder } from '../../utils';
 
@@ -17,14 +17,15 @@ const performanceSlice = createSlice({
       state.performanceDataPeriod = action.payload;
     },
   },
-  extraReducers: commonActionReducerMapBuilder<GetPerformanceContactResponse, PerformanceState>(
-    fetchPerformanceContact
-  ),
+  extraReducers: commonActionReducerMapBuilder<
+    GetPerformanceAccountsAggregatedResponse,
+    PerformanceState
+  >(fetchPerformanceAccountsAggregated),
 });
 
 const performanceReducer = performanceSlice.reducer;
 
-export { fetchPerformanceContact };
+export { fetchPerformanceAccountsAggregated };
 export const { setPerformanceDataPeriod } = performanceSlice.actions;
 
 export default performanceReducer;

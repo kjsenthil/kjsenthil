@@ -11,7 +11,7 @@ import AccountsTable from '../../organisms/AccountsTable';
 import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
-  fetchPerformanceContact,
+  fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
   PerformanceDataPeriod,
 } from '../../../services/performance';
@@ -39,7 +39,7 @@ const BIAccountsPage = () => {
   const performanceChartDimension = usePerformanceChartDimension();
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
 
-  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceAccountsAggregated());
   const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
     dispatchGetPerformanceContact,
     performanceStatus,

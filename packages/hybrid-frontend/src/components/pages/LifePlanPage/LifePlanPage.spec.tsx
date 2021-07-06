@@ -4,8 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import LifePlanPage from './LifePlanPage';
 import { mockClientResponse, mockInvestSummaryResponse } from '../../../services/myAccount/mocks';
 import mockCurrentGoalsResponse from '../../../services/goal/mocks/get-goals-success-response.json';
-import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-contact-sucess-response-simple.json';
-import { PerformanceDataPeriod } from '../../../services/performance/constants';
+import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import { PerformanceDataPeriod } from '../../../services/performance';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,

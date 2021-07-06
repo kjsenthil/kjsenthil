@@ -1,0 +1,64 @@
+{
+  "data": {
+    "type": "performance-accounts-aggregated",
+    "id": null,
+    "attributes": {
+      "accountValue": 9489.37,
+      "performance": {
+        "value": 4582.13,
+        "percentage": 93.56
+      },
+      "values": [
+        {
+          "date": "2016-05-13T00:00:00",
+          "value": 5332.55
+        },
+        {
+          "date": "2016-05-16T00:00:00",
+          "value": 5332.37
+        },
+        {
+          "date": "2016-05-17T00:00:00",
+          "value": 5323.12
+        }
+      ]
+    },
+    "links": null,
+    "relationships": {
+      "netcontribution-accounts-aggregated": {
+        "links": {
+          "related": "https://myaccountsapi.demo2.bestinvest.co.uk/api/performance-accounts-aggregated//netcontribution-accounts-aggregated"
+        },
+        "data": {
+          "type": "netcontribution-accounts-aggregated",
+          "id": null
+        }
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "netcontribution-accounts-aggregated",
+      "id": null,
+      "attributes": {
+        "totalContributions": 4.480,
+        "netContributions": [
+          {
+            "date": "2016-05-13T00:00:00",
+            "netContributionsToDate": 5036.580
+          },
+          {
+            "date": "2016-05-16T00:00:00",
+            "netContributionsToDate": 5036.580
+          },
+          {
+            "date": "2016-05-17T00:00:00",
+            "netContributionsToDate": 5036.580
+          }
+        ]
+      },
+      "links": null,
+      "relationships": null
+    }
+  ]
+}

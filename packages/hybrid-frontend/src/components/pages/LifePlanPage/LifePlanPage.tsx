@@ -29,7 +29,7 @@ import usePerformanceProjectionsChartDimension from '../../organisms/Performance
 import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
 import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import { calculateDateAfterYears } from '../../../utils/date';
-import { fetchPerformanceContact } from '../../../services/performance';
+import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
 import { fetchSimulatedProjections } from '../../../services/projections';
 
@@ -93,7 +93,7 @@ const LifePlanPage = () => {
 
   useDispatchThunkOnRender(
     () => {
-      dispatch(fetchPerformanceContact());
+      dispatch(fetchPerformanceAccountsAggregated());
     },
     performanceStatus,
     {

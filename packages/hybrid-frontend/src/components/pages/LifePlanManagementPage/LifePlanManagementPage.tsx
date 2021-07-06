@@ -36,7 +36,7 @@ import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
 import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
-import { fetchPerformanceContact } from '../../../services/performance';
+import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { useProjectionsChartData, useDispatchThunkOnRender } from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 
@@ -152,7 +152,7 @@ const LifePlanManagementPage = () => {
     },
   });
 
-  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceContact());
+  const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceAccountsAggregated());
 
   useDispatchThunkOnRender(dispatchGetPerformanceContact, performanceStatus, {
     enabled: !!projectionsData.projectionsData,

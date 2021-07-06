@@ -9,7 +9,10 @@ import { MyAccountLayout } from '../../templates';
 import { ChartPeriodSelection, Legend, MainCard } from '../../molecules';
 import { PerformanceSimplifiedChart, GoalMainCardPlaceholder } from '../../organisms';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { fetchPerformanceContact, setPerformanceDataPeriod } from '../../../services/performance';
+import {
+  fetchPerformanceAccountsAggregated,
+  setPerformanceDataPeriod,
+} from '../../../services/performance';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { RootState } from '../../../store';
 import {
@@ -18,7 +21,7 @@ import {
   usePerformanceData,
   useContributionsData,
 } from '../../../hooks';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks/usePerformanceChartDimension';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 
 import { FeatureToggle } from '../../particles';
 import { FeatureFlagNames } from '../../../constants';
@@ -35,6 +38,7 @@ export enum PerformanceDataPeriod {
 
 const HomePage = () => {
   const {
+    client: { included },
     performance: { performanceDataPeriod, error: performanceError },
   } = useSelector((state: RootState) => state);
 
@@ -44,10 +48,16 @@ const HomePage = () => {
     dispatch(setPerformanceDataPeriod(period));
   };
 
+  // This is used to ensure we only fetch performance data at appropriate times
+  const accountIdsJoined =
+    included?.map(({ attributes: { accountId } }) => accountId).join(',') ?? '';
+
   React.useEffect(() => {
-    dispatch(fetchPerformanceContact());
-    setDataPeriod(PerformanceDataPeriod['5Y']);
-  }, []);
+    if (accountIdsJoined) {
+      dispatch(fetchPerformanceAccountsAggregated());
+      setDataPeriod(PerformanceDataPeriod['5Y']);
+    }
+  }, [accountIdsJoined]);
 
   const images = useGoalImages();
 

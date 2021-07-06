@@ -2,13 +2,15 @@ import { ReducersMapObject } from 'redux';
 import * as api from '../api';
 import getStoreAndStateHistory from '../utils/getStoreAndStateHistory';
 import performanceReducer, {
-  fetchPerformanceContact,
+  fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
 } from './performanceSlice';
 import { PerformanceDataPeriod } from '../constants';
-import { GetPerformanceContactResponse, PerformanceState } from '../types';
-import mockGetPerformanceResponse from '../mocks/mock-get-performance-contact-sucess-response-simple.json';
+import { GetPerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
+import mockGetPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import { AuthState } from '../../auth';
+import { ClientState } from '../../myAccount';
+import { DeepPartial } from '../../../utils/common';
 
 jest.mock('../api');
 
@@ -16,8 +18,8 @@ type StateMap = { auth: AuthState; performance: PerformanceState };
 
 function getPerformanceStoreAndStateHistory() {
   return getStoreAndStateHistory<StateMap, ReducersMapObject>({
-    auth: () => ({
-      contactId: 12345678,
+    client: (): DeepPartial<ClientState> => ({
+      included: [{ attributes: { accountId: 12345678 } }],
     }),
     performance: performanceReducer,
   });
@@ -48,12 +50,14 @@ describe('performanceSlice', () => {
     expect(performanceDataPeriod).toBe(PerformanceDataPeriod['5Y']);
   });
 
-  describe('fetchPerformanceContact action', () => {
-    const fetchPerformanceAction = fetchPerformanceContact();
+  describe('fetch performance data action', () => {
+    const fetchPerformanceAction = fetchPerformanceAccountsAggregated();
 
     describe('network fetch success case', () => {
       it('performs the network fetch and store states as expected', async () => {
-        (api.getPerformanceContact as jest.Mock).mockResolvedValue(mockGetPerformanceResponse);
+        (api.getPerformanceAccountsAggregated as jest.Mock).mockResolvedValue(
+          mockGetPerformanceAccountsAggregatedResponse
+        );
 
         const expectedStates: Array<PerformanceState> = [
           // This state is the result of the 'pending' action
@@ -67,8 +71,8 @@ describe('performanceSlice', () => {
 
           // This state is the result of the 'success' action
           {
-            data: mockGetPerformanceResponse.data as GetPerformanceContactResponse['data'],
-            included: mockGetPerformanceResponse.included as GetPerformanceContactResponse['included'],
+            data: mockGetPerformanceAccountsAggregatedResponse.data as GetPerformanceAccountsAggregatedResponse['data'],
+            included: mockGetPerformanceAccountsAggregatedResponse.included as GetPerformanceAccountsAggregatedResponse['included'],
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
             error: undefined,
             status: 'success',
@@ -85,7 +89,7 @@ describe('performanceSlice', () => {
     describe('network fetch failure case', () => {
       it('performs the network fetch and store states as expected', async () => {
         const mockError = new Error(`Some error`);
-        (api.getPerformanceContact as jest.Mock).mockRejectedValue(mockError);
+        (api.getPerformanceAccountsAggregated as jest.Mock).mockRejectedValue(mockError);
 
         const expectedStates: Array<PerformanceState> = [
           // This state is the result of the 'pending' action

@@ -46,8 +46,8 @@ export interface GetPerformanceContactResponse {
 
 export interface PerformanceState
   extends CommonState<
-    GetPerformanceContactResponse['data'],
-    GetPerformanceContactResponse['included']
+    GetPerformanceAccountsAggregatedResponse['data'],
+    GetPerformanceAccountsAggregatedResponse['included']
   > {
   performanceDataPeriod: string;
 }
@@ -55,4 +55,41 @@ export interface PerformanceState
 export interface ProjectionsChartHistoricalDatum extends TimeSeriesDatum {
   netContributionsToDate: number;
   metadata?: Record<string, unknown>;
+}
+
+export interface GetPerformanceAccountsAggregatedResponse {
+  data: {
+    type: 'performance-accounts-aggregated';
+    id: string | null;
+    attributes: {
+      accountValue: number;
+      performance: {
+        value: number;
+        percentage: number;
+      };
+      values: Array<{ date: string; value: number }>;
+    };
+    links: string | null;
+    relationships: {
+      'netcontribution-accounts-aggregated': {
+        links: {
+          related: string;
+        };
+        data: {
+          type: 'netcontribution-accounts-aggregated';
+          id: string | null;
+        };
+      };
+    };
+  };
+  included: Array<{
+    type: 'netcontribution-accounts-aggregated';
+    id: string | null;
+    attributes: {
+      totalContributions: number;
+      netContributions: Array<{ date: string; netContributionsToDate: number }>;
+    };
+    links: string | null;
+    relationships: null;
+  }>;
 }
