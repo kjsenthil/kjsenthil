@@ -55,6 +55,7 @@ export const StyledDialogContent = styled(DialogContent)`
     padding-right: ${theme.spacing(1)}px;
     margin-right: ${theme.spacing(3.5)}px;
     margin-bottom: ${theme.spacing(4)}px;
+    max-height: ${theme.spacing(23)}px;
     
     .MuiDialogContent-dividers {
         padding-right: ${theme.spacing(1)}px;

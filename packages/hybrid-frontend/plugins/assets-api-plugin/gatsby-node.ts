@@ -8,17 +8,8 @@ import {
   GetStandingDataResponse,
 } from './types';
 
-const api = axios.create({ baseURL: API_BASE_URL });
-
 // print a success message if the plugin loads
 export const onPreInit = () => console.log('\x1b[32m%s\x1b', 'success loaded assets-api-plugin');
-
-const getAssetAllocation = async (sedol: string): Promise<AssetAllocation[]> => {
-  const path = API_ENDPOINTS.GET_ASSET_ALLOCATION_BREAKDOWN.replace(/\{sedol\}/, sedol);
-  const response: AxiosResponse<AssetAllocationResponse> = await api.get(path);
-
-  return response.data[0].assetallocation;
-};
 
 export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   actions,
@@ -26,6 +17,15 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   createNodeId,
 }: SourceNodesArgs) => {
   const { createNode } = actions;
+
+  const api = axios.create({ baseURL: API_BASE_URL });
+
+  const getAssetAllocation = async (sedol: string): Promise<AssetAllocation[]> => {
+    const path = API_ENDPOINTS.GET_ASSET_ALLOCATION_BREAKDOWN.replace(/\{sedol\}/, sedol);
+    const response: AxiosResponse<AssetAllocationResponse> = await api.get(path);
+
+    return response.data[0].assetallocation;
+  };
 
   try {
     const response: AxiosResponse<GetStandingDataResponse> = await api.get(
