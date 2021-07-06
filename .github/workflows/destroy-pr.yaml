@@ -29,7 +29,6 @@ jobs:
           fi
 
       - name: "Print environment prefix"
-        id: derive-prefix
         shell: bash
         run: echo "Branch prefix ${{ steps.derive-prefix.outputs.branch-prefix }} will be used to destroy resources"
 
