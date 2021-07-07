@@ -1,0 +1,23 @@
+{
+  "name": "@tsw/wdio-mock-ui",
+  "version": "1.0.0",
+  "description": "Runs webdriver io mock ui tests",
+  "scripts": {
+    "test:ui": "npx wdio run ./wdio.conf.ts"
+  },
+  "dependencies": {
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@types/chai": "^4.2.19",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@wdio/cli": "^7.7.4",
+    "@wdio/local-runner": "^7.7.4",
+    "@wdio/mocha-framework": "^7.7.4",
+    "@wdio/spec-reporter": "^7.7.3",
+    "chai": "^4.3.4",
+    "chromedriver": "^91.0.1",
+    "ts-node": "^10.0.0",
+    "wdio-chromedriver-service": "^7.1.0",
+    "webdriverio": "^7.7.4"
+  }
+}

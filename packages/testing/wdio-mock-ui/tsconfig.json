@@ -1,0 +1,14 @@
+{
+  "compileOnSave": true,
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": [
+      "node",
+      "@wdio/mocha-framework"
+    ]
+  },
+  "include": [
+    "test/**/**/*.ts"
+  ]
+}

@@ -654,75 +654,54 @@ jobs:
   #         inlineScript: |
   #           az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
-  #  Temporarily disabled until tests can be fixed to not fail intermittently
-  #
-  #  end_to_end_test:
-  #    name: "E2E test"
-  #    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
-  #    environment: development
-  #    runs-on: ubuntu-latest
-  #    needs:
-  #      - detect_changes
-  #      - build_cache
-  #      - get_pr_terraform_outputs
-  #      - clear_storybook_storage_account
-  #      - deploy_gatsby
-  #    strategy:
-  #      matrix:
-  #        browser: [chrome,firefox]
-  #    steps:
-  #      - name: "Checkout"
-  #        uses: actions/checkout@v2
-  #
-  #      - name: "Use Node.js 14.x"
-  #        uses: actions/setup-node@v1
-  #        with:
-  #          node-version: 14.x
-  #
-  #      - name: "Get yarn cache"
-  #        uses: actions/cache@v2
-  #        with:
-  #          key: ${{ needs.build_cache.outputs.key }}
-  #          path: ${{ needs.build_cache.outputs.yarn-path }}
-  #          restore-keys: |
-  #            ${{ runner.os }}-yarn-
-  #
-  #      - name: "Get node modules cache"
-  #        uses: actions/cache@v2
-  #        with:
-  #          key: ${{ needs.build_cache.outputs.key }}
-  #          path: ${{ needs.build_cache.outputs.modules-path }}
-  #          restore-keys: |
-  #            ${{ runner.os }}-modules-
-  #
-  #      - name: "Update webdriver-manager"
-  #        run: npx webdriver-manager update
-  #
-  #      - name: "Run E2E UI tests"
-  #        run : yarn test:e2e
-  #        env :
-  #             BROWSER: ${{matrix.browser}}
-  #             URL: ${{ needs.deploy_gatsby.outputs.url }}
-  #             JEST_HTML_REPORTERS_FILE_NAME: TestReport_${{matrix.browser}}.html
-  #             JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
-  #             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-  #             XPLAN_APP_ID : ${{ secrets.XPLAN_APP_ID }}
-  #             XPLAN_USERNAME: ${{ secrets.XPLAN_USERNAME }}
-  #             XPLAN_PASSWORD: ${{ secrets.XPLAN_PASSWORD }}
-  #
-  #      - name: "Login to Azure"
-  #        if: always()
-  #        uses: Azure/login@v1
-  #        with:
-  #          creds: ${{ secrets.AZURE_CREDENTIALS }}
-  #
-  #      - name: "Deploy Selenium Reports"
-  #        if: always()
-  #        uses: azure/CLI@v1
-  #        with:
-  #          azcliversion: latest
-  #          inlineScript: |
-  #                az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/selenium/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+  wdio_ui_test:
+   name: "wdio mock ui test"
+   if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+   environment: development
+   runs-on: ubuntu-latest
+   needs:
+     - detect_changes
+     - build_cache
+     - get_pr_terraform_outputs
+     - clear_storybook_storage_account
+     - deploy_gatsby
+   strategy:
+     matrix:
+       browser: [chrome]
+   steps:
+     - name: "Checkout"
+       uses: actions/checkout@v2
+
+     - name: "Use Node.js 14.x"
+       uses: actions/setup-node@v1
+       with:
+         node-version: 14.x
+
+     - name: "Get yarn cache"
+       uses: actions/cache@v2
+       with:
+         key: ${{ needs.build_cache.outputs.key }}
+         path: ${{ needs.build_cache.outputs.yarn-path }}
+         restore-keys: |
+           ${{ runner.os }}-yarn-
+
+     - name: "Get node modules cache"
+       uses: actions/cache@v2
+       with:
+         key: ${{ needs.build_cache.outputs.key }}
+         path: ${{ needs.build_cache.outputs.modules-path }}
+         restore-keys: |
+           ${{ runner.os }}-modules-
+
+     - name: "Update webdriver-manager"
+       run: npx webdriver-manager update
+
+     - name: "Run wdio mock UI tests"
+       run : yarn test:mock-ui
+       env :
+            BROWSER: ${{matrix.browser}}
+            URL: ${{ needs.deploy_gatsby.outputs.url }}
+            API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -1249,8 +1228,6 @@ jobs:
             **Unit Test Coverage Report:** [${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html)
             **Unit Test Report:** [${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html)
             **API Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html](${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html)
-            **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_chrome.html)
-            **E2E Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html](${{ needs.deploy_storybook.outputs.url }}/reports/TestReport_firefox.html)
 
             #### Review URLs
             **Storybook:** [${{ needs.deploy_storybook.outputs.url }}](${{ needs.deploy_storybook.outputs.url }})

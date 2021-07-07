@@ -1,0 +1,13 @@
+import { pageHeading, simpleMenu, logOut } from './myaccount.locators'
+
+export const getPageHeading = async () => {
+    await (await pageHeading()).waitForExist({ timeout: 5000 });
+    await (await pageHeading()).waitForDisplayed({ timeout: 5000 });
+    return await (await pageHeading()).getText()}
+
+export const logout = async () => {
+    await (await simpleMenu()).click()
+    await (await logOut()).waitForExist({ timeout: 3000 })
+    await (await logOut()).waitForDisplayed({ timeout: 3000 });
+    await (await logOut()).click()
+}
