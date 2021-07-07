@@ -40,7 +40,7 @@ export default function TypographyWithTooltip({
   spacerProps,
 }: TypographyWithTooltipProps) {
   return (
-    <Typography {...typographyProps}>
+    <Typography {...typographyProps} component="div">
       {children}
       <Spacer x={tooltipSpace} inline {...spacerProps} />
       <Tooltip title={tooltip} {...tooltipProps}>

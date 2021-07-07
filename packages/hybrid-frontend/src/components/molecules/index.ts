@@ -1,6 +1,8 @@
 /* custom molecules */
 import ChartPeriodSelection, { ChartPeriodSelectionProps } from './ChartPeriodSelection';
 import { TypographyWithTooltipProps } from './TypographyWithTooltip';
+import Legend, { LegendProps } from './Legend';
+import ProgressBarWithLegend, { ProgressBarWithLegendProps } from './ProgressBarWithLegend';
 
 export { default as SliderWithInput } from './SliderWithInput';
 export { default as Alert } from './Alert';
@@ -11,7 +13,6 @@ export { default as GoalProgress } from './GoalProgress';
 export { default as MainCard } from './MainCard';
 export { default as StepCard } from './StepCard';
 export { default as TagBox } from './TagBox';
-export { default as Legend } from './Legend';
 export { default as Modal } from './Modal';
 export { default as DisabledComponent } from './DisabledComponent';
 export { default as RadioGroup } from './RadioGroup';
@@ -30,5 +31,10 @@ export {
   TableFooter,
 } from '@material-ui/core';
 
-export type { ChartPeriodSelectionProps, TypographyWithTooltipProps };
-export { ChartPeriodSelection };
+export type {
+  ChartPeriodSelectionProps,
+  TypographyWithTooltipProps,
+  LegendProps,
+  ProgressBarWithLegendProps,
+};
+export { ChartPeriodSelection, Legend, ProgressBarWithLegend };

@@ -80,6 +80,6 @@ export const ProgressBarInnerBorder = styled.div`
     height: 100%;
     width: 100%;
     border-radius: ${borderRadius}px;
-    border: ${isMultiValue ? `1px dashed ${theme.palette.gold.main}` : 0};
+    border: ${isMultiValue ? `2px dashed ${theme.palette.gold.main}` : 0};
   `}
 `;

@@ -1,2 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-export { default } from './Legend';
+import Legend, { LegendProps } from './Legend';
+
+export type { LegendProps };
+export default Legend;

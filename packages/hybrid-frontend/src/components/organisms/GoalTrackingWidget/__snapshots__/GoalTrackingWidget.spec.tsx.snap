@@ -1,0 +1,620 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GoalTrackingCardContent  matches snapshot 1`] = `
+Object {
+  "result": Object {
+    "asFragment": [Function],
+    "baseElement": <body>
+      <div>
+        <div
+          class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+        >
+          <div
+            class="MuiCardContent-root sc-iNGGwv hqFhNQ"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-colorSecondary"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+                  >
+                    <div
+                      class="MuiBox-root MuiBox-root-1"
+                      data-testid="Spacer"
+                    />
+                    <h3
+                      class="MuiTypography-root sc-jrQzUz bsiRAM MuiTypography-body1"
+                    >
+                      £1,172,000.00
+                    </h3>
+                    <span>
+                        /  
+                    </span>
+                    <h6
+                      class="MuiTypography-root sc-jrQzUz JxYho MuiTypography-body1"
+                    >
+                      £1,227,000.00
+                    </h6>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-2"
+                    data-testid="Spacer"
+                  />
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+                  >
+                    <div
+                      class="MuiBox-root MuiBox-root-3"
+                      data-testid="Spacer"
+                    />
+                    <div
+                      class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
+                    >
+                      You're on track to have 
+                      72%
+                       of your target. That's a short fall of
+                       
+                      £55,000.00
+                      .
+                      <div
+                        class="MuiBox-root MuiBox-root-4"
+                        data-testid="Spacer"
+                      />
+                      <span
+                        class="sc-khQdMy cyZWup"
+                        title="Some description"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="more information"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-5"
+                    data-testid="Spacer"
+                  />
+                  <div
+                    aria-valuenow="75"
+                    class="sc-iCfLBT fLrhme"
+                    role="progressbar"
+                  >
+                    <div
+                      class="sc-pVTma kWowoK"
+                    />
+                    <div
+                      class="sc-furvIG eUDfdF"
+                    />
+                    <div
+                      class="sc-furvIG kDqjiJ"
+                    />
+                    <div
+                      class="sc-furvIG jaMmSV"
+                    />
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-6"
+                    data-testid="Spacer"
+                  />
+                  <div
+                    class="sc-bYoCmx dkdDhY"
+                  >
+                    <div
+                      class="sc-kLwgWK iXguKH"
+                      width="20"
+                    >
+                      <div
+                        class="sc-kfPtPH koNvvv"
+                      >
+                        <div>
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                          >
+                            LUMP SUM
+                          </h6>
+                          <div
+                            class="sc-fKVsgm jyioak"
+                          >
+                            <h6
+                              class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                            >
+                              £20,000.00
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="sc-kLwgWK eoChNo"
+                      width="50"
+                    >
+                      <div
+                        class="sc-kfPtPH koNvvv"
+                      >
+                        <div>
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                          >
+                            FROM AGE 67 - 89
+                          </h6>
+                          <div
+                            class="sc-fKVsgm jyioak"
+                          >
+                            <h6
+                              class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                            >
+                              £1,080,000.00
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="sc-kLwgWK bmQECt"
+                      width="5"
+                    >
+                      <div
+                        class="sc-kfPtPH koNvvv"
+                      >
+                        <div>
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                          >
+                            REMAINING
+                          </h6>
+                          <div
+                            class="sc-fKVsgm jyioak"
+                          >
+                            <h6
+                              class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                            >
+                              £72,000.00
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-7"
+                data-testid="Spacer"
+              />
+              <div
+                class="MuiBox-root MuiBox-root-8"
+                data-testid="Spacer"
+              >
+                <div
+                  class="sc-iqsfdx YcysP"
+                />
+              </div>
+              <div
+                class="MuiBox-root MuiBox-root-9"
+                data-testid="Spacer"
+              />
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiBox-root MuiBox-root-10"
+                    data-testid="Spacer"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12"
+                >
+                  <div
+                    class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
+                  >
+                    You're likely to have 
+                    £2,340.00
+                     to spend each month between ages 
+                    67
+                     - 
+                    89
+                    .
+                    <div
+                      class="MuiBox-root MuiBox-root-11"
+                      data-testid="Spacer"
+                    />
+                    <span
+                      class="sc-khQdMy cyZWup"
+                      title="Some description"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="more information"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-12"
+                    data-testid="Spacer"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>,
+    "container": <div>
+      <div
+        class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+      >
+        <div
+          class="MuiCardContent-root sc-iNGGwv hqFhNQ"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorSecondary"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+                >
+                  <div
+                    class="MuiBox-root MuiBox-root-1"
+                    data-testid="Spacer"
+                  />
+                  <h3
+                    class="MuiTypography-root sc-jrQzUz bsiRAM MuiTypography-body1"
+                  >
+                    £1,172,000.00
+                  </h3>
+                  <span>
+                      /  
+                  </span>
+                  <h6
+                    class="MuiTypography-root sc-jrQzUz JxYho MuiTypography-body1"
+                  >
+                    £1,227,000.00
+                  </h6>
+                </div>
+                <div
+                  class="MuiBox-root MuiBox-root-2"
+                  data-testid="Spacer"
+                />
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+                >
+                  <div
+                    class="MuiBox-root MuiBox-root-3"
+                    data-testid="Spacer"
+                  />
+                  <div
+                    class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
+                  >
+                    You're on track to have 
+                    72%
+                     of your target. That's a short fall of
+                     
+                    £55,000.00
+                    .
+                    <div
+                      class="MuiBox-root MuiBox-root-4"
+                      data-testid="Spacer"
+                    />
+                    <span
+                      class="sc-khQdMy cyZWup"
+                      title="Some description"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="more information"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="MuiBox-root MuiBox-root-5"
+                  data-testid="Spacer"
+                />
+                <div
+                  aria-valuenow="75"
+                  class="sc-iCfLBT fLrhme"
+                  role="progressbar"
+                >
+                  <div
+                    class="sc-pVTma kWowoK"
+                  />
+                  <div
+                    class="sc-furvIG eUDfdF"
+                  />
+                  <div
+                    class="sc-furvIG kDqjiJ"
+                  />
+                  <div
+                    class="sc-furvIG jaMmSV"
+                  />
+                </div>
+                <div
+                  class="MuiBox-root MuiBox-root-6"
+                  data-testid="Spacer"
+                />
+                <div
+                  class="sc-bYoCmx dkdDhY"
+                >
+                  <div
+                    class="sc-kLwgWK iXguKH"
+                    width="20"
+                  >
+                    <div
+                      class="sc-kfPtPH koNvvv"
+                    >
+                      <div>
+                        <h6
+                          class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                        >
+                          LUMP SUM
+                        </h6>
+                        <div
+                          class="sc-fKVsgm jyioak"
+                        >
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                          >
+                            £20,000.00
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="sc-kLwgWK eoChNo"
+                    width="50"
+                  >
+                    <div
+                      class="sc-kfPtPH koNvvv"
+                    >
+                      <div>
+                        <h6
+                          class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                        >
+                          FROM AGE 67 - 89
+                        </h6>
+                        <div
+                          class="sc-fKVsgm jyioak"
+                        >
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                          >
+                            £1,080,000.00
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="sc-kLwgWK bmQECt"
+                    width="5"
+                  >
+                    <div
+                      class="sc-kfPtPH koNvvv"
+                    >
+                      <div>
+                        <h6
+                          class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                        >
+                          REMAINING
+                        </h6>
+                        <div
+                          class="sc-fKVsgm jyioak"
+                        >
+                          <h6
+                            class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                          >
+                            £72,000.00
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-7"
+              data-testid="Spacer"
+            />
+            <div
+              class="MuiBox-root MuiBox-root-8"
+              data-testid="Spacer"
+            >
+              <div
+                class="sc-iqsfdx YcysP"
+              />
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-9"
+              data-testid="Spacer"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="MuiBox-root MuiBox-root-10"
+                  data-testid="Spacer"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
+                >
+                  You're likely to have 
+                  £2,340.00
+                   to spend each month between ages 
+                  67
+                   - 
+                  89
+                  .
+                  <div
+                    class="MuiBox-root MuiBox-root-11"
+                    data-testid="Spacer"
+                  />
+                  <span
+                    class="sc-khQdMy cyZWup"
+                    title="Some description"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="more information"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="MuiBox-root MuiBox-root-12"
+                  data-testid="Spacer"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    "debug": [Function],
+    "findAllByAltText": [Function],
+    "findAllByDisplayValue": [Function],
+    "findAllByLabelText": [Function],
+    "findAllByPlaceholderText": [Function],
+    "findAllByRole": [Function],
+    "findAllByTestId": [Function],
+    "findAllByText": [Function],
+    "findAllByTitle": [Function],
+    "findByAltText": [Function],
+    "findByDisplayValue": [Function],
+    "findByLabelText": [Function],
+    "findByPlaceholderText": [Function],
+    "findByRole": [Function],
+    "findByTestId": [Function],
+    "findByText": [Function],
+    "findByTitle": [Function],
+    "getAllByAltText": [Function],
+    "getAllByDisplayValue": [Function],
+    "getAllByLabelText": [Function],
+    "getAllByPlaceholderText": [Function],
+    "getAllByRole": [Function],
+    "getAllByTestId": [Function],
+    "getAllByText": [Function],
+    "getAllByTitle": [Function],
+    "getByAltText": [Function],
+    "getByDisplayValue": [Function],
+    "getByLabelText": [Function],
+    "getByPlaceholderText": [Function],
+    "getByRole": [Function],
+    "getByTestId": [Function],
+    "getByText": [Function],
+    "getByTitle": [Function],
+    "queryAllByAltText": [Function],
+    "queryAllByDisplayValue": [Function],
+    "queryAllByLabelText": [Function],
+    "queryAllByPlaceholderText": [Function],
+    "queryAllByRole": [Function],
+    "queryAllByTestId": [Function],
+    "queryAllByText": [Function],
+    "queryAllByTitle": [Function],
+    "queryByAltText": [Function],
+    "queryByDisplayValue": [Function],
+    "queryByLabelText": [Function],
+    "queryByPlaceholderText": [Function],
+    "queryByRole": [Function],
+    "queryByTestId": [Function],
+    "queryByText": [Function],
+    "queryByTitle": [Function],
+    "rerender": [Function],
+    "unmount": [Function],
+  },
+}
+`;

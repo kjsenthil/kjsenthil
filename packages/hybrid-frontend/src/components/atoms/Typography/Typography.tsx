@@ -27,6 +27,7 @@ export interface TypographyProps
   color?: Color | 'inherit';
   colorShade?: ColorShade;
   variant?: Variant;
+  spaceNoWrap?: boolean;
 }
 
 const determineColor = (
@@ -62,7 +63,7 @@ const sizes = {
   b3: { fontSize: 12, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
 };
 
-const StyledTypography = styled(({ variant, colorShade, color, ...props }) => (
+const StyledTypography = styled(({ variant, colorShade, color, spaceNoWrap, ...props }) => (
   <MUITypography {...props} />
 ))`
   ${({
@@ -70,6 +71,7 @@ const StyledTypography = styled(({ variant, colorShade, color, ...props }) => (
     variant,
     color,
     fontWeight,
+    spaceNoWrap,
     theme: {
       palette,
       typography: { pxToRem },
@@ -82,6 +84,7 @@ const StyledTypography = styled(({ variant, colorShade, color, ...props }) => (
       letter-spacing: ${pxToRem(variantSizes?.letterSpacing)};
       font-weight: ${fontWeight || variantSizes?.fontWeight};
       color: ${determineColor(color, palette, variant, colorShade)};
+      white-space: ${spaceNoWrap ? 'nowrap' : 'normal'};
   `;
   }}
 `;

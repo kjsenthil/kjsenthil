@@ -108,7 +108,7 @@ const Legend = ({ title, chartIndicatorProps, tooltip, ...props }: LegendProps) 
   <LegendContainer>
     {chartIndicatorProps && <ChartIndicator {...chartIndicatorProps} />}
     <div>
-      <Typography variant="sh4" color="grey" colorShade="dark1">
+      <Typography variant="sh4" color="grey" colorShade="dark1" spaceNoWrap>
         {title.toUpperCase()}
         {tooltip && <LegendTooltip tooltip={tooltip} />}
       </Typography>

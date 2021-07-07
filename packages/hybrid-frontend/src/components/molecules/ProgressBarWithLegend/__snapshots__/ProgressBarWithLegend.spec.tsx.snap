@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrgoressBarWithLegend matches snapshot 1`] = `
+Object {
+  "result": Object {
+    "asFragment": [Function],
+    "baseElement": <body>
+      <div>
+        <div
+          aria-valuenow="75"
+          class="sc-iCfLBT fLrhme"
+          role="progressbar"
+        >
+          <div
+            class="sc-pVTma kWowoK"
+          />
+          <div
+            class="sc-furvIG eUDfdF"
+          />
+          <div
+            class="sc-furvIG kDqjiJ"
+          />
+          <div
+            class="sc-furvIG jaMmSV"
+          />
+        </div>
+        <div
+          class="MuiBox-root MuiBox-root-1"
+          data-testid="Spacer"
+        />
+        <div
+          class="sc-hGPAah leDlzx"
+        >
+          <div
+            class="sc-dlVyqM djWArT"
+            width="20"
+          >
+            <div
+              class="sc-kfPtPH koNvvv"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                >
+                  LUMP SUM
+                </h6>
+                <div
+                  class="sc-fKVsgm jyioak"
+                >
+                  <h6
+                    class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                  >
+                    £20,000.00
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sc-dlVyqM cUaPCA"
+            width="50"
+          >
+            <div
+              class="sc-kfPtPH koNvvv"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                >
+                  FROM AGE 67 - 89
+                </h6>
+                <div
+                  class="sc-fKVsgm jyioak"
+                >
+                  <h6
+                    class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                  >
+                    £1,080,000.00
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sc-dlVyqM isgWud"
+            width="5"
+          >
+            <div
+              class="sc-kfPtPH koNvvv"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                >
+                  REMAINING
+                </h6>
+                <div
+                  class="sc-fKVsgm jyioak"
+                >
+                  <h6
+                    class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                  >
+                    £72,000.00
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>,
+    "container": <div>
+      <div
+        aria-valuenow="75"
+        class="sc-iCfLBT fLrhme"
+        role="progressbar"
+      >
+        <div
+          class="sc-pVTma kWowoK"
+        />
+        <div
+          class="sc-furvIG eUDfdF"
+        />
+        <div
+          class="sc-furvIG kDqjiJ"
+        />
+        <div
+          class="sc-furvIG jaMmSV"
+        />
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-1"
+        data-testid="Spacer"
+      />
+      <div
+        class="sc-hGPAah leDlzx"
+      >
+        <div
+          class="sc-dlVyqM djWArT"
+          width="20"
+        >
+          <div
+            class="sc-kfPtPH koNvvv"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+              >
+                LUMP SUM
+              </h6>
+              <div
+                class="sc-fKVsgm jyioak"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                >
+                  £20,000.00
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-dlVyqM cUaPCA"
+          width="50"
+        >
+          <div
+            class="sc-kfPtPH koNvvv"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+              >
+                FROM AGE 67 - 89
+              </h6>
+              <div
+                class="sc-fKVsgm jyioak"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                >
+                  £1,080,000.00
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-dlVyqM isgWud"
+          width="5"
+        >
+          <div
+            class="sc-kfPtPH koNvvv"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+              >
+                REMAINING
+              </h6>
+              <div
+                class="sc-fKVsgm jyioak"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                >
+                  £72,000.00
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    "debug": [Function],
+    "findAllByAltText": [Function],
+    "findAllByDisplayValue": [Function],
+    "findAllByLabelText": [Function],
+    "findAllByPlaceholderText": [Function],
+    "findAllByRole": [Function],
+    "findAllByTestId": [Function],
+    "findAllByText": [Function],
+    "findAllByTitle": [Function],
+    "findByAltText": [Function],
+    "findByDisplayValue": [Function],
+    "findByLabelText": [Function],
+    "findByPlaceholderText": [Function],
+    "findByRole": [Function],
+    "findByTestId": [Function],
+    "findByText": [Function],
+    "findByTitle": [Function],
+    "getAllByAltText": [Function],
+    "getAllByDisplayValue": [Function],
+    "getAllByLabelText": [Function],
+    "getAllByPlaceholderText": [Function],
+    "getAllByRole": [Function],
+    "getAllByTestId": [Function],
+    "getAllByText": [Function],
+    "getAllByTitle": [Function],
+    "getByAltText": [Function],
+    "getByDisplayValue": [Function],
+    "getByLabelText": [Function],
+    "getByPlaceholderText": [Function],
+    "getByRole": [Function],
+    "getByTestId": [Function],
+    "getByText": [Function],
+    "getByTitle": [Function],
+    "queryAllByAltText": [Function],
+    "queryAllByDisplayValue": [Function],
+    "queryAllByLabelText": [Function],
+    "queryAllByPlaceholderText": [Function],
+    "queryAllByRole": [Function],
+    "queryAllByTestId": [Function],
+    "queryAllByText": [Function],
+    "queryAllByTitle": [Function],
+    "queryByAltText": [Function],
+    "queryByDisplayValue": [Function],
+    "queryByLabelText": [Function],
+    "queryByPlaceholderText": [Function],
+    "queryByRole": [Function],
+    "queryByTestId": [Function],
+    "queryByText": [Function],
+    "queryByTitle": [Function],
+    "rerender": [Function],
+    "unmount": [Function],
+  },
+}
+`;

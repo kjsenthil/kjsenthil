@@ -2,6 +2,7 @@
 import Button, { ButtonProps } from './Button';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
 import LinearProgress, { LinearProgressProps } from './LinearProgress';
+import ProgressBar, { ProgressBarProps } from './ProgressBar';
 import Typography, { TypographyProps } from './Typography';
 import TextField, {
   FormattedTextFieldControlledProps,
@@ -12,7 +13,7 @@ import { TooltipProps } from './Tooltip';
 import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
 
-export { Button, LinearProgress, TextField, Typography, ChartIndicator };
+export { Button, LinearProgress, TextField, Typography, ChartIndicator, ProgressBar };
 
 export type {
   ButtonProps,
@@ -25,6 +26,7 @@ export type {
   TooltipProps,
   IconProps,
   SpacerProps,
+  ProgressBarProps,
 };
 
 export { default as Spacer } from './Spacer';
@@ -35,7 +37,6 @@ export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Slider } from './Slider';
 export { default as Tooltip } from './Tooltip';
-export { default as ProgressBar } from './ProgressBar';
 export { default as Link } from './Link';
 export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './TextField';
 
