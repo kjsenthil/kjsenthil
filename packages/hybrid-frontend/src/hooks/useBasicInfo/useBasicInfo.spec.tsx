@@ -3,17 +3,15 @@ import { renderHook, ResultContainer } from '@testing-library/react-hooks';
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import useBasicInfo, { BasicInfo } from './useBasicInfo';
-import { calculateBasicInvestmentSummary } from '../../services/myAccount/utils';
-import { mockClientResponse, mockInvestSummaryResponse } from '../../services/myAccount/mocks';
+import {
+  mockAccountsBreakdown,
+  mockClientResponse,
+  mockInvestSummaryResponse,
+} from '../../services/myAccount/mocks';
 
 jest.mock('../../services/myAccount/api', () => ({
   getClient: jest.fn(),
   getInvestmentSummary: jest.fn(),
-}));
-
-jest.mock('../../services/myAccount/utils/calculateBasicInvestmentSummary.ts', () => ({
-  __esModule: true,
-  default: jest.fn(),
 }));
 
 const getRenderedHook = (store: Store) => {
@@ -35,6 +33,9 @@ describe('useBasicInfo', () => {
           investmentSummary: () => ({
             data: undefined,
           }),
+          accountBreakdown: () => ({
+            data: undefined,
+          }),
         },
       });
 
@@ -43,11 +44,12 @@ describe('useBasicInfo', () => {
       expect(renderedHook.result.current).toStrictEqual({
         firstName: '',
         lastName: '',
-        isLoading: false,
+        isLoading: true,
         clientAge: 31,
         dateOfBirth: '',
         totalGainLoss: 0,
         totalInvested: 0,
+        totalInvestableCash: 0,
       });
     });
   });
@@ -59,19 +61,19 @@ describe('useBasicInfo', () => {
         lastName: mockClientResponse.data.attributes.lastName,
         dateOfBirth: mockClientResponse.data.attributes.dateOfBirth,
         clientAge: 48,
-        totalInvested: 1000,
-        totalGainLoss: 100,
+        totalInvested: 635376.130119,
+        totalGainLoss: 122249.170119,
+        totalInvestableCash: 139778.85,
         isLoading: false,
       };
-      (calculateBasicInvestmentSummary as jest.Mock).mockReturnValue({
-        totalGainLoss: result.totalGainLoss,
-        totalInvested: result.totalInvested,
-      });
 
       store = configureStore({
         reducer: {
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestSummaryResponse,
+          accountBreakdown: () => ({
+            data: mockAccountsBreakdown,
+          }),
         },
       });
 

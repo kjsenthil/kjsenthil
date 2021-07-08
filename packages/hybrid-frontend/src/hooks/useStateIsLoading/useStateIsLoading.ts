@@ -3,17 +3,17 @@ import { RootState } from '../../store';
 
 type SliceName = keyof RootState;
 
-const useStateIsAvailable = (sliceNames: SliceName | SliceName[]): boolean => {
+const useStateIsLoading = (sliceNames: SliceName | SliceName[]): boolean => {
   const state = useSelector((s: RootState) => s);
 
   const sliceNamesArray = Array.isArray(sliceNames) ? sliceNames : [sliceNames];
 
-  const allStatusesSuccessful = sliceNamesArray.every((sliceName) => {
+  const hasLoadingStatuses = sliceNamesArray.some((sliceName) => {
     const slice = state[sliceName];
-    return slice.status === 'success';
+    return slice.status === 'loading';
   });
 
-  return allStatusesSuccessful;
+  return hasLoadingStatuses;
 };
 
-export default useStateIsAvailable;
+export default useStateIsLoading;

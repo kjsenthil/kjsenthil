@@ -1,5 +1,5 @@
 import extractClientAccounts from './extractClientAccounts';
-import { mockClientResponse } from '../mocks';
+import { mockClientResponse } from '../../mocks';
 
 describe('extractClientAccounts', () => {
   it('returns an array of client accounts', () => {

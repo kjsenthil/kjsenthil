@@ -2,15 +2,15 @@ import * as React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import useStateIsAvailable from './useStateIsAvailable';
+import useStateIsLoading from './useStateIsLoading';
 
-describe('useStateIsAvailable', () => {
+describe('useStateIsLoading', () => {
   let wrapper: (props: { children: React.ReactNode }) => React.ReactElement;
   beforeEach(async () => {
     const mockStore = configureStore({
       reducer: {
-        currentGoals: () => ({ status: 'success' }),
-        goalTargetProjections: () => ({ status: 'success' }),
+        currentGoals: () => ({ status: 'loading' }),
+        goalTargetProjections: () => ({ status: 'loading' }),
         goalCurrentProjections: () => ({ status: 'idle' }),
         auth: () => ({ status: 'success' }),
         investmentSummary: () => ({ status: 'failure' }),
@@ -21,27 +21,27 @@ describe('useStateIsAvailable', () => {
   });
 
   describe('when an array is given', () => {
-    it('returns true if all required states have status === success', () => {
+    it('returns true if all required states have status === loading', () => {
       const { result } = renderHook(
-        () => useStateIsAvailable(['currentGoals', 'goalTargetProjections']),
+        () => useStateIsLoading(['currentGoals', 'goalTargetProjections']),
         { wrapper }
       );
 
       expect(result.current).toBeTrue();
     });
 
-    it('returns false if one of the required states have status !== success', () => {
+    it('returns true if one of the required states have status === loading', () => {
       const { result } = renderHook(
-        () => useStateIsAvailable(['currentGoals', 'goalTargetProjections', 'investmentSummary']),
+        () => useStateIsLoading(['goalTargetProjections', 'investmentSummary']),
         { wrapper }
       );
 
-      expect(result.current).toBeFalse();
+      expect(result.current).toBeTrue();
     });
 
     it('returns false if none of the required states have status !== success', () => {
       const { result } = renderHook(
-        () => useStateIsAvailable(['goalCurrentProjections', 'investmentSummary']),
+        () => useStateIsLoading(['goalCurrentProjections', 'investmentSummary', 'auth']),
         { wrapper }
       );
 
@@ -50,14 +50,14 @@ describe('useStateIsAvailable', () => {
   });
 
   describe('when a single state is given', () => {
-    it('returns true if a given state status is successful', () => {
-      const { result } = renderHook(() => useStateIsAvailable('currentGoals'), { wrapper });
+    it('returns true if a given state status is loading', () => {
+      const { result } = renderHook(() => useStateIsLoading('currentGoals'), { wrapper });
 
       expect(result.current).toBeTrue();
     });
 
-    it('returns false if a given state status is not successful', () => {
-      const { result } = renderHook(() => useStateIsAvailable('investmentSummary'), { wrapper });
+    it('returns false if a given state status is not  loading', () => {
+      const { result } = renderHook(() => useStateIsLoading('investmentSummary'), { wrapper });
 
       expect(result.current).toBeFalse();
     });

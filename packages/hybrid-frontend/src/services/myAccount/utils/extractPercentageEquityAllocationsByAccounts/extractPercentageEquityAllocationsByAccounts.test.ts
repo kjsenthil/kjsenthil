@@ -1,9 +1,9 @@
-import extractPercentageEquityAllocationsByAccounts from './extractPercentageEquityAllocationsByAccounts';
-import getEquityAllocation from '../api/getEquityAllocation';
-import getMonthlySavingsAmount from '../api/getMonthlySavingsAmount';
+import extractPercentageEquityAllocationsByAccounts from '.';
+import getEquityAllocation from '../../api/getEquityAllocation';
+import getMonthlySavingsAmount from '../../api/getMonthlySavingsAmount';
 
-jest.mock('../api/getEquityAllocation');
-jest.mock('../api/getMonthlySavingsAmount');
+jest.mock('../../api/getEquityAllocation');
+jest.mock('../../api/getMonthlySavingsAmount');
 
 describe('extractPercentageEquityAllocationsByAccounts', () => {
   it('returns Percentage Equity Allocations By Accounts ', async () => {

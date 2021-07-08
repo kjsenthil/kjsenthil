@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { calculateInvestableCash } from '../../services/myAccount/utils';
 import { RootState } from '../../store';
-import calculateAgeToday from '../../utils/date/calculateAgeToday/index';
-import {
-  calculateBasicInvestmentSummary,
-  fetchClient,
-  fetchInvestmentSummary,
-} from '../../services/myAccount';
+import calculateAgeToday from '../../utils/date/calculateAgeToday';
+import useAccountBreakdownInfo from '../useAccountBreakdownInfo';
+import useStateIsAvailable from '../useStateIsAvailable';
 
 export interface BasicInfo {
   totalInvested: number;
   totalGainLoss: number;
+  totalInvestableCash: number;
   dateOfBirth: string;
   clientAge: number;
   firstName: string;
@@ -19,34 +17,23 @@ export interface BasicInfo {
 }
 
 const useBasicInfo = (): BasicInfo => {
-  const { client, investmentSummary, clientStatus, investmentStatus } = useSelector(
-    (state: RootState) => ({
-      client: state.client.data,
-      clientStatus: state.client.status,
-      investmentSummary: state.investmentSummary.data,
-      investmentStatus: state.investmentSummary.status,
-    })
-  );
-  const dispatch = useDispatch();
+  const { client } = useSelector((state: RootState) => ({
+    client: state.client.data,
+    investmentSummary: state.investmentSummary.data,
+  }));
 
-  useEffect(() => {
-    if (client && !investmentSummary) {
-      dispatch(fetchInvestmentSummary());
-    }
-  }, [client, investmentSummary]);
+  const isBasicInfoLoading = !useStateIsAvailable([
+    'client',
+    'investmentSummary',
+    'accountBreakdown',
+  ]);
+  const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
 
-  useEffect(() => {
-    if (!client) {
-      dispatch(fetchClient());
-    }
-  }, []);
-
-  const isBasicInfoLoading = clientStatus === 'loading' || investmentStatus === 'loading';
-
-  if (!client || !investmentSummary) {
+  if (!client || !accountBreakdown) {
     return {
       totalGainLoss: 0,
       totalInvested: 0,
+      totalInvestableCash: 0,
       firstName: '',
       lastName: '',
       dateOfBirth: '',
@@ -55,16 +42,17 @@ const useBasicInfo = (): BasicInfo => {
     };
   }
 
-  const { totalInvested, totalGainLoss } = calculateBasicInvestmentSummary(investmentSummary);
+  const totalInvestableCash = calculateInvestableCash(accountBreakdown || []);
 
   return {
-    totalInvested,
-    totalGainLoss,
+    totalGainLoss: accountsSummary.totalGainLoss,
+    totalInvested: accountsSummary.totalInvested,
+    totalInvestableCash,
     firstName: client.attributes.firstName,
     lastName: client.attributes.lastName,
     dateOfBirth: client.attributes.dateOfBirth,
     clientAge: calculateAgeToday(new Date(client.attributes.dateOfBirth)),
-    isLoading: isBasicInfoLoading,
+    isLoading: false,
   };
 };
 

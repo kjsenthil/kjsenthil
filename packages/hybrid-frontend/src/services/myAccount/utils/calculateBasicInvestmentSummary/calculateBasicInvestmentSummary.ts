@@ -1,4 +1,4 @@
-import { BasicInvestmentSummary, InvestmentSummary } from '../types';
+import { BasicInvestmentSummary, InvestmentSummary } from '../../types';
 
 const calculateBasicInvestmentSummary = (
   accountsInvestmentSummary: InvestmentSummary[]

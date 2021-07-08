@@ -41,19 +41,19 @@
       "type": "netcontribution-accounts-aggregated",
       "id": null,
       "attributes": {
-        "totalContributions": 4.480,
+        "totalContributions": 4.48,
         "netContributions": [
           {
             "date": "2016-05-13T00:00:00",
-            "netContributionsToDate": 5036.580
+            "netContributionsToDate": 5036.58
           },
           {
             "date": "2016-05-16T00:00:00",
-            "netContributionsToDate": 5036.580
+            "netContributionsToDate": 5036.58
           },
           {
             "date": "2016-05-17T00:00:00",
-            "netContributionsToDate": 5036.580
+            "netContributionsToDate": 5036.58
           }
         ]
       },

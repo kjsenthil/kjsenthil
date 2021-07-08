@@ -18,6 +18,7 @@ import {
   useStateIsAvailable,
   useSimulatedProjectionsData,
   useDispatchThunkOnRender,
+  useAccountBreakdownInfo,
 } from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
@@ -27,7 +28,6 @@ import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { createGoal, GoalCategory, GoalDefaults, GoalType } from '../../../services/goal';
 import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
 import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
-import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
@@ -50,6 +50,7 @@ const LifePlanPage = () => {
     performance: { status: performanceStatus },
   } = useSelector((state: RootState) => state);
 
+  const basicInfo = useBasicInfo();
   const dispatch = useDispatch();
 
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
@@ -68,7 +69,7 @@ const LifePlanPage = () => {
   const isUncategorisedGoal = goalsData[0] && goalsData[0].category === GoalCategory.UNCATEGORIZED;
   const simulatedProjectionsData = useSimulatedProjectionsData();
 
-  const stateIsReady = useStateIsAvailable(['currentGoals']);
+  const hasFetchedGoals = useStateIsAvailable(['currentGoals']);
 
   const hasDataForSimulatedProjectionsChart =
     isUncategorisedGoal &&
@@ -159,10 +160,11 @@ const LifePlanPage = () => {
 
   return (
     <MyAccountLayout
-      heading={(basicInfo) => ({
+      basicInfo={basicInfo}
+      heading={{
         primary: `Life plan`,
         secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
-      })}
+      }}
     >
       {/* eslint-disable no-nested-ternary */}
       {hasDataForGoalProjectionsChart || hasDataForSimulatedProjectionsChart ? (
@@ -188,7 +190,7 @@ const LifePlanPage = () => {
             </Link>
           </Disclaimer>
         </>
-      ) : stateIsReady && goalsData.length === 0 ? (
+      ) : hasFetchedGoals && goalsData.length === 0 ? (
         <GoalMainCardPlaceholder
           vertical={false}
           title="What's important to you?"

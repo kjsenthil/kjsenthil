@@ -6,7 +6,7 @@ export interface SwitcherProps extends SwitchProps {
   withInnerLabel?: boolean;
 }
 
-const StyledSwitcher = styled(MUISwitcher)`
+const StyledSwitcher = styled(({ withInnerLabel, ...props }) => <MUISwitcher {...props} />)`
   ${({
     size,
     withInnerLabel,

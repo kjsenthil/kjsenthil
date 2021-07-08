@@ -9,7 +9,7 @@ import {
   refreshTokenActionReducerMapBuilder,
 } from '../thunks';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   status: 'idle',
   accessTokens: [],
   isCredLoggedIn: false,

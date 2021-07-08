@@ -9,6 +9,8 @@ import {
   fetchClient,
   fetchInvestmentSummary,
 } from '../../services/myAccount';
+import useStateIsLoading from '../useStateIsLoading';
+import useStateIsAvailable from '../useStateIsAvailable';
 
 export interface AccountBreakdownInfoProps {
   accountsSummary: BasicInvestmentSummary;
@@ -16,31 +18,41 @@ export interface AccountBreakdownInfoProps {
 }
 
 const useAccountBreakdownInfo = (): AccountBreakdownInfoProps => {
-  const { client, investmentSummary, accountBreakdown } = useSelector((state: RootState) => ({
-    client: state.client.data,
+  const { investmentSummary, accountBreakdown } = useSelector((state: RootState) => ({
     investmentSummary: state.investmentSummary.data,
     accountBreakdown: state.accountBreakdown.data,
   }));
 
+  const isInvestmentSummaryLoading = useStateIsLoading('investmentSummary');
+  const isClientAvailable = useStateIsAvailable('client');
+  const isInvestmentSummaryAvailable = useStateIsAvailable('investmentSummary');
+  const isAccountBreakdownAvailable = useStateIsAvailable('accountBreakdown');
+  const isAccountBreakdowLoading = useStateIsLoading('accountBreakdown');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!client) {
+    if (!isClientAvailable) {
       dispatch(fetchClient());
     }
   }, []);
 
   useEffect(() => {
-    if (client && !investmentSummary) {
+    if (isClientAvailable && !isInvestmentSummaryAvailable && !isInvestmentSummaryLoading) {
       dispatch(fetchInvestmentSummary());
     }
-  }, [client, investmentSummary]);
+  }, [isClientAvailable, isInvestmentSummaryAvailable, isInvestmentSummaryLoading]);
 
   useEffect(() => {
-    if (client && investmentSummary && investmentSummary.length && !accountBreakdown) {
+    if (
+      isClientAvailable &&
+      isInvestmentSummaryAvailable &&
+      !isAccountBreakdownAvailable &&
+      !isAccountBreakdowLoading
+    ) {
       dispatch(fetchAccountBreakdown());
     }
-  }, [client, investmentSummary, accountBreakdown]);
+  }, [isClientAvailable, isInvestmentSummaryAvailable, isAccountBreakdowLoading]);
 
   const accountsSummary = calculateBasicInvestmentSummary(investmentSummary || []);
 

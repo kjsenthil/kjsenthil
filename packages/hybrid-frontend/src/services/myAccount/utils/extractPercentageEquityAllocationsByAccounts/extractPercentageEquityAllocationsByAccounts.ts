@@ -1,5 +1,5 @@
-import { ClientAccountItem, InvestmentSummary } from '../types';
-import { getEquityAllocation, getMonthlySavingsAmount } from '../api';
+import { ClientAccountItem, InvestmentSummary } from '../../types';
+import { getEquityAllocation, getMonthlySavingsAmount } from '../../api';
 
 const extractPercentageEquityAllocationsByAccounts = async (
   investmentSummaryData: InvestmentSummary[],

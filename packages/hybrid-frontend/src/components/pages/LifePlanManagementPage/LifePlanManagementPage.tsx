@@ -31,13 +31,16 @@ import { GoalCategory, GoalDefaults, GoalType, postGoalCreation } from '../../..
 
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
-import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
 import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
-import { useProjectionsChartData, useDispatchThunkOnRender } from '../../../hooks';
+import {
+  useProjectionsChartData,
+  useDispatchThunkOnRender,
+  useAccountBreakdownInfo,
+} from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (

@@ -2,17 +2,17 @@ import { login, pinLogin } from './test/utils/accessToken'
 
 exports.config = {
     //
-    // ====================
+    // --------------------
     // Runner Configuration
-    // ====================
+    // --------------------
     //
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
     //
-    // ==================
+    // -----------------=
     // Specify Test Files
-    // ==================
+    // -----------------=
     // Define which test specs should run. The pattern is relative to the directory
     // from which `wdio` was called.
     //
@@ -33,9 +33,9 @@ exports.config = {
         // 'path/to/excluded/files'
     ],
     //
-    // ============
+    // ------------
     // Capabilities
-    // ============
+    // ------------
     // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
     // time. Depending on the number of capabilities, WebdriverIO launches several test
     // sessions. Within your capabilities you can overwrite the spec and exclude options in
@@ -75,9 +75,9 @@ exports.config = {
 
     sync: false,
     //
-    // ===================
+    // -----------------==
     // Test Configurations
-    // ===================
+    // -----------------==
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
@@ -169,9 +169,9 @@ exports.config = {
         }
     },
     //
-    // =====
+    // -----
     // Hooks
-    // =====
+    // -----
     // WebdriverIO provides several hooks you can use to interfere with the test process in order to enhance
     // it and to build services around it. You can either apply a single function or an array of
     // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got

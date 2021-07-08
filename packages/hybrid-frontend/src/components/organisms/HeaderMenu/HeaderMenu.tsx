@@ -1,42 +1,76 @@
-import { useMediaQuery } from '@material-ui/core';
 import { navigate } from 'gatsby';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { ACTIVE_ENV, MYACCOUNTS_HOME_URL } from '../../../config';
-import { FeatureFlagNames } from '../../../constants';
-import { useFeatureFlagToggle } from '../../../hooks';
-
-import { logout } from '../../../services/auth';
-import { setFeatureToggleFlag } from '../../../services/featureToggle';
 import {
+  useMediaQuery,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
   Toolbar,
   Button,
   Grid,
   Menu,
   MenuItem,
+  Drawer,
   Icon,
   Box,
   Typography,
-  Spacer,
   MenuIcon,
   IconButton,
   Link,
   Switcher,
-  FormControlLabel,
   Divider,
 } from '../../atoms';
 import { NavLink, SubHeader } from '../../molecules';
-import { LogoImage, StyledAppBar } from './HeaderMenu.styles';
-import { NavPaths } from '../../../config/paths';
+import {
+  SwitcherLabel,
+  LogoImage,
+  StyledAppBar,
+  CashText,
+  DrawerContainer,
+} from './HeaderMenu.styles';
+import Spacer from '../../atoms/Spacer/Spacer';
+
+type LinkWithSwitch = {
+  onClick: (isEnabled: boolean) => void;
+  type: 'switch';
+};
+
+type LinkWithPath = {
+  path: string;
+  type?: 'link';
+};
+
+type LinkType = LinkWithSwitch | LinkWithPath;
+
+type LinkData = {
+  name: string;
+  shouldShowInMainMenu?: boolean;
+  shouldShowInDrawer?: boolean;
+  shouldShowInDropdownMenu?: boolean;
+  color?: 'primary' | 'error';
+  icon?: React.ReactElement;
+} & LinkType;
 
 export interface HeaderMenuProps {
-  profileName: string;
+  homePath: string;
+  links: Array<LinkData>;
+  expFeatureSwitch: (isEnabled: boolean) => void;
+  isExpFeatureFlagEnabled?: boolean;
+  currentUrl: string;
+  cash: string;
 }
 
-const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
-  const dispatch = useDispatch();
-  const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
-  const isLargerScreen = useMediaQuery('(min-width: 800px)');
+const HeaderMenu = ({
+  cash,
+  currentUrl,
+  homePath,
+  links,
+  expFeatureSwitch,
+  isExpFeatureFlagEnabled,
+}: HeaderMenuProps) => {
+  const isLargerScreen = useMediaQuery('(min-width: 830px)'); // This is temperory - design will change later and breakdown better specified
 
   const isNonProd = ACTIVE_ENV !== 'production';
 
@@ -59,21 +93,129 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
     setAnchorEl(null);
   };
 
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
-
-  const navigateLifePlan = () => navigate(NavPaths.LIFE_PLAN_PAGE);
-
-  const navigateAccounts = () => navigate(NavPaths.ACCOUNTS_PAGE);
-
-  const navigateHome = () => {
-    navigate(NavPaths.HOME_PAGE);
-  };
-
   const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled: evt.target.checked })
+    expFeatureSwitch(evt.target.checked);
+  };
+
+  const renderSwitcher = (
+    withInnerLabel: boolean,
+    onClick: (evt: React.ChangeEvent<HTMLInputElement>) => void
+  ) => (
+    <Switcher
+      size="small"
+      withInnerLabel={withInnerLabel}
+      checked={isExpFeatureFlagEnabled}
+      onClick={onClick}
+    />
+  );
+
+  const navigateHome = () => navigate(homePath);
+
+  const renderMenuNavDropdownLinks = () =>
+    links
+      .filter((link) => link.shouldShowInDropdownMenu)
+      .map((link) => (
+        <MenuItem
+          key={`${link.name}-MenuItem`}
+          onClick={() => navigate((link as LinkWithPath).path)}
+        >
+          {link.name}
+        </MenuItem>
+      ));
+
+  const getOnLinkClick = (link: LinkData) =>
+    (link as LinkWithSwitch).onClick
+      ? (link as LinkWithSwitch).onClick
+      : () => navigate((link as LinkWithPath).path);
+
+  const renderDrawerList = () => (
+    <>
+      {links.map((link, i) => (
+        <ListItem
+          key={link.name}
+          divider={links.length - 1 > i}
+          button={link.type !== 'switch'}
+          onClick={getOnLinkClick(link)}
+        >
+          {!!link.icon && (
+            <>
+              {link.icon}
+              <Spacer x={1} />
+            </>
+          )}
+          <ListItemText>
+            <Typography
+              variant="sh4"
+              colorShade={link.color === 'error' ? undefined : 'dark2'}
+              color={link.color ?? 'primary'}
+            >
+              {link.name}
+            </Typography>
+          </ListItemText>
+          {link.type === 'switch' && (
+            <ListItemSecondaryAction>
+              {renderSwitcher(false, (evt) => getOnLinkClick(link)(evt.target.checked))}
+            </ListItemSecondaryAction>
+          )}
+        </ListItem>
+      ))}
+    </>
+  );
+
+  const renderMenuNavLinks = () =>
+    links
+      .filter((link) => link.shouldShowInMainMenu)
+      .map((link) => (
+        <Grid item key={`${(link as LinkWithPath).path || link.name} - menu`}>
+          <NavLink
+            onClick={getOnLinkClick(link)}
+            selected={(link as LinkWithPath).path === currentUrl}
+          >
+            <Typography variant="sh4" color="grey">
+              {link.name}
+            </Typography>
+          </NavLink>
+        </Grid>
+      ));
+
+  const renderCashAndInvestActions = (forSubMenu: boolean = true) => {
+    const ButtonWrapper = ({ children }: { children: React.ReactElement }) =>
+      forSubMenu ? (
+        <Grid item container justify="flex-end" spacing={2} wrap="nowrap">
+          {children}
+        </Grid>
+      ) : (
+        children
+      );
+    return (
+      <>
+        <Grid item xs={6}>
+          <CashText align={forSubMenu ? 'left' : 'right'}>
+            <Typography variant="sh4">{cash}</Typography>
+            <Typography variant="b3">cash ready to invest</Typography>
+          </CashText>
+        </Grid>
+
+        <ButtonWrapper>
+          <>
+            <Grid item>
+              <Button
+                color="primary"
+                wrap="nowrap"
+                startIcon={<Icon name="cross" />}
+                variant="outlined"
+              >
+                Add cash
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color="primary" startIcon={<Icon name="statistics" />} variant="contained">
+                Invest
+              </Button>
+            </Grid>
+          </>
+        </ButtonWrapper>
+      </>
     );
   };
 
@@ -82,76 +224,32 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
       <StyledAppBar position="relative" data-testid="header-menu" color="inherit" elevation={0}>
         <Toolbar variant="dense">
           <Grid container justify="space-between" alignItems="center">
-            <Grid item xs={12} md={8}>
-              <Grid container justify="space-evenly" alignItems="center">
-                <Grid item xs={4}>
-                  <Link onClick={navigateHome}>
-                    <LogoImage />
-                  </Link>
-                </Grid>
-
-                <Spacer x={3} />
-
-                {!isLargerScreen && (
-                  <Grid item xs={5}>
-                    <Grid container justify="flex-end">
-                      <IconButton
-                        edge="start"
-                        color="primary"
-                        aria-label="menu"
-                        onClick={handleMenuClick}
-                      >
-                        <MenuIcon />
-                      </IconButton>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleMenuClose}
-                      >
-                        <MenuItem onClick={navigateHome}>Home</MenuItem>
-                        <MenuItem onClick={navigateAccounts}>Investments</MenuItem>
-                        <MenuItem onClick={navigateLifePlan}>Life Plan</MenuItem>
-                        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-                      </Menu>
-                    </Grid>
-                  </Grid>
-                )}
-
-                {isLargerScreen && (
-                  <>
-                    <Grid item>
-                      <NavLink onClick={navigateHome}>
-                        <Typography variant="sh4" color="grey">
-                          Home
-                        </Typography>
-                      </NavLink>
-                    </Grid>
-                    <Grid item>
-                      <NavLink onClick={navigateAccounts}>
-                        <Typography variant="sh4" color="grey">
-                          Investments
-                        </Typography>
-                      </NavLink>
-                    </Grid>
-                    <Grid item>
-                      <NavLink onClick={navigateLifePlan}>
-                        <Typography variant="sh4" color="grey">
-                          Life Plan
-                        </Typography>
-                      </NavLink>
-                    </Grid>
-                  </>
-                )}
+            <Grid container justify="space-between" direction="row" alignItems="center">
+              <Grid item xs={2}>
+                <Link onClick={navigateHome}>
+                  <LogoImage />
+                </Link>
               </Grid>
-            </Grid>
 
-            {isLargerScreen && (
-              <Grid item xs={12} md={4}>
-                <Grid container justify="flex-end">
-                  <Grid item>
-                    <Grid container>
+              {isLargerScreen ? (
+                <Grid item container direction="row" justify="space-between" xs={10} wrap="nowrap">
+                  <Grid item container justify="flex-start" wrap="nowrap">
+                    {renderMenuNavLinks()}
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    spacing={2}
+                    justify="flex-end"
+                    alignItems="center"
+                    wrap="nowrap"
+                    display="contents"
+                  >
+                    {renderCashAndInvestActions(false)}
+                    <Grid item>
+                      <Divider orientation="vertical" y={4} />
+                    </Grid>
+                    <Grid item>
                       <Button
                         aria-controls="simple-menu"
                         aria-haspopup="true"
@@ -160,53 +258,77 @@ const HeaderMenu = ({ profileName }: HeaderMenuProps) => {
                         onClick={handleProfileMenuClick}
                         endIcon={<Icon name="arrowHeadDown" />}
                       >
-                        {profileName}
+                        <Icon name="account" />
                       </Button>
+                      <Menu
+                        anchor="right"
+                        id="simple-menu"
+                        anchorEl={profileAnchorEl}
+                        keepMounted
+                        open={Boolean(profileAnchorEl)}
+                        onClose={handleProfileMenuClose}
+                        wrap="nowrap"
+                      >
+                        {renderMenuNavDropdownLinks()}
+                      </Menu>
                     </Grid>
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={profileAnchorEl}
-                      keepMounted
-                      open={Boolean(profileAnchorEl)}
-                      onClose={handleProfileMenuClose}
-                    >
-                      <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-                    </Menu>
                   </Grid>
                 </Grid>
-              </Grid>
-            )}
+              ) : (
+                <Grid item xs={9}>
+                  <Grid container justify="flex-end">
+                    <IconButton
+                      edge="start"
+                      color="primary"
+                      aria-label="menu"
+                      onClick={handleMenuClick}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <Drawer
+                      anchor="right"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <DrawerContainer>
+                        <List>{renderDrawerList()}</List>
+                      </DrawerContainer>
+                    </Drawer>
+                  </Grid>
+                </Grid>
+              )}
+            </Grid>
           </Grid>
         </Toolbar>
 
         <Divider />
 
         <SubHeader>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              {isNonProd && (
-                <FormControlLabel
-                  control={
-                    <Box mr={1}>
-                      <Switcher
-                        size="small"
-                        withInnerLabel
-                        checked={expFeatureFlag?.isEnabled}
-                        onClick={switchHandler}
-                      />
-                    </Box>
-                  }
-                  label="Experimental Features"
-                />
-              )}
-            </Grid>
+          {isLargerScreen ? (
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                {isNonProd && (
+                  <SwitcherLabel
+                    labelPlacement="start"
+                    control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
+                    label="Experimental Features"
+                  />
+                )}
+              </Grid>
 
-            <Grid item>
-              <Button color="secondary" href={MYACCOUNTS_HOME_URL}>
-                My Accounts Login
-              </Button>
+              <Grid item>
+                <Button color="primary" variant="outlined" href={MYACCOUNTS_HOME_URL}>
+                  My Accounts Login
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <Grid item container wrap="nowrap" justify="space-between" alignItems="center">
+              {renderCashAndInvestActions(true)}
+            </Grid>
+          )}
         </SubHeader>
       </StyledAppBar>
     </Box>

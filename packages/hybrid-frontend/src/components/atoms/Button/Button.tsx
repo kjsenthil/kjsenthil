@@ -9,6 +9,7 @@ import CircularProgress from '../CircularProgress';
 export interface ButtonProps extends Omit<MUIButtonProps, 'color'> {
   color?: MUIButtonProps['color'] | 'gradient';
   isLoading?: boolean;
+  wrap?: 'nowrap' | 'wrap';
 }
 
 const determineColorStyles = ({
@@ -44,12 +45,13 @@ const StyledCircularProgress = styled(CircularProgress)`
   `}
 `;
 
-const BaseButton = styled(({ isIcon, color, ...props }) => (
+const BaseButton = styled(({ isIcon, color, wrap, ...props }) => (
   <MUIButton {...props} disableElevation />
 ))`
   ${({
     color,
     variant,
+    wrap = 'wrap',
     theme: {
       typography: { pxToRem },
       palette,
@@ -83,6 +85,7 @@ const BaseButton = styled(({ isIcon, color, ...props }) => (
       padding: ${isIcon ? '8px' : '12px 16px'};
       padding: ${size === 'small' ? '6px 24px' : '12px 16px'};
       text-transform: capitalize;
+      white-space: ${wrap === 'wrap' ? 'break-space' : 'nowrap'};
     `;
   }}
 `;

@@ -1,7 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from '@reach/router';
 import {
   Box,
   Divider,
+  Icon,
   Spacer,
   Typography,
   useTheme,
@@ -10,8 +13,13 @@ import {
 } from '../../atoms';
 import { HeaderMenu, Footer } from '../../organisms';
 import { HeaderMenuProps } from '../../organisms/HeaderMenu';
-import { useBasicInfo, BasicInfo } from '../../../hooks';
+import { useFeatureFlagToggle, BasicInfo } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
+import { formatCurrency } from '../../../utils/formatters';
+import { NavPaths } from '../../../config/paths';
+import { MYACCOUNTS_HOME_URL } from '../../../config';
+import { FeatureFlagNames } from '../../../constants';
+import { setFeatureToggleFlag } from '../../../services/featureToggle';
 
 interface PageHeading {
   primary: string;
@@ -21,8 +29,10 @@ interface PageHeading {
 
 export interface MyAccountLayoutProps {
   children: React.ReactNode;
-  heading?: (basicInfo: BasicInfo) => PageHeading;
-  headerProps?: Omit<HeaderMenuProps, 'profileName'>;
+  basicInfo: BasicInfo;
+  isLoading?: boolean;
+  heading?: PageHeading;
+  headerProps?: Omit<HeaderMenuProps, 'cash'>;
 }
 
 const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
@@ -37,21 +47,69 @@ const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
   </div>
 );
 
-const MyAccountLayout = ({ children, heading, headerProps = {} }: MyAccountLayoutProps) => {
+const MyAccountLayout = ({
+  children,
+  basicInfo,
+  heading,
+  isLoading,
+  headerProps,
+}: MyAccountLayoutProps) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
-  const basicInfo = useBasicInfo();
+  const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
+  const currentUrl = useLocation().pathname;
+
+  const expFeatureSwitch = (isEnabled: boolean) => {
+    dispatch(setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled }));
+  };
 
   return (
     <LayoutContainer maxWidth="lg" disableGutters>
-      <HeaderMenu {...headerProps} profileName={`${basicInfo.firstName} ${basicInfo.lastName}`} />
-      {basicInfo.isLoading ? (
+      <HeaderMenu
+        {...headerProps}
+        isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
+        homePath={NavPaths.HOME_PAGE}
+        cash={formatCurrency(basicInfo.totalInvestableCash)}
+        currentUrl={currentUrl}
+        expFeatureSwitch={expFeatureSwitch}
+        links={[
+          {
+            name: 'Investment',
+            path: NavPaths.ACCOUNTS_PAGE,
+            shouldShowInDrawer: true,
+            shouldShowInMainMenu: true,
+          },
+          {
+            name: 'Life plan',
+            path: NavPaths.LIFE_PLAN_PAGE,
+            shouldShowInDrawer: true,
+            shouldShowInMainMenu: true,
+          },
+          { name: 'My accounts login', path: MYACCOUNTS_HOME_URL, shouldShowInDrawer: true },
+          {
+            name: 'Experimental features',
+            type: 'switch',
+            onClick: expFeatureSwitch,
+            shouldShowInDrawer: true,
+          },
+          {
+            name: 'Logout',
+            path: NavPaths.LOGOUT_PAGE,
+            shouldShowInDrawer: true,
+            shouldShowInDropdownMenu: true,
+            color: 'error',
+            icon: <Icon name="exit" color="error" />,
+          },
+        ]}
+      />
+      {basicInfo.isLoading || isLoading ? (
         <LinearProgress color="primary" />
       ) : (
         <Box px={isMobile ? 3 : 10} py={5}>
-          {heading && (
+          {!!heading && (
             <>
-              <Heading {...heading(basicInfo)} />
+              <Heading {...heading} />
               <Spacer y={6} />
             </>
           )}

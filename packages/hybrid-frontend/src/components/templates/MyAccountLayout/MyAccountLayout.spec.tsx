@@ -1,12 +1,17 @@
 import React from 'react';
-import { renderWithTheme, screen } from '@tsw/test-util';
-import MyAccountLayout from './MyAccountLayout';
-import * as hooks from '../../../hooks';
+import { configureStore } from '@reduxjs/toolkit';
+import { renderWithProviders, screen } from '@tsw/test-util';
+import { featureToggleSlice as featureToggleReducer } from '../../../services/featureToggle/reducers';
 import { formatCurrency } from '../../../utils/formatters';
+import MyAccountLayout from './MyAccountLayout';
 
 jest.mock('../../organisms', () => ({
   HeaderMenu: () => <div data-testid="header" />,
   Footer: () => <div data-testid="footer" />,
+}));
+
+jest.mock('@reach/router', () => ({
+  useLocation: () => ({ pathname: '/' }),
 }));
 
 jest.mock('../../atoms/LinearProgress', () => ({
@@ -22,20 +27,19 @@ const basicInfo = {
   clientAge: 37,
   totalInvested: 148238.52,
   totalGainLoss: 7632.04,
+  totalInvestableCash: 51520.22,
 };
 
 describe('MyAccountLayout', () => {
-  let useBasicInfoSpy: jest.SpyInstance;
-  beforeEach(() => {
-    useBasicInfoSpy = jest.spyOn(hooks, 'useBasicInfo').mockReturnValue(basicInfo);
-  });
+  const store = configureStore({ reducer: { featureToggle: featureToggleReducer } });
 
   describe('without heading', () => {
     beforeEach(() => {
-      renderWithTheme(
-        <MyAccountLayout>
+      renderWithProviders(
+        <MyAccountLayout basicInfo={basicInfo}>
           <div data-testid="some-child-element" />
-        </MyAccountLayout>
+        </MyAccountLayout>,
+        store
       );
     });
 
@@ -58,19 +62,20 @@ describe('MyAccountLayout', () => {
 
   describe('with heading', () => {
     it('renders with heading', async () => {
-      const heading = ({ firstName, totalInvested, totalGainLoss }: hooks.BasicInfo) => ({
+      const { firstName, totalInvested, totalGainLoss } = basicInfo;
+      const heading = {
         primary: `You have ${formatCurrency(totalInvested)} `,
         secondary: `Hi ${firstName}, `,
         tertiary: `${formatCurrency(totalGainLoss)} total gain`,
-      });
+      };
 
-      renderWithTheme(
-        <MyAccountLayout headerProps={{ profileName: 'Ava' }} heading={heading}>
+      renderWithProviders(
+        <MyAccountLayout heading={heading} basicInfo={basicInfo}>
           <div data-testid="some-child-element" />
-        </MyAccountLayout>
+        </MyAccountLayout>,
+        store
       );
 
-      expect(useBasicInfoSpy).toHaveBeenCalledTimes(1);
       const pageHeading = await screen.findByTestId('page-heading');
 
       expect(pageHeading.textContent).toMatchInlineSnapshot(
@@ -87,15 +92,12 @@ describe('MyAccountLayout', () => {
       isLoading: true,
     };
 
-    beforeEach(() => {
-      useBasicInfoSpy = jest.spyOn(hooks, 'useBasicInfo').mockReturnValue(basicInfoIsLoading);
-    });
-
     it('renders a loading progess bar', async () => {
-      renderWithTheme(
-        <MyAccountLayout>
+      renderWithProviders(
+        <MyAccountLayout basicInfo={basicInfoIsLoading}>
           <div data-testid="some-child-element" />
-        </MyAccountLayout>
+        </MyAccountLayout>,
+        store
       );
       expect(await screen.findByTestId('linear-progress-bar')).toBeInTheDocument();
     });

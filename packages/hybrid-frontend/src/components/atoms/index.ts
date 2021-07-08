@@ -42,6 +42,11 @@ export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './
 
 /* material-ui atoms */
 export {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemSecondaryAction,
   AppBar,
   Box,
   Card,
@@ -68,6 +73,8 @@ export {
   Paper,
   Select,
   Toolbar,
+  Drawer,
+  SwipeableDrawer,
   useTheme,
   makeStyles,
   createStyles,

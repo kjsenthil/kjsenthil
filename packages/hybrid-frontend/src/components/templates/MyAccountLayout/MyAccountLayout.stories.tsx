@@ -13,12 +13,24 @@ export default {
 
 const Template: Story<MyAccountLayoutProps> = (args) => <MyAccountLayout {...args} />;
 
+const basicInfo = {
+  isLoading: false,
+  firstName: 'Ava',
+  lastName: 'Garcia',
+  dateOfBirth: '1984-01-01',
+  clientAge: 37,
+  totalInvested: 148238.52,
+  totalGainLoss: 7632.04,
+  totalInvestableCash: 51520.22,
+};
+
 const defaultArgs: MyAccountLayoutProps = {
-  heading: () => ({
+  heading: {
     secondary: 'Hi Ava,',
     primary: 'You have £148,231.55',
     tertiary: '£7,122.44 total gain',
-  }),
+  },
+  basicInfo,
   children: (
     <MainCard title="Test body" renderActionEl={() => <Button>Click Me</Button>}>
       <Typography variant="h1">Test Content</Typography>

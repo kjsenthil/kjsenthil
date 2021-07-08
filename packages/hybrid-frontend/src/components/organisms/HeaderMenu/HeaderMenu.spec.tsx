@@ -1,20 +1,25 @@
 import React from 'react';
-import { renderWithProviders, screen } from '@tsw/test-util';
-import { Store } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { renderWithTheme } from '@tsw/test-util';
 import HeaderMenu from './HeaderMenu';
-import * as reducer from '../../../services/auth/reducers';
+
+const props = {
+  cash: '£101,100.00',
+  homePath: '/',
+  currentUrl: '/investment',
+  expFeatureSwitch: () => {},
+  links: [
+    {
+      name: 'Investment',
+      path: '/investment',
+    },
+    { name: 'Life plan', path: '/life-plan' },
+    { name: 'Logout', path: '/logout', shouldShowInDrawer: true },
+  ],
+};
 
 describe('HeaderMenu', () => {
-  const store: Store = configureStore({
-    reducer: { auth: reducer.authSlice },
-  });
-
-  beforeEach(() => {
-    renderWithProviders(<HeaderMenu profileName="Profile Name" />, store);
-  });
-
   it('renders the header menu', async () => {
-    expect(await screen.findByTestId('header-menu')).toBeInTheDocument();
+    const { result } = renderWithTheme(<HeaderMenu {...props} />);
+    expect(result.container).toMatchSnapshot();
   });
 });

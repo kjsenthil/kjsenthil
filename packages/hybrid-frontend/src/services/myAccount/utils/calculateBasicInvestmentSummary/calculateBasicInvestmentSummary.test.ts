@@ -1,4 +1,4 @@
-import { mockInvestSummaryResponse } from '../mocks';
+import { mockInvestSummaryResponse } from '../../mocks';
 import calculateBasicInvestmentSummary from './calculateBasicInvestmentSummary';
 
 describe('calculateBasicInvestmentSummary', () => {

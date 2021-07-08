@@ -42,13 +42,14 @@ const HomePage = () => {
     performance: { performanceDataPeriod, error: performanceError },
   } = useSelector((state: RootState) => state);
 
+  const basicInfo = useBasicInfo();
+
   const dispatch = useDispatch();
 
   const setDataPeriod = (period: string) => {
     dispatch(setPerformanceDataPeriod(period));
   };
 
-  // This is used to ensure we only fetch performance data at appropriate times
   const accountIdsJoined =
     included?.map(({ attributes: { accountId } }) => accountId).join(',') ?? '';
 
@@ -64,14 +65,10 @@ const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
 
-  // Historical performance data: false
   const performanceData = usePerformanceData();
   const contributionsData = useContributionsData();
   const performanceChartDimension = usePerformanceChartDimension();
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
-
-  // Projected performance data
-  const basicInfo = useBasicInfo();
 
   const totalContributed = contributionsData.length
     ? contributionsData[contributionsData.length - 1].value - contributionsData[0].value
@@ -179,13 +176,15 @@ const HomePage = () => {
     dispatch(createGoal({ goalType: GoalType.UNCATEGORIZED }));
   };
 
+  const { firstName, totalInvested, totalGainLoss } = basicInfo;
   return (
     <MyAccountLayout
-      heading={({ firstName, totalInvested, totalGainLoss }) => ({
+      basicInfo={basicInfo}
+      heading={{
         primary: `You have ${formatCurrency(totalInvested)}`,
         secondary: `Hi ${firstName},`,
         tertiary: `${formatCurrency(totalGainLoss)} total ${totalGainLoss >= 0 ? 'gain' : 'loss'}`,
-      })}
+      }}
     >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>

@@ -5,6 +5,7 @@ import { useStaticQuery } from 'gatsby';
 import HomePage from './HomePage';
 import { authSlice as authReducer } from '../../../services/auth/reducers';
 import investmentSummaryReducer from '../../../services/myAccount/reducers/investmentSummarySlice';
+import accountBreakdownReducer from '../../../services/myAccount/reducers/accountBreakdownSlice';
 import { performanceSlice as performanceReducer } from '../../../services/performance/reducers';
 import { goalCreationSlice as goalReducer } from '../../../services/goal/reducers';
 import { simulatedProjectionsSlice as projectionsReducer } from '../../../services/projections';
@@ -35,6 +36,7 @@ describe('HomePage', () => {
     reducer: {
       auth: authReducer,
       investmentSummary: investmentSummaryReducer,
+      accountBreakdown: accountBreakdownReducer,
       performance: performanceReducer,
       projections: projectionsReducer,
       client: () => mockClientResponse,

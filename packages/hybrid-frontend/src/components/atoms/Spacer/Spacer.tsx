@@ -23,11 +23,22 @@ export type SpacerProps = BoxProps & {
   // Setting this to true will change the display to 'inline-flex' rather than
   // the default 'flex'.
   inline?: boolean;
+
+  orientation?: 'vertical' | 'horizontal';
+  thickness?: boolean;
 };
 
-const Spacer = ({ x, y, basis, asDivider, inline, ...restProps }: SpacerProps) => {
+const Spacer = ({
+  x,
+  y,
+  basis,
+  asDivider,
+  inline,
+  thickness,
+  orientation = 'horizontal',
+  ...restProps
+}: SpacerProps) => {
   const theme = useTheme();
-
   return (
     <Box
       data-testid="Spacer"
@@ -41,7 +52,7 @@ const Spacer = ({ x, y, basis, asDivider, inline, ...restProps }: SpacerProps) =
       justifyContent="center"
       alignItems="center"
     >
-      {asDivider && <Divider isVertical={typeof x === 'number'} />}
+      {asDivider && <Divider isVertical={orientation === 'vertical'} />}
     </Box>
   );
 };

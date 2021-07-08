@@ -2,6 +2,7 @@ export enum NavPaths {
   ROOT_PAGE = '/my-account',
   HOME_PAGE = '/my-account/',
   LOGIN_PAGE = '/my-account/login',
+  LOGOUT_PAGE = '/my-account/logout',
   LIFE_PLAN_PAGE = '/my-account/life-plan',
   ACCOUNTS_PAGE = '/my-account/accounts',
   LIFE_PLAN_MANAGEMENT = '/my-account/goals/life-plan-management',

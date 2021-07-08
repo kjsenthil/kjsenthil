@@ -35,7 +35,7 @@ describe('customSlice', () => {
     });
   });
 
-  describe('dispatch fetchInvestmentSummary', () => {
+  describe('dispatch fetcher', () => {
     let action: any;
 
     beforeEach(() => {

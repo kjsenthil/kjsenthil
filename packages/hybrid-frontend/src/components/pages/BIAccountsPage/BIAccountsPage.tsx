@@ -8,7 +8,6 @@ import MainCard from '../../molecules/MainCard';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { mockAccountsTableHeader } from '../../../constants/storybook';
 import AccountsTable from '../../organisms/AccountsTable';
-import useAccountBreakdownInfo from '../../../hooks/useAccountBreakdownInfo';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
   fetchPerformanceAccountsAggregated,
@@ -20,6 +19,8 @@ import {
   usePerformanceData,
   useContributionsData,
   usePerformanceDataPeriod,
+  useAccountBreakdownInfo,
+  useBasicInfo,
 } from '../../../hooks';
 import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
@@ -29,6 +30,9 @@ const BIAccountsPage = () => {
   const {
     performance: { status: performanceStatus, error: performanceError },
   } = useSelector((state: RootState) => state);
+
+  const basicInfo = useBasicInfo();
+  const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
 
   const dispatch = useDispatch();
 
@@ -48,9 +52,6 @@ const BIAccountsPage = () => {
     }
   );
 
-  // Account Breakdown Data
-  const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
-
   const summaryContributions =
     accountBreakdown?.reduce(
       (totalContr, acctObj) => acctObj.accountTotalContribution + totalContr,
@@ -65,10 +66,11 @@ const BIAccountsPage = () => {
 
   return (
     <MyAccountLayout
-      heading={(basicInfo) => ({
+      basicInfo={basicInfo}
+      heading={{
         primary: `${basicInfo.firstName}'s`,
         secondary: `Investments`,
-      })}
+      }}
     >
       <Spacer y={3} />
       <Grid container spacing={6}>
