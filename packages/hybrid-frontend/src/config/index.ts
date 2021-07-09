@@ -41,6 +41,7 @@ const defaultEndpoints: Record<ApiEndpoints, string> = {
   MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
   MYACCOUNT_PERFORMANCE_CONTACT: '/myaccount/performance-contact/{id}',
   MYACCOUNT_PERFORMANCE_ACCOUNTS_AGGREGATED: '/myaccount/performance-accounts-aggregated',
+  MYACCOUNT_NETCONTRIBUTION_ACCOUNTS_AGGREGATED: '/myaccount/netcontribution-accounts-aggregated',
   MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS: '/myaccount/investment-summary-account',
   MYACCOUNT_CONTRIBUTION: '/myaccount/contribution-account/{id}',
   MYACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',

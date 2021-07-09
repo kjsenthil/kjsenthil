@@ -69,7 +69,7 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
 
               <AccountsTableCell>
                 <Typography variant="b2" color="primary" colorShade="dark2">
-                  {formatCurrency(row.accountTotalContribution)}
+                  {formatCurrency(row.accountTotalNetContribution)}
                 </Typography>
               </AccountsTableCell>
 

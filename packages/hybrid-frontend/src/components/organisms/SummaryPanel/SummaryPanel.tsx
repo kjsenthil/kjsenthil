@@ -1,12 +1,22 @@
 import * as React from 'react';
-import { SummaryValuesProps } from '../../../types';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { Divider, Box, Grid, Typography, Spacer } from '../../atoms';
 import CustomCard from './SummaryPanel.styles';
 
+export interface SummaryValuesProps {
+  totalValue: number;
+  totalNetContributions: number;
+
+  totalReturn: number;
+  totalReturnPct: number;
+
+  threeMonthsReturn?: number;
+  threeMonthsReturnPct?: number;
+}
+
 export default function SummaryPanel({
   totalValue,
-  totalContributions,
+  totalNetContributions,
   totalReturn,
   totalReturnPct,
   threeMonthsReturn,
@@ -30,9 +40,9 @@ export default function SummaryPanel({
             <Spacer x={1} />
             <Grid item>
               <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                TOTAL CONTRIBUTIONS
+                NET CONTRIBUTIONS
               </Typography>
-              <Typography variant="sh1">{formatCurrency(totalContributions)}</Typography>
+              <Typography variant="sh1">{formatCurrency(totalNetContributions)}</Typography>
             </Grid>
             <Spacer x={1} />
             <Divider />

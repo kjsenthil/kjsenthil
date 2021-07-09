@@ -5,7 +5,7 @@ import { formatCurrency, formatPercent } from '../../../../utils/formatters';
 
 export interface PerformanceChartSummaryPanelProps {
   totalPerformance: number;
-  totalContributions: number;
+  totalNetContributions: number;
 
   totalReturn: number;
   totalReturnPct: number;
@@ -13,7 +13,7 @@ export interface PerformanceChartSummaryPanelProps {
 
 export default function PerformanceChartSummaryPanel({
   totalPerformance,
-  totalContributions,
+  totalNetContributions,
   totalReturn,
   totalReturnPct,
 }: PerformanceChartSummaryPanelProps) {
@@ -27,8 +27,8 @@ export default function PerformanceChartSummaryPanel({
       />
 
       <Legend
-        title="Total Contributed"
-        value={totalContributions}
+        title="Net Contributed"
+        value={totalNetContributions}
         valueFormatter={formatCurrency}
         chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
       />

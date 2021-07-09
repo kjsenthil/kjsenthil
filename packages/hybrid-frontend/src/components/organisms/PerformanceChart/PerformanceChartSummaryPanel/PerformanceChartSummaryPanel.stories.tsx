@@ -18,7 +18,7 @@ const Template: Story<PerformanceChartSummaryPanelProps> = (args) => (
 
 const defaultArgs: PerformanceChartSummaryPanelProps = {
   totalPerformance: 120000,
-  totalContributions: 100000,
+  totalNetContributions: 100000,
   totalReturn: 20000,
   totalReturnPct: 0.2,
 };

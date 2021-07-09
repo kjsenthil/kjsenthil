@@ -5,7 +5,7 @@ import {
   mockAccountsTableData,
   mockAccountsTableFooterData,
   mockAccountsTableHeader,
-} from '../../../constants/storybook';
+} from './mocks';
 
 export default {
   title: 'Digital Hybrid/Organisms/Accounts Table',

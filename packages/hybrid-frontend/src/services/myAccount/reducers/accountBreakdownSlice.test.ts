@@ -4,17 +4,17 @@ import * as api from '../api';
 import { authSlice as authReducer } from '../../auth';
 import accountBreakdownReducer, { fetchAccountBreakdown } from './accountBreakdownSlice';
 
-import { mockClientResponse, mockContributions, mockInvestSummaryResponse } from '../mocks';
+import { mockClientResponse, mockNetContributions, mockInvestSummaryResponse } from '../mocks';
 
 jest.mock('../api', () => ({
-  getContributions: jest.fn(),
+  getNetContributions: jest.fn(),
 }));
 
 describe('accountBreakdownSlice', () => {
   let store: Store;
-  const mockGetContributions = api.getContributions as jest.Mock;
+  const mockGetContributions = api.getNetContributions as jest.Mock;
   beforeEach(() => {
-    mockGetContributions.mockResolvedValue(mockContributions);
+    mockGetContributions.mockResolvedValue(mockNetContributions);
 
     store = configureStore({
       reducer: {
@@ -65,7 +65,7 @@ describe('accountBreakdownSlice', () => {
     describe('when call is rejected', () => {
       it('sets error', async () => {
         const errorMessage = 'Could not find client data.';
-        (api.getContributions as jest.Mock).mockRejectedValue(errorMessage);
+        (api.getNetContributions as jest.Mock).mockRejectedValue(errorMessage);
         await store.dispatch(fetchAccountBreakdownAction);
         const { status, error } = store.getState().accountBreakdown;
 

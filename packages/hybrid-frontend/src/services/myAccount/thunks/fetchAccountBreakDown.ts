@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getContributions } from '../api';
+import { getNetContributions } from '../api';
 import { Breakdown, ClientState, InvestmentSummary, InvestmentSummaryResponse } from '../types';
 import { extractClientAccounts } from '../utils';
 
@@ -33,14 +33,15 @@ const fetchAccountBreakdown = createAsyncThunk(
           investSummaryItem.attributes.funds +
           investSummaryItem.attributes.shares;
 
-        const contributionResponse = await getContributions(investSummaryItem.id);
+        const contributionResponse = await getNetContributions(Number(investSummaryItem.id));
 
         return {
           id: investSummaryItem.id,
           accountName,
           accountType,
           accountTotalHoldings,
-          accountTotalContribution: contributionResponse?.data?.attributes?.totalContributions || 0,
+          accountTotalNetContribution:
+            contributionResponse?.data?.attributes?.totalContributions || 0,
           accountCash: investSummaryItem.attributes.cash,
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,

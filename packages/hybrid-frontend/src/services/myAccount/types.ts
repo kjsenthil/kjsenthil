@@ -52,13 +52,13 @@ export interface NetContributionSliceResponse {
   netContributionsToDate: number;
 }
 
-export interface ContributionResponse {
+export interface NetContributionResponse {
   data: {
-    type: 'contributions';
+    type: 'net-contributions';
     id: string;
     attributes: {
       totalContributions: number;
-      contributions?: NetContributionSliceResponse[];
+      netContributions?: NetContributionSliceResponse[];
     };
     links?: {
       self: string;
@@ -72,7 +72,7 @@ export interface BreakdownState extends CommonState<Array<Breakdown>> {}
 
 export interface Breakdown extends AccountData {
   accountType: string;
-  accountTotalContribution: number;
+  accountTotalNetContribution: number;
 }
 
 export interface ClientResponse {

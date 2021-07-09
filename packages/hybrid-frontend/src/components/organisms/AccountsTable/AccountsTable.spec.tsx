@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import AccountsTable from './AccountsTable';
-import { mockAccountsTableData, mockAccountsTableHeader } from '../../../constants/storybook';
+import { mockAccountsTableHeader, mockAccountsTableData } from './mocks';
 
 describe('AccountsTable', () => {
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe('AccountsTable', () => {
   it('renders a AccountsTable', () => {
     const headerCell1Text = screen.getByText('ACCOUNT');
     const headerCell2Text = screen.getByText('TOTAL HOLDINGS');
-    const headerCell3Text = screen.getByText('TOTAL CONTRIBUTIONS');
+    const headerCell3Text = screen.getByText('NET CONTRIBUTIONS');
     const headerCell4Text = screen.getByText('CASH');
     const headerCell5Text = screen.getByText('LIFETIME RETURN');
 

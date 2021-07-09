@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import SummaryPanel from './SummaryPanel';
-import { SummaryValuesProps } from '../../../types';
+import SummaryPanel, { SummaryValuesProps } from './SummaryPanel';
 
 export default {
   title: 'Digital Hybrid/Organisms/Summary Panel',
@@ -13,7 +12,7 @@ const Template: Story<SummaryValuesProps> = (args) => <SummaryPanel {...args} />
 
 const defaultArgs: SummaryValuesProps = {
   totalValue: 148238.52,
-  totalContributions: 120726.83,
+  totalNetContributions: 120726.83,
   totalReturn: 27512.14,
   totalReturnPct: 0.2534,
   threeMonthsReturn: 7632.04,

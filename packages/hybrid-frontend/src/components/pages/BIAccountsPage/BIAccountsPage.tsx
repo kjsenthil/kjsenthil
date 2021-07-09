@@ -6,7 +6,7 @@ import { MyAccountLayout } from '../../templates';
 import SummaryPanel from '../../organisms/SummaryPanel/SummaryPanel';
 import MainCard from '../../molecules/MainCard';
 import PerformanceChart from '../../organisms/PerformanceChart';
-import { mockAccountsTableHeader } from '../../../constants/storybook';
+import { AccountsTableHeader } from '../../../constants';
 import AccountsTable from '../../organisms/AccountsTable';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
@@ -54,7 +54,7 @@ const BIAccountsPage = () => {
 
   const summaryContributions =
     accountBreakdown?.reduce(
-      (totalContr, acctObj) => acctObj.accountTotalContribution + totalContr,
+      (totalContr, acctObj) => acctObj.accountTotalNetContribution + totalContr,
       0
     ) || 0;
 
@@ -77,7 +77,7 @@ const BIAccountsPage = () => {
         <Grid item xs={12}>
           <SummaryPanel
             totalValue={accountsSummary?.totalInvested}
-            totalContributions={summaryContributions}
+            totalNetContributions={summaryContributions}
             totalReturn={accountsSummary?.totalGainLoss}
             totalReturnPct={accountsSummary?.totalGainLossPercentage}
           />
@@ -121,7 +121,7 @@ const BIAccountsPage = () => {
               )}
             >
               <Spacer y={2.5} />
-              <AccountsTable headerRow={mockAccountsTableHeader} dataRow={accountsTableData} />
+              <AccountsTable headerRow={AccountsTableHeader} dataRow={accountsTableData} />
             </MainCard>
           </Grid>
         )}
@@ -139,10 +139,7 @@ const BIAccountsPage = () => {
               )}
             >
               <Spacer y={2.5} />
-              <AccountsTable
-                headerRow={mockAccountsTableHeader}
-                dataRow={linkedAccountsTableData}
-              />
+              <AccountsTable headerRow={AccountsTableHeader} dataRow={linkedAccountsTableData} />
             </MainCard>
           </Grid>
         )}

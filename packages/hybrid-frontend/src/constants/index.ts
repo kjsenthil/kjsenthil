@@ -1,3 +1,5 @@
+import { AccountsHeaderCell } from '../components/organisms/AccountsTable/AccountsTable';
+
 export enum AccountType {
   ISA = 'isa',
   GIA = 'gia',
@@ -32,3 +34,25 @@ export enum ApiAppName {
   myAccounts = 'MyAccountsApi',
   ois = 'OisApi',
 }
+
+export const AccountsTableHeader: AccountsHeaderCell[] = [
+  {
+    value: 'ACCOUNT',
+  },
+  {
+    value: 'TOTAL HOLDINGS',
+    tooltip: 'Total Holdings = Investments plus Cash',
+  },
+  {
+    value: 'NET CONTRIBUTIONS',
+    tooltip: 'Total net contribution = Contributions minus Withdrawals',
+  },
+  {
+    value: 'CASH',
+  },
+  {
+    value: 'LIFETIME RETURN',
+    tooltip:
+      'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
+  },
+];

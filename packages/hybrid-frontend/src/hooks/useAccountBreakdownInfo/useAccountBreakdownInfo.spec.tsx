@@ -10,7 +10,7 @@ import {
 } from '../../services/myAccount/mocks';
 
 jest.mock('../../services/myAccount/api', () => ({
-  getContributions: jest.fn(),
+  getNetContributions: jest.fn(),
 }));
 
 const getRenderedHook = (store: Store) => {

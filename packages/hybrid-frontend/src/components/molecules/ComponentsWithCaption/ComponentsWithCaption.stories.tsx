@@ -3,8 +3,6 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import FormInput from '../FormInput';
 import ComponentsWithCaption, { ComponentsWithCaptionProps } from './ComponentsWithCaption';
 import { Button } from '../../atoms';
-import AccountsTable from '../../organisms/AccountsTable';
-import { mockAccountsTableData, mockAccountsTableHeader } from '../../../constants/storybook';
 
 export default {
   title: 'Digital Hybrid/Molecules/Container With Caption',
@@ -47,10 +45,4 @@ ButtonWithCaption.args = {
       Button
     </Button>
   ),
-};
-
-export const AccountsTableWithCaption = Template.bind({});
-AccountsTableWithCaption.args = {
-  caption: 'Here is the caption',
-  children: <AccountsTable headerRow={mockAccountsTableHeader} dataRow={mockAccountsTableData} />,
 };

@@ -170,14 +170,14 @@ const LifePlanManagementPage = () => {
     accountBreakdown?.map((breakdownItem) => ({
       accountType: breakdownItem.accountName || '',
       accountName: breakdownItem.accountName || '',
-      accountTotalContribution: breakdownItem.accountTotalContribution,
+      accountTotalNetContribution: breakdownItem.accountTotalNetContribution,
       monthlyInvestment: breakdownItem.monthlyInvestment || 0,
     })) || [];
 
   const footerData = [
     'TOTAL',
     formatCurrency(
-      tableData.reduce((totalVal, currVal) => totalVal + currVal.accountTotalContribution, 0)
+      tableData.reduce((totalVal, currVal) => totalVal + currVal.accountTotalNetContribution, 0)
     ),
     formatCurrency(
       tableData.reduce((totalVal, currVal) => totalVal + currVal.monthlyInvestment, 0)

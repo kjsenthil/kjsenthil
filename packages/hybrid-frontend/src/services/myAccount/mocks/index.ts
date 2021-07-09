@@ -2,7 +2,7 @@ import { AccountData, ClientAccountTypes } from '../../types';
 import {
   BreakdownAllocationResponse,
   ClientResponse,
-  ContributionResponse,
+  NetContributionResponse,
   InvestmentSummaryResponse,
   MonthlySavingsResponse,
   ClientAccountItem,
@@ -21,7 +21,7 @@ export const mockAccountsBreakdown: Breakdown[] = [
   {
     id: '12345',
     accountType: 'accounts',
-    accountTotalContribution: 3000,
+    accountTotalNetContribution: 3000,
     accountName: 'Investment Account ',
     accountCash: 100,
     accountTotalHoldings: 100,
@@ -31,7 +31,7 @@ export const mockAccountsBreakdown: Breakdown[] = [
   {
     id: '23456',
     accountType: 'accounts',
-    accountTotalContribution: 4000,
+    accountTotalNetContribution: 4000,
     accountName: 'ISA ',
     accountCash: 139678.85,
     accountTotalHoldings: 545908.9554399999,
@@ -41,7 +41,7 @@ export const mockAccountsBreakdown: Breakdown[] = [
   {
     id: '34567',
     accountType: 'linked-accounts',
-    accountTotalContribution: 5000,
+    accountTotalNetContribution: 5000,
     accountName: 'SIPP ',
     accountTotalHoldings: 89367.174679,
     accountCash: 43543.26,
@@ -55,13 +55,13 @@ export const mockAccountsBreakdownData = {
   accountsSummary: mockBasicInvestmentSummary,
 };
 
-export const mockContributions: ContributionResponse = {
+export const mockNetContributions: NetContributionResponse = {
   data: {
-    type: 'contributions',
+    type: 'net-contributions',
     id: '43751',
     attributes: {
       totalContributions: 40,
-      contributions: [
+      netContributions: [
         { date: '2013-03-05T00:00:00', netContributionsToDate: 2000.0 },
         {
           date: '2013-03-21T00:00:00',

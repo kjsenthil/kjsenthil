@@ -164,26 +164,26 @@ function PerformanceChart({
   // ----- Summary panel ----- //
 
   let totalPerformance = 0;
-  let totalContributions = 0;
+  let totalNetContributions = 0;
 
   if (tooltipData) {
     totalPerformance = tooltipData.performance.value;
-    totalContributions = tooltipData.contribution.value;
+    totalNetContributions = tooltipData.contribution.value;
   } else if (hasData) {
     totalPerformance = lastPerformanceDataPoint.value;
-    totalContributions = lastContributionsDataPoint.value;
+    totalNetContributions = lastContributionsDataPoint.value;
   }
 
-  const totalReturn = totalPerformance - totalContributions;
+  const totalReturn = totalPerformance - totalNetContributions;
   const totalReturnPct =
-    totalPerformance && totalContributions ? totalPerformance / totalContributions - 1 : 0;
+    totalPerformance && totalNetContributions ? totalPerformance / totalNetContributions - 1 : 0;
 
   return (
     <Container>
       <ControlPanelContainer>
         <PerformanceChartSummaryPanel
           totalPerformance={totalPerformance}
-          totalContributions={totalContributions}
+          totalNetContributions={totalNetContributions}
           totalReturn={totalReturn}
           totalReturnPct={totalReturnPct}
         />

@@ -56,9 +56,9 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
 
   const timeHorizon = monthDifference(dob100, new Date());
 
-  const totalContributions =
+  const totalNetContributions =
     (accountBreakdown || []).reduce(
-      (totalContr, acctObj) => acctObj.accountTotalContribution + totalContr,
+      (totalContr, acctObj) => acctObj.accountTotalNetContribution + totalContr,
       0
     ) || 0;
 
@@ -110,7 +110,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
     isConeGraph: true,
     lumpSumAmount: lumpSum,
     desiredAmount: 0,
-    netContribution: totalContributions,
+    netContribution: totalNetContributions,
     monthlyContributions,
     portfolioCurrentValue,
     preGoalExpectedVolatility: volatility,
