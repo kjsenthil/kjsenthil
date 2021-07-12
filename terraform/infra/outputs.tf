@@ -38,6 +38,16 @@ output "myaccounts_home_url" {
   description = "My Accounts Home Page"
 }
 
+output "gtm_env_auth" {
+  value       = var.gtm_env_auth
+  description = "Environment auth identifier for Google Tag Manager"
+}
+
+output "gtm_env_preview" {
+  value       = var.gtm_env_preview
+  description = "Environment preview identifier for Google Tag Manager"
+}
+
 output "app_conf_keys" {
   value = azurerm_app_configuration.app_config.primary_read_key
 }

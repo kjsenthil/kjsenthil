@@ -32,6 +32,8 @@ const env = from({
   API_ENDPOINTS: process.env.API_ENDPOINTS,
   API_BASE_URL: process.env.API_BASE_URL,
   MYACCOUNTS_HOME_URL: process.env.MYACCOUNTS_HOME_URL,
+  GTM_AUTH: process.env.GTM_AUTH,
+  GTM_PREVIEW: process.env.GTM_PREVIEW,
 });
 
 const isRequired = NODE_ENV !== 'test';
@@ -79,6 +81,10 @@ export const API_ENDPOINTS = env
   .required(isRequired)
   .default(defaultEndpoints)
   .asJsonObject() as Record<ApiEndpoints, string>;
+
+export const GTM_AUTH = env.get('GTM_AUTH').required(isRequired).asString();
+
+export const GTM_PREVIEW = env.get('GTM_PREVIEW').required(isRequired).asString();
 
 export const MY_ACCOUNTS_API_CLIENT_ID = 'myaccounts-spa';
 

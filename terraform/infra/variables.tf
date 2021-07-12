@@ -37,6 +37,16 @@ variable "location" {
   description = "Azure location to deploy resources into. Must be either 'uksouth' or 'ukwest'"
 }
 
+variable "gtm_env_auth" {
+  type        = string
+  description = "Environment auth identifier (not a secret) for Google Tag Manager found in the GTM admin console."
+}
+
+variable "gtm_env_preview" {
+  type        = string
+  description = "Environment preview identifier (not a secret) for Google Tag Manager found in the GTM admin console."
+}
+
 variable "apim_name" {
   type        = string
   description = "Name of the APIM to use for this deployment to create APIs in"

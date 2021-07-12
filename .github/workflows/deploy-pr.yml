@@ -423,6 +423,8 @@ jobs:
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
           echo ::set-output name=myaccounts-home-url::$( terraform output -json | jq -r .myaccounts_home_url.value )
+          echo ::set-output name=gtm-env-auth::$( terraform output -json | jq -r .gtm_env_auth.value )
+          echo ::set-output name=gtm-env-preview::$( terraform output -json | jq -r .gtm_env_preview.value )
 
     outputs:
       frontend_storage_account_name: ${{ steps.set-terraform-outputs.outputs.frontend-storage-account-name }}
@@ -432,6 +434,8 @@ jobs:
       api_base_url: ${{ steps.set-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.set-terraform-outputs.outputs.api-endpoints }}
       myaccounts_home_url: ${{ steps.set-terraform-outputs.outputs.myaccounts-home-url }}
+      gtm_env_auth: ${{ steps.set-terraform-outputs.outputs.gtm-env-auth }}
+      gtm_env_preview: ${{ steps.set-terraform-outputs.outputs.gtm-env-preview }}
 
   open_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
@@ -749,6 +753,8 @@ jobs:
           echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
           echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
           echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
+          echo 'GTM_AUTH=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_auth }}' >> .env.pr
+          echo 'GTM_PREVIEW=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_preview }}' >> .env.pr
           cat .env.pr
 
       - name: "Gatsby build"
@@ -1159,6 +1165,8 @@ jobs:
           echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.production
           echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.production
           echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.production
+          echo 'GTM_AUTH=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_auth }}' >> .env.production
+          echo 'GTM_PREVIEW=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_preview }}' >> .env.production
           cat .env.production
 
       - name: "Build Storybook"

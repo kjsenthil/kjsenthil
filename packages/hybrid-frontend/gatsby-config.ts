@@ -1,5 +1,5 @@
 import { includePlugins } from 'gatsby-plugin-ts-config';
-import { ACTIVE_ENV } from './src/config';
+import { ACTIVE_ENV, GTM_AUTH, GTM_PREVIEW } from './src/config';
 
 const env = ACTIVE_ENV === 'production' ? 'prod' : 'dev';
 
@@ -35,6 +35,17 @@ export default {
       options: {
         name: 'images',
         path: `${__dirname}/src/assets/img/`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: 'GTM-NPWTSD3',
+        includeInDevelopment: false,
+        defaultDataLayer: { platform: 'gatsby' },
+        enableWebVitalsTracking: true,
+        gtmAuth: GTM_AUTH,
+        gtmPreview: GTM_PREVIEW,
       },
     },
   ],

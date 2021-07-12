@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [`gatsby-plugin-ts-config`],
+  plugins: ['gatsby-plugin-ts-config'],
 };
