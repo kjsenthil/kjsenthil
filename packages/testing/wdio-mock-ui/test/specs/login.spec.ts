@@ -3,22 +3,22 @@ import { expect } from 'chai'
 import { open } from '../components/browser/browser.actions'
 import { loginAction, getAlertMsgTxt, pinLoginAction } from '../components/login/login.actions'
 import { getPageHeading, logout } from '../components/myaccount/myaccount.actions'
-import { url, loginApiUrl, pinApiUrl, contributionsApiUrl, accountsApiUrl, investmentSummaryApiUrl } from '../environments/dev'
+import { url, loginApiUrl, pinApiUrl, accountsApiUrl, investmentSummaryApiUrl, performanceAccountsAggregatedApiUrl } from '../environments/dev'
 import { Mock } from 'webdriverio';
 import loginMock from '../fixtures/loginMock'
 import loginErrorMock from '../fixtures/loginErrorMock'
 import pinMock from '../fixtures/pinMock'
-import contributionsMock from '../fixtures/contributionsMock'
 import accountsMock from '../fixtures/accountsMock'
 import investmentSummaryMock from '../fixtures/investmentSummary'
+import performanceAccountsAggregatedMock from '../fixtures/performanceAccountsAggregatedMock'
 
 describe("Login test scenarios", () => {
 
   let login: Mock
   let pin: Mock
-  let contributions: Mock
   let accounts: Mock
   let investmentSummary: Mock
+  let performanceAccountsAggregated: Mock
 
   describe('successful login scenarios', async () => {
     //Arrange
@@ -46,33 +46,36 @@ describe("Login test scenarios", () => {
         accountsApiUrl,
         {
           method: "get",
+          headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
         }
       );
       await accounts.respond(accountsMock, statusCode);
-  
-      contributions = await browser.mock(
-        contributionsApiUrl,
-        {
-          method: "get",
-        }
-      );
-      await contributions.respond(contributionsMock, statusCode);
   
       investmentSummary = await browser.mock(
         investmentSummaryApiUrl,
         {
           method: "get",
+          headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
         }
       );
       await investmentSummary.respond(investmentSummaryMock, statusCode);
+
+      performanceAccountsAggregated = await browser.mock(
+        performanceAccountsAggregatedApiUrl,
+        {
+          method: "get",
+          headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
+        }
+      );
+      await performanceAccountsAggregated.respond(performanceAccountsAggregatedMock, statusCode);
     });
 
     after(async ()=>{
       await login.restore()
       await pin.restore()
-      await contributions.restore()
       await accounts.restore()
       await investmentSummary.restore()
+      await performanceAccountsAggregated.restore()
     })
 
     it("should login with valid credentials", async () => {    

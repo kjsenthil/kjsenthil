@@ -663,8 +663,9 @@ jobs:
      - detect_changes
      - build_cache
      - get_pr_terraform_outputs
-     - clear_storybook_storage_account
+     - unit_test
      - deploy_gatsby
+     - deploy_storybook
    strategy:
      matrix:
        browser: [chrome]
@@ -702,6 +703,8 @@ jobs:
             BROWSER: ${{matrix.browser}}
             URL: ${{ needs.deploy_gatsby.outputs.url }}
             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+            PR_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
+            PR_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
 
   # Deploys frontend pr contents
   deploy_gatsby:
@@ -1188,6 +1191,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
+      - wdio_ui_test
       #- api_test_suite
     steps:
       - name: "Login to Azure"
@@ -1211,6 +1215,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
+      - wdio_ui_test
       - plan_staging
       - plan_prod
       - get_staging_apim_outputs
@@ -1317,6 +1322,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
+      - wdio_ui_test
       - close_storage_account_firewalls
       - get_staging_rg_outputs
       - get_staging_apim_outputs
@@ -1341,13 +1347,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? '#009933' : '#cc0000',
+                "color": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.wdio_ui_test.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? 'Deployment Successful :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.wdio_ui_test.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? 'Deployment Successful :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -1418,6 +1424,7 @@ jobs:
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook' }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.wdio_ui_test.result }}' === 'success' ? ':heavy-check-mark:   Wdio UI Tests' : '${{ needs.wdio_ui_test.result }}' === 'failure' ? ':heavy-cross-mark:   Wdio UI Tests' : ':heavy-minus-sign:   Wdio UI Tests' }},                 
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.close_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Storage Account Firewalls' : '${{ needs.close_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Storage Account Firewalls' : ':heavy-minus-sign:   Close Storage Account Firewalls' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   Publish Results to PR' : '${{ needs.publish_results.result }}' === 'failure' ? ':heavy-cross-mark:   Publish Results to PR' : ':heavy-minus-sign:   Publish Results to PR' }},

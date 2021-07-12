@@ -10,4 +10,5 @@ export const logout = async () => {
     await (await logOut()).waitForExist({ timeout: 3000 })
     await (await logOut()).waitForDisplayed({ timeout: 3000 });
     await (await logOut()).click()
+    await browser.pause(500)
 }

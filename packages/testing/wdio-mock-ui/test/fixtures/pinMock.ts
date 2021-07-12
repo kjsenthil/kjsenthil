@@ -1,3 +1,4 @@
+import { loginCredentials } from '../environments/dev'
 export default {
   "data": {
     "uri": "pin",
@@ -5,7 +6,7 @@ export default {
     "id": null,
     "attributes": {
       "id": null,
-      "contactId": 2257889,
+      "contactId": Number(`${loginCredentials.username.toString().substring(2, 7)}`),
       "tokens": [
         {
           "application": "MyAccountsApi",
