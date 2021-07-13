@@ -28,7 +28,11 @@ export default function ChartPeriodSelection({
           selected={period === currentPeriod}
           color="default"
         >
-          <Typography variant="sh3" color="primary">
+          <Typography
+            variant="sh3"
+            color={period === currentPeriod ? 'white' : 'primary'}
+            colorShade="dark2"
+          >
             {periodTextDisplay(period)}
           </Typography>
         </StyledPeriodSelectionButton>

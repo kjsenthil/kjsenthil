@@ -7,9 +7,10 @@ export const Container = styled.div`
     width: inherit;
     display: flex;
     background-color: ${theme.palette.grey['200']};
-    border-radius: 50px;
+    border-radius: 16px;
     justify-content: space-between;
-    padding: 3px;
+    padding: 3px 12px 3px 4px;
+    color: 'white';
   `}
 `;
 
@@ -27,9 +28,10 @@ export const StyledPeriodSelectionButton = styled(PeriodSelectionButton)`
     min-width: ${theme.spacing(3)}px;
     padding: ${theme.spacing(0.5)}px;
 
+    padding: 5px 10px 5px 9px;
     text-transform: initial;
-    border-radius: 20px;
-    background-color: ${selected ? theme.palette.common.white : 'initial'};
+    border-radius: 8px;
+    background-color: ${selected ? theme.palette.primary.main : 'initial'};
     &:hover {
       background-color: ${selected ? theme.palette.primary.light2 : 'transparent'} 
     }

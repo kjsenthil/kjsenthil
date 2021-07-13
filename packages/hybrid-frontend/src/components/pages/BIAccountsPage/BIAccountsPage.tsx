@@ -4,7 +4,6 @@ import { Skeleton } from '@material-ui/lab';
 import { Box, Button, Grid, Icon, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import SummaryPanel from '../../organisms/SummaryPanel/SummaryPanel';
-import MainCard from '../../molecules/MainCard';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { AccountsTableHeader } from '../../../constants';
 import AccountsTable from '../../organisms/AccountsTable';
@@ -24,7 +23,8 @@ import {
 } from '../../../hooks';
 import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
-import { DisabledComponent } from '../../molecules';
+import { ChartPeriodSelection, DisabledComponent, MainCard } from '../../molecules';
+import { formatCurrency } from '../../../utils/formatters';
 
 const BIAccountsPage = () => {
   const {
@@ -64,6 +64,10 @@ const BIAccountsPage = () => {
   const linkedAccountsTableData =
     accountBreakdown?.filter((breakItem) => breakItem.accountType === 'linked-accounts') || [];
 
+  const setDataPeriod = (period: string) => {
+    dispatch(setPerformanceDataPeriod(period));
+  };
+
   return (
     <MyAccountLayout
       basicInfo={basicInfo}
@@ -72,7 +76,21 @@ const BIAccountsPage = () => {
         secondary: `Investments`,
       }}
     >
-      <Spacer y={3} />
+      <Grid container xs={12}>
+        <Grid xs={9}>
+          <Typography variant="h2" color="primary" colorShade="dark2">
+            Total Value: {formatCurrency(accountsSummary.totalInvested)}
+          </Typography>
+        </Grid>
+        <Grid xs={3}>
+          <ChartPeriodSelection
+            currentPeriod={performanceDataPeriod}
+            performanceDataPeriod={PerformanceDataPeriod}
+            setCurrentPeriod={setDataPeriod}
+          />
+        </Grid>
+      </Grid>
+      <Spacer y={7} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <SummaryPanel
@@ -81,31 +99,6 @@ const BIAccountsPage = () => {
             totalReturn={accountsSummary?.totalGainLoss}
             totalReturnPct={accountsSummary?.totalGainLossPercentage}
           />
-        </Grid>
-
-        <Grid item xs={12}>
-          <MainCard>
-            {/* eslint-disable-next-line no-nested-ternary */}
-            {hasDataForPerformanceChart ? (
-              <Box p={2}>
-                <PerformanceChart
-                  performanceData={performanceData}
-                  contributionsData={contributionsData}
-                  periodSelectionProps={{
-                    performanceDataPeriod: PerformanceDataPeriod,
-                    currentPeriod: performanceDataPeriod,
-                    setCurrentPeriod: (newPeriod: string) =>
-                      dispatch(setPerformanceDataPeriod(newPeriod)),
-                  }}
-                  axisBottomConfig={axisBottomConfig}
-                />
-              </Box>
-            ) : performanceFetchMaxRetriesHit && performanceError ? (
-              <Typography>{performanceError}</Typography>
-            ) : (
-              <Skeleton height={performanceChartDimension.height} />
-            )}
-          </MainCard>
         </Grid>
 
         {accountsTableData.length > 0 && (
@@ -143,6 +136,35 @@ const BIAccountsPage = () => {
             </MainCard>
           </Grid>
         )}
+
+        <Grid item xs={12}>
+          <Typography variant="h3" color="primary" colorShade="dark2">
+            Performance chart
+          </Typography>
+          <Spacer y={3} />
+          <MainCard>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {hasDataForPerformanceChart ? (
+              <Box p={2}>
+                <PerformanceChart
+                  performanceData={performanceData}
+                  contributionsData={contributionsData}
+                  periodSelectionProps={{
+                    performanceDataPeriod: PerformanceDataPeriod,
+                    currentPeriod: performanceDataPeriod,
+                    setCurrentPeriod: (newPeriod: string) =>
+                      dispatch(setPerformanceDataPeriod(newPeriod)),
+                  }}
+                  axisBottomConfig={axisBottomConfig}
+                />
+              </Box>
+            ) : performanceFetchMaxRetriesHit && performanceError ? (
+              <Typography>{performanceError}</Typography>
+            ) : (
+              <Skeleton height={performanceChartDimension.height} />
+            )}
+          </MainCard>
+        </Grid>
       </Grid>
     </MyAccountLayout>
   );

@@ -24,7 +24,7 @@ export default function SummaryPanel({
 }: SummaryValuesProps) {
   return (
     <CustomCard>
-      <Grid container spacing={3} alignItems="center" justify="space-between">
+      <Grid container spacing={0} alignItems="center" justify="space-between">
         <Grid item xs={12} sm={threeMonthsReturn ? 6 : 12}>
           <Grid container justify="space-evenly">
             <Grid item>
