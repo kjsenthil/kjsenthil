@@ -23,10 +23,8 @@ export const CardBody = styled.div`
 `;
 
 export const CardFooter = styled.div`
-  align-items: center;
   display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
+  flex-direction: column;
   justify-content: space-evenly;
 `;
 

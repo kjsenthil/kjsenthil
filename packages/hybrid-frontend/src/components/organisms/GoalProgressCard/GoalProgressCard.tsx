@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { ProgressBar, Spacer, Tooltip, Typography } from '../../atoms';
 import {
   GoalProgressStyledCard,
@@ -14,31 +14,43 @@ import {
 } from './GoalProgressCard.styles';
 
 export interface GoalProgressCardProps {
-  accountTypes: string[];
-  currentValue: number;
+  onTrackPercentage: number;
+  accountValues: Array<{
+    label: string;
+    value: number;
+  }>;
   goalValue: number;
+  shortfallValue: number;
+  shortfallUnderperformValue: number;
+  title: string;
   iconSrc: string;
   iconAlt?: string;
-  title: string;
   tooltipText: string;
-  underperformValue: number;
 }
 
 const GoalProgressCard = ({
-  accountTypes,
-  currentValue,
-  underperformValue,
+  onTrackPercentage,
+  accountValues,
   goalValue,
+  shortfallValue,
+  shortfallUnderperformValue,
   iconSrc,
   iconAlt = 'goal image',
   title,
   tooltipText,
 }: GoalProgressCardProps) => {
+  const totalAccountValue = accountValues.reduce((total, { value }) => total + value, 0);
+
   const numberFormatOptions = { opts: { minimumFractionDigits: 0 } };
-  const formattedCurrentValue = formatCurrency(currentValue, numberFormatOptions);
-  const formattedUnderperformValue = formatCurrency(underperformValue, numberFormatOptions);
+
+  const formattedOnTrackPercentage = formatPercent(onTrackPercentage, numberFormatOptions);
+  const formattedTotalAccountValue = formatCurrency(totalAccountValue, numberFormatOptions);
   const formattedGoalValue = formatCurrency(goalValue, numberFormatOptions);
-  const onTrackPercentage = Math.round((currentValue / goalValue) * 100);
+  const formattedShortfallValue = formatCurrency(shortfallValue, numberFormatOptions);
+  const formattedShortfallUnderperformValue = formatCurrency(
+    shortfallUnderperformValue,
+    numberFormatOptions
+  );
 
   return (
     <GoalProgressStyledCard>
@@ -54,14 +66,13 @@ const GoalProgressCard = ({
 
           <Typography color="primary" colorShade="dark2">
             {"You're on track to have "}
-            <b>{onTrackPercentage}%</b>
+            <b>{formattedOnTrackPercentage}</b>
             {' of your target.'}
           </Typography>
           <Typography color="primary" colorShade="dark2" display="inline">
-            {"That's "}
-            <b>{formattedCurrentValue}</b>
-            {' to spend each month, or '}
-            <b>{formattedUnderperformValue}</b>
+            {"That's a shortfall of "}
+            <b>{formattedShortfallValue}</b>
+            {`, or ${formattedShortfallUnderperformValue}`}
             {' if markets underperform.'}
           </Typography>
           <Tooltip title={tooltipText}>
@@ -75,20 +86,19 @@ const GoalProgressCard = ({
       <CardFooter>
         <GoalValues>
           <Typography color="primary" colorShade="dark2" variant="h3">
-            {formattedCurrentValue}
+            {formattedTotalAccountValue}
           </Typography>
           <Typography color="grey" colorShade="dark1" variant="b2">
-            / {formattedGoalValue}
+            <b>/ {formattedGoalValue}</b>
           </Typography>
         </GoalValues>
-        <Typography color="secondary" variant="sh4">
-          {accountTypes.join(' + ')}
+        <Spacer y={1} />
+        <ProgressBar progress={accountValues.map(({ value }) => value / goalValue)} />
+        <Spacer y={0.5} />
+        <Typography color="secondary" variant="sh4" align="right">
+          {accountValues.map(({ label }) => label).join(' + ')}
         </Typography>
       </CardFooter>
-
-      <Spacer y={0.75} />
-
-      <ProgressBar progress={onTrackPercentage / 100} />
     </GoalProgressStyledCard>
   );
 };

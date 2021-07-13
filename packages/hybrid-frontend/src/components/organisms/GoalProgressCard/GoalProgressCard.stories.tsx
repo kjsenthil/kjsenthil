@@ -15,13 +15,19 @@ export default {
 } as Meta;
 
 const defaultArgs: GoalProgressCardProps = {
-  accountTypes: ['ISA', 'GIA', 'SIPP'],
-  currentValue: 2340,
-  goalValue: 3205,
+  onTrackPercentage: 0.72,
+  accountValues: [
+    { label: 'ISA', value: 700000 },
+    { label: 'GIA', value: 500000 },
+    { label: 'SIPP', value: 242000 },
+  ],
+  goalValue: 1975000,
+  shortfallValue: 553000,
+  shortfallUnderperformValue: 689000,
+  title: 'Retirement',
   iconSrc: '/goal-graphic.png',
-  title: 'Retire',
+  iconAlt: 'goal graphic',
   tooltipText: 'Such forecasts are not a reliable indicator of future returns',
-  underperformValue: 1450,
 };
 
 const Template: Story<GoalProgressCardProps> = (args) => (
