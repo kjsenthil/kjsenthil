@@ -68,3 +68,21 @@ variable "csp_allowed_style_sources" {
   description = "Any allowed 'style-src' directives to be added to the CSP header in the CDN rules"
   default     = "'self'"
 }
+
+variable "public_dns_zone_name" {
+  type        = string
+  description = "The name of the public DNS zone"
+  default     = ""
+}
+
+variable "public_dns_cname" {
+  type        = string
+  description = "The cname record mapped to the CDN"
+  default     = ""
+}
+
+variable "dns_resource_group_name" {
+  type        = string
+  description = "The resource group name where the DNS public zones are hosted in, if left blank, any required DNS resource will be created in var.resource_group_name"
+  default     = ""
+}

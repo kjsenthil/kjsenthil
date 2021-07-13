@@ -7,7 +7,7 @@ resource "azurerm_dns_zone" "public_dns_parent_zone" {
 
 resource "azurerm_dns_zone" "public_dns_child_zone" {
   for_each            = toset(var.public_dns_child_zones)
-  name                = each.key
+  name                = "${each.key}.${var.public_dns_parent_zone}"
   resource_group_name = var.resource_group_name
   tags                = merge(map("tf_module_path", "./terraform/modules/public_dns_zone"), var.tags)
 }

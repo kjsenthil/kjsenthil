@@ -51,3 +51,13 @@ module "cdn" {
 
   tags = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
 }
+
+resource "azurerm_dns_cname_record" "cdn" {
+  count               = var.public_dns_cname == "" ? 0 : 1
+  name                = var.public_dns_cname
+  zone_name           = var.public_dns_zone_name
+  resource_group_name = var.dns_resource_group_name == "" ? var.resource_group_name : var.dns_resource_group_name
+  ttl                 = 3600
+  target_resource_id  = module.cdn.cdn_id
+  tags                = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
+}

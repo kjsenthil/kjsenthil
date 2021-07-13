@@ -71,3 +71,13 @@ variable "app_insights_name" {
   type        = string
   description = "name of the Application insights"
 }
+
+variable "public_dns_zone_name" {
+  type        = string
+  description = "The name of the public DNS zone"
+}
+
+variable "dns_resource_group_name" {
+  type        = string
+  description = "Resource group that hosts the public DNS zone"
+}

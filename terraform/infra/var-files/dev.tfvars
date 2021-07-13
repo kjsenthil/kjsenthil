@@ -1,3 +1,5 @@
-location        = "UK South"
-gtm_env_auth    = "JaOmn40jPLO9ehcopFAfeQ"
-gtm_env_preview = "env-3"
+location                = "UK South"
+public_dns_zone_name    = "dev.bi-digital.co.uk"
+dns_resource_group_name = "rg-uks-staging-digital-hybrid"
+gtm_env_auth            = "JaOmn40jPLO9ehcopFAfeQ"
+gtm_env_preview          = "env-3"
