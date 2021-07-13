@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import DigitalCoachBox, { DigitalCoachBoxProps } from './DigitalCoachBox';
 
 export default {
-  title: 'Digital Hybrid/Organisms/Digital Coach Box',
+  title: 'Digital Hybrid/Molecules/Digital Coach Box',
   component: DigitalCoachBox,
   argTypes: {},
 } as Meta;

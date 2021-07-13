@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Typography, TypographyProps } from '../../atoms';
-import { TypographyWithTooltip } from '../../molecules';
+import TypographyWithTooltip from '../TypographyWithTooltip';
 import {
   DigitalCoachBoxContainer,
   DigitalCoachIcon,

@@ -14,7 +14,8 @@ import {
   Divider,
   Box,
 } from '../../atoms';
-import { FormInput, StepCard, RadioGroup, TypographyWithTooltip } from '../../molecules';
+import { FormInput, RadioGroup, TypographyWithTooltip } from '../../molecules';
+import { StepCard } from '../../organisms';
 import { GoalCreationLayout } from '../../templates';
 import { RootState } from '../../../store';
 import {
@@ -184,6 +185,9 @@ const LifePlanManagementPage = () => {
     ),
   ];
 
+  const drawdownStartYear = drawdownStartDate?.getFullYear() ?? '';
+  const drawdownEndYear = drawdownEndDate?.getFullYear() ?? '';
+
   const drawdownPeriodDeviationFromAverage =
     drawdownPeriodLengthYears - GoalDefaults.AVERAGE_DRAW_DOWN_PERIOD_IN_YEARS;
 
@@ -252,7 +256,18 @@ const LifePlanManagementPage = () => {
     >
       <Grid container justify="center">
         <Grid item xs={12} md={10}>
-          <StepCard title="When would you like to take your retirement income?" step={1}>
+          <StepCard
+            title="When would you like to access your retirement income?"
+            step={1}
+            digitalCoachBoxProps={{
+              title: 'It might help to know...',
+              description: `You’re planning to retire over ${pluralize(
+                'year',
+                drawdownPeriodLengthYears,
+                true
+              )}. That’s ${drawdownPeriodDeviationFromAverageComparison} most people.`,
+            }}
+          >
             <Grid item container direction="column" spacing={1}>
               <Grid item container justify="space-between" spacing={2}>
                 <Grid item xs={6}>
@@ -266,6 +281,8 @@ const LifePlanManagementPage = () => {
                     error={displayError('drawdownStartAge')}
                     value={drawdownStartAge || undefined}
                   />
+                  <Spacer y={0.5} />
+                  <Typography>That&#39;s year {drawdownStartYear}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <FormInput
@@ -278,25 +295,25 @@ const LifePlanManagementPage = () => {
                     error={displayError('drawdownEndAge')}
                     value={drawdownEndAge || undefined}
                   />
+                  <Spacer y={0.5} />
+                  <Typography>That&#39;s year {drawdownEndYear}</Typography>
                 </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                {drawdownStartDate &&
-                  drawdownEndDate &&
-                  !current.matches('planningYourRetirement.invalid') && (
-                    <TypographyWithTooltip tooltip="Some description">
-                      From {drawdownStartDate.getFullYear()} to {drawdownEndDate.getFullYear()}.
-                      That&#39;s {pluralize('year', drawdownPeriodLengthYears, true)}, which is{' '}
-                      {drawdownPeriodDeviationFromAverageComparison} most people.
-                    </TypographyWithTooltip>
-                  )}
               </Grid>
             </Grid>
           </StepCard>
         </Grid>
+
         <Grid item xs={12} md={10}>
           <Spacer y={3} />
-          <StepCard title="How much would you like your retirement income to be?" step={2}>
+          <StepCard
+            title="What would you like your retirement income to be?"
+            step={2}
+            digitalCoachBoxProps={{
+              title: 'It might help to know...',
+              description:
+                'Most people are comfortable in retirement on 60% of their working income.',
+            }}
+          >
             <Grid item container direction="column" spacing={2}>
               <Grid item container alignItems="baseline" justify="space-between">
                 <Grid item xs={12} md={5}>
@@ -310,9 +327,11 @@ const LifePlanManagementPage = () => {
                     error={displayError('annualIncome')}
                     value={String(annualIncome || '')}
                   />
-                  <Spacer y={1} />
                   {!!annualIncome && (
-                    <InflationAdjustedIncomeDescription amount={annualIncomeInTomorrowsMoney} />
+                    <>
+                      <Spacer y={1} />
+                      <InflationAdjustedIncomeDescription amount={annualIncomeInTomorrowsMoney} />
+                    </>
                   )}
                 </Grid>
                 <EqualSignWrapper item xs={1}>
@@ -331,20 +350,28 @@ const LifePlanManagementPage = () => {
                     error={displayError('monthlyIncome')}
                     value={String(annualIncome > 0 ? monthlyIncome : '')}
                   />
-                  <Spacer y={1} />
                   {!!monthlyIncome && (
-                    <InflationAdjustedIncomeDescription amount={monthlyIncomeInTomorrowsMoney} />
+                    <>
+                      <Spacer y={1} />
+                      <InflationAdjustedIncomeDescription amount={monthlyIncomeInTomorrowsMoney} />
+                    </>
                   )}
                 </Grid>
               </Grid>
             </Grid>
           </StepCard>
         </Grid>
+
         <Grid item xs={12} md={10}>
           <Spacer y={3} />
           <StepCard
             title="Would you like to include the full State Pension in your estimated income?"
             step={3}
+            digitalCoachBoxProps={{
+              title: 'It might help to know...',
+              description:
+                'At retirement, you can normally take up to 25% of your pension from age 57 as a tax free cash lump sum.',
+            }}
           >
             <Grid item container direction="row">
               <Tooltip arrow enterDelay={100} leaveDelay={300} placement="top" title="Coming soon">
@@ -360,11 +387,17 @@ const LifePlanManagementPage = () => {
             </Grid>
           </StepCard>
         </Grid>
+
         <Grid item xs={12} md={10}>
           <Spacer y={3} />
           <StepCard
             title="Which accounts would you like to contribute to your retirement pot?"
             step={4}
+            digitalCoachBoxProps={{
+              title: 'It might help to know...',
+              description:
+                'Some people like to leave some money to their family or just have a buffer at the end of their planned retirement.',
+            }}
             horizontalLayout={false}
           >
             <Grid container spacing={2}>
@@ -388,10 +421,12 @@ const LifePlanManagementPage = () => {
                     </Box>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're likely to have "}
-                      <b>{formatCurrency(
-                        goalCurrentProjections?.data?.possibleDrawdown || 0, 
-                        numberFormatOptions
-                        )}</b>
+                      <b>
+                        {formatCurrency(
+                          goalCurrentProjections?.data?.possibleDrawdown || 0,
+                          numberFormatOptions
+                        )}
+                      </b>
                       {' to spend each month, or '}
                       <b>
                         {formatCurrency(

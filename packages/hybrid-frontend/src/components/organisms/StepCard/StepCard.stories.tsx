@@ -1,11 +1,11 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import StepCard, { StepCardProps } from './StepCard';
-import { RadioGroup, TypographyWithTooltip } from '..';
+import { RadioGroup, TypographyWithTooltip } from '../../molecules';
 import { Grid, Radio, FormControlLabel } from '../../atoms';
 
 export default {
-  title: 'Digital Hybrid/Molecules/Step Card',
+  title: 'Digital Hybrid/Organisms/Step Card',
   component: StepCard,
   argTypes: {},
 } as Meta;
@@ -16,6 +16,11 @@ export const Default = Template.bind({});
 Default.args = {
   title: 'Would you like to include the full State Pension in your estimated income?',
   step: 1,
+  digitalCoachBoxProps: {
+    title: 'Coach box title',
+    description: 'Coach box description',
+    tooltip: 'Coach box tooltip',
+  },
   children: (
     <Grid container xs={12}>
       <Grid item>

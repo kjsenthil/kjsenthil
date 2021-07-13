@@ -1,15 +1,26 @@
 import React from 'react';
 import { Box, Grid, Typography } from '../../atoms';
+import { DigitalCoachBox, DigitalCoachBoxProps } from '../../molecules';
 import CardContainer from './StepCard.styles';
 
 export interface StepCardProps {
   step: number;
   title: string;
-  children: React.ReactNode;
+
   horizontalLayout?: boolean;
+
+  digitalCoachBoxProps?: DigitalCoachBoxProps;
+
+  children: React.ReactNode;
 }
 
-const StepCard = ({ title, step, children, horizontalLayout = true }: StepCardProps) => (
+const StepCard = ({
+  title,
+  step,
+  horizontalLayout = true,
+  digitalCoachBoxProps,
+  children,
+}: StepCardProps) => (
   <CardContainer>
     <Grid container spacing={3} alignItems="center">
       <Grid item>
@@ -25,7 +36,14 @@ const StepCard = ({ title, step, children, horizontalLayout = true }: StepCardPr
         </Typography>
       </Grid>
       <Grid item xs={horizontalLayout ? 'auto' : 12}>
-        <Box m={1}>{children}</Box>
+        <Box m={1}>
+          <Grid container direction="column">
+            {children}
+            <Box pt={2.5}>
+              {digitalCoachBoxProps && <DigitalCoachBox {...digitalCoachBoxProps} />}
+            </Box>
+          </Grid>
+        </Box>
       </Grid>
     </Grid>
   </CardContainer>
