@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, Typography } from '../../atoms';
 import { DigitalCoachBox, DigitalCoachBoxProps } from '../../molecules';
-import CardContainer from './StepCard.styles';
+import { CardContainer } from './StepCard.styles';
 
 export interface StepCardProps {
   step: number;

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Card, Theme } from '../../atoms';
 
-const CardContainer = styled(Card)`
+// eslint-disable-next-line import/prefer-default-export
+export const CardContainer = styled(Card)`
   ${({ theme }: { theme: Theme }) => `
     padding: ${theme.spacing(4)}px;
     background-color:  ${theme.palette.background.paper};
@@ -9,5 +10,3 @@ const CardContainer = styled(Card)`
     border-radius: 16px;
   `}
 `;
-
-export default CardContainer;

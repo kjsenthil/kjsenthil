@@ -11,17 +11,24 @@ interface ProgressBarData {
 export interface ProgressBarWithLegendProps {
   currencyFormatter: (num: number) => string;
   progressBarData: Array<ProgressBarData>;
+  progressBarBackgrounds?: string[];
 }
 
 export default function ProgressBarWithLegend({
   currencyFormatter,
   progressBarData,
+  progressBarBackgrounds,
 }: ProgressBarWithLegendProps) {
   const progress = progressBarData.map((data) => data.progress);
 
   return (
     <>
-      <ProgressBar height={38} borderRadius={6} progress={progress} />
+      <ProgressBar
+        height={38}
+        borderRadius={6}
+        progress={progress}
+        barBackgrounds={progressBarBackgrounds}
+      />
       <Spacer y={2} />
       <ProgressLegendContainer>
         {progressBarData.map((data) => {

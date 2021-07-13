@@ -10,12 +10,21 @@ export interface ProgressBarProps {
   progress: number | number[];
   borderRadius?: number;
   height?: number;
+
+  // This allows parent components to override bar background colours, if
+  // necessary
+  barBackgrounds?: string[];
 }
 
-export default function ProgressBar({ borderRadius = 4, height = 8, progress }: ProgressBarProps) {
+export default function ProgressBar({
+  borderRadius = 4,
+  height = 8,
+  progress,
+  barBackgrounds: barBackgroundsFromProps,
+}: ProgressBarProps) {
   const isMultiValue = Array.isArray(progress);
 
-  // reluct casting to reassure TypeScript compiler
+  // reluctantly casting to reassure TypeScript compiler
   const progressValueNow = isMultiValue
     ? (progress as number[]).reduce((a, b) => a + b, 0) * 100
     : (progress as number) * 100;
@@ -25,7 +34,7 @@ export default function ProgressBar({ borderRadius = 4, height = 8, progress }: 
     const linearGradient = `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
 
     if (isMultiValue) {
-      const barBackgrounds = [
+      const barBackgrounds = barBackgroundsFromProps ?? [
         theme.palette.tertiary.dark1,
         linearGradient,
         theme.palette.tertiary.light2,

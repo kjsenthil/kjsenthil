@@ -12,3 +12,4 @@ export { default as PerformanceProjectionsChart } from './PerformanceProjections
 export { default as ProjectionCalculateModal } from './ProjectionCalculateModalContent/ProjectionCalculateModalContent';
 export { default as PerformanceSimplifiedChart } from './PerformanceChart/PerformanceSimplifiedChart';
 export { default as StepCard } from './StepCard';
+export { default as GoalPotTracker } from './GoalPotTracker';
