@@ -64,8 +64,8 @@ variable "private_dns_zone" {
 
 variable "public_dns_zones" {
   type = list(object({
-    public_dns_parent_zone     = string
-    public_dns_child_zones     = list(string)
+    public_dns_parent_zone = string
+    public_dns_child_zones = list(string)
   }))
   description = "The public DNS zone object containing parent and child DNS subzone for the subscription"
 }

@@ -22,4 +22,3 @@ data "azurerm_application_insights" "app_insights" {
   name                = var.app_insights_name
   resource_group_name = data.azurerm_resource_group.resource_group.name
 }
-

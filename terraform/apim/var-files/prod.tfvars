@@ -5,9 +5,9 @@ api_management_sku_name = "Developer_1"
 private_dns_zone        = ""
 public_dns_zones = [
   {
-  public_dns_parent_zone     = "beta.bestinvest.co.uk"
-  public_dns_child_zones     = []
+    public_dns_parent_zone = "beta.bestinvest.co.uk"
+    public_dns_child_zones = []
   }
 ]
-dns_a_records           = []
-sg_rules                = []
+dns_a_records = []
+sg_rules      = []

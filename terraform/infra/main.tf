@@ -1,14 +1,14 @@
 module "apima" {
-  source                           = "../modules/api_management_api"
-  name                             = "${var.environment_prefix}-${var.app_name}"
-  resource_group_name              = data.azurerm_resource_group.resource_group.name
-  api_management_name              = data.azurerm_api_management.apim.name
-  display_name                     = "${var.environment_prefix}-${var.app_name}"
-  revision                         = 1
-  path                             = var.environment_prefix
-  protocols                        = ["https"]
-  subscription_required            = false
-  description                      = "${var.app_name} API."
+  source                = "../modules/api_management_api"
+  name                  = "${var.environment_prefix}-${var.app_name}"
+  resource_group_name   = data.azurerm_resource_group.resource_group.name
+  api_management_name   = data.azurerm_api_management.apim.name
+  display_name          = "${var.environment_prefix}-${var.app_name}"
+  revision              = 1
+  path                  = var.environment_prefix
+  protocols             = ["https"]
+  subscription_required = false
+  description           = "${var.app_name} API."
   api_management_logger_name       = "apim-${local.short_location}-${var.environment_prefix}-logger"
   app_insights_id                  = data.azurerm_application_insights.app_insights.id
   app_insights_instrumentation_key = data.azurerm_application_insights.app_insights.instrumentation_key

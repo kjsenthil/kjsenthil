@@ -38,5 +38,5 @@ module "public_dns_zones" {
   public_dns_parent_zone = var.public_dns_zones[count.index].public_dns_parent_zone
   public_dns_child_zones = var.public_dns_zones[count.index].public_dns_child_zones
   resource_group_name    = data.azurerm_resource_group.resource_group.name
-  tags                   = merge(local.default_tags, var.tags)    
+  tags                   = merge(local.default_tags, var.tags)
 }
