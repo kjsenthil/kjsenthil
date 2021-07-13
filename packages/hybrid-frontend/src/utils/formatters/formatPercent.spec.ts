@@ -5,12 +5,12 @@ describe('formatPercent', () => {
     const locale = 'en-GB';
 
     const testCases = [
-      { amount: 1.12345, formatted: '112.35%' },
-      { amount: 0.12345, formatted: '12.35%' },
-      { amount: 0.012345, formatted: '1.23%' },
-      { amount: 0.0012345, formatted: '0.12%' },
-      { amount: 0, formatted: '0.00%' },
-      { amount: -0.123, formatted: '-12.30%' },
+      { amount: 1.12345, formatted: '112.3%' },
+      { amount: 0.12345, formatted: '12.3%' },
+      { amount: 0.012345, formatted: '1.2%' },
+      { amount: 0.0012345, formatted: '0.1%' },
+      { amount: 0, formatted: '0.0%' },
+      { amount: -0.123, formatted: '-12.3%' },
     ];
 
     testCases.forEach(({ amount, formatted }) => {

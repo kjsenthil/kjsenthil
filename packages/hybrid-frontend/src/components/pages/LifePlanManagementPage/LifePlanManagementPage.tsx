@@ -238,6 +238,8 @@ const LifePlanManagementPage = () => {
   const displayError = (field: InputFieldsKeys) =>
     current.matches('planningYourRetirement.invalid') ? errors?.[field] : undefined;
 
+  const numberFormatOptions = { opts: { minimumFractionDigits: 0, maximumFractionDigits: 0 } };
+
   return (
     <GoalCreationLayout
       iconAlt="goal image"
@@ -294,7 +296,7 @@ const LifePlanManagementPage = () => {
         </Grid>
         <Grid item xs={12} md={10}>
           <Spacer y={3} />
-          <StepCard title="How much would you like your retirement to be?" step={2}>
+          <StepCard title="How much would you like your retirement income to be?" step={2}>
             <Grid item container direction="column" spacing={2}>
               <Grid item container alignItems="baseline" justify="space-between">
                 <Grid item xs={12} md={5}>
@@ -371,13 +373,13 @@ const LifePlanManagementPage = () => {
                   <InfoBox>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're on track to have "}
-                      <b>{formatPercent(onTrackProgress)}</b>
+                      <b>{formatPercent(onTrackProgress, numberFormatOptions)}</b>
                       {" of your target by the time you're "}
                       <b>{drawdownStartAge}</b>.
                       {onTrackDiffAmount === 0 && (
                         <>
                           {` That's a ${onTrackDiffAmount > 0 ? 'surplus' : 'shortfall'} of `}
-                          <b>{formatCurrency(onTrackDiffAmount)}</b>.
+                          <b>{formatCurrency(onTrackDiffAmount, numberFormatOptions)}</b>.
                         </>
                       )}
                     </Typography>
@@ -386,11 +388,15 @@ const LifePlanManagementPage = () => {
                     </Box>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're likely to have "}
-                      <b>{formatCurrency(goalCurrentProjections?.data?.possibleDrawdown || 0)}</b>
+                      <b>{formatCurrency(
+                        goalCurrentProjections?.data?.possibleDrawdown || 0, 
+                        numberFormatOptions
+                        )}</b>
                       {' to spend each month, or '}
                       <b>
                         {formatCurrency(
-                          goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform || 0
+                          goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform || 0,
+                          numberFormatOptions
                         )}
                       </b>
                       {' if market underperforms '}

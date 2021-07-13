@@ -8,7 +8,7 @@ export default function formatPercent(
 ): string {
   return value.toLocaleString(locale ?? DEFAULT_LOCALE, {
     style: 'percent',
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 1,
     ...opts,
   });
 }

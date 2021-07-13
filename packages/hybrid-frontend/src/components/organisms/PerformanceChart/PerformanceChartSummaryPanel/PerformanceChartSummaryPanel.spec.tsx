@@ -22,7 +22,7 @@ describe('PerformanceChartSummaryPanel', () => {
     const totalValueNumber = screen.getByText('£2,000.12');
     const totalNetContributionsNumber = screen.getByText('£1,000.46');
     const totalReturnNumber = screen.getByText('£999.67');
-    const totalReturnPctNumber = screen.getByText('99.92%');
+    const totalReturnPctNumber = screen.getByText('99.9%');
 
     expect(totalValueLabel).toBeVisible();
     expect(totalNetContributionsLabel).toBeVisible();
