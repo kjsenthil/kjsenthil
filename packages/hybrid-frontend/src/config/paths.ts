@@ -22,7 +22,7 @@ export const goalCreationPaths: Record<string, { name: string; path?: NavPaths }
     name: 'Buying a home',
   },
   myChildsEducation: {
-    name: "My Child's Education",
+    name: "My child's education",
   },
   startingABusiness: {
     name: 'Starting a business',

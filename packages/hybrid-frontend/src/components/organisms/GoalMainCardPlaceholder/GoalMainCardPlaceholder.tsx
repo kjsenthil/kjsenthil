@@ -35,6 +35,7 @@ const GoalActions = ({
               color="primary"
               onClick={() => (val.path ? onAddGoal(val.path) : {})}
               disabled={!val.path}
+              textTransform="none"
             >
               {val.name}
             </Button>

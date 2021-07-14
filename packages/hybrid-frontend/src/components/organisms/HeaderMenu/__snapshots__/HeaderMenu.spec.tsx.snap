@@ -104,7 +104,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined sc-gsDJrp gGDYkt MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined sc-gsDJrp jHMvjH MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
               >
@@ -136,7 +136,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained sc-gsDJrp cLSymO MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained sc-gsDJrp fELEhA MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
               >
