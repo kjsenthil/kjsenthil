@@ -5,8 +5,8 @@ api_management_sku_name = "Developer_1"
 private_dns_zone        = "uat3.bestinvest.co.uk"
 public_dns_zones = [
   {
-  public_dns_parent_zone     = "bi-digital.co.uk"
-  public_dns_child_zones     = ["dev", "alpha"]
+    public_dns_parent_zone = "bi-digital.co.uk"
+    public_dns_child_zones = ["dev", "alpha"]
   }
 ]
 dns_a_records = ["10.1.63.5"]

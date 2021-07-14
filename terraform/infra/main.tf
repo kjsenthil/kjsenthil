@@ -1,14 +1,14 @@
 module "apima" {
-  source                = "../modules/api_management_api"
-  name                  = "${var.environment_prefix}-${var.app_name}"
-  resource_group_name   = data.azurerm_resource_group.resource_group.name
-  api_management_name   = data.azurerm_api_management.apim.name
-  display_name          = "${var.environment_prefix}-${var.app_name}"
-  revision              = 1
-  path                  = var.environment_prefix
-  protocols             = ["https"]
-  subscription_required = false
-  description           = "${var.app_name} API."
+  source                           = "../modules/api_management_api"
+  name                             = "${var.environment_prefix}-${var.app_name}"
+  resource_group_name              = data.azurerm_resource_group.resource_group.name
+  api_management_name              = data.azurerm_api_management.apim.name
+  display_name                     = "${var.environment_prefix}-${var.app_name}"
+  revision                         = 1
+  path                             = var.environment_prefix
+  protocols                        = ["https"]
+  subscription_required            = false
+  description                      = "${var.app_name} API."
   api_management_logger_name       = "apim-${local.short_location}-${var.environment_prefix}-logger"
   app_insights_id                  = data.azurerm_application_insights.app_insights.id
   app_insights_instrumentation_key = data.azurerm_application_insights.app_insights.instrumentation_key
@@ -110,7 +110,7 @@ module "front_end" {
   cdn_profile_name         = var.cdn_profile_name
   public_dns_zone_name     = var.public_dns_zone_name
   public_dns_cname         = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "preview" : var.environment_prefix
-  dns_resource_group_name  = var.dns_resource_group_name 
+  dns_resource_group_name  = var.dns_resource_group_name
 
   csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com *.google-analytics.com"
   csp_allowed_style_sources  = "'self' 'unsafe-inline'"

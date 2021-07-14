@@ -17,13 +17,15 @@ resource "azurerm_log_analytics_workspace" "log_analytics" {
 }
 
 resource "azurerm_network_watcher" "network_watcher" {
+  count               = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? 1 : 0
   name                = "nw${local.short_location}tsw${var.environment_prefix}dh"
   resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = data.azurerm_resource_group.resource_group.location
 }
 
 resource "azurerm_network_watcher_flow_log" "nsg_flow_log" {
-  network_watcher_name = azurerm_network_watcher.network_watcher.name
+  count                = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? 1 : 0
+  network_watcher_name = azurerm_network_watcher.network_watcher[0].name
   resource_group_name  = data.azurerm_resource_group.resource_group.name
 
   network_security_group_id = azurerm_network_security_group.apim_security_group.id
