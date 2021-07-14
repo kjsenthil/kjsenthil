@@ -26,6 +26,7 @@ resource "azurerm_function_app" "this" {
 
   site_config {
     linux_fx_version = "NODE|${var.node_version}"
+    http2_enabled = true
 
     // Allow inbound traffic from the APIM VNet
     ip_restriction {
