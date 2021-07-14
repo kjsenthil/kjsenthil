@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    dataLayer?: any[];
     utag?: {
       link?: (value: Record<string, unknown>) => void;
       view?: (value: Record<string, unknown>) => void;
@@ -8,4 +9,4 @@ declare global {
   }
 }
 
-export { trackLink, trackPageView } from './tracking';
+export { sendEvent, trackLink, trackPageView } from './tracking';

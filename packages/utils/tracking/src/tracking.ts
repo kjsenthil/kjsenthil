@@ -15,6 +15,18 @@ export const getPageName = (pathname: string): string =>
 export const getPageCategory = (pathname: string): string =>
   pathname.replace(/^\/([^/]*).*$/, '$1');
 
+/**
+ * Google Tag Manager functions
+ */
+export const sendEvent = (event: Record<string, unknown>): void => {
+  if (window.dataLayer && typeof window.dataLayer.push === 'function') {
+    window.dataLayer.push(event);
+  }
+};
+
+/**
+ * Tealium functions
+ */
 export const trackLink = (event: Record<string, unknown>): void => {
   if (window.utag && typeof window.utag.link === 'function') {
     window.utag.link({ ...snakecaseKeys(event) });

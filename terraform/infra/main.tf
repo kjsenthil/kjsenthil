@@ -112,7 +112,7 @@ module "front_end" {
   public_dns_cname         = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "preview" : var.environment_prefix
   dns_resource_group_name  = var.dns_resource_group_name 
 
-  csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com"
+  csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com *.google-analytics.com"
   csp_allowed_style_sources  = "'self' 'unsafe-inline'"
 
   tags = merge(var.tags, local.default_tags)
@@ -129,7 +129,7 @@ module "storybook" {
   account_tier             = "Standard"
   cdn_profile_name         = var.cdn_profile_name
 
-  csp_allowed_script_sources = "'self' 'unsafe-inline' 'unsafe-eval' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com"
+  csp_allowed_script_sources = "'self' 'unsafe-inline' 'unsafe-eval' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com *.google-analytics.com"
   csp_allowed_style_sources  = "'self' 'unsafe-inline'"
 
   tags = merge(var.tags, local.default_tags)

@@ -1,4 +1,47 @@
-import { getPageCategory, getPageName, trackLink, trackPageView } from './tracking';
+import { getPageCategory, getPageName, sendEvent, trackLink, trackPageView } from './tracking';
+
+describe('sendEvent', () => {
+  let windowSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    windowSpy = jest.spyOn(window, 'window', 'get');
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
+  });
+
+  it('calls the dataLayer.push global with the event object', () => {
+    const mockPush = jest.fn();
+
+    windowSpy.mockImplementation(() => ({
+      dataLayer: {
+        push: mockPush,
+      },
+    }));
+
+    const mockEvent = {
+      event: 'loginSuccess',
+    };
+
+    sendEvent(mockEvent);
+
+    expect(mockPush).toBeCalledTimes(1);
+    expect(mockPush).toBeCalledWith(mockEvent);
+  });
+
+  it('does not error when window.dataLayer is not available', () => {
+    windowSpy.mockImplementation(() => ({
+      dataLayer: undefined,
+    }));
+
+    const mockEvent = {
+      event: 'loginSuccess',
+    };
+
+    expect(() => sendEvent(mockEvent)).not.toThrow();
+  });
+});
 
 describe('trackLink', () => {
   let windowSpy: jest.SpyInstance;
