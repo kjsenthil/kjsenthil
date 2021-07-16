@@ -1,107 +1,155 @@
 import * as React from 'react';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { Divider, Box, Grid, Typography, Spacer } from '../../atoms';
-import CustomCard from './SummaryPanel.styles';
+import { Divider, Spacer, Grid, useTheme, useMediaQuery } from '../../atoms';
+import { Legend, LegendProps } from '../../molecules';
+import { SummaryCard, SummaryWrapper, SummaryOfTotalsWrapper } from './SummaryPanel.styles';
 
 export interface SummaryValuesProps {
   totalValue: number;
   totalNetContributions: number;
 
   totalReturn: number;
-  totalReturnPct: number;
+  totalReturnPercentage: number;
 
-  threeMonthsReturn?: number;
-  threeMonthsReturnPct?: number;
+  periodBasedReturn?: {
+    value: number;
+    percent: number;
+    label: string;
+  };
 }
+
+const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
+  lifetimeReturn: {
+    title: 'LIFETIME RETURN',
+    tooltip:
+      'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
+  },
+  periodBasedReturn: {
+    title: 'LAST 5 YEARS RETURN',
+    tooltip:
+      'Return figure relates to the gain or loss over the specified period including the impact of fees',
+  },
+  totalValue: {
+    title: 'TOTAL VALUE',
+    tooltip: 'Total value  = Investments plus cash',
+  },
+  netContribution: {
+    title: 'NET CONTRIBUTIONS',
+    tooltip: 'Contributions minus withdrawals',
+  },
+};
 
 export default function SummaryPanel({
   totalValue,
   totalNetContributions,
   totalReturn,
-  totalReturnPct,
-  threeMonthsReturn,
-  threeMonthsReturnPct,
+  totalReturnPercentage,
+  periodBasedReturn,
 }: SummaryValuesProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
+
+  const renderVerticalDivider = (
+    <>
+      <Spacer x={3} />
+      <Divider orientation="vertical" y={4} />
+      <Spacer x={3} />
+    </>
+  );
+
+  const renderTotalReturn = (
+    <Legend
+      {...legendProps.lifetimeReturn}
+      value={totalReturn}
+      valueFormatter={(val: number) => formatCurrency(val, { displayPlus: true })}
+      valueSizeVariant="sh1"
+      percentageChange={totalReturnPercentage}
+      percentageFormatter={formatPercent}
+    />
+  );
+
+  const renderPeriodBasedreturn = periodBasedReturn ? (
+    <>
+      {isMobile || renderVerticalDivider}
+      <Legend
+        {...legendProps.periodBasedReturn}
+        title={periodBasedReturn.label}
+        value={periodBasedReturn.value}
+        valueFormatter={(val: number) => formatCurrency(val, { displayPlus: true })}
+        valueSizeVariant="sh1"
+        percentageChange={periodBasedReturn.percent}
+        percentageFormatter={formatPercent}
+      />
+    </>
+  ) : (
+    <>
+      {isMobile || renderVerticalDivider}
+      {renderTotalReturn}
+    </>
+  );
+
   return (
-    <CustomCard>
-      <Grid container spacing={0} alignItems="center" justify="space-between">
-        <Grid item xs={12} sm={threeMonthsReturn ? 6 : 12}>
-          <Grid container justify="space-evenly">
-            <Grid item>
-              <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                TOTAL VALUE
-              </Typography>
-              <Typography variant="h4" color="primary" colorShade="dark2">
-                {formatCurrency(totalValue)}
-              </Typography>
-            </Grid>
-            <Spacer x={1} />
-            <Divider />
-            <Spacer x={1} />
-            <Grid item>
-              <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                NET CONTRIBUTIONS
-              </Typography>
-              <Typography variant="sh1">{formatCurrency(totalNetContributions)}</Typography>
-            </Grid>
-            <Spacer x={1} />
-            <Divider />
-            <Spacer x={1} />
-            <Grid item>
-              <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                TOTAL RETURN
-              </Typography>
-              <Typography display="inline" variant="sh1">
-                {formatCurrency(totalReturn, { displayPlus: true })}
-              </Typography>
-              <Box
-                bgcolor={totalReturn >= 0 ? 'success.main' : 'error.main'}
-                m={1}
-                paddingX={1}
-                display="inline"
-                minHeight="25%"
-                borderRadius={2}
-              >
-                <Typography variant="sh4" color="white" display="inline">
-                  {formatPercent(totalReturnPct / 100)}
-                </Typography>
-              </Box>
-            </Grid>
+    <SummaryCard>
+      <SummaryWrapper isMobile={isMobile} container spacing={3} justify="space-between">
+        <SummaryOfTotalsWrapper
+          isMobile={isMobile && !!periodBasedReturn}
+          item
+          xs={isMobile ? 12 : 8}
+          container
+          spacing={2}
+          wrap="nowrap"
+          justify="flex-start"
+        >
+          <Grid item xs={isMobile ? 12 : undefined}>
+            <Legend
+              {...legendProps.totalValue}
+              value={totalValue}
+              valueFormatter={formatCurrency}
+              valueSizeVariant="h5"
+            />
           </Grid>
-        </Grid>
-
-        <Grid item xs={12} sm={3}>
-          {threeMonthsReturn && (
-            <Grid container justify="flex-end">
-              <Divider />
-              <Spacer x={4} />
-              <Grid item>
-                <Typography variant="sh4" color="grey" colorShade="dark1" gutterBottom>
-                  LAST 3 MONTHS RETURN
-                </Typography>
-
-                <Typography display="inline" variant="sh1">
-                  {formatCurrency(threeMonthsReturn, { displayPlus: true })}
-                </Typography>
-                <Box
-                  bgcolor={threeMonthsReturn > 0 ? 'success.main' : 'error.main'}
-                  m={1}
-                  paddingX={1}
-                  display="inline"
-                  minHeight="25%"
-                  borderRadius={2}
-                >
-                  {threeMonthsReturnPct && (
-                    <Typography variant="sh4" color="white" display="inline">
-                      {formatPercent(threeMonthsReturnPct)}
-                    </Typography>
-                  )}
-                </Box>
+          <Grid
+            item
+            container
+            xs={!!periodBasedReturn || isMobile ? 12 : 6}
+            wrap="nowrap"
+            alignItems="center"
+            spacing={2}
+            alignContent="flex-start"
+            zeroMinWidth
+            justify={isMobile ? 'space-between' : 'flex-start'}
+          >
+            <>
+              {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
+              <Grid item xs={isMobile ? 6 : undefined}>
+                <Legend
+                  {...legendProps.netContribution}
+                  value={totalNetContributions}
+                  valueFormatter={formatCurrency}
+                  valueSizeVariant="sh1"
+                />
               </Grid>
-            </Grid>
-          )}
+              {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
+              <Grid item xs={isMobile ? 6 : undefined}>
+                {!!periodBasedReturn && renderTotalReturn}
+              </Grid>
+            </>
+          </Grid>
+        </SummaryOfTotalsWrapper>
+
+        {isMobile && <Divider orientation="horizontal" />}
+        <Grid
+          item
+          container
+          xs={isMobile ? 12 : 4}
+          direction="row"
+          justify={isMobile ? 'flex-start' : 'flex-end'}
+          alignItems="center"
+          wrap="nowrap"
+        >
+          {renderPeriodBasedreturn}
         </Grid>
-      </Grid>
-    </CustomCard>
+      </SummaryWrapper>
+    </SummaryCard>
   );
 }

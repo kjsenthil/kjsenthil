@@ -1,6 +1,6 @@
 import { CommonState, RiskModel, SedolCode } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
-import { Breakdown, ClientResponse, InvestmentSummary } from '../myAccount';
+import { InvestmentAccount, ClientResponse, InvestmentSummary } from '../myAccount';
 import { AllAssets } from '../assets';
 
 export interface ProjectionRequest {
@@ -141,7 +141,7 @@ export interface FetchGoalCurrentProjectionsParams {
   lumpSum: number;
   laterLifeLeftOver: number;
   fees: number;
-  accountBreakdown?: Breakdown[];
+  investmentAccounts?: InvestmentAccount[];
   investmentSummary?: InvestmentSummary[];
   includedClientAccounts?: ClientResponse['included'];
   fundData: AllAssets;

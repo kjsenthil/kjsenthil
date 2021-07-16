@@ -6,21 +6,27 @@ export interface GetPerformanceAccountsAggregatedProps {
   accountIds: number[];
 }
 
-export function getPerformanceAccountsAggregatedUrl({
-  accountIds,
-}: GetPerformanceAccountsAggregatedProps) {
+export function getPerformanceAccountsAggregatedUrl(accountIds: number | number[]) {
+  const Ids = Array.isArray(accountIds) ? accountIds : [accountIds];
   const urlPath = API_ENDPOINTS.MYACCOUNT_PERFORMANCE_ACCOUNTS_AGGREGATED;
-  const accountIdsQueryParam = accountIds.join(',');
+  const accountIdsQueryParam = Ids.join(',');
 
   return `${urlPath}?include=netcontribution-accounts-aggregated&filter[id]=${accountIdsQueryParam}`;
 }
 
-export default async function getPerformanceAccountsAggregated({
-  accountIds,
-}: GetPerformanceAccountsAggregatedProps): Promise<GetPerformanceAccountsAggregatedResponse> {
-  const url = getPerformanceAccountsAggregatedUrl({ accountIds });
+export default async function getPerformanceAccountsAggregated(
+  accountIds: number | number[]
+): Promise<GetPerformanceAccountsAggregatedResponse | undefined> {
+  const url = getPerformanceAccountsAggregatedUrl(accountIds);
 
-  const res = await api.get<GetPerformanceAccountsAggregatedResponse>(url);
+  try {
+    const res = await api.get<GetPerformanceAccountsAggregatedResponse>(url);
+    return res.data;
+  } catch (error) {
+    if (error.response.status === 404) {
+      return undefined;
+    }
 
-  return res.data;
+    throw error;
+  }
 }

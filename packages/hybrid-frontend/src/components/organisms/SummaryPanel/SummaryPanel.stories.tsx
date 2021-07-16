@@ -14,9 +14,12 @@ const defaultArgs: SummaryValuesProps = {
   totalValue: 148238.52,
   totalNetContributions: 120726.83,
   totalReturn: 27512.14,
-  totalReturnPct: 0.2534,
-  threeMonthsReturn: 7632.04,
-  threeMonthsReturnPct: 0.4511,
+  totalReturnPercentage: 0.2534,
+  periodBasedReturn: {
+    value: 7632.04,
+    percent: 0.4511,
+    label: 'LAST 3 MONTHS RETURN',
+  },
 };
 
 export const Default = Template.bind({});

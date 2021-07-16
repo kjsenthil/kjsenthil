@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { calculateInvestableCash } from '../../services/myAccount/utils';
 import { RootState } from '../../store';
 import calculateAgeToday from '../../utils/date/calculateAgeToday';
-import useAccountBreakdownInfo from '../useAccountBreakdownInfo';
+import useInvestmentAccounts from '../useInvestmentAccounts';
 import useStateIsAvailable from '../useStateIsAvailable';
 
 export interface BasicInfo {
@@ -25,11 +25,11 @@ const useBasicInfo = (): BasicInfo => {
   const isBasicInfoLoading = !useStateIsAvailable([
     'client',
     'investmentSummary',
-    'accountBreakdown',
+    'investmentAccounts',
   ]);
-  const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
+  const { accountsSummary, investmentAccounts } = useInvestmentAccounts();
 
-  if (!client || !accountBreakdown) {
+  if (!client || !investmentAccounts) {
     return {
       totalGainLoss: 0,
       totalInvested: 0,
@@ -42,7 +42,7 @@ const useBasicInfo = (): BasicInfo => {
     };
   }
 
-  const totalInvestableCash = calculateInvestableCash(accountBreakdown || []);
+  const totalInvestableCash = calculateInvestableCash(investmentAccounts || []);
 
   return {
     totalGainLoss: accountsSummary.totalGainLoss,

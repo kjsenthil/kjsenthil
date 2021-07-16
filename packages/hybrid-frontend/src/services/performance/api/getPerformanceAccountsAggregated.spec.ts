@@ -8,7 +8,7 @@ const mockAxios = new MockAdapter(axios);
 
 const mockAccountIds = [12345678, 87654321];
 
-const url = getPerformanceAccountsAggregatedUrl({ accountIds: mockAccountIds });
+const url = getPerformanceAccountsAggregatedUrl(mockAccountIds);
 
 describe('getPerformanceAccountsAggregated', () => {
   it(`makes a call to ${url}`, async () => {
@@ -16,7 +16,7 @@ describe('getPerformanceAccountsAggregated', () => {
 
     mockAxios.onGet(url).reply(200, data);
 
-    const response = await getPerformanceAccountsAggregated({ accountIds: mockAccountIds });
+    const response = await getPerformanceAccountsAggregated(mockAccountIds);
 
     expect(response).toEqual(data);
   });

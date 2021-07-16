@@ -1,11 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getNetContributions } from '../api';
-import { Breakdown, ClientState, InvestmentSummary, InvestmentSummaryResponse } from '../types';
+import { getPerformanceAccountsAggregated } from '../../performance';
+import {
+  InvestmentAccount,
+  ClientState,
+  InvestmentSummary,
+  InvestmentSummaryResponse,
+} from '../types';
 import { extractClientAccounts } from '../utils';
 
-const fetchAccountBreakdown = createAsyncThunk(
-  'client/fetchAccountBreakdown',
-  async (_, { getState }): Promise<{ data: Array<Breakdown> }> => {
+const fetchInvestmentAccounts = createAsyncThunk(
+  'client/fetchInvestmentAccounts',
+  async (_, { getState }): Promise<{ data: Array<InvestmentAccount> }> => {
     const { client, investmentSummary } = getState() as {
       client: ClientState;
       investmentSummary: InvestmentSummaryResponse;
@@ -21,7 +26,7 @@ const fetchAccountBreakdown = createAsyncThunk(
 
     const extractedClientAccounts = extractClientAccounts(client.included);
 
-    const investmentAccountsBreakdownPromises = investmentSummary.data.map(
+    const investmentAccountsPromises = investmentSummary.data.map(
       async (investSummaryItem: InvestmentSummary) => {
         const { name: accountName = '', type: accountType = '' } =
           extractedClientAccounts.find(
@@ -33,7 +38,9 @@ const fetchAccountBreakdown = createAsyncThunk(
           investSummaryItem.attributes.funds +
           investSummaryItem.attributes.shares;
 
-        const contributionResponse = await getNetContributions(Number(investSummaryItem.id));
+        const performanceresponse = await getPerformanceAccountsAggregated(
+          Number(investSummaryItem.id)
+        );
 
         return {
           id: investSummaryItem.id,
@@ -41,7 +48,7 @@ const fetchAccountBreakdown = createAsyncThunk(
           accountType,
           accountTotalHoldings,
           accountTotalNetContribution:
-            contributionResponse?.data?.attributes?.totalContributions || 0,
+            performanceresponse?.included[0]?.attributes?.totalContributions || 0,
           accountCash: investSummaryItem.attributes.cash,
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,
@@ -49,10 +56,10 @@ const fetchAccountBreakdown = createAsyncThunk(
       }
     );
 
-    const investmentAccountsBreakdown = await Promise.all(investmentAccountsBreakdownPromises);
+    const investmentAccountsBreakdown = await Promise.all(investmentAccountsPromises);
 
     return { data: investmentAccountsBreakdown };
   }
 );
 
-export default fetchAccountBreakdown;
+export default fetchInvestmentAccounts;

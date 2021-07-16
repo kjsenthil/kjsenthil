@@ -1,12 +1,15 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import AccountsTable from './AccountsTable';
-import { mockAccountsTableHeader, mockAccountsTableData } from './mocks';
+import { mockInvestmentAccountsTableHeader, mockInvestmentAccountsTableData } from './mocks';
 
 describe('AccountsTable', () => {
   beforeEach(() => {
     renderWithTheme(
-      <AccountsTable headerRow={mockAccountsTableHeader} dataRow={mockAccountsTableData} />
+      <AccountsTable
+        headerRow={mockInvestmentAccountsTableHeader}
+        dataRow={mockInvestmentAccountsTableData}
+      />
     );
   });
 
@@ -17,7 +20,7 @@ describe('AccountsTable', () => {
     const headerCell4Text = screen.getByText('CASH');
     const headerCell5Text = screen.getByText('LIFETIME RETURN');
 
-    const rowCell1Text = screen.getByText(mockAccountsTableData[0].accountName || '');
+    const rowCell1Text = screen.getByText(mockInvestmentAccountsTableData[0].accountName || '');
     const rowCell2Text = screen.getByText('£38,382.29');
     const rowCell3Text = screen.getByText('£31,994.90');
     const rowCell4Text = screen.getByText('£0.03');

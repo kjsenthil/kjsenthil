@@ -3,31 +3,31 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import {
   BasicInvestmentSummary,
-  Breakdown,
+  InvestmentAccount,
   calculateBasicInvestmentSummary,
-  fetchAccountBreakdown,
+  fetchInvestmentAccounts,
   fetchClient,
   fetchInvestmentSummary,
 } from '../../services/myAccount';
 import useStateIsLoading from '../useStateIsLoading';
 import useStateIsAvailable from '../useStateIsAvailable';
 
-export interface AccountBreakdownInfoProps {
+export interface InvestmentAccountsProps {
   accountsSummary: BasicInvestmentSummary;
-  accountBreakdown?: Breakdown[];
+  investmentAccounts?: InvestmentAccount[];
 }
 
-const useAccountBreakdownInfo = (): AccountBreakdownInfoProps => {
-  const { investmentSummary, accountBreakdown } = useSelector((state: RootState) => ({
+const useInvestmentAccounts = (): InvestmentAccountsProps => {
+  const { investmentSummary, investmentAccounts } = useSelector((state: RootState) => ({
     investmentSummary: state.investmentSummary.data,
-    accountBreakdown: state.accountBreakdown.data,
+    investmentAccounts: state.investmentAccounts.data,
   }));
 
   const isInvestmentSummaryLoading = useStateIsLoading('investmentSummary');
   const isClientAvailable = useStateIsAvailable('client');
   const isInvestmentSummaryAvailable = useStateIsAvailable('investmentSummary');
-  const isAccountBreakdownAvailable = useStateIsAvailable('accountBreakdown');
-  const isAccountBreakdowLoading = useStateIsLoading('accountBreakdown');
+  const areAccountsAvailable = useStateIsAvailable('investmentAccounts');
+  const areAccountsLoading = useStateIsLoading('investmentAccounts');
 
   const dispatch = useDispatch();
 
@@ -47,19 +47,19 @@ const useAccountBreakdownInfo = (): AccountBreakdownInfoProps => {
     if (
       isClientAvailable &&
       isInvestmentSummaryAvailable &&
-      !isAccountBreakdownAvailable &&
-      !isAccountBreakdowLoading
+      !areAccountsAvailable &&
+      !areAccountsLoading
     ) {
-      dispatch(fetchAccountBreakdown());
+      dispatch(fetchInvestmentAccounts());
     }
-  }, [isClientAvailable, isInvestmentSummaryAvailable, isAccountBreakdowLoading]);
+  }, [isClientAvailable, isInvestmentSummaryAvailable, areAccountsLoading]);
 
   const accountsSummary = calculateBasicInvestmentSummary(investmentSummary || []);
 
   return {
     accountsSummary,
-    accountBreakdown,
+    investmentAccounts,
   };
 };
 
-export default useAccountBreakdownInfo;
+export default useInvestmentAccounts;

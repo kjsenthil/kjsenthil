@@ -69,7 +69,7 @@ const LegendValue = ({
 
   return (
     <ValueContainer>
-      <Typography variant={valueSizeVariant} color="primary" colorShade="dark2">
+      <Typography variant={valueSizeVariant} color="primary" colorShade="dark2" spaceNoWrap>
         {legendValue}
       </Typography>
       {percentageChange !== undefined && (

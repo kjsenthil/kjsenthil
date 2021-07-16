@@ -20,7 +20,7 @@ const defaultArgs: PerformanceChartSummaryPanelProps = {
   totalPerformance: 120000,
   totalNetContributions: 100000,
   totalReturn: 20000,
-  totalReturnPct: 0.2,
+  totalReturnPercentage: 0.2,
 };
 
 export const Default = Template.bind({});

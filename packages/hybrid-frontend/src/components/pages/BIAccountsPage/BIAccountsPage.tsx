@@ -18,7 +18,7 @@ import {
   usePerformanceData,
   useContributionsData,
   usePerformanceDataPeriod,
-  useAccountBreakdownInfo,
+  useInvestmentAccounts,
   useBasicInfo,
 } from '../../../hooks';
 import { RootState } from '../../../store';
@@ -32,7 +32,7 @@ const BIAccountsPage = () => {
   } = useSelector((state: RootState) => state);
 
   const basicInfo = useBasicInfo();
-  const { accountsSummary, accountBreakdown } = useAccountBreakdownInfo();
+  const { accountsSummary, investmentAccounts } = useInvestmentAccounts();
 
   const dispatch = useDispatch();
 
@@ -53,16 +53,16 @@ const BIAccountsPage = () => {
   );
 
   const summaryContributions =
-    accountBreakdown?.reduce(
+    investmentAccounts?.reduce(
       (totalContr, acctObj) => acctObj.accountTotalNetContribution + totalContr,
       0
     ) || 0;
 
   const accountsTableData =
-    accountBreakdown?.filter((breakItem) => breakItem.accountType === 'accounts') || [];
+    investmentAccounts?.filter((breakItem) => breakItem.accountType === 'accounts') || [];
 
   const linkedAccountsTableData =
-    accountBreakdown?.filter((breakItem) => breakItem.accountType === 'linked-accounts') || [];
+    investmentAccounts?.filter((breakItem) => breakItem.accountType === 'linked-accounts') || [];
 
   const setDataPeriod = (period: string) => {
     dispatch(setPerformanceDataPeriod(period));
@@ -76,13 +76,13 @@ const BIAccountsPage = () => {
         secondary: `Investments`,
       }}
     >
-      <Grid container xs={12}>
-        <Grid xs={9}>
+      <Grid item container xs={12} spacing={1} justify="flex-end">
+        <Grid item xs={12} sm={9}>
           <Typography variant="h2" color="primary" colorShade="dark2">
             Total Value: {formatCurrency(accountsSummary.totalInvested)}
           </Typography>
         </Grid>
-        <Grid xs={3}>
+        <Grid item xs={6} sm={3}>
           <ChartPeriodSelection
             currentPeriod={performanceDataPeriod}
             performanceDataPeriod={PerformanceDataPeriod}
@@ -91,13 +91,13 @@ const BIAccountsPage = () => {
         </Grid>
       </Grid>
       <Spacer y={7} />
-      <Grid container spacing={6}>
+      <Grid item container spacing={6}>
         <Grid item xs={12}>
           <SummaryPanel
             totalValue={accountsSummary?.totalInvested}
             totalNetContributions={summaryContributions}
             totalReturn={accountsSummary?.totalGainLoss}
-            totalReturnPct={accountsSummary?.totalGainLossPercentage}
+            totalReturnPercentage={accountsSummary?.totalGainLossPercentage}
           />
         </Grid>
 

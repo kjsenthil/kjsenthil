@@ -175,7 +175,7 @@ function PerformanceChart({
   }
 
   const totalReturn = totalPerformance - totalNetContributions;
-  const totalReturnPct =
+  const totalReturnPercentage =
     totalPerformance && totalNetContributions ? totalPerformance / totalNetContributions - 1 : 0;
 
   return (
@@ -185,7 +185,7 @@ function PerformanceChart({
           totalPerformance={totalPerformance}
           totalNetContributions={totalNetContributions}
           totalReturn={totalReturn}
-          totalReturnPct={totalReturnPct}
+          totalReturnPercentage={totalReturnPercentage}
         />
       </ControlPanelContainer>
 

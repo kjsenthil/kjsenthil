@@ -1,11 +1,11 @@
-import { mockAccountsBreakdown } from '../../mocks';
+import { mockInvestmentAccounts } from '../../mocks';
 import calculateInvestableCash from './calculateInvestableCash';
 
 describe('calculateInvestableCash', () => {
   it('returns the total amount of investable cash for accounts ignoring linked-accounts', () => {
     const cash =
-      Number(mockAccountsBreakdown[0].accountCash) + Number(mockAccountsBreakdown[1].accountCash);
+      Number(mockInvestmentAccounts[0].accountCash) + Number(mockInvestmentAccounts[1].accountCash);
 
-    expect(calculateInvestableCash(mockAccountsBreakdown)).toStrictEqual(cash);
+    expect(calculateInvestableCash(mockInvestmentAccounts)).toStrictEqual(cash);
   });
 });

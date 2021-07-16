@@ -68,9 +68,9 @@ export interface NetContributionResponse {
   included?: null;
 }
 
-export interface BreakdownState extends CommonState<Array<Breakdown>> {}
+export interface InvestmentAccountState extends CommonState<Array<InvestmentAccount>> {}
 
-export interface Breakdown extends AccountData {
+export interface InvestmentAccount extends AccountData {
   accountType: string;
   accountTotalNetContribution: number;
 }

@@ -9,7 +9,7 @@ describe('PerformanceChartSummaryPanel', () => {
         totalPerformance={2000.123}
         totalNetContributions={1000.456}
         totalReturn={999.667}
-        totalReturnPct={0.99921}
+        totalReturnPercentage={0.99921}
       />
     );
   });
@@ -22,7 +22,7 @@ describe('PerformanceChartSummaryPanel', () => {
     const totalValueNumber = screen.getByText('£2,000.12');
     const totalNetContributionsNumber = screen.getByText('£1,000.46');
     const totalReturnNumber = screen.getByText('£999.67');
-    const totalReturnPctNumber = screen.getByText('99.9%');
+    const totalReturnPercentageNumber = screen.getByText('99.9%');
 
     expect(totalValueLabel).toBeVisible();
     expect(totalNetContributionsLabel).toBeVisible();
@@ -31,6 +31,6 @@ describe('PerformanceChartSummaryPanel', () => {
     expect(totalValueNumber).toBeVisible();
     expect(totalNetContributionsNumber).toBeVisible();
     expect(totalReturnNumber).toBeVisible();
-    expect(totalReturnPctNumber).toBeVisible();
+    expect(totalReturnPercentageNumber).toBeVisible();
   });
 });

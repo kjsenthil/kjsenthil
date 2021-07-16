@@ -1,7 +1,21 @@
+import * as React from 'react';
 import styled from 'styled-components';
-import { Card } from '../../atoms';
+import { Grid, Card } from '../../atoms';
 
-const CustomCard = styled(Card)`
+export const SummaryWrapper = styled(({ isMobile, ...props }) => <Grid {...props} />)`
+  ${({ isMobile }: { isMobile: boolean }) => `
+    display: flex;
+    flex-direction: ${isMobile ? 'column' : 'row'};
+  `}
+`;
+export const SummaryOfTotalsWrapper = styled(({ isMobile, ...props }) => <Grid {...props} />)`
+  ${({ isMobile }: { isMobile: boolean }) => `
+    display: flex;
+    flex-direction: ${isMobile ? 'column' : 'row'};
+  `}
+`;
+
+export const SummaryCard = styled(Card)`
   ${({ theme }) => `
     padding: ${theme.spacing(3)}px;
     background-color:  ${theme.palette.background.paper};
@@ -9,5 +23,3 @@ const CustomCard = styled(Card)`
     border-radius: 16px;
   `}
 `;
-
-export default CustomCard;

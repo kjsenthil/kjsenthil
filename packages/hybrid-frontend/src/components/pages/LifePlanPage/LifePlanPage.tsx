@@ -18,7 +18,7 @@ import {
   useStateIsAvailable,
   useSimulatedProjectionsData,
   useDispatchThunkOnRender,
-  useAccountBreakdownInfo,
+  useInvestmentAccounts,
 } from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
@@ -84,7 +84,7 @@ const LifePlanPage = () => {
     !!projectionsData.length &&
     !!projectionsTargetData.length;
 
-  const { accountBreakdown } = useAccountBreakdownInfo();
+  const { investmentAccounts } = useInvestmentAccounts();
   const { dateOfBirth } = useBasicInfo();
   const fundData = useAllAssets();
 
@@ -143,7 +143,7 @@ const LifePlanPage = () => {
         laterLifeLeftOver: 0, // determine if needed
         shouldIncludeStatePension: false, // determine if needed,
         fees: 0,
-        accountBreakdown,
+        investmentAccounts,
         investmentSummary: investmentSummaryData,
         includedClientAccounts: clientData,
         fundData,

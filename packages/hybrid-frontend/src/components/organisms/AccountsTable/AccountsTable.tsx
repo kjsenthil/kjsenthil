@@ -11,7 +11,7 @@ import {
   AccountsTableRow,
   StyledActionIcon,
 } from './AccountsTable.styles';
-import { Breakdown } from '../../../services/myAccount';
+import { InvestmentAccount } from '../../../services/myAccount';
 
 export interface AccountsHeaderCell {
   value: string;
@@ -22,7 +22,7 @@ export type AccountsFooterCell = string;
 
 export interface AccountsTableProps {
   headerRow: AccountsHeaderCell[];
-  dataRow: Breakdown[];
+  dataRow: InvestmentAccount[];
   footerRow?: AccountsFooterCell[];
 }
 
@@ -53,7 +53,7 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
       </AccountsTableHead>
       <TableBody>
         {dataRow &&
-          dataRow.map((row: Breakdown) => (
+          dataRow.map((row: InvestmentAccount) => (
             <AccountsTableRow key={row.id}>
               <AccountsTableCell>
                 <Typography variant="sh3">{row.accountName}</Typography>

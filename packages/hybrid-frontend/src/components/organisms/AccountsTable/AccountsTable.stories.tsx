@@ -2,9 +2,9 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import AccountsTable, { AccountsTableProps } from './AccountsTable';
 import {
-  mockAccountsTableData,
-  mockAccountsTableFooterData,
-  mockAccountsTableHeader,
+  mockInvestmentAccountsTableData,
+  mockInvestmentAccountsTableFooterData,
+  mockInvestmentAccountsTableHeader,
 } from './mocks';
 
 export default {
@@ -15,25 +15,25 @@ export default {
 
 const Template: Story<AccountsTableProps> = (args) => <AccountsTable {...args} />;
 
-const mockAccountsTableHeaderNoTooltips = mockAccountsTableHeader.map(
+const mockInvestmentAccountsTableHeaderNoTooltips = mockInvestmentAccountsTableHeader.map(
   ({ tooltip, ...rest }) => rest
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  headerRow: mockAccountsTableHeaderNoTooltips,
-  dataRow: mockAccountsTableData,
+  headerRow: mockInvestmentAccountsTableHeaderNoTooltips,
+  dataRow: mockInvestmentAccountsTableData,
 };
 
 export const WithHeaderTooltips = Template.bind({});
 WithHeaderTooltips.args = {
-  headerRow: mockAccountsTableHeader,
-  dataRow: mockAccountsTableData,
+  headerRow: mockInvestmentAccountsTableHeader,
+  dataRow: mockInvestmentAccountsTableData,
 };
 
 export const WithFooter = Template.bind({});
 WithFooter.args = {
-  headerRow: mockAccountsTableHeaderNoTooltips,
-  dataRow: mockAccountsTableData,
-  footerRow: mockAccountsTableFooterData,
+  headerRow: mockInvestmentAccountsTableHeaderNoTooltips,
+  dataRow: mockInvestmentAccountsTableData,
+  footerRow: mockInvestmentAccountsTableFooterData,
 };

@@ -1,9 +1,9 @@
 import { AccountsTableHeader } from '../../../../constants';
 import { AccountsFooterCell, AccountsHeaderCell } from '../AccountsTable';
 
-export const mockAccountsTableHeader: AccountsHeaderCell[] = AccountsTableHeader;
+export const mockInvestmentAccountsTableHeader: AccountsHeaderCell[] = AccountsTableHeader;
 
-export const mockAccountsTableData = [
+export const mockInvestmentAccountsTableData = [
   {
     id: '20499',
     accountType: 'accounts',
@@ -36,7 +36,7 @@ export const mockAccountsTableData = [
   },
 ];
 
-export const mockAccountsTableFooterData: AccountsFooterCell[] = [
+export const mockInvestmentAccountsTableFooterData: AccountsFooterCell[] = [
   'TOTAL',
   '£150000',
   '$100000',

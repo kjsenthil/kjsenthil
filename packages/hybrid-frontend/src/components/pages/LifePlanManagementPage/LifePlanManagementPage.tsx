@@ -40,7 +40,7 @@ import { fetchPerformanceAccountsAggregated } from '../../../services/performanc
 import {
   useProjectionsChartData,
   useDispatchThunkOnRender,
-  useAccountBreakdownInfo,
+  useInvestmentAccounts,
 } from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 
@@ -70,7 +70,7 @@ const LifePlanManagementPage = () => {
 
   const dateOfBirth = client.data?.attributes.dateOfBirth!;
 
-  const { accountBreakdown } = useAccountBreakdownInfo();
+  const { investmentAccounts } = useInvestmentAccounts();
 
   const fundData = useAllAssets();
 
@@ -100,7 +100,7 @@ const LifePlanManagementPage = () => {
                 laterLifeLeftOver,
                 shouldIncludeStatePension,
                 fees,
-                accountBreakdown,
+                investmentAccounts,
                 investmentSummary: investmentSummary.data,
                 includedClientAccounts: client.included,
                 fundData,
@@ -168,7 +168,7 @@ const LifePlanManagementPage = () => {
     (goalCurrentProjections.data?.projectedGoalAgeTotal || 0);
 
   const tableData =
-    accountBreakdown?.map((breakdownItem) => ({
+    investmentAccounts?.map((breakdownItem) => ({
       accountType: breakdownItem.accountName || '',
       accountName: breakdownItem.accountName || '',
       accountTotalNetContribution: breakdownItem.accountTotalNetContribution,

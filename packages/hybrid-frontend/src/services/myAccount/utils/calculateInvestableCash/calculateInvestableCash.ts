@@ -1,7 +1,7 @@
-import { Breakdown } from '../../types';
+import { InvestmentAccount } from '../../types';
 
-const calculateInvestableCash = (accountBreakdown: Array<Breakdown>) =>
-  accountBreakdown
+const calculateInvestableCash = (investmentAccounts: Array<InvestmentAccount>) =>
+  investmentAccounts
     .filter((account) => account.accountType === 'accounts')
     .reduce((acc, account) => acc + (account.accountCash ?? 0), 0);
 

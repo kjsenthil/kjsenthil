@@ -62,7 +62,7 @@ describe('LifePlanPage', () => {
         status: 'success',
         ...mockInvestSummaryResponse,
       }),
-      accountBreakdown: () => ({
+      investmentAccounts: () => ({
         status: 'success',
         data: [],
       }),

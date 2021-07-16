@@ -49,6 +49,7 @@ type LinkData = {
   shouldShowInMainMenu?: boolean;
   shouldShowInDrawer?: boolean;
   shouldShowInDropdownMenu?: boolean;
+  shouldDisplayInNonProdOnly?: boolean;
   color?: 'primary' | 'error';
   icon?: React.ReactElement;
 } & LinkType;
@@ -111,9 +112,11 @@ const HeaderMenu = ({
 
   const navigateHome = () => navigate(homePath);
 
+  const filterForEnv = (link: LinkData) =>
+    link.shouldDisplayInNonProdOnly === undefined || link.shouldDisplayInNonProdOnly === isNonProd;
   const renderMenuNavDropdownLinks = () =>
     links
-      .filter((link) => link.shouldShowInDropdownMenu)
+      .filter((link) => link.shouldShowInDropdownMenu && filterForEnv(link))
       .map((link) => (
         <MenuItem
           key={`${link.name}-MenuItem`}
@@ -130,7 +133,7 @@ const HeaderMenu = ({
 
   const renderDrawerList = () => (
     <>
-      {links.map((link, i) => (
+      {links.filter(filterForEnv).map((link, i) => (
         <ListItem
           key={link.name}
           divider={links.length - 1 > i}

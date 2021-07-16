@@ -4,7 +4,7 @@ import { configureStore, Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import useBasicInfo, { BasicInfo } from './useBasicInfo';
 import {
-  mockAccountsBreakdown,
+  mockInvestmentAccounts,
   mockClientResponse,
   mockInvestSummaryResponse,
 } from '../../services/myAccount/mocks';
@@ -33,7 +33,7 @@ describe('useBasicInfo', () => {
           investmentSummary: () => ({
             data: undefined,
           }),
-          accountBreakdown: () => ({
+          investmentAccounts: () => ({
             data: undefined,
           }),
         },
@@ -71,8 +71,8 @@ describe('useBasicInfo', () => {
         reducer: {
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestSummaryResponse,
-          accountBreakdown: () => ({
-            data: mockAccountsBreakdown,
+          investmentAccounts: () => ({
+            data: mockInvestmentAccounts,
           }),
         },
       });

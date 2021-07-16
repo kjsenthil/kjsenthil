@@ -16,7 +16,7 @@ export { default as useGoalsDataForChart } from './useGoalsDataForChart';
 export { default as useProjectionsChartData } from './useProjectionsChartData';
 export { default as useDispatchThunkOnRender } from './useDispatchThunkOnRender';
 export { default as usePerformanceDataPeriod } from './usePerformanceDataPeriod';
-export { default as useAccountBreakdownInfo } from './useAccountBreakdownInfo';
+export { default as useInvestmentAccounts } from './useInvestmentAccounts';
 export { default as useHistoricalDataForProjectionsChart } from './useHistoricalDataForProjectionsChart';
 export { default as useProjectionsMetadataForProjectionsChart } from './useProjectionsMetadataForProjectionsChart';
 export { default as useProjectionsTargetDataForProjectionsChart } from './useProjectionsTargetDataForProjectionsChart';

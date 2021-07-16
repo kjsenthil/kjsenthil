@@ -8,14 +8,14 @@ export interface PerformanceChartSummaryPanelProps {
   totalNetContributions: number;
 
   totalReturn: number;
-  totalReturnPct: number;
+  totalReturnPercentage: number;
 }
 
 export default function PerformanceChartSummaryPanel({
   totalPerformance,
   totalNetContributions,
   totalReturn,
-  totalReturnPct,
+  totalReturnPercentage,
 }: PerformanceChartSummaryPanelProps) {
   return (
     <Container>
@@ -37,7 +37,7 @@ export default function PerformanceChartSummaryPanel({
         title="Total return"
         value={totalReturn}
         valueFormatter={formatCurrency}
-        percentageChange={totalReturnPct}
+        percentageChange={totalReturnPercentage}
         percentageFormatter={formatPercent}
       />
     </Container>

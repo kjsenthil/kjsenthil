@@ -6,7 +6,7 @@ import { authSlice as authReducer } from '../../../services/auth';
 import {
   clientSlice as clientReducer,
   InvestmentSummarySlice as investmentSummaryReducer,
-  accountBreakdownSlice as accountBreakdownReducer,
+  investmentAccountsSlice as investmentAccountsReducer,
 } from '../../../services/myAccount';
 import BIAccountsPage from './BIAccountsPage';
 import performanceReducer from '../../../services/performance/reducers/performanceSlice';
@@ -23,7 +23,7 @@ describe('BIAccountsPage', () => {
       client: clientReducer,
       performance: performanceReducer,
       investmentSummary: investmentSummaryReducer,
-      accountBreakdown: accountBreakdownReducer,
+      investmentAccounts: investmentAccountsReducer,
     },
   });
 

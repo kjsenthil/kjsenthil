@@ -6,7 +6,7 @@ import {
   InvestmentSummaryResponse,
   MonthlySavingsResponse,
   ClientAccountItem,
-  Breakdown,
+  InvestmentAccount,
   BasicInvestmentSummary,
 } from '../types';
 
@@ -17,7 +17,7 @@ export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
   totalInvested: 635376.130119,
 };
 
-export const mockAccountsBreakdown: Breakdown[] = [
+export const mockInvestmentAccounts: InvestmentAccount[] = [
   {
     id: '12345',
     accountType: 'accounts',
@@ -50,8 +50,8 @@ export const mockAccountsBreakdown: Breakdown[] = [
   },
 ];
 
-export const mockAccountsBreakdownData = {
-  accountBreakdown: mockAccountsBreakdown,
+export const mockInvestmentAccountsData = {
+  investmentAccounts: mockInvestmentAccounts,
   accountsSummary: mockBasicInvestmentSummary,
 };
 

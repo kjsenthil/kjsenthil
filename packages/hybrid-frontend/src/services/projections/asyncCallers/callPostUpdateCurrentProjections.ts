@@ -35,7 +35,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
   drawdownStartDate,
   drawdownEndDate,
   shouldIncludeStatePension,
-  accountBreakdown,
+  investmentAccounts,
   lumpSum,
   laterLifeLeftOver,
   fees,
@@ -57,7 +57,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
   const timeHorizon = monthDifference(dob100, new Date());
 
   const totalNetContributions =
-    (accountBreakdown || []).reduce(
+    (investmentAccounts || []).reduce(
       (totalContr, acctObj) => acctObj.accountTotalNetContribution + totalContr,
       0
     ) || 0;
