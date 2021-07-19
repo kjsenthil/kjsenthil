@@ -2480,9 +2480,10 @@
 									"\r",
 									"var today = moment();\r",
 									"var dob = pm.environment.get('myAccounts.DateOfBirth');\r",
-									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
 									"\r",
-									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + dateOfBirth.month().toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.day().toString()).slice(-2);\r",
+									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
+									"console.log(dateOfBirth);\r",
+									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + (dateOfBirth.month()+1).toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.date().toString()).slice(-2);\r",
 									"var dateTo100 = moment(dateTo100String,\"YYYY-MM-DD\");\r",
 									"var timeHorizon= dateTo100.diff(today, 'months');\r",
 									"pm.environment.set('timeHorizon',timeHorizon );\r",
@@ -2497,7 +2498,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n      \"timeHorizon\": {{timeHorizon}},\r\n      \"preGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n      \"monthlyContributions\": 624,\r\n      \"portfolioCurrentValue\": {{myAccounts.portfolioValue}},\r\n      \"desiredMonthlyDrawdown\": 700,\r\n      \"drawdownStartDate\": \"2055-04-10\",\r\n      \"drawdownEndDate\": \"2076-04-10\",\r\n      \"upfrontContribution\": 0,\r\n      \"preGoalExpectedReturn\":{{myAccounts.erValue}},\r\n      \"preGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"preGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"preGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"feesPercentage\": 0.004,\r\n      \"postGoalRiskModel\":  {{myAccounts.riskModel}},\r\n      \"lumpSumAmount\": 0.0,\r\n      \"statePensionAmount\": 0,\r\n      \"desiredAmount\": 0,\r\n      \"postGoalExpectedReturn\": {{myAccounts.erValue}},\r\n      \"postGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"postGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"postGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"netContribution\": {{myAccounts.netContribution}},\r\n      \"isConeGraph\": true,\r\n      \"includeStatePension\": true\r\n    } \r\n",
+							"raw": "{\r\n      \"timeHorizon\": {{timeHorizon}},\r\n      \"preGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n      \"monthlyContributions\": 624,\r\n      \"portfolioCurrentValue\": {{myAccounts.portfolioValue}},\r\n      \"desiredMonthlyDrawdown\": 700,\r\n      \"drawdownStartDate\": \"2055-04-10\",\r\n      \"drawdownEndDate\": \"2076-04-10\",\r\n      \"upfrontContribution\": 0,\r\n      \"preGoalExpectedReturn\":{{myAccounts.erValue}},\r\n      \"preGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"preGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"preGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"feesPercentage\": 0.004,\r\n      \"postGoalRiskModel\":  \"{{myAccounts.riskModel}}\",\r\n      \"lumpSumAmount\": 100000.0,\r\n      \"lumpSumDate\": \"2055-03-10\",\r\n      \"statePensionAmount\": 0,\r\n      \"desiredAmount\": 0,\r\n      \"postGoalExpectedReturn\": {{myAccounts.erValue}},\r\n      \"postGoalExpectedVolatility\": {{myAccounts.volatility}},\r\n      \"postGoalZScoreLowerBound\": {{myAccounts.zScores.MoreLikelyLB}},\r\n      \"postGoalZScoreUpperBound\": {{myAccounts.zScores.MoreLikelyUB}},\r\n      \"netContribution\": {{myAccounts.netContribution}},\r\n      \"isConeGraph\": true,\r\n      \"includeStatePension\": true\r\n    } \r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2505,13 +2506,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/current-projection",
+							"raw": "http://localhost:7071/api/current-projection",
+							"protocol": "http",
 							"host": [
-								"{{digitalHybrid.baseUrl}}"
+								"localhost"
 							],
+							"port": "7071",
 							"path": [
-								"{{apiPath}}",
-								"Projections",
+								"api",
 								"current-projection"
 							]
 						}
@@ -2593,9 +2595,10 @@
 									"\r",
 									"var today = moment();\r",
 									"var dob = pm.environment.get('myAccounts.DateOfBirth');\r",
-									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
 									"\r",
-									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + dateOfBirth.month().toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.day().toString()).slice(-2);\r",
+									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
+									"console.log(dateOfBirth);\r",
+									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + (dateOfBirth.month()+1).toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.date().toString()).slice(-2);\r",
 									"var dateTo100 = moment(dateTo100String,\"YYYY-MM-DD\");\r",
 									"var timeHorizon= dateTo100.diff(today, 'months');\r",
 									"pm.environment.set('timeHorizon',timeHorizon );\r",
@@ -2610,7 +2613,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"timeToAge100\": {{timeHorizon}},\r\n    \"preGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n    \"portfolioValue\": {{myAccounts.portfolioValue}},\r\n    \"desiredMonthlyDrawdown\": 10000,\r\n    \"drawdownStartDate\": \"2055-04-10\",\r\n    \"drawdownEndDate\": \"2076-04-10\",\r\n    \"upfrontContribution\": 10000,\r\n    \"preGoalExpectedReturn\": {{myAccounts.erValue}},\r\n    \"preGoalVolatility\": {{myAccounts.volatility}},\r\n    \"feesPercentage\": 0.004,\r\n    \"postGoalRiskModel\": \"{{myAccounts.riskModel}}\",\r\n    \"goalLumpSum\": 100000,\r\n    \"lumpSumDate\": \"2055-04-10\",\r\n    \"statePensionAmount\": 0,\r\n    \"postGoalExpectedReturn\":{{myAccounts.erValue}},\r\n    \"postGoalVolatility\":  {{myAccounts.volatility}},\r\n    \"desiredValueAtEndOfDrawdown\": 100000,\r\n    \"includeStatePension\": false\r\n}",
+							"raw": "{\r\n    \"timeToAge100\": {{timeHorizon}},\r\n    \"portfolioValue\": {{myAccounts.portfolioValue}},\r\n    \"desiredMonthlyDrawdown\": 10000,\r\n    \"drawdownStartDate\": \"2055-04-10\",\r\n    \"drawdownEndDate\": \"2076-04-10\",\r\n    \"upfrontContribution\": 10000,\r\n    \"preGoalExpectedReturn\": {{myAccounts.erValue}},\r\n    \"feesPercentage\": 0.004,\r\n    \"goalLumpSum\": 100000,\r\n    \"lumpSumDate\": \"2055-04-10\",\r\n    \"statePensionAmount\": 0,\r\n    \"postGoalExpectedReturn\":{{myAccounts.erValue}},\r\n    \"desiredValueAtEndOfDrawdown\": 100000,\r\n    \"monthlyContributions\":624,\r\n    \"includeStatePension\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3160,7 +3163,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
+							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"bi_retirement_lump_sum\" :100000,\n        \"bi_retirement_lump_sum_date\" :\"2055-10-04\",\n        \"bi_retirement_remaining_amount\" :100000,\n        \"bi_state_pension_amount\" :10000,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3629,7 +3632,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
+							"raw": "{\n    \"fields\": {\n        \"status\": \"2\",\n        \"category\": 5,\n        \"description\": \"Retirement\",\n        \"capture_date\": {\n            \"_val\": \"2021-06-03\",\n            \"_type\": \"Date\"\n        },\n        \"advice_type\": 5,\n        \"regular_drawdown\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": 233,\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"objective_frequency_start_age\": 65,\n        \"objective_frequency_end_age\": 67,\n        \"bi_retirement_lump_sum\" :0,\n        \"bi_retirement_lump_sum_date\" :\"2055-10-04\",\n        \"bi_retirement_remaining_amount\" :100000,\n        \"bi_state_pension_amount\" :10000,\n        \"drawdown_frequency\": \"12\",\n        \"owner\": \"client\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3653,6 +3656,128 @@
 								{
 									"key": "goalIndex",
 									"value": "{{xplan.goalIndex}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fields\": {\n        \"description\": \"savings goal\",\n        \"target_amount\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"100000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"initial_investment\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"20000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"term_timeframe\": \"medium_term\",\n        \"regular_saving\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"5000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"frequency\": \"12\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals/:list_obj_index",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"resourceful",
+										"entity",
+										"client-v4",
+										"goals",
+										":list_obj_index"
+									],
+									"variable": [
+										{
+											"key": "list_obj_index",
+											"value": "{{xplan.goalIndex}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-store,no-cache"
+								},
+								{
+									"key": "Content-Length",
+									"value": "203"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "ETag",
+									"value": "\"XCs+JHUEF7F8If9rIaxKUw==\""
+								},
+								{
+									"key": "X-Robots-Tag",
+									"value": "none"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31622400; includeSubDomains"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:35:45 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"fields\": {\n        \"term_timeframe\": \"medium_term\",\n        \"description\": \"savings goal\",\n        \"frequency\": 12,\n        \"target_amount\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"100000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"initial_investment\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"20000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        },\n        \"regular_saving\": {\n            \"_val\": {\n                \"code\": \"GBP\",\n                \"value\": {\n                    \"_val\": \"5000\",\n                    \"_type\": \"BigDecimal\"\n                }\n            },\n            \"_type\": \"Currency\"\n        }\n    },\n    \"allow_associates\": false,\n    \"allow_multiple_account_associates\": false,\n    \"index\": 1971863369\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete goal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/resourceful/entity/client-v4/goals/:goalIndex",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"resourceful",
+								"entity",
+								"client-v4",
+								"goals",
+								":goalIndex"
+							],
+							"variable": [
+								{
+									"key": "goalIndex",
+									"value": "1775895688"
 								}
 							]
 						}

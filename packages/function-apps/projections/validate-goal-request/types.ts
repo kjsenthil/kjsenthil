@@ -54,6 +54,10 @@ export interface GoalRequestPayload {
     description: string;
     capture_date: GoalRequestPayloadValType<Date | string, 'Date'>;
     regular_drawdown: GoalRequestPayloadValType<GoalRequestPayloadValue<number, 'BigDecimal'>, 'Currency'>;
+    bi_retirement_lump_sum: number;
+    bi_retirement_lump_sum_date: string;
+    bi_retirement_remaining_amount: number;
+    bi_state_pension_amount: number;
   };
 }
 

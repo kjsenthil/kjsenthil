@@ -1,11 +1,9 @@
-import { GoalRequestPayload, ValidationError } from "./types";
+import { GoalAdviceType, GoalCategory, GoalRequestPayload, GoalStatus, ValidationError } from "./types";
 import { validateInput, validateGoalRequestMain } from "./index";
 import { Context } from "@azure/functions";
 
 describe("tests for validate function", () => {
     const emptyGoal = {} as GoalRequestPayload
-    const validGoal = createGoal("Test description", 3, "1", 3, 65, 77, 100)
-
     it("when empty payload should return list of errors", () => {
         expect(
             validateInput(emptyGoal))
@@ -43,14 +41,30 @@ describe("tests for validate function", () => {
                     },
                     {
                         "code": "val-goal-007",
-                        "message": "drawdownAmount_must_be_more_than_zero",
+                        "message": "drawdownAmount_must_be_a_positive_number",
                         "property": "drawdownAmount"
-                    }
+                    },
+                    {
+                        "code": "val-goal-008",
+                        "message": "bi_retirement_lump_sum_must_be_a_positive_number_or_zero",
+                        "property": "bi_retirement_lump_sum",
+                    },
+                    {
+                        "code": "val-goal-010",
+                        "message": "bi_retirement_remaining_amount_must_be_a_positive_number_or_zero",
+                        "property": "bi_retirement_remaining_amount",
+                    },
+                    {
+                        "code": "val-goal-011",
+                        "message": "bi_state_pension_amount_must_be_a_positive_number_or_zero",
+                        "property": "bi_state_pension_amount",
+                    },
                 ] as ValidationError[])
     });
 
     it("when status is not validate error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 3, "77", 3, 65, 77, 100)
+        let invalidStatusGoal = createGoal();
+        invalidStatusGoal.fields.status = "11";
         expect(
             validateInput(invalidStatusGoal))
             .toEqual([
@@ -63,9 +77,10 @@ describe("tests for validate function", () => {
     });
 
     it("when advice type is a valid AdviceType but not allowed one , validate error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 3, "1", 9, 65, 77, 100)
+        let invalidGoal = createGoal();
+        invalidGoal.fields.advice_type = "11";
         expect(
-            validateInput(invalidStatusGoal))
+            validateInput(invalidGoal))
             .toEqual([
                 {
                     "code": "val-goal-004",
@@ -76,9 +91,10 @@ describe("tests for validate function", () => {
     });
 
     it("when category is a valid category but not allowed one , validate error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 10, "1", 5, 65, 77, 100)
+        let invalidGoal = createGoal();
+        invalidGoal.fields.category = "11";
         expect(
-            validateInput(invalidStatusGoal))
+            validateInput(invalidGoal))
             .toEqual([
                 {
                     "code": "val-goal-002",
@@ -86,12 +102,13 @@ describe("tests for validate function", () => {
                     "property": "category"
                 }
             ] as ValidationError[])
-    });    
+    });
 
     it("when start age is not above 65 error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 3, "1", 3, 64, 77, 100)
+        let invalidGoal = createGoal();
+        invalidGoal.fields.objective_frequency_start_age = 64;
         expect(
-            validateInput(invalidStatusGoal))
+            validateInput(invalidGoal))
             .toEqual(
                 [
                     {
@@ -103,9 +120,10 @@ describe("tests for validate function", () => {
     });
 
     it("when end age is below start age error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 3, "1", 3, 65, 64, 100)
+        let invalidGoal = createGoal();
+        invalidGoal.fields.objective_frequency_end_age = 62;
         expect(
-            validateInput(invalidStatusGoal))
+            validateInput(invalidGoal))
             .toEqual([
                 {
                     "code": "val-goal-006",
@@ -115,21 +133,37 @@ describe("tests for validate function", () => {
             ] as ValidationError[])
     });
     it("when drawdown amount is less than or equal to zero error must be thrown", () => {
-        let invalidStatusGoal = createGoal("Test description", 3, "1", 3, 65, 66, 0)
+        let invalidGoal = createGoal();
+        invalidGoal.fields.regular_drawdown._val.value._val = -1000;
         expect(
-            validateInput(invalidStatusGoal))
+            validateInput(invalidGoal))
             .toEqual(
                 [
                     {
                         "code": "val-goal-007",
-                        "message": "drawdownAmount_must_be_more_than_zero",
+                        "message": "drawdownAmount_must_be_a_positive_number",
                         "property": "drawdownAmount"
                     }
                 ] as ValidationError[])
     });
 
+    it("when lump sum amount is more than zero and lump sum date is not passed than error must be thrown", () => {
+        let invalidGoal = createGoal();
+        invalidGoal.fields.bi_retirement_lump_sum_date = null;
+        expect(
+            validateInput(invalidGoal))
+            .toEqual(
+                [
+                    {
+                        "code": "val-goal-009",
+                        "message": "bi_retirement_lump_sum_date_must_be_a_valid_date",
+                        "property": "bi_retirement_lump_sum_date"
+                    }
+                ] as ValidationError[])
+    });
 
     it("when all data is valid no validation error is thrown", () => {
+        const validGoal = createGoal();
         expect(
             validateInput(validGoal))
             .toEqual([] as ValidationError[])
@@ -171,6 +205,10 @@ describe("Tests for GoalRequestValidation Function", () => {
                     "objective_frequency_start_age": 65,
                     "objective_frequency_end_age": 85,
                     "drawdown_frequency": "12",
+                    "bi_retirement_lump_sum": 100000,
+                    "bi_retirement_lump_sum_date": "2055-10-04",
+                    "bi_retirement_remaining_amount": 100000,
+                    "bi_state_pension_amount": 10000,
                     "owner": "client"
                 }
             },
@@ -199,14 +237,36 @@ describe("Tests for GoalRequestValidation Function", () => {
 
 });
 
-function createGoal(description: string, category: number, status: string, advice_type: number, objective_frequency_start_age: number, objective_frequency_end_age: number, drawdownAmount: number): any {
+function createGoal(): any {
     const date = new Date();
     return {
         fields: {
-            description, category, status, advice_type, objective_frequency_start_age,
-            drawdown_frequency: 12, capture_date: { _type: "Date", _val: date },
-            objective_frequency_end_age, regular_drawdown: {
-                _type: "Currency", _val: { value: { _val: drawdownAmount, _type: "BigDecimal" }, code: "GBP" }
+            description: "Test description",
+            category: GoalCategory.RETIREMENT,
+            status: GoalStatus.FULFILLED_PARTIALLY,
+            advice_type: GoalAdviceType.RETIREMENT,
+            objective_frequency_start_age: 65,
+            objective_frequency_end_age: 85,
+            drawdown_frequency: 12,
+            capture_date: {
+                _type: "Date",
+                _val: date
+            },
+            bi_retirement_lump_sum: 1000,
+            bi_retirement_lump_sum_date: "2055-10-04",
+            bi_retirement_remaining_amount: 100000,
+            bi_state_pension_amount: 12000,
+            regular_drawdown: {
+                _type: "Currency",
+                _val:
+                {
+                    value:
+                    {
+                        _val: 1000,
+                        _type: "BigDecimal"
+                    },
+                    code: "GBP"
+                }
             }
         }
     };

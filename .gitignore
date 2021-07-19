@@ -98,3 +98,6 @@ storybook-static
 # Function app dists
 packages/function-apps/**/dist
 function-app-zips/
+
+#VS code local settings
+.vscode/*
