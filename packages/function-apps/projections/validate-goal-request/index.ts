@@ -27,9 +27,13 @@ const validateGoalRequestMain: AzureFunction = async function (context: Context,
 const isUndefinedOrLessThanZero = (field: undefined | number) => !field || field < 0;
 
 function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
+
     let validCategories = [GoalCategory.RETIREMENT.valueOf(), GoalCategory.INVESTMENT.valueOf(), GoalCategory.UNCATEGORIZED.valueOf()];
     let validAdviceTypes = [GoalAdviceType.RETIREMENT.valueOf(), GoalAdviceType.INVESTMENT.valueOf()];
     let errors = Array<ValidationError>();
+
+    //In case of  canceled goal than no need to validate whole request
+    if (inboundPayload.fields?.status === GoalStatus.CANCELLED) { return [] };
 
     if (typeof inboundPayload.fields?.description?.trim == 'undefined') {
         const error: ValidationError = {

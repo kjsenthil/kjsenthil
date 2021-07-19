@@ -62,6 +62,68 @@ describe("tests for validate function", () => {
                 ] as ValidationError[])
     });
 
+    it("when status is cancelled no validate error is thrown", () => {
+        let cancelledStatusGoal = { fields: {} } as GoalRequestPayload;
+        cancelledStatusGoal.fields.status = GoalStatus.CANCELLED;
+        expect(
+            validateInput(cancelledStatusGoal))
+            .toEqual([
+            ] as ValidationError[])
+    });
+
+    it("when status is not cancelled validate error is thrown", () => {
+        let invalidStatusGoal = { fields: {} } as GoalRequestPayload;
+        invalidStatusGoal.fields.status = GoalStatus.FULFILLED;
+        expect(
+            validateInput(invalidStatusGoal))
+            .toEqual([
+                {
+                    "code": "val-goal-001",
+                    "message": "description_cannot_be_empty",
+                    "property": "description"
+                },
+                {
+                    "code": "val-goal-002",
+                    "message": "category_not_valid",
+                    "property": "category"
+                },
+                {
+                    "code": "val-goal-004",
+                    "message": "adviceType_not_valid",
+                    "property": "advice_type"
+                },
+                {
+                    "code": "val-goal-005",
+                    "message": "startAge_not_valid",
+                    "property": "objective_frequency_start_age"
+                },
+                {
+                    "code": "val-goal-006",
+                    "message": "endAge_not_valid",
+                    "property": "objective_frequency_end_age"
+                },
+                {
+                    "code": "val-goal-007",
+                    "message": "drawdownAmount_must_be_a_positive_number",
+                    "property": "drawdownAmount"
+                },
+                {
+                    "code": "val-goal-008",
+                    "message": "bi_retirement_lump_sum_must_be_a_positive_number_or_zero",
+                    "property": "bi_retirement_lump_sum",
+                },
+                {
+                    "code": "val-goal-010",
+                    "message": "bi_retirement_remaining_amount_must_be_a_positive_number_or_zero",
+                    "property": "bi_retirement_remaining_amount",
+                },
+                {
+                    "code": "val-goal-011",
+                    "message": "bi_state_pension_amount_must_be_a_positive_number_or_zero",
+                    "property": "bi_state_pension_amount",
+                },
+            ] as ValidationError[])
+    });
     it("when status is not validate error must be thrown", () => {
         let invalidStatusGoal = createGoal();
         invalidStatusGoal.fields.status = "11";
