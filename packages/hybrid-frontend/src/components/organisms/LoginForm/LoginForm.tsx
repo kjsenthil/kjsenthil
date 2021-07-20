@@ -40,9 +40,7 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) =
     <Grid container justify="center">
       <Grid item xs={12}>
         <Typography variant="h1" color="primary" colorShade="dark2" align="center" gutterBottom>
-          Welcome to Bestinvest
-          <br />
-          Digital Hybrid
+          Welcome to BestInvest Beta
         </Typography>
       </Grid>
       <Grid item xs={12}>
