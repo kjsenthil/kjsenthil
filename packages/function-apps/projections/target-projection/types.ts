@@ -1,21 +1,18 @@
 interface RequestPayload {
   timeToAge100: number,
-  preGoalRiskModel: string,
   portfolioValue: number,
   desiredMonthlyDrawdown: number,
   drawdownStartDate: string,
   drawdownEndDate: string,
   upfrontContribution: number,
   preGoalExpectedReturn: number,
-  preGoalVolatility: number,
   feesPercentage: number,
-  postGoalRiskModel: string,
   goalLumpSum: number,
   lumpSumDate: string,
   statePensionAmount: number,
   postGoalExpectedReturn: number,
-  postGoalVolatility: number,
   desiredValueAtEndOfDrawdown: number,
+  monthlyContributions: number,
   includeStatePension: boolean
 }
 
@@ -26,7 +23,7 @@ interface ValidationError {
 }
 
 interface ResponsePayload {
-  targetGoalAmount: number,
+  upfrontContributionRequiredToFundDrawdown: number,
   monthlyContributionsRequiredToFundDrawdown: number,
   projections: ProjectionMonth[],
 }
