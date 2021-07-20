@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { calculateInvestableCash } from '../../services/myAccount/utils';
 import { RootState } from '../../store';
 import calculateAgeToday from '../../utils/date/calculateAgeToday';
-import useInvestmentAccounts from '../useInvestmentAccounts';
 import useStateIsAvailable from '../useStateIsAvailable';
+import useInvestmentAccounts from '../useInvestmentAccounts';
 
 export interface BasicInfo {
   totalInvested: number;

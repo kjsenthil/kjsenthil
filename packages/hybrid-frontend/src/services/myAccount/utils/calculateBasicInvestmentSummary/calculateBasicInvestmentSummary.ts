@@ -16,6 +16,7 @@ const calculateBasicInvestmentSummary = (
     }),
     { totalInvested: 0, totalCash: 0, totalGainLoss: 0, totalGainLossPercentage: 0 }
   );
+
   return summaryData;
 };
 

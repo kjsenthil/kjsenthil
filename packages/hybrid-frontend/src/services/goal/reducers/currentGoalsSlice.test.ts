@@ -1,7 +1,7 @@
 import * as api from '../api';
 import goalsReducer, { fetchGoals } from './currentGoalsSlice';
 import { CurrentGoals, CurrentGoalsState } from '../types';
-import getStoreAndStateHistory from '../../performance/utils/getStoreAndStateHistory';
+import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
 import mockGetGoalsSuccessResponse from '../mocks/get-goals-success-response.json';
 
 jest.mock('../api');

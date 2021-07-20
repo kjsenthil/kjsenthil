@@ -10,7 +10,11 @@ const findDateByPeriod = (dates: Array<DateType>, period: string): DateType | nu
     return null;
   }
 
-  const periodUnits: Record<'d' | 'm' | 'y', UnitType> = { d: 'day', m: 'month', y: 'year' };
+  const periodUnits: Record<'d' | 'm' | 'y', UnitType> = {
+    d: 'day',
+    m: 'month',
+    y: 'year',
+  };
 
   const [, periodValue, periodUnit] = periodMatch;
 

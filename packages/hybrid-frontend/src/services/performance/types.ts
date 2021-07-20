@@ -1,5 +1,6 @@
 import { CommonState } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
+import { PerformanceDataPeriod } from './constants';
 
 export interface GetPerformanceContactResponse {
   // All numbers have 2 decimal places
@@ -46,10 +47,10 @@ export interface GetPerformanceContactResponse {
 
 export interface PerformanceState
   extends CommonState<
-    GetPerformanceAccountsAggregatedResponse['data'],
-    GetPerformanceAccountsAggregatedResponse['included']
+    PerformanceAccountsAggregatedResponse['data'],
+    PerformanceAccountsAggregatedResponse['included']
   > {
-  performanceDataPeriod: string;
+  performanceDataPeriod: PerformanceDataPeriod;
 }
 
 export interface ProjectionsChartHistoricalDatum extends TimeSeriesDatum {
@@ -57,7 +58,21 @@ export interface ProjectionsChartHistoricalDatum extends TimeSeriesDatum {
   metadata?: Record<string, unknown>;
 }
 
-export interface GetPerformanceAccountsAggregatedResponse {
+export type NetContributionValueWithDate = { date: string; netContributionsToDate: number };
+export interface IncludedNetContributions {
+  type: 'netcontribution-accounts-aggregated';
+  id: string | null;
+  attributes: {
+    totalContributions: number;
+    netContributions: Array<NetContributionValueWithDate>;
+  };
+  links: string | null;
+  relationships: null;
+}
+
+export type PerformanceValueWithDate = { date: string; value: number };
+
+export interface PerformanceAccountsAggregatedResponse {
   data: {
     type: 'performance-accounts-aggregated';
     id: string | null;
@@ -67,7 +82,7 @@ export interface GetPerformanceAccountsAggregatedResponse {
         value: number;
         percentage: number;
       };
-      values: Array<{ date: string; value: number }>;
+      values: Array<PerformanceValueWithDate>;
     };
     links: string | null;
     relationships: {
@@ -82,14 +97,5 @@ export interface GetPerformanceAccountsAggregatedResponse {
       };
     };
   };
-  included: Array<{
-    type: 'netcontribution-accounts-aggregated';
-    id: string | null;
-    attributes: {
-      totalContributions: number;
-      netContributions: Array<{ date: string; netContributionsToDate: number }>;
-    };
-    links: string | null;
-    relationships: null;
-  }>;
+  included: Array<IncludedNetContributions>;
 }

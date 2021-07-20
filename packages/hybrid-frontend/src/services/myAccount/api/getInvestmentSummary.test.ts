@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
-import { mockAccounts, mockInvestSummaryResponse } from '../mocks';
+import { mockBasicInvestmentAccounts, mockInvestSummaryResponse } from '../mocks';
 import getInvestmentSummary from './getInvestmentSummary';
 
 const mockAxios = new MockAdapter(axios);
@@ -15,7 +15,7 @@ describe('getInvestmentSummary', () => {
   it(`makes a call to ${url}`, async () => {
     mockAxios.onGet(url).reply(200, mockInvestSummaryResponse);
 
-    const response = await getInvestmentSummary(mockAccounts);
+    const response = await getInvestmentSummary(mockBasicInvestmentAccounts);
 
     expect(response).toStrictEqual(mockInvestSummaryResponse);
   });

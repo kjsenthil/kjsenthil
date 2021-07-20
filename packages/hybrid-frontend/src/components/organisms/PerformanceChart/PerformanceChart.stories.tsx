@@ -26,7 +26,9 @@ export default {
 type TemplateProps = Omit<PerformanceChartProps, 'periodSelectionProps'>;
 
 const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ...rest }) => {
-  const [currentPeriod, setCurrentPeriod] = React.useState<string>(PerformanceDataPeriod['5Y']);
+  const [currentPeriod, setCurrentPeriod] = React.useState<PerformanceDataPeriod>(
+    PerformanceDataPeriod['5Y']
+  );
 
   const date = findDateByPeriod(
     performanceData.map((data) => data.date),

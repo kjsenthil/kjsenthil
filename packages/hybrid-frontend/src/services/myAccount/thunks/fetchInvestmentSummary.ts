@@ -5,7 +5,7 @@ import { extractClientAccounts } from '../utils';
 
 export const fetchInvestmentSummary = createAsyncThunk(
   'client/fetchInvestmentSummary',
-  async (_, { getState }) => {
+  (_, { getState }) => {
     const { client } = getState() as { client: ClientState };
 
     if (client.included) {

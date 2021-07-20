@@ -22,11 +22,12 @@ import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { usePerformanceChartDimension } from './hooks';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
+import { PerformanceDataPeriod } from '../../../services/performance';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
-  periodSelectionProps: ChartPeriodSelectionProps;
+  periodSelectionProps: ChartPeriodSelectionProps<PerformanceDataPeriod>;
 
   axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;
 }

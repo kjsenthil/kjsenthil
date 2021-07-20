@@ -36,7 +36,10 @@ import { callPostUpdateCurrentProjections } from '../../../services/projections/
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
 import PerformanceProjectionsSimplifiedChart from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChart';
-import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
+import {
+  fetchPerformanceAccountsAggregated,
+  PerformanceDataPeriod,
+} from '../../../services/performance';
 import {
   useProjectionsChartData,
   useDispatchThunkOnRender,
@@ -167,13 +170,21 @@ const LifePlanManagementPage = () => {
     (goalTargetProjections.data?.targetGoalAmount || 0) -
     (goalCurrentProjections.data?.projectedGoalAgeTotal || 0);
 
-  const tableData =
-    investmentAccounts?.map((breakdownItem) => ({
-      accountType: breakdownItem.accountName || '',
-      accountName: breakdownItem.accountName || '',
-      accountTotalNetContribution: breakdownItem.accountTotalNetContribution,
-      monthlyInvestment: breakdownItem.monthlyInvestment || 0,
-    })) || [];
+  const tableData = (investmentAccounts || []).map(
+    ({
+      accountName = '',
+      accountType = '',
+      accountTotalNetContribution,
+      monthlyInvestment = 0,
+      periodReturn,
+    }) => ({
+      accountType,
+      accountName,
+      accountTotalNetContribution,
+      monthlyInvestment,
+      periodReturn,
+    })
+  );
 
   const footerData = [
     'TOTAL',
@@ -449,6 +460,7 @@ const LifePlanManagementPage = () => {
                     { value: 'MONTHLY CONTRIBUTION' },
                   ]}
                   dataRow={tableData}
+                  period={PerformanceDataPeriod['5Y']}
                   footerRow={footerData}
                 />
               </Grid>

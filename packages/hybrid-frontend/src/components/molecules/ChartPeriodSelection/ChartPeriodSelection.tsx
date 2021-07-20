@@ -2,26 +2,26 @@ import * as React from 'react';
 import { Typography } from '../../atoms';
 import { Container, StyledPeriodSelectionButton } from './ChartPeriodSelection.styles';
 
-type PerformanceDataPeriod = Record<string, string>;
+type PerformanceDataPeriod<T> = Record<string, T>;
 
-export interface ChartPeriodSelectionProps {
-  currentPeriod: string;
-  setCurrentPeriod: (newPeriod: string) => void;
-  periodTextDisplay?: (period: string) => string;
-  performanceDataPeriod: PerformanceDataPeriod;
+export interface ChartPeriodSelectionProps<T> {
+  currentPeriod: T;
+  setCurrentPeriod: (newPeriod: T) => void;
+  periodTextDisplay?: (period: T) => string;
+  performanceDataPeriod: PerformanceDataPeriod<T>;
 }
 
-export default function ChartPeriodSelection({
+export default function ChartPeriodSelection<T = string>({
   currentPeriod,
   setCurrentPeriod,
-  periodTextDisplay = (period) => period,
+  periodTextDisplay = (period) => String(period),
   performanceDataPeriod,
-}: ChartPeriodSelectionProps) {
+}: ChartPeriodSelectionProps<T>) {
   return (
     <Container>
       {Object.values(performanceDataPeriod).map((period) => (
         <StyledPeriodSelectionButton
-          key={period}
+          key={String(period)}
           onClick={() => {
             setCurrentPeriod(period);
           }}

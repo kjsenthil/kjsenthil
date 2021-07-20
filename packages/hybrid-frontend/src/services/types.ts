@@ -1,4 +1,4 @@
-export interface AccountData {
+export interface InvestmentAccountData {
   id?: string;
   accountName?: string;
   accountTotalHoldings?: number;

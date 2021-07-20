@@ -1,22 +1,4 @@
-import {
-  ContributionDatum,
-  PerformanceDatum,
-} from '../../../components/organisms/PerformanceChart/performanceData';
-
-export function mapContributionsData<T extends { date: string; netContributionsToDate: number }>(
-  d: T
-): ContributionDatum {
-  return {
-    date: new Date(d.date),
-    value: d.netContributionsToDate,
-  };
-}
-
-export function mapPerformanceData<T extends { date: string; value: number }>(
-  d: T
-): PerformanceDatum {
-  return {
-    date: new Date(d.date),
-    value: d.value,
-  };
-}
+export { default as mapPerformanceData } from './mapPerformanceData';
+export { default as mapContributionsData } from './mapContributionsData';
+export { default as filterAndMapPerformanceData } from './filterAndMapPerformanceData';
+export { default as filterAndMapContributionData } from './filterAndMapContributionData';

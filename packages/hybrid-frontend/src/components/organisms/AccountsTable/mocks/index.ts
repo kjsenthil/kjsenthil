@@ -1,7 +1,34 @@
 import { AccountsTableHeader } from '../../../../constants';
 import { AccountsFooterCell, AccountsHeaderCell } from '../AccountsTable';
 
-export const mockInvestmentAccountsTableHeader: AccountsHeaderCell[] = AccountsTableHeader;
+export const mockInvestmentAccountsTableHeader: AccountsHeaderCell[] = AccountsTableHeader();
+
+const periodReturn = {
+  '7d': {
+    value: 100,
+    percent: 10,
+  },
+  '1m': {
+    value: 100,
+    percent: 10,
+  },
+  '3m': {
+    value: 100,
+    percent: 10,
+  },
+  '6m': {
+    value: 100,
+    percent: 10,
+  },
+  '1y': {
+    value: 100,
+    percent: 10,
+  },
+  '5y': {
+    value: 100,
+    percent: 10,
+  },
+};
 
 export const mockInvestmentAccountsTableData = [
   {
@@ -13,6 +40,13 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 0.03,
     accountReturn: 6837.39,
     accountReturnPercentage: 1.761,
+    periodReturn: {
+      ...periodReturn,
+      '5y': {
+        value: 6837.39,
+        percent: 1.761,
+      },
+    },
   },
   {
     id: '20500',
@@ -23,6 +57,13 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 563.21,
     accountReturn: 5382.01,
     accountReturnPercentage: 8.55,
+    periodReturn: {
+      ...periodReturn,
+      '5y': {
+        value: 5382.01,
+        percent: 8.55,
+      },
+    },
   },
   {
     id: '20871',
@@ -33,6 +74,13 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 0.0,
     accountReturn: 15292.74,
     accountReturnPercentage: 1.761,
+    periodReturn: {
+      ...periodReturn,
+      '5y': {
+        value: 15292.74,
+        percent: 1.761,
+      },
+    },
   },
 ];
 

@@ -1,6 +1,6 @@
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { GetPerformanceAccountsAggregatedResponse } from '../types';
+import { PerformanceAccountsAggregatedResponse } from '../types';
 
 export interface GetPerformanceAccountsAggregatedProps {
   accountIds: number[];
@@ -16,11 +16,11 @@ export function getPerformanceAccountsAggregatedUrl(accountIds: number | number[
 
 export default async function getPerformanceAccountsAggregated(
   accountIds: number | number[]
-): Promise<GetPerformanceAccountsAggregatedResponse | undefined> {
+): Promise<PerformanceAccountsAggregatedResponse | undefined> {
   const url = getPerformanceAccountsAggregatedUrl(accountIds);
 
   try {
-    const res = await api.get<GetPerformanceAccountsAggregatedResponse>(url);
+    const res = await api.get<PerformanceAccountsAggregatedResponse>(url);
     return res.data;
   } catch (error) {
     if (error.response.status === 404) {

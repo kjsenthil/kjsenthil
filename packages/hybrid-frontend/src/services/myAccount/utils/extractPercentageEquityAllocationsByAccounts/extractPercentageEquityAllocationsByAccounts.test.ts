@@ -11,7 +11,7 @@ describe('extractPercentageEquityAllocationsByAccounts', () => {
 
     (getMonthlySavingsAmount as jest.Mock).mockResolvedValueOnce(0);
 
-    const mockAccounts = [
+    const mockInvestmentAccounts = [
       { id: '21977', name: 'ISA ', type: 'accounts' },
       { id: '21978', name: 'Investment Account ', type: 'accounts' },
     ];
@@ -77,7 +77,7 @@ describe('extractPercentageEquityAllocationsByAccounts', () => {
 
     const accountsResults = await extractPercentageEquityAllocationsByAccounts(
       mockInvestmentSummaryData,
-      mockAccounts
+      mockInvestmentAccounts
     );
     expect(accountsResults).toStrictEqual(mockResponse);
   });

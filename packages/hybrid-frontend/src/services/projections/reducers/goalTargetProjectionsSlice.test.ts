@@ -1,5 +1,5 @@
 import * as api from '../api';
-import getStoreAndStateHistory from '../../performance/utils/getStoreAndStateHistory';
+import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
 import goalTargetProjectionsReducer, {
   setGoalTargetProjectionsSuccess,
   setGoalTargetProjectionsLoading,

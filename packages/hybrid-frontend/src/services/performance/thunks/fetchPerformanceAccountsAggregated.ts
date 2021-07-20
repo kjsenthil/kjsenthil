@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ClientState } from '../../myAccount';
+import { ClientState } from '../../myAccount/types';
 import { getPerformanceAccountsAggregated } from '../api';
-import { GetPerformanceAccountsAggregatedResponse } from '../types';
+import { PerformanceAccountsAggregatedResponse } from '../types';
 
-const fetchPerformanceContact = createAsyncThunk<
-  GetPerformanceAccountsAggregatedResponse | undefined,
+const fetchPerformanceAccountsAggregated = createAsyncThunk<
+  PerformanceAccountsAggregatedResponse | undefined,
   void
 >('performance/fetchPerformanceAccountsAggregated', (_, { getState }) => {
   const {
@@ -17,4 +17,4 @@ const fetchPerformanceContact = createAsyncThunk<
   return getPerformanceAccountsAggregated(accountIds);
 });
 
-export default fetchPerformanceContact;
+export default fetchPerformanceAccountsAggregated;

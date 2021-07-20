@@ -6,7 +6,9 @@ const PERIOD_REGEX = /^(\d+)([dmy])$/;
  */
 export default function humanizePeriodLabel(
   period: string,
-  render: (humanizedPeriod: string) => string = (humanizedPeriod) => humanizedPeriod
+  render: (humanizedPeriod: string, periodValue?: number) => string = (humanizedPeriod) =>
+    humanizedPeriod,
+  shouldSkipOne: boolean = false
 ): string {
   const periodUnits = { d: 'day', m: 'month', y: 'year' };
 
@@ -18,7 +20,11 @@ export default function humanizePeriodLabel(
     const pluralSuffix = Number(periodValue) > 1 ? 's' : '';
     const periodUnit = periodUnits[periodUnitShort];
 
-    return render(`${periodValue} ${periodUnit}${pluralSuffix}`);
+    const unit = `${periodUnit}${pluralSuffix}`;
+    if (shouldSkipOne && Number(periodValue) === 1) {
+      return render(unit, Number(periodValue));
+    }
+    return render(`${periodValue} ${unit}`, Number(periodValue));
   }
 
   return render(period);

@@ -35,7 +35,9 @@ export enum ApiAppName {
   ois = 'OisApi',
 }
 
-export const AccountsTableHeader: AccountsHeaderCell[] = [
+export const AccountsTableHeader = (
+  labelReturn: string = 'LIFETIME RETURN'
+): AccountsHeaderCell[] => [
   {
     value: 'ACCOUNT',
   },
@@ -51,7 +53,7 @@ export const AccountsTableHeader: AccountsHeaderCell[] = [
     value: 'CASH',
   },
   {
-    value: 'LIFETIME RETURN',
+    value: labelReturn,
     tooltip:
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
   },

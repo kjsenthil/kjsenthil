@@ -1,4 +1,5 @@
-import { AccountData, ClientAccountTypes, CommonState, SedolCode } from '../types';
+import { PerformanceDataPeriod } from '../performance/constants';
+import { InvestmentAccountData, ClientAccountTypes, CommonState, SedolCode } from '../types';
 
 export interface BasicInvestmentSummary {
   totalInvested: number;
@@ -58,7 +59,7 @@ export interface NetContributionResponse {
     id: string;
     attributes: {
       totalContributions: number;
-      netContributions?: NetContributionSliceResponse[];
+      netContributions: NetContributionSliceResponse[];
     };
     links?: {
       self: string;
@@ -68,12 +69,22 @@ export interface NetContributionResponse {
   included?: null;
 }
 
-export interface InvestmentAccountState extends CommonState<Array<InvestmentAccount>> {}
+export interface InvestmentAccountReturnAndPercentage {
+  value: number;
+  percent: number;
+}
 
-export interface InvestmentAccount extends AccountData {
+export type PeriodReturn = {
+  [key in PerformanceDataPeriod]: InvestmentAccountReturnAndPercentage;
+};
+
+export interface InvestmentAccount extends InvestmentAccountData {
   accountType: string;
   accountTotalNetContribution: number;
+  periodReturn: PeriodReturn;
 }
+
+export interface InvestmentAccountsState extends CommonState<Array<InvestmentAccount>> {}
 
 export interface ClientResponse {
   data: {
@@ -159,7 +170,7 @@ export interface MonthlySavingsResponse {
   included: null;
 }
 
-interface BreakdownItem {
+interface BreakdownAllocationItem {
   name: string;
   percentage: number;
 }
@@ -167,7 +178,7 @@ interface BreakdownItem {
 export interface BreakdownAllocationResponse {
   data: {
     attributes: {
-      breakdown: BreakdownItem[];
+      breakdown: BreakdownAllocationItem[];
     };
     id: string;
     links: Record<string, unknown>;

@@ -92,6 +92,7 @@ const MyAccountLayout = ({
             type: 'switch',
             onClick: expFeatureSwitch,
             shouldShowInDrawer: true,
+            shouldDisplayInNonProdOnly: true,
           },
           {
             name: 'Logout',

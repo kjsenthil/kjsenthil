@@ -14,4 +14,14 @@ describe('humanizePeriodLabel', () => {
       humanizedPeriod === 'all' ? 'BEGINNING' : `${humanizedPeriod.toUpperCase()} AGO`;
     expect(humanizePeriodLabel(period, render)).toStrictEqual(expectedText);
   });
+
+  it('returns unit only when the period value is 1 and option shouldSkipOne is true', () => {
+    const render = (humanizedPeriod: string) => `LAST ${humanizedPeriod.toUpperCase()}`;
+    expect(humanizePeriodLabel('1y', render, true)).toStrictEqual('LAST YEAR');
+  });
+
+  it('does not return unit only when the period value > 1 and option shouldSkipOne is true', () => {
+    const render = (humanizedPeriod: string) => `LAST ${humanizedPeriod.toUpperCase()}`;
+    expect(humanizePeriodLabel('2y', render, true)).toStrictEqual('LAST 2 YEARS');
+  });
 });

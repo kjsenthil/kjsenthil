@@ -2,11 +2,13 @@ import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import AccountsTable from './AccountsTable';
 import { mockInvestmentAccountsTableHeader, mockInvestmentAccountsTableData } from './mocks';
+import { PerformanceDataPeriod } from '../../../services/performance';
 
 describe('AccountsTable', () => {
   beforeEach(() => {
     renderWithTheme(
       <AccountsTable
+        period={PerformanceDataPeriod['5Y']}
         headerRow={mockInvestmentAccountsTableHeader}
         dataRow={mockInvestmentAccountsTableData}
       />

@@ -6,6 +6,10 @@ export const axisBottomConfig: Record<
   PerformanceDataPeriod,
   { numTicks: number; tickFormatterType: D3TimeFormatterType }
 > = {
+  [PerformanceDataPeriod['1W']]: {
+    numTicks: 4,
+    tickFormatterType: D3TimeFormatterType.DATE_AND_DAY,
+  },
   [PerformanceDataPeriod['1M']]: {
     numTicks: 4,
     tickFormatterType: D3TimeFormatterType.DATE_AND_MONTH,

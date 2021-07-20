@@ -62,11 +62,11 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
       0
     ) || 0;
 
-  const accounts = extractClientAccounts(includedClientAccounts);
+  const clientAccounts = extractClientAccounts(includedClientAccounts);
 
   const accountTotals = await extractPercentageEquityAllocationsByAccounts(
     investmentSummary,
-    accounts
+    clientAccounts
   );
 
   // get the percentage equity allocation for the customer's entire portfolio

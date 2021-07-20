@@ -49,7 +49,7 @@ MainCardWithChildren.args = {
         )}
         periodSelectionProps={{
           performanceDataPeriod: PerformanceDataPeriod,
-          currentPeriod: String(PerformanceDataPeriod['5Y']),
+          currentPeriod: PerformanceDataPeriod['5Y'],
           setCurrentPeriod: () => {},
         }}
         axisBottomConfig={axisBottomConfig}

@@ -11,6 +11,7 @@ import { PerformanceSimplifiedChart, GoalMainCardPlaceholder } from '../../organ
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import {
   fetchPerformanceAccountsAggregated,
+  PerformanceDataPeriod,
   setPerformanceDataPeriod,
 } from '../../../services/performance';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
@@ -28,14 +29,6 @@ import { FeatureFlagNames } from '../../../constants';
 import { createGoal, GoalType } from '../../../services/goal';
 import { goalCreationPaths, NavPaths } from '../../../config/paths';
 
-export enum PerformanceDataPeriod {
-  '1M' = '1m',
-  '3M' = '3m',
-  '6M' = '6m',
-  '1Y' = '1y',
-  '5Y' = '5y',
-}
-
 const HomePage = () => {
   const {
     client: { included },
@@ -46,7 +39,7 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
-  const setDataPeriod = (period: string) => {
+  const setDataPeriod = (period: PerformanceDataPeriod) => {
     dispatch(setPerformanceDataPeriod(period));
   };
 

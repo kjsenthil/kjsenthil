@@ -25,6 +25,8 @@ import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
 import { ChartPeriodSelection, DisabledComponent, MainCard } from '../../molecules';
 import { formatCurrency } from '../../../utils/formatters';
+import { calculateInvestmentReturn } from '../../../services/myAccount';
+import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 
 const BIAccountsPage = () => {
   const {
@@ -52,21 +54,29 @@ const BIAccountsPage = () => {
     }
   );
 
+  const returnLabel = humanizePeriodLabel(
+    performanceDataPeriod,
+    (humanizedPeriod) => `LAST ${humanizedPeriod.toUpperCase()} RETURN`,
+    true
+  );
+
   const summaryContributions =
     investmentAccounts?.reduce(
-      (totalContr, acctObj) => acctObj.accountTotalNetContribution + totalContr,
+      (totalContribution, account) => account.accountTotalNetContribution + totalContribution,
       0
     ) || 0;
 
   const accountsTableData =
-    investmentAccounts?.filter((breakItem) => breakItem.accountType === 'accounts') || [];
+    investmentAccounts?.filter((account) => account.accountType === 'accounts') || [];
 
   const linkedAccountsTableData =
-    investmentAccounts?.filter((breakItem) => breakItem.accountType === 'linked-accounts') || [];
+    investmentAccounts?.filter((account) => account.accountType === 'linked-accounts') || [];
 
-  const setDataPeriod = (period: string) => {
+  const setDataPeriod = (period: PerformanceDataPeriod) => {
     dispatch(setPerformanceDataPeriod(period));
   };
+
+  const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
 
   return (
     <MyAccountLayout
@@ -87,6 +97,7 @@ const BIAccountsPage = () => {
             currentPeriod={performanceDataPeriod}
             performanceDataPeriod={PerformanceDataPeriod}
             setCurrentPeriod={setDataPeriod}
+            periodTextDisplay={(period) => (period === '7d' ? '1w' : period)}
           />
         </Grid>
       </Grid>
@@ -98,6 +109,11 @@ const BIAccountsPage = () => {
             totalNetContributions={summaryContributions}
             totalReturn={accountsSummary?.totalGainLoss}
             totalReturnPercentage={accountsSummary?.totalGainLossPercentage}
+            periodBasedReturn={{
+              value: investmentReturn.value,
+              percent: investmentReturn.percent,
+              label: returnLabel,
+            }}
           />
         </Grid>
 
@@ -114,7 +130,11 @@ const BIAccountsPage = () => {
               )}
             >
               <Spacer y={2.5} />
-              <AccountsTable headerRow={AccountsTableHeader} dataRow={accountsTableData} />
+              <AccountsTable
+                period={performanceDataPeriod}
+                headerRow={AccountsTableHeader(returnLabel)}
+                dataRow={accountsTableData}
+              />
             </MainCard>
           </Grid>
         )}
@@ -132,7 +152,11 @@ const BIAccountsPage = () => {
               )}
             >
               <Spacer y={2.5} />
-              <AccountsTable headerRow={AccountsTableHeader} dataRow={linkedAccountsTableData} />
+              <AccountsTable
+                period={performanceDataPeriod}
+                headerRow={AccountsTableHeader(returnLabel)}
+                dataRow={linkedAccountsTableData}
+              />
             </MainCard>
           </Grid>
         )}
@@ -152,7 +176,7 @@ const BIAccountsPage = () => {
                   periodSelectionProps={{
                     performanceDataPeriod: PerformanceDataPeriod,
                     currentPeriod: performanceDataPeriod,
-                    setCurrentPeriod: (newPeriod: string) =>
+                    setCurrentPeriod: (newPeriod: PerformanceDataPeriod) =>
                       dispatch(setPerformanceDataPeriod(newPeriod)),
                   }}
                   axisBottomConfig={axisBottomConfig}

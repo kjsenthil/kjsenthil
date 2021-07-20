@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { commonActionReducerMapBuilder } from '../../utils';
 import { fetchInvestmentAccounts } from '../thunks';
-import { InvestmentAccount, InvestmentAccountState } from '../types';
+import { InvestmentAccount, InvestmentAccountsState } from '../types';
 
-const initialState: InvestmentAccountState = {
+const initialState: InvestmentAccountsState = {
   status: 'idle',
 };
 
@@ -13,7 +13,7 @@ const investmentAccountsSlice = createSlice({
   reducers: {},
   extraReducers: commonActionReducerMapBuilder<
     { data: Array<InvestmentAccount> },
-    InvestmentAccountState
+    InvestmentAccountsState
   >(fetchInvestmentAccounts),
 });
 

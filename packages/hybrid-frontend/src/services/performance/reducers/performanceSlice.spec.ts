@@ -1,13 +1,13 @@
 import { ReducersMapObject } from 'redux';
 import * as api from '../api';
-import getStoreAndStateHistory from '../utils/getStoreAndStateHistory';
+import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
 import performanceReducer, {
   fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
 } from './performanceSlice';
 import { PerformanceDataPeriod } from '../constants';
-import { GetPerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
-import mockGetPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
+import mockPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import { AuthState } from '../../auth';
 import { ClientState } from '../../myAccount';
 import { DeepPartial } from '../../../utils/common';
@@ -56,7 +56,7 @@ describe('performanceSlice', () => {
     describe('network fetch success case', () => {
       it('performs the network fetch and store states as expected', async () => {
         (api.getPerformanceAccountsAggregated as jest.Mock).mockResolvedValue(
-          mockGetPerformanceAccountsAggregatedResponse
+          mockPerformanceAccountsAggregatedResponse
         );
 
         const expectedStates: Array<PerformanceState> = [
@@ -71,8 +71,8 @@ describe('performanceSlice', () => {
 
           // This state is the result of the 'success' action
           {
-            data: mockGetPerformanceAccountsAggregatedResponse.data as GetPerformanceAccountsAggregatedResponse['data'],
-            included: mockGetPerformanceAccountsAggregatedResponse.included as GetPerformanceAccountsAggregatedResponse['included'],
+            data: mockPerformanceAccountsAggregatedResponse.data as PerformanceAccountsAggregatedResponse['data'],
+            included: mockPerformanceAccountsAggregatedResponse.included as PerformanceAccountsAggregatedResponse['included'],
             performanceDataPeriod: PerformanceDataPeriod['5Y'],
             error: undefined,
             status: 'success',

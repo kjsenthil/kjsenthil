@@ -4,16 +4,17 @@ import {
   InvestmentAccount,
   ClientState,
   InvestmentSummary,
-  InvestmentSummaryResponse,
+  InvestmentSummaryState,
 } from '../types';
 import { extractClientAccounts } from '../utils';
+import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
 
 const fetchInvestmentAccounts = createAsyncThunk(
   'client/fetchInvestmentAccounts',
   async (_, { getState }): Promise<{ data: Array<InvestmentAccount> }> => {
     const { client, investmentSummary } = getState() as {
       client: ClientState;
-      investmentSummary: InvestmentSummaryResponse;
+      investmentSummary: InvestmentSummaryState;
     };
 
     if (!client.included) {
@@ -38,7 +39,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
           investSummaryItem.attributes.funds +
           investSummaryItem.attributes.shares;
 
-        const performanceresponse = await getPerformanceAccountsAggregated(
+        const performanceResponse = await getPerformanceAccountsAggregated(
           Number(investSummaryItem.id)
         );
 
@@ -48,17 +49,21 @@ const fetchInvestmentAccounts = createAsyncThunk(
           accountType,
           accountTotalHoldings,
           accountTotalNetContribution:
-            performanceresponse?.included[0]?.attributes?.totalContributions || 0,
+            performanceResponse?.included[0]?.attributes?.totalContributions || 0,
           accountCash: investSummaryItem.attributes.cash,
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,
+          periodReturn: calculateInvestmentReturnForAllPeriods(
+            performanceResponse?.data.attributes.values ?? [],
+            performanceResponse?.included[0].attributes.netContributions ?? []
+          ),
         };
       }
     );
 
-    const investmentAccountsBreakdown = await Promise.all(investmentAccountsPromises);
+    const investmentAccounts = await Promise.all(investmentAccountsPromises);
 
-    return { data: investmentAccountsBreakdown };
+    return { data: investmentAccounts };
   }
 );
 

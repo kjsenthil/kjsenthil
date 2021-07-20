@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { API_ENDPOINTS } from '../../../config';
-import { mockInvestAccounts } from '../../myAccount/mocks';
+import { mockInvestmentAccountsData } from '../../myAccount/mocks';
 import getPortfolioAssetAllocation from './getPortfolioAssetAllocation';
 
 const mockAxios = new MockAdapter(axios);
@@ -12,9 +12,9 @@ describe('getPortfolioAssetAllocation', () => {
     const mockAllocation = {
       portfolioEquityPercentage: 40,
     };
-    mockAxios.onPost(url, mockInvestAccounts).reply(200, mockAllocation);
+    mockAxios.onPost(url, mockInvestmentAccountsData).reply(200, mockAllocation);
 
-    const response = await getPortfolioAssetAllocation(mockInvestAccounts);
+    const response = await getPortfolioAssetAllocation(mockInvestmentAccountsData);
 
     expect(response).toStrictEqual(mockAllocation.portfolioEquityPercentage);
   });

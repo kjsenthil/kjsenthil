@@ -70,7 +70,10 @@ describe('useHistoricalDataForProjectionsChart', () => {
         )
       );
 
-      const expectedData = mockHistoricalDataMonthly.map((d) => ({ ...d, date: new Date(d.date) }));
+      const expectedData = mockHistoricalDataMonthly.map((d) => ({
+        ...d,
+        date: new Date(`${d.date}Z`),
+      }));
 
       const { result } = renderHook(() => useHistoricalDataForProjectionsChart('monthly'));
 

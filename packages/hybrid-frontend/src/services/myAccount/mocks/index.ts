@@ -1,4 +1,4 @@
-import { AccountData, ClientAccountTypes } from '../../types';
+import { InvestmentAccountData, ClientAccountTypes } from '../../types';
 import {
   BreakdownAllocationResponse,
   ClientResponse,
@@ -8,13 +8,42 @@ import {
   ClientAccountItem,
   InvestmentAccount,
   BasicInvestmentSummary,
+  PeriodReturn,
 } from '../types';
+import { PerformanceDataPeriod } from '../../performance';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
   totalCash: 183322.11000000002,
   totalGainLoss: 122249.170119,
   totalGainLossPercentage: 55.04,
   totalInvested: 635376.130119,
+};
+
+const periodReturn: PeriodReturn = {
+  [PerformanceDataPeriod['1W']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['1M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['3M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['6M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['1Y']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['5Y']]: {
+    value: 100,
+    percent: 10,
+  },
 };
 
 export const mockInvestmentAccounts: InvestmentAccount[] = [
@@ -27,6 +56,7 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountTotalHoldings: 100,
     accountReturn: 0,
     accountReturnPercentage: 0,
+    periodReturn,
   },
   {
     id: '23456',
@@ -37,6 +67,7 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountTotalHoldings: 545908.9554399999,
     accountReturn: 116295.09544,
     accountReturnPercentage: 40.11,
+    periodReturn,
   },
   {
     id: '34567',
@@ -47,13 +78,9 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountCash: 43543.26,
     accountReturn: 5954.074679,
     accountReturnPercentage: 14.93,
+    periodReturn,
   },
 ];
-
-export const mockInvestmentAccountsData = {
-  investmentAccounts: mockInvestmentAccounts,
-  accountsSummary: mockBasicInvestmentSummary,
-};
 
 export const mockNetContributions: NetContributionResponse = {
   data: {
@@ -165,7 +192,7 @@ export const mockMonthlySavingsResponse: MonthlySavingsResponse = {
   included: null,
 };
 
-export const mockAccounts: ClientAccountItem[] = [
+export const mockBasicInvestmentAccounts: ClientAccountItem[] = [
   {
     id: '12345',
     name: 'Investment Account ',
@@ -183,7 +210,7 @@ export const mockAccounts: ClientAccountItem[] = [
   },
 ];
 
-export const mockInvestAccounts: AccountData[] = [
+export const mockInvestmentAccountsData: InvestmentAccountData[] = [
   {
     id: '12345',
     accountName: 'Investment Account ',

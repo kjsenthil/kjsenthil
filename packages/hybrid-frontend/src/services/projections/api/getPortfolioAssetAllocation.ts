@@ -1,11 +1,13 @@
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { AccountData } from '../../types';
+import { InvestmentAccountData } from '../../types';
 
-const getPortfolioAssetAllocation = async (accounts: AccountData[]): Promise<number> => {
+const getPortfolioAssetAllocation = async (
+  investmentAccounts: InvestmentAccountData[]
+): Promise<number> => {
   const path = API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION;
 
-  const response = await api.post(path, accounts);
+  const response = await api.post(path, investmentAccounts);
 
   return response.data.portfolioEquityPercentage;
 };

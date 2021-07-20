@@ -12,6 +12,7 @@ import {
   StyledActionIcon,
 } from './AccountsTable.styles';
 import { InvestmentAccount } from '../../../services/myAccount';
+import { PerformanceDataPeriod } from '../../../services/performance';
 
 export interface AccountsHeaderCell {
   value: string;
@@ -23,10 +24,11 @@ export type AccountsFooterCell = string;
 export interface AccountsTableProps {
   headerRow: AccountsHeaderCell[];
   dataRow: InvestmentAccount[];
+  period: PerformanceDataPeriod;
   footerRow?: AccountsFooterCell[];
 }
 
-const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) => (
+const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableProps) => (
   <TableContainer>
     <Table aria-label="accounts table">
       <AccountsTableHead>
@@ -93,22 +95,20 @@ const AccountsTable = ({ headerRow, dataRow, footerRow }: AccountsTableProps) =>
                 </AccountsTableCell>
               )}
 
-              {row.accountReturn !== undefined && (
+              {row.periodReturn[period] !== undefined && (
                 <AccountsTableCell>
                   <AccountReturn>
                     <Typography variant="b2" color="primary" colorShade="dark2" noWrap>
-                      {formatCurrency(row.accountReturn, { displayPlus: true })}
+                      {formatCurrency(row.periodReturn[period].value, {
+                        displayPlus: true,
+                      })}
                     </Typography>
 
-                    {row.accountReturnPercentage !== undefined && (
-                      <>
-                        <Spacer x={2} />
-                        <TagBox variant="percentage" formatter={formatPercent}>
-                          {row.accountReturnPercentage / 100}
-                        </TagBox>
-                        <StyledActionIcon color="primary" name="arrowHeadRight" />
-                      </>
-                    )}
+                    <Spacer x={2} />
+                    <TagBox variant="percentage" formatter={formatPercent}>
+                      {row.periodReturn[period].percent}
+                    </TagBox>
+                    <StyledActionIcon color="primary" name="arrowHeadRight" />
                   </AccountReturn>
                 </AccountsTableCell>
               )}

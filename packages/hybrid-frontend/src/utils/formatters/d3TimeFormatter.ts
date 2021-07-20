@@ -25,6 +25,7 @@ export const d3TimeLocale = timeFormatLocale({
 });
 
 export enum D3TimeFormatterType {
+  DATE_AND_DAY = 'DATE_AND_DAY',
   DATE_AND_MONTH = 'DATE_AND_MONTH',
   MONTH_ONLY = 'MONTH_ONLY',
   'YEAR_AND_MONTH' = 'YEAR_AND_MONTH',
@@ -32,6 +33,7 @@ export enum D3TimeFormatterType {
 }
 
 export const d3TimeFormatter: Record<D3TimeFormatterType, (d: Date) => string> = {
+  DATE_AND_DAY: d3TimeLocale.format('%d %b'),
   DATE_AND_MONTH: d3TimeLocale.format('%e %b'),
   MONTH_ONLY: d3TimeLocale.format('%b'),
   YEAR_AND_MONTH: d3TimeLocale.format('%b %Y'),

@@ -34,14 +34,18 @@ import {
   GoalTargetProjectionsState,
   SimulatedProjectionsState,
 } from '../services/projections';
-import { InvestmentAccountState, ClientState, InvestmentSummaryState } from '../services/myAccount';
+import {
+  InvestmentAccountsState,
+  ClientState,
+  InvestmentSummaryState,
+} from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 import { FeatureToggleState } from '../services/featureToggle';
 
 export interface RootState {
   auth: AuthState;
   client: ClientState;
-  investmentAccounts: InvestmentAccountState;
+  investmentAccounts: InvestmentAccountsState;
   investmentSummary: InvestmentSummaryState;
   goalCreation: GoalCreationState;
   currentGoals: CurrentGoalsState;
@@ -65,6 +69,7 @@ const persistConfig: PersistConfig<RootState> = {
     'goalCreation',
     'currentGoals',
     'performance',
+    'investmentAccounts',
     'simulatedProjections',
     'goalCurrentProjections',
     'goalTargetProjections',

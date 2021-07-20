@@ -3,12 +3,12 @@ import { getEquityAllocation, getMonthlySavingsAmount } from '../../api';
 
 const extractPercentageEquityAllocationsByAccounts = async (
   investmentSummaryData: InvestmentSummary[],
-  accounts: ClientAccountItem[]
+  investmentAccounts: ClientAccountItem[]
 ) => {
   const resultPromises = await Promise.all(
     investmentSummaryData.map(async (account) => {
       const accountName =
-        accounts.find((clientAccount) => clientAccount.id === account.id)?.name || '';
+        investmentAccounts.find((clientAccount) => clientAccount.id === account.id)?.name || '';
 
       const [equityPercentage, monthlyInvestment] = await Promise.all([
         getEquityAllocation(account.id),
