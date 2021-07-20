@@ -1,0 +1,9 @@
+{
+  "compileOnSave": true,
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": [ "node", "mocha", "chai" ]
+  },
+  "include": ["test/specs/*.spec.ts"]
+}

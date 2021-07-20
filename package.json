@@ -10,7 +10,7 @@
     "packages/utils/tracking",
     "packages/function-apps/projections",
     "packages/function-apps/features",
-    "packages/testing/apitest",
+    "packages/testing/axios-api",
     "packages/testing/wdio-mock-ui"
   ],
   "scripts": {
@@ -28,7 +28,7 @@
     "clean": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;",
     "frontend": "yarn workspace @tsw/hybrid-frontend",
     "fe": "yarn workspace @tsw/hybrid-frontend",
-    "test:api:ci": "yarn workspace @tsw/testing-apitest run test:api:ci",
+    "test:api": "yarn workspace @tsw/axios-api run test:api",
     "test:mock-ui": "yarn workspace @tsw/wdio-mock-ui run test:ui"
   }
 }

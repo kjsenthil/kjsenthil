@@ -1,0 +1,18 @@
+{
+  "name": "@tsw/axios-api",
+  "version": "1.0.0",
+  "description": "runs api tests",
+  "scripts": {
+    "test:api": "mocha -r ts-node/register --file ./test/utils/setAccessToken.ts test/specs/**.spec.ts --timeout=120000"
+  },
+  "dependencies": {
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^8.2.3",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.2",
+    "moment": "^2.29.1",
+    "superstruct": "^0.15.2",
+    "ts-node": "^10.1.0"
+  }
+}

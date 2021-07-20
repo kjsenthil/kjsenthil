@@ -4632,6 +4632,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsw/axios-api@workspace:packages/testing/axios-api":
+  version: 0.0.0-use.local
+  resolution: "@tsw/axios-api@workspace:packages/testing/axios-api"
+  dependencies:
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@types/chai": ^4.2.21
+    "@types/mocha": ^8.2.3
+    chai: ^4.3.4
+    mocha: ^9.0.2
+    moment: ^2.29.1
+    superstruct: ^0.15.2
+    ts-node: ^10.1.0
+  languageName: unknown
+  linkType: soft
+
 "@tsw/eslint-config@workspace:packages/shared-config/eslint":
   version: 0.0.0-use.local
   resolution: "@tsw/eslint-config@workspace:packages/shared-config/eslint"
@@ -4806,22 +4821,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsw/testing-apitest@workspace:packages/testing/apitest":
-  version: 0.0.0-use.local
-  resolution: "@tsw/testing-apitest@workspace:packages/testing/apitest"
-  dependencies:
-    "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
-    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
-    "@typescript-eslint/eslint-plugin": ^4.22.0
-    babel-jest: ^26.6.3
-    dotenv: ^8.2.0
-    env-var: ^7.0.0
-    husky: ^4.3.8
-    jest: ^26.6.3
-    lint-staged: ^10.5.3
-  languageName: unknown
-  linkType: soft
-
 "@tsw/tracking-util@workspace:packages/utils/tracking":
   version: 0.0.0-use.local
   resolution: "@tsw/tracking-util@workspace:packages/utils/tracking"
@@ -4978,6 +4977,13 @@ __metadata:
   version: 4.2.19
   resolution: "@types/chai@npm:4.2.19"
   checksum: 0b1513757572a96650373586d54e03fda2a40d07fe641397b03680e0711b8a30c04443effcfd9479ddfabbffa9e86b19d96c4643ea77f861cde57ca1c5036cd4
+  languageName: node
+  linkType: hard
+
+"@types/chai@npm:^4.2.21":
+  version: 4.2.21
+  resolution: "@types/chai@npm:4.2.21"
+  checksum: fc7d32fbae47ad6d3576bcb8cf24a243af03c93bb97cd9456a5415da888ab78a03800dcc4cc25a21ad1b493bcdaee7377f163bc4dd8db463c3530dafddea205c
   languageName: node
   linkType: hard
 
@@ -5500,6 +5506,13 @@ __metadata:
   version: 8.2.2
   resolution: "@types/mocha@npm:8.2.2"
   checksum: 3455211b134b0cfcfc71fee2d4f22a6ac3e313a93bf6c0cd3519c1e85653ffb8c9bb68dcff083b8e9e15b4ea3cb4f50d9916709946c082f072807aeba747575b
+  languageName: node
+  linkType: hard
+
+"@types/mocha@npm:^8.2.3":
+  version: 8.2.3
+  resolution: "@types/mocha@npm:8.2.3"
+  checksum: 5cba26124eb9d6b9b2fab66111488a54e6254162bac855282cb46f1467c5c4debe78ddeba15ab2264d5e4669fbfd403e433b6363106d2dfbe122d660c1e298e2
   languageName: node
   linkType: hard
 
@@ -20685,7 +20698,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mocha@npm:^9.0.0":
+"mocha@npm:^9.0.0, mocha@npm:^9.0.2":
   version: 9.0.2
   resolution: "mocha@npm:9.0.2"
   dependencies:
@@ -27019,6 +27032,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"superstruct@npm:^0.15.2":
+  version: 0.15.2
+  resolution: "superstruct@npm:0.15.2"
+  checksum: 8803e65c0dd0e0f502a057b6106a88f2f9dccfe00b242206adb0c77aa804736dce66c8d57ffefea6ead64acef2bcd97728afa92baa73a12cbe0d290f9c4e3354
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:8.1.1, supports-color@npm:^8.1.0, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
@@ -27781,6 +27801,40 @@ resolve@^2.0.0-next.3:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: dc461e2b9b931b00ff065530a0247f86da1d035e72a7ef6d7ed072dd8e6b236d1879f113dcc73a354d240c81b6b845445c3d32b16eeb68022ed27ab6d130c049
+  languageName: node
+  linkType: hard
+
+"ts-node@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "ts-node@npm:10.1.0"
+  dependencies:
+    "@tsconfig/node10": ^1.0.7
+    "@tsconfig/node12": ^1.0.7
+    "@tsconfig/node14": ^1.0.0
+    "@tsconfig/node16": ^1.0.1
+    arg: ^4.1.0
+    create-require: ^1.1.0
+    diff: ^4.0.1
+    make-error: ^1.1.1
+    source-map-support: ^0.5.17
+    yn: 3.1.1
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: d1b582dc3624061d86c2657507e21c3875919b7d108db16cde5507f2aa75b025be2e09b35ec607900eb525e429ebd14f0cf1c5f4b81292a191c0f8c7bfdf0720
   languageName: node
   linkType: hard
 

@@ -586,130 +586,53 @@ jobs:
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
   
-  #  Temporarily disabled until tests can be fixed to not fail intermittently
-  # api_test_suite:
-  #   name: "API test suite"
-  #   if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
-  #   environment: development
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - detect_changes
-  #     - build_cache
-  #     - get_pr_terraform_outputs
-  #     - clear_storybook_storage_account
-  #     - deploy_gatsby
-  #     - open_storage_account_firewalls
-  #   steps:
-  #     - name: "Checkout"
-  #       uses: actions/checkout@v2
-
-  #     - name: "Use Node.js 14.x"
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
-
-  #     - name: "Get yarn cache"
-  #       uses: actions/cache@v2
-  #       with:
-  #         key: ${{ needs.build_cache.outputs.key }}
-  #         path: ${{ needs.build_cache.outputs.yarn-path }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-yarn-
-
-  #     - name: "Get node modules cache"
-  #       uses: actions/cache@v2
-  #       with:
-  #         key: ${{ needs.build_cache.outputs.key }}
-  #         path: ${{ needs.build_cache.outputs.modules-path }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-modules-
-
-  #     - name: "Create PR env file"
-  #       working-directory: ./packages/testing
-  #       run: |
-  #         touch .env.pr
-  #         echo 'API_ENDPOINTS=${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}' >> .env.pr
-  #         echo 'API_BASE_URL=${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}' >> .env.pr
-  #         echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
-  #         cat .env.pr
-
-  #     - name: "Run API tests"
-  #       run: yarn test:api:ci
-  #       env:
-  #         JEST_HTML_REPORTERS_FILE_NAME: ApiTestReport.html
-  #         JEST_HTML_REPORTERS_PUBLIC_PATH: ./reports
-  #         API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-  #         API_ENDPOINTS: ${{ needs.get_pr_terraform_outputs.outputs.api_endpoints }}
-  #         MYACCOUNTS_HOME_URL: ${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}
-  #         MYACCOUNTS_USERNAME: ${{ secrets.MYACCOUNTS_USERNAME }}
-  #         MYACCOUNTS_PASSWORD: ${{ secrets.MYACCOUNTS_PASSWORD }}
-
-  #     - name: "Login to Azure"
-  #       if: always()
-  #       uses: Azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-  #     - name: "Deploy API Reports"
-  #       if: always()
-  #       uses: azure/CLI@v1
-  #       with:
-  #         azcliversion: latest
-  #         inlineScript: |
-  #           az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/apitest/reports -d "\$web/reports" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
-
-  wdio_ui_test:
-   name: "wdio mock ui test"
-   if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
-   environment: development
-   runs-on: ubuntu-latest
-   needs:
+  api_tests:
+    name: "Api Tests"
+    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    environment: development
+    runs-on: ubuntu-latest
+    needs:
      - detect_changes
      - build_cache
      - get_pr_terraform_outputs
      - unit_test
      - deploy_gatsby
      - deploy_storybook
-   strategy:
-     matrix:
-       browser: [chrome]
-   steps:
-     - name: "Checkout"
-       uses: actions/checkout@v2
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
 
-     - name: "Use Node.js 14.x"
-       uses: actions/setup-node@v1
-       with:
-         node-version: 14.x
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
 
-     - name: "Get yarn cache"
-       uses: actions/cache@v2
-       with:
-         key: ${{ needs.build_cache.outputs.key }}
-         path: ${{ needs.build_cache.outputs.yarn-path }}
-         restore-keys: |
-           ${{ runner.os }}-yarn-
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-     - name: "Get node modules cache"
-       uses: actions/cache@v2
-       with:
-         key: ${{ needs.build_cache.outputs.key }}
-         path: ${{ needs.build_cache.outputs.modules-path }}
-         restore-keys: |
-           ${{ runner.os }}-modules-
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
 
-     - name: "Update webdriver-manager"
-       run: npx webdriver-manager update
-
-     - name: "Run wdio mock UI tests"
-       run : yarn test:mock-ui
-       env :
-            BROWSER: ${{matrix.browser}}
-            URL: ${{ needs.deploy_gatsby.outputs.url }}
+      - name: "Run Api tests"
+        run: yarn test:api
+        env :
             API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
             PR_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
             PR_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
-
+            PR_PIN_POSITION_2: ${{ secrets.DH_TEST_USER_PIN_2 }}
+            PR_PIN_POSITION_4: ${{ secrets.DH_TEST_USER_PIN_4 }}
+            PR_PIN_POSITION_6: ${{ secrets.DH_TEST_USER_PIN_6 }}
+            
   # Deploys frontend pr contents
   deploy_gatsby:
     name: "Build & Deploy Gatsby"
@@ -1199,8 +1122,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
-      - wdio_ui_test
-      #- api_test_suite
+      - api_tests
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -1223,7 +1145,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
-      - wdio_ui_test
+      - api_tests
       - plan_staging
       - plan_prod
       - get_staging_apim_outputs
@@ -1330,7 +1252,7 @@ jobs:
       - unit_test
       - deploy_gatsby
       - deploy_storybook
-      - wdio_ui_test
+      - api_tests
       - close_storage_account_firewalls
       - get_staging_rg_outputs
       - get_staging_apim_outputs
@@ -1355,13 +1277,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.wdio_ui_test.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? '#009933' : '#cc0000',
+                "color": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.api_tests.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.wdio_ui_test.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? 'Deployment Successful :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ needs.detect_changes.result }}' !== 'failure' && '${{ needs.build_cache.result }}' !== 'failure' && '${{ needs.derive_environment_prefix.result }}' !== 'failure' && '${{ needs.package_function_apps.result }}' !== 'failure' && '${{ needs.deploy_rg_terraform.result }}' !== 'failure' && '${{ needs.get_dev_rg_outputs.result }}' !== 'failure' && '${{ needs.deploy_apim_terraform.result }}' !== 'failure' && '${{ needs.get_dev_apim_outputs.result }}' !== 'failure' && '${{ needs.deploy_pr_terraform.result }}' !== 'failure' && '${{ needs.get_pr_terraform_outputs.result }}' !== 'failure' && '${{ needs.open_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.clear_storybook_storage_account.result }}' !== 'failure' && '${{ needs.linting.result }}' !== 'failure' && '${{ needs.unit_test.result }}' !== 'failure' && '${{ needs.deploy_gatsby.result }}' !== 'failure' && '${{ needs.deploy_storybook.result }}' !== 'failure' && '${{ needs.api_tests.result }}' !== 'failure' && '${{ needs.close_storage_account_firewalls.result }}' !== 'failure' && '${{ needs.get_staging_rg_outputs.result }}' !== 'failure' && '${{ needs.get_staging_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_staging.result }}' !== 'failure' && '${{ needs.get_prod_rg_outputs.result }}' !== 'failure' && '${{ needs.get_prod_apim_outputs.result }}' !== 'failure' && '${{ needs.plan_prod.result }}' !== 'failure' && '${{ needs.publish_results.result }}' !== 'failure' ? 'Deployment Successful :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -1432,7 +1354,7 @@ jobs:
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook' }},
-                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.wdio_ui_test.result }}' === 'success' ? ':heavy-check-mark:   Wdio UI Tests' : '${{ needs.wdio_ui_test.result }}' === 'failure' ? ':heavy-cross-mark:   Wdio UI Tests' : ':heavy-minus-sign:   Wdio UI Tests' }},                 
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.api_tests.result }}' === 'success' ? ':heavy-check-mark:   Api Tests' : '${{ needs.api_tests.result }}' === 'failure' ? ':heavy-cross-mark:   Api Tests' : ':heavy-minus-sign:   Api Tests' }},                 
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.close_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Storage Account Firewalls' : '${{ needs.close_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Storage Account Firewalls' : ':heavy-minus-sign:   Close Storage Account Firewalls' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.publish_results.result }}' === 'success' ? ':heavy-check-mark:   Publish Results to PR' : '${{ needs.publish_results.result }}' === 'failure' ? ':heavy-cross-mark:   Publish Results to PR' : ':heavy-minus-sign:   Publish Results to PR' }},
