@@ -129,8 +129,7 @@ const callPostUpdateCurrentProjections = (dispatch: Dispatch) => async ({
     postGoalVolatility: volatility,
     goalLumpSum: lumpSum,
     desiredValueAtEndOfDrawdown: laterLifeLeftOver,
-    // TODO: To be provided by the state machine
-    lumpSumDate: '2079-01-01', // To be specified once the goal state machine has it
+    lumpSumDate: commonPayload.drawdownStartDate,
     ...commonPayload,
   };
 
