@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Runs webdriver io mock ui tests",
   "scripts": {
-    "test:ui": "npx wdio run ./wdio.conf.ts"
+    "test:ui": "yarn wdio run ./wdio.conf.ts"
   },
   "dependencies": {
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint",

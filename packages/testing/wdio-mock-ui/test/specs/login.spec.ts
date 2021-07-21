@@ -3,14 +3,14 @@ import { expect } from 'chai'
 import { open } from '../components/browser/browser.actions'
 import { loginAction, getAlertMsgTxt, pinLoginAction } from '../components/login/login.actions'
 import { getPageHeading, logout } from '../components/myaccount/myaccount.actions'
-import { url, loginApiUrl, pinApiUrl, accountsApiUrl, investmentSummaryApiUrl, performanceAccountsAggregatedApiUrl } from '../environments/dev'
+import { url, loginApiUrl, pinApiUrl, accountsApiUrl, investmentSummaryApiUrl, performanceAccountsAggregatedApiUrl } from '../environments/stage'
 import { Mock } from 'webdriverio';
-import loginMock from '../fixtures/loginMock'
-import loginErrorMock from '../fixtures/loginErrorMock'
-import pinMock from '../fixtures/pinMock'
-import accountsMock from '../fixtures/accountsMock'
-import investmentSummaryMock from '../fixtures/investmentSummary'
-import performanceAccountsAggregatedMock from '../fixtures/performanceAccountsAggregatedMock'
+import loginMockResponse from '../fixtures/login'
+import loginErrorMockResponse from '../fixtures/loginError'
+import pinMockResponse from '../fixtures/pin'
+import accountsMockResponse from '../fixtures/accounts'
+import investmentSummaryMockResponse from '../fixtures/investmentSummary'
+import performanceAccountsAggregatedMockResponse from '../fixtures/performanceAccountsAggregated'
 
 describe("Login test scenarios", () => {
 
@@ -32,7 +32,7 @@ describe("Login test scenarios", () => {
           method: "post"
         }
       );
-      await login.respond(loginMock, statusCode);
+      await login.respond(loginMockResponse, statusCode);
   
       pin = await browser.mock(
         pinApiUrl,
@@ -40,7 +40,7 @@ describe("Login test scenarios", () => {
           method: "post",
         }
       );
-      await pin.respond(pinMock, statusCode);
+      await pin.respond(pinMockResponse, statusCode);
   
       accounts = await browser.mock(
         accountsApiUrl,
@@ -49,7 +49,7 @@ describe("Login test scenarios", () => {
           headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
         }
       );
-      await accounts.respond(accountsMock, statusCode);
+      await accounts.respond(accountsMockResponse, statusCode);
   
       investmentSummary = await browser.mock(
         investmentSummaryApiUrl,
@@ -58,7 +58,7 @@ describe("Login test scenarios", () => {
           headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
         }
       );
-      await investmentSummary.respond(investmentSummaryMock, statusCode);
+      await investmentSummary.respond(investmentSummaryMockResponse, statusCode);
 
       performanceAccountsAggregated = await browser.mock(
         performanceAccountsAggregatedApiUrl,
@@ -67,7 +67,7 @@ describe("Login test scenarios", () => {
           headers: { 'Authorization': `Bearer ${process.env.accessToken}` },
         }
       );
-      await performanceAccountsAggregated.respond(performanceAccountsAggregatedMock, statusCode);
+      await performanceAccountsAggregated.respond(performanceAccountsAggregatedMockResponse, statusCode);
     });
 
     after(async ()=>{
@@ -107,7 +107,7 @@ describe("Login test scenarios", () => {
           method: "post"
         }
       );
-      await login.respond(loginErrorMock, statusCode);
+      await login.respond(loginErrorMockResponse, statusCode);
     });
 
     after(async ()=>{

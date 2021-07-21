@@ -1,4 +1,5 @@
-import { loginCredentials } from '../environments/dev'
+import { loginCredentials } from '../environments/stage'
+
 export default {
   "data": {
     "uri": "pin",

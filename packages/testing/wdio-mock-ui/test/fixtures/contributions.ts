@@ -1,7 +1,9 @@
+import { loginCredentials } from '../environments/stage'
+
 export default {
     "Data": {
       "Type": "performance",
-      "Id": "2257889",
+      "Id": `${loginCredentials.username.toString()}`,
       "Attributes": {
         "AccountValue": 13322.05,
         "Performance": {

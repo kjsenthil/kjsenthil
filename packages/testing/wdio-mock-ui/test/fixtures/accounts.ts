@@ -1,10 +1,12 @@
+import { loginCredentials } from '../environments/stage'
+
 export default {
   "Data": {
     "Type": "contact",
-    "Id": "2257889",
+    "Id": `${loginCredentials.username.toString()}`,
     "Attributes": {
-      "ContactId": 2257889,
-      "ClientNumber": "22578896",
+      "ContactId": Number(`${loginCredentials.username.toString()}`),
+      "ClientNumber": `${loginCredentials.username.toString()}`,
       "TitleId": 1,
       "Title": "Mr.",
       "FirstName": "FirstName",

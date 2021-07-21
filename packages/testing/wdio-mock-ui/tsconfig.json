@@ -5,7 +5,8 @@
     "module": "commonjs",
     "types": [
       "node",
-      "@wdio/mocha-framework"
+      "@wdio/mocha-framework",
+      "webdriverio/async",
     ]
   },
   "include": [
