@@ -1,8 +1,3 @@
-variable "name" {
-  type        = string
-  description = "The name of the key vault."
-}
-
 variable "resource_group_name" {
   description = "The name of the resource group in which resources are created."
   type        = string
@@ -24,3 +19,23 @@ variable "principal_id" {
   description = "system assigned principal_id of APIM"
 }
 
+variable "short_location" {
+  type        = string
+  description = "short location of the resource."
+}
+
+variable "environment_prefix" {
+  type        = string
+  description = "The name of the environment to deploy the resource."
+}
+
+variable "slack_security_alert_webhook_url" {
+  type        = string
+  description = "slack security alert web hook url"
+  sensitive   = true
+}
+
+variable "log_analytics_workspace_id" {
+  type        = string
+  description = "id of log analytics workspace"
+}

@@ -95,3 +95,9 @@ variable "sg_rules" {
   }))
   description = "The environment specific sg rules to be added to the security group."
 }
+
+variable "slack_security_alert_webhook_url" {
+  type        = string
+  description = "slack security alert web hook url"
+  sensitive   = true
+}

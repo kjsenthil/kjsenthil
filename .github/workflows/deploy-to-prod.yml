@@ -189,6 +189,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/staging.tfvars"
@@ -198,6 +199,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -665,6 +667,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/prod.tfvars"
@@ -674,6 +677,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs

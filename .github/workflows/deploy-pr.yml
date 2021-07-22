@@ -248,6 +248,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
         run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
@@ -257,6 +258,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
   get_dev_apim_outputs:
     name: "Get dev APIM outputs"
@@ -585,6 +587,7 @@ jobs:
           inlineScript: |
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+
   
   api_tests:
     name: "Api Tests"
@@ -844,6 +847,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Infra Init"
         run: terraform init -backend-config="./backends/staging.backend"
@@ -1015,6 +1019,7 @@ jobs:
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
+          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Infra Init"
         run: terraform init -backend-config="./backends/prod.backend"
@@ -1174,7 +1179,7 @@ jobs:
             <details><summary>Show Plan</summary>
 
             \`\`\`${{ needs.plan_staging.outputs.plan_rg  }}\`\`\`
-            
+
             </details>
 
             #### APIM Terraform plan - Staging
