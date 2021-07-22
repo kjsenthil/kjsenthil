@@ -7,7 +7,7 @@ Object {
     "baseElement": <body>
       <div>
         <div
-          class="sc-jeqYYF eVIktc"
+          class="sc-nVjpj EOofk"
         >
           <div
             class="MuiBox-root MuiBox-root-1"
@@ -50,14 +50,14 @@ Object {
               data-testid="Spacer"
             />
             <div
-              class="sc-bYoCmx dkdDhY"
+              class="sc-ikJzcn gZHwkl"
             >
               <div
-                class="sc-kLwgWK ftmfjb"
+                class="sc-jJoQpE isypUD"
                 width="10"
               >
                 <div
-                  class="sc-kfPtPH koNvvv"
+                  class="sc-bBHwJV kXmoUd"
                 >
                   <div>
                     <h6
@@ -66,7 +66,7 @@ Object {
                       TITLE A
                     </h6>
                     <div
-                      class="sc-fKVsgm jyioak"
+                      class="sc-iwjezw hwFGdy"
                     >
                       <h6
                         class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -78,11 +78,11 @@ Object {
                 </div>
               </div>
               <div
-                class="sc-kLwgWK cyTsCP"
+                class="sc-jJoQpE bmnsXL"
                 width="30"
               >
                 <div
-                  class="sc-kfPtPH koNvvv"
+                  class="sc-bBHwJV kXmoUd"
                 >
                   <div>
                     <h6
@@ -91,7 +91,7 @@ Object {
                       TITLE B
                     </h6>
                     <div
-                      class="sc-fKVsgm jyioak"
+                      class="sc-iwjezw hwFGdy"
                     >
                       <h6
                         class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -103,11 +103,11 @@ Object {
                 </div>
               </div>
               <div
-                class="sc-kLwgWK jvQlEw"
+                class="sc-jJoQpE hYOjDQ"
                 width="70"
               >
                 <div
-                  class="sc-kfPtPH koNvvv"
+                  class="sc-bBHwJV kXmoUd"
                 >
                   <div>
                     <h6
@@ -116,7 +116,7 @@ Object {
                       TITLE C
                     </h6>
                     <div
-                      class="sc-fKVsgm jyioak"
+                      class="sc-iwjezw hwFGdy"
                     >
                       <h6
                         class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -134,7 +134,7 @@ Object {
     </body>,
     "container": <div>
       <div
-        class="sc-jeqYYF eVIktc"
+        class="sc-nVjpj EOofk"
       >
         <div
           class="MuiBox-root MuiBox-root-1"
@@ -177,14 +177,14 @@ Object {
             data-testid="Spacer"
           />
           <div
-            class="sc-bYoCmx dkdDhY"
+            class="sc-ikJzcn gZHwkl"
           >
             <div
-              class="sc-kLwgWK ftmfjb"
+              class="sc-jJoQpE isypUD"
               width="10"
             >
               <div
-                class="sc-kfPtPH koNvvv"
+                class="sc-bBHwJV kXmoUd"
               >
                 <div>
                   <h6
@@ -193,7 +193,7 @@ Object {
                     TITLE A
                   </h6>
                   <div
-                    class="sc-fKVsgm jyioak"
+                    class="sc-iwjezw hwFGdy"
                   >
                     <h6
                       class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -205,11 +205,11 @@ Object {
               </div>
             </div>
             <div
-              class="sc-kLwgWK cyTsCP"
+              class="sc-jJoQpE bmnsXL"
               width="30"
             >
               <div
-                class="sc-kfPtPH koNvvv"
+                class="sc-bBHwJV kXmoUd"
               >
                 <div>
                   <h6
@@ -218,7 +218,7 @@ Object {
                     TITLE B
                   </h6>
                   <div
-                    class="sc-fKVsgm jyioak"
+                    class="sc-iwjezw hwFGdy"
                   >
                     <h6
                       class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -230,11 +230,11 @@ Object {
               </div>
             </div>
             <div
-              class="sc-kLwgWK jvQlEw"
+              class="sc-jJoQpE hYOjDQ"
               width="70"
             >
               <div
-                class="sc-kfPtPH koNvvv"
+                class="sc-bBHwJV kXmoUd"
               >
                 <div>
                   <h6
@@ -243,7 +243,7 @@ Object {
                     TITLE C
                   </h6>
                   <div
-                    class="sc-fKVsgm jyioak"
+                    class="sc-iwjezw hwFGdy"
                   >
                     <h6
                       class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"

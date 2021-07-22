@@ -4,6 +4,7 @@ import { TypographyWithTooltipProps } from './TypographyWithTooltip';
 import Legend, { LegendProps } from './Legend';
 import ProgressBarWithLegend, { ProgressBarWithLegendProps } from './ProgressBarWithLegend';
 import { DigitalCoachBoxProps } from './DigitalCoachBox';
+import { TabsNavigationProps } from './TabsNavigation';
 
 export { default as SliderWithInput } from './SliderWithInput';
 export { default as Alert } from './Alert';
@@ -20,6 +21,7 @@ export { default as TypographyWithTooltip } from './TypographyWithTooltip';
 export { default as SubHeader } from './SubHeader';
 export { default as NavLink } from './NavLink';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
+export { default as TabsNavigation } from './TabsNavigation';
 
 /* material-ui molecules */
 export {
@@ -38,5 +40,6 @@ export type {
   LegendProps,
   ProgressBarWithLegendProps,
   DigitalCoachBoxProps,
+  TabsNavigationProps,
 };
 export { ChartPeriodSelection, Legend, ProgressBarWithLegend };

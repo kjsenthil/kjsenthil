@@ -12,6 +12,7 @@ import TextField, {
 import { TooltipProps } from './Tooltip';
 import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
+import { TabsProps, TabProps } from './Tabs';
 
 export { Button, LinearProgress, TextField, Typography, ChartIndicator, ProgressBar };
 
@@ -27,6 +28,8 @@ export type {
   IconProps,
   SpacerProps,
   ProgressBarProps,
+  TabsProps,
+  TabProps,
 };
 
 export { default as Spacer } from './Spacer';
@@ -39,6 +42,7 @@ export { default as Slider } from './Slider';
 export { default as Tooltip } from './Tooltip';
 export { default as Link } from './Link';
 export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './TextField';
+export { Tabs, Tab } from './Tabs';
 
 /* material-ui atoms */
 export {
@@ -59,6 +63,7 @@ export {
   DialogContentText,
   DialogTitle,
   Grid,
+  Hidden,
   IconButton,
   Input,
   InputLabel,
