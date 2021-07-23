@@ -14,5 +14,5 @@
     }
   ],
   "scriptFile": "./index.js",
-  "entryPoint": "currentProjectionMain"
+  "entryPoint": "currentProjection"
 }

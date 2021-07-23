@@ -66,6 +66,7 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
     timeHorizon,
     isConeGraph: true,
     lumpSumAmount: lumpSum,
+    lumpSumDate: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
     desiredAmount: 0,
     netContribution: totalNetContributions,
     monthlyContributions,

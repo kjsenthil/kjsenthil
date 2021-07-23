@@ -1,8 +1,8 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { RequestPayload, ProjectionMonth, ValidationError, ResponsePayload, ExpectedReturns, Drawdown } from "./types";
+import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { Drawdown, ExpectedReturns, ProjectionMonth, RequestPayload, ResponsePayload, Stats, ValidationError } from "./types";
 
-const currentProjectionMain: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    let responseBody = {}
+const currentProjection: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+    let responseBody: {}
     let responseStatus = 200
 
     try {
@@ -31,19 +31,58 @@ const currentProjectionMain: AzureFunction = async function (context: Context, r
 }
 
 function getCurrentProjection(inboundPayload: RequestPayload, today: Date): ResponsePayload {
+    //if no lumpsum date is passed assume that as drawdown start date
+    if (inboundPayload.lumpSumDate == undefined)
+        inboundPayload.lumpSumDate = inboundPayload.drawdownStartDate;
 
-    const preGoalExpectedReturn = calculateExpectedreturn(inboundPayload.preGoalExpectedReturn, inboundPayload.feesPercentage, inboundPayload.preGoalExpectedVolatility);
+    let contributionPeriodUptoLumpSum = monthDiff(today, parseDate(inboundPayload.lumpSumDate)) - 1;
+    contributionPeriodUptoLumpSum = contributionPeriodUptoLumpSum < 0 ? 0 : contributionPeriodUptoLumpSum;
+    let goalContributingPeriod = monthDiff(today, parseDate(inboundPayload.drawdownStartDate)) - 1;
+    goalContributingPeriod = goalContributingPeriod < 0 ? 0 : goalContributingPeriod;
 
-    const postGoalExpectedReturn = calculateExpectedreturn(inboundPayload.postGoalExpectedReturn, inboundPayload.feesPercentage, inboundPayload.postGoalExpectedVolatility);
+    const contributionPeriodFromLumpSumAndDrawdown = (contributionPeriodUptoLumpSum == 0) ? goalContributingPeriod : monthDiff(parseDate(inboundPayload.lumpSumDate), parseDate(inboundPayload.drawdownStartDate));
+
+    const preGoalExpectedReturn = calculateExpectedReturn(inboundPayload.preGoalExpectedReturn, inboundPayload.feesPercentage, inboundPayload.preGoalExpectedVolatility);
+    const postGoalExpectedReturn = calculateExpectedReturn(inboundPayload.postGoalExpectedReturn, inboundPayload.feesPercentage, inboundPayload.postGoalExpectedVolatility);
+
+    const goalDrawdownPeriod = goalContributingPeriod == 0
+        ? monthDiff(today, parseDate(inboundPayload.drawdownEndDate))
+        : monthDiff(parseDate(inboundPayload.drawdownStartDate), parseDate(inboundPayload.drawdownEndDate)) + 1;
+
+    const goalTargetMonth = goalContributingPeriod + goalDrawdownPeriod + 1;
 
 
-    const goalContributingPeriod = monthDiff(today, parseDate(inboundPayload.drawdownStartDate)) - 1;
-    const goalDrawdownPeriod = monthDiff(parseDate(inboundPayload.drawdownStartDate), parseDate(inboundPayload.drawdownEndDate)) + 1;
+    const drawdown = calculateDrawdown(preGoalExpectedReturn.monthlyNetExpectedReturn, goalContributingPeriod, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions, inboundPayload.desiredAmount, inboundPayload.lumpSumAmount, postGoalExpectedReturn.monthlyNetExpectedReturn, goalDrawdownPeriod, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
 
-    let drawdown = calculateDrawdown(preGoalExpectedReturn.monthlyNetExpectedReturn, goalContributingPeriod, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions, inboundPayload.desiredAmount, inboundPayload.lumpSumAmount, postGoalExpectedReturn.monthlyNetExpectedReturn, goalDrawdownPeriod, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
+    let stats = {} as Stats;
+    if (inboundPayload.includeStatePension) {
+        stats = calculateHoldingsWithOnTrackPercentage(inboundPayload.timeHorizon, inboundPayload.lumpSumAmount, inboundPayload.desiredAmount, inboundPayload.desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, inboundPayload.monthlyContributions, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, 0, 0, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
+    }
+    else {
+        stats = calculateHoldingsWithOnTrackPercentage(inboundPayload.timeHorizon, inboundPayload.lumpSumAmount, inboundPayload.desiredAmount, inboundPayload.desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, inboundPayload.monthlyContributions, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, 0, 0, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
+    }
+    stats.projectedGoalAgeTotal = drawdown.projectedGoalAgeTotal;
+    stats.possibleDrawdown = drawdown.possibleDrawdown;
 
+    const currentProjections = calculateProjection(inboundPayload, goalContributingPeriod, preGoalExpectedReturn, postGoalExpectedReturn, stats, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth);
+
+
+    //when market underperform
+    let marketUnderperformStats = {} as Stats;
+
+    if (inboundPayload.includeStatePension) {
+        marketUnderperformStats = calculateHoldingsWithOnTrackPercentage(inboundPayload.timeHorizon, inboundPayload.lumpSumAmount, inboundPayload.desiredAmount, inboundPayload.desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, inboundPayload.monthlyContributions, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, inboundPayload.preGoalZScoreLowerBound, inboundPayload.postGoalZScoreLowerBound, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
+    }
+    else {
+        marketUnderperformStats = calculateHoldingsWithOnTrackPercentage(inboundPayload.timeHorizon, inboundPayload.lumpSumAmount, inboundPayload.desiredAmount, inboundPayload.desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, inboundPayload.monthlyContributions, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, inboundPayload.preGoalZScoreLowerBound, inboundPayload.postGoalZScoreLowerBound, inboundPayload.includeStatePension, inboundPayload.statePensionAmount);
+    }
+    // end market underperform
+    return { ...stats, marketUnderperform: marketUnderperformStats, projections: currentProjections } as ResponsePayload;
+}
+
+
+function calculateProjection(inboundPayload: RequestPayload, goalContributingPeriod: number, preGoalExpectedReturn: ExpectedReturns, postGoalExpectedReturn: ExpectedReturns, response: Stats, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number, goalTargetMonth: number): Array<ProjectionMonth> {
     const currentProjections = Array<ProjectionMonth>();
-
     const currentProjectionLine = new ProjectionMonth(
         0,
         inboundPayload.portfolioCurrentValue + inboundPayload.upfrontContribution,
@@ -51,20 +90,12 @@ function getCurrentProjection(inboundPayload: RequestPayload, today: Date): Resp
         inboundPayload.isConeGraph,
         inboundPayload.portfolioCurrentValue + inboundPayload.upfrontContribution,
         inboundPayload.portfolioCurrentValue + inboundPayload.upfrontContribution
-
-    )
-
+    );
     currentProjections.push(currentProjectionLine);
-
-    const response = {} as ResponsePayload;
-    response.projectedGoalAgeTotal = drawdown.projectedGoalAgeTotal;
-    response.possibleDrawdown = drawdown.possibleDrawdown;
-    response.possibleDrawdownWithSP = drawdown.possibleDrawdownsp;
 
     for (let month = 1; month <= inboundPayload.timeHorizon; month++) {
 
         //caclulate percentages
-
         const lowerBoundGoalDrawdownPeriodPercentage: number = calculatePercentage(month, goalContributingPeriod, preGoalExpectedReturn.monthlyNetExpectedReturn, preGoalExpectedReturn.monthlyVolatility, inboundPayload.preGoalZScoreLowerBound, postGoalExpectedReturn.monthlyNetExpectedReturn, postGoalExpectedReturn.monthlyVolatility, inboundPayload.postGoalZScoreLowerBound);
 
         const averagePercentage: number = calculatePercentage(month, goalContributingPeriod, preGoalExpectedReturn.monthlyNetExpectedReturn, preGoalExpectedReturn.monthlyVolatility, 0, postGoalExpectedReturn.monthlyNetExpectedReturn, postGoalExpectedReturn.monthlyVolatility, 0);
@@ -75,33 +106,16 @@ function getCurrentProjection(inboundPayload: RequestPayload, today: Date): Resp
 
         const currentProjectionLine = new ProjectionMonth(
             month,
-            calculateProjectionValue(month, goalContributingPeriod, previousMonth.projectedValue, drawdown.possibleDrawdownsp, averagePercentage, inboundPayload.lumpSumAmount, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions),
-            calculateContributionLine(previousMonth.contributionLine, month, goalContributingPeriod, drawdown.possibleDrawdown, inboundPayload.lumpSumAmount, inboundPayload.monthlyContributions),
+            calculateProjectionValue(month, previousMonth.projectedValue, averagePercentage, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions, response.affordableLumpSum, response.affordableRemainingAmount, response.affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, (month > contributionPeriodUptoLumpSum + 1) ? currentProjections[contributionPeriodUptoLumpSum + 1].projectedValue : 0),
+            calculateContributionLine(month, previousMonth.contributionLine, inboundPayload.monthlyContributions, goalTargetMonth, response.affordableLumpSum, response.affordableRemainingAmount, response.affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown),
             inboundPayload.isConeGraph,
-            calculateProjectionValue(month, goalContributingPeriod, previousMonth.lowerBound, drawdown.possibleDrawdownsp, lowerBoundGoalDrawdownPeriodPercentage, inboundPayload.lumpSumAmount, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions),
-            calculateProjectionValue(month, goalContributingPeriod, previousMonth.upperBound, drawdown.possibleDrawdownsp, upperBoundGoalDrawdownPeriodPercentage, inboundPayload.lumpSumAmount, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions)
-        )
+            calculateProjectionValue(month, previousMonth.lowerBound, lowerBoundGoalDrawdownPeriodPercentage, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions, response.affordableLumpSum, response.affordableRemainingAmount, response.affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, (month > contributionPeriodUptoLumpSum + 1) ? currentProjections[contributionPeriodUptoLumpSum + 1].lowerBound : 0),
+            calculateProjectionValue(month, previousMonth.upperBound, upperBoundGoalDrawdownPeriodPercentage, inboundPayload.portfolioCurrentValue, inboundPayload.upfrontContribution, inboundPayload.monthlyContributions, response.affordableLumpSum, response.affordableRemainingAmount, response.affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, (month > contributionPeriodUptoLumpSum + 1) ? currentProjections[contributionPeriodUptoLumpSum + 1].upperBound : 0, true)
+        );
 
         currentProjections.push(currentProjectionLine);
-        if (month == goalContributingPeriod) {
-
-            const postGoalUnderperformingReturns = ((1 + postGoalExpectedReturn.monthlyNetExpectedReturn) ** goalContributingPeriod + Math.sqrt(goalContributingPeriod) * postGoalExpectedReturn.monthlyVolatility * inboundPayload.postGoalZScoreLowerBound) ** (1 / goalContributingPeriod) - 1;
-            const projectedGoalAgeTotalUnderperforming = (inboundPayload.portfolioCurrentValue + inboundPayload.upfrontContribution) * (1 + lowerBoundGoalDrawdownPeriodPercentage) ** month + inboundPayload.monthlyContributions * ((1 - (1 + lowerBoundGoalDrawdownPeriodPercentage) ** month) / (1 - (1 + lowerBoundGoalDrawdownPeriodPercentage)));
-            const monthlyCompoundInterestMultiplierUnderperforming = ((1 - (1 + postGoalUnderperformingReturns) ** -goalDrawdownPeriod) / postGoalUnderperformingReturns) * (1 + postGoalUnderperformingReturns);
-
-            const possibleDrawdownUnderperforming = (projectedGoalAgeTotalUnderperforming - inboundPayload.lumpSumAmount - drawdown.remainingAmountAtGoalAge) / monthlyCompoundInterestMultiplierUnderperforming;
-
-
-            const possibleDrawdownUnderperforming_sp = inboundPayload.includeStatePension ? possibleDrawdownUnderperforming + inboundPayload.statePensionAmount / 12 : possibleDrawdownUnderperforming;
-
-            response.projectedGoalAgeTotalWhenMarketUnderperform = projectedGoalAgeTotalUnderperforming;
-            response.possibleDrawdownWhenMarketUnderperform = possibleDrawdownUnderperforming;
-            response.possibleDrawdownWhenMarketUnderperformWithSP = possibleDrawdownUnderperforming_sp;
-        }
     }
-
-    response.projections = currentProjections;
-    return response;
+    return currentProjections;
 }
 
 
@@ -112,8 +126,8 @@ function calculateDrawdown(preGoalMonthlyNetExpectedReturn: number, goalContribu
     const remainingAmountAtGoalAge = remainingAmount / (1 + postGoalMonthlyNetExpectedReturn) ** goalDrawdownPeriod;
     const possibleDrawdown = (projectedGoalAgeTotal - lumpSumAmount - remainingAmountAtGoalAge) / monthlyCompoundInterestMultiplePostGoal;
 
-    const possibleDrawdownsp = includeStatePension ? possibleDrawdown + statePensionAmount / 12 : possibleDrawdown ;
-    return { possibleDrawdownsp, possibleDrawdown, projectedGoalAgeTotal, remainingAmountAtGoalAge };
+    const possibleDrawdownsp = includeStatePension ? possibleDrawdown + statePensionAmount / 12 : possibleDrawdown;
+    return { possibleDrawdown: possibleDrawdownsp, projectedGoalAgeTotal, remainingAmountAtGoalAge };
 }
 
 function calculateProjectedGoalAgeTotal(preGoalMonthlyNetExpectedReturn: number, goalContributingPeriod: number, portfolioCurrentValue: number, upfrontContribution: number, monthlyContributions: number) {
@@ -122,41 +136,149 @@ function calculateProjectedGoalAgeTotal(preGoalMonthlyNetExpectedReturn: number,
     return valueOfCurrentHoldingsAtGoal + (monthlyContributions * monthlyCompoundInterestMultiplePreGoal);
 }
 
-function calculateExpectedreturn(expectedReturn: number, feesPercentage: number, expectedVolatility: number): ExpectedReturns {
+function calculateExpectedReturn(expectedReturn: number, feesPercentage: number, expectedVolatility: number): ExpectedReturns {
     const annualNetExpectedReturn = expectedReturn - feesPercentage;
     const monthlyNetExpectedReturn = ((1 + annualNetExpectedReturn) ** (1 / 12)) - 1;
     const monthlyVolatility = expectedVolatility / Math.sqrt(12);
     return { monthlyNetExpectedReturn, monthlyVolatility };
 }
 
-function calculateContributionLine(previousMonthcontributionLine: number, month: number, goalContributingPeriod: number, possibleDrawdown: number, lumpSumAmount: number, monthlyContributions: number) {
-    if (previousMonthcontributionLine <= 0) {
-        return 0;
+function calculateHoldingsWithOnTrackPercentage(timeHorizon: number, lumpSumAmount: number, desiredAmount: number, desiredMonthlyDrawdown: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number, goalDrawdownPeriod: number, goalTargetMonth: number, monthlyContributions: number, portfolioCurrentValue: number, upfrontContribution: number, preGoalExpectedReturn: ExpectedReturns, postGoalExpectedReturn: ExpectedReturns, preGoalZScore: number, postGoalZScore: number, includeStatePension: boolean, statePensionAmount: number): Stats {
+    let iterationCounter: number = 0;
+    const maxIterations = 1000;
+    const lowerGuessOntrackPercentage = 0;
+    const upperGuessOntrackPercentage = 100;
+    function calculateHoldingsWithOnTrackPercentage(timeHorizon: number, lumpSumAmount: number, desiredAmount: number, desiredMonthlyDrawdown: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number, goalDrawdownPeriod: number, goalTargetMonth: number, monthlyContributions: number, portfolioCurrentValue: number, upfrontContribution: number, preGoalExpectedReturn: ExpectedReturns, postGoalExpectedReturn: ExpectedReturns, preGoalZScore: number, postGoalZScore: number, lowerGuessOntrackPercentage: number, upperGuessOntrackPercentage: number, maxIterations: number, includeStatePension: boolean, statePensionAmount: number): Stats {
+        const guessOntrackPercentage = ((upperGuessOntrackPercentage + lowerGuessOntrackPercentage) / 2) / 100
+
+        const desiredMonthlyDrawdownWithStatePension = includeStatePension ? desiredMonthlyDrawdown - (statePensionAmount / 12) : desiredMonthlyDrawdown;
+        const affordableDrawdown = desiredMonthlyDrawdownWithStatePension * guessOntrackPercentage;
+        const affordableLumpSum = lumpSumAmount * guessOntrackPercentage;
+        const affordableRemainingAmount = desiredAmount * guessOntrackPercentage;
+        const desiredOutflow = includeStatePension ? desiredAmount + lumpSumAmount + desiredMonthlyDrawdownWithStatePension * goalDrawdownPeriod : desiredMonthlyDrawdownWithStatePension * goalDrawdownPeriod + lumpSumAmount + desiredAmount;
+        const affordableOutflow = includeStatePension ? affordableRemainingAmount + affordableLumpSum + affordableDrawdown * goalDrawdownPeriod : desiredOutflow * guessOntrackPercentage;
+
+        const surplusOrShortfall = desiredOutflow - affordableOutflow;
+        let previousMonthHoldingAmount = portfolioCurrentValue + upfrontContribution;
+        let holdingAmountOnLumpSumDate = 0;
+        let valueAtRetirement = 0;
+        for (let month = 1; month <= timeHorizon; month++) {
+            const percentage = calculatePercentage(month, contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown, preGoalExpectedReturn.monthlyNetExpectedReturn, preGoalExpectedReturn.monthlyVolatility, preGoalZScore, postGoalExpectedReturn.monthlyNetExpectedReturn, postGoalExpectedReturn.monthlyVolatility, postGoalZScore);
+            const holdingAmount = calculateHolding(month, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, previousMonthHoldingAmount, monthlyContributions, portfolioCurrentValue, upfrontContribution, affordableDrawdown, percentage, affordableLumpSum, affordableRemainingAmount, holdingAmountOnLumpSumDate)
+            if (month == goalTargetMonth) {
+                if (round(holdingAmount, 0) != 0) {
+                    //keep counting itegration and exit if it has over the limit to avoid infinite loop.
+                    ++iterationCounter;
+                    if (iterationCounter >= maxIterations)
+                        throw new Error("Maximum iterations reached while calculating on track percentage");
+
+                    if (holdingAmount > 0) {
+                        lowerGuessOntrackPercentage = guessOntrackPercentage * 100;
+                    }
+
+                    if (holdingAmount < 0) {
+                        upperGuessOntrackPercentage = guessOntrackPercentage * 100;
+                    }
+                    if (lowerGuessOntrackPercentage == upperGuessOntrackPercentage) {
+                        upperGuessOntrackPercentage = upperGuessOntrackPercentage * 2;
+                    }
+
+                    return calculateHoldingsWithOnTrackPercentage(timeHorizon, lumpSumAmount, desiredAmount, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, monthlyContributions, portfolioCurrentValue, upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, preGoalZScore, postGoalZScore, lowerGuessOntrackPercentage, upperGuessOntrackPercentage, maxIterations, includeStatePension, statePensionAmount);
+                }
+
+            }
+            previousMonthHoldingAmount = holdingAmount;
+            if (month == contributionPeriodUptoLumpSum + 1) {
+                holdingAmountOnLumpSumDate = holdingAmount;
+            }
+            if (month == goalTargetMonth)
+                valueAtRetirement = holdingAmount;
+        }
+
+        return {
+            desiredOutflow: desiredOutflow,
+            onTrackPercentage: guessOntrackPercentage,
+            affordableDrawdown: affordableDrawdown,
+            affordableLumpSum: affordableLumpSum,
+            affordableRemainingAmount: affordableRemainingAmount,
+            affordableOutflow: affordableOutflow,
+            surplusOrShortfall: surplusOrShortfall,
+            valueAtRetirement: valueAtRetirement,
+            totalAffordableDrawdown: affordableDrawdown * goalDrawdownPeriod,
+        } as Stats;
     }
 
-    if (month > goalContributingPeriod) {
-        return previousMonthcontributionLine - possibleDrawdown;
-    }
-
-    else if (month == goalContributingPeriod) {
-        return previousMonthcontributionLine - possibleDrawdown - lumpSumAmount;
-    }
-    else {
-        return previousMonthcontributionLine + monthlyContributions;
-    }
+    return calculateHoldingsWithOnTrackPercentage(timeHorizon, lumpSumAmount, desiredAmount, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalDrawdownPeriod, goalTargetMonth, monthlyContributions, portfolioCurrentValue, upfrontContribution, preGoalExpectedReturn, postGoalExpectedReturn, preGoalZScore, postGoalZScore, lowerGuessOntrackPercentage, upperGuessOntrackPercentage, maxIterations, includeStatePension, statePensionAmount);
 }
 
-function calculateProjectionValue(month: number, goalContributingPeriod: number, previousMonthProjectedValue: number, possibleDrawdownsp: number, percentage: number, lumpSumAmount: number, portfolioCurrentValue: number, upfrontContribution: number, monthlyContributions: number) {
-    if (previousMonthProjectedValue <= 0) {
-        return 0;
+function calculateHolding(month: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number, goalTargetMonth: number, PreviousMonthHolding: number, monthlyContributions: number, portfolioCurrentValue: number, upfrontContribution: number, affordableDrawdown: number, averagePercentage: number, affordableLumpSum: number, affordableRemainingAmount: number, holdingAmountOnLumpSumDate: number): number {
+
+    if (month > goalTargetMonth) {
+        return (PreviousMonthHolding - affordableDrawdown) * (1 + averagePercentage)
     }
 
-    if (month > goalContributingPeriod) {
-        return (previousMonthProjectedValue - possibleDrawdownsp) * (1 + percentage);
+    if (month == goalTargetMonth) {
+        return (PreviousMonthHolding - affordableRemainingAmount) * (1 + averagePercentage);
     }
-    else if (month == goalContributingPeriod) {
-        return (previousMonthProjectedValue - lumpSumAmount - possibleDrawdownsp) * (1 + percentage);
+
+    if (month >= (contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown + 1)) {
+        return (PreviousMonthHolding - affordableDrawdown) * (1 + averagePercentage)
     }
+
+    if (contributionPeriodUptoLumpSum != 0 && month > (contributionPeriodUptoLumpSum + 1)) {
+        return holdingAmountOnLumpSumDate * (1 + averagePercentage) ** (month - contributionPeriodUptoLumpSum) + monthlyContributions * ((1 + averagePercentage) ** (month - contributionPeriodUptoLumpSum) - 1) / averagePercentage;
+    }
+
+    if (contributionPeriodUptoLumpSum != 0 && month == (contributionPeriodUptoLumpSum + 1)) {
+        return (PreviousMonthHolding - affordableLumpSum + monthlyContributions) * (1 + averagePercentage);
+    }
+
+    return (portfolioCurrentValue + upfrontContribution) * (1 + averagePercentage) ** month + monthlyContributions * ((1 - (1 + averagePercentage) ** month) / (1 - (1 + averagePercentage)));
+}
+
+function calculateContributionLine(month: number, previousMonthContributionValue: number, monthlyContributions: number, goalTargetMonth: number, affordableLumpSum: number, affordableRemainingAmount: number, affordableDrawdown: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number) {
+
+    if (month == goalTargetMonth) {
+        return previousMonthContributionValue - affordableDrawdown - affordableRemainingAmount;
+    }
+
+    if (contributionPeriodUptoLumpSum != 0 && month == contributionPeriodUptoLumpSum + 1) {
+        return previousMonthContributionValue - affordableLumpSum + monthlyContributions
+    }
+    if (contributionPeriodUptoLumpSum == 0 && month >= goalTargetMonth - contributionPeriodFromLumpSumAndDrawdown) {
+        return previousMonthContributionValue - affordableDrawdown
+    }
+
+    if (month >= (contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown + 1)) {
+        return previousMonthContributionValue - affordableDrawdown;
+    }
+
+
+    return previousMonthContributionValue + monthlyContributions;
+
+}
+
+function calculateProjectionValue(month: number, previousMonthProjectedValue: number, percentage: number, portfolioCurrentValue: number, upfrontContribution: number, monthlyContributions: number, affordableLumpSum: number, affordableRemainingAmount: number, affordableDrawdown: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number, goalTargetMonth: number, projectedAmountOnLumpSumDate: number, isUpperCalulation: boolean = false) {
+    if (isUpperCalulation && month >= goalTargetMonth && previousMonthProjectedValue <= affordableRemainingAmount) {
+        return (previousMonthProjectedValue - affordableRemainingAmount) * (1 + percentage);
+    }
+
+    if (!isUpperCalulation && month == goalTargetMonth) {
+        return (previousMonthProjectedValue - affordableRemainingAmount) * (1 + percentage);
+    }
+
+    if (contributionPeriodUptoLumpSum != 0 && month == contributionPeriodUptoLumpSum + 1) {
+        return (previousMonthProjectedValue - affordableLumpSum + monthlyContributions) * (1 + percentage);
+    }
+
+    if (month >= (contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown + 1)) {
+        return ((previousMonthProjectedValue - affordableDrawdown) * (1 + percentage));
+    }
+
+    if (contributionPeriodUptoLumpSum != 0 && month > contributionPeriodUptoLumpSum + 1) {
+        return projectedAmountOnLumpSumDate * (1 + percentage) ** (month - contributionPeriodUptoLumpSum) + monthlyContributions * ((1 + percentage) ** (month - contributionPeriodUptoLumpSum) - 1) / percentage;
+    }
+
     return (portfolioCurrentValue + upfrontContribution) * (1 + percentage) ** month + monthlyContributions * ((1 - (1 + percentage) ** month) / (1 - (1 + percentage)));
 }
 
@@ -177,6 +299,11 @@ function monthDiff(dateFrom: Date, dateTo: Date) {
     }
 
     return Math.abs(Math.round(months));
+}
+
+function round(value: number, precision: number): number {
+    const multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
 }
 
 function parseDate(date: string): Date {
@@ -204,14 +331,6 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         errors.push(error);
     }
 
-    if (typeof inboundPayload.preGoalRiskModel == 'undefined' || inboundPayload.preGoalRiskModel.trim() === "") {
-        const error: ValidationError = {
-            code: "val-currentproj-002",
-            property: "preGoalRiskModel",
-            message: "preGoalRiskModel_must_not_be_empty"
-        }
-        errors.push(error);
-    }
 
     if (typeof inboundPayload.monthlyContributions == 'undefined' || inboundPayload.monthlyContributions < 0) {
         const error: ValidationError = {
@@ -323,14 +442,6 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         errors.push(error)
     }
 
-    if (typeof inboundPayload.postGoalRiskModel == 'undefined' || inboundPayload.postGoalRiskModel.trim() === "") {
-        const error: ValidationError = {
-            code: "val-currentproj-016",
-            property: "postGoalRiskModel",
-            message: "postGoalRiskModel_must_not_be_empty",
-        }
-        errors.push(error)
-    }
     if (typeof inboundPayload.postGoalExpectedReturn == 'undefined') {
         const error: ValidationError = {
             code: "val-currentproj-017",
@@ -421,7 +532,25 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         errors.push(error)
     }
 
+    if (inboundPayload.lumpSumAmount > 0 && (typeof inboundPayload.lumpSumDate == 'undefined' || !Date.parse(inboundPayload.lumpSumDate))) {
+        const error: ValidationError = {
+            code: "val-currentproj-027",
+            property: "lumpSumDate",
+            message: "lumpSumDate_must_be_a_valid_date",
+        }
+        errors.push(error)
+    }
+
+    if (Date.parse(inboundPayload.drawdownStartDate) > 0 && parseDate(inboundPayload.lumpSumDate) > parseDate(inboundPayload.drawdownStartDate)) {
+        const error: ValidationError = {
+            code: "val-currentproj-028",
+            property: "lumpSumDate",
+            message: "lumpSumDate_must_be_same_or_before_the_drawdownStartDate",
+        }
+        errors.push(error)
+    }
     return errors;
 }
 
-export { currentProjectionMain, getCurrentProjection, calculateDrawdown, validateInput, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedreturn }
+export { currentProjection, getCurrentProjection, calculateDrawdown, validateInput, monthDiff, yearDiff, calculateZscore, calculatePercentage, calculateProjectionValue, calculateContributionLine, calculateExpectedReturn, calculateHoldingsWithOnTrackPercentage };
+

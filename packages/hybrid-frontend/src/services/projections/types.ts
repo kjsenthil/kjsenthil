@@ -103,6 +103,7 @@ export interface GoalCurrentProjectionsRequestPayload {
   feesPercentage: number;
   postGoalRiskModel: string;
   lumpSumAmount: number;
+  lumpSumDate: string;
   statePensionAmount: number;
   desiredAmount: number;
   postGoalExpectedReturn: number;

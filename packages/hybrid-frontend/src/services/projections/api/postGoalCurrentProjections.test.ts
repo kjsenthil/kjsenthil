@@ -25,6 +25,7 @@ describe('postGoalCurrentProjections', () => {
       feesPercentage: 0.004,
       postGoalRiskModel: 'TAA3',
       lumpSumAmount: 0.1,
+      lumpSumDate: '2055-04-10',
       statePensionAmount: 0,
       desiredAmount: 0,
       postGoalExpectedReturn: 0.0298,

@@ -1,41 +1,48 @@
 
 interface RequestPayload {
-    timeHorizon: number,
-    preGoalRiskModel: string,
-    monthlyContributions: number,
-    portfolioCurrentValue: number,
-    desiredMonthlyDrawdown: number,
-    drawdownStartDate: string,
-    drawdownEndDate: string,
-    upfrontContribution: number,
-    preGoalExpectedReturn: number,
-    preGoalExpectedVolatility: number,
-    preGoalZScoreLowerBound: number,
-    preGoalZScoreUpperBound: number,
-    feesPercentage: number,
-    postGoalRiskModel: string,
-    lumpSumAmount: number,
-    statePensionAmount: number,
-    desiredAmount: number,
-    postGoalExpectedReturn: number,
-    postGoalExpectedVolatility: number,
-    postGoalZScoreLowerBound: number,
-    postGoalZScoreUpperBound: number,
-    netContribution: number,
-    isConeGraph: boolean,
-    includeStatePension: boolean
+    timeHorizon: number;
+    monthlyContributions: number;
+    portfolioCurrentValue: number
+    desiredMonthlyDrawdown: number;
+    drawdownStartDate: string;
+    drawdownEndDate: string;
+    upfrontContribution: number;
+    preGoalExpectedReturn: number;
+    preGoalExpectedVolatility: number;
+    preGoalZScoreLowerBound: number;
+    preGoalZScoreUpperBound: number;
+    feesPercentage: number;
+    lumpSumAmount: number;
+    lumpSumDate: string;
+    statePensionAmount: number;
+    desiredAmount: number;
+    postGoalExpectedReturn: number;
+    postGoalExpectedVolatility: number
+    postGoalZScoreLowerBound: number;
+    postGoalZScoreUpperBound: number;
+    netContribution: number;
+    isConeGraph: boolean;
+    includeStatePension: boolean;
 }
 
-interface ResponsePayload {
-    projectedGoalAgeTotal: number,
-    possibleDrawdown: number,
-    possibleDrawdownWithSP: number,
-    projectedGoalAgeTotalWhenMarketUnderperform: number,
-    possibleDrawdownWhenMarketUnderperform: number,
-    possibleDrawdownWhenMarketUnderperformWithSP: number,
-    projections: ProjectionMonth[],
+interface ResponsePayload extends Stats {
+    marketUnderperform: Stats;
+    projections: ProjectionMonth[];
 }
 
+export interface Stats {
+    desiredOutflow: number;
+    affordableDrawdown: number;
+    affordableLumpSum: number;
+    affordableRemainingAmount: number;
+    affordableOutflow: number;
+    surplusOrShortfall: number;
+    valueAtRetirement: number;
+    totalAffordableDrawdown: number;
+    onTrackPercentage: number;
+    projectedGoalAgeTotal: number;
+    possibleDrawdown: number;
+}
 
 class ProjectionMonth {
     month: number;
@@ -61,27 +68,25 @@ class ProjectionMonth {
     }
 }
 
+
 export interface ValidationError {
     property: string;
     message: string;
     code: string;
+
 }
 
 export interface ExpectedReturns {
-    monthlyNetExpectedReturn: number,
-    monthlyVolatility: number,
+    monthlyNetExpectedReturn: number;
+    monthlyVolatility: number;
 }
 
 
 export interface Drawdown {
-    possibleDrawdownsp: number,
-    possibleDrawdown: number,
-    projectedGoalAgeTotal: number,
-    remainingAmountAtGoalAge: number
+    possibleDrawdown: number;
+    projectedGoalAgeTotal: number;
+    remainingAmountAtGoalAge: number;
 }
-
-
-
 
 export type { RequestPayload, ResponsePayload }
 export { ProjectionMonth }
