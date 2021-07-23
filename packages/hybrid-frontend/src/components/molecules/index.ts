@@ -6,6 +6,7 @@ import ProgressBarWithLegend, { ProgressBarWithLegendProps } from './ProgressBar
 import { DigitalCoachBoxProps } from './DigitalCoachBox';
 import { TabsNavigationProps } from './TabsNavigation';
 
+export { default as SliderLabelled } from './SliderLabelled';
 export { default as SliderWithInput } from './SliderWithInput';
 export { default as Alert } from './Alert';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';

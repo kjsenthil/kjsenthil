@@ -7,7 +7,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
     data-test-id="header-menu"
   >
     <header
-      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit sc-hiwReK gehhxm MuiPaper-elevation0"
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit sc-gGCCur jaxCyf MuiPaper-elevation0"
       data-testid="header-menu"
     >
       <div
@@ -26,7 +26,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
                 class="MuiTypography-root MuiLink-root MuiLink-underlineHover sc-dJjZJu hkdYLt MuiLink-button MuiTypography-colorPrimary"
               >
                 <div
-                  class="sc-ehCIER klSZvQ"
+                  class="sc-clIAKW dCKVCv"
                 />
               </button>
             </div>
@@ -74,7 +74,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
         />
       </div>
       <div
-        class="MuiToolbar-root MuiToolbar-regular sc-jgrIVw dZIPsH MuiToolbar-gutters"
+        class="MuiToolbar-root MuiToolbar-regular sc-iNGGwv jAPwkG MuiToolbar-gutters"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -83,7 +83,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <div
-              class="sc-gGCCur gxhFFV"
+              class="sc-GamvQ hPDuxu"
             >
               <h6
                 class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
