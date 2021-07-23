@@ -1778,7 +1778,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.14.0":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.14.0":
   version: 7.14.6
   resolution: "@babel/runtime@npm:7.14.6"
   dependencies:
@@ -3243,6 +3243,120 @@ __metadata:
   version: 2.0.0-next.8
   resolution: "@mdx-js/util@npm:2.0.0-next.8"
   checksum: d3458e9362ac4fd41bb626234c5dc6617ff86e347e729dd9a709f6b78667d0e07798e513ab0ad7397ba5e90de39b97195fce8915e219133501d838ac411912d4
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-analytics-js@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-analytics-js@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-common": 2.6.4
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: 4e8ee2b45194056a98b2f8d2f2426f692fa2abb6a17699b589fef4d5c2e13a23cd2855c1447a1f018cb75647414e5f8c7c7be0a449e5061402fe47537660d414
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-channel-js@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-channel-js@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-common": 2.6.4
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: 704bd6cd689f9ce8b7012c784c5924e8c28c73df5c5b52d4a8271f17b16b06eccbd1777e10504955ded515ccd897b13d924a0e9a942f64a34985fa9bb9eb29f2
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-common@npm:2.6.4, @microsoft/applicationinsights-common@npm:^2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-common@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: e01f969da04b7918997382e6cd70d9fdeeff708e97d52ba64be566a35d10e361b42c52aaf0c627c45d716fd0fcd5b17c703e5b0200ea02aa7e43ac27a58be667
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-core-js@npm:2.6.4, @microsoft/applicationinsights-core-js@npm:^2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-core-js@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: f5591a1527afc855f2d12b48524a1f8b10f9710019a1654acac7b187ceed738378158b83f806f97dcd4e6e3e77ebad46432e488f6f29f85ae53ccdc021ce2c11
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-dependencies-js@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-dependencies-js@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-common": 2.6.4
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: 4d005e7b6c28283931f87e96b63b115982263839f1a2a0ad6fc74d549101a30012aec0943e88c3110b5eeba561f1918e2876298c5d6913d036f91935d475e7bf
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-properties-js@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-properties-js@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-common": 2.6.4
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: 13bb787b7cb21a4bfede754c2b08b19f74c5a7e9dfb159ee349d3ac58eeba274a15a01974dbf25264f42acb060b5d6a24d742f6ec74d96f5287ca6a643c257bf
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-react-js@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "@microsoft/applicationinsights-react-js@npm:3.1.4"
+  dependencies:
+    "@microsoft/applicationinsights-common": ^2.6.4
+    "@microsoft/applicationinsights-core-js": ^2.6.4
+    "@microsoft/applicationinsights-shims": ^2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+    history: ^4.10.1
+  peerDependencies:
+    react: ^17.0.1
+  checksum: 51e3e7035fe5d6b87914c2f613eafb25b8bbde196a2fccbec1d7216fac0553bb2707f4122d7ed28bec1b82b7a954b5d85bb1c2d7a896b664a89e6a938e0cb16b
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-shims@npm:2.0.0, @microsoft/applicationinsights-shims@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@microsoft/applicationinsights-shims@npm:2.0.0"
+  checksum: 8bb6aa8c245f1e3a1b471b96332392de7a37dea78459c2100804546bc220c20af9c8254b4b09ed62d128c934c003e9107a8b1a18b335149817c02bf0bb48b745
+  languageName: node
+  linkType: hard
+
+"@microsoft/applicationinsights-web@npm:^2.6.4":
+  version: 2.6.4
+  resolution: "@microsoft/applicationinsights-web@npm:2.6.4"
+  dependencies:
+    "@microsoft/applicationinsights-analytics-js": 2.6.4
+    "@microsoft/applicationinsights-channel-js": 2.6.4
+    "@microsoft/applicationinsights-common": 2.6.4
+    "@microsoft/applicationinsights-core-js": 2.6.4
+    "@microsoft/applicationinsights-dependencies-js": 2.6.4
+    "@microsoft/applicationinsights-properties-js": 2.6.4
+    "@microsoft/applicationinsights-shims": 2.0.0
+    "@microsoft/dynamicproto-js": ^1.1.4
+  checksum: 75e7b281d1cb471f1654c28a34d109ac370def90a7c3cf08805617f31258728af2b1d3887e6171e4214385e415ec54234396e02ccfad1ec1f0cf4735b5647302
+  languageName: node
+  linkType: hard
+
+"@microsoft/dynamicproto-js@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@microsoft/dynamicproto-js@npm:1.1.4"
+  checksum: 0a70b1ba2f7c076b71c4b418e87d15131957f814b5a92c99b7c1cbeaeed7f39da7660cf28330b21aacbb9d9478ed98d312ae52ec3ecde9ae558dcf92d1e1ddd8
   languageName: node
   linkType: hard
 
@@ -4805,6 +4919,22 @@ __metadata:
     start-server-and-test: ^1.11.7
     styled-components: ^5.2.1
     xstate: ^4.20.0
+  languageName: unknown
+  linkType: soft
+
+"@tsw/telemetry@workspace:packages/utils/telemetry":
+  version: 0.0.0-use.local
+  resolution: "@tsw/telemetry@workspace:packages/utils/telemetry"
+  dependencies:
+    "@microsoft/applicationinsights-react-js": ^3.1.4
+    "@microsoft/applicationinsights-web": ^2.6.4
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@typescript-eslint/eslint-plugin": ^4.22.0
+    babel-jest: ^26.6.3
+    history: ^5.0.0
+    jest: ^26.6.3
+    jest-html-reporter: ^3.3.0
   languageName: unknown
   linkType: soft
 
@@ -15928,6 +16058,29 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"history@npm:^4.10.1":
+  version: 4.10.1
+  resolution: "history@npm:4.10.1"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+    loose-envify: ^1.2.0
+    resolve-pathname: ^3.0.0
+    tiny-invariant: ^1.0.2
+    tiny-warning: ^1.0.0
+    value-equal: ^1.0.1
+  checksum: 3b302b54c08f61f040a265ae9608c6dba88260179b9ddfe542042465ccf79e2ff19e792cb70c6e0240e80bc00b29aad5308d1f277815b1e95662bd5b819c625b
+  languageName: node
+  linkType: hard
+
+"history@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "history@npm:5.0.0"
+  dependencies:
+    "@babel/runtime": ^7.7.6
+  checksum: 38a8af6f31a08ddfd6b404fa6df2fcca8bd91300aa0858bdd2bf314aca0516bd37f9835c1f628e4a9113c1be4145d8e7c58f225564d8e9708a0f49c217acb47a
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.1":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -19659,7 +19812,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.2.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -25088,6 +25241,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"resolve-pathname@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "resolve-pathname@npm:3.0.0"
+  checksum: 88ed8b3dd2b5cec68d35c319dc831cd879155da153208bb9c035f263cd9220fcf0af49158456871f64a181511f8e95c483c3700a958f4110f36e513b78cfd9f0
+  languageName: node
+  linkType: hard
+
 "resolve-url@npm:^0.2.1":
   version: 0.2.1
   resolution: "resolve-url@npm:0.2.1"
@@ -27487,7 +27647,14 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"tiny-warning@npm:^1.0.2":
+"tiny-invariant@npm:^1.0.2":
+  version: 1.1.0
+  resolution: "tiny-invariant@npm:1.1.0"
+  checksum: 64318fbd77c451cfff23b57b9f3aef56594d9cea051a87dc538c9b371f97e8d474eaa2a7cbd60b8aa23f852393152495e8651b197607465fdf9c8ff134043b1b
+  languageName: node
+  linkType: hard
+
+"tiny-warning@npm:^1.0.0, tiny-warning@npm:^1.0.2":
   version: 1.0.3
   resolution: "tiny-warning@npm:1.0.3"
   checksum: 6cf9f66cb765b893976b8cd1c1310338861f30fb04d02ef2c8e0a748cbc2ed5acd8bb1954b78c15f640ad4116def67134d7d705f2a0c9bf27e6e2eb3e92bff29
@@ -28777,6 +28944,13 @@ typescript@^4.2.4:
   version: 10.11.0
   resolution: "validator@npm:10.11.0"
   checksum: 07a37cd1469001b121696c2aa5494e9a4e416feabad31d849c02dfa414ae39c7885acb08d81d50d45e0ec63a1269bd8169937acf76202a79dc1ae53e909186b5
+  languageName: node
+  linkType: hard
+
+"value-equal@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "value-equal@npm:1.0.1"
+  checksum: ae8cc7bbb2bebcaf78ecbf7669944cfc6e23f50361d0d97dc903abbfb9ce5111ce1dc5cb2575646db69636a84b2a3b224e2191088edc3442fb4669c2365af874
   languageName: node
   linkType: hard
 

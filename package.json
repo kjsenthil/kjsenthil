@@ -6,6 +6,7 @@
     "packages/hybrid-frontend",
     "packages/shared-config/typescript",
     "packages/shared-config/eslint",
+    "packages/utils/telemetry",
     "packages/utils/test",
     "packages/utils/tracking",
     "packages/function-apps/projections",

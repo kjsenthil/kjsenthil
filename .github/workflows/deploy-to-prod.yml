@@ -377,6 +377,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_staging_terraform.outputs.myaccounts_home_url }}' >> .env.staging
           echo 'GTM_AUTH=${{ needs.deploy_staging_terraform.outputs.gtm_env_auth }}' >> .env.staging
           echo 'GTM_PREVIEW=${{ needs.deploy_staging_terraform.outputs.gtm_env_preview }}' >> .env.staging
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.staging
           cat .env.staging
 
       - name: "Gatsby Build"
@@ -456,6 +457,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_staging_terraform.outputs.myaccounts_home_url }}' >> .env.staging
           echo 'GTM_AUTH=${{ needs.deploy_staging_terraform.outputs.gtm_env_auth }}' >> .env.staging
           echo 'GTM_PREVIEW=${{ needs.deploy_staging_terraform.outputs.gtm_env_preview }}' >> .env.staging
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.staging
           cat .env.staging
 
       - name: "E2E test"
@@ -858,6 +860,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_production_terraform.outputs.myaccounts_home_url }}' >> .env.production
           echo 'GTM_AUTH=${{ needs.deploy_production_terraform.outputs.gtm_env_auth }}' >> .env.production
           echo 'GTM_PREVIEW=${{ needs.deploy_production_terraform.outputs.gtm_env_preview }}' >> .env.production
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.production
           cat .env.production
 
       - name: "Gatsby build"
@@ -936,6 +939,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_production_terraform.outputs.myaccounts_home_url }}' >> .env.production
           echo 'GTM_AUTH=${{ needs.deploy_production_terraform.outputs.gtm_env_auth }}' >> .env.production
           echo 'GTM_PREVIEW=${{ needs.deploy_production_terraform.outputs.gtm_env_preview }}' >> .env.production
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.production
           cat .env.production
 
       - name: "Build Storybook"

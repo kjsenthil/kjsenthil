@@ -681,6 +681,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.pr
           echo 'GTM_AUTH=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_auth }}' >> .env.pr
           echo 'GTM_PREVIEW=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_preview }}' >> .env.pr
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.pr
           cat .env.pr
 
       - name: "Gatsby build"
@@ -1095,6 +1096,7 @@ jobs:
           echo 'MYACCOUNTS_HOME_URL=${{ needs.get_pr_terraform_outputs.outputs.myaccounts_home_url }}' >> .env.production
           echo 'GTM_AUTH=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_auth }}' >> .env.production
           echo 'GTM_PREVIEW=${{ needs.get_pr_terraform_outputs.outputs.gtm_env_preview }}' >> .env.production
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.production
           cat .env.production
 
       - name: "Build Storybook"
