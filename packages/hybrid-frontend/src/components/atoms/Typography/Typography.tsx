@@ -31,11 +31,14 @@ export interface TypographyProps
 }
 
 const determineColor = (
-  color: Color,
+  color: Color | 'inherit',
   palette: Palette,
   variant: Variant = 'b3',
   colorShade?: ColorShade
 ) => {
+  if (color === 'inherit') {
+    return 'inherit';
+  }
   if (['black', 'white'].includes(color)) {
     return palette.common[color];
   }

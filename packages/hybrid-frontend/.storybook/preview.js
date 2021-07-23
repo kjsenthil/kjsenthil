@@ -6,12 +6,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { action } from '@storybook/addon-actions';
 import theme from '../src/themes/mui';
 import { configureStore } from '@reduxjs/toolkit';
-import { mockClientResponse, mockInvestSummaryResponse } from '../src/services/myAccount/mocks';
+import { mockClientResponse, mockInvestmentSummaryResponse } from '../src/services/myAccount/mocks';
 
 const mockStore = configureStore({
   reducer: {
     client: () => mockClientResponse,
-    investmentSummary: () => mockInvestSummaryResponse,
+    investmentSummary: () => mockInvestmentSummaryResponse,
     projections: () => ({
       projections: { projections: undefined },
     }),

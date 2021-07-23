@@ -7,5 +7,6 @@ export const GoalPotTrackerContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing(2.5)}px;
+    width: 100%;
   `}
 `;
