@@ -1,13 +1,13 @@
-import { mockInvestSummaryResponse } from '../../mocks';
+import { mockInvestmentSummaryResponse } from '../../mocks';
 import calculateBasicInvestmentSummary from './calculateBasicInvestmentSummary';
 
 describe('calculateBasicInvestmentSummary', () => {
   it('calculates totalValue and totalGain/Losses', () => {
-    const { attributes: account1 } = mockInvestSummaryResponse.data[0];
-    const { attributes: account2 } = mockInvestSummaryResponse.data[1];
-    const { attributes: account3 } = mockInvestSummaryResponse.data[2];
+    const { attributes: account1 } = mockInvestmentSummaryResponse.data[0];
+    const { attributes: account2 } = mockInvestmentSummaryResponse.data[1];
+    const { attributes: account3 } = mockInvestmentSummaryResponse.data[2];
 
-    expect(calculateBasicInvestmentSummary(mockInvestSummaryResponse.data)).toStrictEqual({
+    expect(calculateBasicInvestmentSummary(mockInvestmentSummaryResponse.data)).toStrictEqual({
       totalInvested:
         account1.funds +
         account1.shares +

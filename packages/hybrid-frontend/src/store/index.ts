@@ -9,7 +9,7 @@ import storage from 'redux-persist/lib/storage';
 import createWhitelistFilter from 'redux-persist-transform-filter';
 import { persistReducer, PersistConfig } from 'redux-persist';
 import { useDispatch } from 'react-redux';
-import { ACTIVE_ENV, IS_SSR } from '../config';
+import { IS_PRODUCTION, IS_SSR } from '../config';
 import { authSlice as authReducer } from '../services/auth/reducers';
 import {
   clientSlice as clientReducer,
@@ -112,10 +112,11 @@ const store = configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: false,
   }),
-  devTools: ACTIVE_ENV !== 'production',
+  devTools: !IS_PRODUCTION,
 });
 
 export type AppDispatch = typeof store.dispatch;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;

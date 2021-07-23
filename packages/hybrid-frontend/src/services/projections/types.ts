@@ -1,6 +1,6 @@
 import { CommonState, RiskModel, SedolCode } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
-import { InvestmentAccount, ClientResponse, InvestmentSummary } from '../myAccount';
+import { ClientResponse, InvestmentSummary } from '../myAccount';
 import { AllAssets } from '../assets';
 
 export interface ProjectionRequest {
@@ -132,19 +132,17 @@ export interface GoalCurrentProjectionMonth {
   contributionLine: number;
 }
 
-export interface FetchGoalCurrentProjectionsParams {
+export interface FetchGoalCurrentProjectionsParams
+  extends Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'> {
   clientAge: number;
-  drawdownAmount: number;
+  monthlyIncome: number;
   drawdownStartDate: Date | null;
   drawdownEndDate: Date | null;
   shouldIncludeStatePension: boolean;
   lumpSum: number;
+  lumpSumDate?: Date | null;
   laterLifeLeftOver: number;
   fees: number;
-  investmentAccounts?: InvestmentAccount[];
-  investmentSummary?: InvestmentSummary[];
-  includedClientAccounts?: ClientResponse['included'];
-  fundData: AllAssets;
 }
 
 export type GoalTargetProjectionsState = CommonState<GoalTargetProjectionsResponse>;
@@ -196,9 +194,17 @@ export interface GoalTargetProjectionMonth {
   projectedValue: number;
 }
 
+export type CurrentProjectionsPrerequisitePayload = {
+  portfolioCurrentValue: number;
+  monthlyContributions: number;
+  assetModel: AssetModelResponse;
+  riskProfile: PortfolioRiskProfile;
+  totalNetContributions: number;
+};
+
 export interface AssetModelResponse {
   id: number;
-  riskModel: string;
+  riskModel: RiskModel;
   erValue: number;
   volatility: number;
   zScores: {

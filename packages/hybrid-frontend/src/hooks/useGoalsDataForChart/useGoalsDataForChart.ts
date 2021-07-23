@@ -39,7 +39,7 @@ const useGoalsDataForChart = ({
     }
   }
 
-  const { dateOfBirth } = useBasicInfo();
+  const { dateOfBirth } = useBasicInfo({ shouldDispatch: false });
 
   /**
    * The current goalCurrentProjections and goalTargetProjections assume retirement goal.

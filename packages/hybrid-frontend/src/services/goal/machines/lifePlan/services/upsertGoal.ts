@@ -8,7 +8,7 @@ const fields = {
   monthlyIncome: 'Monthly income',
 };
 
-const saveRetirementPlan = <T = unknown>(callback: (ctx: LifePlanMachineContext) => Promise<T>) => (
+const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext) => Promise<T>) => (
   ctx: LifePlanMachineContext
 ): Promise<T> =>
   tryInvokeService<T>(
@@ -26,4 +26,4 @@ const saveRetirementPlan = <T = unknown>(callback: (ctx: LifePlanMachineContext)
     () => callback(ctx)
   );
 
-export default saveRetirementPlan;
+export default upsertGoal;

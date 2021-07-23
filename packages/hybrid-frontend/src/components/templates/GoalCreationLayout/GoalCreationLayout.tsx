@@ -5,7 +5,7 @@ import LayoutContainer from '../LayoutContainer';
 import { GoalTitle, GoalTitleIcon, StyledAppBar, StyledToolBar } from './GoalCreationLayout.styles';
 
 export interface GoalCreationLayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
   iconSrc?: string;
   iconAlt?: string;

@@ -1,8 +1,6 @@
-import { ClientResponse, ClientAccountItem } from '../../types';
+import { ClientAccountItem, ClientAccount } from '../../types';
 
-const extractClientAccounts = (
-  investmentAccounts: ClientResponse['included']
-): ClientAccountItem[] =>
+const extractClientAccounts = (investmentAccounts: ClientAccount[]): ClientAccountItem[] =>
   investmentAccounts.map((account) => {
     const { accountId, accountName } = account.attributes;
     return {

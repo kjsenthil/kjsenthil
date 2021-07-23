@@ -7,7 +7,7 @@ import {
   mockInvestmentAccounts,
   mockBasicInvestmentSummary,
   mockClientResponse,
-  mockInvestSummaryResponse,
+  mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
 
 const getRenderedHook = (store: Store) => {
@@ -52,7 +52,7 @@ describe('useInvestmentAccounts', () => {
       store = configureStore({
         reducer: {
           client: () => mockClientResponse,
-          investmentSummary: () => mockInvestSummaryResponse,
+          investmentSummary: () => mockInvestmentSummaryResponse,
           investmentAccounts: () => ({
             data: mockInvestmentAccounts,
           }),

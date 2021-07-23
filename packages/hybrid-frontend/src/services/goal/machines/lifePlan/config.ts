@@ -2,6 +2,14 @@ import { MachineConfig } from 'xstate';
 import { LifePlanMachineContext, LifePlanMachineEvents, LifePlanMachineSchema } from './types';
 import context from './context';
 
+const afterInvokeCalculation = [
+  'calculateDrawdownDates',
+  'calculateDrawdownPeriodLength',
+  'calculateTargetDrawdownAmount',
+  'calculateRetirementPotValue',
+  'calculateTomorrowsMoney',
+];
+
 const lifePlanConfig: MachineConfig<
   LifePlanMachineContext,
   LifePlanMachineSchema,
@@ -21,13 +29,16 @@ const lifePlanConfig: MachineConfig<
   states: {
     planningYourRetirement: {
       id: 'planningYourRetirement',
-      initial: 'processingInput',
+      initial: 'bootstrapping',
       on: {
-        SAVE: '.saving',
         SET_DRAWDOWN_AGES: [
           {
-            target: '.processingInput',
-            actions: ['resetErrors', 'setDrawdownAges'],
+            actions: [
+              'resetErrors',
+              'setDrawdownAges',
+              'calculateDrawdownDates',
+              'calculateDrawdownPeriodLength',
+            ],
           },
         ],
         SET_INCOME: [
@@ -42,24 +53,32 @@ const lifePlanConfig: MachineConfig<
         SET_LATER_LIFE_LEFT_OVER: {
           actions: ['setLaterLifeLeftOver', 'calculateRetirementPotValue'],
         },
+        SAVE: '.saving',
+        DELETE: '.deleting',
       },
       states: {
+        bootstrapping: {
+          invoke: {
+            id: 'bootstrapping',
+            src: 'bootstrap',
+            onDone: {
+              target: 'processingInput',
+              actions: ['prepopulate', ...afterInvokeCalculation],
+            },
+            onError: {
+              target: 'invalid',
+              actions: ['setErrors'],
+            },
+          },
+        },
         processingInput: {
-          entry: [
-            'calculateTomorrowsMoney',
-            'calculateDrawdownDates',
-            'calculateDrawdownPeriodLength',
-            'calculateTargetDrawdownAmount',
-            'calculateRetirementPotValue',
-            'calculateTomorrowsMoney',
-          ],
+          entry: afterInvokeCalculation,
           invoke: {
             id: 'processingInput',
             src: 'updateCurrentProjections',
             onDone: {
               target: 'normal',
             },
-
             onError: {
               target: 'invalid',
               actions: ['setErrors'],
@@ -70,8 +89,21 @@ const lifePlanConfig: MachineConfig<
         invalid: {},
         saving: {
           invoke: {
-            id: 'saveRetirementPlan',
-            src: 'saveRetirementPlan',
+            id: 'upsertGoal',
+            src: 'upsertGoal',
+            onDone: {
+              target: '#lifePlan.fundingYourRetirement',
+            },
+            onError: {
+              target: 'invalid',
+              actions: ['setErrors'],
+            },
+          },
+        },
+        deleting: {
+          invoke: {
+            id: 'deleteGoal',
+            src: 'deleteGoal',
             onDone: {
               target: '#lifePlan.fundingYourRetirement',
             },

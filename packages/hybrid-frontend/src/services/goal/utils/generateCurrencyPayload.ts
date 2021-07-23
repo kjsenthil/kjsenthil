@@ -1,9 +1,9 @@
-import { GoalPayloadValType, GoalPayloadValue } from '../types';
+import { GoalCurrencyValType } from '../types';
 
 const generateCurrencyPayload = (
   value: number,
   currencyCode: string = 'GBP'
-): GoalPayloadValType<GoalPayloadValue<number, 'BigDecimal'>, 'Currency', '_val'> => ({
+): GoalCurrencyValType => ({
   _val: {
     code: currencyCode,
     value: {

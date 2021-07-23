@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { navigate } from 'gatsby';
-import { useMachine } from '@xstate/react';
 import { useDispatch, useSelector } from 'react-redux';
 import pluralize from 'pluralize';
 import styled from 'styled-components';
@@ -18,20 +17,9 @@ import { FormInput, RadioGroup, TypographyWithTooltip } from '../../molecules';
 import { StepCard } from '../../organisms';
 import { GoalCreationLayout } from '../../templates';
 import { RootState } from '../../../store';
-import {
-  InputFieldsKeys,
-  lifePlanContext,
-  lifePlanMachine,
-  lifePlanMachineActions,
-  LifePlanMachineContext,
-  lifePlanMachineGuards,
-  lifePlanMachineServices,
-} from '../../../services/goal/machines/lifePlan';
+import { InputFieldsKeys } from '../../../services/goal/machines/lifePlan';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { GoalCategory, GoalDefaults, GoalType, postGoalCreation } from '../../../services/goal';
-
-import useAllAssets from '../../../services/assets/hooks/useAllAssets';
-import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
+import { GoalCategory, GoalDefaults } from '../../../services/goal';
 
 import AccountsTable from '../../organisms/AccountsTable';
 import { InfoBox } from '../../organisms/PerformanceProjectionsChart/PerformanceProjectionsSimplifiedChartCard/PerformanceProjectionsSimplifiedChartCard.styles';
@@ -43,7 +31,8 @@ import {
 import {
   useProjectionsChartData,
   useDispatchThunkOnRender,
-  useInvestmentAccounts,
+  useLifePlanMachine,
+  useUpdateCurrentProjectionsPrerequisites,
 } from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 
@@ -60,86 +49,35 @@ const EqualSignWrapper = styled(Grid)`
 
 const goToLifePlanPage = () => navigate(NavPaths.LIFE_PLAN_PAGE);
 
+const commonTemplateProps = {
+  iconAlt: 'goal image',
+  iconSrc: '/goal-graphic.png',
+  progressButtonTitle: 'Save',
+  title: 'Your life after work',
+};
+
 const LifePlanManagementPage = () => {
   const dispatch = useDispatch();
 
   const {
-    client,
     performance: { status: performanceStatus },
-    investmentSummary,
+    investmentAccounts,
     goalCurrentProjections,
     goalTargetProjections,
   } = useSelector((state: RootState) => state);
 
-  const dateOfBirth = client.data?.attributes.dateOfBirth!;
+  const projectionsPrerequisitesPayload = useUpdateCurrentProjectionsPrerequisites();
 
-  const { investmentAccounts } = useInvestmentAccounts();
+  const { state: currentState, send, service } = useLifePlanMachine();
 
-  const fundData = useAllAssets();
-
-  const [current, send, service] = useMachine(
-    lifePlanMachine
-      .withConfig({
-        actions: lifePlanMachineActions,
-        guards: lifePlanMachineGuards,
-        services: {
-          updateCurrentProjections: lifePlanMachineServices.updateCurrentProjections(
-            async ({
-              clientAge,
-              drawdownStartDate,
-              drawdownEndDate,
-              monthlyIncome,
-              lumpSum,
-              laterLifeLeftOver,
-              shouldIncludeStatePension,
-              fees,
-            }: LifePlanMachineContext) =>
-              callPostUpdateCurrentProjections(dispatch)({
-                clientAge,
-                drawdownStartDate,
-                drawdownEndDate,
-                drawdownAmount: monthlyIncome,
-                lumpSum,
-                laterLifeLeftOver,
-                shouldIncludeStatePension,
-                fees,
-                investmentAccounts,
-                investmentSummary: investmentSummary.data,
-                includedClientAccounts: client.included,
-                fundData,
-              })
-          ),
-          saveRetirementPlan: lifePlanMachineServices.saveRetirementPlan(
-            async ({ drawdownStartAge, drawdownEndAge, monthlyIncome }: LifePlanMachineContext) =>
-              postGoalCreation({
-                goalType: GoalType.RETIREMENT,
-                inputs: {
-                  drawdownStartAge,
-                  drawdownEndAge,
-                  regularDrawdown: monthlyIncome,
-                },
-              })
-          ),
-        },
-      })
-      .withContext({
-        ...lifePlanContext,
-        userDateOfBirth: new Date(dateOfBirth),
-        drawdownStartAge: GoalDefaults.DRAW_DOWN_START_AGE,
-        drawdownEndAge: GoalDefaults.DRAW_DOWN_END_AGE,
-        expectedReturnOfTAA: GoalDefaults.EXPECTED_RETURN_OF_TAA,
-        inflation: GoalDefaults.INFLATION,
-      }),
-    { devTools: true }
-  );
-
-  service.onTransition((state) => {
-    if (state.matches('fundingYourRetirement')) {
+  service.onTransition(({ matches }) => {
+    if (matches('fundingYourRetirement')) {
       goToLifePlanPage();
     }
   });
 
   const {
+    doesGoalExist,
     drawdownStartDate,
     drawdownStartAge,
     drawdownEndAge,
@@ -150,7 +88,7 @@ const LifePlanManagementPage = () => {
     annualIncomeInTomorrowsMoney,
     monthlyIncomeInTomorrowsMoney,
     errors,
-  } = current.context;
+  } = currentState.context;
 
   const projectionsData = useProjectionsChartData({
     goalCategory: GoalCategory.RETIREMENT,
@@ -170,14 +108,16 @@ const LifePlanManagementPage = () => {
     (goalTargetProjections.data?.targetGoalAmount || 0) -
     (goalCurrentProjections.data?.projectedGoalAgeTotal || 0);
 
-  const tableData = (investmentAccounts || []).map(
+  const tableData = (investmentAccounts.data || []).map(
     ({
+      id,
       accountName = '',
       accountType = '',
       accountTotalNetContribution,
       monthlyInvestment = 0,
       periodReturn,
     }) => ({
+      id,
       accountType,
       accountName,
       accountTotalNetContribution,
@@ -238,6 +178,7 @@ const LifePlanManagementPage = () => {
     send('SET_INCOME', {
       payload: {
         annualIncome: Number(event.target.value || 0),
+        ...projectionsPrerequisitesPayload,
       },
     });
   };
@@ -246,24 +187,34 @@ const LifePlanManagementPage = () => {
     send('SET_INCOME', {
       payload: {
         monthlyIncome: Number(event.target.value || 0),
+        ...projectionsPrerequisitesPayload,
       },
     });
   };
 
+  const handleGoalDelete = () => {
+    send('DELETE');
+  };
+
   const displayError = (field: InputFieldsKeys) =>
-    current.matches('planningYourRetirement.invalid') ? errors?.[field] : undefined;
+    currentState.matches('planningYourRetirement.invalid') ? errors?.[field] : undefined;
 
   const numberFormatOptions = { opts: { minimumFractionDigits: 0, maximumFractionDigits: 0 } };
 
+  const isLoading = [
+    'planningYourRetirement.saving',
+    'planningYourRetirement.deleting',
+    'planningYourRetirement.processingInput',
+    'planningYourRetirement.bootstrapping',
+  ].some((state) => currentState.matches(state));
+
   return (
     <GoalCreationLayout
-      iconAlt="goal image"
-      iconSrc="/goal-graphic.png"
+      {...commonTemplateProps}
       onCancelHandler={goToLifePlanPage}
-      progressButtonTitle="Save"
-      isLoading={current.matches('planningYourRetirement.saving')}
+      onDeleteHandler={doesGoalExist ? handleGoalDelete : undefined}
+      isLoading={isLoading}
       progressEventHandler={() => send('SAVE')}
-      title="Your life after work"
     >
       <Grid container justify="center">
         <Grid item xs={12} md={10}>
@@ -346,7 +297,7 @@ const LifePlanManagementPage = () => {
                   )}
                 </Grid>
                 <EqualSignWrapper item xs={1}>
-                  <Typography center variant="h4" color="grey" component="span">
+                  <Typography variant="h4" color="grey" component="span">
                     =
                   </Typography>
                 </EqualSignWrapper>

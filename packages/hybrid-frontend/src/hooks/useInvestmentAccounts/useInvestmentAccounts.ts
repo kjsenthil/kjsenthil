@@ -17,7 +17,9 @@ export interface InvestmentAccountsProps {
   investmentAccounts?: InvestmentAccount[];
 }
 
-const useInvestmentAccounts = (): InvestmentAccountsProps => {
+const useInvestmentAccounts = (
+  { shouldDispatch }: { shouldDispatch: boolean } = { shouldDispatch: true }
+): InvestmentAccountsProps => {
   const { investmentSummary, investmentAccounts } = useSelector((state: RootState) => ({
     investmentSummary: state.investmentSummary.data,
     investmentAccounts: state.investmentAccounts.data,
@@ -32,19 +34,25 @@ const useInvestmentAccounts = (): InvestmentAccountsProps => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isClientAvailable) {
+    if (shouldDispatch && !isClientAvailable) {
       dispatch(fetchClient());
     }
   }, []);
 
   useEffect(() => {
-    if (isClientAvailable && !isInvestmentSummaryAvailable && !isInvestmentSummaryLoading) {
+    if (
+      shouldDispatch &&
+      isClientAvailable &&
+      !isInvestmentSummaryAvailable &&
+      !isInvestmentSummaryLoading
+    ) {
       dispatch(fetchInvestmentSummary());
     }
   }, [isClientAvailable, isInvestmentSummaryAvailable, isInvestmentSummaryLoading]);
 
   useEffect(() => {
     if (
+      shouldDispatch &&
       isClientAvailable &&
       isInvestmentSummaryAvailable &&
       !areAccountsAvailable &&

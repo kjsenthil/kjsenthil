@@ -2,10 +2,14 @@ import React from 'react';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import LifePlanPage from './LifePlanPage';
-import { mockClientResponse, mockInvestSummaryResponse } from '../../../services/myAccount/mocks';
+import {
+  mockClientResponse,
+  mockInvestmentSummaryResponse,
+} from '../../../services/myAccount/mocks';
 import mockCurrentGoalsResponse from '../../../services/goal/mocks/get-goals-success-response.json';
 import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import { PerformanceDataPeriod } from '../../../services/performance';
+import * as hooks from '../../../hooks';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
@@ -16,6 +20,17 @@ jest.mock('../../organisms/PerformanceProjectionsChart/PerformanceProjectionsCha
   __esModule: true,
   default: () => <div>Projections Chart</div>,
 }));
+
+jest.mock('../../../hooks', () => {
+  const originalModule = jest.requireActual('../../../hooks');
+
+  return {
+    ...originalModule,
+    useUpdateCurrentProjectionsPrerequisites: jest.fn(),
+  };
+});
+
+const mockUseUpdateCurrentProjectionsPrerequisites = hooks.useUpdateCurrentProjectionsPrerequisites as jest.Mock;
 
 const mockCurrentProjectionsData = [
   {
@@ -60,7 +75,7 @@ describe('LifePlanPage', () => {
       }),
       investmentSummary: () => ({
         status: 'success',
-        ...mockInvestSummaryResponse,
+        ...mockInvestmentSummaryResponse,
       }),
       investmentAccounts: () => ({
         status: 'success',
@@ -94,6 +109,7 @@ describe('LifePlanPage', () => {
   });
 
   beforeEach(() => {
+    mockUseUpdateCurrentProjectionsPrerequisites.mockReturnValue({});
     renderWithProviders(<LifePlanPage />, store);
   });
 

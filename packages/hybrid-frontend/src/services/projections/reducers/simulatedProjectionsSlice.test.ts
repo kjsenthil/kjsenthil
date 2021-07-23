@@ -2,20 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import projectionsReducer, { fetchSimulatedProjections } from './simulatedProjectionsSlice';
 import * as api from '../api';
-import { getEquityAllocation, getMonthlySavingsAmount } from '../../myAccount/api';
-import { mockClientResponse, mockInvestSummaryResponse } from '../../myAccount/mocks';
-import { mockAssets } from '../../assets/mocks';
+import { mockClientResponse, mockInvestmentSummaryResponse } from '../../myAccount/mocks';
 import { RiskModel, SedolCode } from '../../types';
 import { mockProjectionResponse } from '../mocks';
 
-jest.mock('../../myAccount/api', () => ({
-  getEquityAllocation: jest.fn(),
-  getMonthlySavingsAmount: jest.fn(),
-}));
-
 jest.mock('../api', () => ({
-  getPortfolioAssetAllocation: jest.fn(),
-  getPortfolioRiskProfile: jest.fn(),
   postProjections: jest.fn(),
 }));
 
@@ -27,25 +18,23 @@ describe('simulatedProjectionsSlice', () => {
       reducer: {
         simulatedProjections: projectionsReducer,
         client: () => mockClientResponse,
-        investmentSummary: () => mockInvestSummaryResponse,
+        investmentSummary: () => mockInvestmentSummaryResponse,
       },
     });
   });
 
   describe('dispatch fetchSimulatedProjections', () => {
     const fetchSimulatedProjectionsAction = fetchSimulatedProjections({
-      fundData: mockAssets,
       investmentPeriod: 50,
+      monthlyInvestment: 150,
+      upfrontInvestment: 40,
+      riskProfile: {
+        riskModel: RiskModel.TAA1,
+        sedol: SedolCode.BFY1N37,
+      },
     }) as any;
 
     beforeEach(() => {
-      (getEquityAllocation as jest.Mock).mockResolvedValue(40);
-      (getMonthlySavingsAmount as jest.Mock).mockResolvedValue(150);
-      (api.getPortfolioAssetAllocation as jest.Mock).mockResolvedValue(40);
-      (api.getPortfolioRiskProfile as jest.Mock).mockResolvedValue({
-        riskModel: RiskModel.TAA1,
-        sedol: SedolCode.BFY1N37,
-      });
       (api.postProjections as jest.Mock).mockResolvedValue(mockProjectionResponse);
     });
 

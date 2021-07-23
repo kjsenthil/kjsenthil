@@ -6,7 +6,7 @@ import useBasicInfo, { BasicInfo } from './useBasicInfo';
 import {
   mockInvestmentAccounts,
   mockClientResponse,
-  mockInvestSummaryResponse,
+  mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
 
 jest.mock('../../services/myAccount/api', () => ({
@@ -46,7 +46,7 @@ describe('useBasicInfo', () => {
         lastName: '',
         isLoading: true,
         clientAge: 31,
-        dateOfBirth: '',
+        dateOfBirth: new Date(1979, 1, 1),
         totalGainLoss: 0,
         totalInvested: 0,
         totalInvestableCash: 0,
@@ -59,7 +59,7 @@ describe('useBasicInfo', () => {
       const result = {
         firstName: mockClientResponse.data.attributes.firstName,
         lastName: mockClientResponse.data.attributes.lastName,
-        dateOfBirth: mockClientResponse.data.attributes.dateOfBirth,
+        dateOfBirth: new Date(mockClientResponse.data.attributes.dateOfBirth),
         clientAge: 48,
         totalInvested: 635376.130119,
         totalGainLoss: 122249.170119,
@@ -70,7 +70,7 @@ describe('useBasicInfo', () => {
       store = configureStore({
         reducer: {
           client: () => mockClientResponse,
-          investmentSummary: () => mockInvestSummaryResponse,
+          investmentSummary: () => mockInvestmentSummaryResponse,
           investmentAccounts: () => ({
             data: mockInvestmentAccounts,
           }),

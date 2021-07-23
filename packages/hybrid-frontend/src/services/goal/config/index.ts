@@ -1,4 +1,5 @@
-import { GoalCategory, GoalDatum } from '../types';
+import { GoalCategory, GoalDatum, GoalStatus, CommonPayload } from '../types';
+import generateDatePayload from '../utils/generateDatePayload';
 
 export enum GoalDefaults {
   AVERAGE_DRAW_DOWN_PERIOD_IN_YEARS = 22,
@@ -79,4 +80,10 @@ export const goalDataForChart: Record<GoalCategory, GoalDatum> = {
     icon: '/goal-graphic.png',
     targetAmount: 0,
   },
+};
+
+export const goalsDefaultValues: Pick<CommonPayload, 'status' | 'capture_date' | 'owner'> = {
+  status: GoalStatus.UNFULFILLED,
+  capture_date: generateDatePayload(),
+  owner: 'client',
 };

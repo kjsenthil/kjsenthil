@@ -1,10 +1,14 @@
-import { LifePlanMachineContext } from '../types';
+import {
+  LifePlanMachineContext,
+  LifePlanMachineEvents,
+  UpdateCurrentProjectionsEvent,
+} from '../types';
 import guards from '../guards';
 import tryInvokeService from './tryInvokeService';
 
-const updateCurrentProjections = <T = unknown>(
-  callback: (ctx: LifePlanMachineContext) => Promise<T>
-) => (ctx: LifePlanMachineContext): Promise<T> =>
+const updateCurrentProjections = (
+  callback: (ctx: LifePlanMachineContext, event: UpdateCurrentProjectionsEvent) => Promise<void>
+) => (ctx: LifePlanMachineContext, event: LifePlanMachineEvents): Promise<void> =>
   tryInvokeService(
     () => {
       const errors: Record<string, string> = {};
@@ -20,6 +24,6 @@ const updateCurrentProjections = <T = unknown>(
       }
       return errors;
     },
-    () => callback(ctx)
+    () => callback(ctx, event as UpdateCurrentProjectionsEvent)
   );
 export default updateCurrentProjections;

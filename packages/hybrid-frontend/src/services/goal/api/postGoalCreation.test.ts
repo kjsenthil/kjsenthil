@@ -1,22 +1,20 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import postGoalCreation from './postGoalCreation';
+import { RetirementInputs, GoalCategory, GoalsApiResponse, GoalStatus, GoalType } from '../types';
+import { createRetirementPayload } from '../utils';
 import { API_ENDPOINTS } from '../../../config';
-import postGoalCreation, { createOnboardGoalsPayLoad } from './postGoalCreation';
-import { RiskAppetites } from '../constants';
-import { CaptureGoalData, GoalCategory, GoalsApiResponse, GoalStatus, GoalType } from '../types';
 
 const mockAxios = new MockAdapter(axios);
 const url = API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS;
 
 describe('postGoalCreation', () => {
-  it(`makes a call to ${url}`, async () => {
-    const inputs: CaptureGoalData = {
-      targetDate: '2100-11-11',
-      targetAmount: 1000000,
-      targetYear: 2100,
-      upfrontInvestment: 4000,
-      monthlyInvestment: 100,
-      riskAppetite: RiskAppetites.CAUTIOUS,
+  it(`makes a call to ${url}  with POST method`, async () => {
+    const inputs: RetirementInputs = {
+      drawdownEndAge: 80,
+      drawdownStartAge: 56,
+      regularDrawdown: 7000,
+      lumpSumDate: new Date(2055, 1, 1).toISOString(),
     };
 
     const data: GoalsApiResponse = {
@@ -30,11 +28,11 @@ describe('postGoalCreation', () => {
       },
     };
 
-    mockAxios.onPost(url, createOnboardGoalsPayLoad(inputs)).reply(201, data);
+    mockAxios.onPost(url, createRetirementPayload(inputs)).reply(201, data);
 
-    const response = await postGoalCreation({
+    const response = await postGoalCreation<GoalType.RETIREMENT>({
       inputs,
-      goalType: GoalType.ONBOARDING,
+      goalType: GoalType.RETIREMENT,
     });
 
     expect(response).toStrictEqual(data);

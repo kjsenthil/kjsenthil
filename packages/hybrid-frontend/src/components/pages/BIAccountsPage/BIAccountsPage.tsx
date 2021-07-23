@@ -34,7 +34,7 @@ const BIAccountsPage = () => {
   } = useSelector((state: RootState) => state);
 
   const basicInfo = useBasicInfo();
-  const { accountsSummary, investmentAccounts } = useInvestmentAccounts();
+  const { accountsSummary, investmentAccounts } = useInvestmentAccounts({ shouldDispatch: false });
 
   const dispatch = useDispatch();
 

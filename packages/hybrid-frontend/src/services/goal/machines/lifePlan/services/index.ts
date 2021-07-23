@@ -1,7 +1,11 @@
-import saveRetirementPlan from './saveRetirementPlan';
+import bootstrap from './bootstrap';
+import upsertGoal from './upsertGoal';
+import deleteGoal from './deleteGoal';
 import updateCurrentProjections from './updateCurrentProjections';
 
 export default {
-  saveRetirementPlan,
+  bootstrap,
+  upsertGoal,
+  deleteGoal,
   updateCurrentProjections,
 };

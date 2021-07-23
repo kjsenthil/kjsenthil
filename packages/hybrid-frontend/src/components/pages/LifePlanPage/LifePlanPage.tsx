@@ -1,7 +1,7 @@
 import React from 'react';
 import Img from 'gatsby-image';
 import { navigate } from 'gatsby';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Link, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
@@ -10,7 +10,6 @@ import {
   PerformanceProjectionsChart,
   GoalMainCardPlaceholder,
 } from '../../organisms';
-
 import {
   useBasicInfo,
   useGoalImages,
@@ -18,20 +17,24 @@ import {
   useStateIsAvailable,
   useSimulatedProjectionsData,
   useDispatchThunkOnRender,
-  useInvestmentAccounts,
+  useUpdateCurrentProjectionsPrerequisites,
 } from '../../../hooks';
 import { Disclaimer } from './LifePlanPage.styles';
 import { MainCard, Modal } from '../../molecules';
 import { getPossessiveSuffix } from '../../../utils/string';
-import { RootState } from '../../../store';
+import { RootState, useAppDispatch } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import { createGoal, GoalCategory, GoalDefaults, GoalType } from '../../../services/goal';
-import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension/usePerformanceProjectionsChartDimension';
-import { callPostUpdateCurrentProjections } from '../../../services/projections/asyncCallers';
+import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension';
 import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
-import { fetchSimulatedProjections } from '../../../services/projections';
+import {
+  fetchGoalCurrentProjections,
+  fetchTargetProjections,
+  fetchSimulatedProjections,
+  prepareCurrentAndTargetProjectionsRequestPayloads,
+} from '../../../services/projections';
 
 const LifePlanPage = () => {
   const images = useGoalImages();
@@ -51,7 +54,7 @@ const LifePlanPage = () => {
   } = useSelector((state: RootState) => state);
 
   const basicInfo = useBasicInfo();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
 
@@ -84,13 +87,21 @@ const LifePlanPage = () => {
     !!projectionsData.length &&
     !!projectionsTargetData.length;
 
-  const { investmentAccounts } = useInvestmentAccounts();
-  const { dateOfBirth } = useBasicInfo();
+  const { dateOfBirth } = basicInfo;
   const fundData = useAllAssets();
 
   const retirementGoal = currentGoals.find(
     (goal) => goal.fields.category === GoalCategory.RETIREMENT
   );
+
+  const projectionsPrerequisitesPayload = useUpdateCurrentProjectionsPrerequisites();
+  const {
+    riskProfile,
+    assetModel,
+    monthlyContributions,
+    portfolioCurrentValue,
+    totalNetContributions,
+  } = projectionsPrerequisitesPayload;
 
   useDispatchThunkOnRender(
     () => {
@@ -104,16 +115,24 @@ const LifePlanPage = () => {
 
   useDispatchThunkOnRender(
     () => {
-      dispatch(
-        fetchSimulatedProjections({
-          fundData,
-          investmentPeriod: projectionsMetadata.investmentPeriod,
-        })
-      );
+      if (riskProfile) {
+        dispatch(
+          fetchSimulatedProjections({
+            riskProfile,
+            monthlyInvestment: monthlyContributions!,
+            upfrontInvestment: portfolioCurrentValue!,
+            investmentPeriod: projectionsMetadata.investmentPeriod,
+          })
+        );
+      }
     },
     simulatedProjectionsStatus,
     {
-      enabled: isUncategorisedGoal,
+      enabled:
+        isUncategorisedGoal &&
+        !!riskProfile &&
+        monthlyContributions !== undefined &&
+        portfolioCurrentValue !== undefined,
     }
   );
 
@@ -127,8 +146,17 @@ const LifePlanPage = () => {
     !projectionsData.length;
 
   React.useEffect(() => {
-    if (shouldFetchProjections) {
-      callPostUpdateCurrentProjections(dispatch)({
+    if (
+      shouldFetchProjections &&
+      assetModel &&
+      monthlyContributions !== undefined &&
+      portfolioCurrentValue !== undefined &&
+      totalNetContributions !== undefined
+    ) {
+      const {
+        currentProjectionsPayload,
+        targetProjectionsPayload,
+      } = prepareCurrentAndTargetProjectionsRequestPayloads({
         clientAge: projectionsMetadata.todayAge,
         drawdownStartDate: calculateDateAfterYears(
           dateOfBirth,
@@ -138,18 +166,27 @@ const LifePlanPage = () => {
           dateOfBirth,
           retirementGoal?.fields?.objectiveFrequencyEndAge || GoalDefaults.DRAW_DOWN_END_AGE
         ),
-        drawdownAmount: Number(retirementGoal?.fields?.regularDrawdown?.val?.value?.val),
+        monthlyIncome: Number(retirementGoal?.fields?.regularDrawdown?.val?.value?.val),
         lumpSum: 0, // determine if needed
         laterLifeLeftOver: 0, // determine if needed
         shouldIncludeStatePension: false, // determine if needed,
         fees: 0,
-        investmentAccounts,
-        investmentSummary: investmentSummaryData,
-        includedClientAccounts: clientData,
-        fundData,
+        assetModel,
+        monthlyContributions,
+        portfolioCurrentValue,
+        totalNetContributions,
       });
+      dispatch(fetchGoalCurrentProjections(currentProjectionsPayload));
+      dispatch(fetchTargetProjections(targetProjectionsPayload));
     }
-  }, [fundData, clientData, retirementGoal, investmentSummaryData, shouldFetchProjections]);
+  }, [
+    fundData,
+    clientData,
+    retirementGoal,
+    investmentSummaryData,
+    shouldFetchProjections,
+    projectionsPrerequisitesPayload,
+  ]);
 
   const linkClickHandler = () => setIsModalOpen(true);
   const modalCloseHandler = () => setIsModalOpen(false);

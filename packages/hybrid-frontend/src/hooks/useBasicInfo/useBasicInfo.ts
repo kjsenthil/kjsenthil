@@ -9,14 +9,16 @@ export interface BasicInfo {
   totalInvested: number;
   totalGainLoss: number;
   totalInvestableCash: number;
-  dateOfBirth: string;
+  dateOfBirth: Date;
   clientAge: number;
   firstName: string;
   lastName: string;
   isLoading: boolean;
 }
 
-const useBasicInfo = (): BasicInfo => {
+const useBasicInfo = (
+  { shouldDispatch }: { shouldDispatch: boolean } = { shouldDispatch: true }
+): BasicInfo => {
   const { client } = useSelector((state: RootState) => ({
     client: state.client.data,
     investmentSummary: state.investmentSummary.data,
@@ -27,7 +29,8 @@ const useBasicInfo = (): BasicInfo => {
     'investmentSummary',
     'investmentAccounts',
   ]);
-  const { accountsSummary, investmentAccounts } = useInvestmentAccounts();
+
+  const { accountsSummary, investmentAccounts } = useInvestmentAccounts({ shouldDispatch });
 
   if (!client || !investmentAccounts) {
     return {
@@ -35,8 +38,8 @@ const useBasicInfo = (): BasicInfo => {
       totalInvested: 0,
       totalInvestableCash: 0,
       firstName: '',
+      dateOfBirth: new Date(1979, 1, 1),
       lastName: '',
-      dateOfBirth: '',
       clientAge: 31,
       isLoading: isBasicInfoLoading,
     };
@@ -50,7 +53,7 @@ const useBasicInfo = (): BasicInfo => {
     totalInvestableCash,
     firstName: client.attributes.firstName,
     lastName: client.attributes.lastName,
-    dateOfBirth: client.attributes.dateOfBirth,
+    dateOfBirth: new Date(client.attributes.dateOfBirth),
     clientAge: calculateAgeToday(new Date(client.attributes.dateOfBirth)),
     isLoading: false,
   };

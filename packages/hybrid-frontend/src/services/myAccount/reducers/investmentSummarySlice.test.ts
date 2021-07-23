@@ -2,14 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import * as api from '../api';
 import investmentSummaryReducer, { fetchInvestmentSummary } from './investmentSummarySlice';
-import { mockClientResponse, mockInvestSummaryResponse } from '../mocks';
+import { mockClientResponse, mockInvestmentSummaryResponse } from '../mocks';
 
 jest.mock('../api', () => ({
   getInvestmentSummary: jest.fn(),
 }));
 
 const mockGetInvestmentSummary = (api.getInvestmentSummary as jest.Mock).mockResolvedValue(
-  mockInvestSummaryResponse
+  mockInvestmentSummaryResponse
 );
 
 describe('investmentSummarySlice', () => {

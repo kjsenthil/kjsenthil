@@ -3,20 +3,17 @@ import { AnyAction, Store } from 'redux';
 import goalReducer, { createGoal, setGoalDetails } from './goalCreationSlice';
 import * as api from '../api';
 import { authSlice as authReducer } from '../../auth';
-import { RiskAppetites } from '../constants';
-import { GoalType } from '../types';
+import { GoalType, RetirementInputs } from '../types';
 
 jest.mock('../api', () => ({
   postGoalCreation: jest.fn(),
 }));
 
-const inputs = {
-  targetAmount: 1000000,
-  targetYear: 2100,
-  targetDate: new Date(2100, 11, 31),
-  upfrontInvestment: 2000,
-  monthlyInvestment: 100,
-  riskAppetite: RiskAppetites.CAUTIOUS,
+const inputs: RetirementInputs = {
+  drawdownEndAge: 80,
+  drawdownStartAge: 56,
+  regularDrawdown: 7000,
+  lumpSumDate: new Date(2055, 1, 1),
 };
 
 const mockGoalDetails = { name: 'Retirement' };
@@ -38,7 +35,7 @@ describe('goalCreationSlice', () => {
   describe('dispatch createGoal', () => {
     const createGoalAction = (createGoal({
       inputs,
-      goalType: GoalType.ONBOARDING,
+      goalType: GoalType.RETIREMENT,
     }) as unknown) as AnyAction;
 
     beforeEach(() => {
@@ -61,7 +58,7 @@ describe('goalCreationSlice', () => {
 
         expect(api.postGoalCreation).toHaveBeenCalledWith({
           inputs,
-          goalType: 'onboarding',
+          goalType: 'retirement',
         });
         expect(status).toStrictEqual('loading');
         expect(error).toBeUndefined();

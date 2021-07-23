@@ -13,6 +13,7 @@ import {
   SetIncomeEvent,
   SetLaterLifeLeftOverEvent,
   SetLumpSumEvent,
+  PrepopulateContextEvent,
 } from './types';
 import * as math from '../../../../utils/math';
 
@@ -22,6 +23,22 @@ const setDrawdownAges = assign<LifePlanMachineContext, SetAgesDrawdownEvent>(
     drawdownEndAge,
   })
 );
+
+const prepopulate = assign<LifePlanMachineContext, PrepopulateContextEvent>((ctx, { data }) => {
+  if (data) {
+    return {
+      index: data.index,
+      doesGoalExist: !!data.index,
+      monthlyIncome: data.monthlyIncome,
+      annualIncome: Math.round(data.monthlyIncome * 12 * 100) / 100,
+      drawdownStartAge: data.drawdownStartAge || ctx.drawdownStartAge,
+      drawdownEndAge: data.drawdownEndAge || ctx.drawdownEndAge,
+    };
+  }
+  return {
+    doesGoalExist: false,
+  };
+});
 
 const setIncome = assign<LifePlanMachineContext, SetIncomeEvent>(
   (ctx, { payload: { annualIncome, monthlyIncome } }) => {
@@ -130,6 +147,7 @@ const setErrors = assign<LifePlanMachineContext, SetErrorsEvent>((ctx, evt) => (
 const resetErrors = assign({ errors: null });
 
 export default ({
+  prepopulate,
   setErrors,
   resetErrors,
   setIncome,

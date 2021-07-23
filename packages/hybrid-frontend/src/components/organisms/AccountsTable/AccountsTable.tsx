@@ -118,8 +118,9 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
       {footerRow && (
         <AccountsTableFooter>
           <TableRow>
-            {footerRow.map((footerRowItem: AccountsFooterCell) => (
-              <AccountsTableCell key={`${footerRowItem}-key`}>
+            {footerRow.map((footerRowItem: AccountsFooterCell, i) => (
+              /* eslint-disable-next-line react/no-array-index-key */
+              <AccountsTableCell key={`${footerRowItem}-${i}-key`}>
                 <Typography variant="sh3" display="inline">
                   {footerRowItem}
                 </Typography>

@@ -4,7 +4,7 @@ import * as api from '../../performance/api';
 import { authSlice as authReducer } from '../../auth';
 import investmentAccountsReducer, { fetchInvestmentAccounts } from './investmentAccountsSlice';
 
-import { mockClientResponse, mockInvestSummaryResponse } from '../mocks';
+import { mockClientResponse, mockInvestmentSummaryResponse } from '../mocks';
 import mockPerformanceAccountsAggregated from '../../performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 
 jest.mock('../../performance/api', () => ({
@@ -21,7 +21,7 @@ describe('investmentAccountsSlice', () => {
       reducer: {
         auth: authReducer,
         client: () => mockClientResponse,
-        investmentSummary: () => mockInvestSummaryResponse,
+        investmentSummary: () => mockInvestmentSummaryResponse,
         investmentAccounts: investmentAccountsReducer,
       },
     });

@@ -1,4 +1,8 @@
+import { CurrentProjectionsPrerequisitePayload } from '../../../projections';
+
 export interface LifePlanMachineContext {
+  index: number | null;
+  doesGoalExist: boolean;
   fees: number;
   clientAge: number;
   inflation: number;
@@ -20,6 +24,7 @@ export interface LifePlanMachineContext {
   annualIncomeInTomorrowsMoney: number;
   monthlyIncomeInTomorrowsMoney: number;
   lumpSum: number;
+  lumpSumAtAge: number;
   laterLifeLeftOver: number;
   retirementPotValue: number;
   shouldIncludeStatePension: boolean;
@@ -43,10 +48,12 @@ export interface LifePlanMachineSchema {
   states: {
     planningYourRetirement: {
       states: {
+        bootstrapping: {};
         normal: {};
         invalid: {};
         processingInput: {};
         saving: {};
+        deleting: {};
       };
     };
     fundingYourRetirement: {};
@@ -59,10 +66,12 @@ export type SetAgesDrawdownEvent = {
 };
 
 export type SetIncomeEvent = {
-  type: 'SET_INCOME';
-  payload:
+  type: 'SET_INCOME' | 'done.invoke.updateCurrentProjection';
+  payload: (
     | { annualIncome: number; monthlyIncome: undefined }
-    | { annualIncome: undefined; monthlyIncome: number };
+    | { annualIncome: undefined; monthlyIncome: number }
+  ) &
+    Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
 };
 
 export type SetLumpSumEvent = {
@@ -75,15 +84,36 @@ export type SetLaterLifeLeftOverEvent = {
   payload: { laterLifeLeftOver: number };
 };
 
+export type UpdateCurrentProjectionsEvent = {
+  type: string;
+  payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+};
+
+export type PrepopulateContextEvent = {
+  type: 'done.invoke.bootstrapping';
+  data: PrepopulateContext;
+  payload?: undefined;
+};
+
 export type SetErrorsEvent = {
   type: 'error.platform.updateCurrentProjection';
   data: Record<InputFieldsKeys, string>;
 };
 
 export type LifePlanMachineEvents =
+  | PrepopulateContextEvent
+  | UpdateCurrentProjectionsEvent
   | SetAgesDrawdownEvent
   | SetIncomeEvent
   | SetLumpSumEvent
   | SetLaterLifeLeftOverEvent
   | SetErrorsEvent
-  | { type: 'SAVE' };
+  | { type: 'SAVE'; payload?: undefined }
+  | { type: 'DELETE'; payload?: undefined };
+
+export type PrepopulateContext =
+  | Pick<
+      LifePlanMachineContext,
+      'userDateOfBirth' | 'monthlyIncome' | 'drawdownStartAge' | 'drawdownEndAge' | 'index'
+    >
+  | undefined;

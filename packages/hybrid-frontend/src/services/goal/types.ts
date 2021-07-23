@@ -4,7 +4,6 @@ import { RiskAppetites } from './constants';
 export enum GoalType {
   UNCATEGORIZED = 'uncategorised',
   RETIREMENT = 'retirement',
-  ONBOARDING = 'onboarding',
 }
 
 export enum GoalStatus {
@@ -68,15 +67,21 @@ export type GoalAmountPayload = GoalPayloadValType<
   '_val'
 >;
 
+export type GoalCurrencyValType = GoalPayloadValType<
+  GoalPayloadValue<number, 'BigDecimal'>,
+  'Currency',
+  '_val'
+>;
+
+export type GoalDateValType = GoalPayloadValType<string, 'Date', '_val'>;
+
 export interface GoalApiFields {
   status: GoalStatus;
   category: GoalCategory;
   advice_type?: GoalAdviceType;
   description: string;
   owner: 'client';
-  xpt_external_id?: string | null;
   present_value?: number | null;
-  frequency?: number;
   capture_date: GoalPayloadValType<string, 'Date', '_val'>;
   target_date?: GoalPayloadValType<string, 'Date', '_val'>;
   target_amount?: GoalPayloadValType<
@@ -115,39 +120,43 @@ export interface OnboardingGoalInputs extends CaptureGoalData {
 }
 
 export interface RetirementInputs {
+  description?: string;
   drawdownEndAge: number;
   drawdownStartAge: number;
   regularDrawdown: number;
-  description?: string;
+  lumpSum?: number;
+  lumpSumDate: Date | number | string;
+  statePensionAmount?: number;
+  laterLifeLeftOver?: number;
 }
 
-export type CreateGoalParams =
-  | {
-      goalType: GoalType.ONBOARDING;
-      inputs?: OnboardingGoalInputs;
-    }
-  | {
-      goalType: GoalType.RETIREMENT;
-      inputs: RetirementInputs;
-    }
-  | {
-      goalType: GoalType.UNCATEGORIZED;
-      inputs?: undefined;
-    };
+export interface CommonPayload {
+  status: GoalStatus;
+  category: GoalCategory;
+  advice_type?: GoalAdviceType;
+  capture_date: GoalDateValType;
+  owner: 'client';
+  description: string;
+}
 
-export type PostGoalParams =
-  | {
-      goalType: GoalType.ONBOARDING;
-      inputs: OnboardingGoalInputs;
-    }
-  | {
-      goalType: GoalType.RETIREMENT;
-      inputs: RetirementInputs;
-    }
-  | {
-      goalType: GoalType.UNCATEGORIZED;
-      inputs: undefined;
-    };
+export interface UncategorisedPayload extends CommonPayload {}
+
+export interface RetirementPayload extends CommonPayload {
+  regular_drawdown: GoalCurrencyValType;
+  objective_frequency_start_age: number;
+  objective_frequency_end_age: number;
+  drawdown_frequency: string;
+  bi_retirement_lump_sum: number;
+  bi_retirement_lump_sum_date: Date | number | string;
+  bi_state_pension_amount: number;
+  bi_retirement_remaining_amount: number;
+}
+
+export type PostGoalParams<T extends GoalType> = T extends GoalType.RETIREMENT
+  ? { goalType: GoalType.RETIREMENT; inputs: RetirementInputs }
+  : T extends GoalType.UNCATEGORIZED
+  ? { goalType: GoalType.UNCATEGORIZED; inputs?: undefined }
+  : { goalType: GoalType; inputs?: unknown };
 
 export interface GoalDetails {
   id?: string;

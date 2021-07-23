@@ -4,7 +4,9 @@ import { GoalCurrentProjectionsRequestPayload } from '../types';
 
 const fetchGoalCurrentProjections = createAsyncThunk(
   'projections/fetchGoalCurrentProjections',
-  async (payload: GoalCurrentProjectionsRequestPayload) => postGoalCurrentProjections(payload)
+  async (payload: GoalCurrentProjectionsRequestPayload) => ({
+    data: await postGoalCurrentProjections(payload),
+  })
 );
 
 export default fetchGoalCurrentProjections;

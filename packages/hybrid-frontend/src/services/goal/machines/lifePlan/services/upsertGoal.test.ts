@@ -1,12 +1,12 @@
-import saveRetirementPlan from './saveRetirementPlan';
+import upsertGoal from './upsertGoal';
 import context from '../context';
 
 const callback = jest.fn();
 
 describe('services', () => {
-  const service = saveRetirementPlan(callback);
+  const service = upsertGoal(callback);
 
-  describe('saveRetirementPlan', () => {
+  describe('upsertGoal', () => {
     it('rejects if all or any of the required fields are empty', async () => {
       await expect(
         service({

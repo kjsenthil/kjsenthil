@@ -237,7 +237,7 @@ export const mockInvestmentAccountsData: InvestmentAccountData[] = [
   },
 ];
 
-export const mockInvestSummaryResponse: InvestmentSummaryResponse = {
+export const mockInvestmentSummaryResponse: InvestmentSummaryResponse = {
   data: [
     {
       type: 'investment-summary',
