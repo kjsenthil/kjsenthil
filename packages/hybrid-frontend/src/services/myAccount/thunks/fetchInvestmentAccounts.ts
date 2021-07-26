@@ -42,14 +42,18 @@ const fetchInvestmentAccounts = createAsyncThunk(
         const performanceResponse = await getPerformanceAccountsAggregated(
           Number(investSummaryItem.id)
         );
+        const netContributions = performanceResponse?.included[0]?.attributes?.netContributions;
+        const netContributionToDate =
+          netContributions && netContributions.length > 0
+            ? netContributions[netContributions.length - 1].netContributionsToDate
+            : 0;
 
         return {
           id: investSummaryItem.id,
           accountName,
           accountType,
           accountTotalHoldings,
-          accountTotalNetContribution:
-            performanceResponse?.included[0]?.attributes?.totalContributions || 0,
+          accountTotalNetContribution: netContributionToDate,
           accountCash: investSummaryItem.attributes.cash,
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,

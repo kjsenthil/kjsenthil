@@ -120,7 +120,7 @@ const LifePlanPage = () => {
           fetchSimulatedProjections({
             riskProfile,
             monthlyInvestment: monthlyContributions!,
-            upfrontInvestment: portfolioCurrentValue!,
+            upfrontInvestment: totalNetContributions!,
             investmentPeriod: projectionsMetadata.investmentPeriod,
           })
         );
