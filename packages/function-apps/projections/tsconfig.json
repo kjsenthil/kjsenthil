@@ -18,6 +18,9 @@
     "current-projection/function.json",
     "current-projection/types.ts",
     "validate-goal-request/index.ts",
-    "validate-goal-request/function.json"
+    "validate-goal-request/function.json",
+    "simulate-projection/index.ts",
+    "simulate-projection/types.ts",
+    "simulate-projection/function.json",
   ]
 }

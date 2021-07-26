@@ -387,6 +387,21 @@
         "backend_url": "features_function_app",
         "rewrite_url": "/features"
       }
-    }
+    },
+    {
+      "operation_id": "projections-simulate-projection",
+      "display_name": "Projections - Get simulate projection",
+      "url_template": "/projections/simulate-projection",
+      "description": "Connects to the simulate-projection function app and returns the simulate projection for the given inputs",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "projections_function_app",
+        "rewrite_url": "/simulate-projection"
+      }
+    }  
   ]
 }
