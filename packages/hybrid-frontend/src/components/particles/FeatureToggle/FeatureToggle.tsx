@@ -5,6 +5,7 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useTelemetryContext, SeverityLevel } from '@tsw/telemetry';
 import { useFeatureFlagToggle } from '../../../hooks';
 
 export interface FeatureToggleProps {
@@ -27,19 +28,28 @@ const FeatureToggleWithoutErrorHandling = ({
   return <>{children}</>;
 };
 
-const FeatureToggle = ({ children, flagName, fallback }: FeatureToggleProps) => (
-  <ErrorBoundary
-    fallbackRender={({ error }) => {
-      console.error(`An error occurred when retrieving feature flag with name "${flagName}"`);
-      console.error(error);
+const FeatureToggle = ({ children, flagName, fallback }: FeatureToggleProps) => {
+  const telemetry = useTelemetryContext();
 
-      return <>{fallback}</>;
-    }}
-  >
-    <FeatureToggleWithoutErrorHandling flagName={flagName} fallback={fallback}>
-      {children}
-    </FeatureToggleWithoutErrorHandling>
-  </ErrorBoundary>
-);
+  return (
+    <ErrorBoundary
+      fallbackRender={({ error }) => {
+        console.error(`An error occurred when retrieving feature flag with name "${flagName}"`);
+        console.error(error);
+
+        telemetry.trackException({
+          exception: error,
+          severityLevel: SeverityLevel.Error,
+        });
+
+        return <>{fallback}</>;
+      }}
+    >
+      <FeatureToggleWithoutErrorHandling flagName={flagName} fallback={fallback}>
+        {children}
+      </FeatureToggleWithoutErrorHandling>
+    </ErrorBoundary>
+  );
+};
 
 export default FeatureToggle;

@@ -10,7 +10,7 @@ Object {
           class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
         >
           <div
-            class="MuiCardContent-root sc-clIAKW lijLil"
+            class="MuiCardContent-root sc-GamvQ dgMDvy"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -81,7 +81,7 @@ Object {
                         data-testid="Spacer"
                       />
                       <span
-                        class="sc-lbhJmS inIlup"
+                        class="sc-jeqYYF ledCfb"
                         title="Some description"
                       >
                         <svg
@@ -258,7 +258,7 @@ Object {
                       data-testid="Spacer"
                     />
                     <span
-                      class="sc-lbhJmS inIlup"
+                      class="sc-jeqYYF ledCfb"
                       title="Some description"
                     >
                       <svg
@@ -290,7 +290,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-clIAKW lijLil"
+          class="MuiCardContent-root sc-GamvQ dgMDvy"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -361,7 +361,7 @@ Object {
                       data-testid="Spacer"
                     />
                     <span
-                      class="sc-lbhJmS inIlup"
+                      class="sc-jeqYYF ledCfb"
                       title="Some description"
                     >
                       <svg
@@ -538,7 +538,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <span
-                    class="sc-lbhJmS inIlup"
+                    class="sc-jeqYYF ledCfb"
                     title="Some description"
                   >
                     <svg

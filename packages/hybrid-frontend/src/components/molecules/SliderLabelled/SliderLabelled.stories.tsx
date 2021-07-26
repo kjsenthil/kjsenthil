@@ -11,11 +11,7 @@ const Template: Story<SliderLabelledProps> = ({ value: defaultValue, ...args }) 
   const [value, setValue] = useState(defaultValue);
 
   return (
-    <SliderLabelled
-      {...args}
-      onChange={(_name, newValue) => setValue(newValue)}
-      value={value}
-    />
+    <SliderLabelled {...args} onChange={(_name, newValue) => setValue(newValue)} value={value} />
   );
 };
 
@@ -23,7 +19,7 @@ const defaultArgs: SliderLabelledProps = {
   max: 7,
   min: 1,
   name: 'sliderLabelled',
-  onChange: () => { },
+  onChange: () => {},
   step: 1,
   value: 4,
   startLabel: 'Low risk/reward',

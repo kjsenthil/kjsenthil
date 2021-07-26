@@ -5,7 +5,7 @@ import {
   HereLabel,
   HereText,
   StyledSlider,
-  PointerIcon
+  PointerIcon,
 } from './SliderLabelled.styles';
 
 export interface SliderLabelledProps {
@@ -36,24 +36,30 @@ const SliderLabelled: React.FC<SliderLabelledProps> = ({
     onChange(sliderName, newValue);
   };
 
-  const marks = (min, max, step) => Array.from({ length: (max - min) / step + 1 }, (_, i) => ({ 'value': min + (i * step), 'label': min + (i * step) }));
-  const hereValuePercentage = hereValue && hereValue !== 0 ? (100 * ((hereValue - min) / (max - min))) : 0;
+  const marks = (minValue: number, maxValue: number, stepValue: number) =>
+    Array.from({ length: (maxValue - minValue) / stepValue + 1 }, (_, i) => ({
+      value: minValue + i * stepValue,
+      label: minValue + i * stepValue,
+    }));
+
+  const hereValuePercentage =
+    hereValue && hereValue !== 0 ? 100 * ((hereValue - min) / (max - min)) : 0;
 
   return (
     <Container>
-      {!startLabel ? null :
+      {!startLabel ? null : (
         <>
           <Grid container xs={12} justifyContent="center">
             <Grid container xs={6} justify="flex-start">
               <Typography>{startLabel}</Typography>
             </Grid>
             <Grid container xs={6} justify="flex-end">
-              <Typography >{endLabel}</Typography>
+              <Typography>{endLabel}</Typography>
             </Grid>
           </Grid>
           <Spacer y={2} />
         </>
-      }
+      )}
 
       <StyledSlider
         max={max}
@@ -71,17 +77,19 @@ const SliderLabelled: React.FC<SliderLabelledProps> = ({
         activeMark={value - min}
       />
 
-      {hereValue === null ? null :
+      {hereValue === null ? null : (
         <HereContainer>
           <HereLabel hereValue={hereValuePercentage}>
             <PointerIcon name="arrowHeadUp" />
             <HereText>
-              <Typography variant="b3" primary="grey" fontWeight="300">You are here</Typography>
+              <Typography variant="b3" primary="grey" fontWeight="300">
+                You are here
+              </Typography>
             </HereText>
           </HereLabel>
         </HereContainer>
-      }
-    </Container >
+      )}
+    </Container>
   );
 };
 

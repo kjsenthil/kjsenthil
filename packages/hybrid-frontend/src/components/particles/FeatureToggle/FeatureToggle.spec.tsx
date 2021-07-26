@@ -1,11 +1,13 @@
 // eslint-disable no-console
 import * as React from 'react';
+import { useTelemetryContext } from '@tsw/telemetry';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import FeatureToggle from '.';
 import { FeatureFlagNames } from '../../../constants';
 import { useFeatureFlagToggle } from '../../../hooks';
 
 jest.mock('../../../hooks');
+jest.mock('@tsw/telemetry');
 
 describe('FeatureToggle', () => {
   beforeEach(() => {
@@ -52,6 +54,11 @@ describe('FeatureToggle', () => {
     const consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
+    const mockTrackException = jest.fn();
+    (useTelemetryContext as jest.Mock).mockReturnValue({
+      trackException: mockTrackException,
+    });
+
     (useFeatureFlagToggle as jest.Mock).mockImplementation(() => {
       throw new Error();
     });
@@ -64,6 +71,7 @@ describe('FeatureToggle', () => {
 
     expect(screen.getByText('Enabled feature - Old')).toBeInTheDocument();
     expect(screen.queryByText('Enabled feature - New')).not.toBeInTheDocument();
+    expect(mockTrackException).toBeCalledTimes(1);
 
     // Restore console message functionality
     consoleWarn.mockRestore();

@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { Slider, Theme, Icon } from '../../atoms';
 
 export const HereContainer = styled.div`
-    position: relative;
-    line-height: 10px;
+  position: relative;
+  line-height: 10px;
 `;
 
 export const HereLabel = styled.div`
-  ${({ hereValue }: { hereValue: number; }) => `
+  ${({ hereValue }: { hereValue: number }) => `
     position: absolute;
     top: -10px;
     left: ${hereValue}%;
@@ -30,8 +30,15 @@ export const PointerIcon = styled(Icon)`
 `;
 
 export const StyledSlider = styled(Slider)`
-  ${({ theme, showMarks, activeMark }: { theme: Theme, showMarks: boolean, activeMark: number }) => {
-    return `
+  ${({
+    theme,
+    showMarks,
+    activeMark,
+  }: {
+    theme: Theme;
+    showMarks: boolean;
+    activeMark: number;
+  }) => `
       .MuiSlider-mark {
         display: none;
       }
@@ -60,6 +67,5 @@ export const StyledSlider = styled(Slider)`
       .MuiSvgIcon-fontSizeSmall {
         font-size: 1rem;
       }
-    `;
-  }}
+    `}
 `;
