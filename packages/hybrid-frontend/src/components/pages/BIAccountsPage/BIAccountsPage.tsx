@@ -27,6 +27,7 @@ import { ChartPeriodSelection, DisabledComponent, MainCard } from '../../molecul
 import { formatCurrency } from '../../../utils/formatters';
 import { calculateInvestmentReturn } from '../../../services/myAccount';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
+import { getPossessiveSuffix } from '../../../utils/string';
 
 const BIAccountsPage = () => {
   const {
@@ -82,8 +83,8 @@ const BIAccountsPage = () => {
     <MyAccountLayout
       basicInfo={basicInfo}
       heading={{
-        primary: `${basicInfo.firstName}'s`,
-        secondary: `Investments`,
+        primary: `Investments`,
+        secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
       }}
     >
       <Grid item container xs={12} spacing={1} justify="flex-end">

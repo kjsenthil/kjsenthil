@@ -13,22 +13,33 @@ import performanceReducer from '../../../services/performance/reducers/performan
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
-  default: ({ children }) => <div>{children}</div>,
+  default: ({ children, heading: { primary } }) => (
+    <div>
+      <p>Primary heading = {primary}</p>
+      {children}
+    </div>
+  ),
 }));
 
 describe('BIAccountsPage', () => {
-  const store: Store = configureStore({
-    reducer: {
-      auth: authReducer,
-      client: clientReducer,
-      performance: performanceReducer,
-      investmentSummary: investmentSummaryReducer,
-      investmentAccounts: investmentAccountsReducer,
-    },
+  beforeEach(() => {
+    const store: Store = configureStore({
+      reducer: {
+        auth: authReducer,
+        client: clientReducer,
+        performance: performanceReducer,
+        investmentSummary: investmentSummaryReducer,
+        investmentAccounts: investmentAccountsReducer,
+      },
+    });
+    renderWithProviders(<BIAccountsPage />, store);
   });
 
   test('BIAccountsPage title has been successfully rendered', async () => {
-    renderWithProviders(<BIAccountsPage />, store);
     expect(screen.getByText('TOTAL VALUE')).toBeInTheDocument();
+  });
+
+  test('the primary heading should be Investments', () => {
+    expect(screen.getByText('Primary heading = Investments')).toBeInTheDocument();
   });
 });
