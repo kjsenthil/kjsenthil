@@ -3,6 +3,7 @@ export { default as HeaderMenu } from './HeaderMenu';
 export { default as Footer } from './Footer';
 export { default as AssetDetails } from './AssetDetails';
 export { default as GoalProgressCard } from './GoalProgressCard';
+export { default as GoalInputCard } from './GoalInputCard';
 export { default as AccountTypeSelection } from './AccountTypeSelection';
 export { default as GoalTrackingWidget } from './GoalTrackingWidget';
 export { default as SimulationForm } from './SimulationForm';
