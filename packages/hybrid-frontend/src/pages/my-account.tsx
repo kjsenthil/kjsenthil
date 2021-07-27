@@ -5,7 +5,6 @@ import { PrivateRoute } from '../components/particles';
 import NotFoundPage from '../components/pages/NotFoundPage';
 import LoginPage from '../components/pages/LoginPage';
 import LogoutPage from '../components/pages/LogoutPage';
-import HomePage from '../components/pages/HomePage';
 import BIAccountsPage from '../components/pages/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage';
 import { NavPaths } from '../config/paths';
@@ -31,7 +30,7 @@ const MyAccount = () => {
       <LoginPage path={getBasePath(NavPaths.LOGIN_PAGE)} />
       <LogoutPage path={getBasePath(NavPaths.LOGOUT_PAGE)} />
 
-      <PrivateRoute path={getBasePath(NavPaths.HOME_PAGE)} Component={HomePage} />
+      <PrivateRoute path={getBasePath(NavPaths.HOME_PAGE)} Component={BIAccountsPage} />
       <PrivateRoute path={getBasePath(NavPaths.ACCOUNTS_PAGE)} Component={BIAccountsPage} />
       <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPage} />
       <PrivateRoute
