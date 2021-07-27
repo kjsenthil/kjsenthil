@@ -301,7 +301,7 @@
 						}
 					}
 				},
-				"body" :"@{ var inboundPayload = context.Request.Body.As<JObject>(true); inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12; inboundPayload[\"fields\"][\"owner\"] = \"client\"; return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
+				"body": "@{ var inboundPayload = context.Request.Body.As<JObject>(true); if(inboundPayload[\"fields\"][\"capture_date\"] != null){inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");}  if(inboundPayload[\"fields\"][\"drawdown_frequency\"] != null){inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12;} if(inboundPayload[\"fields\"][\"owner\"] != null){inboundPayload[\"fields\"][\"owner\"] = \"client\";} return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } ",
 				"backend_url": "xplan",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\/\" + \"{goal-index}\";}",
 				"authentication-basic": {

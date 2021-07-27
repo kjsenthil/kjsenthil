@@ -24,7 +24,7 @@ const validateGoalRequestMain: AzureFunction = async function (context: Context,
     }
 }
 
-const isUndefinedOrLessThanZero = (field: undefined | number) => !field || field < 0;
+const isUndefinedOrLessThanZero = (field: undefined | number) => field === undefined || field < 0;
 
 function validateInput(inboundPayload: GoalRequestPayload): ValidationError[] {
 

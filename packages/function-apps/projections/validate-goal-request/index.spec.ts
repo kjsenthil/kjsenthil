@@ -209,6 +209,14 @@ describe("tests for validate function", () => {
                 ] as ValidationError[])
     });
 
+    it("when lumpsum is zero , validate error must not be thrown", () => {
+        let invalidGoal = createGoal();
+        invalidGoal.fields.bi_retirement_lump_sum = 0;
+        expect(
+            validateInput(invalidGoal))
+            .toEqual([] as ValidationError[])
+    });
+
     it("when lump sum amount is more than zero and lump sum date is not passed than error must be thrown", () => {
         let invalidGoal = createGoal();
         invalidGoal.fields.bi_retirement_lump_sum_date = null;
