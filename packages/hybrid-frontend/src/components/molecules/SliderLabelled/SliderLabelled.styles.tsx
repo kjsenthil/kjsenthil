@@ -19,7 +19,7 @@ export const HereLabel = styled.div`
 
 export const HereText = styled.div`
   ${() => `
-    margin-top: -5px;
+    margin-top: -10px;
   `}
 `;
 

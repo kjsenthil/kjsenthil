@@ -51,10 +51,14 @@ const SliderLabelled: React.FC<SliderLabelledProps> = ({
         <>
           <Grid container xs={12} justifyContent="center">
             <Grid container xs={6} justify="flex-start">
-              <Typography>{startLabel}</Typography>
+              <Typography color="grey" fontWeight="300">
+                {startLabel}
+              </Typography>
             </Grid>
             <Grid container xs={6} justify="flex-end">
-              <Typography>{endLabel}</Typography>
+              <Typography color="grey" fontWeight="300">
+                {endLabel}
+              </Typography>
             </Grid>
           </Grid>
           <Spacer y={2} />
@@ -82,7 +86,7 @@ const SliderLabelled: React.FC<SliderLabelledProps> = ({
           <HereLabel hereValue={hereValuePercentage}>
             <PointerIcon name="arrowHeadUp" />
             <HereText>
-              <Typography variant="b3" primary="grey" fontWeight="300">
+              <Typography variant="b3" color="grey" fontWeight="300">
                 You are here
               </Typography>
             </HereText>
