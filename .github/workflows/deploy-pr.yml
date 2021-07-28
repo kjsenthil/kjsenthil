@@ -635,6 +635,10 @@ jobs:
             PR_PIN_POSITION_2: ${{ secrets.DH_TEST_USER_PIN_2 }}
             PR_PIN_POSITION_4: ${{ secrets.DH_TEST_USER_PIN_4 }}
             PR_PIN_POSITION_6: ${{ secrets.DH_TEST_USER_PIN_6 }}
+            PR_ISA_ACCOUNT_ID: ${{ secrets.DH_TEST_ISA_ACCOUNT_ID }}
+            PR_GIA_ACCOUNT_ID: ${{ secrets.DH_TEST_GIA_ACCOUNT_ID }}
+            PR_SIPP_ACCOUNT_ID: ${{ secrets.DH_TEST_SIPP_ACCOUNT_ID }}
+            PR_ACCOUNT_IDs: ${{ secrets.DH_TEST_ACCOUNT_IDs }}
             
   # Deploys frontend pr contents
   deploy_gatsby:

@@ -33,13 +33,16 @@ const getAccessToken = async (twoStepAuthCode) => {
     },
   };
   const pinLoginResponse = await axios.post(pinApiUrl, pinLoginPayload);
-  const { accessToken } = await pinLoginResponse.data.data.attributes.tokens[0];
-  return accessToken;
+  const responseObject = await pinLoginResponse.data.data;
+  const { contactId } = responseObject.attributes;
+  const { accessToken } = responseObject.attributes.tokens[0];
+  return { contactId, accessToken };
 };
 
 before(async () => {
   const twoStepAuthCode = await getTwoStepAuthCode();
-  const accessToken = await getAccessToken(twoStepAuthCode);
+  const accessTokenResponse = await getAccessToken(twoStepAuthCode);
   process.env.TWO_STEP_AUTH_CODE = twoStepAuthCode;
-  process.env.ACCESS_TOKEN = accessToken;
+  process.env.CONTACT_ID = accessTokenResponse.contactId;
+  process.env.ACCESS_TOKEN = accessTokenResponse.accessToken;
 });
