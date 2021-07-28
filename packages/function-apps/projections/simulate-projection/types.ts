@@ -1,5 +1,5 @@
 interface RequestPayload {
-  timeHorizionToProject: number,
+  timeHorizonToProject: number,
   feesPercentage?: number,
   upfrontContribution?: number,
   monthlyContribution: number,

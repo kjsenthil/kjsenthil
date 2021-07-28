@@ -1,5 +1,5 @@
 import { DrawdownType, ProjectionMonth, RequestPayload, ValidationError } from "./types";
-import { validateInput, monthsDiff, simulateProjectionMain } from './index';
+import { validateInput, monthsDiff, simulateProjectionMain, setDefaultInputValues, calculateOnTrackPercentage } from './index';
 import { Context } from "@azure/functions";
 
 describe("tests for validate function", () => {
@@ -13,8 +13,8 @@ describe("tests for validate function", () => {
         [
           {
              code: 'val-simulateproj-001',
-             message: 'timeHorizionToProject_must_be_greater_than_zero',
-             property: 'timeHorizionToProject',
+             message: 'timeHorizonToProject_must_be_greater_than_zero',
+             property: 'timeHorizonToProject',
           },
           {
              code: 'val-simulateproj-004',
@@ -53,7 +53,7 @@ describe("tests for validate function", () => {
 
   it("when default inputs are not valid validation errors are thrown", () => {
     const invalidDateRequestPayload = createRequestPayload();
-    invalidDateRequestPayload.timeHorizionToProject = -5;
+    invalidDateRequestPayload.timeHorizonToProject = -5;
     invalidDateRequestPayload.feesPercentage = 102;
     invalidDateRequestPayload.upfrontContribution = -5;
     invalidDateRequestPayload.monthlyContribution = -100;
@@ -67,8 +67,8 @@ describe("tests for validate function", () => {
         [
           {
             "code": "val-simulateproj-001",
-            "property": "timeHorizionToProject",
-            "message": "timeHorizionToProject_must_be_greater_than_zero"
+            "property": "timeHorizonToProject",
+            "message": "timeHorizonToProject_must_be_greater_than_zero"
           },
           {
             "code": "val-simulateproj-002",
@@ -119,8 +119,36 @@ describe("tests for validate function", () => {
     const invalidDateRequestPayload = createRequestPayload();
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.OneOff;
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() +1);
     invalidDateRequestPayload.drawdownOneOff = {
       targetAmount : -10,
+      targetDate: targetDate
+    }
+
+    expect(
+      validateInput(invalidDateRequestPayload))
+      .toEqual(
+        [
+          {
+            "code": "val-simulateproj-010",
+            "message": "drawdownOneOff_targetAmount_must_be_a_positive_number",
+            "property": "drawdownOneOff.targetAmount"
+          },
+          {
+            "code": "val-simulateproj-039",
+            "message": "drawdownOneOff_targetDate_must_be_in_the_past",
+            "property": "drawdownOneOff.targetDate"
+          }
+        ] as ValidationError[])
+  });
+
+  it("when drawdown type is One-Off and drawdownOneOff has no values validation errors are thrown", () => {
+    const invalidDateRequestPayload = createRequestPayload();
+    invalidDateRequestPayload.includeGoal = true;
+    invalidDateRequestPayload.drawdownType = DrawdownType.OneOff;
+    invalidDateRequestPayload.drawdownOneOff = {
+      targetAmount : null,
       targetDate: null
     }
 
@@ -145,9 +173,11 @@ describe("tests for validate function", () => {
     const invalidDateRequestPayload = createRequestPayload();
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.OneOff;
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() -1);
     invalidDateRequestPayload.drawdownOneOff = {
       targetAmount : 100,
-      targetDate: new Date()
+      targetDate: targetDate
     }
 
     expect(
@@ -227,6 +257,11 @@ describe("tests for validate function", () => {
             "property": "drawdownMonthly.amount"
           },
           {
+            "code": "val-simulateproj-038",
+            "message": "drawdownMonthly_endDate_must_be_in_the_future",
+            "property": "drawdownMonthly.endDate"
+          },
+          {
             "code": "val-simulateproj-016",
             "message": "drawdownMonthly_endDate_must_be_at_least_one_month_greather_than_startDate",
             "property": "drawdownMonthly.endDate"
@@ -237,11 +272,13 @@ describe("tests for validate function", () => {
   it("when drawdown type is Monthly and drawdownMonthly has valid values validation will return no error", () => {
     const invalidDateRequestPayload = createRequestPayload();
     const startDate = new Date(1975,1,5);
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() +1);
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.Monthly;
     invalidDateRequestPayload.drawdownMonthly = {
       amount: 1505,
-      endDate: new Date(),
+      endDate: endDate,
       startDate: startDate
     }
 
@@ -322,6 +359,11 @@ describe("tests for validate function", () => {
             "property": "drawdownAnnually.amount"
           },
           {
+            "code": "val-simulateproj-037",
+            "message": "drawdownAnnually_endDate_must_be_in_the_future",
+            "property": "drawdownAnnually.endDate"
+          },
+          {
             "code": "val-simulateproj-021",
             "message": "drawdownAnnually_endDate_must_be_at_least_one_year_greather_than_startDate",
             "property": "drawdownAnnually.endDate"
@@ -332,11 +374,13 @@ describe("tests for validate function", () => {
   it("when drawdown type is Annual and drawdownAnnualy has valid values validation will return no error", () => {
     const invalidDateRequestPayload = createRequestPayload();
     const startDate = new Date(1975,1,5);
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() +1);
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.Annual;
     invalidDateRequestPayload.drawdownAnnually = {
       amount: 1505,
-      endDate: new Date(),
+      endDate: endDate,
       startDate: startDate
     }
 
@@ -627,9 +671,72 @@ describe("Calculate number of months between two dates", () => {
   });
 });
 
+describe("Set default input values", () => {
+  test("If no values set for input fields, set default values", () => {
+    const validDateRequestPayload = createRequestPayload();
+    const copyValidDateRequestPayload = createRequestPayload();
+    validDateRequestPayload.feesPercentage = null;
+    validDateRequestPayload.upfrontContribution = null;
+
+    setDefaultInputValues(validDateRequestPayload);
+
+    expect(validDateRequestPayload.feesPercentage).toBe(0);
+    expect(validDateRequestPayload.upfrontContribution).toBe(0);
+    expect(validDateRequestPayload.postGoal.expectedReturnPercentage).toBe(copyValidDateRequestPayload.preGoal.expectedReturnPercentage);
+    expect(validDateRequestPayload.postGoal.volatilityPercentage).toBe(copyValidDateRequestPayload.preGoal.volatilityPercentage);
+    expect(validDateRequestPayload.postGoal.ZScoreLowerBound).toBe(copyValidDateRequestPayload.preGoal.ZScoreLowerBound);
+    expect(validDateRequestPayload.postGoal.ZScoreUpperBound).toBe(copyValidDateRequestPayload.preGoal.ZScoreUpperBound);
+
+  });
+  test("if values set will not override with default values", () => {
+    const validDateRequestPayload = createRequestPayload();
+    validDateRequestPayload.feesPercentage = 15;
+    validDateRequestPayload.upfrontContribution = 10000;
+    validDateRequestPayload.postGoal = {
+      expectedReturnPercentage: 15,
+      volatilityPercentage: 1,
+      ZScoreLowerBound: -15,
+      ZScoreUpperBound: 100
+    };
+
+    setDefaultInputValues(validDateRequestPayload);
+
+    expect(validDateRequestPayload.feesPercentage).toBe(15);
+    expect(validDateRequestPayload.upfrontContribution).toBe(10000);
+    expect(validDateRequestPayload.postGoal.expectedReturnPercentage).toBe(15);
+    expect(validDateRequestPayload.postGoal.volatilityPercentage).toBe(1);
+    expect(validDateRequestPayload.postGoal.ZScoreLowerBound).toBe(-15);
+    expect(validDateRequestPayload.postGoal.ZScoreUpperBound).toBe(100);
+  });
+});
+
+describe("Calculate on track percentage", () => {
+  test("Calculate on track percentage should pass", () => {
+    var currentDate = new Date();
+    const validDateRequestPayload = createRequestPayload();
+    validDateRequestPayload.timeHorizonToProject = 900;
+    validDateRequestPayload.feesPercentage = 0.4;
+    validDateRequestPayload.upfrontContribution = 50000;
+    validDateRequestPayload.monthlyContribution = 624;
+    validDateRequestPayload.preGoal.expectedReturnPercentage = 4.3;
+    validDateRequestPayload.preGoal.volatilityPercentage = 16.37;
+    validDateRequestPayload.preGoal.ZScoreLowerBound = -1.350641417;
+    validDateRequestPayload.preGoal.ZScoreUpperBound = 1.26511912;
+    validDateRequestPayload.currentNetContribution = 50000;
+    validDateRequestPayload.currentPortfolioValue = 200000;
+    validDateRequestPayload.drawdownType = DrawdownType.OneOff;
+    validDateRequestPayload.drawdownOneOff = {
+      targetAmount : 500000,
+      targetDate : new Date(currentDate.setMonth(currentDate.getMonth()+344))
+    }
+    const result = calculateOnTrackPercentage(validDateRequestPayload, new Date());
+    expect(result).toBe(227.66602562264245);
+  });
+});
+
 function createRequestPayload(): RequestPayload {
   return {
-    timeHorizionToProject: 100,
+    timeHorizonToProject: 100,
     monthlyContribution: 500,
     currentNetContribution: 0,
     currentPortfolioValue: 0,

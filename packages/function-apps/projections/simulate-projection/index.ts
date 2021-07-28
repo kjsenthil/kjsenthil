@@ -14,6 +14,7 @@ const simulateProjectionMain: AzureFunction = async function (context: Context, 
       responseBody = validationResult;
     }
     else {
+      setDefaultInputValues(input);
       responseBody = getSimulateProjection(input, new Date());
     }
   } catch (e) {
@@ -27,10 +28,85 @@ const simulateProjectionMain: AzureFunction = async function (context: Context, 
 };
 
 function getSimulateProjection(inboundPayload: RequestPayload, today: Date): ResponsePayload {
-  //TODO this part will be done in the next stories
+  if (!inboundPayload.includeGoal){
+    return getTealProjectionNonRecursive();
+  }
+  else{
+      switch(inboundPayload.drawdownType){
+        case DrawdownType.OneOff: 
+          return getOneOffProjection();
+        case DrawdownType.Annual:
+          return getAnnualProjection();
+        case DrawdownType.Monthly:
+        case DrawdownType.Retirement:
+        default:
+          return getMonthlyOrRetirementProjection();
+      }
+  }
+}
+
+function getOneOffProjection(): ResponsePayload{
+//TODO in next stories
   const response = {
   } as ResponsePayload;
   return response;
+}
+
+function getAnnualProjection() : ResponsePayload{
+  //TODO in next stories
+  const response = {
+  } as ResponsePayload;
+  return response;
+}
+
+function getMonthlyOrRetirementProjection() : ResponsePayload{
+  //TODO in next stories
+  const response = {
+  } as ResponsePayload;
+  return response;
+}
+
+function getTealProjectionNonRecursive(): ResponsePayload {
+  //TODO in the next stories
+  const response = {
+  } as ResponsePayload;
+  return response;
+}
+
+function calculateOnTrackPercentage(inboundPayload: RequestPayload, today: Date): number {
+  const annualNetExpectedReturns = inboundPayload.preGoal.expectedReturnPercentage - (inboundPayload.feesPercentage ?? 0);
+  const monthlyNetExpectedReturns = Math.pow((1 + annualNetExpectedReturns/100), 1/12) - 1;
+  const timeTillGoalInMonths =  monthsDiff(today, inboundPayload.drawdownOneOff?.targetDate ?? today);
+  const multiplier = (Math.pow((1 + monthlyNetExpectedReturns), timeTillGoalInMonths) - 1) / monthlyNetExpectedReturns;
+  const valueOfCurrentHoldingsAndUpFrontContributionAtGoalTargetDate = Math.pow((1 + monthlyNetExpectedReturns), timeTillGoalInMonths) * ((inboundPayload.upfrontContribution ?? 0) + inboundPayload.currentPortfolioValue);
+  const totalAmountProjectedAtGoalDate = valueOfCurrentHoldingsAndUpFrontContributionAtGoalTargetDate + (inboundPayload.monthlyContribution * multiplier);
+  return totalAmountProjectedAtGoalDate / (inboundPayload.drawdownOneOff?.targetAmount ?? 1) * 100;
+}
+
+function setDefaultInputValues(inboundPayload: RequestPayload){
+  if (inboundPayload.feesPercentage == null || typeof inboundPayload.feesPercentage == 'undefined')
+    inboundPayload.feesPercentage = 0;
+
+  if (inboundPayload.upfrontContribution == null || typeof inboundPayload.upfrontContribution == 'undefined')
+    inboundPayload.upfrontContribution = 0;
+  
+  if (inboundPayload.postGoal == null || typeof inboundPayload.postGoal == 'undefined')
+  {
+    inboundPayload.postGoal = inboundPayload.preGoal;
+  }
+  else{
+    if (typeof inboundPayload.postGoal.expectedReturnPercentage == 'undefined')
+      inboundPayload.postGoal.expectedReturnPercentage = inboundPayload.preGoal.expectedReturnPercentage;
+
+    if (typeof inboundPayload.postGoal.volatilityPercentage == 'undefined')
+      inboundPayload.postGoal.volatilityPercentage = inboundPayload.preGoal.volatilityPercentage;
+
+    if (typeof inboundPayload.postGoal.ZScoreLowerBound == 'undefined')
+      inboundPayload.postGoal.ZScoreLowerBound = inboundPayload.preGoal.ZScoreLowerBound;
+
+    if (typeof inboundPayload.postGoal.ZScoreUpperBound == 'undefined')
+      inboundPayload.postGoal.ZScoreUpperBound = inboundPayload.preGoal.ZScoreUpperBound;
+  }
 }
 
 function validateInput(inboundPayload: RequestPayload): ValidationError[] {
@@ -48,7 +124,7 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
     validateDrawdownRetirement(inboundPayload, errors);
   }
   
-  validatePreaGoal(inboundPayload, errors);
+  validatePreGoal(inboundPayload, errors);
 
   validatePostGoal(inboundPayload, errors);
 
@@ -56,11 +132,11 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
 }
 
 function validateDefaultInputs(inboundPayload: RequestPayload, errors: Array<ValidationError>) {
-  if (typeof inboundPayload.timeHorizionToProject == 'undefined' || inboundPayload.timeHorizionToProject <= 0) {
+  if (typeof inboundPayload.timeHorizonToProject == 'undefined' || inboundPayload.timeHorizonToProject <= 0) {
     const error: ValidationError = {
       code: "val-simulateproj-001",
-      property: "timeHorizionToProject",
-      message: "timeHorizionToProject_must_be_greater_than_zero"
+      property: "timeHorizonToProject",
+      message: "timeHorizonToProject_must_be_greater_than_zero"
     }
     errors.push(error);
   }
@@ -161,6 +237,18 @@ function validateDrawdownOneOff(inboundPayload: RequestPayload, errors: Array<Va
         }
         errors.push(error)
       }
+      else
+      {
+        const currentDate = new Date();
+        if (inboundPayload.drawdownOneOff.targetDate >= currentDate) {
+          const error: ValidationError = {
+            code: "val-simulateproj-039",
+            property: "drawdownOneOff.targetDate",
+            message: "drawdownOneOff_targetDate_must_be_in_the_past",
+          }
+          errors.push(error)
+        }
+      }
     }
   }
 }
@@ -202,6 +290,17 @@ function validateDrawdownMonthly(inboundPayload: RequestPayload, errors: Array<V
           message: "drawdownMonthly_endDate_must_be_a_valid_date"
         }
         errors.push(error)
+      }
+      else{
+        const currentDate = new Date();
+        if (inboundPayload.drawdownMonthly.endDate <= currentDate){
+          const error: ValidationError = {
+            code: "val-simulateproj-038",
+            property: "drawdownMonthly.endDate",
+            message: "drawdownMonthly_endDate_must_be_in_the_future"
+          }
+          errors.push(error)
+        }
       }
 
       if (inboundPayload.drawdownMonthly.startDate && inboundPayload.drawdownMonthly.endDate && monthsDiff(inboundPayload.drawdownMonthly.startDate, inboundPayload.drawdownMonthly.endDate) < 1) {
@@ -253,6 +352,17 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
           message: "drawdownAnnually_endDate_must_be_a_valid_date",
         }
         errors.push(error)
+      }
+      else {
+        const currentDate = new Date();
+        if (inboundPayload.drawdownAnnually.endDate <= currentDate){
+          const error: ValidationError = {
+            code: "val-simulateproj-037",
+            property: "drawdownAnnually.endDate",
+            message: "drawdownAnnually_endDate_must_be_in_the_future",
+          }
+          errors.push(error)
+        }
       }
 
       if (inboundPayload.drawdownAnnually.startDate && inboundPayload.drawdownAnnually.endDate && (inboundPayload.drawdownAnnually.endDate.getFullYear() - inboundPayload.drawdownAnnually.startDate.getFullYear() < 1))  {
@@ -372,7 +482,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
   }
 }
 
-function validatePreaGoal(inboundPayload: RequestPayload, errors: Array<ValidationError>){
+function validatePreGoal(inboundPayload: RequestPayload, errors: Array<ValidationError>){
   if (typeof inboundPayload.preGoal == 'undefined'){
     const error: ValidationError = {
       code: "val-simulateproj-032",
@@ -485,5 +595,7 @@ export {
   simulateProjectionMain,
   getSimulateProjection,
   validateInput,
-  monthsDiff
+  monthsDiff,
+  setDefaultInputValues,
+  calculateOnTrackPercentage
 };
