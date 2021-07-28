@@ -46,29 +46,31 @@ function getTargetProjection(inboundPayload: RequestPayload, today: Date): Respo
   const amountNeededAtEndOfDrawdown = inboundPayload.desiredValueAtEndOfDrawdown / ((1 + postGoalExpectedMonthlyReturn) ** goalDrawdownMonths);
   let desiredMonthlyDrawdown = 0
 
-  //if lumpsum date is past  then lumpsum considered as zero
+  //if lump sum date is past  then lump sum considered as zero
   if (contributionPeriodUptoLumpSum < 0) {
     inboundPayload.goalLumpSum = 0;
   }
 
   if (goalDrawdownMonths > 0) {
     desiredMonthlyDrawdown = inboundPayload.includeStatePension ? inboundPayload.desiredMonthlyDrawdown - (inboundPayload.statePensionAmount / 12) : inboundPayload.desiredMonthlyDrawdown
-
   }
+
+  if (desiredMonthlyDrawdown < 0) //when desired monthly is below  zero
+    desiredMonthlyDrawdown = 0;
 
   let upfrontContributionRequiredToFundDrawdown = 0;
   let monthlyContributionsRequiredToFundDrawdown = 0;
   let portfolioValueRequiredTodayToAchiveTarget = 0;
   if (goalContributingMonths <= 0) {
     const compoundInterestMultiplierAtDrawdown = calculateCompoundInterestMultiplierAtDrawdown(goalTargetMonth, postGoalExpectedMonthlyReturn);
-    const remainingAmountinTodaysMoney = inboundPayload.desiredValueAtEndOfDrawdown / (1 + postGoalExpectedMonthlyReturn) ** goalTargetMonth;
-    portfolioValueRequiredTodayToAchiveTarget = remainingAmountinTodaysMoney + compoundInterestMultiplierAtDrawdown * inboundPayload.desiredMonthlyDrawdown;
+    const remainingAmountInTodaysMoney = inboundPayload.desiredValueAtEndOfDrawdown / (1 + postGoalExpectedMonthlyReturn) ** goalTargetMonth;
+    portfolioValueRequiredTodayToAchiveTarget = remainingAmountInTodaysMoney + compoundInterestMultiplierAtDrawdown * desiredMonthlyDrawdown;
     upfrontContributionRequiredToFundDrawdown = portfolioValueRequiredTodayToAchiveTarget - inboundPayload.portfolioValue;
   }
 
   else if (contributionPeriodFromLumpSumAndDrawdown == 0) {
-    const targetGoalAmount = calculateTargetGoalAmountWhenLumpsumIsOnRetirement(goalDrawdownMonths, inboundPayload.desiredMonthlyDrawdown, inboundPayload.goalLumpSum, postGoalExpectedMonthlyReturn, inboundPayload.desiredValueAtEndOfDrawdown);
-    monthlyContributionsRequiredToFundDrawdown = calculateMonthlyContributionsRequiredToFundDrawdownWhenLumpsumIsOnRetirement(targetGoalAmount, goalDrawdownMonths, goalContributingMonths, inboundPayload.desiredMonthlyDrawdown, inboundPayload.goalLumpSum, preGoalExpectedMonthlyReturn, postGoalExpectedMonthlyReturn, inboundPayload.portfolioValue, inboundPayload.upfrontContribution);
+    const targetGoalAmount = calculateTargetGoalAmountWhenLumpsumIsOnRetirement(goalDrawdownMonths, desiredMonthlyDrawdown, inboundPayload.goalLumpSum, postGoalExpectedMonthlyReturn, inboundPayload.desiredValueAtEndOfDrawdown);
+    monthlyContributionsRequiredToFundDrawdown = calculateMonthlyContributionsRequiredToFundDrawdownWhenLumpsumIsOnRetirement(targetGoalAmount, goalDrawdownMonths, goalContributingMonths, desiredMonthlyDrawdown, inboundPayload.goalLumpSum, preGoalExpectedMonthlyReturn, postGoalExpectedMonthlyReturn, inboundPayload.portfolioValue, inboundPayload.upfrontContribution);
     upfrontContributionRequiredToFundDrawdown = calculateUpfrontContributionRequiredWhenLumpsumIsOnRetirement(preGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodUptoLumpSum, targetGoalAmount, inboundPayload.monthlyContributions, inboundPayload.portfolioValue);
   }
   else {
@@ -82,7 +84,7 @@ function getTargetProjection(inboundPayload: RequestPayload, today: Date): Respo
   const response = {
     upfrontContributionRequiredToFundDrawdown: upfrontContributionRequiredToFundDrawdown,
     monthlyContributionsRequiredToFundDrawdown: monthlyContributionsRequiredToFundDrawdown,
-    projections: calculateProjection(inboundPayload.includeStatePension, inboundPayload.statePensionAmount, inboundPayload.timeToAge100, inboundPayload.portfolioValue, inboundPayload.upfrontContribution, inboundPayload.goalLumpSum, desiredMonthlyDrawdown, inboundPayload.monthlyContributions, inboundPayload.desiredValueAtEndOfDrawdown, goalContributingMonths, preGoalExpectedMonthlyReturn, postGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, monthlyContributionsRequiredToFundDrawdown, goalDrawdownMonths, projectionStartValue)
+    projections: calculateProjection(inboundPayload.timeToAge100, inboundPayload.portfolioValue, inboundPayload.upfrontContribution, inboundPayload.goalLumpSum, desiredMonthlyDrawdown, inboundPayload.monthlyContributions, inboundPayload.desiredValueAtEndOfDrawdown, goalContributingMonths, preGoalExpectedMonthlyReturn, postGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, monthlyContributionsRequiredToFundDrawdown, goalDrawdownMonths, projectionStartValue)
   } as ResponsePayload;
   return response;
 }
@@ -105,7 +107,7 @@ function calculateUpfrontContributionRequiredWhenLumpsumIsOnRetirement(preGoalEx
 }
 
 
-function calculateProjection(includeStatePension: boolean, statePensionAmount: number, timeToAge100: number,
+function calculateProjection(timeToAge100: number,
   portfolioValue: number, upfrontContribution: number, goalLumpSum: number, desiredMonthlyDrawdown: number, monthlyContributions: number, desiredValueAtEndOfDrawdown: number,
   goalContributingMonths: number, preGoalExpectedMonthlyReturn: number, postGoalExpectedMonthlyReturn: number, contributionPeriodUptoLumpSum: number, contributionPeriodFromLumpSumAndDrawdown: number,
   goalTargetMonth: number, monthlyContributionsRequiredToFundDrawdown: number, goalDrawdownMonths: number, startingValue: number) {
@@ -115,7 +117,6 @@ function calculateProjection(includeStatePension: boolean, statePensionAmount: n
     startingValue
   );
 
-  let possibleDrawdownsp = includeStatePension ? statePensionAmount / 12 : 0;
 
   targetProjections.push(targetProjectionLine);
 
@@ -129,9 +130,9 @@ function calculateProjection(includeStatePension: boolean, statePensionAmount: n
 
 
     let projectionValue = (contributionPeriodFromLumpSumAndDrawdown == 0) ?
-      calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month, previousMonthProjectedValue, averagePercentage, portfolioValue, upfrontContribution, possibleDrawdownsp, goalLumpSum, desiredMonthlyDrawdown, goalContributingMonths, goalDrawdownMonths, monthlyContributionsRequiredToFundDrawdown)
+      calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month, previousMonthProjectedValue, averagePercentage, portfolioValue, upfrontContribution, goalLumpSum, desiredMonthlyDrawdown, goalContributingMonths, goalDrawdownMonths, monthlyContributionsRequiredToFundDrawdown)
       : (contributionPeriodUptoLumpSum < 0)
-        ? calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month, previousMonthProjectedValue, averagePercentage, portfolioValue, upfrontContribution, possibleDrawdownsp, goalLumpSum, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, goalDrawdownMonths, monthlyContributions)
+        ? calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month, previousMonthProjectedValue, averagePercentage, portfolioValue, upfrontContribution, goalLumpSum, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, goalDrawdownMonths, monthlyContributions)
         : calculateProjectionValue(month, previousMonthProjectedValue, averagePercentage, portfolioValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, goalLumpSum, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, (month > contributionPeriodUptoLumpSum + 1) ? targetProjections[contributionPeriodUptoLumpSum].projectedValue : 0)
 
     const targetProjectionLine = new ProjectionMonth(
@@ -144,21 +145,21 @@ function calculateProjection(includeStatePension: boolean, statePensionAmount: n
   return targetProjections;
 }
 
-//when retirement and lumpsum date is same
+//when retirement and lump sum date is same
 
-function calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month: number, previousMonthProjectedValue: number, percentage: number, portfolioCurrentValue: number, upfrontContribution: number, possibleDrawdownsp: number, lumpSumAmount: number, desiredMonthlyDrawdown: number, goalContributingPeriod: number, goalDrawdownPeriod: number, monthlyContributions: number) {
+function calculateProjectionWhenInRetirementOrWhenLumpsumIsOnRetirement(month: number, previousMonthProjectedValue: number, percentage: number, portfolioCurrentValue: number, upfrontContribution: number, lumpSumAmount: number, desiredMonthlyDrawdown: number, goalContributingPeriod: number, goalDrawdownPeriod: number, monthlyContributions: number) {
   if (previousMonthProjectedValue <= 0) {
     return 0;
   }
 
   if (month > goalContributingPeriod + 1 && month <= goalContributingPeriod + goalDrawdownPeriod) {
-    return (previousMonthProjectedValue - desiredMonthlyDrawdown - possibleDrawdownsp) * (1 + percentage);
+    return (previousMonthProjectedValue - desiredMonthlyDrawdown) * (1 + percentage);
   }
   else if (month > goalContributingPeriod + goalDrawdownPeriod) {
     return 0;
   }
   else if (month == goalContributingPeriod + 1) {
-    return (previousMonthProjectedValue - lumpSumAmount - desiredMonthlyDrawdown - possibleDrawdownsp) * (1 + percentage);
+    return (previousMonthProjectedValue - lumpSumAmount - desiredMonthlyDrawdown) * (1 + percentage);
   }
   return (portfolioCurrentValue + upfrontContribution) * (1 + percentage) ** month + monthlyContributions * ((1 - (1 + percentage) ** month) / (1 - (1 + percentage)));
 }

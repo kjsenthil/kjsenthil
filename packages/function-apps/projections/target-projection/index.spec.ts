@@ -115,7 +115,7 @@ describe("tests for validate function", () => {
         ] as ValidationError[])
   });
 
-  it("when lumpsum dates are not valid validation error is thrown", () => {
+  it("when lump sum dates are not valid validation error is thrown", () => {
     const invalidDateRequestPayload = validRequestPayload;
     invalidDateRequestPayload.lumpSumDate = "2021-02-01"
     invalidDateRequestPayload.drawdownStartDate = "2021-01-01"
@@ -133,7 +133,7 @@ describe("tests for validate function", () => {
         ] as ValidationError[])
   });
 
-  it("when lumpsum amount is more than 0 and lumpsum date is empty a validation error is thrown", () => {
+  it("when lump sum amount is more than 0 and lump sum date is empty a validation error is thrown", () => {
     const invalidDateRequestPayload = validRequestPayload;
     invalidDateRequestPayload.drawdownStartDate = "2021-01-01"
     invalidDateRequestPayload.drawdownEndDate = "2022-01-01"
@@ -230,7 +230,7 @@ describe("Current projection calculation logic", () => {
       .toBeCloseTo(58446.91, 2);
   })
 
-  test("Calculates required monthly contribution to fund desired drawdown with zero lumpsum and upfront contribution", () => {
+  test("Calculates required monthly contribution to fund desired drawdown with zero lump sum and upfront contribution", () => {
     lumpSum = 0;
     upfrontContribution = 0;
     expect(calculateMonthlyContributionsRequiredToFundDrawdown(targetGoalAgeTotal, preGoalExpectedMonthlyReturn, contributionPeriodFromLumpSumAndDrawdown, portfolioValue, upfrontContribution, lumpSum, contributionPeriodUptoLumpSum))
@@ -250,7 +250,7 @@ describe("Current projection calculation logic", () => {
       .toBeCloseTo(927.93, 2);
   })
 
-  test("Calculates required upfront contribution to fund desired drawdown with zero lumpsum and upfront contribution", () => {
+  test("Calculates required upfront contribution to fund desired drawdown with zero lump sum and upfront contribution", () => {
     lumpSum = 0;
     upfrontContribution = 0;
     expect(calculateUpfrontContributionRequired(preGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, targetGoalAgeTotal, monthlyContributions, lumpSum, portfolioValue, upfrontContribution))
@@ -292,7 +292,7 @@ describe("tests for calculateProjectionValue function", () => {
       .toBeCloseTo(251770.36, 2);
   });
 
-  it("should return valid projection for month after the lumpsum is taken", () => {
+  it("should return valid projection for month after the lump sum is taken", () => {
     const month = contributionPeriodUptoLumpSum + 1;
     const previousMonthProjectedValue = 827942.9852;
 
@@ -302,7 +302,7 @@ describe("tests for calculateProjectionValue function", () => {
   });
 
 
-  it("should return valid projection for month after 1 month of lumpsum date", () => {
+  it("should return valid projection for month after 1 month of lump sum date", () => {
     const month = contributionPeriodUptoLumpSum + 2;
     const previousMonthProjectedValue = 731242.67;
     const projectedAmountOnLumpSumDate = 731242.67;
@@ -332,7 +332,7 @@ describe("tests for calculateProjectionValue function", () => {
   });
 
 });
-describe("Tests for getTargetProjection Function with lumpsum and desired remaining amount", () => {
+describe("Tests for getTargetProjection Function with lump sum and desired remaining amount", () => {
   let context: Context;
 
   beforeEach(() => {
@@ -374,12 +374,12 @@ describe("Tests for getTargetProjection Function with lumpsum and desired remain
 
     expect(result.projections[1].projectedValue).toBeCloseTo(251770.36, 2);
 
-    //lumpsum  month
+    //lump sum  month
     expect(result.projections[224].projectedValue).toBeCloseTo(827942.99, 2);
-    // after lumpsum date
+    // after lump sum date
     expect(result.projections[225].projectedValue).toBeCloseTo(731242.67, 2);
 
-    // after lumpsum date
+    // after lump sum date
     expect(result.projections[226].projectedValue).toBeCloseTo(734546.67, 2);
 
     //Month before drawdown start
@@ -409,7 +409,7 @@ describe("Tests for getTargetProjection Function with lumpsum and desired remain
   });
 
 })
-describe("Tests for getTargetProjection Function without lumpsum and desired remaining amount", () => {
+describe("Tests for getTargetProjection Function without lump sum and desired remaining amount", () => {
   let context: Context;
 
   beforeEach(() => {
@@ -417,9 +417,9 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
   });
 
 
-  it("should return an 200 response when lumpsum date is past", async () => {
+  it("should return an 200 response when lump sum date is past", async () => {
     const today = new Date("2021-07-09");
-    const pastdate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
     const inboundPayload = {
       timeToAge100: 900,
       portfolioValue: 250000,
@@ -430,7 +430,7 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
       preGoalExpectedReturn: 0.043,
       feesPercentage: 0.004,
       goalLumpSum: 100000,
-      lumpSumDate: pastdate,
+      lumpSumDate: pastDate,
       statePensionAmount: 12000,
       postGoalExpectedReturn: 0.0298,
       desiredValueAtEndOfDrawdown: 100000,
@@ -458,7 +458,7 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
 
     expect(result.projections.length).toEqual(901);
 
-    //After the drawdown end date expect to have zero aamount left
+    //After the drawdown end date expect to have zero amount left
     expect(result.projections[660].projectedValue).toBeCloseTo(0, 0);
 
     expect(result.projections[661]).toEqual(
@@ -474,7 +474,55 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
       } as ProjectionMonth);
   });
 
-  it("should return an 200 response when lumpsum date and drawdown start date is same", async () => {
+  it("when desired monthly amount is less than state pension when state pension is included the result should be same as desired monthly drawdown is zero", async () => {
+    const today = new Date("2021-07-09");
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const inboundPayload = {
+      timeToAge100: 900,
+      portfolioValue: 250000,
+      desiredMonthlyDrawdown: 0,
+      drawdownStartDate: "2055-04-10",
+      drawdownEndDate: "2076-04-10",
+      upfrontContribution: 0,
+      preGoalExpectedReturn: 0.043,
+      feesPercentage: 0.004,
+      goalLumpSum: 100000,
+      lumpSumDate: pastDate,
+      statePensionAmount: 12000,
+      postGoalExpectedReturn: 0.0298,
+      desiredValueAtEndOfDrawdown: 100000,
+      netContribution: 1000.00,
+      monthlyContributions: 624.00,
+      includeStatePension: false,
+    } as RequestPayload;
+
+
+    // Action
+    const result = getTargetProjection(inboundPayload, today);
+
+    const inboundPayloadWithStatePension = { ...inboundPayload, includeStatePension: true, desiredMonthlyDrawdown: 800, statePensionAmount: 12000 };
+
+    const resultWithStatePension = getTargetProjection(inboundPayloadWithStatePension, today);
+
+    // Assertion
+    expect(result.monthlyContributionsRequiredToFundDrawdown).toEqual(resultWithStatePension.monthlyContributionsRequiredToFundDrawdown)
+    expect(result.upfrontContributionRequiredToFundDrawdown).toEqual(resultWithStatePension.upfrontContributionRequiredToFundDrawdown)
+
+    expect(result.projections[0]).toEqual(resultWithStatePension.projections[0]);
+
+    expect(result.projections[1]).toEqual(resultWithStatePension.projections[1]);
+
+
+    expect(result.projections.length).toEqual(resultWithStatePension.projections.length);
+
+    //After the drawdown end date expect to have zero amount left
+    expect(result.projections[660]).toEqual(resultWithStatePension.projections[660]);
+
+    expect(result.projections[661]).toEqual(resultWithStatePension.projections[661]);
+    expect(result.projections[900]).toEqual(resultWithStatePension.projections[900]);
+  });
+
+  it("should return an 200 response when lump sum date and drawdown start date is same", async () => {
     const today = new Date("2021-07-12");
     const inboundPayload = {
       timeToAge100: 900,
@@ -519,7 +567,7 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
 
     expect(result.projections.length).toEqual(901);
 
-    //After the drawdown end date expect to have zero aamount left
+    //After the drawdown end date expect to have zero amount left
     expect(result.projections[660].projectedValue).toBeCloseTo(0, 0);
 
     expect(result.projections[661]).toEqual(
@@ -537,18 +585,18 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
 
   it("should return an 200 response when already in retirement and no contribution", async () => {
     const today = new Date("2021-07-12");
-    const pastdate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
     const inboundPayload = {
       timeToAge100: 900,
       portfolioValue: 250000,
       desiredMonthlyDrawdown: 7500,
-      drawdownStartDate: pastdate,
+      drawdownStartDate: pastDate,
       drawdownEndDate: "2076-04-10",
       upfrontContribution: 0,
       preGoalExpectedReturn: 0.043,
       feesPercentage: 0.004,
       goalLumpSum: 100000,
-      lumpSumDate: pastdate,
+      lumpSumDate: pastDate,
       statePensionAmount: 12000,
       postGoalExpectedReturn: 0.0298,
       desiredValueAtEndOfDrawdown: 100000,
@@ -595,7 +643,7 @@ describe("Tests for getTargetProjection Function without lumpsum and desired rem
   });
 })
 
-describe("Tests for getTargetProjection function with  statepension", () => {
+describe("Tests for getTargetProjection function with  state pension", () => {
   let context: Context;
 
   beforeEach(() => {
@@ -637,12 +685,12 @@ describe("Tests for getTargetProjection function with  statepension", () => {
     //first row
     expect(result.projections[1].projectedValue).toBeCloseTo(251532.03, 2);
 
-    //just before lumpsum  month
+    //just before lump sum  month
     expect(result.projections[224].projectedValue).toBeCloseTo(750140.74, 2);
-    // after lumpsum date
+    // after lump sum date
     expect(result.projections[225].projectedValue).toBeCloseTo(652952.89, 2);
 
-    // after lumpsum date +1
+    // after lump sum date +1
     expect(result.projections[226].projectedValue).toBeCloseTo(655769.33, 2);
 
     //Month before drawdown start

@@ -148,7 +148,7 @@ describe("tests for validate function", () => {
           }
         ] as ValidationError[])
   });
-  it("when lumpsum dates are not valid validation error is thrown", () => {
+  it("when lump sum dates are not valid validation error is thrown", () => {
     const invalidDateRequestPayload = validRequestPayload;
     invalidDateRequestPayload.lumpSumDate = "2021-02-01"
     invalidDateRequestPayload.drawdownStartDate = "2021-01-01"
@@ -178,7 +178,7 @@ describe("Tests for current-projection Function", () => {
 
   it("should return a 200 response when payload is valid", async () => {
     // Arrange
-    const inbountPayload = {
+    const inboundPayload = {
       timeHorizon: 900,
       monthlyContributions: 624,
       portfolioCurrentValue: 250000,
@@ -205,7 +205,7 @@ describe("Tests for current-projection Function", () => {
     } as RequestPayload;
     const request = {
       query: {},
-      body: inbountPayload,
+      body: inboundPayload,
     };
 
     // Action
@@ -216,9 +216,9 @@ describe("Tests for current-projection Function", () => {
 
   });
 
-  it("should return a 200 response when payload has verly low desiredMonthlyDrawdown this will have high iteration", async () => {
+  it("should return a 200 response when payload has very low desiredMonthlyDrawdown this will have high iteration", async () => {
     // Arrange
-    const inbountPayload = {
+    const inboundPayload = {
       "timeHorizon": 600,
       "isConeGraph": true,
       "lumpSumAmount": 0,
@@ -247,7 +247,7 @@ describe("Tests for current-projection Function", () => {
     } as RequestPayload;
     const request = {
       query: {},
-      body: inbountPayload,
+      body: inboundPayload,
     };
 
     // Action
@@ -282,9 +282,9 @@ describe("Tests for getCurrentProjection Function", () => {
     context = ({ log: jest.fn() } as unknown) as Context;
   });
 
-  it("should return expected results when lumpsum date is before drawdown start date ", async () => {
+  it("should return expected results when lump sum date is before drawdown start date ", async () => {
     // Arrange
-    const inbountPayload = {
+    const inboundPayload = {
       timeHorizon: 900,
       monthlyContributions: 624,
       portfolioCurrentValue: 250000,
@@ -311,7 +311,7 @@ describe("Tests for getCurrentProjection Function", () => {
     } as RequestPayload;
 
     // Action
-    const result = getCurrentProjection(inbountPayload, new Date("July 05,2021"));
+    const result = getCurrentProjection(inboundPayload, new Date("July 05,2021"));
 
     // Assertion
     expect(result.projectedGoalAgeTotal).toBeCloseTo(1419501.99, 2);
@@ -347,7 +347,7 @@ describe("Tests for getCurrentProjection Function", () => {
         upperBound: 266368.48354157555
       } as ProjectionMonth);
 
-    //just before  lumpsum start
+    //just before  lump sum start
     expect(result.projections[224]).toEqual({
       month: 224,
       contributionLine: 140776,
@@ -356,7 +356,7 @@ describe("Tests for getCurrentProjection Function", () => {
       upperBound: 985019.5795674027
     } as ProjectionMonth);
 
-    //just after lumpsum
+    //just after lump sum
     expect(result.projections[225]).toEqual({
       month: 225,
       contributionLine: 57902.47573852539,
@@ -384,7 +384,7 @@ describe("Tests for getCurrentProjection Function", () => {
       } as ProjectionMonth);
 
 
-    //after drawdowndown start
+    //after drawdown start
     expect(result.projections[407]).toEqual(
       {
         month: 407,
@@ -423,12 +423,12 @@ describe("Tests for getCurrentProjection Function", () => {
       } as ProjectionMonth);
   });
 
-  it("should return expected results when lumpsum date is past date", async () => {
+  it("should return expected results when lump sum date is past date", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastdate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
 
-    const inbountPayload = {
+    const inboundPayload = {
       timeHorizon: 900,
       monthlyContributions: 624,
       portfolioCurrentValue: 250000,
@@ -442,7 +442,7 @@ describe("Tests for getCurrentProjection Function", () => {
       preGoalZScoreUpperBound: 1.26511912,
       feesPercentage: 0.004,
       lumpSumAmount: 100000,
-      lumpSumDate: pastdate,
+      lumpSumDate: pastDate,
       statePensionAmount: 10000,
       desiredAmount: 100000,
       postGoalExpectedReturn: 0.0298,
@@ -456,7 +456,7 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Action
 
-    const result = getCurrentProjection(inbountPayload, today);
+    const result = getCurrentProjection(inboundPayload, today);
 
     // Assertion
     expect(result.projectedGoalAgeTotal).toBeCloseTo(1414361.49, 2);
@@ -492,7 +492,7 @@ describe("Tests for getCurrentProjection Function", () => {
         upperBound: 266368.48354157555
       } as ProjectionMonth);
 
-    //just before  lumpsum start
+    //just before  lump sum start
     expect(result.projections[224]).toEqual({
       month: 224,
       contributionLine: 140776,
@@ -501,7 +501,7 @@ describe("Tests for getCurrentProjection Function", () => {
       upperBound: 985019.5795674027
     } as ProjectionMonth);
 
-    //just after lumpsum
+    //just after lump sum
     expect(result.projections[225]).toEqual({
       month: 225,
       contributionLine: 141400,
@@ -528,7 +528,7 @@ describe("Tests for getCurrentProjection Function", () => {
     } as ProjectionMonth);
 
 
-    //after drawdowndown start
+    //after drawdown start
     expect(result.projections[403]).toEqual(
       {
         month: 403,
@@ -577,12 +577,12 @@ describe("Tests for getCurrentProjection Function", () => {
       } as ProjectionMonth);
   });
 
-  it("should return expected results when lumpsum date is past date with state pension", async () => {
+  it("should return expected results when lump sum date is past date with state pension", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastdate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
 
-    const inbountPayload = {
+    const inboundPayload = {
       timeHorizon: 900,
       monthlyContributions: 624,
       portfolioCurrentValue: 250000,
@@ -596,7 +596,7 @@ describe("Tests for getCurrentProjection Function", () => {
       preGoalZScoreUpperBound: 1.26511912,
       feesPercentage: 0.004,
       lumpSumAmount: 100000,
-      lumpSumDate: pastdate,
+      lumpSumDate: pastDate,
       statePensionAmount: 10000,
       desiredAmount: 100000,
       postGoalExpectedReturn: 0.0298,
@@ -610,7 +610,7 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Action
 
-    const result = getCurrentProjection(inbountPayload, today);
+    const result = getCurrentProjection(inboundPayload, today);
 
     // Assertion
     expect(result.projectedGoalAgeTotal).toBeCloseTo(1414361.49, 2);
@@ -646,7 +646,7 @@ describe("Tests for getCurrentProjection Function", () => {
         upperBound: 266368.48354157555
       } as ProjectionMonth);
 
-    //just before  lumpsum start
+    //just before  lump sum start
     expect(result.projections[224]).toEqual({
       month: 224,
       contributionLine: 140776,
@@ -655,7 +655,7 @@ describe("Tests for getCurrentProjection Function", () => {
       upperBound: 985019.5795674027
     } as ProjectionMonth);
 
-    //just after lumpsum
+    //just after lump sum
     expect(result.projections[225]).toEqual({
       month: 225,
       contributionLine: 141400,
@@ -674,17 +674,15 @@ describe("Tests for getCurrentProjection Function", () => {
 
   });
 
-  it("should return expected results when drawdown already started", async () => {
+  it("when desired monthly amount is less than state pension when state pension is included the result should be same as desired monthly drawdown is zero", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastdate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
-
-    const inbountPayload = {
+    const inboundPayload = {
       timeHorizon: 900,
       monthlyContributions: 624,
       portfolioCurrentValue: 250000,
-      desiredMonthlyDrawdown: 7500,
-      drawdownStartDate: pastdate,
+      desiredMonthlyDrawdown: 0,
+      drawdownStartDate: "2055-04-10",
       drawdownEndDate: "2076-04-10",
       upfrontContribution: 0,
       preGoalExpectedReturn: 0.043,
@@ -693,7 +691,85 @@ describe("Tests for getCurrentProjection Function", () => {
       preGoalZScoreUpperBound: 1.26511912,
       feesPercentage: 0.004,
       lumpSumAmount: 100000,
-      lumpSumDate: pastdate,
+      lumpSumDate: "2055-04-10",
+      statePensionAmount: 0,
+      desiredAmount: 100000,
+      postGoalExpectedReturn: 0.0298,
+      postGoalExpectedVolatility: 0.0927,
+      postGoalZScoreLowerBound: -1.297734628,
+      postGoalZScoreUpperBound: 1.284789644,
+      netContribution: 1000,
+      isConeGraph: true,
+      includeStatePension: false
+    } as RequestPayload;
+
+    // Action
+
+    const result = getCurrentProjection(inboundPayload, today);
+
+    const inboundPayloadWithStatePension = { ...inboundPayload, includeStatePension: true, desiredMonthlyDrawdown: 700, statePensionAmount: 12000 };
+
+    const resultWithStatePension = getCurrentProjection(inboundPayloadWithStatePension, today);
+
+
+    // // Assertion
+    expect(result.projectedGoalAgeTotal).toEqual(resultWithStatePension.projectedGoalAgeTotal);
+    expect(result.possibleDrawdown).toEqual(resultWithStatePension.possibleDrawdown - 1000);
+    expect(result.onTrackPercentage).toEqual(resultWithStatePension.onTrackPercentage);
+    expect(result.desiredOutflow).toEqual(resultWithStatePension.desiredOutflow);
+    expect(result.affordableOutflow).toEqual(resultWithStatePension.affordableOutflow);
+    expect(result.affordableDrawdown).toEqual(resultWithStatePension.affordableDrawdown);
+    expect(result.affordableLumpSum).toEqual(resultWithStatePension.affordableLumpSum);
+    expect(result.projections.length).toEqual(resultWithStatePension.projections.length);
+    // //underperform
+    expect(result.marketUnderperform.onTrackPercentage).toEqual(resultWithStatePension.marketUnderperform.onTrackPercentage);
+    expect(result.marketUnderperform.desiredOutflow).toEqual(resultWithStatePension.marketUnderperform.desiredOutflow);
+    expect(result.marketUnderperform.affordableOutflow).toEqual(resultWithStatePension.marketUnderperform.affordableOutflow);
+    expect(result.marketUnderperform.affordableDrawdown).toEqual(resultWithStatePension.marketUnderperform.affordableDrawdown);
+    expect(result.marketUnderperform.affordableLumpSum).toEqual(resultWithStatePension.marketUnderperform.affordableLumpSum);
+
+    expect(result.projections[0]).toEqual(resultWithStatePension.projections[0]);
+
+    expect(result.projections[1]).toEqual(resultWithStatePension.projections[1]);
+
+    expect(result.projections[224]).toEqual(resultWithStatePension.projections[224]);
+
+    expect(result.projections[225]).toEqual(resultWithStatePension.projections[225]);
+
+    expect(result.projections[226]).toEqual(resultWithStatePension.projections[226]);
+
+    //after drawdown start
+    expect(result.projections[403]).toEqual(resultWithStatePension.projections[403]);
+
+    //after target month
+    expect(result.projections[600]).toEqual(resultWithStatePension.projections[600]);
+
+    //end
+    expect(result.projections[900]).toEqual(resultWithStatePension.projections[900]);
+
+
+  });
+
+  it("should return expected results when drawdown already started", async () => {
+    // Arrange
+    const today = new Date("2021-07-13");
+    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+
+    const inboundPayload = {
+      timeHorizon: 900,
+      monthlyContributions: 624,
+      portfolioCurrentValue: 250000,
+      desiredMonthlyDrawdown: 7500,
+      drawdownStartDate: pastDate,
+      drawdownEndDate: "2076-04-10",
+      upfrontContribution: 0,
+      preGoalExpectedReturn: 0.043,
+      preGoalExpectedVolatility: 0.1637,
+      preGoalZScoreLowerBound: -1.350641417,
+      preGoalZScoreUpperBound: 1.26511912,
+      feesPercentage: 0.004,
+      lumpSumAmount: 100000,
+      lumpSumDate: pastDate,
       statePensionAmount: 10000,
       desiredAmount: 100000,
       postGoalExpectedReturn: 0.0298,
@@ -707,7 +783,7 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Action
 
-    const result = getCurrentProjection(inbountPayload, today);
+    const result = getCurrentProjection(inboundPayload, today);
 
     // Assertion
     expect(result.projectedGoalAgeTotal).toBeCloseTo(250000.00, 2);
@@ -770,7 +846,7 @@ describe("Tests for getCurrentProjection Function", () => {
     } as ProjectionMonth);
 
 
-    //after drawdowndown start
+    //after drawdown start
     expect(result.projections[403]).toEqual(
       {
         month: 403,
@@ -803,7 +879,7 @@ describe("Tests for getCurrentProjection Function", () => {
 });
 
 describe("tests for calculateDrawdown function", () => {
-  it("should return exepected value when statepension is false", () => {
+  it("should return expected value when state pension is false", () => {
     const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
     const goalContributingPeriod = 404;
     const portfolioCurrentValue = 250000;
@@ -825,7 +901,7 @@ describe("tests for calculateDrawdown function", () => {
         } as Drawdown);
   });
 
-  it("should return exepected value when statepension is true with zero state pension amount", () => {
+  it("should return expected value when state pension is true with zero state pension amount", () => {
     const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
     const goalContributingPeriod = 404;
     const portfolioCurrentValue = 250000;
@@ -847,7 +923,7 @@ describe("tests for calculateDrawdown function", () => {
         } as Drawdown);
   });
 
-  it("should return exepected value when statepension is true with state pension amount more than zero", () => {
+  it("should return expected value when state pension is true with state pension amount more than zero", () => {
     const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
     const goalContributingPeriod = 404;
     const portfolioCurrentValue = 250000;
@@ -929,7 +1005,7 @@ describe("tests for calculateProjectionValue function", () => {
       .toEqual(251422.3285);
   });
 
-  it("should return valid projection for month after the lumpsum is taken", () => {
+  it("should return valid projection for month after the lump sum is taken", () => {
     const month = 225;
     const previousMonthProjectedValue = 714327.30;
     const percentage = 0.003193314;
@@ -948,7 +1024,7 @@ describe("tests for calculateProjectionValue function", () => {
   });
 
 
-  it("should return valid projection for month after 1 month of lumpsum date", () => {
+  it("should return valid projection for month after 1 month of lump sum date", () => {
     const month = 226;
     const previousMonthProjectedValue = 633957.8862565875;
     const percentage = 0.003193314;
@@ -967,7 +1043,7 @@ describe("tests for calculateProjectionValue function", () => {
       .toEqual(639265.2020759225);
   });
 
-  it("should return valid projection for month after 1 month of lumpsum date", () => {
+  it("should return valid projection for month after 1 month of lump sum date", () => {
     const month = 658;
     const previousMonthProjectedValue = 1590180.22;
     const percentage = 0.002426445;
@@ -991,7 +1067,7 @@ describe("tests for calculateProjectionValue function", () => {
 describe("tests for calculateContributionLine function", () => {
   it("should return valid projection", () => {
     //arrange
-    const previousMonthcontributionLine: number = 1000;
+    const previousMonthContributionLine: number = 1000;
     const month: number = 1;
     const monthlyContributions: number = 624;
     const goalTargetMonth: number = 657;
@@ -1002,15 +1078,15 @@ describe("tests for calculateContributionLine function", () => {
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContributionLine(month, previousMonthcontributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContributionLine(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
       .toEqual(1624);
   });
 });
 
-describe("tests for calculateContributionLine function when lumpsum is withdrawn", () => {
+describe("tests for calculateContributionLine function when lump sum is withdrawn", () => {
   it("should return valid projection", () => {
     //arrange
-    const previousMonthcontributionLine: number = 140776.00;
+    const previousMonthContributionLine: number = 140776.00;
     const month: number = 225;
     const monthlyContributions: number = 624;
     const goalTargetMonth: number = 657;
@@ -1021,14 +1097,14 @@ describe("tests for calculateContributionLine function when lumpsum is withdrawn
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContributionLine(month, previousMonthcontributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContributionLine(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
       .toEqual(58390.59);
   });
 });
 describe("tests for calculateContributionLine function when goal target period reached", () => {
   it("should return valid projection", () => {
     //arrange
-    const previousMonthcontributionLine: number = -1405016.92;
+    const previousMonthContributionLine: number = -1405016.92;
     const month: number = 658;
     const monthlyContributions: number = 624.00;
     const goalTargetMonth: number = 658;
@@ -1039,7 +1115,7 @@ describe("tests for calculateContributionLine function when goal target period r
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContributionLine(month, previousMonthcontributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContributionLine(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
       .toEqual(-1494252.0399999998);
   });
 });
