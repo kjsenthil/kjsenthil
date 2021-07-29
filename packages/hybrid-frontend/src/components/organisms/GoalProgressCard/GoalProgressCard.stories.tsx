@@ -16,11 +16,7 @@ export default {
 
 const defaultArgs: GoalProgressCardProps = {
   onTrackPercentage: 0.72,
-  accountValues: [
-    { label: 'ISA', value: 700000 },
-    { label: 'GIA', value: 500000 },
-    { label: 'SIPP', value: 242000 },
-  ],
+  affordableValues: [700000, 500000, 242000],
   goalValue: 1975000,
   shortfallValue: 553000,
   shortfallUnderperformValue: 689000,
@@ -28,6 +24,7 @@ const defaultArgs: GoalProgressCardProps = {
   iconSrc: '/goal-graphic.png',
   iconAlt: 'goal graphic',
   tooltipText: 'Such forecasts are not a reliable indicator of future returns',
+  investmentAccounts: ['ISA', 'GIA', 'SIPP'],
 };
 
 const Template: Story<GoalProgressCardProps> = (args) => (

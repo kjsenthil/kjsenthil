@@ -56,7 +56,8 @@ export default function ProgressBar({
           return (
             <ProgressBarFill
               barBackground={selectedBackground}
-              key={totalWidth}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${totalWidth}${index}`}
               barHeight={height}
               barWidth={totalWidth}
               borderRadius={borderRadius}

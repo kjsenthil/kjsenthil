@@ -6,33 +6,40 @@ import { Skeleton } from '@material-ui/lab';
 import { Link, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
 import {
-  ProjectionCalculateModal,
-  PerformanceProjectionsChart,
   GoalMainCardPlaceholder,
+  GoalProgressCard,
+  GoalSetUpNewCard,
+  PerformanceProjectionsChart,
+  ProjectionCalculateModal,
 } from '../../organisms';
 import {
   useBasicInfo,
+  useDispatchThunkOnRender,
   useGoalImages,
   useProjectionsChartData,
-  useStateIsAvailable,
   useSimulatedProjectionsData,
-  useDispatchThunkOnRender,
+  useStateIsAvailable,
   useUpdateCurrentProjectionsPrerequisites,
 } from '../../../hooks';
-import { Disclaimer } from './LifePlanPage.styles';
-import { MainCard, Modal } from '../../molecules';
-import { getPossessiveSuffix } from '../../../utils/string';
+import { Disclaimer, YourImportantMomentsContainer } from './LifePlanPage.styles';
+import { DisabledComponent, MainCard, Modal } from '../../molecules';
 import { RootState, useAppDispatch } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
-import { createGoal, GoalCategory, GoalDefaults, GoalType } from '../../../services/goal';
+import {
+  createGoal,
+  GoalCategory,
+  goalDataForChart,
+  GoalDefaults,
+  GoalType,
+} from '../../../services/goal';
 import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension';
 import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
 import {
   fetchGoalCurrentProjections,
-  fetchTargetProjections,
   fetchSimulatedProjections,
+  fetchTargetProjections,
   prepareCurrentAndTargetProjectionsRequestPayloads,
 } from '../../../services/projections';
 
@@ -45,10 +52,11 @@ const LifePlanPage = () => {
 
   const {
     client: { included: clientData },
+    investmentAccounts: { data: investmentAccounts },
     investmentSummary: { data: investmentSummaryData },
     currentGoals: { data: currentGoals = [] },
     simulatedProjections: { status: simulatedProjectionsStatus },
-    goalCurrentProjections: { status: goalCurrentProjectionsStatus },
+    goalCurrentProjections: { data: goalCurrentProjections, status: goalCurrentProjectionsStatus },
     goalTargetProjections: { status: goalTargetProjectionsStatus },
     performance: { status: performanceStatus },
   } = useSelector((state: RootState) => state);
@@ -200,7 +208,7 @@ const LifePlanPage = () => {
       basicInfo={basicInfo}
       heading={{
         primary: `Life plan`,
-        secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
+        secondary: 'Your',
       }}
     >
       {/* eslint-disable no-nested-ternary */}
@@ -222,7 +230,7 @@ const LifePlanPage = () => {
             <Typography display="inline" variant="b3" color="grey" colorShade="dark1">
               Such forecasts are not a reliable indicator of future performance
             </Typography>
-            <Link component="button" onClick={linkClickHandler}>
+            <Link special component="button" onClick={linkClickHandler}>
               Tell me more
             </Link>
           </Disclaimer>
@@ -243,7 +251,46 @@ const LifePlanPage = () => {
       )}
       <Spacer y={5} />
 
-      <MainCard title="Your important moments">Coming soon</MainCard>
+      <MainCard title="Your important moments">
+        <YourImportantMomentsContainer>
+          {goalCurrentProjections && (
+            <GoalProgressCard
+              onTrackPercentage={goalCurrentProjections.onTrackPercentage ?? 0}
+              affordableValues={[
+                goalCurrentProjections.affordableLumpSum ?? 0,
+                goalCurrentProjections.totalAffordableDrawdown ?? 0,
+                goalCurrentProjections.affordableRemainingAmount ?? 0,
+              ]}
+              goalValue={goalCurrentProjections.desiredOutflow ?? 0}
+              shortfallValue={goalCurrentProjections.surplusOrShortfall ?? 0}
+              shortfallUnderperformValue={
+                goalCurrentProjections.marketUnderperform.surplusOrShortfall ?? 0
+              }
+              title={
+                retirementGoal && retirementGoal.fields
+                  ? goalDataForChart[retirementGoal.fields.category]?.label ?? ''
+                  : ''
+              }
+              iconSrc="/goal-graphic.png"
+              iconAlt="umbrella at the beach"
+              tooltipText={retirementGoal?.fields?.description ?? ''}
+              investmentAccounts={
+                investmentAccounts?.map(({ accountName }) => accountName ?? '') ?? []
+              }
+            />
+          )}
+          <DisabledComponent title="Coming soon">
+            <GoalSetUpNewCard
+              imgProps={{
+                src: images.setUpNew.childImageSharp.fluid.src,
+                alt: 'dog holding newspaper',
+                srcSet: images.setUpNew.childImageSharp.fluid.srcSet,
+                sizes: images.setUpNew.childImageSharp.fluid.sizes,
+              }}
+            />
+          </DisabledComponent>
+        </YourImportantMomentsContainer>
+      </MainCard>
       <Modal
         open={isModalOpen}
         onClose={modalCloseHandler}

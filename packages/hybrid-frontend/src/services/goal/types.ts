@@ -170,9 +170,9 @@ export interface GoalsApiResponse {
   allowMultipleAccountAssociates: boolean;
   fields: {
     description: string;
-    status: GoalStatus;
     category: GoalCategory;
-    targetDate?: GoalPayloadValType<string, 'Date', 'val'>;
+    status: GoalStatus;
+    present_value?: number | null;
     targetAmount?: GoalPayloadValType<
       GoalPayloadValue<number | string, 'BigDecimal', 'val'>,
       'Currency',
@@ -180,11 +180,13 @@ export interface GoalsApiResponse {
     >;
     objectiveFrequencyEndAge?: number;
     objectiveFrequencyStartAge?: number;
+    targetDate?: GoalPayloadValType<string, 'Date', 'val'>;
     regularDrawdown?: GoalPayloadValType<
       GoalPayloadValue<number | string, 'BigDecimal', 'val'>,
       'Currency',
       'val'
     >;
+    biRetirementLumpSumDate?: GoalPayloadValType<string, 'Date', 'val'> | null; // Lump sum date
   };
 }
 
@@ -203,15 +205,13 @@ export interface GoalCreationState extends CommonState {
 // This kind of data is used by the projections chart
 export interface ProjectionsChartGoalDatum {
   date: Date;
-  progress: number;
   label: string;
   icon: string;
+
+  // If progress is undefined, the progress bar below the label won't be shown
+  progress?: number;
 }
 
-export interface GoalDatum {
-  date: Date;
-  progress: number;
-  icon: string;
-  label: string;
+export interface GoalDatum extends ProjectionsChartGoalDatum {
   targetAmount: number;
 }

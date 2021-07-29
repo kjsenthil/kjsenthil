@@ -21,12 +21,14 @@ interface ProjectionsChartData {
   projectionsMetadata: ProjectionsChartMetadata;
 }
 
-const useProjectionsChartData = (goalDataForChart: GoalOptionsForChart): ProjectionsChartData => ({
+const useProjectionsChartData = (
+  goalOptionsForChart: GoalOptionsForChart
+): ProjectionsChartData => ({
   projectionsMetadata: useProjectionsMetadataForProjectionsChart(),
   historicalData: useHistoricalDataForProjectionsChart(),
   projectionsTargetData: useProjectionsTargetDataForProjectionsChart(), // might wanna specify goal
   projectionsData: useCurrentProjectionsDataForProjectionsChart(), // might wanna specify goal
-  goalsData: useGoalsDataForChart(goalDataForChart),
+  goalsData: useGoalsDataForChart(goalOptionsForChart),
 });
 
 export default useProjectionsChartData;

@@ -22,6 +22,7 @@ const getGoals = async () => {
     'objective_frequency_end_age',
     'target_date',
     'regular_drawdown',
+    'bi_retirement_lump_sum_date',
   ]);
 
   const url = `${baseUrl}?${fieldsQueryParams}`;

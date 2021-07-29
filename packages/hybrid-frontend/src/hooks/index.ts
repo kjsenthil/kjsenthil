@@ -24,5 +24,6 @@ export { default as useCurrentProjectionsDataForProjectionsChart } from './useCu
 export { default as useUpdateCurrentProjectionsPrerequisites } from './useUpdateCurrentProjectionsPrerequisites';
 export { default as useSimulatedProjectionsData } from './useSimulatedProjectionsData';
 export { default as useLifePlanMachine } from './useLifePlanMachine';
+export { default as useGoalCurrentProjections } from './useGoalCurrentProjections';
 
 export type { BasicInfo };

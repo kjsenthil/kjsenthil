@@ -10,7 +10,7 @@ Object {
           class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
         >
           <div
-            class="MuiCardContent-root sc-GamvQ dgMDvy"
+            class="MuiCardContent-root sc-fWCJfs fvbCNH"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -290,7 +290,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-GamvQ dgMDvy"
+          class="MuiCardContent-root sc-fWCJfs fvbCNH"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"

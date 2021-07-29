@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ProjectionsChartProjectionDatum, ProjectionMonth } from '../../services/projections/types';
+import { ProjectionsChartProjectionDatum, ProjectionMonth } from '../../services/projections';
 import { RootState } from '../../store';
 import { calculateDateAfterMonths } from '../../utils/date';
 

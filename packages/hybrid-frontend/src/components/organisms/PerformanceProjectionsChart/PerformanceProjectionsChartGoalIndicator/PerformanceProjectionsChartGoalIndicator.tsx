@@ -10,7 +10,7 @@ export interface PerformanceProjectionsChartGoalIndicatorProps {
 
   label: string;
   icon: string;
-  progress: number;
+  progress?: number;
 }
 
 export default function PerformanceProjectionsChartGoalIndicator({
@@ -26,7 +26,7 @@ export default function PerformanceProjectionsChartGoalIndicator({
         {label}
       </Typography>
 
-      <ProgressBar progress={progress} />
+      {progress !== undefined && <ProgressBar progress={progress} />}
       <GoalImage imageSrc={icon} />
     </Container>
   );

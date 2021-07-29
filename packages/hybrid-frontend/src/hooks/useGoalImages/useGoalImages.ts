@@ -9,6 +9,14 @@ const images = graphql`
         }
       }
     }
+
+    setUpNew: file(relativePath: { eq: "dogpaper.png" }) {
+      childImageSharp {
+        fluid(maxHeight: 525, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
   }
 `;
 const useGoalImages = () => useStaticQuery(images);

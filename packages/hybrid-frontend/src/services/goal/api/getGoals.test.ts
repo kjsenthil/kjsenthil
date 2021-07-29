@@ -7,7 +7,7 @@ import mockSuccessResponse from '../mocks/get-goals-success-response.json';
 const mockAxios = new MockAdapter(axios);
 const baseUrl = API_ENDPOINTS.GET_GOALS;
 const queryParams =
-  'fields.0=description&fields.1=category&fields.2=status&fields.3=present_value&fields.4=target_amount&fields.5=objective_frequency_start_age&fields.6=objective_frequency_end_age&fields.7=target_date&fields.8=regular_drawdown';
+  'fields.0=description&fields.1=category&fields.2=status&fields.3=present_value&fields.4=target_amount&fields.5=objective_frequency_start_age&fields.6=objective_frequency_end_age&fields.7=target_date&fields.8=regular_drawdown&fields.9=bi_retirement_lump_sum_date';
 const url = `${baseUrl}?${queryParams}`;
 
 describe('getGoals', () => {

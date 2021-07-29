@@ -1,17 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Card, Icon, IconButton, Theme } from '../../atoms';
-
-export const GoalProgressStyledCard = styled(Card)`
-  ${({ theme }: { theme: Theme }) => css`
-    border: 1px solid ${theme.palette.grey['200']};
-    border-radius: 16px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    min-height: ${theme.typography.pxToRem(240)};
-    padding: ${theme.spacing(2)}px;
-  `}
-`;
+import { Icon, IconButton, Theme } from '../../atoms';
 
 export const CardBody = styled.div`
   ${({ theme }: { theme: Theme }) => css`

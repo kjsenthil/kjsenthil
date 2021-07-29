@@ -115,13 +115,22 @@ export interface GoalCurrentProjectionsRequestPayload {
   includeStatePension: boolean;
 }
 
-export interface GoalCurrentProjectionsResponse {
-  projectedGoalAgeTotal: number;
+export interface GoalCurrentProjectionsScenarioData {
+  affordableDrawdown: number;
+  affordableLumpSum: number;
+  affordableOutflow: number;
+  affordableRemainingAmount: number;
+  desiredOutflow: number;
+  onTrackPercentage: number;
+  surplusOrShortfall: number;
+  totalAffordableDrawdown: number;
+  valueAtRetirement: number;
+}
+
+export interface GoalCurrentProjectionsResponse extends GoalCurrentProjectionsScenarioData {
   possibleDrawdown: number;
-  possibleDrawdownWithSP: number;
-  projectedGoalAgeTotalWhenMarketUnderperform: number;
-  possibleDrawdownWhenMarketUnderperform: number;
-  possibleDrawdownWhenMarketUnderperformWithSP: number;
+  projectedGoalAgeTotal: number;
+  marketUnderperform: GoalCurrentProjectionsScenarioData;
   projections: GoalCurrentProjectionMonth[];
 }
 

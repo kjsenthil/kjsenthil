@@ -15,11 +15,7 @@ jest.mock('../../atoms/Tooltip', () => ({
 describe('GoalProgressCard', () => {
   const defaultCardProps: GoalProgressCardProps = {
     onTrackPercentage: 0.72,
-    accountValues: [
-      { label: 'ISA', value: 700000 },
-      { label: 'GIA', value: 500000 },
-      { label: 'SIPP', value: 242000 },
-    ],
+    affordableValues: [700000, 500000, 242000],
     goalValue: 1975000,
     shortfallValue: 553000,
     shortfallUnderperformValue: 689000,
@@ -27,6 +23,7 @@ describe('GoalProgressCard', () => {
     iconSrc: '/goal-graphic.png',
     tooltipText: 'Some tooltip text',
     title: 'Retirement',
+    investmentAccounts: ['ISA', 'GIA', 'SIPP'],
   };
 
   test('component renders with expected goal data', () => {
@@ -45,14 +42,5 @@ describe('GoalProgressCard', () => {
     );
 
     expect(screen.getByAltText('some alt text')).toBeVisible();
-  });
-
-  test('component renders with a single account type', () => {
-    const singleAccountProps: GoalProgressCardProps = {
-      ...defaultCardProps,
-      accountValues: [{ label: 'ISA', value: 700000 }],
-    };
-    renderWithTheme(<GoalProgressCard {...singleAccountProps} />);
-    expect(screen.getByText('ISA')).toBeVisible();
   });
 });

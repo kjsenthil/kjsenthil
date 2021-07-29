@@ -1,10 +1,13 @@
 import React from 'react';
-import { Link as MUILink, LinkProps as MUILinkProps } from '@material-ui/core';
+import { Link as MUILink, LinkProps as MUILinkProps, Theme } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledLink = styled(MUILink)`
-  font-weight: bold;
-  font-size: ${({ theme }) => theme.typography.pxToRem(14)}};
+  ${({ theme }: { theme: Theme }) => `
+    font-weight: bold;
+    font-size: ${theme.typography.pxToRem(14)};
+    font-family: ${theme.typography.fontFamily};
+  `}
 `;
 
 export interface LinkProps extends Omit<MUILinkProps, 'color'> {

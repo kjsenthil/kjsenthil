@@ -26,10 +26,12 @@ jest.mock('../../../hooks', () => {
 
   return {
     ...originalModule,
+    useGoalImages: jest.fn(),
     useUpdateCurrentProjectionsPrerequisites: jest.fn(),
   };
 });
 
+const mockUseGoalImages = hooks.useGoalImages as jest.Mock;
 const mockUseUpdateCurrentProjectionsPrerequisites = hooks.useUpdateCurrentProjectionsPrerequisites as jest.Mock;
 
 const mockCurrentProjectionsData = [
@@ -92,6 +94,28 @@ describe('LifePlanPage', () => {
       goalCurrentProjections: () => ({
         status: 'success',
         data: {
+          desiredOutflow: 245368.8,
+          onTrackPercentage: 0.37483978271484375,
+          affordableDrawdown: 347.0716516113281,
+          affordableLumpSum: 0,
+          affordableRemainingAmount: 0,
+          affordableOutflow: 91973.98767700195,
+          surplusOrShortfall: 153394.81232299804,
+          valueAtRetirement: 0.07741928261073262,
+          totalAffordableDrawdown: 91973.98767700195,
+          projectedGoalAgeTotal: 73093.11048848694,
+          possibleDrawdown: 347.0718785441286,
+          marketUnderperform: {
+            desiredOutflow: 245368.8,
+            onTrackPercentage: 0.36944580078125,
+            affordableDrawdown: 342.077255859375,
+            affordableLumpSum: 0,
+            affordableRemainingAmount: 0,
+            affordableOutflow: 90650.47280273437,
+            surplusOrShortfall: 154718.32719726564,
+            valueAtRetirement: 0.25640099215629014,
+            totalAffordableDrawdown: 90650.47280273437,
+          },
           projections: mockCurrentProjectionsData,
         },
       }),
@@ -109,6 +133,10 @@ describe('LifePlanPage', () => {
   });
 
   beforeEach(() => {
+    mockUseGoalImages.mockReturnValue({
+      lifePlan: { childImageSharp: { fluid: '' } },
+      setUpNew: { childImageSharp: { fluid: '' } },
+    });
     mockUseUpdateCurrentProjectionsPrerequisites.mockReturnValue({});
     renderWithProviders(<LifePlanPage />, store);
   });
@@ -122,6 +150,5 @@ describe('LifePlanPage', () => {
 
   it('renders goals card successfully', async () => {
     expect(screen.getByText('Your important moments')).toBeInTheDocument();
-    expect(screen.getByText('Coming soon')).toBeInTheDocument();
   });
 });

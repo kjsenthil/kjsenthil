@@ -33,7 +33,6 @@ import {
   valueAccessor,
   lowerBoundAccessor,
   upperBoundAccessor,
-  getPerformanceProjectionsDataMinValue,
 } from './performanceProjectionsData';
 import {
   ProjectionsChartMetadata,
@@ -117,10 +116,7 @@ function PerformanceProjectionsChart({
     )
   );
 
-  const minChartValue = getPerformanceProjectionsDataMinValue({
-    projectionsData,
-    projectionsTargetData,
-  });
+  const minChartValue = 0;
   const maxChartValue = getPerformanceProjectionsDataMaxValue({
     projectionsData,
     projectionsTargetData,
@@ -236,6 +232,27 @@ function PerformanceProjectionsChart({
     performanceTargetNotMet = firstPerformanceProjectionsTargetDataPoint?.value;
   }
 
+  // ----- Chart ticks ----- //
+  // This chart has pre-defined ticks
+
+  const axisBottomStaticTicks: Date[] = [];
+
+  // There is a tick for today's date
+  const today = new Date();
+  today.setDate(1);
+  today.setMonth(0);
+  axisBottomStaticTicks.push(today);
+
+  // There is a tick for each goal's date
+  goalsData.forEach(({ date }) => {
+    axisBottomStaticTicks.push(date);
+  });
+
+  // There is a tick for the final date
+  if (hasProjectionsData) {
+    axisBottomStaticTicks.push(projectionsData[projectionsData.length - 1].date);
+  }
+
   // ----- Goal indicators ----- //
 
   let goalIndicators: React.ReactNode[] = [];
@@ -348,6 +365,8 @@ function PerformanceProjectionsChart({
             chartDimension={chartDimension}
             scale={xScale}
             todayAge={todayAge}
+            tickValues={axisBottomStaticTicks}
+            finalYear={projectionsData[projectionsData.length - 1].date.getFullYear()}
           />
 
           {/* ----- Graph paths - Historical ----- */}

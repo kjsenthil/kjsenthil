@@ -88,7 +88,7 @@ export {
 } from '@material-ui/core';
 
 /* material-ui atoms - types */
-export type { BoxProps, Theme, ToolbarProps } from '@material-ui/core';
+export type { BoxProps, CardProps, Theme, ToolbarProps } from '@material-ui/core';
 
 // At some point we might need to create an Icon wrapper as an atom
 // that dynamically imports each icon by a given name like <Icon name"menu" />

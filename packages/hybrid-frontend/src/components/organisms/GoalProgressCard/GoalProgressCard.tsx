@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { ProgressBar, Spacer, Tooltip, Typography } from '../../atoms';
+import { GoalLifePlanCard } from '../../molecules';
 import {
-  GoalProgressStyledCard,
   DetailsContainer,
   GoalIcon,
   CardBody,
@@ -15,10 +15,7 @@ import {
 
 export interface GoalProgressCardProps {
   onTrackPercentage: number;
-  accountValues: Array<{
-    label: string;
-    value: number;
-  }>;
+  affordableValues: number[];
   goalValue: number;
   shortfallValue: number;
   shortfallUnderperformValue: number;
@@ -26,11 +23,12 @@ export interface GoalProgressCardProps {
   iconSrc: string;
   iconAlt?: string;
   tooltipText: string;
+  investmentAccounts: string[];
 }
 
 const GoalProgressCard = ({
   onTrackPercentage,
-  accountValues,
+  affordableValues,
   goalValue,
   shortfallValue,
   shortfallUnderperformValue,
@@ -38,13 +36,14 @@ const GoalProgressCard = ({
   iconAlt = 'goal image',
   title,
   tooltipText,
+  investmentAccounts,
 }: GoalProgressCardProps) => {
-  const totalAccountValue = accountValues.reduce((total, { value }) => total + value, 0);
+  const totalAffordableValue = affordableValues.reduce((total, value) => total + value, 0);
 
-  const numberFormatOptions = { opts: { minimumFractionDigits: 0 } };
+  const numberFormatOptions = { opts: { minimumFractionDigits: 0, maximumFractionDigits: 0 } };
 
   const formattedOnTrackPercentage = formatPercent(onTrackPercentage, numberFormatOptions);
-  const formattedTotalAccountValue = formatCurrency(totalAccountValue, numberFormatOptions);
+  const formattedTotalAccountValue = formatCurrency(totalAffordableValue, numberFormatOptions);
   const formattedGoalValue = formatCurrency(goalValue, numberFormatOptions);
   const formattedShortfallValue = formatCurrency(shortfallValue, numberFormatOptions);
   const formattedShortfallUnderperformValue = formatCurrency(
@@ -53,7 +52,7 @@ const GoalProgressCard = ({
   );
 
   return (
-    <GoalProgressStyledCard>
+    <GoalLifePlanCard>
       <CardBody>
         <IconContainer>
           <GoalIcon src={iconSrc} alt={iconAlt} />
@@ -70,7 +69,7 @@ const GoalProgressCard = ({
             {' of your target.'}
           </Typography>
           <Typography color="primary" colorShade="dark2" display="inline">
-            {"That's a shortfall of "}
+            {`That's a ${shortfallValue < 0 ? 'surplus' : 'shortfall'} of `}
             <b>{formattedShortfallValue}</b>
             {`, or ${formattedShortfallUnderperformValue}`}
             {' if markets underperform.'}
@@ -93,13 +92,17 @@ const GoalProgressCard = ({
           </Typography>
         </GoalValues>
         <Spacer y={1} />
-        <ProgressBar progress={accountValues.map(({ value }) => value / goalValue)} />
+        <ProgressBar
+          progress={affordableValues.map((affordableValue) =>
+            goalValue ? affordableValue / goalValue : 0
+          )}
+        />
         <Spacer y={0.5} />
         <Typography color="secondary" variant="sh4" align="right">
-          {accountValues.map(({ label }) => label).join(' + ')}
+          {investmentAccounts.join(' + ')}
         </Typography>
       </CardFooter>
-    </GoalProgressStyledCard>
+    </GoalLifePlanCard>
   );
 };
 

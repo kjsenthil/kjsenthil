@@ -5,6 +5,7 @@ import Legend, { LegendProps } from './Legend';
 import ProgressBarWithLegend, { ProgressBarWithLegendProps } from './ProgressBarWithLegend';
 import { DigitalCoachBoxProps } from './DigitalCoachBox';
 import { TabsNavigationProps } from './TabsNavigation';
+import { GoalLifePlanCardProps } from './GoalLifePlanCard';
 
 export { default as SliderLabelled } from './SliderLabelled';
 export { default as SliderWithInput } from './SliderWithInput';
@@ -23,6 +24,7 @@ export { default as SubHeader } from './SubHeader';
 export { default as NavLink } from './NavLink';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
 export { default as TabsNavigation } from './TabsNavigation';
+export { default as GoalLifePlanCard } from './GoalLifePlanCard';
 
 /* material-ui molecules */
 export {
@@ -42,5 +44,6 @@ export type {
   ProgressBarWithLegendProps,
   DigitalCoachBoxProps,
   TabsNavigationProps,
+  GoalLifePlanCardProps,
 };
 export { ChartPeriodSelection, Legend, ProgressBarWithLegend };

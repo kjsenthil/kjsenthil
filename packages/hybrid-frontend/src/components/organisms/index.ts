@@ -15,3 +15,4 @@ export { default as PerformanceSimplifiedChart } from './PerformanceChart/Perfor
 export { default as StepCard } from './StepCard';
 export { default as GoalPotTracker } from './GoalPotTracker';
 export { default as RiskAppetiteCard } from './RiskAppetiteCard';
+export { default as GoalSetUpNewCard } from './GoalSetUpNewCard';

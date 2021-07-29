@@ -368,7 +368,7 @@ const LifePlanManagementPage = () => {
                   <InfoBox>
                     <Typography variant="b2" color="grey" colorShade="dark1">
                       {"You're on track to have "}
-                      <b>{formatPercent(onTrackProgress, numberFormatOptions)}</b>
+                      <b>{formatPercent(onTrackProgress ?? 0, numberFormatOptions)}</b>
                       {" of your target by the time you're "}
                       <b>{drawdownStartAge}</b>.
                       {onTrackDiffAmount === 0 && (
@@ -392,7 +392,7 @@ const LifePlanManagementPage = () => {
                       {' to spend each month, or '}
                       <b>
                         {formatCurrency(
-                          goalCurrentProjections?.data?.possibleDrawdownWhenMarketUnderperform || 0,
+                          goalCurrentProjections?.data?.marketUnderperform.affordableDrawdown || 0,
                           numberFormatOptions
                         )}
                       </b>
