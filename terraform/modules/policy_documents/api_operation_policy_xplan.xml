@@ -25,7 +25,7 @@
                 }" />
                 <!-- Store result in cache -->
                 <cache-store-value key="cached-myaccount-signing-key" value="@(context.Variables.GetValueOrDefault<string>("myaccount-signing-key"))" duration="{{keyvault-secret-cache-duration}}" />
-                    <trace source="Inbount/secrets/myaccount-signing-key" severity="information">
+                    <trace source="Inbound/secrets/myaccount-signing-key" severity="information">
                         <message>Received Myaccount signing key from keyvault</message>
                 </trace>                
             </when>
@@ -43,7 +43,7 @@
                 }" />
                 <!-- Store result in cache -->
                 <cache-store-value key="cached-xplan-username" value="@(context.Variables.GetValueOrDefault<string>("xplan-username"))" duration="{{keyvault-secret-cache-duration}}" />
-                <trace source="Inbount/secrets/xplan-username" severity="information">
+                <trace source="Inbound/secrets/xplan-username" severity="information">
                         <message>Received xplan-username from keyvault</message>
                 </trace>                
             </when>
@@ -61,7 +61,7 @@
                 }" />
                 <!-- Store result in cache -->
                 <cache-store-value key="cached-xplan-password" value="@(context.Variables.GetValueOrDefault<string>("xplan-password"))" duration="{{keyvault-secret-cache-duration}}" />
-                <trace source="Inbount/secrets/xplan-password" severity="information">
+                <trace source="Inbound/secrets/xplan-password" severity="information">
                         <message>Received xplan-password from keyvault</message>
                 </trace>
             </when>

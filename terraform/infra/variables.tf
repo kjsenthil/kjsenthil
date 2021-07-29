@@ -21,6 +21,12 @@ variable "features_function_app_code_path" {
   description = "Path to the function app code."
 }
 
+variable "returns_function_app_code_path" {
+  type        = string
+  default     = "./zips/returns.zip"
+  description = "Path to the returns function app code."
+}
+
 variable "app_name" {
   type        = string
   default     = "digital-hybrid"

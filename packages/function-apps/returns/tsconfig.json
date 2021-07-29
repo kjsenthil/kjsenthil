@@ -1,0 +1,14 @@
+{
+  "extends": "@tsw/typescript-config/base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noEmit": false,
+    "outDir": "dist"
+  },
+  "files": [
+    "annualised-return/index.ts",
+    "annualised-return/function.json",
+    "annualised-return/types.ts",
+  ]
+}

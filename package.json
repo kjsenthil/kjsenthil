@@ -11,6 +11,7 @@
     "packages/utils/tracking",
     "packages/function-apps/projections",
     "packages/function-apps/features",
+    "packages/function-apps/returns",
     "packages/testing/axios-api",
     "packages/testing/wdio-mock-ui"
   ],

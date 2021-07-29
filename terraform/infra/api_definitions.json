@@ -155,7 +155,7 @@
         "backend_url": "projections_function_app",
         "rewrite_url": "/current-projection"
       }
-    },    
+    },
     {
       "operation_id": "projections-target-projection",
       "display_name": "Projections - Get target projection",
@@ -402,6 +402,21 @@
         "backend_url": "projections_function_app",
         "rewrite_url": "/simulate-projection"
       }
-    }  
+    },
+    {
+      "operation_id": "returns-annualised-return",
+      "display_name": "Returns - Get annualised return",
+      "url_template": "/returns/annualised-return",
+      "description": "Connects to the annualised-return function app and returns the annualised return for the given inputs",
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "returns_function_app",
+        "rewrite_url": "/annualised-return"
+      }
+    }
   ]
 }

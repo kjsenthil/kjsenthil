@@ -1,0 +1,26 @@
+{
+  "name": "@tsw/function-app-returns",
+  "version": "1.1.0",
+  "description": "Function app containing APIs to support returns functionality in Digital Hybrid",
+  "scripts": {
+    "build": "tsc",
+    "build:zip": "yarn build && cp ./host.json ./dist && cd dist && zip -qr returns.zip *",
+    "copy-zip": "cp ./dist/returns.zip ../../../function-app-zips/",
+    "install-only": "yarn workspaces focus",
+    "start": "yarn build && func start",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
+    "@tsw/test-util": "workspace:packages/utils/test",
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript",
+    "@types/jest": "^26.0.23",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "jest-html-reporter": "^3.4.1"
+  },
+  "dependencies": {
+    "@azure/functions": "^1.2.3",
+    "azure-functions-core-tools": "^2.7.3188"
+  }
+}
