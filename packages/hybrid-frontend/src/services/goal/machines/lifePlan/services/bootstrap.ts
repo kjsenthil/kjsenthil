@@ -1,17 +1,17 @@
+import { yearDifference } from '../../../../../utils/date';
 import { GoalsApiResponse } from '../../../types';
 import { PrepopulateContext, LifePlanMachineContext } from '../types';
 
 const bootstrap = (
-  callback: () => Promise<{ goal: GoalsApiResponse | undefined; userDateOfBirth: Date }>
+  callback: (
+    ctx: LifePlanMachineContext
+  ) => Promise<{ goal: GoalsApiResponse | undefined; userDateOfBirth: Date }>
 ) => async (ctx: LifePlanMachineContext): Promise<PrepopulateContext> => {
-  const { goal, userDateOfBirth } = await callback();
+  const { goal, userDateOfBirth } = await callback(ctx);
 
   const result = {
+    ...ctx,
     userDateOfBirth,
-    index: ctx.index,
-    monthlyIncome: ctx.monthlyIncome,
-    drawdownStartAge: ctx.drawdownStartAge,
-    drawdownEndAge: ctx.drawdownEndAge,
   };
 
   if (goal) {
@@ -21,6 +21,10 @@ const bootstrap = (
       monthlyIncome: Number(goal.fields.regularDrawdown?.val.value.val),
       drawdownStartAge: Number(goal.fields.objectiveFrequencyStartAge),
       drawdownEndAge: Number(goal.fields.objectiveFrequencyEndAge),
+      lumpSum: Number(goal.fields.biRetirementLumpSum),
+      lumpSumAge: yearDifference(goal.fields.biRetirementLumpSumDate?.val!, userDateOfBirth),
+      laterLifeLeftOver: Number(goal.fields.biRetirementRemainingAmount),
+      shouldIncludeStatePension: (goal.fields.biStatePensionAmount || 0) > 0.1,
     };
   }
 

@@ -2,8 +2,8 @@ import { LifePlanMachineContext } from './types';
 
 const context: LifePlanMachineContext = {
   index: null,
-  doesGoalExist: false,
   fees: 0,
+  defaultStatePension: 0,
   inflation: 0,
   clientAge: 0,
   userDateOfBirth: new Date(0),
@@ -24,12 +24,14 @@ const context: LifePlanMachineContext = {
   annualIncomeInTomorrowsMoney: 0,
   monthlyIncomeInTomorrowsMoney: 0,
   lumpSum: 0,
-  lumpSumAtAge: 0,
+  lumpSumAge: 0,
+  lumpSumDate: null,
   laterLifeLeftOver: 0,
   retirementPotValue: 0,
   shouldIncludeStatePension: false,
   remainingValue: 0,
   errors: null,
+  hasFetchedProjections: false,
 };
 
 export default context;

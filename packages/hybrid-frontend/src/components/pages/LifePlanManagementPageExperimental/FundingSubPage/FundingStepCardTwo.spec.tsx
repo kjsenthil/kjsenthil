@@ -4,7 +4,7 @@ import FundingStepCardTwo from './FundingStepCardTwo';
 
 describe('FundingStepCardTwo', () => {
   it('renders correctly', () => {
-    renderWithTheme(<FundingStepCardTwo includeStatePension />);
+    renderWithTheme(<FundingStepCardTwo shouldIncludeStatePension onChange={() => {}} />);
 
     expect(screen.getByText('Include your State Pension?')).toBeVisible();
   });

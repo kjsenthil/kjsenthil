@@ -8,7 +8,10 @@ export interface GoalPotTrackerProps {
   title: string;
   potTotal: number | undefined;
 
-  progressBarProps: Omit<ProgressBarWithLegendProps, 'progressBarBackgrounds'>;
+  progressBarProps: Omit<
+    ProgressBarWithLegendProps,
+    'progressBarBackgrounds' | 'currencyFormatter'
+  >;
 }
 
 export default function GoalPotTracker({ title, potTotal, progressBarProps }: GoalPotTrackerProps) {
@@ -53,6 +56,7 @@ export default function GoalPotTracker({ title, potTotal, progressBarProps }: Go
         <ProgressBarWithLegend
           progressBarBackgrounds={progressBarBackgrounds}
           {...progressBarProps}
+          currencyFormatter={formatCurrency}
         />
       </Box>
     </GoalPotTrackerContainer>

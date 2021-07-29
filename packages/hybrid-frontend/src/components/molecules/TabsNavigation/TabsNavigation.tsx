@@ -3,9 +3,9 @@ import { Tabs, Tab, TabsProps, TabProps } from '../../atoms';
 
 export interface TabsNavigationProps {
   currentPath: string;
-  navigate: (to: string) => void;
+  onClick: (to: string) => void;
 
-  tabs: Array<{ label: string; path: string }>;
+  tabs: Array<{ label: string; path: string; disabled?: boolean }>;
 
   tabsProps?: Omit<TabsProps, 'value' | 'onChange'>;
   tabProps?: Omit<TabProps, 'label' | 'value'>;
@@ -32,7 +32,7 @@ export function getCurrentTab({
 
 export default function TabsNavigation({
   currentPath,
-  navigate,
+  onClick,
   tabs,
   tabsProps,
   tabProps,
@@ -43,15 +43,15 @@ export default function TabsNavigation({
   });
 
   const handleOnChange = (e: React.ChangeEvent<{}>, newTab: string) => {
-    navigate(newTab);
+    onClick(newTab);
   };
 
   return (
     // Material-UI requires the 'value' prop to be 'false' if no valid tab is
     // found
     <Tabs value={currentTab ?? false} onChange={handleOnChange} {...tabsProps}>
-      {tabs.map(({ label, path }) => (
-        <Tab key={path} label={label} value={path} {...tabProps} />
+      {tabs.map(({ label, path, disabled }) => (
+        <Tab key={path} label={label} value={path} disabled={!!disabled} {...tabProps} />
       ))}
     </Tabs>
   );

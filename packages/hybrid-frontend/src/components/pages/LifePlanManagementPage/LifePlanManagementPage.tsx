@@ -77,7 +77,7 @@ const LifePlanManagementPage = () => {
   });
 
   const {
-    doesGoalExist,
+    index,
     drawdownStartDate,
     drawdownStartAge,
     drawdownEndAge,
@@ -204,7 +204,7 @@ const LifePlanManagementPage = () => {
   const isLoading = [
     'planningYourRetirement.saving',
     'planningYourRetirement.deleting',
-    'planningYourRetirement.processingInput',
+    'planningYourRetirement.inputProcessing',
     'planningYourRetirement.bootstrapping',
   ].some((state) => currentState.matches(state));
 
@@ -212,7 +212,7 @@ const LifePlanManagementPage = () => {
     <GoalCreationLayout
       {...commonTemplateProps}
       onCancelHandler={goToLifePlanPage}
-      onDeleteHandler={doesGoalExist ? handleGoalDelete : undefined}
+      onDeleteHandler={index ? handleGoalDelete : undefined}
       isLoading={isLoading}
       progressEventHandler={() => send('SAVE')}
     >

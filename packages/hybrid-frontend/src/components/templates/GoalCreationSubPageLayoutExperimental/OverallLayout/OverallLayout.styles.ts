@@ -28,6 +28,5 @@ const overallLayoutDesktopDisplay = css`
 // eslint-disable-next-line import/prefer-default-export
 export const OverallLayoutContainer = styled.div<OverallLayoutStyledProps>`
   position: relative;
-
   ${(props) => (props.isMobile ? overallLayoutMobileDisplay : overallLayoutDesktopDisplay)}
 `;

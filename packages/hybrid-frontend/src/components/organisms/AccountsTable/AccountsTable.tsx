@@ -21,9 +21,21 @@ export interface AccountsHeaderCell {
 
 export type AccountsFooterCell = string;
 
+type PartialPick<T, K extends keyof T> = {
+  [P in K]?: T[P];
+};
+
 export interface AccountsTableProps {
   headerRow: AccountsHeaderCell[];
-  dataRow: InvestmentAccount[];
+  dataRow: (Pick<InvestmentAccount, 'id' | 'accountName'> &
+    PartialPick<
+      InvestmentAccount,
+      | 'accountTotalNetContribution'
+      | 'accountTotalHoldings'
+      | 'accountCash'
+      | 'monthlyInvestment'
+      | 'periodReturn'
+    >)[];
   period: PerformanceDataPeriod;
   footerRow?: AccountsFooterCell[];
 }
@@ -55,7 +67,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
       </AccountsTableHead>
       <TableBody>
         {dataRow &&
-          dataRow.map((row: InvestmentAccount) => (
+          dataRow.map((row) => (
             <AccountsTableRow key={row.id}>
               <AccountsTableCell>
                 <Typography variant="sh3">{row.accountName}</Typography>
@@ -69,11 +81,13 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 </AccountsTableCell>
               )}
 
-              <AccountsTableCell>
-                <Typography variant="b2" color="primary" colorShade="dark2">
-                  {formatCurrency(row.accountTotalNetContribution)}
-                </Typography>
-              </AccountsTableCell>
+              {row.accountTotalNetContribution !== undefined && (
+                <AccountsTableCell>
+                  <Typography variant="b2" color="primary" colorShade="dark2">
+                    {formatCurrency(row.accountTotalNetContribution)}
+                  </Typography>
+                </AccountsTableCell>
+              )}
 
               {row.accountCash !== undefined && (
                 <AccountsTableCell>
@@ -95,7 +109,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 </AccountsTableCell>
               )}
 
-              {row.periodReturn[period] !== undefined && (
+              {row.periodReturn && row.periodReturn[period] !== undefined && (
                 <AccountsTableCell>
                   <AccountReturn>
                     <Typography variant="b2" color="primary" colorShade="dark2" noWrap>

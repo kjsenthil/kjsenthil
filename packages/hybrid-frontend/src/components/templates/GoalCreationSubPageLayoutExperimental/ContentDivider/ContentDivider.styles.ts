@@ -30,4 +30,5 @@ export const DividerTriangle = styled.div`
 // A container for the line and the triangle to ensure consistent positioning.
 export const DividerContainer = styled.div`
   position: relative;
+  left: 4px;
 `;

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import GoalTrackingWidget, { GoalTrackingWidgetProps } from './GoalTrackingWidget';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
 
 export default {
   title: 'Digital Hybrid/Organisms/Goal Tracking Widget',
@@ -25,15 +24,13 @@ const progressBarData = [
   },
 ];
 
-const opts = { minimumFractionDigits: 0 };
-const onTrack = formatPercent(0.72, { opts });
+const onTrack = 0.72;
 const shortfall = 55000;
 const totalProjected = progressBarData.reduce((acc, data) => acc + data.legendProps.value, 0);
 const target = totalProjected + shortfall;
 
 export const Default = Template.bind({});
 Default.args = {
-  currencyFormatter: formatCurrency,
   target,
   onTrack,
   totalProjected,

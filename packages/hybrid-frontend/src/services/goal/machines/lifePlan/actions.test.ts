@@ -17,17 +17,32 @@ const DummyMachine = Machine<LifePlanMachineContext, any, any>({
         actions.calculateDrawdownPeriodLength,
       ],
     },
+    SET_INDEX: {
+      actions: [actions.setIndex],
+    },
     SET_INCOME: {
       actions: [actions.setIncome],
     },
     SET_LUMP_SUM: {
-      actions: [actions.setLumpSum],
+      actions: [actions.setLumpSumAmount],
+    },
+    SET_LUMP_SUM_AGE: {
+      actions: [actions.setLumpSumAge],
     },
     SET_LATER_LIFE_LEFT_OVER: {
       actions: [actions.setLaterLifeLeftOver],
     },
+    SET_HAS_FETCHED_PROJECTIONS: {
+      actions: [actions.setHasFetchedProjections],
+    },
+    PREPOPULATE: {
+      actions: [actions.prepopulate],
+    },
     CALCULATE_RETIREMENT_POT_VALUE: {
       actions: [actions.calculateRetirementPotValue],
+    },
+    CALUCLATE_LUMP_SUM_DATE: {
+      actions: [actions.calcuateLumpSumDate],
     },
     CALCULATE_DRAWDOWN_PERIOD_LENGTH: {
       actions: [actions.calculateDrawdownPeriodLength],
@@ -55,6 +70,58 @@ describe('lifePlan actions', () => {
 
   beforeAll(() => {
     jest.useFakeTimers('modern').setSystemTime(new Date('2021-06-01').getTime());
+  });
+
+  describe('basic setters ', () => {
+    beforeAll(() => {
+      service = interpret(
+        DummyMachine.withContext({
+          ...context,
+          ...initialContext,
+        })
+      ).start();
+    });
+
+    it('sets index', () => {
+      const index = 123456789;
+      expect(service.state.context.index).toBeNull();
+
+      service.send('SET_INDEX', { data: { index } });
+      expect(service.state.context.index).toStrictEqual(index);
+    });
+
+    it('sets hasFetchedProjections', () => {
+      expect(service.state.context.hasFetchedProjections).toBeFalse();
+
+      service.send('SET_HAS_FETCHED_PROJECTIONS');
+      expect(service.state.context.hasFetchedProjections).toBeTrue();
+    });
+  });
+
+  describe('Prepopulate data', () => {
+    beforeAll(() => {
+      service = interpret(
+        DummyMachine.withContext({
+          ...context,
+          ...initialContext,
+        })
+      ).start();
+    });
+
+    it('updates context with a given set of data', () => {
+      const data = {
+        index: 12345678,
+        monthlyIncome: 2000,
+        annualIncome: 24000,
+        drawdownStartAge: 70,
+        drawdownEndAge: 90,
+        shouldIncludeStatePension: true,
+      };
+
+      expect(service.state.context.index).toBeNull();
+      service.send('PREPOPULATE', { data });
+      expect(service.state.context).toStrictEqual({ ...context, ...initialContext, ...data });
+    });
   });
 
   describe('Setting ages', () => {
@@ -207,7 +274,7 @@ describe('lifePlan actions', () => {
     });
   });
 
-  describe('setLumpSum', () => {
+  describe('Setting lumpSum and lumpSum ages', () => {
     beforeAll(() => {
       service = interpret(
         DummyMachine.withContext({
@@ -215,12 +282,25 @@ describe('lifePlan actions', () => {
           ...initialContext,
         })
       ).start();
-
-      service.send('SET_LUMP_SUM', { payload: { lumpSum: 100000 } });
     });
 
     it('sets lump sum amount', () => {
+      expect(service.state.context.lumpSum).toStrictEqual(0);
+      expect(service.state.context.lumpSumAge).toStrictEqual(0);
+
+      service.send('SET_LUMP_SUM', { payload: { lumpSum: 100000 } });
+      service.send('SET_LUMP_SUM_AGE', { payload: { lumpSumAge: 65 } });
+
       expect(service.state.context.lumpSum).toStrictEqual(100000);
+      expect(service.state.context.lumpSumAge).toStrictEqual(65);
+    });
+
+    it('calcualtes lumpSum date', () => {
+      expect(service.state.context.lumpSumDate).toBeNull();
+
+      service.send('CALUCLATE_LUMP_SUM_DATE');
+
+      expect(service.state.context.lumpSumDate).toStrictEqual(new Date(2045, 2, 10));
     });
   });
 

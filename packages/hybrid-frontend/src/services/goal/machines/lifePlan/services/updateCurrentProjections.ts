@@ -3,7 +3,7 @@ import {
   LifePlanMachineEvents,
   UpdateCurrentProjectionsEvent,
 } from '../types';
-import guards from '../guards';
+import validateDrawdownAges from '../validators/validateDrawdownAges';
 import tryInvokeService from './tryInvokeService';
 
 const updateCurrentProjections = (
@@ -11,17 +11,8 @@ const updateCurrentProjections = (
 ) => (ctx: LifePlanMachineContext, event: LifePlanMachineEvents): Promise<void> =>
   tryInvokeService(
     () => {
-      const errors: Record<string, string> = {};
+      const errors = validateDrawdownAges(ctx);
 
-      if (!guards.isClientAgeUpToDrawdownStartAge(ctx)) {
-        errors.drawdownStartAge = 'Please pick an age greater than your current age';
-      }
-
-      if (!guards.isDrawdownEndAgeUpTo100(ctx)) {
-        errors.drawdownEndAge = 'Please pick an age less than 100';
-      } else if (!guards.isDrawdownEndAgeGreaterThanStartAge(ctx)) {
-        errors.drawdownEndAge = `Please select an age greater than ${ctx.drawdownStartAge}`;
-      }
       return errors;
     },
     () => callback(ctx, event as UpdateCurrentProjectionsEvent)

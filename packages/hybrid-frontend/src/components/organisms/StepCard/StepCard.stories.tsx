@@ -26,7 +26,7 @@ Default.args = {
       <Grid item>
         <TypographyWithTooltip tooltip="Some explaination">
           Since the government will provide your state pension, wet&#39;ll deduct this from your
-          target retirement pot. We use todayt&#39;s maximum figure of £9,371.27 a year assuming you
+          target retirement pot. We use todayt&#39;s maximum figure of £9,339.20 a year assuming you
           contribute National Insurance for 30 years.
         </TypographyWithTooltip>
       </Grid>

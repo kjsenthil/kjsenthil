@@ -70,9 +70,12 @@ Object {
                     <div
                       class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
                     >
-                      You're on track to have 
+                      You're on track to have
+                       
                       72%
-                       of your target. That's a short fall of
+                       of your target. That's a 
+                      shortfall
+                       of
                        
                       £55,000.00
                       .
@@ -350,9 +353,12 @@ Object {
                   <div
                     class="MuiTypography-root sc-jrQzUz kAJydy MuiTypography-body1"
                   >
-                    You're on track to have 
+                    You're on track to have
+                     
                     72%
-                     of your target. That's a short fall of
+                     of your target. That's a 
+                    shortfall
+                     of
                      
                     £55,000.00
                     .

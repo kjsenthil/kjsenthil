@@ -39,7 +39,6 @@ const PlanningStepCardThree = React.forwardRef(
     >
       <SubPageStepCardContentWithInputsContainer>
         <FormInput
-          disabled
           label="Lump sum amount"
           name="lump-sum-amount"
           type="number"
@@ -51,7 +50,6 @@ const PlanningStepCardThree = React.forwardRef(
           value={lumpSumAmount || undefined}
         />
         <FormInput
-          disabled
           label="At age"
           name="lump-sum-age"
           type="number"
@@ -59,7 +57,7 @@ const PlanningStepCardThree = React.forwardRef(
           fullWidth
           onChange={handleLumpSumAgeChange}
           onFocus={onFocus}
-          error={displayError('lumpSum')}
+          error={displayError('lumpSumAge')}
           value={lumpSumAge || undefined}
         />
       </SubPageStepCardContentWithInputsContainer>

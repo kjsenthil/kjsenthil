@@ -7,14 +7,17 @@ export interface FundingStepCardOneProps {
   accountsTableProps: AccountsTableProps;
 }
 
-export default function FundingStepCardOne({ accountsTableProps }: FundingStepCardOneProps) {
-  return (
+const FundingStepCardOne = React.forwardRef(
+  ({ accountsTableProps }: FundingStepCardOneProps, ref) => (
     <StepCardExperimental
+      ref={ref}
       step={1}
       title="Which accounts would you like to contribute to your retirement pot?"
       childrenFullWidth
     >
       <AccountsTable {...accountsTableProps} />
     </StepCardExperimental>
-  );
-}
+  )
+);
+
+export default FundingStepCardOne;

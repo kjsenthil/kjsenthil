@@ -20,9 +20,12 @@ const getGoals = async () => {
     'target_amount',
     'objective_frequency_start_age',
     'objective_frequency_end_age',
+    'bi_state_pension_amount',
+    'bi_retirement_lump_sum',
+    'bi_retirement_lump_sum_date',
+    'bi_retirement_remaining_amount',
     'target_date',
     'regular_drawdown',
-    'bi_retirement_lump_sum_date',
   ]);
 
   const url = `${baseUrl}?${fieldsQueryParams}`;

@@ -16,7 +16,7 @@ describe('TabsNavigation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    renderWithTheme(<TabsNavigation currentPath="/" navigate={mockNavigate} tabs={tabs} />);
+    renderWithTheme(<TabsNavigation currentPath="/" onClick={mockNavigate} tabs={tabs} />);
 
     tab1 = screen.getByText(tabs[0].label);
     tab2 = screen.getByText(tabs[1].label);

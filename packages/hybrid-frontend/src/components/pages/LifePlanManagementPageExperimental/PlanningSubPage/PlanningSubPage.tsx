@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { navigate } from 'gatsby';
 import { RouteComponentProps, useLocation } from '@reach/router';
-import { ProgressBarWithLegendProps } from '../../../molecules';
-import { GoalPotTracker } from '../../../organisms';
-import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayoutExperimental';
 import PlanningStepCardOne, { PlanningStepCardOneProps } from './PlanningStepCardOne';
 import PlanningStepCardTwo, { PlanningStepCardTwoProps } from './PlanningStepCardTwo';
 import PlanningStepCardThree, { PlanningStepCardThreeProps } from './PlanningStepCardThree';
 import PlanningStepCardFour, { PlanningStepCardFourProps } from './PlanningStepCardFour';
+
+import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayoutExperimental';
 
 type SubComponentsProps = Omit<
   RouteComponentProps &
@@ -19,12 +18,11 @@ type SubComponentsProps = Omit<
 >;
 
 export interface PlanningSubPageProps extends SubComponentsProps {
-  goalPotTotal: number | undefined;
-  goalPotProgressBarData: ProgressBarWithLegendProps['progressBarData'];
-  currencyFormatter: (n: number) => string;
+  renderContentSide: () => React.ReactNode;
 }
 
 export default function PlanningSubPage({
+  renderContentSide,
   drawdownStartAge,
   drawdownEndAge,
   drawdownStartDate,
@@ -36,6 +34,9 @@ export default function PlanningSubPage({
 
   annualIncome,
   monthlyIncome,
+  annualIncomeInTomorrowsMoney,
+  monthlyIncomeInTomorrowsMoney,
+
   handleAnnualIncomeChange,
   handleMonthlyIncomeChange,
 
@@ -48,10 +49,6 @@ export default function PlanningSubPage({
   handleRemainingAmountChange,
 
   displayError,
-
-  goalPotTotal,
-  goalPotProgressBarData,
-  currencyFormatter,
 }: PlanningSubPageProps) {
   const { hash: currentUrlHash } = useLocation();
 
@@ -105,6 +102,8 @@ export default function PlanningSubPage({
           onFocus={handleStepTwoInputsFocused}
           annualIncome={annualIncome}
           monthlyIncome={monthlyIncome}
+          annualIncomeInTomorrowsMoney={annualIncomeInTomorrowsMoney}
+          monthlyIncomeInTomorrowsMoney={monthlyIncomeInTomorrowsMoney}
           handleAnnualIncomeChange={handleAnnualIncomeChange}
           handleMonthlyIncomeChange={handleMonthlyIncomeChange}
           displayError={displayError}
@@ -151,16 +150,7 @@ export default function PlanningSubPage({
       mainContentHorizontalSwipeOnMobile
       sideContentFirstOnMobile
       contentMain={mainContentElements}
-      contentSide={
-        <GoalPotTracker
-          title="Your retirement pot"
-          potTotal={goalPotTotal}
-          progressBarProps={{
-            progressBarData: goalPotProgressBarData,
-            currencyFormatter,
-          }}
-        />
-      }
+      contentSide={renderContentSide()}
     />
   );
 }

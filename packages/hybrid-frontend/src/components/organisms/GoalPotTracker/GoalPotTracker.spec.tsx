@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
-import { formatCurrency } from '../../../utils/formatters';
 import GoalPotTracker from './GoalPotTracker';
 
 const progressBarData = [
@@ -22,11 +21,7 @@ describe('GoalPotTracker', () => {
   it('matches snapshot', () => {
     expect(
       renderWithTheme(
-        <GoalPotTracker
-          title="Main title"
-          potTotal={100}
-          progressBarProps={{ currencyFormatter: formatCurrency, progressBarData }}
-        />
+        <GoalPotTracker title="Main title" potTotal={100} progressBarProps={{ progressBarData }} />
       )
     ).toMatchSnapshot();
   });

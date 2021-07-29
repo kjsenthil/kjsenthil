@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import GoalTrackingWidget from './GoalTrackingWidget';
 
 const progressBarData = [
@@ -18,8 +17,7 @@ const progressBarData = [
   },
 ];
 
-const opts = { minimumFractionDigits: 0 };
-const onTrack = formatPercent(0.72, { opts });
+const onTrack = 0.72;
 const shortfall = 55000;
 const totalProjected = progressBarData.reduce((acc, data) => acc + data.legendProps.value, 0);
 const target = totalProjected + shortfall;
@@ -27,9 +25,9 @@ const target = totalProjected + shortfall;
 const props = {
   target,
   onTrack,
-  currencyFormatter: formatCurrency,
   progressBarData,
   totalProjected,
+  surplusOrShortfall: shortfall,
   drawdownMonthlyIncome: 2340,
   drawdownStartAge: 67,
   drawdownEndAge: 89,

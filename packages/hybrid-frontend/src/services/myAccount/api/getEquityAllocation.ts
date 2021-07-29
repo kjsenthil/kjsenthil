@@ -5,7 +5,7 @@ const getEquityAllocation = async (accountId: string): Promise<number | undefine
 
   try {
     const breakdown = await getBreakdownAllocation(accountId);
-    equityPercentage = breakdown.data.attributes.breakdown.find(
+    equityPercentage = (breakdown?.data?.attributes?.breakdown || []).find(
       (allocation) => allocation.name === 'Equity'
     )?.percentage;
   } catch (e) {

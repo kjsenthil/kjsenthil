@@ -45,7 +45,7 @@ const Template: Story<StoryProps> = (args) => {
       {...args}
       tabsNavigationProps={{
         currentPath,
-        navigate: setCurrentPath,
+        onClick: setCurrentPath,
         tabs: [
           { path: 'tab-1', label: 'Tab 1' },
           { path: 'tab-2', label: 'Tab 2' },

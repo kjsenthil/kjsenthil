@@ -12,7 +12,7 @@ describe('services', () => {
   const service = updateCurrentProjections(callback);
 
   const mockIsDrawdownEndAgeGreaterThanStartAge = guards.isDrawdownEndAgeGreaterThanStartAge as jest.Mock;
-  const mockIsClientAgeUpToDrawdownStartAge = guards.isClientAgeUpToDrawdownStartAge as jest.Mock;
+  const mockisUserAgeUpToDrawdownStartAge = guards.isUserAgeUpToDrawdownStartAge as jest.Mock;
   const mockIsDrawdownEndAgeUpTo100 = guards.isDrawdownEndAgeUpTo100 as jest.Mock;
 
   const projectionsPrerequisitesPayloadPayload: Omit<
@@ -43,7 +43,7 @@ describe('services', () => {
   describe('updateCurrentProjections', () => {
     it('rejects if any or all the guards return false', async () => {
       mockIsDrawdownEndAgeUpTo100.mockReturnValue(false);
-      mockIsClientAgeUpToDrawdownStartAge.mockReturnValue(false);
+      mockisUserAgeUpToDrawdownStartAge.mockReturnValue(false);
       mockIsDrawdownEndAgeGreaterThanStartAge.mockReturnValue(false);
 
       await expect(service(context, event)).rejects.toStrictEqual({
@@ -57,7 +57,7 @@ describe('services', () => {
     describe('when no errors', () => {
       beforeEach(() => {
         mockIsDrawdownEndAgeUpTo100.mockReturnValue(true);
-        mockIsClientAgeUpToDrawdownStartAge.mockReturnValue(true);
+        mockisUserAgeUpToDrawdownStartAge.mockReturnValue(true);
         mockIsDrawdownEndAgeGreaterThanStartAge.mockReturnValue(true);
       });
       it('resolves without errors if all required fields are present and callback suceeds', async () => {

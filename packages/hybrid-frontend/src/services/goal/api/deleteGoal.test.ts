@@ -10,7 +10,7 @@ const goalIndex = 123456789;
 const goalsURL = API_ENDPOINTS.UPDATE_GOAL.replace('{goal-index}', String(goalIndex));
 
 describe('deleteGoal', () => {
-  it(`makes a call to ${goalsURL} with DELETE method`, async () => {
+  it(`makes a call to ${goalsURL} with PATCH method`, async () => {
     const data: GoalsApiResponse = {
       index: 1,
       allowAssociates: true,
@@ -22,7 +22,7 @@ describe('deleteGoal', () => {
       },
     };
 
-    mockAxios.onDelete(goalsURL).reply(201, data);
+    mockAxios.onPatch(goalsURL, { fields: { status: GoalStatus.CANCELLED } }).reply(201, data);
 
     const response = await deleteGoal(goalIndex);
 

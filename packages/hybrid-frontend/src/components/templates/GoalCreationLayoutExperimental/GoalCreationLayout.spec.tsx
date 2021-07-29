@@ -14,7 +14,7 @@ describe('GoalCreationLayout', () => {
         tabsNavigationProps={{
           currentPath: '',
           tabs: [],
-          navigate: () => {},
+          onClick: () => {},
         }}
       >
         <div data-testid="some-child-element" />

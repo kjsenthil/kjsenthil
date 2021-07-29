@@ -8,7 +8,53 @@ const afterInvokeCalculation = [
   'calculateTargetDrawdownAmount',
   'calculateRetirementPotValue',
   'calculateTomorrowsMoney',
+  'calcuateLumpSumDate',
 ];
+
+const createinputProcessingState = () => ({
+  entry: afterInvokeCalculation,
+  invoke: {
+    id: 'inputProcessing',
+    src: 'updateCurrentProjections',
+    onDone: {
+      target: 'normal',
+      actions: ['resetErrors', 'setHasFetchedProjections'],
+    },
+    onError: {
+      target: 'invalid',
+      actions: ['setErrors'],
+    },
+  },
+});
+
+const createSavingState = (onDoneTarget: string) => ({
+  invoke: {
+    id: 'upsertGoal',
+    src: 'upsertGoal',
+    onDone: {
+      target: onDoneTarget,
+      actions: ['setIndex', ...afterInvokeCalculation],
+    },
+    onError: {
+      target: 'invalid',
+      actions: ['setErrors'],
+    },
+  },
+});
+
+const createDeletingState = () => ({
+  invoke: {
+    id: 'deleteGoal',
+    src: 'deleteGoal',
+    onDone: {
+      target: '#lifePlan.finished',
+    },
+    onError: {
+      target: 'invalid',
+      actions: ['setErrors'],
+    },
+  },
+});
 
 const lifePlanConfig: MachineConfig<
   LifePlanMachineContext,
@@ -24,6 +70,7 @@ const lifePlanConfig: MachineConfig<
     'calculateMonthlyNetExpectedReturn',
     'calculateDrawdownDates',
     'calculateDrawdownPeriodLength',
+    'calcuateLumpSumDate',
   ],
   context,
   states: {
@@ -33,6 +80,7 @@ const lifePlanConfig: MachineConfig<
       on: {
         SET_DRAWDOWN_AGES: [
           {
+            target: '.validate',
             actions: [
               'resetErrors',
               'setDrawdownAges',
@@ -41,17 +89,31 @@ const lifePlanConfig: MachineConfig<
             ],
           },
         ],
+        SWITCH_TO_FUNDING: {
+          target: '#lifePlan.fundingYourRetirement.inputProcessing',
+          cond: 'doesGoalExist',
+        },
         SET_INCOME: [
           {
-            target: '.processingInput',
-            actions: ['resetErrors', 'setIncome'],
+            target: '.inputProcessing',
+            actions: ['setIncome'],
           },
         ],
-        SET_LUMP_SUM: {
-          actions: ['takeLumpSum', 'calculateRetirementPotValue'],
+        SET_LUMP_SUM_AMOUNT: {
+          target: '.preInputProcessing',
+          actions: ['setLumpSumAmount'],
+        },
+        SET_LUMP_SUM_AGE: {
+          target: '.preInputProcessing',
+          actions: ['setLumpSumAge', 'calcuateLumpSumDate'],
         },
         SET_LATER_LIFE_LEFT_OVER: {
-          actions: ['setLaterLifeLeftOver', 'calculateRetirementPotValue'],
+          target: '.preInputProcessing',
+          actions: ['setLaterLifeLeftOver'],
+        },
+        FETCH_PROJETIONS: {
+          target: '.inputProcessing',
+          cond: 'shouldFetchProjections',
         },
         SAVE: '.saving',
         DELETE: '.deleting',
@@ -62,22 +124,8 @@ const lifePlanConfig: MachineConfig<
             id: 'bootstrapping',
             src: 'bootstrap',
             onDone: {
-              target: 'processingInput',
-              actions: ['prepopulate', ...afterInvokeCalculation],
-            },
-            onError: {
-              target: 'invalid',
-              actions: ['setErrors'],
-            },
-          },
-        },
-        processingInput: {
-          entry: afterInvokeCalculation,
-          invoke: {
-            id: 'processingInput',
-            src: 'updateCurrentProjections',
-            onDone: {
               target: 'normal',
+              actions: ['prepopulate', ...afterInvokeCalculation],
             },
             onError: {
               target: 'invalid',
@@ -87,36 +135,53 @@ const lifePlanConfig: MachineConfig<
         },
         normal: {},
         invalid: {},
-        saving: {
-          invoke: {
-            id: 'upsertGoal',
-            src: 'upsertGoal',
-            onDone: {
-              target: '#lifePlan.fundingYourRetirement',
-            },
-            onError: {
-              target: 'invalid',
-              actions: ['setErrors'],
-            },
+        preInputProcessing: {
+          on: {
+            '': [{ target: 'inputProcessing', cond: 'doesGoalExist' }, { target: 'normal' }],
           },
         },
-        deleting: {
-          invoke: {
-            id: 'deleteGoal',
-            src: 'deleteGoal',
-            onDone: {
-              target: '#lifePlan.fundingYourRetirement',
-            },
-            onError: {
-              target: 'invalid',
-              actions: ['setErrors'],
-            },
+        validate: {
+          after: {
+            500: [
+              {
+                target: 'normal',
+                cond: 'areDrawdownDatesValid',
+              },
+              { target: 'invalid', actions: ['validateDrawdownAges'] },
+            ],
           },
         },
+        inputProcessing: createinputProcessingState(),
+        saving: createSavingState('#lifePlan.fundingYourRetirement'),
+        deleting: createDeletingState(),
+      },
+    },
+    fundingYourRetirement: {
+      id: 'fundingYourRetirement',
+      initial: 'inputProcessing',
+      on: {
+        SWITCH_TO_PLANNING: {
+          target: '#lifePlan.planningYourRetirement.inputProcessing',
+        },
+        SET_INCLUDE_STATE_PENSION: {
+          target: '.inputProcessing',
+          actions: ['setIncludeStatePension'],
+        },
+        SAVE: '.saving',
+        DELETE: '.deleting',
+      },
+      states: {
+        normal: {},
+        invalid: {},
+        inputProcessing: createinputProcessingState(),
+        saving: createSavingState('#lifePlan.finished'),
+        deleting: createDeletingState(),
       },
     },
 
-    fundingYourRetirement: {},
+    finished: {
+      type: 'final',
+    },
   },
 };
 

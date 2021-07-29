@@ -14,7 +14,7 @@ describe('postGoalCreation', () => {
       drawdownEndAge: 80,
       drawdownStartAge: 56,
       regularDrawdown: 7000,
-      lumpSumDate: new Date(2055, 1, 1).toISOString(),
+      lumpSumDate: new Date(2055, 1, 1),
     };
 
     const data: GoalsApiResponse = {

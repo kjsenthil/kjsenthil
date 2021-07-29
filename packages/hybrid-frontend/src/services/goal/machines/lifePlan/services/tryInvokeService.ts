@@ -8,6 +8,7 @@ const tryInvokeService = async <T = unknown>(
     return Promise.reject(errors);
   }
 
-  return callback();
+  const result = await callback();
+  return Promise.resolve(result);
 };
 export default tryInvokeService;

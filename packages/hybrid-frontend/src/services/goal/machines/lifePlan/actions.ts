@@ -12,10 +12,18 @@ import {
   SetErrorsEvent,
   SetIncomeEvent,
   SetLaterLifeLeftOverEvent,
-  SetLumpSumEvent,
+  SetLumpSumAmountEvent,
+  SetLumpSumAgeEvent,
   PrepopulateContextEvent,
+  SetIndexEvent,
+  SetIncludeStatePensionEvent,
 } from './types';
 import * as math from '../../../../utils/math';
+import * as validators from './validators';
+
+const setIndex = assign<LifePlanMachineContext, SetIndexEvent>((_, { data }) => ({
+  index: data.index,
+}));
 
 const setDrawdownAges = assign<LifePlanMachineContext, SetAgesDrawdownEvent>(
   (_, { payload: { drawdownStartAge, drawdownEndAge } }): Partial<LifePlanMachineContext> => ({
@@ -24,20 +32,23 @@ const setDrawdownAges = assign<LifePlanMachineContext, SetAgesDrawdownEvent>(
   })
 );
 
+const setHasFetchedProjections = assign<LifePlanMachineContext, SetIndexEvent>({
+  hasFetchedProjections: true,
+});
+
 const prepopulate = assign<LifePlanMachineContext, PrepopulateContextEvent>((ctx, { data }) => {
   if (data) {
     return {
+      ...data,
       index: data.index,
-      doesGoalExist: !!data.index,
       monthlyIncome: data.monthlyIncome,
       annualIncome: Math.round(data.monthlyIncome * 12 * 100) / 100,
       drawdownStartAge: data.drawdownStartAge || ctx.drawdownStartAge,
       drawdownEndAge: data.drawdownEndAge || ctx.drawdownEndAge,
+      shouldIncludeStatePension: data.shouldIncludeStatePension,
     };
   }
-  return {
-    doesGoalExist: false,
-  };
+  return {};
 });
 
 const setIncome = assign<LifePlanMachineContext, SetIncomeEvent>(
@@ -62,12 +73,25 @@ const setIncome = assign<LifePlanMachineContext, SetIncomeEvent>(
   }
 );
 
-const setLumpSum = assign<LifePlanMachineContext, SetLumpSumEvent>({
+const setLumpSumAmount = assign<LifePlanMachineContext, SetLumpSumAmountEvent>({
   lumpSum: (_, evt) => evt.payload.lumpSum,
+});
+
+const setLumpSumAge = assign<LifePlanMachineContext, SetLumpSumAgeEvent>({
+  lumpSumAge: (_, evt) => evt.payload.lumpSumAge,
+});
+
+const calcuateLumpSumDate = assign<LifePlanMachineContext>({
+  lumpSumDate: ({ userDateOfBirth, lumpSumAge }) =>
+    calculateDateAfterYears(userDateOfBirth, lumpSumAge),
 });
 
 const setLaterLifeLeftOver = assign<LifePlanMachineContext, SetLaterLifeLeftOverEvent>({
   laterLifeLeftOver: (_, evt) => evt.payload.laterLifeLeftOver,
+});
+
+const setIncludeStatePension = assign<LifePlanMachineContext, SetIncludeStatePensionEvent>({
+  shouldIncludeStatePension: (_, evt) => evt.payload.shouldIncludeStatePension,
 });
 
 const calculateDrawdownDates = assign<LifePlanMachineContext>(
@@ -140,6 +164,10 @@ const calculateTomorrowsMoney = assign<LifePlanMachineContext>(
   }
 );
 
+const validateDrawdownAges = assign<LifePlanMachineContext>((ctx) => ({
+  errors: { ...ctx.errors, ...validators.validateDrawdownAges(ctx) },
+}));
+
 const setErrors = assign<LifePlanMachineContext, SetErrorsEvent>((ctx, evt) => ({
   errors: { ...ctx.errors, ...evt.data },
 }));
@@ -147,15 +175,17 @@ const setErrors = assign<LifePlanMachineContext, SetErrorsEvent>((ctx, evt) => (
 const resetErrors = assign({ errors: null });
 
 export default ({
-  prepopulate,
+  setIndex,
   setErrors,
-  resetErrors,
   setIncome,
-  setLumpSum,
+  setLumpSumAmount,
+  setLumpSumAge,
   setDrawdownAges,
   setLaterLifeLeftOver,
-  reEvaluateDrawdownStartAge,
+  setIncludeStatePension,
+  setHasFetchedProjections,
   calculateAge,
+  calcuateLumpSumDate,
   calculateDrawdownDates,
   calculateTomorrowsMoney,
   calculateRetirementPotValue,
@@ -163,4 +193,8 @@ export default ({
   calculateDrawdownPeriodLength,
   calculateAnnualNetExpectedReturn,
   calculateMonthlyNetExpectedReturn,
+  resetErrors,
+  prepopulate,
+  validateDrawdownAges,
+  reEvaluateDrawdownStartAge,
 } as unknown) as AssignAction<LifePlanMachineContext, LifePlanMachineEvents>;

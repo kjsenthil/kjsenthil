@@ -24,12 +24,12 @@ export default {
   },
 } as Meta;
 
-type StoryProps = Omit<TabsNavigationProps, 'navigate' | 'currentPath'>;
+type StoryProps = Omit<TabsNavigationProps, 'onClick' | 'currentPath'>;
 
 const Template: Story<TabsNavigationProps> = (args) => {
   const [currentPath, setCurrentPath] = React.useState('');
 
-  return <TabsNavigation {...args} navigate={setCurrentPath} currentPath={currentPath} />;
+  return <TabsNavigation {...args} onClick={setCurrentPath} currentPath={currentPath} />;
 };
 
 const defaultArgs: StoryProps = {

@@ -9,6 +9,8 @@ describe('PlanningStepCardTwo', () => {
         onFocus={() => {}}
         annualIncome={0}
         monthlyIncome={0}
+        annualIncomeInTomorrowsMoney={0}
+        monthlyIncomeInTomorrowsMoney={0}
         handleAnnualIncomeChange={() => {}}
         handleMonthlyIncomeChange={() => {}}
         displayError={() => undefined}

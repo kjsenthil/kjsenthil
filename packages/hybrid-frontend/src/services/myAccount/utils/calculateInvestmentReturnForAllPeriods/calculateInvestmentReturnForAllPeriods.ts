@@ -6,6 +6,7 @@ import {
   filterAndMapPerformanceData,
   filterAndMapContributionData,
 } from '../../../performance';
+import { PeriodReturn } from '../../types';
 import calculateInvestmentReturn from '../calculateInvestmentReturn';
 
 const calculateInvestmentReturnForAllPeriods = (
@@ -22,6 +23,6 @@ const calculateInvestmentReturnForAllPeriods = (
     );
 
     return periodReturn;
-  }, {} as InvestmentAccount['periodReturn']);
+  }, {} as PeriodReturn);
 
 export default calculateInvestmentReturnForAllPeriods;

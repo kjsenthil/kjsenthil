@@ -84,11 +84,7 @@ export interface GoalApiFields {
   present_value?: number | null;
   capture_date: GoalPayloadValType<string, 'Date', '_val'>;
   target_date?: GoalPayloadValType<string, 'Date', '_val'>;
-  target_amount?: GoalPayloadValType<
-    GoalPayloadValue<number | string, 'BigDecimal', '_val'>,
-    'Currency',
-    '_val'
-  >;
+  target_amount?: GoalAmountPayload;
   initial_investment?: GoalPayloadValType<
     GoalPayloadValue<number, 'BigDecimal', '_val'>,
     'Currency',
@@ -125,8 +121,8 @@ export interface RetirementInputs {
   drawdownStartAge: number;
   regularDrawdown: number;
   lumpSum?: number;
-  lumpSumDate: Date | number | string;
-  statePensionAmount?: number;
+  lumpSumDate: Date;
+  statePension?: number;
   laterLifeLeftOver?: number;
 }
 
@@ -142,7 +138,7 @@ export interface CommonPayload {
 export interface UncategorisedPayload extends CommonPayload {}
 
 export interface RetirementPayload extends CommonPayload {
-  regular_drawdown: GoalCurrencyValType;
+  regular_drawdown: GoalAmountPayload;
   objective_frequency_start_age: number;
   objective_frequency_end_age: number;
   drawdown_frequency: string;
@@ -181,12 +177,15 @@ export interface GoalsApiResponse {
     objectiveFrequencyEndAge?: number;
     objectiveFrequencyStartAge?: number;
     targetDate?: GoalPayloadValType<string, 'Date', 'val'>;
+    biRetirementLumpSum?: number;
+    biRetirementRemainingAmount?: number;
+    biStatePensionAmount?: number;
+    biRetirementLumpSumDate?: GoalPayloadValType<string, 'Date', 'val'> | null; // Lump sum date
     regularDrawdown?: GoalPayloadValType<
       GoalPayloadValue<number | string, 'BigDecimal', 'val'>,
       'Currency',
       'val'
     >;
-    biRetirementLumpSumDate?: GoalPayloadValType<string, 'Date', 'val'> | null; // Lump sum date
   };
 }
 

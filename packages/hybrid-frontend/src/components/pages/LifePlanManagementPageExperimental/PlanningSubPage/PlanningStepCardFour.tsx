@@ -35,7 +35,6 @@ const PlanningStepCardFour = React.forwardRef(
     >
       <SubPageStepCardContentWithInputsContainer>
         <FormInput
-          disabled
           label="Remaining amount"
           name="remaining-amount"
           type="number"

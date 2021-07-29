@@ -2,8 +2,8 @@ import { CurrentProjectionsPrerequisitePayload } from '../../../projections';
 
 export interface LifePlanMachineContext {
   index: number | null;
-  doesGoalExist: boolean;
   fees: number;
+  defaultStatePension: number;
   clientAge: number;
   inflation: number;
   userDateOfBirth: Date;
@@ -24,12 +24,14 @@ export interface LifePlanMachineContext {
   annualIncomeInTomorrowsMoney: number;
   monthlyIncomeInTomorrowsMoney: number;
   lumpSum: number;
-  lumpSumAtAge: number;
+  lumpSumAge: number;
+  lumpSumDate: Date | null;
   laterLifeLeftOver: number;
   retirementPotValue: number;
   shouldIncludeStatePension: boolean;
   remainingValue: number;
-  errors: Record<InputFieldsKeys, string> | null;
+  hasFetchedProjections: boolean;
+  errors: Partial<Record<InputFieldsKeys, string>> | null;
 }
 
 export type InputFields = Pick<
@@ -39,6 +41,7 @@ export type InputFields = Pick<
   | 'annualIncome'
   | 'monthlyIncome'
   | 'lumpSum'
+  | 'lumpSumAge'
   | 'laterLifeLeftOver'
 >;
 
@@ -49,14 +52,25 @@ export interface LifePlanMachineSchema {
     planningYourRetirement: {
       states: {
         bootstrapping: {};
+        preInputProcessing: {};
+        validate: {};
         normal: {};
         invalid: {};
-        processingInput: {};
+        inputProcessing: {};
         saving: {};
         deleting: {};
       };
     };
-    fundingYourRetirement: {};
+    fundingYourRetirement: {
+      states: {
+        normal: {};
+        invalid: {};
+        inputProcessing: {};
+        saving: {};
+        deleting: {};
+      };
+    };
+    finished: {};
   };
 }
 
@@ -74,14 +88,32 @@ export type SetIncomeEvent = {
     Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
 };
 
-export type SetLumpSumEvent = {
-  type: 'SET_LUMP_SUM';
-  payload: { lumpSum: number };
+export type SwitchToToFunding = {
+  type: 'SWITCH_TO_FUNDING';
+};
+
+export type SwitchToToFlanning = {
+  type: 'SWITCH_TO_PLANNING';
+};
+
+export type SetLumpSumAmountEvent = {
+  type: 'SET_LUMP_SUM_AMOUNT';
+  payload: Pick<LifePlanMachineContext, 'lumpSum'>;
+};
+
+export type SetLumpSumAgeEvent = {
+  type: 'SET_LUMP_SUM_AGE';
+  payload: Pick<LifePlanMachineContext, 'lumpSumAge'>;
 };
 
 export type SetLaterLifeLeftOverEvent = {
   type: 'SET_LATER_LIFE_LEFT_OVER';
-  payload: { laterLifeLeftOver: number };
+  payload: Pick<LifePlanMachineContext, 'laterLifeLeftOver'>;
+};
+
+export type SetIncludeStatePensionEvent = {
+  type: 'SET_INCLUDE_STATE_PENSION';
+  payload: Pick<LifePlanMachineContext, 'shouldIncludeStatePension'>;
 };
 
 export type UpdateCurrentProjectionsEvent = {
@@ -95,6 +127,12 @@ export type PrepopulateContextEvent = {
   payload?: undefined;
 };
 
+export type SetIndexEvent = {
+  type: 'done.invoke.upsertGoal';
+  data: { index: number };
+  payload?: undefined;
+};
+
 export type SetErrorsEvent = {
   type: 'error.platform.updateCurrentProjection';
   data: Record<InputFieldsKeys, string>;
@@ -102,18 +140,35 @@ export type SetErrorsEvent = {
 
 export type LifePlanMachineEvents =
   | PrepopulateContextEvent
+  | SetIndexEvent
   | UpdateCurrentProjectionsEvent
   | SetAgesDrawdownEvent
   | SetIncomeEvent
-  | SetLumpSumEvent
+  | SetLumpSumAmountEvent
+  | SetLumpSumAgeEvent
   | SetLaterLifeLeftOverEvent
+  | SetIncludeStatePensionEvent
   | SetErrorsEvent
+  | SwitchToToFunding
+  | SwitchToToFlanning
   | { type: 'SAVE'; payload?: undefined }
-  | { type: 'DELETE'; payload?: undefined };
+  | { type: 'DELETE'; payload?: undefined }
+  | {
+      type: 'FETCH_PROJETIONS';
+      payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+    };
 
 export type PrepopulateContext =
   | Pick<
       LifePlanMachineContext,
-      'userDateOfBirth' | 'monthlyIncome' | 'drawdownStartAge' | 'drawdownEndAge' | 'index'
+      | 'userDateOfBirth'
+      | 'monthlyIncome'
+      | 'drawdownStartAge'
+      | 'drawdownEndAge'
+      | 'index'
+      | 'lumpSum'
+      | 'lumpSumAge'
+      | 'laterLifeLeftOver'
+      | 'shouldIncludeStatePension'
     >
   | undefined;

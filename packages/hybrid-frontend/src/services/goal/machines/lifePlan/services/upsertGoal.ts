@@ -6,10 +6,14 @@ const fields = {
   drawdownEndAge: 'Drawdown end age',
   annualIncome: 'Annual income',
   monthlyIncome: 'Monthly income',
+  lumpSum: 'Lump sum income',
+  lumpSumAge: 'Lump sum withdrawal age',
+  laterLifeLeftOver: 'Leftover money',
 };
 
-const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext) => Promise<T>) => (
-  ctx: LifePlanMachineContext
+const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext, event) => Promise<T>) => (
+  ctx: LifePlanMachineContext,
+  event
 ): Promise<T> =>
   tryInvokeService<T>(
     () => {
@@ -23,7 +27,7 @@ const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext) => Prom
 
       return errors;
     },
-    () => callback(ctx)
+    () => callback(ctx, event)
   );
 
 export default upsertGoal;

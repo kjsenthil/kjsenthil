@@ -15,7 +15,7 @@ const defaultArgs: RadioGroupProps = {
   label: (
     <>
       Since the government will provide your state pension, we&apos;ll deduct this from your target
-      retirement pot. We use today&apos;s maximum figure of £9,371.27 a year assuming you contribute
+      retirement pot. We use today&apos;s maximum figure of £9,339.20 a year assuming you contribute
       National Insurance for 30 years. Use the <Link>governments website</Link> to find out how much
       your state pension could be.
     </>

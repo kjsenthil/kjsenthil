@@ -1,5 +1,6 @@
 import { useMachine } from '@xstate/react';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Interpreter, State } from 'xstate';
 import {
   lifePlanContext,
   lifePlanMachine,
@@ -32,8 +33,19 @@ import {
   fetchTargetProjections,
   prepareCurrentAndTargetProjectionsRequestPayloads,
 } from '../../services/projections';
+import {
+  LifePlanMachineEvents,
+  LifePlanMachineSchema,
+} from '../../services/goal/machines/lifePlan/types';
 
-const useLifePlanMachine = () => {
+const STATE_PENSION = 9339.2;
+
+const useLifePlanMachine = (): {
+  state: State<LifePlanMachineContext, LifePlanMachineEvents>;
+  send: Interpreter<LifePlanMachineContext, LifePlanMachineSchema, LifePlanMachineEvents>['send'];
+  service: Interpreter<LifePlanMachineContext, LifePlanMachineSchema, LifePlanMachineEvents>;
+  isLoading: boolean;
+} => {
   const dispatch = useAppDispatch();
 
   const bootstrap = lifePlanMachineServices.bootstrap(async () => {
@@ -50,45 +62,63 @@ const useLifePlanMachine = () => {
     };
   });
 
+  const callCurrentProjections = async (context: LifePlanMachineContext, event) => {
+    const {
+      currentProjectionsPayload,
+      targetProjectionsPayload,
+    } = prepareCurrentAndTargetProjectionsRequestPayloads({
+      ...context,
+      ...event.payload,
+    });
+    const dispatchedFetchCurrentProjections = await dispatch(
+      fetchGoalCurrentProjections(currentProjectionsPayload)
+    );
+    unwrapResult(dispatchedFetchCurrentProjections);
+    const dispatchedFetchTargetProjections = await dispatch(
+      fetchTargetProjections(targetProjectionsPayload)
+    );
+    unwrapResult(dispatchedFetchTargetProjections);
+  };
+
   const updateCurrentProjections = lifePlanMachineServices.updateCurrentProjections(
-    async (context: LifePlanMachineContext, event) => {
-      const {
-        currentProjectionsPayload,
-        targetProjectionsPayload,
-      } = prepareCurrentAndTargetProjectionsRequestPayloads({
-        ...context,
-        ...event.payload,
-      });
-      unwrapResult(await dispatch(fetchGoalCurrentProjections(currentProjectionsPayload)));
-      unwrapResult(await dispatch(fetchTargetProjections(targetProjectionsPayload)));
-    }
+    callCurrentProjections
   );
 
-  const upsertGoal = lifePlanMachineServices.upsertGoal(
-    ({
+  const upsertGoal = lifePlanMachineServices.upsertGoal(async (context, event) => {
+    await callCurrentProjections(context, event);
+    const {
       index,
       drawdownStartAge,
+      drawdownStartDate,
       drawdownEndAge,
       monthlyIncome: regularDrawdown,
-      drawdownStartDate,
-    }: LifePlanMachineContext) => {
-      const inputs: PostGoalParams<GoalType.RETIREMENT> = {
-        goalType: GoalType.RETIREMENT,
-        inputs: {
-          drawdownStartAge,
-          drawdownEndAge,
-          regularDrawdown,
-          lumpSumDate: new Date(drawdownStartDate!), // TODO: to implement lumpSumDate in V2 of retirement goal creation page
-        },
-      };
+      lumpSum,
+      lumpSumDate,
+      laterLifeLeftOver,
+      shouldIncludeStatePension,
+      defaultStatePension,
+    } = context;
+    const inputs: PostGoalParams<GoalType.RETIREMENT> = {
+      goalType: GoalType.RETIREMENT,
+      inputs: {
+        drawdownStartAge,
+        drawdownEndAge,
+        regularDrawdown,
+        lumpSum,
+        lumpSumDate: lumpSumDate || drawdownStartDate!,
+        laterLifeLeftOver,
+        statePension: shouldIncludeStatePension ? defaultStatePension : 0,
+      },
+    };
 
-      if (index) {
-        return patchGoalUpdate(index, inputs);
-      }
-
-      return postGoalCreation(inputs);
+    if (index) {
+      await patchGoalUpdate(index, inputs);
+      return { index };
     }
-  );
+
+    const result = await postGoalCreation(inputs);
+    return { index: result.index };
+  });
 
   const deleteGoal = lifePlanMachineServices.deleteGoal(({ index }: LifePlanMachineContext) =>
     cancelGoal(Number(index))
@@ -108,6 +138,7 @@ const useLifePlanMachine = () => {
       })
       .withContext({
         ...lifePlanContext,
+        defaultStatePension: STATE_PENSION,
         drawdownStartAge: GoalDefaults.DRAW_DOWN_START_AGE,
         drawdownEndAge: GoalDefaults.DRAW_DOWN_END_AGE,
         expectedReturnOfTAA: GoalDefaults.EXPECTED_RETURN_OF_TAA,
@@ -116,7 +147,17 @@ const useLifePlanMachine = () => {
     { devTools: !IS_PRODUCTION }
   );
 
-  return { state, send, service };
+  const isLoading = [
+    'planningYourRetirement.saving',
+    'planningYourRetirement.deleting',
+    'planningYourRetirement.inputProcessing',
+    'planningYourRetirement.bootstrapping',
+    'fundingYourRetirement.saving',
+    'fundingYourRetirement.deleting',
+    'fundingYourRetirement.inputProcessing',
+  ].some(state.matches);
+
+  return { state, send, service, isLoading };
 };
 
 export default useLifePlanMachine;

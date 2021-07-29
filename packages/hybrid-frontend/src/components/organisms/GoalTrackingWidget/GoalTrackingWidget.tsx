@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { formatPercent, formatCurrency } from '../../../utils/formatters';
 import {
   Grid,
   Typography,
@@ -15,11 +16,13 @@ import ProgressBarWithLegend, {
 } from '../../molecules/ProgressBarWithLegend';
 import { GoalTrackingCardContent } from './GoalTrackingWidget.styles';
 
-export interface GoalTrackingWidgetProps extends ProgressBarWithLegendProps {
+export interface GoalTrackingWidgetProps
+  extends Omit<ProgressBarWithLegendProps, 'currencyFormatter'> {
   target: number;
-  onTrack: string;
+  onTrack: number;
   totalProjected: number;
   drawdownStartAge: number;
+  surplusOrShortfall: number;
   drawdownEndAge: number;
   drawdownMonthlyIncome: number;
 }
@@ -29,9 +32,9 @@ const GoalTrackingWidget = ({
   totalProjected,
   onTrack,
   drawdownStartAge,
+  surplusOrShortfall,
   drawdownEndAge,
   drawdownMonthlyIncome,
-  currencyFormatter,
   progressBarData,
 }: GoalTrackingWidgetProps) => {
   const theme = useTheme();
@@ -51,11 +54,11 @@ const GoalTrackingWidget = ({
               <Grid item direction="row" container alignItems="center">
                 <Spacer x={1} />
                 <Typography color="primary" colorShade="dark2" variant="h3">
-                  {currencyFormatter(totalProjected)}
+                  {formatCurrency(totalProjected)}
                 </Typography>
                 <span>{'\u00a0\u00a0/\u00a0\u00a0'}</span>
                 <Typography color="grey" colorShade="dark1" variant="sh3">
-                  {currencyFormatter(target)}
+                  {formatCurrency(target)}
                 </Typography>
               </Grid>
               <Spacer y={2} />
@@ -65,15 +68,17 @@ const GoalTrackingWidget = ({
                   tooltip="Some description"
                   typographyProps={{ color: 'grey', colorShade: 'dark1' }}
                 >
-                  You&#39;re on track to have {onTrack} of your target. That&#39;s a short fall of
+                  You&#39;re on track to have{' '}
+                  {formatPercent(onTrack, { opts: { minimumFractionDigits: 0 } })} of your target.
+                  That&#39;s a {onTrack > 1 ? `surplus` : `shortfall`} of
                   {'\u00a0'}
-                  {currencyFormatter(target - totalProjected)}.
+                  {formatCurrency(Math.abs(surplusOrShortfall))}.
                 </TypographyWithTooltip>
               </Grid>
               <Spacer y={2} />
               <ProgressBarWithLegend
                 progressBarData={progressBarData}
-                currencyFormatter={currencyFormatter}
+                currencyFormatter={formatCurrency}
               />
             </Grid>
           </Grid>
@@ -95,7 +100,7 @@ const GoalTrackingWidget = ({
                 tooltip="Some description"
                 typographyProps={{ color: 'grey', colorShade: 'dark1' }}
               >
-                You&#39;re likely to have {currencyFormatter(drawdownMonthlyIncome)} to spend each
+                You&#39;re likely to have {formatCurrency(drawdownMonthlyIncome)} to spend each
                 month between ages {drawdownStartAge} - {drawdownEndAge}.
               </TypographyWithTooltip>
               <Spacer y={2} />

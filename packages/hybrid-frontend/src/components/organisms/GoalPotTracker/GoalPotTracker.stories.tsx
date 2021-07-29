@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { formatCurrency } from '../../../utils/formatters';
 import GoalPotTracker, { GoalPotTrackerProps } from './GoalPotTracker';
 
 export default {
@@ -9,14 +8,6 @@ export default {
 } as Meta;
 
 const Template: Story<GoalPotTrackerProps> = (args) => <GoalPotTracker {...args} />;
-
-const currencyFormatter = (val: number) =>
-  formatCurrency(val, {
-    opts: {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    },
-  });
 
 const lumpSumValue = 375000;
 const projectionValue = 1500000;
@@ -27,7 +18,6 @@ const defaultArgs: GoalPotTrackerProps = {
   title: 'Your retirement pot',
   potTotal: totalValue,
   progressBarProps: {
-    currencyFormatter,
     progressBarData: [
       {
         legendProps: { title: 'Lump sum', value: lumpSumValue },

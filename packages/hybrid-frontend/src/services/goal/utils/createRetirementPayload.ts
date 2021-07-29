@@ -1,15 +1,16 @@
 import generateCurrencyPayload from './generateCurrencyPayload';
 import { goalsDefaultValues } from '../config';
 import { GoalAdviceType, GoalCategory, RetirementInputs, RetirementPayload } from '../types';
+import formatDate from '../../../utils/date/formatDate/index';
 
 const createRetirementPayload = ({
   drawdownStartAge,
   drawdownEndAge,
   regularDrawdown,
-  lumpSum = 0.1,
+  lumpSum = 0,
   lumpSumDate,
-  statePensionAmount = 0.1,
-  laterLifeLeftOver = 0.1,
+  laterLifeLeftOver = 0,
+  statePension = 0,
   description,
 }: RetirementInputs): { fields: RetirementPayload } => ({
   fields: {
@@ -22,8 +23,8 @@ const createRetirementPayload = ({
     objective_frequency_end_age: drawdownEndAge,
     drawdown_frequency: '12',
     bi_retirement_lump_sum: lumpSum,
-    bi_retirement_lump_sum_date: lumpSumDate,
-    bi_state_pension_amount: statePensionAmount,
+    bi_retirement_lump_sum_date: formatDate(new Date(lumpSumDate), 'YYYY-MM-DD', false),
+    bi_state_pension_amount: statePension,
     bi_retirement_remaining_amount: laterLifeLeftOver,
   },
 });

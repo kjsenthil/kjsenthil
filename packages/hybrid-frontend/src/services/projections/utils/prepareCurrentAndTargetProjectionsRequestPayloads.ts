@@ -54,20 +54,20 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
     preGoalRiskModel: riskModel,
     preGoalExpectedReturn: erValue,
     feesPercentage: fees / 100,
-    includeStatePension: shouldIncludeStatePension,
-    desiredMonthlyDrawdown: monthlyIncome,
+    desiredMonthlyDrawdown: monthlyIncome || 0,
     drawdownStartDate: formatDrawdownDate(drawdownStartDate || defaultDrawDownStartDate),
     drawdownEndDate: formatDrawdownDate(drawdownEndDate || defaultDrawDownEndDate),
     upfrontContribution: 0,
+    includeStatePension: !!shouldIncludeStatePension,
     statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
+    lumpSumDate: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
   };
 
   const currentProjectionsPayload = {
     timeHorizon,
     isConeGraph: true,
     lumpSumAmount: lumpSum,
-    lumpSumDate: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
-    desiredAmount: 0,
+    desiredAmount: laterLifeLeftOver,
     netContribution: totalNetContributions,
     monthlyContributions,
     portfolioCurrentValue,
@@ -87,7 +87,6 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
     postGoalVolatility: volatility,
     goalLumpSum: lumpSum,
     desiredValueAtEndOfDrawdown: laterLifeLeftOver,
-    lumpSumDate: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
     ...commonPayload,
   };
 

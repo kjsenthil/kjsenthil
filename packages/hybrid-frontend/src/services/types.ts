@@ -1,10 +1,10 @@
 export interface InvestmentAccountData {
   id?: string;
-  accountName?: string;
-  accountTotalHoldings?: number;
-  accountCash?: number;
-  accountReturn?: number;
-  accountReturnPercentage?: number;
+  accountName: string;
+  accountTotalHoldings: number;
+  accountCash: number;
+  accountReturn: number;
+  accountReturnPercentage: number;
   equityPercentage?: number;
   monthlyInvestment?: number;
 }
