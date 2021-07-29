@@ -4922,6 +4922,7 @@ __metadata:
     jest-coverage-badges: ^1.1.2
     jest-extended: ^0.11.5
     jest-html-reporter: ^3.3.0
+    jest-styled-components: ^7.0.5
     lint-staged: ^10.5.3
     mockdate: ^3.0.5
     pluralize: ^8.0.0
@@ -18597,6 +18598,17 @@ fsevents@^1.2.7:
     pretty-format: ^26.6.2
     semver: ^7.3.2
   checksum: 53f1de055b1d3840bc6e851fd674d5991b844d4695dadbd07354c93bf191048d8767b8606999847e97c4214a485b9afb45c1d2411772befa1870414ac973b3e2
+  languageName: node
+  linkType: hard
+
+"jest-styled-components@npm:^7.0.5":
+  version: 7.0.5
+  resolution: "jest-styled-components@npm:7.0.5"
+  dependencies:
+    css: ^3.0.0
+  peerDependencies:
+    styled-components: ">= 5"
+  checksum: fef9f261dd59d6d095c1bc43da5ba5faaf87ca73dff20ff10e38f70201c35c60f6347836581c087bab6a8b26de29adc4cd657fdf2a28cf98609b2452a7368549
   languageName: node
   linkType: hard
 

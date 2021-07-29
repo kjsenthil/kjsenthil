@@ -4,22 +4,206 @@ exports[`GoalPotTracker matches snapshot 1`] = `
 Object {
   "result": Object {
     "asFragment": [Function],
-    "baseElement": <body>
+    "baseElement": .c3 {
+  position: relative;
+  width: 100%;
+  height: 2.375rem;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.c5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 110%;
+  border-radius: 6px;
+  background: #a5f2ec;
+  -webkit-animation: dKzkex 1s ease-out;
+  animation: dKzkex 1s ease-out;
+  z-index: 1;
+}
+
+.c6 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 40%;
+  border-radius: 6px;
+  background: linear-gradient(to left,#00e8d9,#00c4bd 50%);
+  -webkit-animation: gBYqud 1s ease-out;
+  animation: gBYqud 1s ease-out;
+  z-index: 1;
+}
+
+.c7 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 10%;
+  border-radius: 6px;
+  background: #009492;
+  -webkit-animation: kiPwco 1s ease-out;
+  animation: kiPwco 1s ease-out;
+  z-index: 1;
+}
+
+.c4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  border: 2px dashed #ebb300;
+}
+
+.c1 {
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #380c57;
+  white-space: normal;
+}
+
+.c2 {
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #00c4bd;
+  white-space: normal;
+}
+
+.c11 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #6a6775;
+  white-space: nowrap;
+}
+
+.c13 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #380c57;
+  white-space: nowrap;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c8 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+}
+
+.c9 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 10%;
+  -webkit-animation: kiPwco 1s ease-out;
+  animation: kiPwco 1s ease-out;
+  z-index: 1;
+}
+
+.c14 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 30%;
+  -webkit-animation: hpUXGe 1s ease-out;
+  animation: hpUXGe 1s ease-out;
+  z-index: 1;
+}
+
+.c15 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 70%;
+  -webkit-animation: jZJhoi 1s ease-out;
+  animation: jZJhoi 1s ease-out;
+  z-index: 1;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+<body>
       <div>
         <div
-          class="sc-faUofl cYOXre"
+          class="c0"
         >
           <div
             class="MuiBox-root MuiBox-root-1"
           >
             <span
-              class="MuiTypography-root sc-jrQzUz jCZfJK MuiTypography-body1"
+              class="MuiTypography-root c1 MuiTypography-body1"
             >
               Main title
               : 
             </span>
             <span
-              class="MuiTypography-root sc-jrQzUz UTINV MuiTypography-body1"
+              class="MuiTypography-root c2 MuiTypography-body1"
             >
               £100
             </span>
@@ -29,20 +213,20 @@ Object {
           >
             <div
               aria-valuenow="110.00000000000001"
-              class="sc-iCfLBT fLrhme"
+              class="c3"
               role="progressbar"
             >
               <div
-                class="sc-pVTma kWowoK"
+                class="c4"
               />
               <div
-                class="sc-furvIG erDLzm"
+                class="c5"
               />
               <div
-                class="sc-furvIG iDqOBC"
+                class="c6"
               />
               <div
-                class="sc-furvIG avoAJ"
+                class="c7"
               />
             </div>
             <div
@@ -50,26 +234,26 @@ Object {
               data-testid="Spacer"
             />
             <div
-              class="sc-ikJzcn gZHwkl"
+              class="c8"
             >
               <div
-                class="sc-jJoQpE isypUD"
+                class="c9"
                 width="10"
               >
                 <div
-                  class="sc-bBHwJV kXmoUd"
+                  class="c10"
                 >
                   <div>
                     <h6
-                      class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                      class="MuiTypography-root c11 MuiTypography-body1"
                     >
                       TITLE A
                     </h6>
                     <div
-                      class="sc-iwjezw hwFGdy"
+                      class="c12"
                     >
                       <h6
-                        class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
+                        class="MuiTypography-root c13 MuiTypography-body1"
                       >
                         £10.00
                       </h6>
@@ -78,23 +262,23 @@ Object {
                 </div>
               </div>
               <div
-                class="sc-jJoQpE bmnsXL"
+                class="c14"
                 width="30"
               >
                 <div
-                  class="sc-bBHwJV kXmoUd"
+                  class="c10"
                 >
                   <div>
                     <h6
-                      class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                      class="MuiTypography-root c11 MuiTypography-body1"
                     >
                       TITLE B
                     </h6>
                     <div
-                      class="sc-iwjezw hwFGdy"
+                      class="c12"
                     >
                       <h6
-                        class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
+                        class="MuiTypography-root c13 MuiTypography-body1"
                       >
                         £30.00
                       </h6>
@@ -103,23 +287,23 @@ Object {
                 </div>
               </div>
               <div
-                class="sc-jJoQpE hYOjDQ"
+                class="c15"
                 width="70"
               >
                 <div
-                  class="sc-bBHwJV kXmoUd"
+                  class="c10"
                 >
                   <div>
                     <h6
-                      class="MuiTypography-root sc-jrQzUz EJbHG MuiTypography-body1"
+                      class="MuiTypography-root c11 MuiTypography-body1"
                     >
                       TITLE C
                     </h6>
                     <div
-                      class="sc-iwjezw hwFGdy"
+                      class="c12"
                     >
                       <h6
-                        class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
+                        class="MuiTypography-root c13 MuiTypography-body1"
                       >
                         £70.00
                       </h6>

@@ -1,13 +1,136 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HeaderMenu renders the header menu 1`] = `
+.c8 {
+  font-size: 0.75rem;
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.018125rem;
+  -moz-letter-spacing: 0.018125rem;
+  -ms-letter-spacing: 0.018125rem;
+  letter-spacing: 0.018125rem;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  padding: 12px 16px;
+  padding: 12px 16px;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.c8.Mui-disabled {
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  opacity: 0.2;
+}
+
+.c8 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c9 {
+  font-size: 0.75rem;
+  background-color: #6c00bf;
+  color: #fff;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.018125rem;
+  -moz-letter-spacing: 0.018125rem;
+  -ms-letter-spacing: 0.018125rem;
+  letter-spacing: 0.018125rem;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  padding: 12px 16px;
+  padding: 12px 16px;
+  text-transform: none;
+  white-space: break-space;
+}
+
+.c9.Mui-disabled {
+  background-color: #6c00bf;
+  color: #fff;
+  opacity: 0.2;
+}
+
+.c9 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c6 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #380c57;
+  white-space: normal;
+}
+
+.c7 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: normal;
+  color: #000;
+  white-space: normal;
+}
+
+.c3 {
+  background-color: #eeedfc;
+  width: 100%;
+  height: 2px;
+  border-radius: 1.5px;
+}
+
+.c1 {
+  font-weight: bold;
+  font-size: 0.875rem;
+  font-family: FSElliot,Roboto;
+}
+
+.c4 .MuiToolbar-root {
+  border-top: 2px solid [object Object];
+}
+
+.c0 {
+  box-shadow: 1px 2px 44px 0 rgba(139,139,139,0.26);
+}
+
+.c2 {
+  background-image: url('/PurpleBestInvest.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 38px;
+  width: 124px;
+}
+
+.c5 {
+  text-align: left;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
 <div>
   <div
     class="MuiBox-root MuiBox-root-1"
     data-test-id="header-menu"
   >
     <header
-      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit sc-GamvQ eicXZI MuiPaper-elevation0"
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
       data-testid="header-menu"
     >
       <div
@@ -23,10 +146,10 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
             >
               <button
-                class="MuiTypography-root MuiLink-root MuiLink-underlineHover sc-dJjZJu jauytq MuiLink-button MuiTypography-colorPrimary"
+                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 MuiLink-button MuiTypography-colorPrimary"
               >
                 <div
-                  class="sc-fWCJfs iDVXit"
+                  class="c2"
                 />
               </button>
             </div>
@@ -70,11 +193,11 @@ exports[`HeaderMenu renders the header menu 1`] = `
         data-testid="Spacer"
       >
         <div
-          class="sc-iqsfdx YcysP"
+          class="c3"
         />
       </div>
       <div
-        class="MuiToolbar-root MuiToolbar-regular sc-eJwXpk hSaTsD MuiToolbar-gutters"
+        class="MuiToolbar-root MuiToolbar-regular c4 MuiToolbar-gutters"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -83,15 +206,15 @@ exports[`HeaderMenu renders the header menu 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <div
-              class="sc-TBWwm hFwqmN"
+              class="c5"
             >
               <h6
-                class="MuiTypography-root sc-jrQzUz bxceGS MuiTypography-body1"
+                class="MuiTypography-root c6 MuiTypography-body1"
               >
                 £101,100.00
               </h6>
               <p
-                class="MuiTypography-root sc-jrQzUz ifrOuG MuiTypography-body1"
+                class="MuiTypography-root c7 MuiTypography-body1"
               >
                 cash ready to invest
               </p>
@@ -104,7 +227,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined sc-gsDJrp jHMvjH MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined c8 MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
               >
@@ -136,7 +259,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained sc-gsDJrp fELEhA MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained c9 MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
               >
