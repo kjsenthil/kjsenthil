@@ -53,8 +53,10 @@ const LoginPage = (_: LoginPageProps) => {
         <Grid item xs={12}>
           <LoginForm
             onSubmit={onLoginFormSubmit}
-            errorMessage={status === 'error' ? credLoginError : undefined}
-            successMessage={isCredLoggedIn ? 'Success' : undefined}
+            errorMessage={
+              status === 'error' && credLoginError ? 'Incorrect username or password' : undefined
+            }
+            successMessage={status === 'success' && isCredLoggedIn ? 'Success' : undefined}
           />
         </Grid>
 
@@ -62,7 +64,9 @@ const LoginPage = (_: LoginPageProps) => {
           <Grid item xs={12}>
             <PinLogin
               onPinSubmit={onPinSubmit}
-              errorMessage={status === 'error' ? pinLoginError : undefined}
+              errorMessage={
+                status === 'error' && pinLoginError ? 'Incorrect pin digits' : undefined
+              }
             />
           </Grid>
         )}
