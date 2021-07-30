@@ -97,7 +97,7 @@ jobs:
       - name: "Install Function App dependencies"
         run: |
           yarn plugin import workspace-tools
-          yarn workspaces focus --production @tsw/function-app-features @tsw/function-app-projections
+          yarn workspaces focus --production @tsw/function-app-features @tsw/function-app-projections @tsw/function-app-returns
 
       - name: "Create function app zips"
         run: yarn all:fa:build:zip
@@ -590,19 +590,18 @@ jobs:
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
-  
   api_tests:
     name: "Api Tests"
     if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     runs-on: ubuntu-latest
     needs:
-     - detect_changes
-     - build_cache
-     - get_pr_terraform_outputs
-     - unit_test
-     - deploy_gatsby
-     - deploy_storybook
+      - detect_changes
+      - build_cache
+      - get_pr_terraform_outputs
+      - unit_test
+      - deploy_gatsby
+      - deploy_storybook
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -630,18 +629,18 @@ jobs:
 
       - name: "Run Api tests"
         run: yarn test:api
-        env :
-            API_BASE_URL : ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-            PR_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
-            PR_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
-            PR_PIN_POSITION_2: ${{ secrets.DH_TEST_USER_PIN_2 }}
-            PR_PIN_POSITION_4: ${{ secrets.DH_TEST_USER_PIN_4 }}
-            PR_PIN_POSITION_6: ${{ secrets.DH_TEST_USER_PIN_6 }}
-            PR_ISA_ACCOUNT_ID: ${{ secrets.DH_TEST_ISA_ACCOUNT_ID }}
-            PR_GIA_ACCOUNT_ID: ${{ secrets.DH_TEST_GIA_ACCOUNT_ID }}
-            PR_SIPP_ACCOUNT_ID: ${{ secrets.DH_TEST_SIPP_ACCOUNT_ID }}
-            PR_ACCOUNT_IDs: ${{ secrets.DH_TEST_ACCOUNT_IDs }}
-            
+        env:
+          API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+          PR_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
+          PR_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
+          PR_PIN_POSITION_2: ${{ secrets.DH_TEST_USER_PIN_2 }}
+          PR_PIN_POSITION_4: ${{ secrets.DH_TEST_USER_PIN_4 }}
+          PR_PIN_POSITION_6: ${{ secrets.DH_TEST_USER_PIN_6 }}
+          PR_ISA_ACCOUNT_ID: ${{ secrets.DH_TEST_ISA_ACCOUNT_ID }}
+          PR_GIA_ACCOUNT_ID: ${{ secrets.DH_TEST_GIA_ACCOUNT_ID }}
+          PR_SIPP_ACCOUNT_ID: ${{ secrets.DH_TEST_SIPP_ACCOUNT_ID }}
+          PR_ACCOUNT_IDs: ${{ secrets.DH_TEST_ACCOUNT_IDs }}
+
   # Deploys frontend pr contents
   deploy_gatsby:
     name: "Build & Deploy Gatsby"

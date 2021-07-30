@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a8d60440-ea1f-4fef-9fd6-43c66aba3547",
+		"_postman_id": "47fbae11-eeec-40d1-b5b8-738744418432",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4010,6 +4010,125 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Returns",
+			"item": [
+				{
+					"name": "Annualised Return",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//calculate months to age to 100\r",
+									"var moment = require('moment');\r",
+									"\r",
+									"var today = moment();\r",
+									"var dob = pm.environment.get('myAccounts.DateOfBirth');\r",
+									"\r",
+									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
+									"console.log(dateOfBirth);\r",
+									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + (dateOfBirth.month()+1).toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.date().toString()).slice(-2);\r",
+									"var dateTo100 = moment(dateTo100String,\"YYYY-MM-DD\");\r",
+									"var timeHorizon= dateTo100.diff(today, 'months');\r",
+									"pm.environment.set('timeHorizon',timeHorizon );\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"netContributionData\": [\r\n        {\r\n            \"date\": \"2015-01-01\",\r\n            \"netContributionsToDate\": 1000\r\n        },\r\n        {\r\n            \"date\": \"2016-01-01\",\r\n            \"netContributionsToDate\": 2500\r\n        },\r\n        {\r\n            \"date\": \"2017-01-01\",\r\n            \"netContributionsToDate\": 1700\r\n        },\r\n        {\r\n            \"date\": \"2018-01-01\",\r\n            \"netContributionsToDate\": 1200\r\n        },\r\n        {\r\n            \"date\": \"2019-01-01\",\r\n            \"netContributionsToDate\": 2200\r\n        },\r\n        {\r\n            \"date\": \"2020-01-01\",\r\n            \"netContributionsToDate\": 3400\r\n        },\r\n        {\r\n            \"date\": \"2021-01-01\",\r\n            \"netContributionsToDate\": 4400\r\n        }\r\n    ],\r\n    \"currentPortfolioData\": {\r\n        \"date\": \"2021-07-21\",\r\n        \"currentPortfolioAmount\": -9200\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/returns/annualised-return",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"returns",
+								"annualised-return"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"riskModel\": \"TAA5\",\r\n    \"sedolCode\": \"BYX8KR5\",\r\n    \"upfrontInvestment\": 635376.130119,\r\n    \"monthlyInvestment\": 0,\r\n    \"investmentPeriod\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/returns/annualised-return",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"returns",
+										"annualised-return"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:32:41 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"annualisedReturnValue\": 20.77898137116826,\n  \"transactionData\": [\n    {\n      \"date\": \"2015-01-01\",\n      \"transactionAmount\": 1000\n    },\n    {\n      \"date\": \"2016-01-01\",\n      \"transactionAmount\": 1500\n    },\n    {\n      \"date\": \"2017-01-01\",\n      \"transactionAmount\": -800\n    },\n    {\n      \"date\": \"2018-01-01\",\n      \"transactionAmount\": -500\n    },\n    {\n      \"date\": \"2019-01-01\",\n      \"transactionAmount\": 1000\n    },\n    {\n      \"date\": \"2020-01-01\",\n      \"transactionAmount\": 1200\n    },\n    {\n      \"date\": \"2021-01-01\",\n      \"transactionAmount\": 1000\n    },\n    {\n      \"date\": \"2021-07-21\",\n      \"transactionAmount\": -9200\n    }\n  ]\n}"
+						}
+					]
 				}
 			]
 		},

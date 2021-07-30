@@ -169,74 +169,76 @@ function isTransactionDataValid(
 function validateInput(inboundPayload: RequestPayload): ValidationError[] {
   let errors: ValidationError[] = [];
 
-  if (!inboundPayload || Object.keys(inboundPayload).length === 0)
+  if (!inboundPayload || Object.keys(inboundPayload).length === 0) {
     errors.push({
       code: "val-annualreturns-001",
       property: "inboundPayload",
       message: "inbound_payload_not_defined",
     });
-  else {
-    if (!inboundPayload?.netContributionData)
-      errors.push({
-        code: "val-annualreturns-002",
-        property: "netContribution_data",
-        message: "netContribution_data_not_defined",
-      });
-    else {
-      inboundPayload?.netContributionData?.forEach(
-        (netContributionItem, idx) => {
-          if (
-            typeof netContributionItem.date == "undefined" ||
-            !Date.parse(netContributionItem.date)
-          ) {
-            errors.push({
-              code: "val-annualreturns-003-" + idx,
-              property: "netContribution_date_" + idx,
-              message: "netContribution_date_not_defined_for_item_" + idx,
-            });
-          } else if (!netContributionItem.netContributionsToDate) {
-            errors.push({
-              code: "val-annualreturns-004-" + idx,
-              property: "netContribution_amount_" + idx,
-              message:
-                "netContribution_amount_not_defined_or_zero_for_item_" + idx,
-            });
-          }
-        }
-      );
-    }
 
-    if (!inboundPayload?.currentPortfolioData)
-      errors.push({
-        code: "val-annualreturns-005",
-        property: "currentPortfolio_data",
-        message: "currentPortfolio_data_not_defined",
-      });
-    else {
+    return errors;
+  }
+
+  if (
+    !inboundPayload.netContributionData ||
+    inboundPayload.netContributionData.length === 0
+  )
+    errors.push({
+      code: "val-annualreturns-002",
+      property: "netContribution_data",
+      message: "netContribution_data_not_defined",
+    });
+  else {
+    inboundPayload.netContributionData.forEach((netContributionItem, idx) => {
       if (
-        typeof inboundPayload.currentPortfolioData.date == "undefined" ||
-        !Date.parse(inboundPayload.currentPortfolioData.date)
+        typeof netContributionItem.date == "undefined" ||
+        !Date.parse(netContributionItem.date)
       ) {
         errors.push({
-          code: "val-annualreturns-006",
-          property: "currentPortfolio_date",
-          message: "currentPortfolio_date_not_defined",
+          code: "val-annualreturns-003-" + idx,
+          property: "netContribution_date_" + idx,
+          message: "netContribution_date_not_defined_for_item_" + idx,
         });
-      } else if (!inboundPayload.currentPortfolioData.currentPortfolioAmount) {
+      } else if (!netContributionItem.netContributionsToDate) {
         errors.push({
-          code: "val-annualreturns-007",
-          property: "currentPortfolio_amount",
-          message: "currentPortfolio_amount_not_defined_or_zero",
-        });
-      } else if (
-        inboundPayload.currentPortfolioData.currentPortfolioAmount >= 0
-      ) {
-        errors.push({
-          code: "val-annualreturns-008",
-          property: "currentPortfolio_amount",
-          message: "currentPortfolio_amount_must_be_negative",
+          code: "val-annualreturns-004-" + idx,
+          property: "netContribution_amount_" + idx,
+          message: "netContribution_amount_not_defined_or_zero_for_item_" + idx,
         });
       }
+    });
+  }
+
+  if (!inboundPayload.currentPortfolioData)
+    errors.push({
+      code: "val-annualreturns-005",
+      property: "currentPortfolio_data",
+      message: "currentPortfolio_data_not_defined",
+    });
+  else {
+    if (
+      typeof inboundPayload.currentPortfolioData.date == "undefined" ||
+      !Date.parse(inboundPayload.currentPortfolioData.date)
+    ) {
+      errors.push({
+        code: "val-annualreturns-006",
+        property: "currentPortfolio_date",
+        message: "currentPortfolio_date_not_defined",
+      });
+    } else if (!inboundPayload.currentPortfolioData.currentPortfolioAmount) {
+      errors.push({
+        code: "val-annualreturns-007",
+        property: "currentPortfolio_amount",
+        message: "currentPortfolio_amount_not_defined_or_zero",
+      });
+    } else if (
+      inboundPayload.currentPortfolioData.currentPortfolioAmount >= 0
+    ) {
+      errors.push({
+        code: "val-annualreturns-008",
+        property: "currentPortfolio_amount",
+        message: "currentPortfolio_amount_must_be_negative",
+      });
     }
   }
 
