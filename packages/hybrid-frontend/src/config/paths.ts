@@ -11,6 +11,7 @@ export enum NavPaths {
   STARTING_A_BUSINESS_MANAGEMENT = '/my-account/goals/starting-a-business-management',
   EMERGENCY_FUNDS_MANAGEMENT = '/my-account/goals/emergency-funds-management',
   SOMETHING_ELSE_MANAGEMENT = '/my-account/goals/something-else-management',
+  ADD_CASH_PAGE = '/my-account/add-cash',
 }
 
 export const goalCreationPaths: Record<string, { name: string; path?: NavPaths }> = {

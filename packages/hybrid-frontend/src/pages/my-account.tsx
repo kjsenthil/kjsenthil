@@ -7,6 +7,7 @@ import LoginPage from '../components/pages/LoginPage';
 import LogoutPage from '../components/pages/LogoutPage';
 import BIAccountsPage from '../components/pages/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage';
+import AddCashPage from '../components/pages/AddCashPage';
 import { NavPaths } from '../config/paths';
 import { useFeatureFlagToggle } from '../hooks';
 import { FeatureFlagNames } from '../constants';
@@ -20,8 +21,8 @@ const MyAccount = () => {
     trackPageView(location.pathname);
   }, [location]);
 
-  const retirementV2Feature = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
-  const retirementV2Enabled = !!retirementV2Feature?.isEnabled;
+  const experimentalFeature = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
+  const experimentalFeatureEnabled = !!experimentalFeature?.isEnabled;
 
   const getBasePath = (path: NavPaths) => path.replace(NavPaths.ROOT_PAGE, '');
 
@@ -36,9 +37,12 @@ const MyAccount = () => {
       <PrivateRoute
         path={`${getBasePath(NavPaths.LIFE_PLAN_MANAGEMENT)}/*`}
         Component={
-          retirementV2Enabled ? LifePlanManagementPageExperimental : LifePlanManagementPage
+          experimentalFeatureEnabled ? LifePlanManagementPageExperimental : LifePlanManagementPage
         }
       />
+      {experimentalFeatureEnabled && (
+        <PrivateRoute path={getBasePath(NavPaths.ADD_CASH_PAGE)} Component={AddCashPage} />
+      )}
       <NotFoundPage default />
     </Router>
   );
