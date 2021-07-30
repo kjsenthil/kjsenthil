@@ -157,3 +157,4 @@ jobs:
           TF_VAR_apim_subnet_name: ${{ needs.get_apim_outputs.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.get_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_apim_outputs.outputs.app_insights_name }}
+          TF_VAR_git_branch_name: ${{ github.head_ref }}

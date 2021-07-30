@@ -369,6 +369,7 @@ jobs:
           TF_VAR_apim_subnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_dev_apim_outputs.outputs.app_insights_name }}
+          TF_VAR_git_branch_name: ${{ github.head_ref }}
 
       - name: "Terraform Apply"
         id: pr-apply
@@ -381,6 +382,7 @@ jobs:
           TF_VAR_apim_subnet_name: ${{ needs.get_dev_apim_outputs.outputs.apim_subnet_name }}
           TF_VAR_cdn_profile_name: ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_dev_apim_outputs.outputs.app_insights_name }}
+          TF_VAR_git_branch_name: ${{ github.head_ref }}
 
   get_pr_terraform_outputs:
     name: "Get PR Terraform outputs"
@@ -871,6 +873,7 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_cdn_profile_name: ${{ needs.get_staging_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_staging_apim_outputs.outputs.app_insights_name }}
+          TF_VAR_git_branch_name: ${{ github.head_ref }}
 
     outputs:
       plan_outcome_rg: ${{ steps.plan-rg.outcome }}
@@ -1046,6 +1049,7 @@ jobs:
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_cdn_profile_name: ${{ needs.get_prod_apim_outputs.outputs.cdn_profile_name }}
           TF_VAR_app_insights_name: ${{ needs.get_prod_apim_outputs.outputs.app_insights_name }}
+          TF_VAR_git_branch_name: ${{ github.head_ref }}
 
     outputs:
       plan_outcome_rg: ${{ steps.plan-rg.outcome }}

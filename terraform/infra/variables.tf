@@ -3,6 +3,11 @@ variable "environment_prefix" {
   description = "The name of the environment to deploy the resource."
 }
 
+variable "git_branch_name" {
+  type        = string
+  description = "Name of the Git branch, used as a tag on resources"
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}

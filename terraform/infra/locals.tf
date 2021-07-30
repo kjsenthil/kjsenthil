@@ -44,5 +44,6 @@ locals {
     "terraform"           = "true"
     "main_directory_path" = "./terraform/infra"
     "env_prefix"          = var.environment_prefix
+    "BranchName"          = var.git_branch_name
   }
 }
