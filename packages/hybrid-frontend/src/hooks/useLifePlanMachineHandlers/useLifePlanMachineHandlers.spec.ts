@@ -87,8 +87,8 @@ describe('useLifePlanMachineHandlers', () => {
     });
   });
 
-  it('calls send with SET_INCOME on handleAnnualIncomeChange with event target value and prerequisites', () => {
-    handlers.handleAnnualIncomeChange(cast({ target: { value: '100000' } }));
+  it('calls send with SET_INCOME on handleAnnualIncomeChange with normalized event target value and prerequisites', () => {
+    handlers.handleAnnualIncomeChange(cast({ target: { value: '100,000' } }));
     expect(mockSend).toHaveBeenCalledWith('SET_INCOME', {
       payload: { annualIncome: 100000, ...prerequisites },
     });
@@ -101,10 +101,10 @@ describe('useLifePlanMachineHandlers', () => {
     });
   });
 
-  it('calls send with SET_INCOME on handleMonthlyIncomeChange with event target value and prerequisites', () => {
-    handlers.handleMonthlyIncomeChange(cast({ target: { value: '10000' } }));
+  it('calls send with SET_INCOME on handleMonthlyIncomeChange with normalized event target value and prerequisites', () => {
+    handlers.handleMonthlyIncomeChange(cast({ target: { value: '10,000.01' } }));
     expect(mockSend).toHaveBeenCalledWith('SET_INCOME', {
-      payload: { monthlyIncome: 10000, ...prerequisites },
+      payload: { monthlyIncome: 10000.01, ...prerequisites },
     });
   });
 
@@ -115,8 +115,8 @@ describe('useLifePlanMachineHandlers', () => {
     });
   });
 
-  it('calls send with SET_LUMP_SUM_AMOUNT on handleLumpSumAmountChange with event target value and prerequisites', () => {
-    handlers.handleLumpSumAmountChange(cast({ target: { value: '200000' } }));
+  it('calls send with SET_LUMP_SUM_AMOUNT on handleLumpSumAmountChange with normalized event target value and prerequisites', () => {
+    handlers.handleLumpSumAmountChange(cast({ target: { value: '200,000' } }));
     expect(mockSend).toHaveBeenCalledWith('SET_LUMP_SUM_AMOUNT', {
       payload: { lumpSum: 200000, ...prerequisites },
     });
@@ -143,8 +143,8 @@ describe('useLifePlanMachineHandlers', () => {
     });
   });
 
-  it('calls send with SET_LATER_LIFE_LEFT_OVER on handleRemainingAmountChange with event target value and prerequisites', () => {
-    handlers.handleRemainingAmountChange(cast({ target: { value: '20000' } }));
+  it('calls send with SET_LATER_LIFE_LEFT_OVER on handleRemainingAmountChange with normalized event target value and prerequisites', () => {
+    handlers.handleRemainingAmountChange(cast({ target: { value: '20,000' } }));
     expect(mockSend).toHaveBeenCalledWith('SET_LATER_LIFE_LEFT_OVER', {
       payload: { laterLifeLeftOver: 20000, ...prerequisites },
     });

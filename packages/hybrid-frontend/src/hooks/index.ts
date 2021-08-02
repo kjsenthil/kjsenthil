@@ -2,6 +2,7 @@ import { BasicInfo } from './useBasicInfo';
 
 export { default as useGoals } from './useGoals';
 export { default as useBasicInfo } from './useBasicInfo';
+export { default as useBreakpoint } from './useBreakpoint';
 export { default as useGoalImages } from './useGoalImages';
 export { default as useScreenSize } from './useScreenSize';
 export { default as useChartStyles } from './useChartStyles';

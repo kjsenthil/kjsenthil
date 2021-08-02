@@ -13,7 +13,7 @@ describe('FormInput', () => {
 
   describe('Form input as text field', () => {
     it('renders a text field', () => {
-      renderWithTheme(<FormInput label={label} name="text" defaultValue="Text Value" />);
+      renderWithTheme(<FormInput label={label} name="text" value="Text Value" />);
       expect(screen.getByRole('textbox')).toHaveProperty('value', 'Text Value');
     });
   });

@@ -7,12 +7,11 @@ import LoginPage from '../components/pages/LoginPage';
 import LogoutPage from '../components/pages/LogoutPage';
 import BIAccountsPage from '../components/pages/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage';
+import LifePlanManagementPage from '../components/pages/LifePlanManagementPage';
 import AddCashPage from '../components/pages/AddCashPage';
-import { NavPaths } from '../config/paths';
 import { useFeatureFlagToggle } from '../hooks';
 import { FeatureFlagNames } from '../constants';
-import LifePlanManagementPageExperimental from '../components/pages/LifePlanManagementPageExperimental/LifePlanManagementPageExperimental';
-import LifePlanManagementPage from '../components/pages/LifePlanManagementPage';
+import { NavPaths } from '../config/paths';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -36,9 +35,7 @@ const MyAccount = () => {
       <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPage} />
       <PrivateRoute
         path={`${getBasePath(NavPaths.LIFE_PLAN_MANAGEMENT)}/*`}
-        Component={
-          experimentalFeatureEnabled ? LifePlanManagementPageExperimental : LifePlanManagementPage
-        }
+        Component={LifePlanManagementPage}
       />
       {experimentalFeatureEnabled && (
         <PrivateRoute path={getBasePath(NavPaths.ADD_CASH_PAGE)} Component={AddCashPage} />

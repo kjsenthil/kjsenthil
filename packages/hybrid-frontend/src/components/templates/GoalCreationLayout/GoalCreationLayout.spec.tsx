@@ -3,33 +3,28 @@ import { renderWithTheme, screen } from '@tsw/test-util';
 import GoalCreationLayout from './GoalCreationLayout';
 
 describe('GoalCreationLayout', () => {
-  it('Renders with child elements and default params', async () => {
-    renderWithTheme(
-      <GoalCreationLayout>
-        <div data-testid="some-child-element" />
-      </GoalCreationLayout>
-    );
-    expect(await screen.findByTestId('some-child-element')).toBeInTheDocument();
-    expect(await screen.findByText('Your life after work')).toBeInTheDocument();
-    expect(await screen.findByAltText('goal image')).toBeInTheDocument();
-  });
-
-  it('Renders with child elements with params', async () => {
+  it('Renders with child elements and default params', () => {
     renderWithTheme(
       <GoalCreationLayout
-        title="test-title"
-        iconAlt="test-alt"
+        title="Some title"
+        iconAlt="goal image alt text"
+        progressButtonTitle="Next"
         progressEventHandler={() => {}}
         onDeleteHandler={() => {}}
-        progressButtonTitle="test-next"
+        tabsNavigationProps={{
+          currentPath: '',
+          tabs: [],
+          onClick: () => {},
+        }}
       >
         <div data-testid="some-child-element" />
       </GoalCreationLayout>
     );
-    expect(await screen.findByTestId('some-child-element')).toBeInTheDocument();
-    expect(await screen.findByText('test-title')).toBeInTheDocument();
-    expect(await screen.findByAltText('test-alt')).toBeInTheDocument();
-    expect(await screen.findByText('test-next')).toBeInTheDocument();
-    expect(await screen.findByText('Delete')).toBeInTheDocument();
+    expect(screen.getByText('Some title')).toBeInTheDocument();
+    expect(screen.getByTestId('some-child-element')).toBeInTheDocument();
+    expect(screen.getByAltText('goal image alt text')).toBeInTheDocument();
+    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByText('Delete')).toBeInTheDocument();
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 });

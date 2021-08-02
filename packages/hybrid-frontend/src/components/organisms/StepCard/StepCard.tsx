@@ -1,52 +1,37 @@
 import React from 'react';
-import { Box, Grid, Typography } from '../../atoms';
+import { Box, Typography } from '../../atoms';
 import { DigitalCoachBox, DigitalCoachBoxProps } from '../../molecules';
-import { CardContainer } from './StepCard.styles';
+import { CardChildrenContainer, CardContainer } from './StepCard.styles';
 
 export interface StepCardProps {
   step: number;
   title: string;
 
-  horizontalLayout?: boolean;
+  // If true, children will span the full width of the card. Otherwise, children
+  // will start after the "step number" column
+  childrenFullWidth?: boolean;
 
+  // Will show a DigitalCoachBox if provided
   digitalCoachBoxProps?: DigitalCoachBoxProps;
 
   children: React.ReactNode;
 }
 
-const StepCard = ({
-  title,
-  step,
-  horizontalLayout = true,
-  digitalCoachBoxProps,
-  children,
-}: StepCardProps) => (
-  <CardContainer>
-    <Grid container spacing={3} alignItems="center">
-      <Grid item>
-        <Box mr={3}>
-          <Typography variant="h4" component="h2" color="primary">
-            {step}.
-          </Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12} sm={5}>
-        <Typography variant="h4" component="h3">
-          {title}
-        </Typography>
-      </Grid>
-      <Grid item xs={horizontalLayout ? 'auto' : 12}>
-        <Box m={1}>
-          <Grid container direction="column">
-            {children}
-            <Box pt={2.5}>
-              {digitalCoachBoxProps && <DigitalCoachBox {...digitalCoachBoxProps} />}
-            </Box>
-          </Grid>
-        </Box>
-      </Grid>
-    </Grid>
-  </CardContainer>
+const StepCard = React.forwardRef(
+  ({ title, step, childrenFullWidth, digitalCoachBoxProps, children }: StepCardProps, ref) => (
+    <CardContainer ref={ref}>
+      <Typography variant="h4" component="h2" color="primary">
+        {step}.
+      </Typography>
+      <Typography variant="h4" component="h3">
+        {title}
+      </Typography>
+      <CardChildrenContainer childrenFullWidth={!!childrenFullWidth}>
+        <Box>{children}</Box>
+        <Box pt={2.5}>{digitalCoachBoxProps && <DigitalCoachBox {...digitalCoachBoxProps} />}</Box>
+      </CardChildrenContainer>
+    </CardContainer>
+  )
 );
 
 export default StepCard;

@@ -6,7 +6,7 @@ import PlanningStepCardTwo, { PlanningStepCardTwoProps } from './PlanningStepCar
 import PlanningStepCardThree, { PlanningStepCardThreeProps } from './PlanningStepCardThree';
 import PlanningStepCardFour, { PlanningStepCardFourProps } from './PlanningStepCardFour';
 
-import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayoutExperimental';
+import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 
 type SubComponentsProps = Omit<
   RouteComponentProps &
@@ -52,23 +52,22 @@ export default function PlanningSubPage({
 }: PlanningSubPageProps) {
   const { hash: currentUrlHash } = useLocation();
 
+  const steps = ['#step-1', '#step-2', '#step-3', '#step-4'];
+
   const stepCardOneElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardTwoElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardThreeElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardFourElementRef = React.useRef<HTMLElement | null>(null);
 
-  const handleStepOneInputsFocused = () => {
-    navigate('#step-1');
+  const handleInputFocused = (index: number) => () => {
+    navigate(steps[index]);
   };
-  const handleStepTwoInputsFocused = () => {
-    navigate('#step-2');
-  };
-  const handleStepThreeInputsFocused = () => {
-    navigate('#step-3');
-  };
-  const handleStepFourInputsFocused = () => {
-    navigate('#step-4');
-  };
+
+  React.useEffect(() => {
+    if (!steps.includes(currentUrlHash)) {
+      navigate(steps[0]);
+    }
+  }, [currentUrlHash]);
 
   const mainContentElements = [
     {
@@ -77,7 +76,7 @@ export default function PlanningSubPage({
       element: (
         <PlanningStepCardOne
           ref={stepCardOneElementRef}
-          onFocus={handleStepOneInputsFocused}
+          onFocus={handleInputFocused(0)}
           drawdownStartAge={drawdownStartAge}
           drawdownEndAge={drawdownEndAge}
           drawdownStartDate={drawdownStartDate}
@@ -99,7 +98,7 @@ export default function PlanningSubPage({
       element: (
         <PlanningStepCardTwo
           ref={stepCardTwoElementRef}
-          onFocus={handleStepTwoInputsFocused}
+          onFocus={handleInputFocused(1)}
           annualIncome={annualIncome}
           monthlyIncome={monthlyIncome}
           annualIncomeInTomorrowsMoney={annualIncomeInTomorrowsMoney}
@@ -117,7 +116,7 @@ export default function PlanningSubPage({
       element: (
         <PlanningStepCardThree
           ref={stepCardThreeElementRef}
-          onFocus={handleStepThreeInputsFocused}
+          onFocus={handleInputFocused(2)}
           drawdownStartAge={drawdownStartAge}
           lumpSumAmount={lumpSumAmount}
           lumpSumAge={lumpSumAge}
@@ -134,7 +133,7 @@ export default function PlanningSubPage({
       element: (
         <PlanningStepCardFour
           ref={stepCardFourElementRef}
-          onFocus={handleStepFourInputsFocused}
+          onFocus={handleInputFocused(3)}
           drawdownEndAge={drawdownEndAge}
           remainingAmount={remainingAmount}
           handleRemainingAmountChange={handleRemainingAmountChange}

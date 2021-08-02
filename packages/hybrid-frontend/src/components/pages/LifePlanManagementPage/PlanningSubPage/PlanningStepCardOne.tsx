@@ -6,7 +6,7 @@ import {
   SubPageStepCardInputContainer,
 } from '../CommonSubPage/CommonSubPage.styles';
 import { FormInput } from '../../../molecules';
-import StepCardExperimental from '../../../organisms/StepCardExperimental';
+import StepCard from '../../../organisms/StepCard';
 import { Typography } from '../../../atoms';
 
 export interface PlanningStepCardOneProps {
@@ -42,7 +42,7 @@ const PlanningStepCardOne = React.forwardRef(
     const drawdownEndYear = drawdownEndDate ? drawdownEndDate.getFullYear() : 0;
 
     return (
-      <StepCardExperimental
+      <StepCard
         ref={ref}
         step={1}
         title="When would you like to access your retirement income?"
@@ -67,6 +67,7 @@ const PlanningStepCardOne = React.forwardRef(
               onFocus={onFocus}
               error={displayError('drawdownStartAge')}
               value={drawdownStartAge || undefined}
+              shouldDelayOnChange
             />
             <Typography variant="b3" color="primary" colorShade="dark2">
               {`That's year ${drawdownStartYear}`}
@@ -84,13 +85,14 @@ const PlanningStepCardOne = React.forwardRef(
               onFocus={onFocus}
               error={displayError('drawdownEndAge')}
               value={drawdownEndAge || undefined}
+              shouldDelayOnChange
             />
             <Typography variant="b3" color="primary" colorShade="dark2">
               {`That's year ${drawdownEndYear}`}
             </Typography>
           </SubPageStepCardInputContainer>
         </SubPageStepCardContentWithInputsContainer>
-      </StepCardExperimental>
+      </StepCard>
     );
   }
 );

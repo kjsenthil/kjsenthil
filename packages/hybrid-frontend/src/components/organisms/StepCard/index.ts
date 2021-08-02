@@ -1,3 +1,1 @@
-import StepCard from './StepCard';
-
-export default StepCard;
+export { default } from './StepCard';

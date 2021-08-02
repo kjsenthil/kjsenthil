@@ -52,13 +52,17 @@ export interface PerformanceProjectionsChartProps
   historicalData: ProjectionsChartHistoricalDatum[];
   goalsData: ProjectionsChartGoalDatum[];
   projectionsMetadata: ProjectionsChartMetadata;
-
   // If true, will always show the projections likely range band. Otherwise,
   // will only show the band on hover.
   showLikelyRange: boolean;
-
   // A function used by the likely range toggle to toggle likely range
-  toggleLikelyRange: () => void;
+  toggleLikelyRange?: () => void;
+
+  panelOptions?: {
+    displayContributions?: boolean;
+    displayLikelyRangeLegend?: boolean;
+    displayLikelyRangeToggle?: boolean;
+  };
 }
 
 // ---------- Utilities ---------- //
@@ -87,6 +91,11 @@ function PerformanceProjectionsChart({
   projectionsMetadata,
   showLikelyRange,
   toggleLikelyRange,
+  panelOptions = {
+    displayContributions: true,
+    displayLikelyRangeLegend: true,
+    displayLikelyRangeToggle: true,
+  },
   parentWidth = 0,
 }: PerformanceProjectionsChartProps) {
   // ----- Stylings ----- //
@@ -312,12 +321,12 @@ function PerformanceProjectionsChart({
     <Container>
       <PerformanceProjectionsChartSummaryPanel
         performance={performance}
-        performanceLowEnd={performanceLowEnd}
-        performanceHighEnd={performanceHighEnd}
-        contributions={contributions}
+        performanceLowEnd={panelOptions.displayContributions ? performanceLowEnd : undefined}
+        performanceHighEnd={panelOptions.displayContributions ? performanceHighEnd : undefined}
+        contributions={panelOptions.displayContributions ? contributions : undefined}
         performanceTargetNotMet={performanceTargetNotMet}
         showLikelyRange={showLikelyRange}
-        toggleLikelyRange={toggleLikelyRange}
+        toggleLikelyRange={panelOptions.displayLikelyRangeToggle ? toggleLikelyRange : undefined}
       />
 
       <svg

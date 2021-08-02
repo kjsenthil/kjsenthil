@@ -2,7 +2,7 @@ import * as React from 'react';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import { SubPageStepCardContentWithInputsContainer } from '../CommonSubPage/CommonSubPage.styles';
 import { FormInput } from '../../../molecules';
-import StepCardExperimental from '../../../organisms/StepCardExperimental';
+import StepCard from '../../../organisms/StepCard';
 
 export interface PlanningStepCardFourProps {
   onFocus: () => void;
@@ -23,7 +23,7 @@ const PlanningStepCardFour = React.forwardRef(
     }: PlanningStepCardFourProps,
     ref
   ) => (
-    <StepCardExperimental
+    <StepCard
       ref={ref}
       step={4}
       title={`Would you like to have money left over at ${drawdownEndAge}?`}
@@ -44,9 +44,10 @@ const PlanningStepCardFour = React.forwardRef(
           onFocus={onFocus}
           error={displayError('lumpSum')}
           value={remainingAmount || undefined}
+          shouldDelayOnChange
         />
       </SubPageStepCardContentWithInputsContainer>
-    </StepCardExperimental>
+    </StepCard>
   )
 );
 

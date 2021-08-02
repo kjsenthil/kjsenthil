@@ -28,6 +28,9 @@ type BasicHandlerFunctions = {
   [key in BasicHandlers]: () => void;
 };
 
+const normalizeNumberTargetValue = (event: InputEvent) =>
+  Number((event.target.value || '0').replace(',', ''));
+
 export type LifePlanMachineHandlers = BasicHandlerFunctions &
   EventHandlerFunctions & {
     handleCustomEvent: <T extends string, P extends Object>(type: T, payload?: P) => void;
@@ -47,7 +50,7 @@ const useLifePlanMachineHandlers = ({
   const handleFromAgeChange = (event: InputEvent) => {
     send('SET_DRAWDOWN_AGES', {
       payload: {
-        drawdownStartAge: Number(event.target.value || 0),
+        drawdownStartAge: normalizeNumberTargetValue(event),
         drawdownEndAge,
       },
     });
@@ -57,7 +60,7 @@ const useLifePlanMachineHandlers = ({
     send('SET_DRAWDOWN_AGES', {
       payload: {
         drawdownStartAge,
-        drawdownEndAge: Number(event.target.value || 0),
+        drawdownEndAge: normalizeNumberTargetValue(event),
       },
     });
   };
@@ -65,7 +68,7 @@ const useLifePlanMachineHandlers = ({
   const handleAnnualIncomeChange = (event: InputEvent) => {
     send('SET_INCOME', {
       payload: {
-        annualIncome: Number(event.target.value || 0),
+        annualIncome: normalizeNumberTargetValue(event),
         ...projectionsPrerequisitesPayload,
       },
     });
@@ -74,7 +77,7 @@ const useLifePlanMachineHandlers = ({
   const handleMonthlyIncomeChange = (event: InputEvent) => {
     send('SET_INCOME', {
       payload: {
-        monthlyIncome: Number(event.target.value || 0),
+        monthlyIncome: normalizeNumberTargetValue(event),
         ...projectionsPrerequisitesPayload,
       },
     });
@@ -83,7 +86,7 @@ const useLifePlanMachineHandlers = ({
   const handleLumpSumAmountChange = (event: InputEvent) => {
     send('SET_LUMP_SUM_AMOUNT', {
       payload: {
-        lumpSum: Number(event.target.value || 0),
+        lumpSum: normalizeNumberTargetValue(event),
         ...projectionsPrerequisitesPayload,
       },
     });
@@ -92,7 +95,7 @@ const useLifePlanMachineHandlers = ({
   const handleLumpSumAgeChange = (event: InputEvent) => {
     send('SET_LUMP_SUM_AGE', {
       payload: {
-        lumpSumAge: Number(event.target.value || 0),
+        lumpSumAge: normalizeNumberTargetValue(event),
         ...projectionsPrerequisitesPayload,
       },
     });
@@ -101,7 +104,7 @@ const useLifePlanMachineHandlers = ({
   const handleRemainingAmountChange = (event: InputEvent) => {
     send('SET_LATER_LIFE_LEFT_OVER', {
       payload: {
-        laterLifeLeftOver: Number(event.target.value || 0),
+        laterLifeLeftOver: normalizeNumberTargetValue(event),
         ...projectionsPrerequisitesPayload,
       },
     });

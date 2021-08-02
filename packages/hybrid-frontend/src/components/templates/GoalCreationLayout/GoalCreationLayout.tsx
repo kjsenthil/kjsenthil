@@ -1,26 +1,32 @@
+import * as React from 'react';
 import { navigate } from 'gatsby';
-import React from 'react';
-import { LinearProgress, Button, Divider, Grid, Icon, IconButton, Spacer } from '../../atoms';
+import { Button, Divider, Grid, Icon, IconButton, LinearProgress, Spacer } from '../../atoms';
+import { TabsNavigation, TabsNavigationProps } from '../../molecules';
 import LayoutContainer from '../LayoutContainer';
 import { GoalTitle, GoalTitleIcon, StyledAppBar, StyledToolBar } from './GoalCreationLayout.styles';
 
 export interface GoalCreationLayoutProps {
-  children?: React.ReactNode;
   title?: string;
   iconSrc?: string;
   iconAlt?: string;
   progressButtonTitle?: string;
-  onDeleteHandler?: () => void;
-  disableProgress?: boolean;
   isLoading?: boolean;
+
+  // Navigation
+  disableProgress?: boolean;
   progressEventHandler?: () => void;
+  onDeleteHandler?: () => void;
   onCancelHandler?: () => void;
+
+  // Tabs
+  tabsNavigationProps: TabsNavigationProps;
+
+  children: React.ReactNode;
 }
 
 const navigateBack = () => navigate(-1);
 
 const GoalCreationLayout = ({
-  children,
   title = 'Your life after work',
   iconSrc = '/goal-graphic.png',
   iconAlt = 'goal image',
@@ -30,6 +36,8 @@ const GoalCreationLayout = ({
   disableProgress = false,
   progressEventHandler,
   onCancelHandler = navigateBack,
+  tabsNavigationProps,
+  children,
 }: GoalCreationLayoutProps) => (
   <LayoutContainer>
     <StyledAppBar position="relative" data-testid="goal-header-menu" elevation={0}>
@@ -59,6 +67,10 @@ const GoalCreationLayout = ({
       </StyledToolBar>
     </StyledAppBar>
     {isLoading && <LinearProgress color="primary" />}
+    <Spacer y={7.5} />
+
+    <TabsNavigation {...tabsNavigationProps} />
+
     <Spacer y={4} />
     {children}
     <Spacer y={1} />

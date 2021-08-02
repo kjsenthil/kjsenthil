@@ -2,6 +2,11 @@ import * as React from 'react';
 import { screen, renderWithTheme } from '@tsw/test-util';
 import GoalCreationSubPageLayout from './GoalCreationSubPageLayout';
 
+jest.mock('../../../hooks', () => ({
+  useStateIsAvailable: jest.fn().mockReturnValue(true),
+  useBreakpoint: jest.fn().mockReturnValue(false),
+}));
+
 describe('GoalCreationSubPageLayout', () => {
   function TestComponent() {
     const refOne = React.useRef(null);

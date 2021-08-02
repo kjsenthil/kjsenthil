@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useGoalCreationLayoutIsMobile } from '../../GoalCreationLayoutExperimental';
+import { useBreakpoint } from '../../../../hooks';
 import { OverallLayoutContainer } from './OverallLayout.styles';
 
 interface OverallLayoutProps {
@@ -9,7 +9,7 @@ interface OverallLayoutProps {
 
 const OverallLayout = React.forwardRef(
   ({ sideContentFirstOnMobile, children }: OverallLayoutProps, ref) => {
-    const isMobile = useGoalCreationLayoutIsMobile();
+    const isMobile = useBreakpoint();
 
     return (
       <OverallLayoutContainer

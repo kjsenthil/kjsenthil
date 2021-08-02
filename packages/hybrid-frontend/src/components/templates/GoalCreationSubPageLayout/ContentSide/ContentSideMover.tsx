@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useGoalCreationLayoutIsMobile } from '../../GoalCreationLayoutExperimental';
 import { ContentSideMoverContainer } from './ContentSide.styles';
+import { useBreakpoint } from '../../../../hooks';
 
 interface ContentSideMoverProps {
   offsetY: number;
@@ -10,7 +10,7 @@ interface ContentSideMoverProps {
 // Mobile: either on top or at bottom
 // Desktop: on the right
 const ContentSideMover = React.forwardRef(({ offsetY, children }: ContentSideMoverProps, ref) => {
-  const isMobile = useGoalCreationLayoutIsMobile();
+  const isMobile = useBreakpoint();
 
   return (
     <ContentSideMoverContainer

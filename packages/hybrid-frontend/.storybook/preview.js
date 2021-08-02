@@ -11,9 +11,18 @@ import { mockClientResponse, mockInvestmentSummaryResponse } from '../src/servic
 const mockStore = configureStore({
   reducer: {
     client: () => mockClientResponse,
-    investmentSummary: () => mockInvestmentSummaryResponse,
-    projections: () => ({
-      projections: { projections: undefined },
+    investmentSummary: () => ({
+      status: 'success',
+      ...mockInvestmentSummaryResponse,
+    }),
+    goalCurrentProjections: () => ({
+      status: 'idle',
+    }),
+    goalTargetProjections: () => ({
+      status: 'idle',
+    }),
+    currentGoals: () => ({
+      status: 'idle',
     }),
   },
 });

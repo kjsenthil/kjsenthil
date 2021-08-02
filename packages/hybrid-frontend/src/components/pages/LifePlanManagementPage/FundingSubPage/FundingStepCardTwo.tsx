@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { FormControlLabel, Radio, Theme } from '../../../atoms';
 import { RadioGroup, TypographyWithTooltip } from '../../../molecules';
-import StepCardExperimental from '../../../organisms/StepCardExperimental';
+import StepCard from '../../../organisms/StepCard';
 
 export interface FundingStepCardOneProps {
   shouldIncludeStatePension: boolean;
@@ -19,7 +19,7 @@ const FundingStepCardTwoChildContainer = styled.div`
 
 const FundingStepCardTwo = React.forwardRef(
   ({ shouldIncludeStatePension, onChange }: FundingStepCardOneProps, ref) => (
-    <StepCardExperimental ref={ref} step={2} title="Include your State Pension?">
+    <StepCard ref={ref} step={2} title="Include your State Pension?">
       <FundingStepCardTwoChildContainer>
         <TypographyWithTooltip typographyProps={{ variant: 'b3' }} tooltip="">
           {`Since the government will provide your state pension, we’ll deduct
@@ -33,7 +33,7 @@ const FundingStepCardTwo = React.forwardRef(
           <FormControlLabel value="false" control={<Radio />} label="No" />
         </RadioGroup>
       </FundingStepCardTwoChildContainer>
-    </StepCardExperimental>
+    </StepCard>
   )
 );
 

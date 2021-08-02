@@ -59,7 +59,7 @@ const useGoalsDataForChart = ({
     filteredGoalsFieldsFromState = goalsFromState.filter(
       ({ fields }) => fields.category === GoalCategory.UNCATEGORIZED
     );
-  } else if (fallbackGoalData) {
+  } else if (fallbackGoalData && filteredGoalsFieldsFromState.length === 0) {
     filteredGoalsFieldsFromState = [
       {
         fields: { category, description: '', status: GoalStatus.UNFULFILLED, ...fallbackGoalData },

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import StepCard from './StepCard';
 import { Typography } from '../../atoms';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { navigate, RouteComponentProps, useLocation } from '@reach/router';
-import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayoutExperimental';
+import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 import FundingStepCardOne from './FundingStepCardOne';
 import FundingStepCardTwo from './FundingStepCardTwo';
 import { PerformanceDataPeriod } from '../../../../services/performance';
@@ -24,9 +24,13 @@ export default function GoalCreationFundingSubPage({
 
   const { investmentAccounts } = useSelector((state: RootState) => state);
 
+  const steps = ['#step-1', '#step-2'];
+
   React.useEffect(() => {
-    navigate('#step-1');
-  }, []);
+    if (!steps.includes(currentUrlHash)) {
+      navigate(steps[0]);
+    }
+  }, [currentUrlHash]);
 
   const tableData = (investmentAccounts.data || []).map(
     ({ id, accountName = '', accountTotalHoldings, monthlyInvestment = 0 }) => ({

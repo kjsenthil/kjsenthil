@@ -253,7 +253,7 @@ const LifePlanPage = () => {
 
       <MainCard title="Your important moments">
         <YourImportantMomentsContainer>
-          {goalCurrentProjections && (
+          {retirementGoal && goalCurrentProjections && (
             <GoalProgressCard
               onTrackPercentage={goalCurrentProjections.onTrackPercentage ?? 0}
               affordableValues={[

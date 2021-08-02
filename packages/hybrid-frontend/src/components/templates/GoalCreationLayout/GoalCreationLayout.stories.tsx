@@ -1,23 +1,63 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import GoalCreationLayout, { GoalCreationLayoutProps } from './GoalCreationLayout';
-import { Button, Typography } from '../../atoms';
+import { Typography } from '../../atoms';
 import { MainCard } from '../../molecules';
+
+const noControl = {
+  control: {
+    type: null,
+  },
+};
 
 export default {
   title: 'Digital Hybrid/Templates/Goal Creation Layout',
   component: GoalCreationLayout,
-  argTypes: {},
+  argTypes: {
+    tabsNavigationProps: { ...noControl },
+    progressEventHandler: { ...noControl },
+    onDeleteHandler: { ...noControl },
+    onCancelHandler: { ...noControl },
+    children: { ...noControl },
+  },
 } as Meta;
 
-const Template: Story<GoalCreationLayoutProps> = (args) => <GoalCreationLayout {...args} />;
+type StoryProps = Omit<GoalCreationLayoutProps, 'tabsNavigationProps' | 'children'>;
 
-const defaultArgs = {
-  children: (
-    <MainCard title="Test body" renderActionEl={() => <Button>Click Me</Button>}>
-      <Typography variant="h1">Test Content</Typography>
-    </MainCard>
-  ),
+const ExampleContent = ({ content }: { content: string }) => (
+  <MainCard>
+    <Typography>{content}</Typography>
+  </MainCard>
+);
+
+const Template: Story<StoryProps> = (args) => {
+  const [currentPath, setCurrentPath] = React.useState('');
+
+  const content =
+    currentPath === 'tab-2' ? (
+      <ExampleContent content="Tab 2 content" />
+    ) : (
+      <ExampleContent content="Tab 1 content" />
+    );
+
+  return (
+    <GoalCreationLayout
+      {...args}
+      tabsNavigationProps={{
+        currentPath,
+        onClick: setCurrentPath,
+        tabs: [
+          { path: 'tab-1', label: 'Tab 1' },
+          { path: 'tab-2', label: 'Tab 2' },
+        ],
+      }}
+    >
+      {content}
+    </GoalCreationLayout>
+  );
+};
+
+const defaultArgs: StoryProps = {
   progressEventHandler: () => {},
 };
 

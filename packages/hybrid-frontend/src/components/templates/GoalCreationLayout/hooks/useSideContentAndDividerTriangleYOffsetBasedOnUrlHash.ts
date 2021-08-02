@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useGoalCreationLayoutIsMobile from './useGoalCreationLayoutIsMobile';
+import { useBreakpoint } from '../../../../hooks';
 
 export interface CalculateSideContentYOffsetProps {
   overallLayoutElementRect: DOMRect;
@@ -48,6 +48,8 @@ export function calculateDividerTriangleYOffset({
 type ElementRef = React.MutableRefObject<HTMLElement | null>;
 
 export interface UseSideContentAndDividerTriangleYOffsetBasedOnUrlHashProps {
+  forceRefresh?: boolean;
+
   currentUrlHash: string;
 
   overallLayoutElementRef: ElementRef;
@@ -63,6 +65,7 @@ export interface UseSideContentAndDividerTriangleYOffsetBasedOnUrlHashProps {
  * hash.
  */
 export default function useSideContentAndDividerTriangleYOffsetBasedOnUrlHash({
+  forceRefresh,
   currentUrlHash,
   overallLayoutElementRef,
   mainContentElementsRefs,
@@ -73,7 +76,7 @@ export default function useSideContentAndDividerTriangleYOffsetBasedOnUrlHash({
   dividerTriangleYOffset: number;
 } {
   // Need this to re-run the layout effect when mobile / desktop view changes
-  const isMobile = useGoalCreationLayoutIsMobile();
+  const isMobile = useBreakpoint();
 
   const [sideContentYOffset, setSideContentYOffset] = React.useState(0);
   const [dividerTriangleYOffset, setDividerTriangleYOffset] = React.useState(0);
@@ -131,7 +134,7 @@ export default function useSideContentAndDividerTriangleYOffsetBasedOnUrlHash({
         })
       );
     }
-  }, [currentUrlHash, isMobile]);
+  }, [currentUrlHash, isMobile, forceRefresh]);
 
   return { sideContentYOffset, dividerTriangleYOffset };
 }

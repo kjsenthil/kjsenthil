@@ -1,11 +1,11 @@
 import * as React from 'react';
-import useSideContentAndDividerTriangleYOffsetBasedOnUrlHash from '../GoalCreationLayoutExperimental/hooks/useSideContentAndDividerTriangleYOffsetBasedOnUrlHash';
-import { useGoalCreationLayoutIsMobile } from '../GoalCreationLayoutExperimental';
+import useSideContentAndDividerTriangleYOffsetBasedOnUrlHash from '../GoalCreationLayout/hooks/useSideContentAndDividerTriangleYOffsetBasedOnUrlHash';
 import OverallLayout from './OverallLayout/OverallLayout';
 import { ContentMain, ContentMainChildContainer } from './ContentMain/ContentMain.styles';
 import ContentDivider from './ContentDivider/ContentDivider';
 import { ContentSide } from './ContentSide/ContentSide.styles';
 import ContentSideMover from './ContentSide/ContentSideMover';
+import { useStateIsAvailable, useBreakpoint } from '../../../hooks';
 
 type ElementRef = React.MutableRefObject<HTMLElement | null>;
 
@@ -36,20 +36,31 @@ export default function GoalCreationSubPageLayout({
   mainContentHorizontalSwipeOnMobile,
   sideContentFirstOnMobile,
 }: GoalCreationSubPageLayoutProps) {
-  const isMobile = useGoalCreationLayoutIsMobile();
+  const isMobile = useBreakpoint();
+  const isStateLoading = useStateIsAvailable([
+    'goalCurrentProjections',
+    'goalTargetProjections',
+    'currentGoals',
+  ]);
 
   const overallLayoutElementRef = React.useRef<HTMLElement | null>(null);
   const sideContentElementRef = React.useRef<HTMLElement | null>(null);
+
+  const currentUrlHashFallback =
+    contentMain?.find(({ hash }) => hash === currentUrlHash)?.hash ??
+    contentMain[0]?.hash ??
+    currentUrlHash;
 
   // We use the URL hash to determine which step the user is currently at.
   const {
     sideContentYOffset,
     dividerTriangleYOffset,
   } = useSideContentAndDividerTriangleYOffsetBasedOnUrlHash({
-    currentUrlHash,
+    currentUrlHash: currentUrlHashFallback,
     overallLayoutElementRef,
     sideContentElementRef,
     mainContentElementsRefs: contentMain,
+    forceRefresh: isStateLoading,
   });
 
   const renderContentMain = contentMain
@@ -59,7 +70,7 @@ export default function GoalCreationSubPageLayout({
       // If not, we show everything in a column-stacked manner.
       let show = !mainContentHorizontalSwipeOnMobile;
       if (mainContentHorizontalSwipeOnMobile) {
-        show = isMobile ? currentUrlHash === elementHash : true;
+        show = isMobile ? currentUrlHashFallback === elementHash : true;
       }
 
       return show ? (

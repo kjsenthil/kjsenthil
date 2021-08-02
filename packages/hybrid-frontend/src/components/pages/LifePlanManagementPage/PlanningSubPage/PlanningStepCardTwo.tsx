@@ -5,7 +5,7 @@ import {
   SubPageStepCardInputContainer,
 } from '../CommonSubPage/CommonSubPage.styles';
 import { FormInput, TypographyWithTooltip } from '../../../molecules';
-import StepCardExperimental from '../../../organisms/StepCardExperimental';
+import StepCard from '../../../organisms/StepCard';
 import EqualSign from '../CommonSubPage/EqualSign';
 import { formatCurrency } from '../../../../utils/formatters';
 import { Spacer } from '../../../atoms';
@@ -42,7 +42,7 @@ const PlanningStepCardTwo = React.forwardRef(
     }: PlanningStepCardTwoProps,
     ref
   ) => (
-    <StepCardExperimental
+    <StepCard
       ref={ref}
       title="What would you like your retirement income to be?"
       step={2}
@@ -64,6 +64,7 @@ const PlanningStepCardTwo = React.forwardRef(
               fullWidth
               error={displayError('annualIncome')}
               value={String(annualIncome || '')}
+              shouldDelayOnChange
             />
           </SubPageStepCardInputContainer>
           <EqualSign />
@@ -77,6 +78,7 @@ const PlanningStepCardTwo = React.forwardRef(
             fullWidth
             error={displayError('monthlyIncome')}
             value={String(annualIncome > 0 ? monthlyIncome : '')}
+            shouldDelayOnChange
           />
         </SubPageStepCardContentWithInputsAndSignContainer>
         <Spacer y={1} />
@@ -93,7 +95,7 @@ const PlanningStepCardTwo = React.forwardRef(
           )}
         </SubPageStepCardContentWithInputsAndSignContainer>
       </>
-    </StepCardExperimental>
+    </StepCard>
   )
 );
 

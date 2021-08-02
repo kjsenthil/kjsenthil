@@ -22,7 +22,7 @@ const ExampleElement = React.forwardRef<HTMLDivElement, { text: string; onClick?
 );
 
 export default {
-  title: 'Digital Hybrid/Templates/Goal Creation Sub Page Layout (Experimental)',
+  title: 'Digital Hybrid/Templates/Goal Creation Sub Page Layout',
   component: GoalCreationSubPageLayout,
   argTypes: {
     contentMain: {
