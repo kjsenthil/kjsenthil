@@ -12,13 +12,13 @@ export default {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'gradient', 'primary', 'secondary', 'tertiary'],
+      options: [undefined, 'gradient', 'primary', 'secondary', 'tertiary', 'grey'],
     },
     variant: {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'contained', 'outlined'],
+      options: [undefined, 'contained', 'outlined', 'dashed'],
     },
     size: {
       control: {
@@ -37,6 +37,12 @@ export default {
         type: 'boolean',
       },
       options: ['True', 'False'],
+    },
+    isPill: {
+      control: {
+        type: 'boolean',
+      },
+      options: [undefined, 'True', 'False'],
     },
     startIcon: {
       name: 'icon',

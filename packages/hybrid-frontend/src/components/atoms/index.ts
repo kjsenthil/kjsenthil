@@ -32,6 +32,7 @@ export type {
   TabProps,
 };
 
+export { default as Pill } from './Button/Pill';
 export { default as Spacer } from './Spacer';
 export { Divider } from './Spacer';
 export { default as Icon } from './Icon';

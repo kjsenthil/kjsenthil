@@ -14,10 +14,9 @@ exports[`HeaderMenu renders the header menu 1`] = `
   height: 40px;
   border-radius: 6px;
   min-width: 80px;
-  padding: 12px 16px;
-  padding: 12px 16px;
   text-transform: none;
   white-space: nowrap;
+  padding: 12px 16px;
 }
 
 .c8.Mui-disabled {
@@ -43,10 +42,9 @@ exports[`HeaderMenu renders the header menu 1`] = `
   height: 40px;
   border-radius: 6px;
   min-width: 80px;
-  padding: 12px 16px;
-  padding: 12px 16px;
   text-transform: none;
   white-space: break-space;
+  padding: 12px 16px;
 }
 
 .c9.Mui-disabled {
