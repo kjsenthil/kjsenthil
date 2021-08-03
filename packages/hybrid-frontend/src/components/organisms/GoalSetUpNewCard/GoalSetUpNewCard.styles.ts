@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import { Theme } from '../../atoms';
 
-// The & > * targets the <CardActionArea> component. It's a <button> under the
-// hood and these styles make sure its height is properly set.
-export const CardContainer = styled.div`
-  height: 100%;
-  & > * {
-    height: 100%;
-  }
-`;
-
 // Fun fact: setting 1fr 1fr for the grid-template-rows here doesn't work as
 // expected because the <img> has an aspect ratio and its row will have larger
 // height than the text content's row.

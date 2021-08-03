@@ -24,6 +24,7 @@ describe('GoalProgressCard', () => {
     tooltipText: 'Some tooltip text',
     title: 'Retirement',
     investmentAccounts: ['ISA', 'GIA', 'SIPP'],
+    navigateToEditGoalPage: () => {},
   };
 
   test('component renders with expected goal data', () => {

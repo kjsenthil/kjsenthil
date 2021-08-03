@@ -277,6 +277,7 @@ const LifePlanPage = () => {
               investmentAccounts={
                 investmentAccounts?.map(({ accountName }) => accountName ?? '') ?? []
               }
+              navigateToEditGoalPage={() => navigate(goalCreationPaths.retirement.path ?? '')}
             />
           )}
           <DisabledComponent title="Coming soon">

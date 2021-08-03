@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
-import { ProgressBar, Spacer, Tooltip, Typography } from '../../atoms';
-import { GoalLifePlanCard } from '../../molecules';
+import { ProgressBar, Spacer, Typography } from '../../atoms';
+import { GoalLifePlanCard, TypographyWithTooltip } from '../../molecules';
 import {
+  CardBody,
+  CardFooter,
   DetailsContainer,
   GoalIcon,
-  CardBody,
-  IconContainer,
-  CardFooter,
   GoalValues,
-  InfoIcon,
-  StyledIconButton,
+  IconContainer,
 } from './GoalProgressCard.styles';
 
 export interface GoalProgressCardProps {
@@ -24,6 +22,7 @@ export interface GoalProgressCardProps {
   iconAlt?: string;
   tooltipText: string;
   investmentAccounts: string[];
+  navigateToEditGoalPage: () => void;
 }
 
 const GoalProgressCard = ({
@@ -37,6 +36,7 @@ const GoalProgressCard = ({
   title,
   tooltipText,
   investmentAccounts,
+  navigateToEditGoalPage,
 }: GoalProgressCardProps) => {
   const totalAffordableValue = affordableValues.reduce((total, value) => total + value, 0);
 
@@ -52,7 +52,7 @@ const GoalProgressCard = ({
   );
 
   return (
-    <GoalLifePlanCard>
+    <GoalLifePlanCard handleClick={navigateToEditGoalPage}>
       <CardBody>
         <IconContainer>
           <GoalIcon src={iconSrc} alt={iconAlt} />
@@ -68,17 +68,20 @@ const GoalProgressCard = ({
             <b>{formattedOnTrackPercentage}</b>
             {' of your target.'}
           </Typography>
-          <Typography color="primary" colorShade="dark2" display="inline">
+
+          <TypographyWithTooltip
+            typographyProps={{
+              display: 'inline',
+              color: 'primary',
+              colorShade: 'dark2',
+            }}
+            tooltip={tooltipText}
+          >
             {`That's a ${shortfallValue < 0 ? 'surplus' : 'shortfall'} of `}
             <b>{formattedShortfallValue}</b>
             {`, or ${formattedShortfallUnderperformValue}`}
             {' if markets underperform.'}
-          </Typography>
-          <Tooltip title={tooltipText}>
-            <StyledIconButton aria-label="Goal Progress Info" size="small">
-              <InfoIcon name="infoCircleIcon" />
-            </StyledIconButton>
-          </Tooltip>
+          </TypographyWithTooltip>
         </DetailsContainer>
       </CardBody>
 
