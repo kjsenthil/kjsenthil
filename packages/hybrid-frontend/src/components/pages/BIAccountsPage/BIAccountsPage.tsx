@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import { Box, Button, Grid, Icon, Spacer, Typography } from '../../atoms';
 import { MyAccountLayout } from '../../templates';
-import SummaryPanel from '../../organisms/SummaryPanel/SummaryPanel';
+import SummaryPanel from '../../organisms/SummaryPanel';
 import PerformanceChart from '../../organisms/PerformanceChart';
 import { AccountsTableHeader } from '../../../constants';
 import AccountsTable from '../../organisms/AccountsTable';

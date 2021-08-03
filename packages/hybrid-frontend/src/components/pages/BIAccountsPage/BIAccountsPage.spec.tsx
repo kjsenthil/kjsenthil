@@ -35,8 +35,8 @@ describe('BIAccountsPage', () => {
     renderWithProviders(<BIAccountsPage />, store);
   });
 
-  test('BIAccountsPage title has been successfully rendered', async () => {
-    expect(screen.getByText('TOTAL VALUE')).toBeInTheDocument();
+  test('BIAccountsPage title has been successfully rendered', () => {
+    expect(screen.getByText('Total Value: £0.00')).toBeInTheDocument();
   });
 
   test('the primary heading should be Investments', () => {

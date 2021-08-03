@@ -2,14 +2,15 @@ import * as React from 'react';
 import { formatCurrency, formatPercent } from '../../../utils/formatters';
 import { Divider, Spacer, Grid, useTheme, useMediaQuery } from '../../atoms';
 import { Legend, LegendProps } from '../../molecules';
-import { SummaryCard, SummaryWrapper, SummaryOfTotalsWrapper } from './SummaryPanel.styles';
+import SummaryWrapper, { SummaryCard, SummaryOfTotalsWrapper } from './SummaryPanel.styles';
 
 export interface SummaryValuesProps {
-  totalValue: number;
   totalNetContributions: number;
-
   totalReturn: number;
   totalReturnPercentage: number;
+
+  totalValue?: number;
+  annualisedReturnPercentage?: number;
 
   periodBasedReturn?: {
     value: number;
@@ -29,6 +30,11 @@ const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
     tooltip:
       'Return figure relates to the gain or loss over the specified period including the impact of fees',
   },
+  annualisedReturn: {
+    title: 'ANNUALISED RETURN',
+    tooltip:
+      'Return figure relates to the gain or loss over the specified period including the impact of fees',
+  },
   totalValue: {
     title: 'TOTAL VALUE',
     tooltip: 'Total value  = Investments plus cash',
@@ -44,6 +50,7 @@ export default function SummaryPanel({
   totalNetContributions,
   totalReturn,
   totalReturnPercentage,
+  annualisedReturnPercentage,
   periodBasedReturn,
 }: SummaryValuesProps) {
   const theme = useTheme();
@@ -57,12 +64,43 @@ export default function SummaryPanel({
     </>
   );
 
+  const renderAnnualisedReturn = (
+    <Legend
+      {...legendProps.annualisedReturn}
+      value={annualisedReturnPercentage}
+      valueFormatter={(val: number) =>
+        formatPercent(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
+      }
+      valueSizeVariant="h5"
+    />
+  );
+
+  const renderNetContributions = (
+    <Legend
+      {...legendProps.netContribution}
+      value={totalNetContributions}
+      valueFormatter={formatCurrency}
+      valueSizeVariant="h5"
+    />
+  );
+
+  const renderTotalValue = (
+    <Legend
+      {...legendProps.totalValue}
+      value={totalValue}
+      valueFormatter={formatCurrency}
+      valueSizeVariant="h5"
+    />
+  );
+
   const renderTotalReturn = (
     <Legend
       {...legendProps.lifetimeReturn}
       value={totalReturn}
-      valueFormatter={(val: number) => formatCurrency(val, { displayPlus: true })}
-      valueSizeVariant="sh1"
+      valueFormatter={(val: number) =>
+        formatCurrency(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
+      }
+      valueSizeVariant="h5"
       percentageChange={totalReturnPercentage}
       percentageFormatter={formatPercent}
     />
@@ -75,8 +113,10 @@ export default function SummaryPanel({
         {...legendProps.periodBasedReturn}
         title={periodBasedReturn.label}
         value={periodBasedReturn.value}
-        valueFormatter={(val: number) => formatCurrency(val, { displayPlus: true })}
-        valueSizeVariant="sh1"
+        valueFormatter={(val: number) =>
+          formatCurrency(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
+        }
+        valueSizeVariant="h5"
         percentageChange={periodBasedReturn.percent}
         percentageFormatter={formatPercent}
       />
@@ -101,12 +141,7 @@ export default function SummaryPanel({
           justify="flex-start"
         >
           <Grid item xs={isMobile ? 12 : undefined}>
-            <Legend
-              {...legendProps.totalValue}
-              value={totalValue}
-              valueFormatter={formatCurrency}
-              valueSizeVariant="h5"
-            />
+            {totalValue ? renderTotalValue : renderNetContributions}
           </Grid>
           <Grid
             item
@@ -122,16 +157,13 @@ export default function SummaryPanel({
             <>
               {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
               <Grid item xs={isMobile ? 6 : undefined}>
-                <Legend
-                  {...legendProps.netContribution}
-                  value={totalNetContributions}
-                  valueFormatter={formatCurrency}
-                  valueSizeVariant="sh1"
-                />
+                {totalValue ? renderNetContributions : renderTotalReturn}
               </Grid>
               {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
               <Grid item xs={isMobile ? 6 : undefined}>
-                {!!periodBasedReturn && renderTotalReturn}
+                {annualisedReturnPercentage
+                  ? renderAnnualisedReturn
+                  : !!periodBasedReturn && renderTotalReturn}
               </Grid>
             </>
           </Grid>

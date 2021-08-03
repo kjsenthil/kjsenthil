@@ -28,8 +28,8 @@ describe('SummaryPanel', () => {
 
     const totalValueNumber = screen.getByText('£148,238.52');
     const totalNetContributionsNumber = screen.getByText('£120,726.83');
-    const totalReturnNumber = screen.getByText('+£27,512.14');
-    const periodBasedReturnValue = screen.getByText('+£7,632.04');
+    const totalReturnNumber = screen.getByText('+ £27,512.14');
+    const periodBasedReturnValue = screen.getByText('+ £7,632.04');
 
     expect(totalValueLabel).toBeVisible();
     expect(totalNetContributionsLabel).toBeVisible();

@@ -24,3 +24,10 @@ const defaultArgs: SummaryValuesProps = {
 
 export const Default = Template.bind({});
 Default.args = defaultArgs;
+
+export const WithAnnualisedReturn = Template.bind({});
+WithAnnualisedReturn.args = {
+  ...defaultArgs,
+  totalValue: undefined,
+  annualisedReturnPercentage: 0.2,
+};

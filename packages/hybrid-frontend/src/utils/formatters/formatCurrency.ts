@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE } from './locale';
+import prependValuePlusMinus from './prependValuePlusMinus';
 
 export default function formatCurrency(
   value: number,
@@ -22,15 +23,5 @@ export default function formatCurrency(
     ...opts,
   });
 
-  const space = injectSpaceAfterPlusMinus ? ' ' : '';
-
-  if (value < 0) {
-    return `-${space}${formattedValue}`;
-  }
-
-  if (displayPlus && value >= 0) {
-    return `+${space}${formattedValue}`;
-  }
-
-  return formattedValue;
+  return prependValuePlusMinus(formattedValue, value, !!displayPlus, !!injectSpaceAfterPlusMinus);
 }
