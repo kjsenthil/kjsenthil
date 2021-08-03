@@ -57,21 +57,10 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: "Get yarn cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.yarn-path }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: "Get node modules cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.modules-path }}
-          restore-keys: |
-            ${{ runner.os }}-modules-
+      - name: "Install Function App dependencies"
+        run: |
+          yarn plugin import workspace-tools
+          yarn workspaces focus --production @tsw/function-app-features @tsw/function-app-projections @tsw/function-app-returns
 
       - name: "Create function app zips"
         run: yarn all:fa:build:zip
