@@ -9,7 +9,7 @@ interface ContentDividerProps {
 // Mobile: hidden
 // Desktop: in the middle
 export default function ContentDivider({ offsetY }: ContentDividerProps) {
-  const isMobile = useBreakpoint();
+  const { isMobile } = useBreakpoint();
 
   return !isMobile ? (
     <DividerContainer>

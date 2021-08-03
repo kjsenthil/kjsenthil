@@ -115,7 +115,7 @@ const LifePlanManagementPage = () => {
   const displayError = (field: InputFieldsKeys) =>
     matches('planningYourRetirement.invalid') ? errors?.[field] : undefined;
 
-  const isMobile = useBreakpoint();
+  const { isMobile } = useBreakpoint();
 
   const goalPotTotal = Math.max(annualIncome * (drawdownEndAge - drawdownStartAge), 0);
 

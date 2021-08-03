@@ -9,7 +9,7 @@ interface OverallLayoutProps {
 
 const OverallLayout = React.forwardRef(
   ({ sideContentFirstOnMobile, children }: OverallLayoutProps, ref) => {
-    const isMobile = useBreakpoint();
+    const { isMobile } = useBreakpoint();
 
     return (
       <OverallLayoutContainer

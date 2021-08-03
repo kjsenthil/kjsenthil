@@ -76,7 +76,7 @@ export default function useSideContentAndDividerTriangleYOffsetBasedOnUrlHash({
   dividerTriangleYOffset: number;
 } {
   // Need this to re-run the layout effect when mobile / desktop view changes
-  const isMobile = useBreakpoint();
+  const { isMobile } = useBreakpoint();
 
   const [sideContentYOffset, setSideContentYOffset] = React.useState(0);
   const [dividerTriangleYOffset, setDividerTriangleYOffset] = React.useState(0);

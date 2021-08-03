@@ -10,7 +10,7 @@ interface ContentSideMoverProps {
 // Mobile: either on top or at bottom
 // Desktop: on the right
 const ContentSideMover = React.forwardRef(({ offsetY, children }: ContentSideMoverProps, ref) => {
-  const isMobile = useBreakpoint();
+  const { isMobile } = useBreakpoint();
 
   return (
     <ContentSideMoverContainer

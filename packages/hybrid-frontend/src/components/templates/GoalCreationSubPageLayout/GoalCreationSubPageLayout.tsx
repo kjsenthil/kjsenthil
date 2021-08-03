@@ -36,7 +36,7 @@ export default function GoalCreationSubPageLayout({
   mainContentHorizontalSwipeOnMobile,
   sideContentFirstOnMobile,
 }: GoalCreationSubPageLayoutProps) {
-  const isMobile = useBreakpoint();
+  const { isMobile } = useBreakpoint();
   const isStateLoading = useStateIsAvailable([
     'goalCurrentProjections',
     'goalTargetProjections',

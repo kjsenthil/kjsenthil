@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { screen, renderWithTheme } from '@tsw/test-util';
 import GoalCreationSubPageLayout from './GoalCreationSubPageLayout';
+import { useBreakpoint, useStateIsAvailable } from '../../../hooks';
 
-jest.mock('../../../hooks', () => ({
-  useStateIsAvailable: jest.fn().mockReturnValue(true),
-  useBreakpoint: jest.fn().mockReturnValue(false),
-}));
+jest.mock('../../../hooks');
 
 describe('GoalCreationSubPageLayout', () => {
+  beforeEach(() => {
+    (useStateIsAvailable as jest.Mock).mockReturnValue(true);
+    (useBreakpoint as jest.Mock).mockReturnValue({ isMobile: false });
+  });
+
   function TestComponent() {
     const refOne = React.useRef(null);
     const refTwo = React.useRef(null);
