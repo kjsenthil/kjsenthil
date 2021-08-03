@@ -123,7 +123,7 @@ describe("Login test scenarios", () => {
       await loginAction("invalid username", "valid password");
       //Assert
       const alertMsg = await getAlertMsgTxt();
-      const expectedAlertMsg = "Request failed with status code 404";
+      const expectedAlertMsg = "Incorrect username or password";
       expect(alertMsg).to.equal(expectedAlertMsg);
     });
 
@@ -133,7 +133,7 @@ describe("Login test scenarios", () => {
       await loginAction("valid username", "invalid password");
       //Assert
       const alertMsg = await getAlertMsgTxt();
-      const expectedAlertMsg = "Request failed with status code 404";
+      const expectedAlertMsg = "Incorrect username or password";
       expect(alertMsg).to.equal(expectedAlertMsg);
     });
 
@@ -143,7 +143,7 @@ describe("Login test scenarios", () => {
       await loginAction("invalid username", "invalid password");
       //Assert
       const alertMsg = await getAlertMsgTxt();
-      const expectedAlertMsg = "Request failed with status code 404";
+      const expectedAlertMsg = "Incorrect username or password";
       expect(alertMsg).to.equal(expectedAlertMsg);
     });
   });
