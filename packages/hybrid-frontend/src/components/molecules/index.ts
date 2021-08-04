@@ -26,6 +26,7 @@ export { default as DigitalCoachBox } from './DigitalCoachBox';
 export { default as TabsNavigation } from './TabsNavigation';
 export { default as GoalLifePlanCard } from './GoalLifePlanCard';
 export { default as GoalTile } from './GoalTile';
+export { default as SimplifiedPortfolioTile } from './SimplifiedPortfolioTile';
 
 /* material-ui molecules */
 export {
