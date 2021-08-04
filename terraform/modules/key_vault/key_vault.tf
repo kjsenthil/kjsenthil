@@ -5,9 +5,8 @@ resource "azurerm_key_vault" "key_vault" {
   tags                        = merge(map("tf_module_path", "./terraform/modules/key_vault"), var.tags)
   enabled_for_disk_encryption = false
   tenant_id                   = data.azurerm_client_config.current.tenant_id
-  purge_protection_enabled    = false
-
-  sku_name = "standard"
+  purge_protection_enabled    = true
+  sku_name                    = "standard"
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = var.principal_id
@@ -26,11 +25,11 @@ resource "azurerm_key_vault" "key_vault" {
   }
 }
 
+//audit and metric logging 
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
   name                       = "monitor-ds-${var.short_location}-${var.environment_prefix}-dh"
   target_resource_id         = azurerm_key_vault.key_vault.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
-
   log {
     category = "AuditEvent"
     enabled  = true
@@ -51,11 +50,13 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
   }
 }
 
+//security alert 
 
 resource "azurerm_monitor_action_group" "slack_webhook" {
   name                = "action-group-${var.short_location}-${var.environment_prefix}-slack-webhook-dh"
   resource_group_name = var.resource_group_name
   short_name          = "tsw-sec-alt"
+  tags                = merge(map("tf_module_path", "./terraform/modules/key_vault"), var.tags)
   webhook_receiver {
     name        = "slack-api"
     service_uri = var.slack_security_alert_webhook_url
@@ -66,7 +67,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "query_rules_alert" {
   name                = "query-rules-alert-${var.short_location}-${var.environment_prefix}-slack-dh"
   resource_group_name = var.resource_group_name
   location            = var.location
-
+  tags                = merge(map("tf_module_path", "./terraform/modules/key_vault"), var.tags)
   action {
     action_group           = [azurerm_monitor_action_group.slack_webhook.id]
     custom_webhook_payload = "{\"text\":\"Security Alert!!! Key vault has been accessed by someone/something outside of the allowed azure APIM instance. Please view azure monitor logs for more details.\"}"

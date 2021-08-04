@@ -39,3 +39,13 @@ variable "log_analytics_workspace_id" {
   type        = string
   description = "id of log analytics workspace"
 }
+
+variable "virtual_network_id" {
+  type        = string
+  description = "id of virtual network"
+}
+
+variable "private_link_subnet_id" {
+  type        = string
+  description = "id of private link subnet"
+}

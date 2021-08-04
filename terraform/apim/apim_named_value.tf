@@ -3,7 +3,7 @@ resource "azurerm_api_management_named_value" "keyvault_baseurl" {
   resource_group_name = var.resource_group_name
   api_management_name = module.apim.name
   display_name        = "keyvault-baseurl"
-  value               = module.key_vault.uri
+  value               = module.key_vault.private_uri
 }
 
 resource "azurerm_api_management_named_value" "keyvault_secret_cache_duration" {

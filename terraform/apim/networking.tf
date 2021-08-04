@@ -14,6 +14,14 @@ resource "azurerm_subnet" "apim_external_subnet" {
   service_endpoints    = ["Microsoft.Web"]
 }
 
+resource "azurerm_subnet" "private_link_subnet" {
+  name                                           = "snet-private-link-${local.short_location}-${var.environment_prefix}-${var.app_name}"
+  resource_group_name                            = data.azurerm_resource_group.resource_group.name
+  virtual_network_name                           = azurerm_virtual_network.this.name
+  address_prefixes                               = [cidrsubnet(var.vnet_cidr, 5, 2)]
+  enforce_private_link_endpoint_network_policies = true
+}
+
 resource "azurerm_network_security_group" "apim_security_group" {
   name                = "sg-${local.short_location}-${var.environment_prefix}-${var.app_name}"
   resource_group_name = data.azurerm_resource_group.resource_group.name

@@ -31,7 +31,7 @@ locals {
     xplan                    = "https://tbigroupuat2.xplan.iress.co.uk/"
     projections_function_app = "https://${module.function_app_projections.url}/api/"
     features_function_app    = "https://${module.function_app_features.url}/api/"
-    returns_function_app    = "https://${module.function_app_returns.url}/api/"
+    returns_function_app     = "https://${module.function_app_returns.url}/api/"
     myaccounts_api           = "https://myaccountsapi.demo2.bestinvest.co.uk/"
     ois_api                  = "https://oisapi.demo2.bestinvest.co.uk/"
   }

@@ -1194,20 +1194,9 @@ jobs:
             #### APIM Terraform plan - Staging
 
             **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_apim }}\`
-            <details><summary>Show Plan</summary>
-
-            \`\`\`${{ needs.plan_staging.outputs.plan_apim  }}\`\`\`
-
-            </details>
 
             #### Infra Terraform plan - Staging
-
-            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_infra }}\`
-            <details><summary>Show Plan</summary>
-
-            \`\`\`${{ needs.plan_staging.outputs.plan_infra  }}\`\`\`
-
-            </details>
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_infra }}\`            
 
             #### Resource Group Terraform plan - Prod
 
