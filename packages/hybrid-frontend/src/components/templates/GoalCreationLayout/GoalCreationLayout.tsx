@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { navigate } from 'gatsby';
 import { Button, Divider, Grid, Icon, IconButton, LinearProgress, Spacer } from '../../atoms';
-import { TabsNavigation, TabsNavigationProps } from '../../molecules';
+import { DisabledComponent, TabsNavigation, TabsNavigationProps } from '../../molecules';
 import LayoutContainer from '../LayoutContainer';
 import { GoalTitle, GoalTitleIcon, StyledAppBar, StyledToolBar } from './GoalCreationLayout.styles';
 
@@ -106,8 +106,15 @@ const GoalCreationLayout = ({
 
       <Grid item xs={12} sm={6}>
         {progressEventHandler && (
-          <Grid container justify="flex-end">
-            <Grid item xs={12} sm={4}>
+          <Grid container alignItems="center" spacing={2} justify="flex-end">
+            <Grid item>
+              <DisabledComponent arrow placement="top" title="Coming soon">
+                <Button fullWidth variant="outlined" disabled={disableProgress || isLoading}>
+                  Save to my to-do list
+                </Button>
+              </DisabledComponent>
+            </Grid>
+            <Grid item>
               <Button
                 onClick={progressEventHandler}
                 fullWidth

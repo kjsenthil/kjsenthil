@@ -24,6 +24,7 @@ describe('GoalCreationLayout', () => {
     expect(screen.getByTestId('some-child-element')).toBeInTheDocument();
     expect(screen.getByAltText('goal image alt text')).toBeInTheDocument();
     expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByText('Save to my to-do list')).toBeInTheDocument();
     expect(screen.getByText('Delete')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
