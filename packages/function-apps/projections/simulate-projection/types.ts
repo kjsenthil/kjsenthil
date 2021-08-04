@@ -54,16 +54,16 @@ interface ValidationError {
 
 interface ResponsePayload {
   projectionData: ProjectionMonth[],
-  contributionData: ContributionNonth[],
+  contributionData: ContributionMonth[],
   goal: {
     onTrack: {
       percentage: number,
-      monthlyContributionsToReach: number,
-      upfrontContributionsToReach: number,
-      targetProjectionData: TargetProjectionMonth[]
+      monthlyContributionsToReach?: number,
+      upfrontContributionsToReach?: number,
+      targetProjectionData?: TargetProjectionMonth[]
     },
     desiredDiscountedOutflow: number,
-    affordableUndiscountedOutflowAverage: number,
+    affordableUnDiscountedOutflowAverage: number,
     shortfallSurplusAverage: number,
     affordableUndiscountedOutflowUnderperform: number,
     shortfallSurplusUnderperform: number,
@@ -96,12 +96,40 @@ interface ResponsePayload {
   }
 }
 
+export interface ExpectedReturns {
+  monthlyNetExpectedReturn: number;
+  monthlyVolatility: number;
+}
+
+export interface Drawdown {
+  possibleDrawdown: number;
+  projectedGoalAgeTotal: number;
+  remainingAmountAtGoalAge: number;
+}
+
+export interface Stats {
+  desiredOutflow: number;
+  affordableDrawdown: number;
+  affordableLumpSum: number;
+  affordableRemainingAmount: number;
+  affordableOutflow: number;
+  surplusOrShortfall: number;
+  valueAtRetirement: number;
+  totalAffordableDrawdown: number;
+  onTrackPercentage: number;
+  projectedGoalAgeTotal: number;
+  possibleDrawdown: number;
+}
+
 class ProjectionMonth {
   constructor(public monthNo: number, public lower: number, public average: number, public upper: number) {
+    this.lower = lower < 0 ? 0 : lower;
+    this.upper = upper < 0 ? 0 : upper;
+    this.average = average < 0 ? 0 : average;
   }
 }
 
-class ContributionNonth {
+class ContributionMonth {
   constructor(public monthNo: number, public value: number) {
   }
 }
@@ -119,4 +147,4 @@ enum DrawdownType {
 }
 
 export type { RequestPayload, ResponsePayload, ValidationError }
-export { ContributionNonth, DrawdownType, ProjectionMonth, TargetProjectionMonth }
+export { ContributionMonth, DrawdownType, ProjectionMonth, TargetProjectionMonth }
