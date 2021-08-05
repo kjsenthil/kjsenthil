@@ -5,6 +5,7 @@ import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { Button, Icon, Spacer, Typography } from '../../atoms';
 import { LayoutContainer } from '../../templates';
+import { NavPaths } from '../../../config/paths';
 
 export const NotFoundStyle = styled.div`
   ${({ theme }: { theme: Theme }) => `
@@ -20,7 +21,7 @@ export const NotFoundStyle = styled.div`
 `;
 
 const NotFoundPage: React.FC<RouteComponentProps> = () => {
-  const navigateHome = () => navigate('/');
+  const navigateHome = () => navigate(NavPaths.MY_ACCOUNT_BASE_URL);
 
   return (
     <LayoutContainer maxWidth={false} disableGutters>

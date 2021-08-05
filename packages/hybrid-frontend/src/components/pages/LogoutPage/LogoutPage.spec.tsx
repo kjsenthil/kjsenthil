@@ -39,6 +39,6 @@ describe('Logout', () => {
   it('dispatches a logout and redirects to login page', () => {
     renderWithProviders(<LogoutPage />, store);
 
-    expect(mockNavigate).toHaveBeenCalledWith(NavPaths.LOGIN_PAGE);
+    expect(mockNavigate).toHaveBeenCalledWith(NavPaths.ROOT_PAGE);
   });
 });

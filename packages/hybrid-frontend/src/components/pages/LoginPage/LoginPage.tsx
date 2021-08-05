@@ -33,7 +33,9 @@ const LoginPage = (_: LoginPageProps) => {
 
   useEffect(() => {
     if (hasAccessTokens) {
-      navigate(NavPaths.HOME_PAGE);
+      navigate(NavPaths.MY_ACCOUNT_BASE_URL);
+    } else {
+      navigate(NavPaths.ROOT_PAGE);
     }
   }, [hasAccessTokens]);
 

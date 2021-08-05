@@ -69,7 +69,7 @@ const MyAccountLayout = ({
       <HeaderMenu
         {...headerProps}
         isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
-        homePath={NavPaths.HOME_PAGE}
+        homePath={NavPaths.MY_ACCOUNT_BASE_URL}
         cash={formatCurrency(
           basicInfo.totalInvestableCash,
           CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -79,7 +79,7 @@ const MyAccountLayout = ({
         links={[
           {
             name: 'Investment',
-            path: NavPaths.ACCOUNTS_PAGE,
+            path: NavPaths.MY_ACCOUNT_BASE_URL,
             shouldShowInDrawer: true,
             shouldShowInMainMenu: true,
           },

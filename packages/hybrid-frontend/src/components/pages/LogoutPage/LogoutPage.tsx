@@ -19,7 +19,7 @@ const LogoutPage = (_: LogoutPageProps) => {
 
   useEffect(() => {
     if (!hasAccessTokens) {
-      navigate(NavPaths.LOGIN_PAGE);
+      navigate(NavPaths.ROOT_PAGE);
     }
   }, [accessTokens]);
 

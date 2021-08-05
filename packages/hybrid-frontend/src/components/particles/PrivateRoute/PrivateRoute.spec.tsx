@@ -35,7 +35,7 @@ describe('Private Route Components', () => {
     it('navigate to login page ', () => {
       renderWithStore(<Component />, store);
 
-      expect(mockNavigate).toHaveBeenCalledWith(NavPaths.LOGIN_PAGE);
+      expect(mockNavigate).toHaveBeenCalledWith(NavPaths.ROOT_PAGE);
     });
   });
 
@@ -53,7 +53,7 @@ describe('Private Route Components', () => {
 
       renderWithStore(<Component />, store);
 
-      expect(mockNavigate).not.toHaveBeenCalledWith(NavPaths.LOGIN_PAGE);
+      expect(mockNavigate).not.toHaveBeenCalledWith(NavPaths.ROOT_PAGE);
       expect(screen.getByText(contentText)).toBeInTheDocument();
     });
   });

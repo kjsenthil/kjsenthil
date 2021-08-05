@@ -12,7 +12,7 @@ interface PrivateRouteProps extends RouteComponentProps {
 const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
   const { accessTokens } = useSelector((state: RootState) => state.auth);
 
-  const loginPath = NavPaths.LOGIN_PAGE;
+  const loginPath = NavPaths.ROOT_PAGE;
   const isNotLoggedIn = accessTokens.length === 0;
 
   useEffect(() => {
