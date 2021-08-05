@@ -10,24 +10,24 @@ import AccountsTable from '../../organisms/AccountsTable';
 import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
   fetchPerformanceAccountsAggregated,
-  setPerformanceDataPeriod,
   PerformanceDataPeriod,
+  setPerformanceDataPeriod,
 } from '../../../services/performance';
 import {
-  useDispatchThunkOnRender,
-  usePerformanceData,
-  useContributionsData,
-  usePerformanceDataPeriod,
-  useInvestmentAccounts,
   useBasicInfo,
+  useContributionsData,
+  useDispatchThunkOnRender,
+  useInvestmentAccounts,
+  usePerformanceData,
+  usePerformanceDataPeriod,
 } from '../../../hooks';
 import { RootState } from '../../../store';
 import { axisBottomConfig } from '../../../config/chart';
 import { ChartPeriodSelection, DisabledComponent, MainCard } from '../../molecules';
-import { formatCurrency } from '../../../utils/formatters';
 import { calculateInvestmentReturn } from '../../../services/myAccount';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
 import { getPossessiveSuffix } from '../../../utils/string';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 
 const BIAccountsPage = () => {
   const {
@@ -90,7 +90,11 @@ const BIAccountsPage = () => {
       <Grid item container xs={12} spacing={1} justify="flex-end">
         <Grid item xs={12} sm={9}>
           <Typography variant="h2" color="primary" colorShade="dark2">
-            Total Value: {formatCurrency(accountsSummary.totalInvested)}
+            Total Value:{' '}
+            {formatCurrency(
+              accountsSummary.totalInvested,
+              CurrencyPresentationVariant.ACTUAL_TOPLINE
+            )}
           </Typography>
         </Grid>
         <Grid item xs={6} sm={3}>

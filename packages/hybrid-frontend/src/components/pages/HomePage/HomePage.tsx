@@ -4,30 +4,40 @@ import { navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import { Box, Button, Icon, Grid, Typography, Spacer, useTheme, useMediaQuery } from '../../atoms';
-import { MyAccountLayout } from '../../templates';
+import {
+  formatCurrency,
+  formatPercent,
+  CurrencyPresentationVariant,
+  PercentPresentationVariant,
+} from '../../../utils/formatters';
+import { Box, Button, Grid, Icon, Spacer, Typography, useMediaQuery, useTheme } from '../../atoms';
 import { ChartPeriodSelection, Legend, MainCard } from '../../molecules';
-import { PerformanceSimplifiedChart, GoalMainCardPlaceholder } from '../../organisms';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
+import { FeatureToggle } from '../../particles';
+import { GoalMainCardPlaceholder, PerformanceSimplifiedChart } from '../../organisms';
+import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
+import { MyAccountLayout } from '../../templates';
+import { RootState } from '../../../store';
 import {
   fetchPerformanceAccountsAggregated,
   PerformanceDataPeriod,
   setPerformanceDataPeriod,
 } from '../../../services/performance';
 import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
-import { RootState } from '../../../store';
 import {
   useBasicInfo,
+  useContributionsData,
   useGoalImages,
   usePerformanceData,
-  useContributionsData,
 } from '../../../hooks';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
-
-import { FeatureToggle } from '../../particles';
 import { FeatureFlagNames } from '../../../constants';
 import { createGoal, GoalType } from '../../../services/goal';
 import { goalCreationPaths, NavPaths } from '../../../config/paths';
+
+const currencyFormatter = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE);
+
+const percentFormatter = (val: number) =>
+  formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE);
 
 const HomePage = () => {
   const {
@@ -143,7 +153,7 @@ const HomePage = () => {
           )}
           valueSizeVariant={isMobile ? 'b2' : 'b1'}
           value={totalContributed}
-          valueFormatter={formatCurrency}
+          valueFormatter={currencyFormatter}
           shouldAnimate
         />
       </Grid>
@@ -156,9 +166,9 @@ const HomePage = () => {
           )}
           valueSizeVariant={isMobile ? 'b2' : 'b1'}
           value={totalReturn}
-          valueFormatter={formatCurrency}
+          valueFormatter={currencyFormatter}
           percentageChange={totalReturnPercentage}
-          percentageFormatter={formatPercent}
+          percentageFormatter={percentFormatter}
           shouldAnimate
         />
       </Grid>
@@ -174,9 +184,11 @@ const HomePage = () => {
     <MyAccountLayout
       basicInfo={basicInfo}
       heading={{
-        primary: `You have ${formatCurrency(totalInvested)}`,
+        primary: `You have ${currencyFormatter(totalInvested)}`,
         secondary: `Hi ${firstName},`,
-        tertiary: `${formatCurrency(totalGainLoss)} total ${totalGainLoss >= 0 ? 'gain' : 'loss'}`,
+        tertiary: `${currencyFormatter(totalGainLoss)} total ${
+          totalGainLoss >= 0 ? 'gain' : 'loss'
+        }`,
       }}
     >
       <Grid container spacing={3}>

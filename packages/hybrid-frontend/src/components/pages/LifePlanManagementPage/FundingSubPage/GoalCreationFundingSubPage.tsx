@@ -5,7 +5,7 @@ import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLay
 import FundingStepCardOne from './FundingStepCardOne';
 import FundingStepCardTwo from './FundingStepCardTwo';
 import { PerformanceDataPeriod } from '../../../../services/performance';
-import { formatCurrency } from '../../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../../utils/formatters';
 import { RootState } from '../../../../store';
 
 interface GoalCreationFundingSubPageProps extends RouteComponentProps {
@@ -44,10 +44,12 @@ export default function GoalCreationFundingSubPage({
   const footerData = [
     'TOTAL',
     formatCurrency(
-      tableData.reduce((totalVal, currVal) => totalVal + (currVal.accountTotalHoldings || 0), 0)
+      tableData.reduce((totalVal, currVal) => totalVal + (currVal.accountTotalHoldings || 0), 0),
+      CurrencyPresentationVariant.ACTUAL_TOPLINE
     ),
     formatCurrency(
-      tableData.reduce((totalVal, currVal) => totalVal + (currVal.monthlyInvestment || 0), 0)
+      tableData.reduce((totalVal, currVal) => totalVal + (currVal.monthlyInvestment || 0), 0),
+      CurrencyPresentationVariant.ACTUAL_TOPLINE
     ),
   ];
 

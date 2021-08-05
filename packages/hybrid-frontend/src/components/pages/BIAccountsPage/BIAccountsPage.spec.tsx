@@ -36,7 +36,7 @@ describe('BIAccountsPage', () => {
   });
 
   test('BIAccountsPage title has been successfully rendered', () => {
-    expect(screen.getByText('Total Value: £0.00')).toBeInTheDocument();
+    expect(screen.getByText('Total Value: £0')).toBeInTheDocument();
   });
 
   test('the primary heading should be Investments', () => {

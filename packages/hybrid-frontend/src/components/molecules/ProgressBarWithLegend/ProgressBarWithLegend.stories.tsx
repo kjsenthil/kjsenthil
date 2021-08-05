@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import ProgressBarWithLegend, { ProgressBarWithLegendProps } from '.';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 
 export default {
   title: 'Digital Hybrid/Molecules/ProgressBar With Legend',
@@ -28,6 +28,6 @@ const Template: Story<ProgressBarWithLegendProps> = (args) => <ProgressBarWithLe
 
 export const Default = Template.bind({});
 Default.args = {
-  currencyFormatter: formatCurrency,
+  currencyFormatter: (val: number) => formatCurrency(val, CurrencyPresentationVariant.USER_INPUT),
   progressBarData,
 };

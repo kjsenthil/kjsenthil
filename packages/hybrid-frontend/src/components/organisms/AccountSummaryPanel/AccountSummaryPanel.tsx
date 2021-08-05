@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatCurrency } from '../../../utils/formatters';
-import { Grid, Spacer, Divider, useMediaQuery, useTheme } from '../../atoms';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
+import { Divider, Grid, Spacer, useMediaQuery, useTheme } from '../../atoms';
 import { Legend } from '../../molecules';
 import { SummaryCard, SummaryOfTotalsWrapper } from './AccountSummaryPanel.styles';
 
@@ -9,6 +9,9 @@ export interface AccountSummaryValuesProps {
   investmentValue: number;
   totalValue: number;
 }
+
+const currencyFormatter = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE);
 
 const AccountSummaryPanel = ({
   cashValue,
@@ -41,7 +44,7 @@ const AccountSummaryPanel = ({
           <Legend
             title="Cash"
             value={cashValue}
-            valueFormatter={formatCurrency}
+            valueFormatter={currencyFormatter}
             valueSizeVariant="h5"
           />
         </Grid>
@@ -50,7 +53,7 @@ const AccountSummaryPanel = ({
           <Legend
             title="Investments"
             value={investmentValue}
-            valueFormatter={formatCurrency}
+            valueFormatter={currencyFormatter}
             valueSizeVariant="h5"
           />
         </Grid>
@@ -60,7 +63,7 @@ const AccountSummaryPanel = ({
           <Legend
             title="Total"
             value={totalValue}
-            valueFormatter={formatCurrency}
+            valueFormatter={currencyFormatter}
             valueSizeVariant="h5"
           />
         </Grid>

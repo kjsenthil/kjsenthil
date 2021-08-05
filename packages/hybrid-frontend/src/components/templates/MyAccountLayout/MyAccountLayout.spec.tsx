@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { featureToggleSlice as featureToggleReducer } from '../../../services/featureToggle/reducers';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import MyAccountLayout from './MyAccountLayout';
 
 jest.mock('../../organisms', () => ({
@@ -64,9 +64,15 @@ describe('MyAccountLayout', () => {
     it('renders with heading', async () => {
       const { firstName, totalInvested, totalGainLoss } = basicInfo;
       const heading = {
-        primary: `You have ${formatCurrency(totalInvested)} `,
+        primary: `You have ${formatCurrency(
+          totalInvested,
+          CurrencyPresentationVariant.ACTUAL_TOPLINE
+        )} `,
         secondary: `Hi ${firstName}, `,
-        tertiary: `${formatCurrency(totalGainLoss)} total gain`,
+        tertiary: `${formatCurrency(
+          totalGainLoss,
+          CurrencyPresentationVariant.ACTUAL_TOPLINE
+        )} total gain`,
       };
 
       renderWithProviders(
@@ -79,7 +85,7 @@ describe('MyAccountLayout', () => {
       const pageHeading = await screen.findByTestId('page-heading');
 
       expect(pageHeading.textContent).toMatchInlineSnapshot(
-        `"Hi Ava, You have £148,238.52 £7,632.04 total gain"`
+        `"Hi Ava, You have £148,238 £7,632 total gain"`
       );
 
       expect(pageHeading).toBeInTheDocument();

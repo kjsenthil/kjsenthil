@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
+import {
+  formatCurrency,
+  CurrencyPresentationVariant,
+  formatPercent,
+  PercentPresentationVariant,
+} from '../../../utils/formatters';
 import { ProgressBar, Spacer, Typography } from '../../atoms';
 import { GoalLifePlanCard, TypographyWithTooltip } from '../../molecules';
 import {
@@ -40,15 +45,26 @@ const GoalProgressCard = ({
 }: GoalProgressCardProps) => {
   const totalAffordableValue = affordableValues.reduce((total, value) => total + value, 0);
 
-  const numberFormatOptions = { opts: { minimumFractionDigits: 0, maximumFractionDigits: 0 } };
+  const formattedOnTrackPercentage = formatPercent(
+    onTrackPercentage,
+    PercentPresentationVariant.PROJECTION
+  );
+  const formattedTotalAccountValue = formatCurrency(
+    totalAffordableValue,
+    CurrencyPresentationVariant.PROJECTION
+  );
+  const formattedGoalValue = formatCurrency(goalValue, CurrencyPresentationVariant.USER_INPUT);
 
-  const formattedOnTrackPercentage = formatPercent(onTrackPercentage, numberFormatOptions);
-  const formattedTotalAccountValue = formatCurrency(totalAffordableValue, numberFormatOptions);
-  const formattedGoalValue = formatCurrency(goalValue, numberFormatOptions);
-  const formattedShortfallValue = formatCurrency(shortfallValue, numberFormatOptions);
+  // We're using the absolute value here always because whether shortfall value
+  // is negative or positive is represented by the wording "surplus" or
+  // "shortfall".
+  const formattedShortfallValue = formatCurrency(
+    Math.abs(shortfallValue),
+    CurrencyPresentationVariant.PROJECTION
+  );
   const formattedShortfallUnderperformValue = formatCurrency(
-    shortfallUnderperformValue,
-    numberFormatOptions
+    Math.abs(shortfallUnderperformValue),
+    CurrencyPresentationVariant.PROJECTION
   );
 
   return (

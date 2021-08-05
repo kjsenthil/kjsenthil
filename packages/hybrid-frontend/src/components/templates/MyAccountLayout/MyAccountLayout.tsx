@@ -5,17 +5,17 @@ import {
   Box,
   Divider,
   Icon,
+  LinearProgress,
   Spacer,
   Typography,
-  useTheme,
   useMediaQuery,
-  LinearProgress,
+  useTheme,
 } from '../../atoms';
-import { HeaderMenu, Footer } from '../../organisms';
+import { Footer, HeaderMenu } from '../../organisms';
 import { HeaderMenuProps } from '../../organisms/HeaderMenu';
-import { useFeatureFlagToggle, BasicInfo } from '../../../hooks';
+import { BasicInfo, useFeatureFlagToggle } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import { NavPaths } from '../../../config/paths';
 import { MYACCOUNTS_HOME_URL } from '../../../config';
 import { FeatureFlagNames } from '../../../constants';
@@ -70,7 +70,10 @@ const MyAccountLayout = ({
         {...headerProps}
         isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
         homePath={NavPaths.HOME_PAGE}
-        cash={formatCurrency(basicInfo.totalInvestableCash)}
+        cash={formatCurrency(
+          basicInfo.totalInvestableCash,
+          CurrencyPresentationVariant.ACTUAL_TOPLINE
+        )}
         currentUrl={currentUrl}
         expFeatureSwitch={expFeatureSwitch}
         links={[

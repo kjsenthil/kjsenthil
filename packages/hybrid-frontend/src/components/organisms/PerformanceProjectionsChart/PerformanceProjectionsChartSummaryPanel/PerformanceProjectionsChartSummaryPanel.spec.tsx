@@ -16,31 +16,25 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
       />
     );
 
-    const projectedValueLabel = screen.getByText('PROJECTED VALUE');
+    const testTexts = [
+      'PROJECTED VALUE',
+      '£10,000',
+      'CONTRIBUTIONS',
+      '£20,000',
+      'TARGET VALUE',
+      '£40,000',
+      '£9,000 - £11,000', // This is the likely range
+    ];
 
-    const contributionsLabel = screen.getByText('CONTRIBUTIONS');
-    const performanceTargetNotMetLabel = screen.getByText('TARGET VALUE');
+    testTexts.forEach((testText) => {
+      expect(screen.getByText(testText)).toBeVisible();
+    });
 
     // There are 2 "Likely Range" labels, one for the chart legend, and one for
     // the likely range toggle.
     const likelyRangeLabels = screen.getAllByText('LIKELY RANGE');
-
-    const projectedValueText = screen.getByText('£10,000.12');
-    const likelyRangeText = screen.getByText('£9,000 - £11,001');
-    const contributionsText = screen.getByText('£20,000.00');
-    const performanceTargetNotMetText = screen.getByText('£40,000');
-
-    expect(projectedValueLabel).toBeVisible();
-    expect(contributionsLabel).toBeVisible();
-    expect(performanceTargetNotMetLabel).toBeVisible();
-
     expect(likelyRangeLabels).toHaveLength(2);
     expect(likelyRangeLabels[0]).toBeVisible();
     expect(likelyRangeLabels[1]).toBeVisible();
-
-    expect(projectedValueText).toBeVisible();
-    expect(likelyRangeText).toBeVisible();
-    expect(contributionsText).toBeVisible();
-    expect(performanceTargetNotMetText).toBeVisible();
   });
 });

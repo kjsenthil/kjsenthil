@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography, useTheme } from '../../atoms';
 import { ProgressBarWithLegend, ProgressBarWithLegendProps } from '../../molecules';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import { GoalPotTrackerContainer } from './GoalPotTracker.styles';
 
 export interface GoalPotTrackerProps {
@@ -14,19 +14,14 @@ export interface GoalPotTrackerProps {
   >;
 }
 
+const currencyFormatter = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.PROJECTION);
+
 export default function GoalPotTracker({ title, potTotal, progressBarProps }: GoalPotTrackerProps) {
   const theme = useTheme();
 
   // When the pot total is undefined, there will be no text after the title
-  const formattedRetirementTotal =
-    potTotal !== undefined
-      ? formatCurrency(potTotal, {
-          opts: {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          },
-        })
-      : '';
+  const formattedRetirementTotal = potTotal !== undefined ? currencyFormatter(potTotal) : '';
 
   let progressBarBackgrounds: string[] | undefined;
   if (progressBarProps.progressBarData.length === 1) {
@@ -56,7 +51,7 @@ export default function GoalPotTracker({ title, potTotal, progressBarProps }: Go
         <ProgressBarWithLegend
           progressBarBackgrounds={progressBarBackgrounds}
           {...progressBarProps}
-          currencyFormatter={formatCurrency}
+          currencyFormatter={currencyFormatter}
         />
       </Box>
     </GoalPotTrackerContainer>

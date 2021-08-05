@@ -1,6 +1,11 @@
 import React from 'react';
 import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
+import {
+  formatCurrency,
+  formatPercent,
+  CurrencyPresentationVariant,
+  PercentPresentationVariant,
+} from '../../../utils/formatters';
 import { Grid, IconButton, Spacer, Tooltip, Typography } from '../../atoms';
 import {
   AccountReturn,
@@ -40,6 +45,9 @@ export interface AccountsTableProps {
   footerRow?: AccountsFooterCell[];
 }
 
+const formatPercentActualTopline = (val: number) =>
+  formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE);
+
 const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableProps) => (
   <TableContainer>
     <Table aria-label="accounts table">
@@ -76,7 +84,10 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.accountTotalHoldings !== undefined && (
                 <AccountsTableCell>
                   <Typography variant="b2" color="primary" colorShade="dark2">
-                    {formatCurrency(row.accountTotalHoldings)}
+                    {formatCurrency(
+                      row.accountTotalHoldings,
+                      CurrencyPresentationVariant.ACTUAL_TOPLINE
+                    )}
                   </Typography>
                 </AccountsTableCell>
               )}
@@ -84,7 +95,10 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.accountTotalNetContribution !== undefined && (
                 <AccountsTableCell>
                   <Typography variant="b2" color="primary" colorShade="dark2">
-                    {formatCurrency(row.accountTotalNetContribution)}
+                    {formatCurrency(
+                      row.accountTotalNetContribution,
+                      CurrencyPresentationVariant.ACTUAL_TOPLINE
+                    )}
                   </Typography>
                 </AccountsTableCell>
               )}
@@ -93,7 +107,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 <AccountsTableCell>
                   <Grid container alignItems="center">
                     <Typography variant="b2" color="primary" colorShade="dark2">
-                      {formatCurrency(row.accountCash)}
+                      {formatCurrency(row.accountCash, CurrencyPresentationVariant.ACTUAL_TOPLINE)}
                     </Typography>
                   </Grid>
                 </AccountsTableCell>
@@ -103,7 +117,10 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 <AccountsTableCell>
                   <Grid container alignItems="center">
                     <Typography variant="b2" color="secondary" colorShade="dark2">
-                      {formatCurrency(row.monthlyInvestment)}
+                      {formatCurrency(
+                        row.monthlyInvestment,
+                        CurrencyPresentationVariant.ACTUAL_TOPLINE
+                      )}
                     </Typography>
                   </Grid>
                 </AccountsTableCell>
@@ -113,13 +130,17 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 <AccountsTableCell>
                   <AccountReturn>
                     <Typography variant="b2" color="primary" colorShade="dark2" noWrap>
-                      {formatCurrency(row.periodReturn[period].value, {
-                        displayPlus: true,
-                      })}
+                      {formatCurrency(
+                        row.periodReturn[period].value,
+                        CurrencyPresentationVariant.ACTUAL_TOPLINE,
+                        {
+                          displayPlus: true,
+                        }
+                      )}
                     </Typography>
 
                     <Spacer x={2} />
-                    <TagBox variant="percentage" formatter={formatPercent}>
+                    <TagBox variant="percentage" formatter={formatPercentActualTopline}>
                       {row.periodReturn[period].percent}
                     </TagBox>
                     <StyledActionIcon color="primary" name="arrowHeadRight" />

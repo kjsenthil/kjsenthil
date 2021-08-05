@@ -15,7 +15,7 @@ jest.mock('../../atoms/Tooltip', () => ({
 describe('GoalProgressCard', () => {
   const defaultCardProps: GoalProgressCardProps = {
     onTrackPercentage: 0.72,
-    affordableValues: [700000, 500000, 242000],
+    affordableValues: [700000, 500000, 242555],
     goalValue: 1975000,
     shortfallValue: 553000,
     shortfallUnderperformValue: 689000,
@@ -33,10 +33,11 @@ describe('GoalProgressCard', () => {
       'Retirement',
       'Some tooltip text',
       'ISA + GIA + SIPP',
-      '£1,442,000',
+      '£1,443,000',
       '£553,000',
       '£689,000',
       '/ £1,975,000',
+      '72%',
     ];
     expectedTexts.forEach((expectedString) =>
       expect(screen.getByText(expectedString, { exact: false })).toBeVisible()

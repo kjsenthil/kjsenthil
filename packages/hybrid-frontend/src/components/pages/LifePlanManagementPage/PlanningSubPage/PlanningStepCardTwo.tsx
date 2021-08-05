@@ -7,7 +7,7 @@ import {
 import { FormInput, TypographyWithTooltip } from '../../../molecules';
 import StepCard from '../../../organisms/StepCard';
 import EqualSign from '../CommonSubPage/EqualSign';
-import { formatCurrency } from '../../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../../utils/formatters';
 import { Spacer } from '../../../atoms';
 
 export interface PlanningStepCardTwoProps {
@@ -23,7 +23,7 @@ export interface PlanningStepCardTwoProps {
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
   <TypographyWithTooltip tooltip="Some description">
-    That&#39;s {formatCurrency(amount, { opts: { maximumFractionDigits: 0 } })} in tomorrow&#39;s
+    That&#39;s {formatCurrency(amount, CurrencyPresentationVariant.PROJECTION)} in tomorrow&#39;s
     money
   </TypographyWithTooltip>
 );

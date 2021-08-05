@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { Legend } from '../../../molecules';
 import { Container } from './PerformanceChartSummaryPanel.styles';
-import { formatCurrency, formatPercent } from '../../../../utils/formatters';
+import {
+  formatCurrency,
+  formatPercent,
+  CurrencyPresentationVariant,
+  PercentPresentationVariant,
+} from '../../../../utils/formatters';
 
 export interface PerformanceChartSummaryPanelProps {
   totalPerformance: number;
@@ -10,6 +15,9 @@ export interface PerformanceChartSummaryPanelProps {
   totalReturn: number;
   totalReturnPercentage: number;
 }
+
+const currencyFormatter = (val: number) => formatCurrency(val, CurrencyPresentationVariant.CHART);
+const percentFormatter = (val: number) => formatPercent(val, PercentPresentationVariant.CHART);
 
 export default function PerformanceChartSummaryPanel({
   totalPerformance,
@@ -22,23 +30,23 @@ export default function PerformanceChartSummaryPanel({
       <Legend
         title="Total value"
         value={totalPerformance}
-        valueFormatter={formatCurrency}
+        valueFormatter={currencyFormatter}
         chartIndicatorProps={{ variant: 'solid' }}
       />
 
       <Legend
         title="Net Contributed"
         value={totalNetContributions}
-        valueFormatter={formatCurrency}
+        valueFormatter={currencyFormatter}
         chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
       />
 
       <Legend
         title="Total return"
         value={totalReturn}
-        valueFormatter={formatCurrency}
+        valueFormatter={currencyFormatter}
         percentageChange={totalReturnPercentage}
-        percentageFormatter={formatPercent}
+        percentageFormatter={percentFormatter}
       />
     </Container>
   );

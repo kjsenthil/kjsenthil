@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { formatCurrency, formatPercent } from '../../../utils/formatters';
+import {
+  formatCurrency,
+  formatPercent,
+  CurrencyPresentationVariant,
+  PercentPresentationVariant,
+} from '../../../utils/formatters';
 import { Divider, Spacer, Grid, useTheme, useMediaQuery } from '../../atoms';
 import { Legend, LegendProps } from '../../molecules';
 import SummaryWrapper, { SummaryCard, SummaryOfTotalsWrapper } from './SummaryPanel.styles';
 
-export interface SummaryValuesProps {
+export interface SummaryPanelProps {
   totalNetContributions: number;
   totalReturn: number;
   totalReturnPercentage: number;
-
   totalValue?: number;
   annualisedReturnPercentage?: number;
-
   periodBasedReturn?: {
     value: number;
     percent: number;
@@ -37,13 +40,27 @@ const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
   },
   totalValue: {
     title: 'TOTAL VALUE',
-    tooltip: 'Total value  = Investments plus cash',
+    tooltip: 'Total value = Investments plus cash',
   },
   netContribution: {
     title: 'NET CONTRIBUTIONS',
     tooltip: 'Contributions minus withdrawals',
   },
 };
+
+const percentFormatterWithSign = (val: number) =>
+  formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE, {
+    displayPlus: true,
+    injectSpaceAfterPlusMinus: true,
+  });
+
+const currencyFormatter = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE);
+const currencyFormatterWithSign = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE, {
+    displayPlus: true,
+    injectSpaceAfterPlusMinus: true,
+  });
 
 export default function SummaryPanel({
   totalValue,
@@ -52,7 +69,7 @@ export default function SummaryPanel({
   totalReturnPercentage,
   annualisedReturnPercentage,
   periodBasedReturn,
-}: SummaryValuesProps) {
+}: SummaryPanelProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
 
@@ -68,9 +85,7 @@ export default function SummaryPanel({
     <Legend
       {...legendProps.annualisedReturn}
       value={annualisedReturnPercentage}
-      valueFormatter={(val: number) =>
-        formatPercent(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
-      }
+      valueFormatter={percentFormatterWithSign}
       valueSizeVariant="h5"
     />
   );
@@ -79,7 +94,7 @@ export default function SummaryPanel({
     <Legend
       {...legendProps.netContribution}
       value={totalNetContributions}
-      valueFormatter={formatCurrency}
+      valueFormatter={currencyFormatter}
       valueSizeVariant="h5"
     />
   );
@@ -88,7 +103,7 @@ export default function SummaryPanel({
     <Legend
       {...legendProps.totalValue}
       value={totalValue}
-      valueFormatter={formatCurrency}
+      valueFormatter={currencyFormatter}
       valueSizeVariant="h5"
     />
   );
@@ -97,15 +112,12 @@ export default function SummaryPanel({
     <Legend
       {...legendProps.lifetimeReturn}
       value={totalReturn}
-      valueFormatter={(val: number) =>
-        formatCurrency(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
-      }
+      valueFormatter={currencyFormatterWithSign}
       valueSizeVariant="h5"
       percentageChange={totalReturnPercentage}
-      percentageFormatter={formatPercent}
+      percentageFormatter={percentFormatterWithSign}
     />
   );
-
   const renderPeriodBasedreturn = periodBasedReturn ? (
     <>
       {isMobile || renderVerticalDivider}
@@ -113,12 +125,10 @@ export default function SummaryPanel({
         {...legendProps.periodBasedReturn}
         title={periodBasedReturn.label}
         value={periodBasedReturn.value}
-        valueFormatter={(val: number) =>
-          formatCurrency(val, { displayPlus: true, injectSpaceAfterPlusMinus: true })
-        }
+        valueFormatter={currencyFormatterWithSign}
         valueSizeVariant="h5"
         percentageChange={periodBasedReturn.percent}
-        percentageFormatter={formatPercent}
+        percentageFormatter={percentFormatterWithSign}
       />
     </>
   ) : (
@@ -127,7 +137,6 @@ export default function SummaryPanel({
       {renderTotalReturn}
     </>
   );
-
   return (
     <SummaryCard>
       <SummaryWrapper isMobile={isMobile} container spacing={3} justify="space-between">
@@ -168,7 +177,6 @@ export default function SummaryPanel({
             </>
           </Grid>
         </SummaryOfTotalsWrapper>
-
         {isMobile && <Divider orientation="horizontal" />}
         <Grid
           item

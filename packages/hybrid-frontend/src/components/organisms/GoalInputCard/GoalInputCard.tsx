@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import { Typography } from '../../atoms';
 import { FormInput } from '../../molecules';
 
@@ -19,8 +19,7 @@ const GoalInputCard = ({ type, onTrack, value, onChange }: GoalInputCardProps) =
     onChange(event.target.name, newValue);
   };
 
-  const opts = { minimumFractionDigits: 0 };
-  const formattedOnTrack = formatCurrency(onTrack, { opts });
+  const formattedOnTrack = formatCurrency(onTrack, CurrencyPresentationVariant.ACTUAL_TOPLINE);
 
   return (
     <GoalInputStyledCard>

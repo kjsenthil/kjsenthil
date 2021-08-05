@@ -15,22 +15,18 @@ describe('PerformanceChartSummaryPanel', () => {
   });
 
   test('The summary panel is visible and its components render correctly', () => {
-    const totalValueLabel = screen.getByText('TOTAL VALUE');
-    const totalNetContributionsLabel = screen.getByText('NET CONTRIBUTED');
-    const totalReturnLabel = screen.getByText('TOTAL RETURN');
+    const testTexts = [
+      'TOTAL VALUE',
+      '£2,000',
+      'NET CONTRIBUTED',
+      '£1,000',
+      'TOTAL RETURN',
+      '£999',
+      '99.9%',
+    ];
 
-    const totalValueNumber = screen.getByText('£2,000.12');
-    const totalNetContributionsNumber = screen.getByText('£1,000.46');
-    const totalReturnNumber = screen.getByText('£999.67');
-    const totalReturnPercentageNumber = screen.getByText('99.9%');
-
-    expect(totalValueLabel).toBeVisible();
-    expect(totalNetContributionsLabel).toBeVisible();
-    expect(totalReturnLabel).toBeVisible();
-
-    expect(totalValueNumber).toBeVisible();
-    expect(totalNetContributionsNumber).toBeVisible();
-    expect(totalReturnNumber).toBeVisible();
-    expect(totalReturnPercentageNumber).toBeVisible();
+    testTexts.forEach((testText) => {
+      expect(screen.getByText(testText)).toBeVisible();
+    });
   });
 });

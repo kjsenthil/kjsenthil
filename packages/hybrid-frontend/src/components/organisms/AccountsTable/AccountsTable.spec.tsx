@@ -1,8 +1,8 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import AccountsTable from './AccountsTable';
-import { mockInvestmentAccountsTableHeader, mockInvestmentAccountsTableData } from './mocks';
 import { PerformanceDataPeriod } from '../../../services/performance';
+import { mockInvestmentAccountsTableHeader, mockInvestmentAccountsTableData } from './mocks';
 
 describe('AccountsTable', () => {
   beforeEach(() => {
@@ -16,28 +16,25 @@ describe('AccountsTable', () => {
   });
 
   it('renders a AccountsTable', () => {
-    const headerCell1Text = screen.getByText('ACCOUNT');
-    const headerCell2Text = screen.getByText('TOTAL HOLDINGS');
-    const headerCell3Text = screen.getByText('NET CONTRIBUTIONS');
-    const headerCell4Text = screen.getByText('CASH');
-    const headerCell5Text = screen.getByText('LIFETIME RETURN');
+    const testTexts = [
+      'ACCOUNT',
+      'TOTAL HOLDINGS',
+      '£38,382',
+      'NET CONTRIBUTIONS',
+      '£31,994',
+      'CASH',
+      'LIFETIME RETURN',
+      '+£6,837',
+      mockInvestmentAccountsTableData[0].accountName ?? '',
+    ];
 
-    const rowCell1Text = screen.getByText(mockInvestmentAccountsTableData[0].accountName || '');
-    const rowCell2Text = screen.getByText('£38,382.29');
-    const rowCell3Text = screen.getByText('£31,994.90');
-    const rowCell4Text = screen.getByText('£0.03');
-    const rowCell5Text = screen.getByText('+£6,837.39');
+    testTexts.forEach((testText) => {
+      expect(screen.getByText(testText)).toBeVisible();
+    });
 
-    expect(headerCell1Text).toBeVisible();
-    expect(headerCell2Text).toBeVisible();
-    expect(headerCell3Text).toBeVisible();
-    expect(headerCell4Text).toBeVisible();
-    expect(headerCell5Text).toBeVisible();
-
-    expect(rowCell1Text).toBeVisible();
-    expect(rowCell2Text).toBeVisible();
-    expect(rowCell3Text).toBeVisible();
-    expect(rowCell4Text).toBeVisible();
-    expect(rowCell5Text).toBeVisible();
+    const zeroPoundTexts = screen.getAllByText('£0');
+    expect(zeroPoundTexts).toHaveLength(2);
+    expect(zeroPoundTexts[0]).toBeVisible();
+    expect(zeroPoundTexts[1]).toBeVisible();
   });
 });

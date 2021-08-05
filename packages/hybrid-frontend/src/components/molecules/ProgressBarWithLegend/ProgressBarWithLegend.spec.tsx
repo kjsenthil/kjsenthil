@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
-import { formatCurrency } from '../../../utils/formatters';
+import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import ProgressBarWithLegend from './ProgressBarWithLegend';
 
 const progressBarData = [
@@ -19,7 +19,7 @@ const progressBarData = [
 ];
 
 const props = {
-  currencyFormatter: formatCurrency,
+  currencyFormatter: (val: number) => formatCurrency(val, CurrencyPresentationVariant.USER_INPUT),
   progressBarData,
 };
 

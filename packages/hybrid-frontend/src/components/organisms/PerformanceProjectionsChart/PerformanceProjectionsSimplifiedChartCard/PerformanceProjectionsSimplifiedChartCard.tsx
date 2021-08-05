@@ -3,7 +3,12 @@ import { GoalProgress, MainCard } from '../../../molecules';
 import { Button, ButtonProps, Icon, Spacer, Typography } from '../../../atoms';
 import { GoalProgressProps } from '../../../molecules/GoalProgress';
 import { InfoBox } from './PerformanceProjectionsSimplifiedChartCard.styles';
-import { formatCurrency, formatPercent } from '../../../../utils/formatters';
+import {
+  formatCurrency,
+  formatPercent,
+  CurrencyPresentationVariant,
+  PercentPresentationVariant,
+} from '../../../../utils/formatters';
 import PerformanceProjectionsSimplifiedChart, {
   PerformanceProjectionsSimplifiedChartProps,
 } from '../PerformanceProjectionsSimplifiedChart';
@@ -34,18 +39,14 @@ export default function PerformanceProjectionsSimplifiedChartCard({
   goalProgressProps,
   chartProps,
 }: PerformanceProjectionsSimplifiedChartCardProps) {
-  const formattedRetirementPerformance = formatCurrency(retirementPerformance, {
-    opts: {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    },
-  });
-  const formattedRetirementPerformancePercentage = formatPercent(retirementPerformancePercentage, {
-    opts: {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    },
-  });
+  const formattedRetirementPerformance = formatCurrency(
+    retirementPerformance,
+    CurrencyPresentationVariant.PROJECTION
+  );
+  const formattedRetirementPerformancePercentage = formatPercent(
+    retirementPerformancePercentage,
+    PercentPresentationVariant.PROJECTION
+  );
 
   return (
     <MainCard

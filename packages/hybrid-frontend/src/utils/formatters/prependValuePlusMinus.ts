@@ -1,9 +1,16 @@
-export default function prependValuePlusMinus(
-  formattedValue: string,
-  value: number,
-  displayPlus: boolean,
-  injectSpaceAfterPlusMinus: boolean
-) {
+export interface PrependValuePlusMinusProps {
+  formattedValue: string;
+  value: number;
+  displayPlus?: boolean;
+  injectSpaceAfterPlusMinus?: boolean;
+}
+
+export default function prependValuePlusMinus({
+  formattedValue,
+  value,
+  displayPlus,
+  injectSpaceAfterPlusMinus,
+}: PrependValuePlusMinusProps) {
   const space = injectSpaceAfterPlusMinus ? ' ' : '';
 
   if (value < 0) {

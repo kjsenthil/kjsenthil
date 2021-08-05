@@ -1,7 +1,7 @@
 import prependValuePlusMinus from './prependValuePlusMinus';
 
 describe('prependValuePlusMinus', () => {
-  it('injects a + or - with space before the formatted value', () => {
+  it('injects a + or - with (or without) space before the formatted value when specified', () => {
     const testCases = [
       { formatted: '£0.00', value: 0, withPlusMinus: '+ £0.00', withPlusMinusNoSpace: '+£0.00' },
       { formatted: '£1.00', value: -1, withPlusMinus: '- £1.00', withPlusMinusNoSpace: '-£1.00' },
@@ -20,10 +20,34 @@ describe('prependValuePlusMinus', () => {
     ];
 
     testCases.forEach(({ formatted, value, withPlusMinus, withPlusMinusNoSpace }) => {
-      expect(prependValuePlusMinus(formatted, value, true, true)).toBe(withPlusMinus);
-      expect(prependValuePlusMinus(formatted, value, true, false)).toBe(withPlusMinusNoSpace);
-    });
+      expect(
+        prependValuePlusMinus({
+          formattedValue: formatted,
+          value,
+          displayPlus: true,
+          injectSpaceAfterPlusMinus: true,
+        })
+      ).toBe(withPlusMinus);
 
-    expect(prependValuePlusMinus('£0.00', 0, false, false)).toBe('£0.00');
+      expect(
+        prependValuePlusMinus({
+          formattedValue: formatted,
+          value,
+          displayPlus: true,
+          injectSpaceAfterPlusMinus: false,
+        })
+      ).toBe(withPlusMinusNoSpace);
+    });
+  });
+
+  it(`doesn't inject a + or before the formatted value if intended`, () => {
+    expect(
+      prependValuePlusMinus({
+        formattedValue: '£0.00',
+        value: 0,
+        displayPlus: false,
+        injectSpaceAfterPlusMinus: false,
+      })
+    ).toBe('£0.00');
   });
 });

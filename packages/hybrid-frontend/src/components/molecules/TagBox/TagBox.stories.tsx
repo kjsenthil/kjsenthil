@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import TagBox, { TagBoxProps } from './TagBox';
-import { formatPercent } from '../../../utils/formatters';
+import { formatPercent, PercentPresentationVariant } from '../../../utils/formatters';
 
 export default {
   title: 'Digital Hybrid/Molecules/Tag Box',
@@ -21,7 +21,7 @@ export const Percentage = Template.bind({});
 Percentage.args = {
   variant: 'percentage',
   children: 0.3,
-  formatter: formatPercent,
+  formatter: (val: number) => formatPercent(val, PercentPresentationVariant.USER_INPUT),
 };
 
 export const Label = Template.bind({});
