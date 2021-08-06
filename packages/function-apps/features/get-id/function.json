@@ -5,7 +5,7 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "features/{id:alpha}",
+      "route": "features/{id}",
       "methods": ["get"]
     },
     {
