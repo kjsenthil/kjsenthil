@@ -9,11 +9,11 @@ import {
   array,
   nullable,
 } from "superstruct";
-import goalWithLessFieldsPayload from "../payloads/createGoalWithLessFields";
-import goalWithAdditionalFieldsPayload from "../payloads/createGoalWithAdditionalFields";
-import updateGoalPayload from "../payloads/updateGoal";
-import createObjectivePayload from "../payloads/createObjective";
-import updateObjectivePayload from "../payloads/updateObjective";
+import goalWithLessFieldsPayload from "../payloads/xplan/createGoalWithLessFields";
+import goalWithAdditionalFieldsPayload from "../payloads/xplan/createGoalWithAdditionalFields";
+import updateGoalPayload from "../payloads/xplan/updateGoal";
+import createObjectivePayload from "../payloads/xplan/createObjective";
+import updateObjectivePayload from "../payloads/xplan/updateObjective";
 import { apiEndpoint } from "../utils/apiBuilder";
 import { API_ENDPOINTS } from "../utils/apiEndPoints";
 
