@@ -9,7 +9,10 @@
   "files": [
     "get-all/index.ts",
     "get-all/function.json",
-    "shared-code/http.ts",
+    "get-id/index.ts",
+    "get-id/function.json",
+    "shared-code/getAllFeaturesTransformer/getAllFeaturesTransformer.ts",
+    "shared-code/http/http.ts",
     "shared-code/utils.ts",
     "shared-code/types.ts"
   ]

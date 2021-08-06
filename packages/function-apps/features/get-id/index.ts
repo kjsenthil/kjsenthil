@@ -3,8 +3,9 @@ import { AppConfigPath } from "../shared-code/types";
 import { getFunctionAppConfig } from "../shared-code/utils";
 import { sendGetRequestToAppConfig } from "../shared-code/http";
 import getAllFeaturesTransformer from "../shared-code/getAllFeaturesTransformer";
+import getFeaturesByIdTransformer from "../shared-code/getFeaturesByIdTransformer/getFeaturesByIdTransformer";
 
-const getAllMain: AzureFunction = async function (
+const getIdMain: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
@@ -12,22 +13,28 @@ const getAllMain: AzureFunction = async function (
   let returnStatus;
 
   try {
+    const id = context.bindingData.id;
+
     const appConfigUrl = new URL(
       getFunctionAppConfig("APP_CONFIG_INSTANCE_URL")
     );
+
     const response = await sendGetRequestToAppConfig(
       appConfigUrl.host,
       AppConfigPath.KEY_VALUES,
       getAllFeaturesTransformer
     );
+
     returnStatus = response.status;
+
     if (response.status == 200) {
-      returnBody = response.data;
+      returnBody = getFeaturesByIdTransformer(response.data, id);
     } else {
       returnBody = response.data.message;
     }
   } catch (e) {
     returnBody = { errorMessage: e.message };
+
     returnStatus = 400;
   }
 
@@ -37,4 +44,4 @@ const getAllMain: AzureFunction = async function (
   };
 };
 
-export { getAllMain };
+export { getIdMain };

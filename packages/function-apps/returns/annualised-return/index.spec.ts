@@ -120,10 +120,8 @@ describe("Tests for annualised return Function", () => {
 
   it("should return a 200 response when payload is valid", async () => {
     // Arrange
-    const inboundPayload = mockRequestPayload();
     const request = {
       query: {},
-      body: inboundPayload,
     };
 
     // Action

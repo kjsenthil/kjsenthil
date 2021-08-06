@@ -389,6 +389,22 @@
       }
     },
     {
+      "operation_id": "features-get-id",
+      "display_name": "Feature Toggles - Get features by user id",
+      "url_template": "/features/{id}",
+      "description": "Queries for by user ID all feature toggles which are held inside Azure App Config",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "allowed_origins": ["*"],
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "features_function_app",
+        "rewrite_url": "/features/{id}"
+      }
+    },
+    {
       "operation_id": "projections-simulate-projection",
       "display_name": "Projections - Get simulate projection",
       "url_template": "/projections/simulate-projection",
