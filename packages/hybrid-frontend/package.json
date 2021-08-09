@@ -37,6 +37,7 @@
     "@react-spring/web": "^9.2.1",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/user-event": "^13.1.5",
+    "@tsw/telemetry": "workspace:packages/utils/telemetry",
     "@tsw/tracking-util": "workspace:packages/utils/tracking",
     "@types/camelcase-keys": "^5.1.1",
     "@visx/axis": "^1.7.0",

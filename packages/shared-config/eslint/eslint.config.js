@@ -12,7 +12,15 @@ module.exports = {
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.spec.tsx', '**/*.stories.tsx'] },
+      {
+        devDependencies: [
+          '**/*.spec.ts',
+          '**/*.spec.tsx',
+          '**/*.stories.tsx',
+          '**/*.test.ts',
+          '**/*.test.tsx',
+        ],
+      },
     ],
     '@typescript-eslint/comma-dangle': 0,
     'implicit-arrow-linebreak': 0,
@@ -21,6 +29,5 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'react/require-default-props': 0,
     'jsx-a11y/anchor-is-valid': 0,
-    'import/no-extraneous-dependencies': 0,
   },
 };

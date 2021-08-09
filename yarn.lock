@@ -4855,6 +4855,7 @@ __metadata:
     "@testing-library/react-hooks": ^5.1.1
     "@testing-library/user-event": ^13.1.5
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
+    "@tsw/telemetry": "workspace:packages/utils/telemetry"
     "@tsw/test-util": "workspace:packages/utils/test"
     "@tsw/tracking-util": "workspace:packages/utils/tracking"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
@@ -4960,12 +4961,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tsw/test-util@workspace:packages/utils/test"
   dependencies:
+    "@material-ui/core": ^4.11.3
     "@testing-library/react": ^11.2.6
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
     "@types/redux": ^3.6.0
     "@typescript-eslint/eslint-plugin": ^4.22.0
+    react: ^16.12.0
     react-redux: ^7.2.4
+    redux: ^4.1.0
+    styled-components: ^5.2.1
   languageName: unknown
   linkType: soft
 
