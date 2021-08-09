@@ -20,3 +20,16 @@ resource "azurerm_api_management" "api" {
     prevent_destroy = true
   }
 }
+
+resource "azurerm_api_management_backend" "backend" {
+  for_each            = var.api_backends
+  name                = each.value.name
+  url                 = each.value.url
+  resource_group_name = var.resource_group_name
+  api_management_name = azurerm_api_management.api.name
+  protocol            = "http"
+  tls {
+    validate_certificate_name  = true
+    validate_certificate_chain = each.value.validate_certificate_chain
+  }
+}

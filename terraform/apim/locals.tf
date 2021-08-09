@@ -14,4 +14,5 @@ locals {
     "environment"         = var.environment_prefix
     "main_directory_path" = "./terraform/apim"
   }
+
 }

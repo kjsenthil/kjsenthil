@@ -112,9 +112,12 @@
         </set-body>
         %{ endif ~}             
         
-        %{ if config.backend_url != ""}
+        %{ if config.backend_url != null}  
         <set-backend-service base-url="${config.backend_url}" />
-        %{ endif ~}  
+        %{ endif ~}
+        %{ if config.backend_id != null} 
+        <set-backend-service backend-id="${config.backend_id}" />
+        %{ endif ~}
 
         <cors allow-credentials="${config.allow-credentials}">
 

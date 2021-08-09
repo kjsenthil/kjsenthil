@@ -71,14 +71,13 @@ variable "public_dns_zones" {
 }
 
 variable "dns_a_records" {
-  type        = list(string)
-  description = "The records to associate with the A record."
+  type = map(object({
+    name    = string
+    records = list(string)
+  }))
+  description = "objects containing name and records to associate with the DNS A record."
 }
 
-# variable "myaccounts_ip_address" {
-#   type        = string
-#   description = "The IP address of MyAccounts."
-# }
 
 variable "sg_rules" {
   type = list(object({
@@ -100,4 +99,13 @@ variable "slack_security_alert_webhook_url" {
   type        = string
   description = "slack security alert web hook url"
   sensitive   = true
+}
+
+variable "api_backends" {
+  type = map(object({
+    name                       = string
+    url                        = string
+    validate_certificate_chain = bool
+  }))
+  description = "list of backend api urls"
 }

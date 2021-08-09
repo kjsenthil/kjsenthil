@@ -2,10 +2,14 @@
   <inbound>
     <base />
     
-    %{ if config.backend_url != ""}
+    %{ if config.backend_url != null}  
       <set-backend-service base-url="${config.backend_url}" />
     %{ endif ~}
+    %{ if config.backend_id != null} 
+      <set-backend-service backend-id="${config.backend_id}" />
+    %{ endif ~}
 
+   
     <cors allow-credentials="${config.allow-credentials}">
 
      %{ if config.cors_allowed_origins != null }

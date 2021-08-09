@@ -38,7 +38,8 @@ module "api_management_policy" {
   operation_id        = lookup(each.value, "operation_id", null)
   xml_policy_file = templatefile("../modules/policy_documents/api_operation_policy.xml", {
     config = {
-      backend_url          = lookup(local.api_backends, lookup(each.value.policy, "backend_url", null), null),
+      backend_url          = lookup(local.api_backends, lookup(each.value.policy, "backend_url", ""), null),
+      backend_id           = lookup(each.value.policy, "backend_id", null),
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
@@ -80,7 +81,8 @@ module "api_management_policy_xplan" {
   operation_id        = lookup(each.value, "operation_id", null)
   xml_policy_file = templatefile("../modules/policy_documents/api_operation_policy_xplan.xml", {
     config = {
-      backend_url          = lookup(local.api_backends, lookup(each.value.policy, "backend_url", null), null),
+      backend_url          = lookup(local.api_backends, lookup(each.value.policy, "backend_url", ""), null),
+      backend_id           = lookup(each.value.policy, "backend_id", null),
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),

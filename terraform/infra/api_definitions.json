@@ -10,7 +10,7 @@
           "allowed_origins": ["*"],
           "method": "GET"
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -23,7 +23,7 @@
           "allowed_origins": ["*"],
           "method": "GET"
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -37,7 +37,7 @@
           "allowed_origins": ["*"],
           "method": "GET"
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -51,7 +51,7 @@
           "allowed_origins": ["*"],
           "method": "GET"
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -65,7 +65,7 @@
           "method": "POST",
           "headers": ["Content-Type", "Authorization"]
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -80,7 +80,7 @@
           "method": "GET",
           "headers": ["Content-Type", "Authorization"]
         },
-        "backend_url": "bestinvest_api"
+        "backend_id": "bestinvest-online-api"
       }
     },
     {
@@ -94,7 +94,7 @@
           "method": "POST",
           "headers": ["Content-Type"]
         },
-        "backend_url": "bestinvest_auth"
+        "backend_id": "bestinvest-identity-api"
       }
     },
     {
@@ -108,7 +108,7 @@
           "method": "POST",
           "headers": ["Content-Type"]
         },
-        "backend_url": "bestinvest_auth"
+        "backend_id": "bestinvest-identity-api"
       }
     },
     {
@@ -182,7 +182,7 @@
           "method": "POST",
           "headers": ["Content-Type"]
         },
-        "backend_url": "bestinvest_auth"
+        "backend_id": "bestinvest-identity-api"
       }
     },
     {
@@ -197,8 +197,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/clients/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/clients/{id}"
       }
     },
     {
@@ -213,8 +213,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/performance-contact/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/performance-contact/{id}"
       }
     },
     {
@@ -229,8 +229,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/investment-summary-account/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/investment-summary-account/{id}"
       }
     },
     {
@@ -244,8 +244,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/investment-summary-account"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/investment-summary-account"
       }
     },
     {
@@ -260,8 +260,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/breakdown-allocation/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/breakdown-allocation/{id}"
       }
     },
     {
@@ -276,8 +276,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/accounts/{id}/monthly-savings"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/accounts/{id}/monthly-savings"
       }
     },
     {
@@ -292,8 +292,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/contribution-account/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/contribution-account/{id}"
       }
     },
     {
@@ -308,8 +308,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/isa-contributions/{id}"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/isa-contributions/{id}"
       }
     },
     {
@@ -324,8 +324,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/Accounts/{id}/investments"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/Accounts/{id}/investments"
       }
     },
     {
@@ -339,8 +339,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/Aggregated-breakdown-allocation"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/Aggregated-breakdown-allocation"
       }
     },
     {
@@ -354,8 +354,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/performance-accounts-aggregated"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/performance-accounts-aggregated"
       }
     },
     {
@@ -369,8 +369,8 @@
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
-        "backend_url": "myaccounts_api",
-        "rewrite_url": "/api/netcontribution-accounts-aggregated"
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/netcontribution-accounts-aggregated"
       }
     },
     {

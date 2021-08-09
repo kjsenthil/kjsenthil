@@ -47,7 +47,7 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -117,7 +117,7 @@
 					}
 				}, 	
 				"body" :"@{ var inboundPayload = context.Request.Body.As<JObject>(true); inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");  inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12; inboundPayload[\"fields\"][\"owner\"] = \"client\"; return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } " ,
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -172,7 +172,7 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/objectives\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -230,7 +230,7 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\/\" + \"{objective-index}\/objective_link\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -302,7 +302,7 @@
 					}
 				},
 				"body": "@{ var inboundPayload = context.Request.Body.As<JObject>(true); if(inboundPayload[\"fields\"][\"capture_date\"] != null){inboundPayload[\"fields\"][\"capture_date\"][\"_val\"] = DateTime.Now.ToString(\"yyyy-MM-dd\");}  if(inboundPayload[\"fields\"][\"drawdown_frequency\"] != null){inboundPayload[\"fields\"][\"drawdown_frequency\"] = 12;} if(inboundPayload[\"fields\"][\"owner\"] != null){inboundPayload[\"fields\"][\"owner\"] = \"client\";} return inboundPayload.ToString(Newtonsoft.Json.Formatting.None); } ",
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\/\" + \"{goal-index}\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -360,7 +360,7 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],				
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/objectives\/\" + \"{objective-index}\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",
@@ -415,7 +415,7 @@
 						"value": "@{string xplanId = \"default\";Jwt authorizationJwt=context.Variables.GetValueOrDefault<Jwt>(\"authorizationJwt\");xplanId = (authorizationJwt.Claims.GetValueOrDefault(\"xplan_id\", \"\"));return xplanId;}"
 					}
 				],				
-				"backend_url": "xplan",
+				"backend_id": "xplan-api",
 				"rewrite_url": "@{ return $\"\/resourceful\/entity\/client-v4\/{context.Variables.GetValueOrDefault<string>(\"xplanId\")}\/goals\";}",
 				"authentication-basic": {
 					"username": "@{return context.Variables.GetValueOrDefault<string>(\"xplan-username\")}",

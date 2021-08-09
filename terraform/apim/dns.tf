@@ -9,15 +9,16 @@ resource "azurerm_private_dns_zone" "private_dns_zone" {
   tags                = merge(local.default_tags, var.tags)
 }
 
-resource "azurerm_private_dns_a_record" "online" {
-  count               = var.private_dns_zone == "" ? 0 : 1
-  name                = "online"
+resource "azurerm_private_dns_a_record" "dns_a_record" {
+  for_each            = var.dns_a_records
+  name                = each.value.name
   zone_name           = azurerm_private_dns_zone.private_dns_zone[0].name
   resource_group_name = data.azurerm_resource_group.resource_group.name
   ttl                 = 300
-  records             = var.dns_a_records
+  records             = each.value.records
   tags                = merge(local.default_tags, var.tags)
 }
+
 
 resource "azurerm_private_dns_zone_virtual_network_link" "link" {
   count                 = var.private_dns_zone == "" ? 0 : 1

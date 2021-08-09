@@ -40,3 +40,12 @@ variable "tags" {
   default     = {}
   description = "Non default tags for the resource."
 }
+
+variable "api_backends" {
+  type = map(object({
+    name                       = string
+    url                        = string
+    validate_certificate_chain = bool
+  }))
+  description = "list of backend api urls"
+}

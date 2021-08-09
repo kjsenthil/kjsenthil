@@ -6,4 +6,5 @@ module "apim" {
   api_management_sku_name = var.api_management_sku_name
   external_subnet_id      = azurerm_subnet.apim_external_subnet.id
   tags                    = merge(local.default_tags, var.tags)
+  api_backends            = var.api_backends
 }
