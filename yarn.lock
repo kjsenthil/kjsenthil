@@ -5007,11 +5007,13 @@ __metadata:
     "@wdio/cli": ^7.7.4
     "@wdio/local-runner": ^7.7.4
     "@wdio/mocha-framework": ^7.7.4
+    "@wdio/selenium-standalone-service": ^7.7.3
     "@wdio/spec-reporter": ^7.7.3
     chai: ^4.3.4
-    chromedriver: ^91.0.1
+    chromedriver: ^92.0.1
     ts-node: ^10.0.0
     wdio-chromedriver-service: ^7.1.0
+    wdio-wait-for: 2.1.0
     webdriverio: ^7.7.4
   languageName: unknown
   linkType: soft
@@ -5345,6 +5347,15 @@ __metadata:
   version: 3.0.0
   resolution: "@types/events@npm:3.0.0"
   checksum: 9a424c2da210957d5636e0763e8c9fc3aaeee35bf411284ddec62a56a6abe31de9c7c2e713dabdd8a76ff98b47db2bd52f61310be6609641d6234cc842ecbbe3
+  languageName: node
+  linkType: hard
+
+"@types/fs-extra@npm:^9.0.1":
+  version: 9.0.12
+  resolution: "@types/fs-extra@npm:9.0.12"
+  dependencies:
+    "@types/node": "*"
+  checksum: c63834f0be8d0993c55abcc0b2c90f3c095cf3aa9e827973472167bd93687df9da546bd5e0823ddc9e83e1651c9cfb09bbac99fa57a15ab28fd21280426e472c
   languageName: node
   linkType: hard
 
@@ -5700,6 +5711,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^15.12.5":
+  version: 15.14.7
+  resolution: "@types/node@npm:15.14.7"
+  checksum: 9622cc3d46cbc434f690c0d086ca61fa43df1bbc28276b857452ea56a33e1b61345d4bd6c9393cd73dd9c3b78222ca86e1b96d0c5e37b6edac98fa21f8482ba0
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^8.5.7":
   version: 8.10.66
   resolution: "@types/node@npm:8.10.66"
@@ -5894,6 +5912,15 @@ __metadata:
   version: 0.16.1
   resolution: "@types/scheduler@npm:0.16.1"
   checksum: 2ff8034df029a6cbb3623b05fa895cac4fc504806a8e948ebe29675a1edfa5ac04faac7611016076b3ffefc2037bbe344ad1978304059b2d4c78e513ec43c7bf
+  languageName: node
+  linkType: hard
+
+"@types/selenium-standalone@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "@types/selenium-standalone@npm:7.0.1"
+  dependencies:
+    "@types/node": "*"
+  checksum: e0f6f2193a484de10492b6ba0daf5521e6c1ee8b6c56b376334ef680b235c5562a2907dbc8013c92d67278cdb154373b45b295c9a0848f1b2fb7162126594b40
   languageName: node
   linkType: hard
 
@@ -6528,6 +6555,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wdio/config@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@wdio/config@npm:7.8.0"
+  dependencies:
+    "@wdio/logger": 7.7.0
+    "@wdio/types": 7.8.0
+    deepmerge: ^4.0.0
+    glob: ^7.1.2
+  checksum: 15833f18d4d94c32f0b217440231e6eb368da0d1a3ed4991aae879a19cdab5219ca96f3b80f61f340096c18c12edfda04a06f121f78d7cce0eab25d4a91c7df4
+  languageName: node
+  linkType: hard
+
 "@wdio/local-runner@npm:^7.7.4":
   version: 7.7.4
   resolution: "@wdio/local-runner@npm:7.7.4"
@@ -6615,6 +6654,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wdio/selenium-standalone-service@npm:^7.7.3":
+  version: 7.8.0
+  resolution: "@wdio/selenium-standalone-service@npm:7.8.0"
+  dependencies:
+    "@types/fs-extra": ^9.0.1
+    "@types/node": ^15.12.5
+    "@types/selenium-standalone": ^7.0.0
+    "@wdio/config": 7.8.0
+    "@wdio/logger": 7.7.0
+    "@wdio/types": 7.8.0
+    fs-extra: ^10.0.0
+    selenium-standalone: ^7.0.1
+  peerDependencies:
+    "@wdio/cli": ^7.0.0
+  checksum: 77646e995cbfa3d3cde7d2aebd1e0ac1827918b1ca22f683acb9f017751c5561ee78d224592bbb6f76e8106c17e1b92d6add4baae950f7e9a18001a5aa6884af
+  languageName: node
+  linkType: hard
+
 "@wdio/spec-reporter@npm:^7.7.3":
   version: 7.7.3
   resolution: "@wdio/spec-reporter@npm:7.7.3"
@@ -6638,6 +6695,16 @@ __metadata:
     "@types/node": ^14.14.31
     got: ^11.8.1
   checksum: 69df0296e64571b5b202df0a09a118fe063e1eaf6c6dbd6e50384a9472d8c55c2cf0ecc34890ea80cd531bdd62a3fae85cf274b5223946b08b0b5124a2774651
+  languageName: node
+  linkType: hard
+
+"@wdio/types@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@wdio/types@npm:7.8.0"
+  dependencies:
+    "@types/node": ^15.12.5
+    got: ^11.8.1
+  checksum: af6f720cd925f12ae614da75aa120214aff7d363cc8b0099a0bccb3930c7e31765e42508c05b604ffc2bec0c8f3ae2692888c5d8303d42976bc6ee425771d80a
   languageName: node
   linkType: hard
 
@@ -9454,9 +9521,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^91.0.1":
-  version: 91.0.1
-  resolution: "chromedriver@npm:91.0.1"
+"chromedriver@npm:^92.0.1":
+  version: 92.0.1
+  resolution: "chromedriver@npm:92.0.1"
   dependencies:
     "@testim/chrome-version": ^1.0.7
     axios: ^0.21.1
@@ -9467,7 +9534,7 @@ __metadata:
     tcp-port-used: ^1.0.1
   bin:
     chromedriver: bin/chromedriver
-  checksum: 869fb9954d437bc17da40d142abcfc06ac0dc99b978d3b7e6718cf260a768b88d28aea9d3b8dcfe14bbdf197063b818972a3b3b692e695f64d7bfe8d988468c2
+  checksum: e923624cc00d88bee1e6d26a8b884b9ad2fbcb651386291b0019245c164f8f75978dc3eaa6b2f88d8e4aa902306b47a680d555919918b0abfc317286d9489af1
   languageName: node
   linkType: hard
 
@@ -9885,6 +9952,13 @@ __metadata:
   version: 6.2.1
   resolution: "commander@npm:6.2.1"
   checksum: d7090410c0de6bc5c67d3ca41c41760d6d268f3c799e530aafb73b7437d1826bbf0d2a3edac33f8b57cc9887b4a986dce307fa5557e109be40eadb7c43b21742
+  languageName: node
+  linkType: hard
+
+"commander@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "commander@npm:7.2.0"
+  checksum: 53501cbeee61d5157546c0bef0fedb6cdfc763a882136284bed9a07225f09a14b82d2a84e7637edfd1a679fb35ed9502fd58ef1d091e6287f60d790147f68ddc
   languageName: node
   linkType: hard
 
@@ -15543,7 +15617,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"got@npm:^11.0.2, got@npm:^11.8.1":
+"got@npm:^11.0.2, got@npm:^11.8.1, got@npm:^11.8.2":
   version: 11.8.2
   resolution: "got@npm:11.8.2"
   dependencies:
@@ -17560,6 +17634,13 @@ fsevents@^1.2.7:
   version: 2.0.0
   resolution: "is-png@npm:2.0.0"
   checksum: c277ac4cc7b3cfde8ceb7e0868874db51d32d78e888ab6fbbc2ad12db47b77fb51fcb0d66e157be371c9a16f0592c2ed5fb53e3c528a1a89721b6d3090727f39
+  languageName: node
+  linkType: hard
+
+"is-port-reachable@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-port-reachable@npm:3.0.0"
+  checksum: 211ff40648a9795b21e259fee7c9a18a58e5f03d2fb03763d815dcce4d721fb8d38d0be865a1bbc529b87fa7db6d3e08658ee713491e2aab9be70c7b6206845f
   languageName: node
   linkType: hard
 
@@ -19675,6 +19756,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lodash.mapvalues@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.mapvalues@npm:4.6.0"
+  checksum: 0ff1b252fda318fc36e47c296984925e98fbb0fc5a2ecc4ef458f3c739a9476d47e40c95ac653e8314d132aa59c746d4276527b99d6e271940555c6e12d2babd
+  languageName: node
+  linkType: hard
+
 "lodash.maxby@npm:^4.6.0":
   version: 4.6.0
   resolution: "lodash.maxby@npm:4.6.0"
@@ -19689,7 +19777,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lodash.merge@npm:^4.6.1":
+"lodash.merge@npm:^4.6.1, lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
@@ -25697,6 +25785,30 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"selenium-standalone@npm:^7.0.1":
+  version: 7.1.0
+  resolution: "selenium-standalone@npm:7.1.0"
+  dependencies:
+    commander: ^7.2.0
+    cross-spawn: ^7.0.3
+    debug: ^4.3.1
+    fs-extra: ^10.0.0
+    got: ^11.8.2
+    is-port-reachable: ^3.0.0
+    lodash.mapvalues: ^4.6.0
+    lodash.merge: ^4.6.2
+    minimist: ^1.2.5
+    mkdirp: ^1.0.4
+    progress: 2.0.3
+    tar-stream: 2.2.0
+    which: ^2.0.2
+    yauzl: ^2.10.0
+  bin:
+    selenium-standalone: bin/selenium-standalone
+  checksum: fa04ed909cc4ee5f8a8cb4ca11bf8bdce0ac7071ac2bed5e5c9efeb8939169845bdf537463b3bd64df1596903fdd2208be9bbce3b5f7e6a18834f44157f42083
+  languageName: node
+  linkType: hard
+
 "selfsigned@npm:^1.10.8":
   version: 1.10.8
   resolution: "selfsigned@npm:1.10.8"
@@ -27383,6 +27495,19 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"tar-stream@npm:2.2.0, tar-stream@npm:^2.1.4, tar-stream@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "tar-stream@npm:2.2.0"
+  dependencies:
+    bl: ^4.0.3
+    end-of-stream: ^1.4.1
+    fs-constants: ^1.0.0
+    inherits: ^2.0.3
+    readable-stream: ^3.1.1
+  checksum: 699831a8b97666ef50021c767f84924cfee21c142c2eb0e79c63254e140e6408d6d55a065a2992548e72b06de39237ef2b802b99e3ece93ca3904a37622a66f3
+  languageName: node
+  linkType: hard
+
 "tar-stream@npm:^1.5.2":
   version: 1.6.2
   resolution: "tar-stream@npm:1.6.2"
@@ -27395,19 +27520,6 @@ resolve@^2.0.0-next.3:
     to-buffer: ^1.1.1
     xtend: ^4.0.0
   checksum: a5d49e232d3e33321bbd150381b6a4e5046bf12b1c2618acb95435b7871efde4d98bd1891eb2200478a7142ef7e304e033eb29bbcbc90451a2cdfa1890e05245
-  languageName: node
-  linkType: hard
-
-"tar-stream@npm:^2.1.4, tar-stream@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "tar-stream@npm:2.2.0"
-  dependencies:
-    bl: ^4.0.3
-    end-of-stream: ^1.4.1
-    fs-constants: ^1.0.0
-    inherits: ^2.0.3
-    readable-stream: ^3.1.1
-  checksum: 699831a8b97666ef50021c767f84924cfee21c142c2eb0e79c63254e140e6408d6d55a065a2992548e72b06de39237ef2b802b99e3ece93ca3904a37622a66f3
   languageName: node
   linkType: hard
 
@@ -29162,6 +29274,13 @@ typescript@^4.2.4:
     "@wdio/cli": ^7.0.0
     chromedriver: "*"
   checksum: a1e55a78f780b2e3fbab0c2652971e9420860f21a5ff2bc28c51ed58231e39783d2f7707a7deb55bcbf61b2ffd83da9f7ab8657ccbcafa74323dd0ea5e60edec
+  languageName: node
+  linkType: hard
+
+"wdio-wait-for@npm:2.1.0":
+  version: 2.1.0
+  resolution: "wdio-wait-for@npm:2.1.0"
+  checksum: 40748c549abffdf1d76ff6713544542ef2af57e1f3ed8464b9859f53960b84244a937cdbf98fd1d0d33a769d25e1838b8ec61dfec23e861b0ed40b19d9662a87
   languageName: node
   linkType: hard
 

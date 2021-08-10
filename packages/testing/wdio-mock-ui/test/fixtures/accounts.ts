@@ -3,9 +3,9 @@ import { loginCredentials } from '../environments/stage'
 export default {
   "Data": {
     "Type": "contact",
-    "Id": `${loginCredentials.username.toString()}`,
+    "Id": `${loginCredentials.username.toString().substring(0, 7)}`,
     "Attributes": {
-      "ContactId": Number(`${loginCredentials.username.toString()}`),
+      "ContactId": Number(loginCredentials.username.toString().substring(0, 7)),
       "ClientNumber": `${loginCredentials.username.toString()}`,
       "TitleId": 1,
       "Title": "Mr.",
