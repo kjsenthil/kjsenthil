@@ -30,7 +30,6 @@ describe('Login test scenarios', () => {
   let investmentSummary: Mock
   let performanceAccountsAggregated: Mock
   let pin: Mock
-  // const login_url = url + '/login'
 
   describe('successful login scenarios', async () => {
     // arrange
@@ -77,12 +76,12 @@ describe('Login test scenarios', () => {
     })
 
     after(async () => {
+      await login.restore()
+      await pin.restore()
       await accounts.restore()
       await contributions.restore()
       await investmentSummary.restore()
-      await login.restore()
       await performanceAccountsAggregated.restore()
-      await pin.restore()
     })
 
     it('should login with valid credentials', async () => {

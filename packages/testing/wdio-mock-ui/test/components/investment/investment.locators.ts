@@ -68,8 +68,7 @@ export const setChartPeriodTo = async (period: Period) => {
 }
 
 // cards
-// summary
-
+// #region summary
 export const totalTitle = () =>
   $('.MuiGrid-grid-xs-8:nth-child(1) .MuiGrid-item:nth-child(1) div div h6.MuiTypography-body1')
 export const totalTooltip = () =>
@@ -122,13 +121,25 @@ export const lastPeriodReturnRating = () =>
   $(
     '.MuiContainer-disableGutters .MuiContainer-disableGutters.MuiContainer-maxWidthLg div.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6.MuiGrid-item:nth-child(5) .MuiGrid-item.MuiGrid-grid-xs-12:nth-child(1) .MuiPaper-rounded .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-3.MuiGrid-justify-xs-space-between div.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-flex-end.MuiGrid-grid-xs-4:nth-child(2) div:nth-child(4) div:nth-child(1) > div div > h6'
   )
+// #endregion
 
 // cards
-// linked accounts
-export const linkedAccountsTitle = () =>
+// #region your accounts
+// header
+export const yHeader = () =>
+  $(
+    '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(2) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root > h4'
+  )
+// #endregion
+
+// cards
+// #region linked accounts
+// header
+export const lHeader = () =>
   $(
     '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(3) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root > h4'
   )
+// #endregion
 
 // url
 export const investmentUrl = url + '/accounts'

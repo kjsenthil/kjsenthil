@@ -21,7 +21,7 @@ import {
   ourRegisteredDetails,
   riskWarnings,
 } from '../components/headerFooter/headerFooter.locators'
-import { linkedAccountsTitle } from '../components/investment/investment.locators'
+import { lHeader } from '../components/investment/investment.locators'
 import { performLogin } from '../components/login/login.actions'
 import { logout } from '../components/myAccounts/myAccounts.actions'
 import {
@@ -43,9 +43,8 @@ describe('Check common elements from header, footer area', () => {
   // arrange
   let accounts: Mock
   let contributions: Mock
-  let customTimeout = 5000
-  let login: Mock
   let investmentSummary: Mock
+  let login: Mock
   let performanceAccountsAggregated: Mock
   let pin: Mock
 
@@ -90,24 +89,29 @@ describe('Check common elements from header, footer area', () => {
       performanceAccountsAggregatedMockResponse,
       statusCode
     )
+
     await performLogin('test', 'test')
   })
 
+  afterEach(async () => {
+    await browser.pause(500)
+  })
+
   after(async () => {
-    await logout() 
+    await login.restore()
+    await pin.restore()
     await accounts.restore()
     await contributions.restore()
     await investmentSummary.restore()
-    await login.restore()
     await performanceAccountsAggregated.restore()
-    await pin.restore()
+    await logout()
   })
 
   describe('Header scenarios', () => {
     it('should load header links', async () => {
       // assert
       const elemLogoBtn = expect(
-        await (await logoBtn()).waitForClickable({ timeout: customTimeout }),
+        await (await logoBtn()).waitForClickable(),
         'Expected result not matching'
       ).to.be.true
       console.info('Logo is displayed:', elemLogoBtn)
@@ -121,21 +125,11 @@ describe('Check common elements from header, footer area', () => {
       // act
       await (await investmentMenuBtn()).waitForClickable()
       await (await investmentMenuBtn()).click()
-      await (await linkedAccountsTitle()).waitForClickable()
+      await (await lHeader()).waitForClickable()
       // assert
       let currentUrl = await browser.getUrl()
       console.info('Current URL:', currentUrl)
-      expect(
-        new RegExp('[a-z]*.azureedge.net/my-account/accounts').test(currentUrl),
-        'URL does not match'
-      ).true
-
-      // act
-      await browser.back()
-      // assert
-      currentUrl = await browser.getUrl()
-      console.info('Current URL:', await browser.getUrl())
-      expect(new RegExp('[a-z]*.azureedge.net/my-account/').test(currentUrl), 'URL does not match')
+      expect(new RegExp('[a-z]*.azureedge.net/my-account').test(currentUrl), 'URL does not match')
         .true
 
       // act
@@ -164,43 +158,33 @@ describe('Check common elements from header, footer area', () => {
       currentUrl = await browser.getUrl()
       console.info('Current URL:', currentUrl)
       // assert
-      expect(new RegExp('[a-z]*.azureedge.net/my-account/').test(currentUrl), 'URL does not match')
+      expect(new RegExp('[a-z]*.azureedge.net/my-account').test(currentUrl), 'URL does not match')
         .true
 
       // assert
       // cash to invest
-      const elemCashToInvestAmount = await (await cashToInvestAmount()).waitForClickable({
-        timeout: customTimeout,
-      })
+      const elemCashToInvestAmount = await (await cashToInvestAmount()).waitForClickable()
       console.info('MyAccountsLogin is displayed:', elemCashToInvestAmount)
       expect(elemCashToInvestAmount).to.equal(true, 'Expected result not matching')
-      const elemCashToInvestLabel = await (await cashToInvestLabel()).waitForClickable({
-        timeout: customTimeout,
-      })
+      const elemCashToInvestLabel = await (await cashToInvestLabel()).waitForClickable()
       console.info('MyAccountsLogin is displayed:', elemCashToInvestLabel)
       expect(elemCashToInvestLabel).to.equal(true, 'Expected result not matching')
 
       // assert
       // addCash
-      const elemAddCashBtn = await (await addCashBtn()).waitForClickable({
-        timeout: customTimeout,
-      })
+      const elemAddCashBtn = await (await addCashBtn()).waitForClickable()
       console.info('MyAccountsLogin is displayed:', elemAddCashBtn)
       expect(elemAddCashBtn).to.equal(true, 'Expected result not matching')
 
       // assert
       // invest
-      const elemInvestBtn = await (await investBtn()).waitForClickable({
-        timeout: customTimeout,
-      })
+      const elemInvestBtn = await (await investBtn()).waitForClickable()
       console.info('MyAccountsLogin is displayed:', elemInvestBtn)
       expect(elemInvestBtn).to.equal(true, 'Expected result not matching')
 
       // assert
       // ma
-      const elemMyAccountsLogin = await (await myAccountsLoginText()).waitForClickable({
-        timeout: customTimeout,
-      })
+      const elemMyAccountsLogin = await (await myAccountsLoginText()).waitForClickable()
       console.info('MyAccountsLogin is displayed:', elemMyAccountsLogin)
       expect(elemMyAccountsLogin).to.equal(true, 'Expected result not matching')
       const textMyAccountsLogin = await (await myAccountsLoginText()).getText()
