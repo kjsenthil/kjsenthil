@@ -99,6 +99,7 @@ describe("test projections endpoints", () => {
       .path(API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION);
     const expectedSchema = object({
       portfolioEquityPercentage: number(),
+      portfolioCashPercentage: number()
     })
     // Act
     const response = await axios.post(apiUrl, portfolioAssetAllocationPayload, {

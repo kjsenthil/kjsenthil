@@ -7,11 +7,11 @@ const assetAllocationMain: AzureFunction = async function (context: Context, req
     let returnStatus = 200
 
     try {
-        const portfolioEquityPercentage = calculatePortfolioEquityPercentage(inputAccounts)
-        returnBody = { "portfolioEquityPercentage": portfolioEquityPercentage }
+        const portfolioPercentages = calculatePortfolioPercentages(inputAccounts)
+        returnBody = { "portfolioEquityPercentage": portfolioPercentages.equityPercentage, "portfolioCashPercentage": portfolioPercentages.cashPercentage }
     }
     catch (e) {
-        if(e instanceof InvalidEquityPercentageError) {
+        if(e instanceof InvalidPercentageError) {
            returnBody = { "errorMessage": e.message }
             returnStatus = 400
         }
@@ -26,38 +26,64 @@ const assetAllocationMain: AzureFunction = async function (context: Context, req
 interface Account {
     accountName: string,
     accountValue: number,
-    equityPercentage: number
+    equityPercentage: number,
+    cashPercentage: number
+}
+
+interface ExtendedAccount {
+    account: Account,
+    isEquity: boolean
+}
+
+interface Percentages {
+    equityPercentage: number,
+    cashPercentage: number,
 }
 
 type Accounts = Account[]
 
-class InvalidEquityPercentageError extends Error {
-    constructor(accountName: string, equityPercentage: number) {
-        const message = `Equity percentage must be between 0 and 100 for account: '${accountName}', got: ${equityPercentage}`
+class InvalidPercentageError extends Error {
+    constructor(accountName: string, percentage: number, percentageType: string) {
+        const message = `${percentageType} percentage must be between 0 and 100 for account: '${accountName}', got: ${percentage}`
         super(message);
         Object.setPrototypeOf(this, new.target.prototype)
-        this.name = InvalidEquityPercentageError.name
+        this.name = InvalidPercentageError.name
     }
 }
 
-function equityValue(account: Account): number {
-    if(account.equityPercentage >= 0 && account.equityPercentage <= 100) {
-        return account.accountValue * (account.equityPercentage / 100)
+function getValue(extendedAccount: ExtendedAccount): number {
+    const percentage = getPercentage(extendedAccount);
+
+    if(percentage >= 0 && percentage <= 100) {
+        return extendedAccount.account.accountValue * (percentage / 100)
     }
     else {
-       throw new InvalidEquityPercentageError(account.accountName, account.equityPercentage)
+       throw new InvalidPercentageError(extendedAccount.account.accountName, extendedAccount.account.equityPercentage, getPercentageType(extendedAccount))
     }
 }
 
-function calculatePortfolioEquityPercentage(inputAccounts: Accounts): number {
+function calculatePortfolioPercentages(inputAccounts: Accounts): Percentages {
     const totalEquityValue = inputAccounts
-        .map(equityValue)
+        .map(account => getValue({account, isEquity : true}))
         .reduce((accumulator, equity) => accumulator + equity)
+    
+    const totalCashValue = inputAccounts
+        .map(account => getValue({account, isEquity : false}))
+        .reduce((accumulator, equity) => accumulator + equity)
+
     const totalPortfolioValue = inputAccounts
         .map(account => account.accountValue)
         .reduce((accumulator, value) => accumulator + value)
 
-    return (totalEquityValue / totalPortfolioValue) * 100
+    return { "equityPercentage": (totalEquityValue / totalPortfolioValue) * 100, "cashPercentage": (totalCashValue / totalPortfolioValue) * 100, } as Percentages
 }
 
-export { assetAllocationMain, calculatePortfolioEquityPercentage, equityValue }
+function getPercentage(extendedAccount: ExtendedAccount) : number {
+    return extendedAccount.isEquity ? extendedAccount.account.equityPercentage : extendedAccount.account.cashPercentage;
+}
+
+function getPercentageType(extendedAccount: ExtendedAccount) : string {
+    return extendedAccount.isEquity ? "Equity" : "Cash";
+}
+
+export { assetAllocationMain, calculatePortfolioPercentages, getValue }
