@@ -109,7 +109,7 @@ module "front_end" {
   account_kind             = "StorageV2"
   account_replication_type = "GRS"
   account_tier             = "Standard"
-  cdn_profile_name         = var.cdn_profile_name
+  cdn_profile_name         = var.cdn_profile_website_name
   public_dns_zone_name     = var.public_dns_zone_name
   public_dns_cname         = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "preview" : var.environment_prefix
   dns_resource_group_name  = var.dns_resource_group_name
@@ -129,7 +129,7 @@ module "storybook" {
   account_kind             = "StorageV2"
   account_replication_type = "GRS"
   account_tier             = "Standard"
-  cdn_profile_name         = var.cdn_profile_name
+  cdn_profile_name         = var.cdn_profile_storybook_name
 
   csp_allowed_script_sources = "'self' 'unsafe-inline' 'unsafe-eval' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com *.google-analytics.com"
   csp_allowed_style_sources  = "'self' 'unsafe-inline'"

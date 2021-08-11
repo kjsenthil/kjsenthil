@@ -78,6 +78,16 @@ variable "cdn_profile_name" {
   description = "Name of the CDN profile to create endpoints on"
 }
 
+variable "cdn_profile_website_name" {
+  type        = string
+  description = "Name of the CDN profile to create endpoints on for the website"
+}
+
+variable "cdn_profile_storybook_name" {
+  type        = string
+  description = "Name of the CDN profile to create endpoints on for storybook"
+}
+
 variable "app_insights_name" {
   type        = string
   description = "name of the Application insights"
