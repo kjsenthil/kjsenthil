@@ -1,6 +1,7 @@
 import { Context } from "@azure/functions";
-import { calculateContribution, calculateDrawdown, calculateExpectedReturn, calculateHoldingsWithOnTrackPercentage, calculatePercentage, calculateProjectionValue, getRetirementTealProjectionRecursive } from "./goal-retirement";
-import { ContributionMonth, Drawdown, DrawdownType, ExpectedReturns, ProjectionMonth, RequestPayload } from "./types";
+import { calculateCompoundInterestMultiplierAtDrawdown, calculateCompoundInterestMultiplierPreDrawdown, calculateContribution, calculateDrawdown, calculateExpectedReturn, calculateGoldProjectionValue, calculateHoldingsWithOnTrackPercentage, calculateMonthlyContributionsRequiredToFundDrawdown, calculateMonthlyNetExpectedReturn, calculatePercentage, calculateProjectionValue, calculateUpfrontContributionRequired, calculateValueAtDrawdownStart, calculateValueAtDrawdownStartRetainingFundsAfterDrawdown, getGoldProjection, getRetirementTealProjectionRecursive } from "./goal-retirement";
+import { monthsDiff } from "./helpers";
+import { ContributionMonth, Drawdown, DrawdownType, ExpectedReturns, ProjectionMonth, RequestPayload, TargetProjectionMonth } from "./types";
 
 describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   let context: Context;
@@ -1163,4 +1164,588 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   
     });
   });
+
+  describe("Current projection calculation logic", () => {
+    const expectedAnnualReturnPreDrawdown = 0.043;
+    const expectedAnnualReturnAtDrawdown = 0.0298;
+    const feesAnnualPercentage = 0.004;
+    const drawdownStartDate = new Date(2055, 4, 10);
+    const drawdownEndDate = new Date(2076, 4, 10);
+    const currentDate = new Date(2021, 7, 7);
+    const portfolioValue = 250000;
+    const desiredValueAtEndOfDrawdown = 100000;
+    const goalContributingMonths = monthsDiff(currentDate, drawdownStartDate) - 1;
+    const preGoalExpectedMonthlyReturn = calculateMonthlyNetExpectedReturn(expectedAnnualReturnPreDrawdown, feesAnnualPercentage);
+    const goalDrawdownMonths = monthsDiff(drawdownStartDate, drawdownEndDate) + 1;
+    const postGoalExpectedMonthlyReturn = calculateMonthlyNetExpectedReturn(expectedAnnualReturnAtDrawdown, feesAnnualPercentage);
+    const contributionPeriodUptoLumpSum = 224;
+    const contributionPeriodFromLumpSumAndDrawdown = 180;
+    const targetGoalAgeTotal = 1528151.77;
+    const monthlyContributions = 624;
+    let lumpSum = 0;
+    let upfrontContribution = 0;
   
+  
+    test("Calculates monthly contribution period", () => {
+      expect(monthsDiff(currentDate, drawdownStartDate))
+        .toBe(405);
+    })
+  
+    test("Calculates monthly net expected return correctly", () => {
+      expect(calculateMonthlyNetExpectedReturn(expectedAnnualReturnPreDrawdown, feesAnnualPercentage))
+        .toBeCloseTo(0.0032, 4);
+    })
+  
+    test("Calculates value at drawdown start correctly without upfront contribution", () => {
+  
+      expect(calculateValueAtDrawdownStart(goalContributingMonths, preGoalExpectedMonthlyReturn, portfolioValue, upfrontContribution))
+        .toBeCloseTo(906421.32, 2);
+    })
+  
+    test("Calculates value at drawdown start correctly with upfront contribution", () => {
+      upfrontContribution = 10000
+      expect(calculateValueAtDrawdownStart(goalContributingMonths, preGoalExpectedMonthlyReturn, portfolioValue, upfrontContribution))
+        .toBeCloseTo(942678.17, 2);
+    })
+  
+    test("Calculates compound interest multiplier correctly pre drawdown", () => {
+      expect(calculateCompoundInterestMultiplierPreDrawdown(goalContributingMonths, preGoalExpectedMonthlyReturn))
+        .toBeCloseTo(822.2446708679934, 7);
+    })
+  
+    test("Calculates compound interest multiplier correctly at drawdown", () => {
+      expect(calculateCompoundInterestMultiplierAtDrawdown(goalDrawdownMonths, postGoalExpectedMonthlyReturn))
+        .toBeCloseTo(195.9606487, 7);
+    })
+  
+    test("Calculates portfolio value at drawdown start with lump sum zero", () => {
+      expect(calculateValueAtDrawdownStartRetainingFundsAfterDrawdown(goalDrawdownMonths, postGoalExpectedMonthlyReturn, desiredValueAtEndOfDrawdown))
+        .toBeCloseTo(58446.91, 2);
+    })
+  
+    test("Calculates required monthly contribution to fund desired drawdown with zero lump sum and upfront contribution", () => {
+      lumpSum = 0;
+      upfrontContribution = 0;
+      expect(calculateMonthlyContributionsRequiredToFundDrawdown(targetGoalAgeTotal, preGoalExpectedMonthlyReturn, contributionPeriodFromLumpSumAndDrawdown, portfolioValue, upfrontContribution, lumpSum, contributionPeriodUptoLumpSum))
+        .toBeCloseTo(756.14, 2);
+    })
+  
+    test("Calculates required monthly contribution to fund desired drawdown with zero upfrontContribution ", () => {
+      lumpSum = 100000;
+      upfrontContribution = 0;
+      expect(calculateMonthlyContributionsRequiredToFundDrawdown(targetGoalAgeTotal, preGoalExpectedMonthlyReturn, contributionPeriodFromLumpSumAndDrawdown, portfolioValue, upfrontContribution, lumpSum, contributionPeriodUptoLumpSum))
+        .toBeCloseTo(972.03, 2);
+    })
+    test("Calculates required monthly contribution to fund desired drawdown", () => {
+      lumpSum = 100000;
+      upfrontContribution = 10000;
+      expect(calculateMonthlyContributionsRequiredToFundDrawdown(targetGoalAgeTotal, preGoalExpectedMonthlyReturn, contributionPeriodFromLumpSumAndDrawdown, portfolioValue, upfrontContribution, lumpSum, contributionPeriodUptoLumpSum))
+        .toBeCloseTo(927.93, 2);
+    })
+  
+    test("Calculates required upfront contribution to fund desired drawdown with zero lump sum and upfront contribution", () => {
+      lumpSum = 0;
+      upfrontContribution = 0;
+      expect(calculateUpfrontContributionRequired(preGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, targetGoalAgeTotal, monthlyContributions, lumpSum, portfolioValue, upfrontContribution))
+        .toBeCloseTo(29966.69, 2);
+    })
+  
+    test("Calculates required upfront contribution to fund desired drawdown with zero upfrontContribution", () => {
+      lumpSum = 100000;
+      upfrontContribution = 0;
+      expect(calculateUpfrontContributionRequired(preGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, targetGoalAgeTotal, monthlyContributions, lumpSum, portfolioValue, upfrontContribution))
+        .toBeCloseTo(78926.88, 2);
+    })
+  
+    test("Calculates required upfront contribution to fund desired drawdown", () => {
+      lumpSum = 100000;
+      upfrontContribution = 10000;
+      expect(calculateUpfrontContributionRequired(preGoalExpectedMonthlyReturn, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, targetGoalAgeTotal, monthlyContributions, lumpSum, portfolioValue, upfrontContribution))
+        .toBeCloseTo(68926.88);
+    })
+  });
+
+  describe("tests for calculateGoldProjectionValue function", () => {
+    const percentage = 0.003193314;
+    const portfolioCurrentValue = 250000;
+    const upfrontContribution = 0;
+    const monthlyContributionsRequiredToFundDrawdown = 972.0278285;
+    const lumpSumAmount = 100000;
+    const desiredValueAtEndOfDrawdown = 100000;
+    const desiredMonthlyDrawdown = 7500.00;
+    const contributionPeriodUptoLumpSum = 224;
+    const contributionPeriodFromLumpSumAndDrawdown = 180;
+    const goalTargetMonth = 658;
+    it("should return valid projection for month 1", () => {
+      const month = 1;
+      const previousMonthProjectedValue = 25000;
+      expect(
+        calculateGoldProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, lumpSumAmount, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+        .toBeCloseTo(251770.36, 2);
+    });
+  
+    it("should return valid projection for month after the lump sum is taken", () => {
+      const month = contributionPeriodUptoLumpSum + 1;
+      const previousMonthProjectedValue = 827942.9852;
+  
+      expect(
+        calculateGoldProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, lumpSumAmount, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+        .toBeCloseTo(731242.67, 2);
+    });
+  
+  
+    it("should return valid projection for month after 1 month of lump sum date", () => {
+      const month = contributionPeriodUptoLumpSum + 2;
+      const previousMonthProjectedValue = 731242.67;
+      const projectedAmountOnLumpSumDate = 731242.67;
+      expect(
+        calculateGoldProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, lumpSumAmount, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+        .toBeCloseTo(637227.78, 2);
+    });
+  
+    it("should return valid projection for month after 1 month of drawdown start date", () => {
+      const month = contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown + 2;
+      const previousMonthProjectedValue = 1523883.00;
+      const projectedAmountOnLumpSumDate = 731242.67;
+      const percentage = 0.002124988;
+      expect(
+        calculateGoldProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, lumpSumAmount, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+        .toBeCloseTo(1519605.30, 2);
+    });
+  
+    it("should return valid projection for month after 1 month of target date", () => {
+      const month = goalTargetMonth;
+      const previousMonthProjectedValue = 100000.00;
+      const projectedAmountOnLumpSumDate = 731242.67;
+      const percentage = 0.002124988;
+      expect(
+        calculateGoldProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributionsRequiredToFundDrawdown, lumpSumAmount, desiredValueAtEndOfDrawdown, desiredMonthlyDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+        .toBeCloseTo(0, 2);
+    }); 
+  });
+  
+  describe("Tests for getGoldProjection Function with lump sum and desired remaining amount", () => {
+    let context: Context;
+  
+    beforeEach(() => {
+      context = ({ log: jest.fn() } as unknown) as Context;
+    });
+  
+    it("should return correct reponse", async () => {
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement: {
+          startDate: new Date("2055-04-10"),
+          endDate: new Date("2076-04-10"),
+          regularDrawdown: 7500,
+          lumpSum: {
+            amount: 100000,
+            date: new Date("2040-04-10")
+          },
+          remainingAmount: 100000
+        },
+        upfrontContribution: 0,
+        feesPercentage: 0.4,
+        currentNetContribution: 1000.00,
+        monthlyContribution: 624.00,
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        postGoal: {
+          expectedReturnPercentage: 2.98
+        }
+      } as RequestPayload;
+  
+      const result = getGoldProjection(inboundPayload, new Date("2021-07-08"));
+  
+      expect(result.upfrontContributionsToReach).toBeCloseTo(78926.88, 2);
+      expect(result.monthlyContributionsToReach).toBeCloseTo(972.03, 2);
+  
+      expect(result.targetProjectionData.length).toEqual(901);
+  
+      expect(result.targetProjectionData[0]).toEqual(
+        {
+          monthNo: 0,
+          value: 250000
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[1].value).toBeCloseTo(251770.36, 2);
+  
+      //lump sum  month
+      expect(result.targetProjectionData[224].value).toBeCloseTo(827942.99, 2);
+      // after lump sum date
+      expect(result.targetProjectionData[225].value).toBeCloseTo(731242.67, 2);
+  
+      // after lump sum date
+      expect(result.targetProjectionData[226].value).toBeCloseTo(734546.67, 2);
+  
+      //Month before drawdown start
+      expect(result.targetProjectionData[406].value).toBeCloseTo(1519605.43, 2);
+  
+      //Drawdown start
+      expect(result.targetProjectionData[407].value).toBeCloseTo(1515318.64, 2);
+  
+  
+      // At the drawdown end date expect to have desired amount
+      expect(result.targetProjectionData[657].value).toBeCloseTo(100000, 0);
+  
+      // After the drawdown end date expect to have zero amount
+      expect(result.targetProjectionData[658].value).toBeCloseTo(0, 0);
+  
+      expect(result.targetProjectionData[661]).toEqual(
+        {
+          monthNo: 661,
+          value: 0,
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[900]).toEqual(
+        {
+          monthNo: 900,
+          value: 0,
+        } as TargetProjectionMonth);
+    });
+  })
+
+  describe("Tests for getGoldProjection Function without lump sum and desired remaining amount", () => {
+    let context: Context;
+  
+    beforeEach(() => {
+      context = ({ log: jest.fn() } as unknown) as Context;
+    });
+  
+  
+    it("should return correct response when lump sum date is past", async () => {
+      const today = new Date("2021-07-09");
+      const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement: {
+          startDate: new Date("2055-04-10"),
+          endDate: new Date("2076-04-10"),
+          regularDrawdown: 9999,
+          lumpSum: {
+            amount: 100000,
+            date: new Date(pastDate)
+          },
+          remainingAmount: 100000
+        },
+        upfrontContribution: 0,
+        feesPercentage: 0.4,
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        postGoal: {
+          expectedReturnPercentage: 2.98
+        },
+        currentNetContribution: 1000.00,
+        monthlyContribution: 624.00,
+      } as RequestPayload;
+  
+  
+      // Action
+      const result = getGoldProjection(inboundPayload, today);
+  
+      // Assertion
+      expect(result.monthlyContributionsToReach).toBeCloseTo(1361.20, 2)
+      expect(result.upfrontContributionsToReach).toBeCloseTo(166981.70, 2)
+  
+      expect(result.targetProjectionData[0]).toEqual(
+        {
+          monthNo: 0,
+          value: 250000
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[1].value).toBeCloseTo(240767.40, 2);
+  
+  
+      expect(result.targetProjectionData.length).toEqual(901);
+  
+      //After the drawdown end date expect to have zero amount left
+      expect(result.targetProjectionData[660].value).toBeCloseTo(0, 0);
+  
+      expect(result.targetProjectionData[661]).toEqual(
+        {
+          monthNo: 661,
+          value: 0,
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[900]).toEqual(
+        {
+          monthNo: 900,
+          value: 0,
+        } as TargetProjectionMonth);
+    });
+  
+    it("when desired monthly amount is less than state pension when state pension is included the result should be same as desired monthly drawdown is zero", async () => {
+      const today = new Date("2021-07-09");
+      const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement: {
+          startDate: new Date("2055-04-10" ),
+          endDate: new Date("2076-04-10"),
+          regularDrawdown: 0,
+          lumpSum: {
+            amount: 100000,
+            date: new Date(pastDate)
+          },
+          remainingAmount: 100000
+        },
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        upfrontContribution: 0,
+        feesPercentage: 0.4,
+        postGoal: {
+          expectedReturnPercentage: 2.98
+        },
+        currentNetContribution: 1000.00,
+        monthlyContribution: 624.00,
+      } as RequestPayload;
+  
+  
+      // Action
+      const result = getGoldProjection(inboundPayload, today);
+  
+      const inboundPayloadWithStatePension = { ...inboundPayload, includeStatePension: true, desiredMonthlyDrawdown: 800, statePensionAmount: 12000 };
+  
+      const resultWithStatePension = getGoldProjection(inboundPayloadWithStatePension, today);
+  
+      // Assertion
+      expect(result.monthlyContributionsToReach).toEqual(resultWithStatePension.monthlyContributionsToReach)
+      expect(result.upfrontContributionsToReach).toEqual(resultWithStatePension.upfrontContributionsToReach)
+  
+      expect(result.targetProjectionData[0]).toEqual(resultWithStatePension.targetProjectionData[0]);
+  
+      expect(result.targetProjectionData[1]).toEqual(resultWithStatePension.targetProjectionData[1]);
+  
+  
+      expect(result.targetProjectionData.length).toEqual(resultWithStatePension.targetProjectionData.length);
+  
+      //After the drawdown end date expect to have zero amount left
+      expect(result.targetProjectionData[660]).toEqual(resultWithStatePension.targetProjectionData[660]);
+  
+      expect(result.targetProjectionData[661]).toEqual(resultWithStatePension.targetProjectionData[661]);
+      expect(result.targetProjectionData[900]).toEqual(resultWithStatePension.targetProjectionData[900]);
+    });
+  
+    it("should return a correct response when lump sum date and drawdown start date is same", async () => {
+      const today = new Date("2021-07-12");
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement:{
+          remainingAmount: 100000,
+          regularDrawdown: 9999,
+          startDate: new Date("2055-04-10"),
+          endDate: new Date("2076-04-10"),
+          lumpSum: {
+            amount: 100000,
+            date: new Date("2055-04-10")
+          }
+        },
+        upfrontContribution: 0,
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        postGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        feesPercentage: 0.4,
+        currentNetContribution: 0.00,
+        monthlyContribution: 624.00,
+      } as RequestPayload;
+  
+  
+      // Action
+      const result = getGoldProjection(inboundPayload, today);
+  
+      // Assertion
+      expect(result.monthlyContributionsToReach).toBeCloseTo(1197.36, 2)
+      expect(result.upfrontContributionsToReach).toBeCloseTo(129871.21, 2)
+  
+      expect(result.targetProjectionData[0]).toEqual(
+        {
+          monthNo: 0,
+          value: 250000
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[1].value).toBeCloseTo(251995.69, 2);
+  
+      //Month before drawdown start
+      expect(result.targetProjectionData[406].value).toBeCloseTo(1770688.47, 2);
+  
+      //Drawdown start
+      expect(result.targetProjectionData[407].value).toBeCloseTo(1766311.91, 2);
+  
+      expect(result.targetProjectionData.length).toEqual(901);
+  
+      //After the drawdown end date expect to have zero amount left
+      expect(result.targetProjectionData[660].value).toBeCloseTo(0, 0);
+  
+      expect(result.targetProjectionData[661]).toEqual(
+        {
+          monthNo: 661,
+          value: 0,
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[900]).toEqual(
+        {
+          monthNo: 900,
+          value: 0,
+        } as TargetProjectionMonth);
+    });
+  
+    it("should return a correct response when already in retirement and no contribution", async () => {
+      const today = new Date("2021-07-12");
+      const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement: {
+          remainingAmount: 100000,
+          regularDrawdown: 7500,
+          startDate: new Date(pastDate),
+          endDate: new Date("2076-04-10"),
+          lumpSum: {
+            amount: 100000,
+            date: new Date(pastDate)
+          }
+        },
+        upfrontContribution: 0,
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        postGoal: {
+          expectedReturnPercentage: 2.98
+        },
+        feesPercentage: 0.4,
+        currentNetContribution: 1000.00,
+        monthlyContribution: 624.00,
+      } as RequestPayload;
+  
+  
+      // Action
+      const result = getGoldProjection(inboundPayload, today);
+  
+      // Assertion
+      expect(result.monthlyContributionsToReach).toEqual(0)
+      expect(result.upfrontContributionsToReach).toBeCloseTo(2433025.83, 2)
+  
+      expect(result.targetProjectionData[0].monthNo).toEqual(0);
+      expect(result.targetProjectionData[0].value).toBeCloseTo(2683025.83, 2);
+  
+      expect(result.targetProjectionData[1].value).toBeCloseTo(2681211.29, 2);
+  
+      //Month before drawdown start
+      expect(result.targetProjectionData[406].value).toBeCloseTo(1515318.64, 2);
+  
+      //Drawdown start
+      expect(result.targetProjectionData[407].value).toBeCloseTo(1511022.73, 2);
+  
+      expect(result.targetProjectionData.length).toEqual(901);
+  
+      //After the drawdown end date expect to have zero amount left
+      expect(result.targetProjectionData[660].value).toBeCloseTo(0, 0);
+  
+      expect(result.targetProjectionData[661]).toEqual(
+        {
+          monthNo: 661,
+          value: 0,
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[900]).toEqual(
+        {
+          monthNo: 900,
+          value: 0,
+        } as TargetProjectionMonth);
+    });
+  })
+
+  describe("Tests for getGoldProjection function with state pension", () => {
+    let context: Context;
+  
+    beforeEach(() => {
+      context = ({ log: jest.fn() } as unknown) as Context;
+    });
+  
+  
+    it("should return a correct response", async () => {
+      const inboundPayload = {
+        timeHorizonToProject: 900,
+        currentPortfolioValue: 250000,
+        drawdownRetirement: {
+          regularDrawdown: 7500,
+          startDate: new Date("2055-04-10"),
+          endDate: new Date("2076-04-10"),
+          lumpSum: {
+            amount: 100000,
+            date: new Date("2040-04-10")
+          },
+          statePensionAmount: 12000,
+          remainingAmount: 100000
+        },
+        upfrontContribution: 0,
+        preGoal: {
+          expectedReturnPercentage: 4.3
+        },
+        feesPercentage: 0.4,
+        postGoal: {
+          expectedReturnPercentage: 2.98
+        },
+        currentNetContribution: 1000.00,
+        monthlyContribution: 624.00,
+      } as RequestPayload;
+  
+  
+      // Action
+      const result = getGoldProjection(inboundPayload, new Date("2021-07-08"));
+  
+  
+      // Assertion
+      expect(result.upfrontContributionsToReach).toBeCloseTo(24878.99, 2)
+      expect(result.monthlyContributionsToReach).toBeCloseTo(733.70, 2)
+  
+      expect(result.targetProjectionData.length).toEqual(901);
+  
+      //first row
+      expect(result.targetProjectionData[1].value).toBeCloseTo(251532.03, 2);
+  
+      //just before lump sum  month
+      expect(result.targetProjectionData[224].value).toBeCloseTo(750140.74, 2);
+      // after lump sum date
+      expect(result.targetProjectionData[225].value).toBeCloseTo(652952.89, 2);
+  
+      // after lump sum date +1
+      expect(result.targetProjectionData[226].value).toBeCloseTo(655769.33, 2);
+  
+      //Month before drawdown start
+      expect(result.targetProjectionData[406].value).toBeCloseTo(1324817.45, 2);
+  
+      //Drawdown start
+      expect(result.targetProjectionData[407].value).toBeCloseTo(1321118.86, 2);
+  
+  
+      // At the drawdown end date expect to have desired amount
+      expect(result.targetProjectionData[657].value).toBeCloseTo(100000, 0);
+  
+      // After the drawdown end date expect to have zero amount
+      expect(result.targetProjectionData[658].value).toBeCloseTo(0, 0);
+  
+  
+      expect(result.targetProjectionData[661]).toEqual(
+        {
+          monthNo: 661,
+          value: 0,
+        } as TargetProjectionMonth);
+  
+      expect(result.targetProjectionData[900]).toEqual(
+        {
+          monthNo: 900,
+          value: 0,
+        } as TargetProjectionMonth);
+    });
+  })

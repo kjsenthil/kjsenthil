@@ -96,18 +96,24 @@ interface ResponsePayload {
   }
 }
 
-export interface ExpectedReturns {
+interface GoldProjectionResponse{
+  monthlyContributionsToReach?: number,
+  upfrontContributionsToReach?: number,
+  targetProjectionData?: TargetProjectionMonth[]
+}
+
+interface ExpectedReturns {
   monthlyNetExpectedReturn: number;
   monthlyVolatility: number;
 }
 
-export interface Drawdown {
+interface Drawdown {
   possibleDrawdown: number;
   projectedGoalAgeTotal: number;
   remainingAmountAtGoalAge: number;
 }
 
-export interface Stats {
+interface Stats {
   desiredOutflow: number;
   affordableDrawdown: number;
   affordableLumpSum: number;
@@ -146,5 +152,5 @@ enum DrawdownType {
   Retirement = "Retirement"
 }
 
-export type { RequestPayload, ResponsePayload, ValidationError }
+export type { RequestPayload, ResponsePayload, ValidationError, GoldProjectionResponse, ExpectedReturns, Drawdown, Stats }
 export { ContributionMonth, DrawdownType, ProjectionMonth, TargetProjectionMonth }
