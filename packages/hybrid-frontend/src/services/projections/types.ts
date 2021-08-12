@@ -224,3 +224,9 @@ export interface AssetModelResponse {
     lessLikelyUb: number;
   };
 }
+
+export interface PortfolioAssetAllocationResponse {
+  // These figures can be null if the 'accountValue' parameter is omitted
+  portfolioEquityPercentage: number | null;
+  portfolioCashPercentage: number | null;
+}

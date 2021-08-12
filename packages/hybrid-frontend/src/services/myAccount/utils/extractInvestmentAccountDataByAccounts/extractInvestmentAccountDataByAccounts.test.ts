@@ -1,13 +1,16 @@
-import extractPercentageEquityAllocationsByAccounts from '.';
-import getEquityAllocation from '../../api/getEquityAllocation';
+import extractInvestmentAccountDataByAccounts from '.';
+import getEquityAndCashAllocation from '../../api/getEquityAndCashAllocation';
 import getMonthlySavingsAmount from '../../api/getMonthlySavingsAmount';
 
-jest.mock('../../api/getEquityAllocation');
+jest.mock('../../api/getEquityAndCashAllocation');
 jest.mock('../../api/getMonthlySavingsAmount');
 
-describe('extractPercentageEquityAllocationsByAccounts', () => {
-  it('returns Percentage Equity Allocations By Accounts ', async () => {
-    (getEquityAllocation as jest.Mock).mockResolvedValue(100);
+describe('extractInvestmentAccountDataByAccounts', () => {
+  it('returns investment account data by accounts ', async () => {
+    (getEquityAndCashAllocation as jest.Mock).mockResolvedValue({
+      equityPercentage: 100,
+      cashPercentage: 50,
+    });
 
     (getMonthlySavingsAmount as jest.Mock).mockResolvedValueOnce(0);
 
@@ -23,6 +26,7 @@ describe('extractPercentageEquityAllocationsByAccounts', () => {
         accountReturnPercentage: 93.56,
         accountTotalHoldings: 9479.442456,
         equityPercentage: 100,
+        cashPercentage: 50,
         id: '21977',
         monthlyInvestment: 0,
       },
@@ -33,6 +37,7 @@ describe('extractPercentageEquityAllocationsByAccounts', () => {
         accountReturnPercentage: 0,
         accountTotalHoldings: 9.93,
         equityPercentage: 100,
+        cashPercentage: 50,
         id: '21978',
         monthlyInvestment: undefined,
       },
@@ -75,7 +80,7 @@ describe('extractPercentageEquityAllocationsByAccounts', () => {
       },
     ];
 
-    const accountsResults = await extractPercentageEquityAllocationsByAccounts(
+    const accountsResults = await extractInvestmentAccountDataByAccounts(
       mockInvestmentSummaryData,
       mockInvestmentAccounts
     );

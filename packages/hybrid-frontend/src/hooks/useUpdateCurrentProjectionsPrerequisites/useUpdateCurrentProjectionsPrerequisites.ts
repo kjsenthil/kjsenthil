@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
-  extractPercentageEquityAllocationsByAccounts,
   extractClientAccounts,
+  extractInvestmentAccountDataByAccounts,
 } from '../../services/myAccount';
 import {
   AssetModelResponse,
@@ -56,7 +56,7 @@ const useUpdateCurrentProjectionsPrerequisites = (): Partial<CurrentProjectionsP
       if (investmentSummary.data && client.included && !accountTotals) {
         const clientAccounts = extractClientAccounts(client.included);
         setAccountTotals(
-          await extractPercentageEquityAllocationsByAccounts(investmentSummary.data, clientAccounts)
+          await extractInvestmentAccountDataByAccounts(investmentSummary.data, clientAccounts)
         );
       }
     })();

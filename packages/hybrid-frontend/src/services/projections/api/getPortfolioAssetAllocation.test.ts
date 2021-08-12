@@ -11,8 +11,17 @@ describe('getPortfolioAssetAllocation', () => {
   it(`makes a call to ${url}`, async () => {
     const mockAllocation = {
       portfolioEquityPercentage: 40,
+      portfolioCashPercentage: 20,
     };
-    mockAxios.onPost(url, mockInvestmentAccountsData).reply(200, mockAllocation);
+    mockAxios
+      .onPost(
+        url,
+        mockInvestmentAccountsData.map((investmentAccountData) => ({
+          ...investmentAccountData,
+          accountValue: investmentAccountData.accountTotalHoldings,
+        }))
+      )
+      .reply(200, mockAllocation);
 
     const response = await getPortfolioAssetAllocation(mockInvestmentAccountsData);
 

@@ -6,6 +6,7 @@ export interface InvestmentAccountData {
   accountReturn: number;
   accountReturnPercentage: number;
   equityPercentage?: number;
+  cashPercentage?: number;
   monthlyInvestment?: number;
 }
 
