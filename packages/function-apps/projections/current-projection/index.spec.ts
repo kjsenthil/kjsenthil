@@ -423,7 +423,7 @@ describe("Tests for getCurrentProjection Function", () => {
       } as ProjectionMonth);
   });
 
-  it("should return expected results when lump sum date is past date", async () => {
+  it("should return expected results when lump sum date is past date the result is same as lump sum is zero", async () => {
     // Arrange
     const today = new Date("2021-07-13");
     const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
@@ -456,128 +456,49 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Action
 
-    const result = getCurrentProjection(inboundPayload, today);
+    const resultWithLumpSum = getCurrentProjection(inboundPayload, today);
+
+    inboundPayload.lumpSumAmount = 0;
+
+    const resultWithLumpSumZero = getCurrentProjection(inboundPayload, today);
+
 
     // Assertion
-    expect(result.projectedGoalAgeTotal).toBeCloseTo(1414361.49, 2);
-    expect(result.possibleDrawdown).toBeCloseTo(6409.01, 2);
-    expect(result.onTrackPercentage).toEqual(0.9255373477935791);
-    expect(result.desiredOutflow).toEqual(2097500);
-    expect(result.affordableOutflow).toBeCloseTo(1941314.59, 2);
-    expect(result.affordableDrawdown).toBeCloseTo(6941.53, 2);
-    expect(result.affordableLumpSum).toBeCloseTo(92553.73, 2);
-    expect(result.projections.length).toBeCloseTo(901);
+    expect(resultWithLumpSum.projectedGoalAgeTotal).toBeCloseTo(resultWithLumpSumZero.projectedGoalAgeTotal);
+    expect(resultWithLumpSum.possibleDrawdown).toBeCloseTo(resultWithLumpSumZero.possibleDrawdown);
+    expect(resultWithLumpSum.onTrackPercentage).toEqual(resultWithLumpSumZero.onTrackPercentage);
+    expect(resultWithLumpSum.desiredOutflow).toEqual(resultWithLumpSumZero.desiredOutflow);
+    expect(resultWithLumpSum.affordableOutflow).toBeCloseTo(resultWithLumpSumZero.affordableOutflow);
+    expect(resultWithLumpSum.affordableDrawdown).toBeCloseTo(resultWithLumpSumZero.affordableDrawdown);
+    expect(resultWithLumpSum.affordableLumpSum).toBeCloseTo(resultWithLumpSumZero.affordableLumpSum);
+    expect(resultWithLumpSum.projections.length).toBeCloseTo(901);
     //underperform
-    expect(result.marketUnderperform.onTrackPercentage).toEqual(0.5904126167297363);
-    expect(result.marketUnderperform.desiredOutflow).toBeCloseTo(2097500);
-    expect(result.marketUnderperform.affordableOutflow).toBeCloseTo(1238390.46, 2);
-    expect(result.marketUnderperform.affordableDrawdown).toBeCloseTo(4428.09, 2);
-    expect(result.marketUnderperform.affordableLumpSum).toBeCloseTo(59041.26, 2);
+    expect(resultWithLumpSum.marketUnderperform.onTrackPercentage).toEqual(resultWithLumpSumZero.marketUnderperform.onTrackPercentage);
+    expect(resultWithLumpSum.marketUnderperform.desiredOutflow).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.desiredOutflow);
+    expect(resultWithLumpSum.marketUnderperform.affordableOutflow).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableOutflow);
+    expect(resultWithLumpSum.marketUnderperform.affordableDrawdown).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableDrawdown);
+    expect(resultWithLumpSum.marketUnderperform.affordableLumpSum).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableLumpSum);
 
-    expect(result.projections[0]).toEqual(
-      {
-        month: 0,
-        contributionLine: 1000,
-        lowerBound: 250000,
-        projectedValue: 250000,
-        upperBound: 250000
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[0]).toEqual(resultWithLumpSumZero.projections[0]);
 
-    expect(result.projections[1]).toEqual(
-      {
-        month: 1,
-        contributionLine: 1624,
-        lowerBound: 235465.81038991973,
-        projectedValue: 251422.32845197053,
-        upperBound: 266368.48354157555
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[1]).toEqual(resultWithLumpSumZero.projections[1]);
+    expect(resultWithLumpSum.projections[224]).toEqual(resultWithLumpSumZero.projections[224]);
+    expect(resultWithLumpSum.projections[225]).toEqual(resultWithLumpSumZero.projections[225]);
+    expect(resultWithLumpSum.projections[226]).toEqual(resultWithLumpSumZero.projections[226]);
 
-    //just before  lump sum start
-    expect(result.projections[224]).toEqual({
-      month: 224,
-      contributionLine: 140776,
-      lowerBound: 417562.7172793837,
-      projectedValue: 714327.2998455743,
-      upperBound: 985019.5795674027
-    } as ProjectionMonth);
-
-    //just after lump sum
-    expect(result.projections[225]).toEqual({
-      month: 225,
-      contributionLine: 141400,
-      lowerBound: 419609.9961708655,
-      projectedValue: 717232.3710755184,
-      upperBound: 988698.4854539612,
-    } as ProjectionMonth);
-
-    expect(result.projections[226]).toEqual({
-      month: 226,
-      lowerBound: 421667.67069273203,
-      projectedValue: 720146.7191095338,
-      upperBound: 992385.7950017868,
-      contributionLine: 142024,
-    } as ProjectionMonth);
-
-
-    expect(result.projections[254]).toEqual({
-      month: 254,
-      lowerBound: 483606.8353890391,
-      projectedValue: 805637.7550093164,
-      upperBound: 1099184.177155734,
-      contributionLine: 151930.46989154816,
-    } as ProjectionMonth);
 
 
     //after drawdown start
-    expect(result.projections[403]).toEqual(
-      {
-        month: 403,
-        contributionLine: -882357.5162677765,
-        lowerBound: 978472.1399793173,
-        projectedValue: 1414361.4897820344,
-        upperBound: 1812720.1353594651,
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[403]).toEqual(resultWithLumpSumZero.projections[403]);
 
     //target month
-    expect(result.projections[600]).toEqual(
-      {
-        month: 600,
-        contributionLine: -2249838.9476327896,
-        lowerBound: 0,
-        projectedValue: 449079.53834706655,
-        upperBound: 1245345.5753395925,
-      } as ProjectionMonth);
-
-    expect(result.projections[657]).toEqual(
-      {
-        month: 657,
-        contributionLine: -2738059.8985939026,
-        lowerBound: 0,
-        projectedValue: 0,
-        upperBound: 1006819.6731505602,
-      } as ProjectionMonth);
-
-    expect(result.projections[658]).toEqual(
-      {
-        month: 658,
-        contributionLine: -2745001.4287023544,
-        lowerBound: 0,
-        projectedValue: 0,
-        upperBound: 1002303.4628256634,
-      } as ProjectionMonth);
-
-
-    expect(result.projections[900]).toEqual(
-      {
-        month: 900,
-        upperBound: 0,
-        lowerBound: 0,
-        contributionLine: -4424851.7149477005,
-        projectedValue: 0,
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[600]).toEqual(resultWithLumpSumZero.projections[600]);
+    expect(resultWithLumpSum.projections[657]).toEqual(resultWithLumpSumZero.projections[657]);
+    expect(resultWithLumpSum.projections[658]).toEqual(resultWithLumpSumZero.projections[658]);
+    expect(resultWithLumpSum.projections[900]).toEqual(resultWithLumpSumZero.projections[900]);
   });
 
-  it("should return expected results when lump sum date is past date with state pension", async () => {
+  it("should return  results same as lump sum zero when lump sum date is past date with state pension", async () => {
     // Arrange
     const today = new Date("2021-07-13");
     const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
@@ -610,67 +531,46 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Action
 
-    const result = getCurrentProjection(inboundPayload, today);
+    const resultWithLumpSum = getCurrentProjection(inboundPayload, today);
+
+    inboundPayload.lumpSumAmount = 0;
+
+    const resultWithLumpSumZero = getCurrentProjection(inboundPayload, today);
+
 
     // Assertion
-    expect(result.projectedGoalAgeTotal).toBeCloseTo(1414361.49, 2);
-    expect(result.possibleDrawdown).toBeCloseTo(7242.35, 2);
-    expect(result.onTrackPercentage).toEqual(1.0362753868103027);
-    expect(result.desiredOutflow).toBeCloseTo(1886666.67, 2);
-    expect(result.affordableOutflow).toBeCloseTo(1955106.23, 2);
-    expect(result.affordableDrawdown).toBeCloseTo(6908.50, 2);
-    expect(result.affordableLumpSum).toBeCloseTo(103627.54, 2);
-    expect(result.projections.length).toBeCloseTo(901);
+    expect(resultWithLumpSum.projectedGoalAgeTotal).toBeCloseTo(resultWithLumpSumZero.projectedGoalAgeTotal);
+    expect(resultWithLumpSum.possibleDrawdown).toBeCloseTo(resultWithLumpSumZero.possibleDrawdown);
+    expect(resultWithLumpSum.onTrackPercentage).toEqual(resultWithLumpSumZero.onTrackPercentage);
+    expect(resultWithLumpSum.desiredOutflow).toEqual(resultWithLumpSumZero.desiredOutflow);
+    expect(resultWithLumpSum.affordableOutflow).toBeCloseTo(resultWithLumpSumZero.affordableOutflow);
+    expect(resultWithLumpSum.affordableDrawdown).toBeCloseTo(resultWithLumpSumZero.affordableDrawdown);
+    expect(resultWithLumpSum.affordableLumpSum).toBeCloseTo(resultWithLumpSumZero.affordableLumpSum);
+    expect(resultWithLumpSum.projections.length).toBeCloseTo(901);
     //underperform
-    expect(result.marketUnderperform.onTrackPercentage).toEqual(0.6608352661132812);
-    expect(result.marketUnderperform.desiredOutflow).toBeCloseTo(1886666.67, 2);
-    expect(result.marketUnderperform.affordableOutflow).toBeCloseTo(1246775.87, 2);
-    expect(result.marketUnderperform.affordableDrawdown).toBeCloseTo(4405.57, 2);
-    expect(result.marketUnderperform.affordableLumpSum).toBeCloseTo(66083.53, 2);
+    expect(resultWithLumpSum.marketUnderperform.onTrackPercentage).toEqual(resultWithLumpSumZero.marketUnderperform.onTrackPercentage);
+    expect(resultWithLumpSum.marketUnderperform.desiredOutflow).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.desiredOutflow);
+    expect(resultWithLumpSum.marketUnderperform.affordableOutflow).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableOutflow);
+    expect(resultWithLumpSum.marketUnderperform.affordableDrawdown).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableDrawdown);
+    expect(resultWithLumpSum.marketUnderperform.affordableLumpSum).toBeCloseTo(resultWithLumpSumZero.marketUnderperform.affordableLumpSum);
 
-    expect(result.projections[0]).toEqual(
-      {
-        month: 0,
-        contributionLine: 1000,
-        lowerBound: 250000,
-        projectedValue: 250000,
-        upperBound: 250000
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[0]).toEqual(resultWithLumpSumZero.projections[0]);
 
-    expect(result.projections[1]).toEqual(
-      {
-        month: 1,
-        contributionLine: 1624,
-        lowerBound: 235465.81038991973,
-        projectedValue: 251422.32845197053,
-        upperBound: 266368.48354157555
-      } as ProjectionMonth);
+    expect(resultWithLumpSum.projections[1]).toEqual(resultWithLumpSumZero.projections[1]);
+    expect(resultWithLumpSum.projections[224]).toEqual(resultWithLumpSumZero.projections[224]);
+    expect(resultWithLumpSum.projections[225]).toEqual(resultWithLumpSumZero.projections[225]);
+    expect(resultWithLumpSum.projections[226]).toEqual(resultWithLumpSumZero.projections[226]);
 
-    //just before  lump sum start
-    expect(result.projections[224]).toEqual({
-      month: 224,
-      contributionLine: 140776,
-      lowerBound: 417562.7172793837,
-      projectedValue: 714327.2998455743,
-      upperBound: 985019.5795674027
-    } as ProjectionMonth);
 
-    //just after lump sum
-    expect(result.projections[225]).toEqual({
-      month: 225,
-      contributionLine: 141400,
-      lowerBound: 419609.9961708655,
-      projectedValue: 717232.3710755184,
-      upperBound: 988698.4854539612,
-    } as ProjectionMonth);
 
-    expect(result.projections[226]).toEqual({
-      month: 226,
-      lowerBound: 421667.67069273203,
-      projectedValue: 720146.7191095338,
-      upperBound: 992385.7950017868,
-      contributionLine: 142024,
-    } as ProjectionMonth);
+    //after drawdown start
+    expect(resultWithLumpSum.projections[403]).toEqual(resultWithLumpSumZero.projections[403]);
+
+    //target month
+    expect(resultWithLumpSum.projections[600]).toEqual(resultWithLumpSumZero.projections[600]);
+    expect(resultWithLumpSum.projections[657]).toEqual(resultWithLumpSumZero.projections[657]);
+    expect(resultWithLumpSum.projections[658]).toEqual(resultWithLumpSumZero.projections[658]);
+    expect(resultWithLumpSum.projections[900]).toEqual(resultWithLumpSumZero.projections[900]);
 
   });
 
@@ -787,19 +687,19 @@ describe("Tests for getCurrentProjection Function", () => {
 
     // Assertion
     expect(result.projectedGoalAgeTotal).toBeCloseTo(250000.00, 2);
-    expect(result.possibleDrawdown).toBeCloseTo(353.12, 2);
+    expect(result.possibleDrawdown).toBeCloseTo(635.27, 2);
     expect(result.onTrackPercentage).toEqual(0.093178391456604);
-    expect(result.desiredOutflow).toEqual(5120000);
-    expect(result.affordableOutflow).toBeCloseTo(477073.36, 2);
+    expect(result.desiredOutflow).toEqual(5020000);
+    expect(result.affordableOutflow).toBeCloseTo(467755.53, 2);
     expect(result.affordableDrawdown).toBeCloseTo(698.84, 2);
-    expect(result.affordableLumpSum).toBeCloseTo(9317.84, 2);
+    expect(result.affordableLumpSum).toBeCloseTo(0);
     expect(result.projections.length).toBeCloseTo(901);
     //underperform
     expect(result.marketUnderperform.onTrackPercentage).toEqual(0.03659200668334961);
-    expect(result.marketUnderperform.desiredOutflow).toBeCloseTo(5120000);
-    expect(result.marketUnderperform.affordableOutflow).toBeCloseTo(187351.07, 2);
+    expect(result.marketUnderperform.desiredOutflow).toBeCloseTo(5020000);
+    expect(result.marketUnderperform.affordableOutflow).toBeCloseTo(183691.87, 2);
     expect(result.marketUnderperform.affordableDrawdown).toBeCloseTo(274.44, 2);
-    expect(result.marketUnderperform.affordableLumpSum).toBeCloseTo(3659.20, 2);
+    expect(result.marketUnderperform.affordableLumpSum).toBeCloseTo(0, 2);
 
     expect(result.projections[0]).toEqual(
       {

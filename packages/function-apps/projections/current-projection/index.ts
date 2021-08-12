@@ -36,6 +36,11 @@ function getCurrentProjection(inboundPayload: RequestPayload, today: Date): Resp
         inboundPayload.lumpSumDate = inboundPayload.drawdownStartDate;
 
     let contributionPeriodUptoLumpSum = monthDiff(today, parseDate(inboundPayload.lumpSumDate)) - 1;
+
+    //when the lump Sum is past date than lump Sum can be considered as zero
+    if (contributionPeriodUptoLumpSum < 0)
+        inboundPayload.lumpSumAmount = 0;
+
     contributionPeriodUptoLumpSum = contributionPeriodUptoLumpSum < 0 ? 0 : contributionPeriodUptoLumpSum;
     let goalContributingPeriod = monthDiff(today, parseDate(inboundPayload.drawdownStartDate)) - 1;
     goalContributingPeriod = goalContributingPeriod < 0 ? 0 : goalContributingPeriod;
@@ -288,7 +293,7 @@ function monthDiff(dateFrom: Date, dateTo: Date) {
         months--;
     }
 
-    return Math.abs(Math.round(months));
+    return Math.round(months);
 }
 
 function round(value: number, precision: number): number {
