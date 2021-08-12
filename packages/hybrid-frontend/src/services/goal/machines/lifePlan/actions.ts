@@ -132,9 +132,7 @@ const calculateDrawdownPeriodLength = assign<LifePlanMachineContext>((ctx) => {
 
     return {
       drawdownPeriodLengthYears: Math.abs(yearDifference(ctx.drawdownEndDate, drawdownStartDate)),
-      drawdownPeriodLengthMonths: Math.abs(
-        monthDifference(ctx.drawdownEndDate, drawdownStartDate) + 1
-      ),
+      drawdownPeriodLengthMonths: Math.abs(monthDifference(ctx.drawdownEndDate, drawdownStartDate)),
     };
   }
   return ctx;

@@ -174,7 +174,7 @@ describe('lifePlan actions', () => {
 
       it('calculate drawdownPeriodLengthMonths from start age to end age', () => {
         const diffInYears = 28;
-        const diffInMonths = diffInYears * 12 + 1; // Adding 1 to diff in month assuming user take the money out at the end of period
+        const diffInMonths = diffInYears * 12;
         expect(service.state.context.drawdownPeriodLengthMonths).toStrictEqual(diffInMonths);
       });
     });
@@ -198,7 +198,7 @@ describe('lifePlan actions', () => {
         /**
          * 47 years and 3 months diff between todays date mocked at 2021-06-01 and drawdownEndDate at 2069-03-10
          */
-        const diffInMonths = 47 * 12 + 9 + 1; // Adding 1 to diff in month assuming user take the money out at the end of period
+        const diffInMonths = 47 * 12 + 9;
         expect(service.state.context.drawdownPeriodLengthMonths).toStrictEqual(diffInMonths);
       });
     });

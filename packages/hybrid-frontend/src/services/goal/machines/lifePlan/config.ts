@@ -86,6 +86,8 @@ const lifePlanConfig: MachineConfig<
               'setDrawdownAges',
               'calculateDrawdownDates',
               'calculateDrawdownPeriodLength',
+              'calculateTargetDrawdownAmount',
+              'calculateRetirementPotValue',
             ],
           },
         ],
@@ -96,12 +98,12 @@ const lifePlanConfig: MachineConfig<
         SET_INCOME: [
           {
             target: '.inputProcessing',
-            actions: ['setIncome'],
+            actions: ['setIncome', 'calculateRetirementPotValue'],
           },
         ],
         SET_LUMP_SUM_AMOUNT: {
           target: '.preInputProcessing',
-          actions: ['setLumpSumAmount'],
+          actions: ['setLumpSumAmount', 'calculateRetirementPotValue'],
         },
         SET_LUMP_SUM_AGE: {
           target: '.preInputProcessing',
@@ -109,7 +111,7 @@ const lifePlanConfig: MachineConfig<
         },
         SET_LATER_LIFE_LEFT_OVER: {
           target: '.preInputProcessing',
-          actions: ['setLaterLifeLeftOver'],
+          actions: ['setLaterLifeLeftOver', 'calculateRetirementPotValue'],
         },
         FETCH_PROJETIONS: {
           target: '.inputProcessing',

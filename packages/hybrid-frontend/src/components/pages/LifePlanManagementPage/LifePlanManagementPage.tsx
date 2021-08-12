@@ -64,6 +64,7 @@ const LifePlanManagementPage = () => {
     laterLifeLeftOver,
     errors,
     hasFetchedProjections,
+    retirementPotValue,
   } = context;
 
   const doesGoalExist = !!index;
@@ -117,11 +118,9 @@ const LifePlanManagementPage = () => {
 
   const { isMobile } = useBreakpoint();
 
-  const goalPotTotal = Math.max(annualIncome * (drawdownEndAge - drawdownStartAge), 0);
-
   const { goalPotTrackerProgressBarData, ...trackerProps } = useGoalPotTrackerProgressBarData({
     doesGoalExist,
-    goalPotTotal,
+    goalPotTotal: retirementPotValue,
     drawdownStartAge,
     drawdownEndAge,
     lumpSum,
@@ -160,7 +159,7 @@ const LifePlanManagementPage = () => {
     ) : (
       <GoalPotTracker
         title="Your retirement pot"
-        potTotal={goalPotTotal}
+        potTotal={retirementPotValue}
         progressBarProps={{
           progressBarData: goalPotTrackerProgressBarData,
         }}
