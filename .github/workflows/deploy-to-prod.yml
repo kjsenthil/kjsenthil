@@ -530,14 +530,14 @@ jobs:
           timeout: 600000
           interval: 1000
 
-      - name: "Run wdio mock UI tests"
-        run: yarn test:mock-ui
-        env:
-          BROWSER: ${{matrix.browser}}
-          URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
-          API_BASE_URL: ${{ needs.deploy_staging_terraform.outputs.api_base_url }}
-          STG_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
-          STG_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
+#       - name: "Run wdio mock UI tests"
+#        run: yarn test:mock-ui --spec=login.spec.ts
+#        env:
+#          BROWSER: ${{matrix.browser}}
+#          URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
+#          API_BASE_URL: ${{ needs.deploy_staging_terraform.outputs.api_base_url }}
+#          STG_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
+#          STG_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
 
   close_staging_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
