@@ -49,7 +49,7 @@ module "cdn" {
   csp_allowed_script_sources = var.csp_allowed_script_sources
   csp_allowed_style_sources  = var.csp_allowed_style_sources
 
-  tags = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
+  tags = merge(map("tf_module_path", "./terraform/modules/cdn_endpoint"), var.tags)
 }
 
 resource "azurerm_dns_cname_record" "cdn" {
@@ -59,5 +59,12 @@ resource "azurerm_dns_cname_record" "cdn" {
   resource_group_name = var.dns_resource_group_name == "" ? var.resource_group_name : var.dns_resource_group_name
   ttl                 = 3600
   target_resource_id  = module.cdn.cdn_id
-  tags                = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
+  tags                = merge(map("tf_module_path", "./terraform/modules/static_website_with_cdn"), var.tags)
+}
+
+resource "azurerm_cdn_endpoint_custom_domain" "friendly_dns" {
+  count           = var.public_dns_cname == "" ? 0 : 1
+  name            = "cdn-gbl-${var.public_dns_cname}-custom-domain"
+  cdn_endpoint_id = module.cdn.cdn_id
+  host_name       = "${var.public_dns_cname}.${var.public_dns_zone_name}"
 }
