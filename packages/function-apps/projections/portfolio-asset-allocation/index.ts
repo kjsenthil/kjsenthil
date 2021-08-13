@@ -58,7 +58,7 @@ function getValue(extendedAccount: ExtendedAccount): number {
         return extendedAccount.account.accountValue * (percentage / 100)
     }
     else {
-       throw new InvalidPercentageError(extendedAccount.account.accountName, extendedAccount.account.equityPercentage, getPercentageType(extendedAccount))
+       throw new InvalidPercentageError(extendedAccount.account.accountName, percentage, getPercentageType(extendedAccount))
     }
 }
 
