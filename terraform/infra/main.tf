@@ -101,6 +101,19 @@ module "api_management_policy_xplan" {
   depends_on = [module.api_operation, module.function_app_projections]
 }
 
+//----------------------------------------------------------------------------//
+//          !!!!!!! IMPORTANT - Changes to front_end module !!!!!!!!          //
+//                                                                            //
+//    Currently the resource azurerm_cdn_endpoint_custom_domain doesnt        //
+//    support enabling HTTPS so this has been turned on manually for          //
+//    staging and production, if this resource is deleted and recreated       //
+//    through changing var.public_dns_zone_name or public_dns_cname HTTPS     //
+//    will need to be manually re-enabled through the Azure portal            //
+//                                                                            //
+//   Functionality is being worked on under below GH issue:                   //
+//   https://github.com/hashicorp/terraform-provider-azurerm/issues/398       //
+//----------------------------------------------------------------------------//
+
 module "front_end" {
   source                   = "../modules/static_website_with_cdn"
   storage_account_name     = "st${local.short_location}tsw${var.environment_prefix}dh"
