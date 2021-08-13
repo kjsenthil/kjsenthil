@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import { MyAccountLayout } from '../../templates';
+import { AccountDetailsLayout } from '../../templates';
 import { useBasicInfo } from '../../../hooks';
 import AccountSummaryPanel from '../../organisms/AccountSummaryPanel/AccountSummaryPanel';
 import useInvestmentSummary from '../../../hooks/useInvestmentSummary';
@@ -22,17 +22,10 @@ const AddCashPage = () => {
     ? selectedAccount?.cash + selectedAccount?.funds + selectedAccount?.shares
     : 0;
 
-  // TODO - this is a placeholder page, need to add final template with account selector
   return (
-    <MyAccountLayout
-      basicInfo={basicInfo}
-      heading={{
-        primary: `Add cash`,
-        secondary: ``,
-      }}
-    >
+    <AccountDetailsLayout basicInfo={basicInfo}>
       <AccountSummaryPanel cashValue={cash} investmentValue={investment} totalValue={total} />
-    </MyAccountLayout>
+    </AccountDetailsLayout>
   );
 };
 

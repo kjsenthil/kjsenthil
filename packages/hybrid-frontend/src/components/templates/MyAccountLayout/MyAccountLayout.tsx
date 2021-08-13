@@ -33,6 +33,7 @@ export interface MyAccountLayoutProps {
   isLoading?: boolean;
   heading?: PageHeading;
   headerProps?: Omit<HeaderMenuProps, 'cash'>;
+  accountDetailsMenu?: React.ReactNode;
 }
 
 const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
@@ -53,6 +54,7 @@ const MyAccountLayout = ({
   heading,
   isLoading,
   headerProps,
+  accountDetailsMenu,
 }: MyAccountLayoutProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -107,6 +109,7 @@ const MyAccountLayout = ({
           },
         ]}
       />
+      {accountDetailsMenu}
       {basicInfo.isLoading || isLoading ? (
         <LinearProgress color="primary" />
       ) : (
