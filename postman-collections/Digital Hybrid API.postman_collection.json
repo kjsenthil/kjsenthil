@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "47fbae11-eeec-40d1-b5b8-738744418432",
+		"_postman_id": "b9750bad-570e-4990-a6b6-05b29611c960",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4046,7 +4046,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"netContributionData\": [\r\n        {\r\n            \"date\": \"2015-01-01\",\r\n            \"netContributionsToDate\": 1000\r\n        },\r\n        {\r\n            \"date\": \"2016-01-01\",\r\n            \"netContributionsToDate\": 2500\r\n        },\r\n        {\r\n            \"date\": \"2017-01-01\",\r\n            \"netContributionsToDate\": 1700\r\n        },\r\n        {\r\n            \"date\": \"2018-01-01\",\r\n            \"netContributionsToDate\": 1200\r\n        },\r\n        {\r\n            \"date\": \"2019-01-01\",\r\n            \"netContributionsToDate\": 2200\r\n        },\r\n        {\r\n            \"date\": \"2020-01-01\",\r\n            \"netContributionsToDate\": 3400\r\n        },\r\n        {\r\n            \"date\": \"2021-01-01\",\r\n            \"netContributionsToDate\": 4400\r\n        }\r\n    ],\r\n    \"currentPortfolioData\": {\r\n        \"date\": \"2021-07-21\",\r\n        \"currentPortfolioAmount\": -9200\r\n    }\r\n}",
+							"raw": "{\r\n    \"firstPerformanceData\": {\r\n    \"date\": \"2015-01-01\",\r\n    \"firstPerformanceAmount\": 1000\r\n    },\r\n    \"netContributionData\": [\r\n        {\r\n            \"date\": \"2015-01-01\",\r\n            \"netContributionsToDate\": 1000\r\n        },\r\n        {\r\n            \"date\": \"2016-01-01\",\r\n            \"netContributionsToDate\": 2500\r\n        },\r\n        {\r\n            \"date\": \"2017-01-01\",\r\n            \"netContributionsToDate\": 1700\r\n        },\r\n        {\r\n            \"date\": \"2018-01-01\",\r\n            \"netContributionsToDate\": 1200\r\n        },\r\n        {\r\n            \"date\": \"2019-01-01\",\r\n            \"netContributionsToDate\": 2200\r\n        },\r\n        {\r\n            \"date\": \"2020-01-01\",\r\n            \"netContributionsToDate\": 3400\r\n        },\r\n        {\r\n            \"date\": \"2021-01-01\",\r\n            \"netContributionsToDate\": 4400\r\n        }\r\n    ],\r\n    \"currentPortfolioData\": {\r\n        \"date\": \"2021-08-16\",\r\n        \"currentPortfolioAmount\": -9200\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

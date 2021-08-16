@@ -130,7 +130,8 @@ function deriveTransactionData(
     (netContrbItem, idx) => {
       let transactionAmount = 0;
       if (idx === 0) {
-        transactionAmount = netContrbItem.netContributionsToDate;
+        transactionAmount =
+          inboundPayload.firstPerformanceData.firstPerformanceAmount;
       } else {
         transactionAmount =
           netContrbItem.netContributionsToDate - prevNetContributionAmount;
@@ -180,7 +181,7 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
   }
 
   if (
-    !inboundPayload.netContributionData ||
+    !inboundPayload?.netContributionData ||
     inboundPayload.netContributionData.length === 0
   )
     errors.push({
@@ -191,7 +192,7 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
   else {
     inboundPayload.netContributionData.forEach((netContributionItem, idx) => {
       if (
-        typeof netContributionItem.date == "undefined" ||
+        netContributionItem.date === undefined ||
         !Date.parse(netContributionItem.date)
       ) {
         errors.push({
@@ -199,17 +200,17 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
           property: "netContribution_date_" + idx,
           message: "netContribution_date_not_defined_for_item_" + idx,
         });
-      } else if (!netContributionItem.netContributionsToDate) {
+      } else if (netContributionItem.netContributionsToDate === undefined) {
         errors.push({
           code: "val-annualreturns-004-" + idx,
           property: "netContribution_amount_" + idx,
-          message: "netContribution_amount_not_defined_or_zero_for_item_" + idx,
+          message: "netContribution_amount_not_defined_for_item_" + idx,
         });
       }
     });
   }
 
-  if (!inboundPayload.currentPortfolioData)
+  if (!inboundPayload?.currentPortfolioData)
     errors.push({
       code: "val-annualreturns-005",
       property: "currentPortfolio_data",
@@ -217,7 +218,7 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
     });
   else {
     if (
-      typeof inboundPayload.currentPortfolioData.date == "undefined" ||
+      inboundPayload.currentPortfolioData.date === undefined ||
       !Date.parse(inboundPayload.currentPortfolioData.date)
     ) {
       errors.push({
@@ -225,11 +226,13 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         property: "currentPortfolio_date",
         message: "currentPortfolio_date_not_defined",
       });
-    } else if (!inboundPayload.currentPortfolioData.currentPortfolioAmount) {
+    } else if (
+      inboundPayload.currentPortfolioData.currentPortfolioAmount === undefined
+    ) {
       errors.push({
         code: "val-annualreturns-007",
         property: "currentPortfolio_amount",
-        message: "currentPortfolio_amount_not_defined_or_zero",
+        message: "currentPortfolio_amount_not_defined",
       });
     } else if (
       inboundPayload.currentPortfolioData.currentPortfolioAmount >= 0
@@ -240,6 +243,44 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         message: "currentPortfolio_amount_must_be_negative",
       });
     }
+  }
+
+  if (!inboundPayload?.firstPerformanceData)
+    errors.push({
+      code: "val-annualreturns-009",
+      property: "firstPerformance_data",
+      message: "firstPerformance_data_not_defined",
+    });
+  else {
+    if (
+      inboundPayload.firstPerformanceData.date === undefined ||
+      !Date.parse(inboundPayload.firstPerformanceData.date)
+    ) {
+      errors.push({
+        code: "val-annualreturns-010",
+        property: "firstPerformance_date",
+        message: "firstPerformance_date_not_defined",
+      });
+    } else if (
+      inboundPayload.firstPerformanceData.firstPerformanceAmount === undefined
+    ) {
+      errors.push({
+        code: "val-annualreturns-011",
+        property: "firstPerformance_amount",
+        message: "firstPerformance_amount_not_defined",
+      });
+    }
+  }
+
+  if (
+    Date.parse(inboundPayload?.firstPerformanceData?.date) !==
+    Date.parse(inboundPayload?.netContributionData[0]?.date)
+  ) {
+    errors.push({
+      code: "val-annualreturns-012",
+      property: "firstPerformance_netContributionData_date",
+      message: "firstPerformance_and_netContributionData_date_must_match",
+    });
   }
 
   return errors;
@@ -283,11 +324,6 @@ function calculateReturnRateValue(
 }
 
 function calculateFractionOfYear(currDate: Date, firstDate: Date) {
-  // const firstDayjs = dayjs(firstDate);
-  // const currDayjs = dayjs(currDate);
-  // // year difference gives more inaccuracy
-  // const diffDay = firstDayjs.diff(currDayjs, "day");
-
   const diffTime = Math.abs(currDate.getTime() - firstDate.getTime());
 
   const diffDay = diffTime / (1000 * 60 * 60 * 24);

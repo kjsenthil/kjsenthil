@@ -1,3 +1,7 @@
+interface FirstPerformanceData {
+  date: string;
+  firstPerformanceAmount: number;
+}
 interface NetContributionItem {
   date: string;
   netContributionsToDate: number;
@@ -20,6 +24,7 @@ export interface ValidationError {
 }
 
 interface RequestPayload {
+  firstPerformanceData: FirstPerformanceData;
   netContributionData: NetContributionItem[];
   currentPortfolioData: CurrentPortfolioItem;
 }

@@ -12,7 +12,50 @@ import {
 
 describe("tests for validate function", () => {
   const emptyRequestPayload = {} as RequestPayload;
-  const validRequestPayload = mockRequestPayload();
+  let testPayload = {} as RequestPayload;
+
+  beforeEach(() => {
+    testPayload = {
+      firstPerformanceData: {
+        date: "2015-01-01",
+        firstPerformanceAmount: 1000,
+      },
+      netContributionData: [
+        {
+          date: "2015-01-01",
+          netContributionsToDate: 1000,
+        },
+        {
+          date: "2016-01-01",
+          netContributionsToDate: 2500,
+        },
+        {
+          date: "2017-01-01",
+          netContributionsToDate: 1700,
+        },
+        {
+          date: "2018-01-01",
+          netContributionsToDate: 1200,
+        },
+        {
+          date: "2019-01-01",
+          netContributionsToDate: 2200,
+        },
+        {
+          date: "2020-01-01",
+          netContributionsToDate: 3400,
+        },
+        {
+          date: "2021-01-01",
+          netContributionsToDate: 4400,
+        },
+      ],
+      currentPortfolioData: {
+        date: "2021-07-21",
+        currentPortfolioAmount: -9200,
+      },
+    };
+  });
 
   it("when empty payload should return specific error", () => {
     expect(validateInput(emptyRequestPayload)).toEqual([
@@ -25,11 +68,11 @@ describe("tests for validate function", () => {
   });
 
   it("when all data is valid no validation error is thrown", () => {
-    expect(validateInput(validRequestPayload)).toEqual([]);
+    expect(validateInput(testPayload)).toEqual([]);
   });
 
   it("when net contribution dates are undefined the specific validation error is thrown", () => {
-    const invalidDateRequestPayload = validRequestPayload;
+    const invalidDateRequestPayload = testPayload;
     invalidDateRequestPayload.netContributionData[2].date = "";
 
     expect(validateInput(invalidDateRequestPayload)).toEqual([
@@ -42,24 +85,24 @@ describe("tests for validate function", () => {
   });
 
   it("when net contribution amounts are undefined the specific validation error is thrown", () => {
-    const invalidDateRequestPayload = validRequestPayload;
+    const invalidAmountRequestPayload = testPayload;
 
-    invalidDateRequestPayload.netContributionData[3].netContributionsToDate = null;
+    invalidAmountRequestPayload.netContributionData[3].netContributionsToDate = undefined;
 
-    expect(validateInput(invalidDateRequestPayload)).toEqual([
+    expect(validateInput(invalidAmountRequestPayload)).toEqual([
       {
         code: "val-annualreturns-004-3",
         property: "netContribution_amount_3",
-        message: "netContribution_amount_not_defined_or_zero_for_item_3",
+        message: "netContribution_amount_not_defined_for_item_3",
       },
     ]);
   });
 
   it("when current portfolio data is undefined the specific validation error is thrown", () => {
-    const invalidDateRequestPayload = validRequestPayload;
-    invalidDateRequestPayload.currentPortfolioData = null;
+    const invalidCurrPortDateRequestPayload = testPayload;
+    invalidCurrPortDateRequestPayload.currentPortfolioData = undefined;
 
-    expect(validateInput(invalidDateRequestPayload)).toEqual([
+    expect(validateInput(invalidCurrPortDateRequestPayload)).toEqual([
       {
         code: "val-annualreturns-005",
         property: "currentPortfolio_data",
@@ -69,11 +112,11 @@ describe("tests for validate function", () => {
   });
 
   it("when current portfolio date is undefined the specific validation error is thrown", () => {
-    const invalidDateRequestPayload = validRequestPayload;
+    const invalidCurrPortDateRequestPayload = testPayload;
 
-    invalidDateRequestPayload.currentPortfolioData.date = null;
+    invalidCurrPortDateRequestPayload.currentPortfolioData.date = undefined;
 
-    expect(validateInput(invalidDateRequestPayload)).toEqual([
+    expect(validateInput(invalidCurrPortDateRequestPayload)).toEqual([
       {
         code: "val-annualreturns-006",
         property: "currentPortfolio_date",
@@ -83,29 +126,58 @@ describe("tests for validate function", () => {
   });
 
   it("when current portfolio amount is undefined the specific validation error is thrown", () => {
-    const invalidDateRequestPayload = validRequestPayload;
+    const invalidCurrPortAmountRequestPayload = testPayload;
 
-    invalidDateRequestPayload.currentPortfolioData.currentPortfolioAmount = null;
+    invalidCurrPortAmountRequestPayload.currentPortfolioData.currentPortfolioAmount = undefined;
 
-    expect(validateInput(invalidDateRequestPayload)).toEqual([
+    expect(validateInput(invalidCurrPortAmountRequestPayload)).toEqual([
       {
         code: "val-annualreturns-007",
         property: "currentPortfolio_amount",
-        message: "currentPortfolio_amount_not_defined_or_zero",
+        message: "currentPortfolio_amount_not_defined",
       },
     ]);
   });
 
   it("when current portfolio amount is not negative", () => {
-    const invalidDateRequestPayload = validRequestPayload;
+    const negativeCurrPortAmountRequestPayload = testPayload;
 
-    invalidDateRequestPayload.currentPortfolioData.currentPortfolioAmount = 9200;
+    negativeCurrPortAmountRequestPayload.currentPortfolioData.currentPortfolioAmount = 9200;
 
-    expect(validateInput(invalidDateRequestPayload)).toEqual([
+    expect(validateInput(negativeCurrPortAmountRequestPayload)).toEqual([
       {
         code: "val-annualreturns-008",
         property: "currentPortfolio_amount",
         message: "currentPortfolio_amount_must_be_negative",
+      },
+    ]);
+  });
+
+  it("when first performance amount is undefined the specific validation error is thrown", () => {
+    const invalidFirstAmtRequestPayload = testPayload;
+
+    invalidFirstAmtRequestPayload.firstPerformanceData.firstPerformanceAmount = undefined;
+
+    expect(validateInput(invalidFirstAmtRequestPayload)).toEqual([
+      {
+        code: "val-annualreturns-011",
+        property: "firstPerformance_amount",
+        message: "firstPerformance_amount_not_defined",
+      },
+    ]);
+  });
+
+  it("when first performance date and first net contribution date is not the same the specific validation error is thrown", () => {
+    const invalidFirstAmtNetContrDateRequestPayload = testPayload;
+
+    invalidFirstAmtNetContrDateRequestPayload.firstPerformanceData.date =
+      "2019-06-09";
+
+    expect(validateInput(invalidFirstAmtNetContrDateRequestPayload)).toEqual([
+      {
+        code: "val-annualreturns-012",
+        property: "firstPerformance_netContributionData_date",
+        message: "firstPerformance_and_netContributionData_date_must_match",
       },
     ]);
   });
@@ -122,6 +194,46 @@ describe("Tests for annualised return Function", () => {
     // Arrange
     const request = {
       query: {},
+      body: {
+        firstPerformanceData: {
+          date: "2015-01-01",
+          firstPerformanceAmount: 1000,
+        },
+        netContributionData: [
+          {
+            date: "2015-01-01",
+            netContributionsToDate: 1000,
+          },
+          {
+            date: "2016-01-01",
+            netContributionsToDate: 2500,
+          },
+          {
+            date: "2017-01-01",
+            netContributionsToDate: 1700,
+          },
+          {
+            date: "2018-01-01",
+            netContributionsToDate: 1200,
+          },
+          {
+            date: "2019-01-01",
+            netContributionsToDate: 2200,
+          },
+          {
+            date: "2020-01-01",
+            netContributionsToDate: 3400,
+          },
+          {
+            date: "2021-01-01",
+            netContributionsToDate: 4400,
+          },
+        ],
+        currentPortfolioData: {
+          date: "2021-07-21",
+          currentPortfolioAmount: -9200,
+        },
+      } as RequestPayload,
     };
 
     // Action
@@ -147,6 +259,45 @@ describe("Tests for annualised return Function", () => {
 });
 
 describe("tests for validateTransaction function", () => {
+  let mockTransactionData = [] as TransactionDataItem[];
+
+  beforeEach(() => {
+    mockTransactionData = [
+      {
+        date: "2015-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2016-01-01",
+        transactionAmount: 1500,
+      },
+      {
+        date: "2017-01-01",
+        transactionAmount: -800,
+      },
+      {
+        date: "2018-01-01",
+        transactionAmount: -500,
+      },
+      {
+        date: "2019-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2020-01-01",
+        transactionAmount: 1200,
+      },
+      {
+        date: "2021-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2021-07-28",
+        transactionAmount: -9200,
+      },
+    ];
+  });
+
   it("should throw an exception if all the values are positive", () => {
     const allPositiveTransaction = mockTransactionData;
     allPositiveTransaction[2].transactionAmount = 400;
@@ -158,9 +309,45 @@ describe("tests for validateTransaction function", () => {
 
 describe("Tests for getAnnualisedReturn Function", () => {
   let context: Context;
+  let mockTransactionData = [] as TransactionDataItem[];
 
   beforeEach(() => {
     context = ({ log: jest.fn() } as unknown) as Context;
+
+    mockTransactionData = [
+      {
+        date: "2015-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2016-01-01",
+        transactionAmount: 1500,
+      },
+      {
+        date: "2017-01-01",
+        transactionAmount: -800,
+      },
+      {
+        date: "2018-01-01",
+        transactionAmount: -500,
+      },
+      {
+        date: "2019-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2020-01-01",
+        transactionAmount: 1200,
+      },
+      {
+        date: "2021-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2021-07-28",
+        transactionAmount: -9200,
+      },
+    ];
   });
 
   it("should return expected results", async () => {
@@ -174,6 +361,44 @@ describe("Tests for getAnnualisedReturn Function", () => {
 });
 
 describe("tests for calculateFractionOfYear function", () => {
+  let mockTransactionData = [] as TransactionDataItem[];
+
+  beforeEach(() => {
+    mockTransactionData = [
+      {
+        date: "2015-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2016-01-01",
+        transactionAmount: 1500,
+      },
+      {
+        date: "2017-01-01",
+        transactionAmount: -800,
+      },
+      {
+        date: "2018-01-01",
+        transactionAmount: -500,
+      },
+      {
+        date: "2019-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2020-01-01",
+        transactionAmount: 1200,
+      },
+      {
+        date: "2021-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2021-07-28",
+        transactionAmount: -9200,
+      },
+    ];
+  });
   it("should return expected year factor value based on first and current date", () => {
     const firstDate = new Date(mockTransactionData[0].date);
     const currDate = new Date(mockTransactionData[1].date);
@@ -182,7 +407,46 @@ describe("tests for calculateFractionOfYear function", () => {
 });
 
 describe("tests for calculateReturnRateSeriesSum function", () => {
-  it("should return expected sum of the series based on transactiondate, 1st transaction date and sample rate value", () => {
+  let mockTransactionData = [] as TransactionDataItem[];
+
+  beforeEach(() => {
+    mockTransactionData = [
+      {
+        date: "2015-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2016-01-01",
+        transactionAmount: 1500,
+      },
+      {
+        date: "2017-01-01",
+        transactionAmount: -800,
+      },
+      {
+        date: "2018-01-01",
+        transactionAmount: -500,
+      },
+      {
+        date: "2019-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2020-01-01",
+        transactionAmount: 1200,
+      },
+      {
+        date: "2021-01-01",
+        transactionAmount: 1000,
+      },
+      {
+        date: "2021-07-28",
+        transactionAmount: -9200,
+      },
+    ];
+  });
+
+  it("should return expected sum of the series based on transaction date, 1st transaction date and sample rate value", () => {
     const firstTransactionDate = new Date(mockTransactionData[0].date);
     expect(
       calculateReturnRateSeriesSum(
@@ -204,77 +468,3 @@ describe("tests for calculateReturnRateValue function", () => {
     ).toBeCloseTo(0.02999970000269998, 4);
   });
 });
-
-function mockRequestPayload(): RequestPayload {
-  return {
-    netContributionData: [
-      {
-        date: "2015-01-01",
-        netContributionsToDate: 1000,
-      },
-      {
-        date: "2016-01-01",
-        netContributionsToDate: 2500,
-      },
-      {
-        date: "2017-01-01",
-        netContributionsToDate: 1700,
-      },
-      {
-        date: "2018-01-01",
-        netContributionsToDate: 1200,
-      },
-      {
-        date: "2019-01-01",
-        netContributionsToDate: 2200,
-      },
-      {
-        date: "2020-01-01",
-        netContributionsToDate: 3400,
-      },
-      {
-        date: "2021-01-01",
-        netContributionsToDate: 4400,
-      },
-    ],
-    currentPortfolioData: {
-      date: "2021-07-21",
-      currentPortfolioAmount: -9200,
-    },
-  };
-}
-
-export const mockTransactionData: TransactionDataItem[] = [
-  {
-    date: "2015-01-01",
-    transactionAmount: 1000,
-  },
-  {
-    date: "2016-01-01",
-    transactionAmount: 1500,
-  },
-  {
-    date: "2017-01-01",
-    transactionAmount: -800,
-  },
-  {
-    date: "2018-01-01",
-    transactionAmount: -500,
-  },
-  {
-    date: "2019-01-01",
-    transactionAmount: 1000,
-  },
-  {
-    date: "2020-01-01",
-    transactionAmount: 1200,
-  },
-  {
-    date: "2021-01-01",
-    transactionAmount: 1000,
-  },
-  {
-    date: "2021-07-28",
-    transactionAmount: -9200,
-  },
-];
