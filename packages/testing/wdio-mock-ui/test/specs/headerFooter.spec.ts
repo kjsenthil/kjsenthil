@@ -1,32 +1,32 @@
 import { expect } from 'chai'
 import { Mock } from 'webdriverio'
 import {
-  bottomNoteLabel,
-  infoLabel,
-  pastPerformanceLabel,
-  logoBtn,
-  investmentMenuLabel,
-  investmentMenuBtn,
-  lifePlanMenuLabel,
-  lifePlanMenuBtn,
+  addCashBtn,
   cashToInvestAmount,
   cashToInvestLabel,
-  addCashBtn,
-  myAccountsLoginText,
-  myAccountsLoginBtn,
+  investmentMenuBtn,
+  investmentMenuLabel,
   investBtn,
-  websiteConditions,
+  lifePlanMenuBtn,
+  lifePlanMenuLabel,
+  logoBtn,
+  myAccountsLoginBtn,
+  myAccountsLoginText,
+} from '../components/header/header.locators'
+import {
+  bottomNoteLabel,
   cookiePolicy,
+  infoLabel,
   keyFactsAndTerms,
   ourRegisteredDetails,
+  pastPerformanceLabel,
   riskWarnings,
-} from '../components/headerFooter/headerFooter.locators'
+  websiteConditions,
+} from '../components/footer/footer.locators'
 import { lHeader } from '../components/investment/investment.locators'
 import { performLogin } from '../components/login/login.actions'
-import { logout } from '../components/myAccounts/myAccounts.actions'
 import {
   accountsApiUrl,
-  contributionsApiUrl,
   investmentSummaryApiUrl,
   loginApiUrl,
   performanceAccountsAggregatedApiUrl,
@@ -35,14 +35,11 @@ import {
 import loginMockResponse from '../fixtures/login'
 import pinMockResponse from '../fixtures/pin'
 import accountsMockResponse from '../fixtures/accounts'
-import contributionsMockResponse from '../fixtures/contributions'
 import investmentSummaryMockResponse from '../fixtures/investmentSummary'
 import performanceAccountsAggregatedMockResponse from '../fixtures/performanceAccountsAggregated'
 
 describe('Check common elements from header, footer area', () => {
-  // arrange
   let accounts: Mock
-  let contributions: Mock
   let investmentSummary: Mock
   let login: Mock
   let performanceAccountsAggregated: Mock
@@ -70,11 +67,6 @@ describe('Check common elements from header, footer area', () => {
     })
     await accounts.respond(accountsMockResponse, statusCode)
 
-    contributions = await browser.mock(contributionsApiUrl, {
-      method: 'get',
-    })
-    await contributions.respond(contributionsMockResponse, statusCode)
-
     investmentSummary = await browser.mock(investmentSummaryApiUrl, {
       method: 'get',
       headers: { Authorization: `Bearer ${process.env.accessToken}` },
@@ -101,10 +93,8 @@ describe('Check common elements from header, footer area', () => {
     await login.restore()
     await pin.restore()
     await accounts.restore()
-    await contributions.restore()
     await investmentSummary.restore()
     await performanceAccountsAggregated.restore()
-    await logout()
   })
 
   describe('Header scenarios', () => {

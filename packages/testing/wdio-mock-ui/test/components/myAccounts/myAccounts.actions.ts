@@ -1,13 +1,14 @@
-import { expect } from 'chai'
-import { pageHeading, simpleMenu, logOut } from './myAccounts.locators'
+import { pageHeading, simpleMenu, logOutMenu } from './myAccounts.locators'
 
 export const getPageHeading = async () => {
-  expect(await (await pageHeading()).waitForDisplayed({ timeout: 25000 })).to.be.true
+  await (await pageHeading()).waitForExist({ timeout: 25000 })
+  await (await pageHeading()).waitForDisplayed({ timeout: 25000 })
   return await (await pageHeading()).getText()
 }
 
-export const logout = async () => {
+export const logOut = async () => {
   await (await simpleMenu()).click()
-  await (await logOut()).waitForClickable()
-  await (await logOut()).click()
+  await (await logOutMenu()).waitForClickable()
+  await (await logOutMenu()).click()
+  await browser.pause(500)
 }

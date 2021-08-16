@@ -1,3 +1,1 @@
-export const open = async (url: string) => {
-  browser.url(url)
-}
+export const open = (url: string) => browser.url(url)

@@ -7,7 +7,7 @@ export default {
     "id": null,
     "attributes": {
       "id": null,
-      "contactId": Number(`${loginCredentials.username.toString().substring(0, 7)}`),
+      "contactId": Number(`${loginCredentials.username.toString().substring(2, 7)}`),
       "tokens": [
         {
           "application": "MyAccountsApi",
