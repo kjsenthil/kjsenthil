@@ -327,6 +327,10 @@ function calculateContribution(month: number, previousMonthContributionValue: nu
     return previousMonthContributionValue - affordableDrawdown - affordableRemainingAmount;
   }
 
+  if (month > goalTargetMonth) {
+    return previousMonthContributionValue;
+  }
+
   if (contributionPeriodUptoLumpSum != 0 && month == contributionPeriodUptoLumpSum + 1) {
     return previousMonthContributionValue - affordableLumpSum + monthlyContributions
   }

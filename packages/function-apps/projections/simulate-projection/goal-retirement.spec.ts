@@ -200,7 +200,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     expect(result.contributionData[900]).toEqual(
       {
         monthNo: 900,
-        value: -3020006.9510498047
+        value: -1504526.8857040405
       } as ContributionMonth);
   });
 
@@ -562,7 +562,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     expect(result.contributionData[900]).toEqual(
       {
         monthNo: 900,
-        value: -637271.9814777374,
+        value: -467454.36304807663,
       } as ContributionMonth);
   });
 });
