@@ -14,7 +14,8 @@ const fetchPerformanceAccountsAggregated = createAsyncThunk<
   // Get account IDs from Redux.
   const accountIds = included?.map(({ attributes: { accountId } }) => accountId) ?? [];
 
-  return getPerformanceAccountsAggregated(accountIds);
+  if (accountIds.length > 0) return getPerformanceAccountsAggregated(accountIds);
+  return undefined;
 });
 
 export default fetchPerformanceAccountsAggregated;
