@@ -531,7 +531,7 @@ jobs:
           interval: 1000
 
       - name: "Run wdio mock UI tests"
-        run: yarn test:mock-ui --spec=login.spec.ts
+        run: yarn test:mock-ui
         env:
           BROWSER: ${{matrix.browser}}
           URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
