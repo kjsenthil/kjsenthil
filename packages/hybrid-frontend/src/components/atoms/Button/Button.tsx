@@ -29,9 +29,16 @@ const determineColorStyles = ({
     } else if (variant === 'dashed') {
       style += `border: 1px dashed ${mainColor};`;
     } else if (variant === 'contained') {
+      const textColor = color === 'grey' ? palette.primary.dark2 : palette.common.white;
+
       style = `
         background-color: ${mainColor};
-        color: ${color === 'grey' ? palette.primary.dark2 : palette.common.white};
+        color: ${textColor};
+        
+        &:hover {
+          background-color: ${mainColor};
+          color: ${textColor};
+        }
       `;
     }
   } else {
@@ -73,9 +80,13 @@ const StyledCircularProgress = styled(CircularProgress)`
   `}
 `;
 
-const BaseButton = styled(({ isIcon, color, isPill, wrap, ...props }) => (
-  <MUIButton {...props} disableElevation />
-))`
+const MUIButtonNoElevation = React.forwardRef<HTMLButtonElement, MUIButtonProps>(
+  (props: MUIButtonProps, ref) => <MUIButton {...props} ref={ref} disableElevation />
+) as typeof MUIButton;
+
+const BaseButton = styled(MUIButtonNoElevation).withConfig({
+  shouldForwardProp: (prop) => !['color', 'isPill', 'isIcon', 'variant'].includes(String(prop)),
+})`
   ${({
     color,
     variant,
@@ -96,6 +107,7 @@ const BaseButton = styled(({ isIcon, color, isPill, wrap, ...props }) => (
     if (size === 'small') {
       height = '28px';
     }
+
     return css`
       font-size: ${pxToRem(12)};
       ${colorStyles};
@@ -123,17 +135,20 @@ const BaseButton = styled(({ isIcon, color, isPill, wrap, ...props }) => (
       ${paddingStyle}
     `;
   }}
-`;
+` as typeof MUIButtonNoElevation;
 
-const Button: React.FC<ButtonProps> = ({ children, isLoading, superstar, ...props }) => (
-  <BaseButton
-    variant="contained"
-    isIcon={typeof children !== 'string'}
-    {...props}
-    color={props.color || 'primary'}
-  >
-    {isLoading ? <StyledCircularProgress size={20} /> : children}
-  </BaseButton>
-);
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, isLoading, superstar, isIcon, ...props }, ref) => (
+    <BaseButton
+      variant="contained"
+      isIcon={isIcon === undefined ? typeof children !== 'string' : isIcon}
+      {...props}
+      ref={ref}
+      color={props.color || 'primary'}
+    >
+      {isLoading ? <StyledCircularProgress size={20} /> : children}
+    </BaseButton>
+  )
+) as React.FC<ButtonProps>;
 
 export default Button;

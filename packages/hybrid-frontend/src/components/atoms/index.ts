@@ -12,7 +12,7 @@ import TextField, {
 import { TooltipProps } from './Tooltip';
 import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
-import { TabsProps, TabProps } from './Tabs';
+import { PillProps } from './Button/Pill/Pill';
 
 export { Button, LinearProgress, TextField, Typography, ChartIndicator, ProgressBar };
 
@@ -28,8 +28,7 @@ export type {
   IconProps,
   SpacerProps,
   ProgressBarProps,
-  TabsProps,
-  TabProps,
+  PillProps,
 };
 
 export { default as Pill } from './Button/Pill';
@@ -43,7 +42,6 @@ export { default as Slider } from './Slider';
 export { default as Tooltip } from './Tooltip';
 export { default as Link } from './Link';
 export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './TextField';
-export { Tabs, Tab } from './Tabs';
 
 /* material-ui atoms */
 export {
@@ -54,6 +52,7 @@ export {
   ListItemSecondaryAction,
   AppBar,
   Box,
+  ButtonBase,
   Card,
   colors,
   CardActionArea,
@@ -78,6 +77,8 @@ export {
   FormLabel,
   Paper,
   Select,
+  Tab,
+  Tabs,
   Toolbar,
   Drawer,
   SwipeableDrawer,
@@ -89,7 +90,15 @@ export {
 } from '@material-ui/core';
 
 /* material-ui atoms - types */
-export type { BoxProps, CardProps, Theme, ToolbarProps } from '@material-ui/core';
+export type {
+  BoxProps,
+  ButtonBaseProps,
+  CardProps,
+  Theme,
+  TabProps,
+  TabsProps,
+  ToolbarProps,
+} from '@material-ui/core';
 
 // At some point we might need to create an Icon wrapper as an atom
 // that dynamically imports each icon by a given name like <Icon name"menu" />

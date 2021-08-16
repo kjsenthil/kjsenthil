@@ -6,18 +6,28 @@ export interface PillProps extends Omit<ButtonProps, 'color' | 'variant' | 'size
   selectedColor?: 'primary' | 'secondary' | 'tertiary';
 }
 
-const Pill = ({ variant = 'selected', selectedColor = 'primary', ...props }: PillProps) => {
-  let color: ButtonProps['color'] = variant === 'selected' ? selectedColor : 'grey';
-  let pillVariant: ButtonProps['variant'] = 'contained';
+const Pill = React.forwardRef<HTMLButtonElement, PillProps>(
+  ({ variant = 'selected', selectedColor = 'primary', ...props }, ref) => {
+    let color: ButtonProps['color'] = variant === 'selected' ? selectedColor : 'grey';
+    let pillVariant: ButtonProps['variant'] = 'contained';
 
-  if (variant === 'creator') {
-    color = 'primary';
-    pillVariant = 'dashed';
+    if (variant === 'creator') {
+      color = 'primary';
+      pillVariant = 'dashed';
+    }
+
+    return (
+      <Button
+        {...props}
+        ref={ref}
+        isPill
+        color={color}
+        variant={pillVariant}
+        size="large"
+        fullWidth={false}
+      />
+    );
   }
-
-  return (
-    <Button {...props} isPill color={color} variant={pillVariant} size="large" fullWidth={false} />
-  );
-};
+) as React.FC<PillProps>;
 
 export default Pill;

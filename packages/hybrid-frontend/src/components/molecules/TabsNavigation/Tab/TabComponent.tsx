@@ -2,8 +2,9 @@ import * as React from 'react';
 import {
   ButtonBase as MUIButtonBase,
   ButtonBaseProps as MUIButtonBaseProps,
-} from '@material-ui/core';
-import Typography, { TypographyProps } from '../../Typography';
+  Typography,
+  TypographyProps,
+} from '../../../atoms';
 
 type TabComponentTypographyProps = Omit<TypographyProps, 'color' | 'colorShade'>;
 
@@ -20,7 +21,7 @@ const defaultLabelProps: TabComponentTypographyProps = {
 // In addition, we need to do this forwardRef per MUI's documentation. See the
 // 'component' prop in the link below:
 // https://material-ui.com/api/button-base/#props
-export const TabComponent = React.forwardRef(
+const TabComponent = React.forwardRef(
   ({ component, children, labelProps, ...rest }: TabComponentProps, ref) => {
     const labelPropsWithDefault = {
       ...defaultLabelProps,
@@ -36,3 +37,5 @@ export const TabComponent = React.forwardRef(
     );
   }
 );
+
+export default TabComponent;

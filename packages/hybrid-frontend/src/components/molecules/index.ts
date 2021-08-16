@@ -6,6 +6,8 @@ import ProgressBarWithLegend, { ProgressBarWithLegendProps } from './ProgressBar
 import { DigitalCoachBoxProps } from './DigitalCoachBox';
 import { TabsNavigationProps } from './TabsNavigation';
 import { GoalLifePlanCardProps } from './GoalLifePlanCard';
+import { SimplifiedPortfolioTileProps } from './SimplifiedPortfolioTile';
+import { PillsNavigationTabProps, PillsNavigationProps } from './PillsNavigation';
 
 export { default as SliderLabelled } from './SliderLabelled';
 export { default as SliderWithInput } from './SliderWithInput';
@@ -27,6 +29,12 @@ export { default as TabsNavigation } from './TabsNavigation';
 export { default as GoalLifePlanCard } from './GoalLifePlanCard';
 export { default as GoalTile } from './GoalTile';
 export { default as SimplifiedPortfolioTile } from './SimplifiedPortfolioTile';
+export { default as PillsNavigation } from './PillsNavigation';
+export {
+  PillsNavigationTab,
+  PillsNavigationSelectableTabComponent,
+  PillNavigationCreatorTabComponent,
+} from './PillsNavigation';
 
 /* material-ui molecules */
 export {
@@ -47,5 +55,8 @@ export type {
   DigitalCoachBoxProps,
   TabsNavigationProps,
   GoalLifePlanCardProps,
+  SimplifiedPortfolioTileProps,
+  PillsNavigationTabProps,
+  PillsNavigationProps,
 };
 export { ChartPeriodSelection, Legend, ProgressBarWithLegend };

@@ -1,3 +1,5 @@
+import { GoalProgressCardProps } from './GoalProgressCard';
+
 export { default as LoginForm } from './LoginForm';
 export { default as HeaderMenu } from './HeaderMenu';
 export { default as Footer } from './Footer';
@@ -17,3 +19,5 @@ export { default as GoalPotTracker } from './GoalPotTracker';
 export { default as RiskAppetiteCard } from './RiskAppetiteCard';
 export { default as GoalSetUpNewCard } from './GoalSetUpNewCard';
 export { default as GoalSelection } from './GoalSelection';
+
+export type { GoalProgressCardProps };

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Tabs as MUITabs, TabsProps as MUITabsProps, Theme } from '@material-ui/core';
+import { Tabs as MUITabs, TabsProps as MUITabsProps, Theme } from '../../../atoms';
 
 // We omit a few style-related props from MUI's TabsProps to make stylings
 // consistent

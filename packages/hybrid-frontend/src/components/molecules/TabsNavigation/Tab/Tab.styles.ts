@@ -1,11 +1,10 @@
-import * as React from 'react';
 import styled from 'styled-components';
-import { Tab as MUITab, TabProps as MUITabProps, Theme } from '@material-ui/core';
-import { TabComponent, TabComponentProps } from './TabComponent';
+import { Tab as MUITab, TabProps as MUITabProps, Theme } from '../../../atoms';
+import { TabComponentProps } from './TabComponent';
 
 export interface TabProps extends Omit<MUITabProps, 'component' | 'wrapped'>, TabComponentProps {}
 
-const STab = styled(MUITab)`
+export const STab = styled(MUITab)`
   ${({ theme }: { theme: Theme }) => `
     &.MuiTab-root {
       min-width: 0;
@@ -25,7 +24,3 @@ const STab = styled(MUITab)`
     }
   `}
 `;
-
-export default function Tab({ ...rest }: TabProps) {
-  return <STab component={TabComponent} {...rest} />;
-}

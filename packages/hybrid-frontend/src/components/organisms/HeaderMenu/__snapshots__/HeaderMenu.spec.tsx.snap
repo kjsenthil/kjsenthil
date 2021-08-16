@@ -47,10 +47,20 @@ exports[`HeaderMenu renders the header menu 1`] = `
   padding: 12px 16px;
 }
 
+.c9:hover {
+  background-color: #6c00bf;
+  color: #fff;
+}
+
 .c9.Mui-disabled {
   background-color: #6c00bf;
   color: #fff;
   opacity: 0.2;
+}
+
+.c9.Mui-disabled:hover {
+  background-color: #6c00bf;
+  color: #fff;
 }
 
 .c9 .MuiButton-iconSizeMedium *:first-child {
@@ -225,9 +235,10 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined c8 MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text c8 MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
+                wrap="nowrap"
               >
                 <span
                   class="MuiButton-label"
@@ -257,7 +268,7 @@ exports[`HeaderMenu renders the header menu 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained c9 MuiButton-disableElevation"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text c9 MuiButton-disableElevation"
                 tabindex="0"
                 type="button"
               >

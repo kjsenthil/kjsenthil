@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Tabs, Tab, TabsProps, TabProps } from '../../atoms';
+import Tabs, { TabsProps } from './Tabs/Tabs.styles';
+import Tab, { TabProps } from './Tab/Tab';
 
 export interface TabsNavigationProps {
   currentPath: string;

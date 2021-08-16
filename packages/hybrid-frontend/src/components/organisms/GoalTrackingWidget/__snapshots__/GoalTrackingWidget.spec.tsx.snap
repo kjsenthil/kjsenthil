@@ -493,7 +493,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-kHOZQx bietmF"
+          class="MuiCardContent-root sc-dtMiey eCrkdS"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -567,7 +567,7 @@ Object {
                       data-testid="Spacer"
                     />
                     <span
-                      class="sc-jeqYYF ledCfb"
+                      class="sc-lbhJmS inIlup"
                       title="Some description"
                     >
                       <svg
@@ -611,14 +611,14 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-ikJzcn gZHwkl"
+                  class="sc-bYoCmx dkdDhY"
                 >
                   <div
-                    class="sc-jJoQpE dfgUfn"
+                    class="sc-kLwgWK iXguKH"
                     width="20"
                   >
                     <div
-                      class="sc-bBHwJV kXmoUd"
+                      class="sc-kfPtPH koNvvv"
                     >
                       <div>
                         <h6
@@ -627,7 +627,7 @@ Object {
                           LUMP SUM
                         </h6>
                         <div
-                          class="sc-iwjezw hwFGdy"
+                          class="sc-fKVsgm jyioak"
                         >
                           <h6
                             class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -639,11 +639,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-jJoQpE htohdE"
+                    class="sc-kLwgWK eoChNo"
                     width="50"
                   >
                     <div
-                      class="sc-bBHwJV kXmoUd"
+                      class="sc-kfPtPH koNvvv"
                     >
                       <div>
                         <h6
@@ -652,7 +652,7 @@ Object {
                           FROM AGE 67 - 89
                         </h6>
                         <div
-                          class="sc-iwjezw hwFGdy"
+                          class="sc-fKVsgm jyioak"
                         >
                           <h6
                             class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -664,11 +664,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-jJoQpE RLned"
+                    class="sc-kLwgWK bmQECt"
                     width="5"
                   >
                     <div
-                      class="sc-bBHwJV kXmoUd"
+                      class="sc-kfPtPH koNvvv"
                     >
                       <div>
                         <h6
@@ -677,7 +677,7 @@ Object {
                           REMAINING
                         </h6>
                         <div
-                          class="sc-iwjezw hwFGdy"
+                          class="sc-fKVsgm jyioak"
                         >
                           <h6
                             class="MuiTypography-root sc-jrQzUz prRFo MuiTypography-body1"
@@ -744,7 +744,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <span
-                    class="sc-jeqYYF ledCfb"
+                    class="sc-lbhJmS inIlup"
                     title="Some description"
                   >
                     <svg

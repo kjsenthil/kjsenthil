@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import Tabs from './Tabs';
-import Tab from './Tab/Tab';
+import Tabs from './Tabs.styles';
+import Tab from '../Tab/Tab';
 
 describe('Tabs', () => {
   it('renders', () => {
