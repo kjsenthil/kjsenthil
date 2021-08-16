@@ -54,19 +54,19 @@ const prepopulate = assign<LifePlanMachineContext, PrepopulateContextEvent>((ctx
 const setIncome = assign<LifePlanMachineContext, SetIncomeEvent>(
   (ctx, { payload: { annualIncome, monthlyIncome } }) => {
     if (annualIncome !== undefined && monthlyIncome === undefined) {
-      const absoluteAnnualIncome = Math.round(Math.abs(annualIncome) * 100) / 100;
+      const absoluteAnnualIncome = Math.round(Math.abs(annualIncome));
       return {
         ...ctx,
         annualIncome: absoluteAnnualIncome,
-        monthlyIncome: Math.round((absoluteAnnualIncome / 12) * 100) / 100,
+        monthlyIncome: Math.round(absoluteAnnualIncome / 12),
       };
     }
     if (annualIncome === undefined && monthlyIncome !== undefined) {
-      const absoluteMonthlyIncome = Math.round(Math.abs(monthlyIncome) * 100) / 100;
+      const absoluteMonthlyIncome = Math.round(Math.abs(monthlyIncome));
       return {
         ...ctx,
         monthlyIncome: absoluteMonthlyIncome,
-        annualIncome: Math.round(absoluteMonthlyIncome * 12 * 100) / 100,
+        annualIncome: absoluteMonthlyIncome * 12,
       };
     }
     return {};

@@ -209,7 +209,7 @@ describe('lifePlan actions', () => {
       annualIncome | monthlyIncome
       ${72000}     | ${6000}
       ${-72000}    | ${6000}
-      ${100000}    | ${8333.33}
+      ${100000}    | ${8333}
     `(
       'when annualIncome is provided with value: $annualIncome',
       ({ annualIncome, monthlyIncome }: { annualIncome: number; monthlyIncome: number }) => {
@@ -233,8 +233,8 @@ describe('lifePlan actions', () => {
 
     describe.each`
       annualIncome | monthlyIncome
-      ${72000}     | ${-6000}
-      ${72000}     | ${6000}
+      ${72000}     | ${-6000.13}
+      ${72012}     | ${6000.73}
     `(
       'when monthlyIncome is provided',
       ({ annualIncome, monthlyIncome }: { annualIncome: number; monthlyIncome: number }) => {
@@ -246,12 +246,14 @@ describe('lifePlan actions', () => {
             })
           ).start();
 
-          service.send('SET_INCOME', { payload: { monthlyIncome: 6000 } });
+          service.send('SET_INCOME', { payload: { monthlyIncome } });
         });
 
         it('sets annual income and calculates and sets monthly income', () => {
           expect(service.state.context.annualIncome).toStrictEqual(Math.abs(annualIncome));
-          expect(service.state.context.monthlyIncome).toStrictEqual(Math.abs(monthlyIncome));
+          expect(service.state.context.monthlyIncome).toStrictEqual(
+            Math.round(Math.abs(monthlyIncome))
+          );
         });
       }
     );
