@@ -49,7 +49,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     const result = getRetirementTealProjectionRecursive(inboundPayload, new Date("July 05,2021"));
 
     // Assertion
-    expect(result.goal.onTrack.percentage).toBeCloseTo(0.8350, 4);
+    expect(result.goal.onTrack.percentage).toBeCloseTo(83.49752426147461, 2);
     expect(result.goal.desiredDiscountedOutflow).toBeCloseTo(2097500);
     expect(result.goal.affordableUnDiscountedOutflowAverage).toBeCloseTo(1751360.57, 2);
     expect(result.goal.drawdownRetirement.affordable.drawdown).toBeCloseTo(6262.31, 2);
@@ -186,7 +186,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     expect(result.contributionData[658]).toEqual(
       {
         monthNo: 658,
-        value: -1504526.8857040405
+        value: -1498264.57138443
       } as ContributionMonth);
 
     expect(result.projectionData[900]).toEqual(
@@ -200,7 +200,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     expect(result.contributionData[900]).toEqual(
       {
         monthNo: 900,
-        value: -1504526.8857040405
+        value: -1498264.57138443
       } as ContributionMonth);
   });
 
@@ -440,7 +440,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     const result = getRetirementTealProjectionRecursive(inboundPayload, today);
 
     // Assertion
-    expect(result.goal.onTrack.percentage).toEqual(0.093178391456604);
+    expect(result.goal.onTrack.percentage).toEqual(9.3178391456604);
     expect(result.goal.desiredDiscountedOutflow).toEqual(5020000);
     expect(result.goal.drawdownRetirement.affordable.drawdown).toBeCloseTo(698.84, 2);
     expect(result.goal.drawdownRetirement.affordable.lumpSum).toEqual(0);
@@ -562,8 +562,199 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
     expect(result.contributionData[900]).toEqual(
       {
         monthNo: 900,
-        value: -467454.36304807663,
+        value: -466755.5251121521,
       } as ContributionMonth);
+  });
+
+  it("should return expected results when zeros are set for preGoal and postGoal", async () => {
+    // Arrange
+    const inboundPayload = {
+      timeHorizonToProject: 900,
+      monthlyContribution: 650,
+      currentPortfolioValue: 250000,
+      upfrontContribution: 1000,
+      currentNetContribution: 1000,
+      includeGoal: true,
+      preGoal: {
+        expectedReturnPercentage: 0,
+        volatilityPercentage: 0,
+        ZScoreLowerBound: 0,
+        ZScoreUpperBound: 0
+      },
+      feesPercentage: 0,
+      drawdownType: DrawdownType.Retirement,
+      drawdownRetirement: {
+        startDate: new Date("2055-04-10"),
+        endDate: new Date("2076-04-10"),
+        regularDrawdown: 3000,
+        remainingAmount: 2000,
+        lumpSum: {
+          amount: 1000,
+          date: new Date("2040-04-10")
+        }
+      }
+    } as RequestPayload;
+
+    // Action
+    const result = getRetirementTealProjectionRecursive(inboundPayload, new Date("2021-08-12"));
+
+    // Assertion
+    expect(result.goal.onTrack.percentage).toBeCloseTo(67.2309711286088, 4);
+    expect(result.goal.desiredDiscountedOutflow).toBeCloseTo(762000);
+    expect(result.goal.affordableUnDiscountedOutflowAverage).toBeCloseTo(512300.125, 2);
+    expect(result.goal.drawdownRetirement.affordable.drawdown).toBeCloseTo(2016.92913385826, 2);
+    expect(result.goal.drawdownRetirement.affordable.lumpSum).toBeCloseTo(672.309711286088, 2);
+    expect(result.goal.drawdownRetirement.affordable.totalDrawdown).toBeCloseTo(510283.19549560547, 2);
+    expect(result.goal.drawdownRetirement.affordable.remainingAmount).toBeCloseTo(1344.61942257218, 2);
+    expect(result.projectionData.length).toBeCloseTo(901);
+    //underperform
+    expect(result.goal.drawdownRetirement.underperform.drawdown).toBeCloseTo(2016.92913385826, 2);
+    expect(result.goal.drawdownRetirement.underperform.lumpSum).toBeCloseTo(672.309711286088, 2);
+    expect(result.goal.drawdownRetirement.underperform.totalDrawdown).toBeCloseTo(510283.19549560547, 2);
+    expect(result.goal.drawdownRetirement.underperform.remainingAmount).toBeCloseTo(1344.61942257218, 2);
+
+    expect(result.projectionData[0]).toEqual(
+      {
+        monthNo: 0,
+        lower: 251000,
+        average: 251000,
+        upper: 251000
+      } as ProjectionMonth);
+
+    expect(result.contributionData[0]).toEqual(
+      {
+        monthNo:0,
+        value: 2000
+      } as ContributionMonth);
+
+    expect(result.projectionData[1]).toEqual(
+      {
+        monthNo: 1,
+        lower: 251650,
+        average: 251650,
+        upper: 251650
+      } as ProjectionMonth);
+
+    expect(result.contributionData[1]).toEqual(
+      {
+          monthNo:1,
+          value: 2650
+      } as ContributionMonth);
+
+    //just before  lump sum start
+    expect(result.projectionData[224]).toEqual({
+      monthNo: 224,
+      lower: 395927.6901245117,
+      average: 395927.6901245117,
+      upper: 395927.6901245117
+    } as ProjectionMonth);
+
+    expect(result.contributionData[224]).toEqual(
+      {
+          monthNo:224,
+          value: 146927.69012451172
+      } as ContributionMonth);
+
+    //just after lump sum
+    expect(result.projectionData[225]).toEqual({
+      monthNo: 225,
+      lower: 396577.6901245117,
+      average: 396577.6901245117,
+      upper: 396577.6901245117,
+    } as ProjectionMonth);
+
+    expect(result.contributionData[225]).toEqual(
+      {
+          monthNo:225,
+          value: 147577.69012451172
+      } as ContributionMonth);
+
+    expect(result.projectionData[226]).toEqual({
+      monthNo: 226,
+      lower: 397227.6901245117,
+      average: 397227.6901245117,
+      upper: 397227.6901245117
+    } as ProjectionMonth);
+
+
+    expect(result.contributionData[226]).toEqual(
+      {
+          monthNo:226,
+          value: 148227.69012451172
+      } as ContributionMonth);
+
+    expect(result.projectionData[405]).toEqual(
+      {
+        monthNo: 405,
+        lower: 505576.9012451172,
+        average: 505576.9012451172,
+        upper: 505576.9012451172
+      } as ProjectionMonth);
+
+
+    expect(result.contributionData[405]).toEqual(
+      {
+          monthNo:405,
+          value: 256576.9012451172
+      } as ContributionMonth);
+
+    //after drawdown start
+    expect(result.projectionData[407]).toEqual(
+      {
+        monthNo: 407,
+        lower: 501543.0419921875,
+        average: 501543.0419921875,
+        upper: 501543.0419921875,
+      } as ProjectionMonth);
+
+    expect(result.contributionData[407]).toEqual(
+      {
+          monthNo:407,
+          value: 252543.0419921875
+        } as ContributionMonth);
+  
+    //target month
+    expect(result.projectionData[657]).toEqual(
+      {
+        monthNo: 657,
+        lower: 0,
+        average: 0,
+        upper: 0,
+      } as ProjectionMonth);
+
+    expect(result.contributionData[657]).toEqual(
+      {
+          monthNo:657,
+          value: -249000.1251220703
+        } as ContributionMonth);
+      
+    expect(result.projectionData[658]).toEqual(
+      {
+        monthNo: 658,
+        lower: 0,
+        average: 0,
+        upper: 0,
+      } as ProjectionMonth);
+
+    expect(result.contributionData[658]).toEqual(
+      {
+          monthNo:658,
+          value: -249000.1251220703
+      } as ContributionMonth);
+
+    expect(result.projectionData[900]).toEqual(
+      {
+        monthNo: 900,
+        upper: 0,
+        lower: 0,
+        average: 0,
+      } as ProjectionMonth);
+
+    expect(result.contributionData[900]).toEqual(
+      {
+            monthNo:900,
+            value: -249000.1251220703
+        } as ContributionMonth);
   });
 });
 
@@ -848,7 +1039,7 @@ describe("tests for calculateContribution function when goal target period reach
 
     expect(
       calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
-      .toEqual(-1494252.0399999998);
+      .toEqual(-1488026.3299999998);
   });
 });
 
@@ -1586,6 +1777,91 @@ describe("Tests for getGoldProjection function with state pension", () => {
 
     // At the drawdown end date expect to have desired amount
     expect(result.targetProjectionData[657].value).toBeCloseTo(100000, 0);
+
+    // After the drawdown end date expect to have zero amount
+    expect(result.targetProjectionData[658].value).toBeCloseTo(0, 0);
+
+
+    expect(result.targetProjectionData[661]).toEqual(
+      {
+        monthNo: 661,
+        value: 0,
+      } as TargetProjectionMonth);
+
+    expect(result.targetProjectionData[900]).toEqual(
+      {
+        monthNo: 900,
+        value: 0,
+      } as TargetProjectionMonth);
+  });
+})
+
+describe("Tests for getGoldProjection function with pre and post goal zeros", () => {
+  let context: Context;
+
+  beforeEach(() => {
+    context = ({ log: jest.fn() } as unknown) as Context;
+  });
+
+
+  it("should return a correct response", async () => {
+    const inboundPayload = {
+      timeHorizonToProject: 900,
+      currentPortfolioValue: 250000,
+      drawdownRetirement: {
+        regularDrawdown: 3000,
+        startDate: new Date("2055-04-10"),
+        endDate: new Date("2076-04-10"),
+        lumpSum: {
+          amount: 1000,
+          date: new Date("2040-04-10")
+        },
+        statePensionAmount: 0,
+        remainingAmount: 2000
+      },
+      upfrontContribution: 1000,
+      preGoal: {
+        expectedReturnPercentage: 0,
+        ZScoreLowerBound: 0,
+        ZScoreUpperBound: 0,
+        volatilityPercentage: 0
+      },
+      feesPercentage: 0,
+      currentNetContribution: 1000,
+      monthlyContribution: 650,
+    } as RequestPayload;
+
+
+    // Action
+    const result = getGoldProjection(inboundPayload, new Date("2021-08-12"));
+
+
+    // Assertion
+    expect(result.upfrontContributionsToReach).toBeCloseTo(249700, 2)
+    expect(result.monthlyContributionsToReach).toBeCloseTo(1271.14427860697, 2)
+
+    expect(result.targetProjectionData.length).toEqual(901);
+
+    //first row
+    expect(result.targetProjectionData[1].value).toBeCloseTo(252271.144278607, 2);
+
+    //just before lump sum  month
+    expect(result.targetProjectionData[224].value).toBeCloseTo(534736.318407964, 2);
+    // after lump sum date
+    expect(result.targetProjectionData[225].value).toBeCloseTo(536007.462686571, 2);
+
+    // after lump sum date +1
+    expect(result.targetProjectionData[226].value).toBeCloseTo(537278.606965178, 2);
+
+    //Month before drawdown start
+    expect(result.targetProjectionData[406].value).toBeCloseTo(749000, 2);
+
+    //Drawdown start
+    expect(result.targetProjectionData[407].value).toBeCloseTo(746000, 2);
+
+
+    // At the drawdown end date expect to have desired amount
+    expect(result.targetProjectionData[657].value).toBeCloseTo(0, 0);
 
     // After the drawdown end date expect to have zero amount
     expect(result.targetProjectionData[658].value).toBeCloseTo(0, 0);
