@@ -61,25 +61,3 @@ resource "azurerm_dns_cname_record" "cdn" {
   target_resource_id  = module.cdn.cdn_id
   tags                = merge(map("tf_module_path", "./terraform/modules/static_website_with_cdn"), var.tags)
 }
-
-//----------------------------------------------------------------------------//
-//                          !!!!!!! IMPORTANT !!!!!!!!                        //
-//    Currently this resource doesnt support enabling HTTPS so this has been  //
-//    turned on manually for staging and production, if this resource is      //
-//    is deleted and recreated HTTPS will need to be manually re-enabled      //
-//    through the Azure portal                                                //
-//                                                                            //
-//   Functionality is being worked on under below issue:                      //
-//   https://github.com/hashicorp/terraform-provider-azurerm/issues/398       //
-//----------------------------------------------------------------------------//
-
-resource "azurerm_cdn_endpoint_custom_domain" "friendly_dns" {
-  //To mitigate intermittent failures where CNAME record was not created
-  depends_on = [
-    azurerm_dns_cname_record.cdn,
-  ]
-  count           = var.public_dns_cname == "" ? 0 : 1
-  name            = "cdn-gbl-${var.public_dns_cname}-custom-domain"
-  cdn_endpoint_id = module.cdn.cdn_id
-  host_name       = "${var.public_dns_cname}.${var.public_dns_zone_name}"
-}
