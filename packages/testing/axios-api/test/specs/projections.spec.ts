@@ -92,7 +92,7 @@ describe("test projections endpoints", () => {
     assert(response.data, expectedSchema);
   });
 
-  it("portfolio asset allocation", async () => {
+  it.skip("portfolio asset allocation", async () => {
     // Arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()

@@ -160,7 +160,7 @@ describe("test myaccount endpoints", () => {
     });
     // Assert
     const { Data } = response.data;
-    const { Included } = response.data;
+    // const { Included } = response.data;
     expect(response.status).to.equal(200);
     expect(Data.Type).to.equal("contact");
     expect(Data.Id).to.equal(contactId);
@@ -170,31 +170,31 @@ describe("test myaccount endpoints", () => {
     expect(Data.Attributes.ContactStatus).to.equal("Hybrid");
     expect(Data.Attributes.ClientType).to.equal("Individual");
 
-    const giaAccount = Included.filter((account) => {
-      return account.Id === giaAccountId;
-    });
-    expect(giaAccount[0], "GIA_ACCOUNT is undefined").to.not.be.undefined;
-    expect(giaAccount[0].Attributes.AccountId).to.equal(Number(giaAccountId));
-    expect(giaAccount[0].Attributes.AccountName).to.equal(
-      "Investment Account "
-    );
-    expect(giaAccount[0].Attributes.BestInvestAccount).to.equal("GIA");
+    // const giaAccount = Included.filter((account) => {
+    //   return account.Id === giaAccountId;
+    // });
+    // expect(giaAccount[0], "GIA_ACCOUNT is undefined").to.not.be.undefined;
+    // expect(giaAccount[0].Attributes.AccountId).to.equal(Number(giaAccountId));
+    // expect(giaAccount[0].Attributes.AccountName).to.equal(
+    //   "Investment Account "
+    // );
+    // expect(giaAccount[0].Attributes.BestInvestAccount).to.equal("GIA");
 
-    const isaAccount = Included.filter((account) => {
-      return account.Id === isaAccountId;
-    });
-    expect(isaAccount[0], "ISA_ACCOUNT is undefined").to.not.be.undefined;
-    expect(isaAccount[0].Attributes.AccountId).to.equal(Number(isaAccountId));
-    expect(isaAccount[0].Attributes.AccountName).to.equal("ISA ");
-    expect(isaAccount[0].Attributes.BestInvestAccount).to.equal("ISA");
+    // const isaAccount = Included.filter((account) => {
+    //   return account.Id === isaAccountId;
+    // });
+    // expect(isaAccount[0], "ISA_ACCOUNT is undefined").to.not.be.undefined;
+    // expect(isaAccount[0].Attributes.AccountId).to.equal(Number(isaAccountId));
+    // expect(isaAccount[0].Attributes.AccountName).to.equal("ISA ");
+    // expect(isaAccount[0].Attributes.BestInvestAccount).to.equal("ISA");
 
-    const sippAccount = Included.filter((account) => {
-      return account.Id === sippAccountId;
-    });
-    expect(sippAccount[0], "SIPP_ACCOUNT is undefined").to.not.be.undefined;
-    expect(sippAccount[0].Attributes.AccountId).to.equal(Number(sippAccountId));
-    expect(sippAccount[0].Attributes.AccountName).to.equal("SIPP ");
-    expect(sippAccount[0].Attributes.BestInvestAccount).to.equal("SIPP");
+    // const sippAccount = Included.filter((account) => {
+    //   return account.Id === sippAccountId;
+    // });
+    // expect(sippAccount[0], "SIPP_ACCOUNT is undefined").to.not.be.undefined;
+    // expect(sippAccount[0].Attributes.AccountId).to.equal(Number(sippAccountId));
+    // expect(sippAccount[0].Attributes.AccountName).to.equal("SIPP ");
+    // expect(sippAccount[0].Attributes.BestInvestAccount).to.equal("SIPP");
     assert(response.data, expectedSchema);
   });
 
