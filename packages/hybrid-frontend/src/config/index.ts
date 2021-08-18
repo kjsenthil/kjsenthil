@@ -69,6 +69,7 @@ const defaultEndpoints: Record<ApiEndpoints, string> = {
   CREATE_GOAL_LESS_FIELDS: '/resourceful/entity/client-v4/goals',
   CREATE_OBJECTIVE: '/resourceful/entity/client-v4/objectives',
   LINK_GOAL_TO_OBJECTIVE: '/resourceful/entity/client-v4/goals/{objective-index}/objective_link',
+  PROJECTIONS_SIMULATE_PROJECTION: '/projections/simulate-projection',
 };
 
 export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
@@ -122,4 +123,5 @@ export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS,
   API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS,
   API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE,
+  API_ENDPOINTS.PROJECTIONS_SIMULATE_PROJECTION,
 ];

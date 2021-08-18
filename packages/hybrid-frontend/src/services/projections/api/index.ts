@@ -4,3 +4,4 @@ export { default as getPortfolioRiskProfile } from './getPortfolioRiskProfile';
 export { default as postGoalCurrentProjections } from './postGoalCurrentProjections';
 export { default as postGoalTargetProjectionsFetcher } from './postGoalTargetProjections';
 export { default as postProjections } from './postProjections';
+export { default as postGoalSimulateProjections } from './postGoalSimulateProjections';

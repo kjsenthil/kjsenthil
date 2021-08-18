@@ -1,0 +1,66 @@
+{
+  "projectionData": [
+    {
+      "monthNo": 0,
+      "average": 250000,
+      "lower": 250000,
+      "upper": 250000
+    },
+    {
+      "monthNo": 1,
+      "average": 251422.32845197053,
+      "lower": 235465.81038991973,
+      "upper": 266368.48354157555
+    }
+  ],
+  "contributionData": [
+    {
+      "monthNo": 0,
+      "value": 1000
+    },
+    {
+      "monthNo": 1,
+      "value": 1624
+    }
+  ],
+  "goal": {
+    "onTrack": {
+      "percentage": 37.483978271484375,
+      "monthlyContributionsToReach": -806.8208820475061,
+      "upfrontContributionsToReach": 243017.1446264885,
+      "targetProjectionData": [
+        {
+          "monthNo": 0,
+          "value": 250000
+        },
+        {
+          "monthNo": 1,
+          "value": 249991.50756992304
+        },
+        {
+          "monthNo": 2,
+          "value": 249982.9880208518
+        }
+      ]
+    },
+    "desiredDiscountedOutflow": 245368.8,
+    "affordableUnDiscountedOutflowAverage": 91973.98767700195,
+    "shortfallSurplusAverage": 153394.81232299804,
+    "affordableUndiscountedOutflowUnderperform": 90650.47280273437,
+    "shortfallSurplusUnderperform": 154718.32719726564,
+    "drawdownRetirement": {
+      "affordable": {
+        "lumpSum": 0,
+        "remainingAmount": 0,
+        "drawdown": 347.0716516113281,
+        "totalDrawdown": 91973.98767700195
+      },
+      "underperform": {
+        "lumpSum": 0,
+        "remainingAmount": 0,
+        "drawdown": 342.077255859375,
+        "totalDrawdown": 90650.47280273437
+      }
+    }
+  }
+}

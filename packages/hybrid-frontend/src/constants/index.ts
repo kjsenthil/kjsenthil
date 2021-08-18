@@ -58,3 +58,10 @@ export const AccountsTableHeader = (
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
   },
 ];
+
+export enum DrawdownType {
+  OneOff = 'One-off',
+  Monthly = 'Monthly',
+  Annual = 'Annual',
+  Retirement = 'Retirement',
+}

@@ -2,6 +2,7 @@ import { CommonState, RiskModel, SedolCode } from '../types';
 import { TimeSeriesDatum } from '../../utils/data';
 import { ClientResponse, InvestmentSummary } from '../myAccount';
 import { AllAssets } from '../assets';
+import { DrawdownType } from '../../constants';
 
 export interface ProjectionRequest {
   upfrontInvestment: number;
@@ -229,4 +230,115 @@ export interface PortfolioAssetAllocationResponse {
   // These figures can be null if the 'accountValue' parameter is omitted
   portfolioEquityPercentage: number | null;
   portfolioCashPercentage: number | null;
+}
+
+export type GoalSimulateProjectionsState = CommonState<GoalSimulateProjectionsResponse>;
+
+export interface GoalSimulateProjectionsRequestPayload {
+  timeHorizonToProject: number;
+  feesPercentage?: number;
+  upfrontContribution?: number;
+  monthlyContribution: number;
+  currentNetContribution: number;
+  currentPortfolioValue: number;
+  includeGoal: boolean;
+  drawdownType?: DrawdownType;
+  drawdownOneOff?: {
+    targetAmount: number;
+    targetDate: string;
+  };
+  drawdownMonthly?: {
+    amount: number;
+    startDate: string;
+    endDate: string;
+  };
+  drawdownAnnually?: {
+    amount: number;
+    startDate: string;
+    endDate: string;
+  };
+  drawdownRetirement?: {
+    regularDrawdown: number;
+    startDate: string;
+    endDate: string;
+    lumpSum?: {
+      amount?: number;
+      date?: string;
+    };
+    remainingAmount?: number;
+    statePensionAmount?: number;
+  };
+  preGoal: {
+    expectedReturnPercentage: number;
+    volatilityPercentage: number;
+    ZScoreLowerBound: number;
+    ZScoreUpperBound: number;
+  };
+  postGoal?: {
+    expectedReturnPercentage: number;
+    volatilityPercentage: number;
+    ZScoreLowerBound: number;
+    ZScoreUpperBound: number;
+  };
+}
+
+export interface GoalSimulateProjectionsResponse {
+  projectionData: SimulateProjectionMonth[];
+  contributionData: SimulateContributionMonth[];
+  goal: {
+    onTrack: {
+      percentage: number;
+      monthlyContributionsToReach?: number;
+      upfrontContributionsToReach?: number;
+      targetProjectionData?: TargetProjectionMonth[];
+    };
+    desiredDiscountedOutflow: number;
+    affordableUnDiscountedOutflowAverage: number;
+    shortfallSurplusAverage: number;
+    affordableUndiscountedOutflowUnderperform: number;
+    shortfallSurplusUnderperform: number;
+    drawdownOneOff?: {
+      affordable: number;
+      affordableUnderperform: number;
+    };
+    drawdownMonthly?: {
+      affordable: number;
+      affordableUnderperform: number;
+    };
+    drawdownAnnual?: {
+      affordable: number;
+      affordableUnderperform: number;
+    };
+    drawdownRetirement?: {
+      affordable: {
+        lumpSum: number;
+        remainingAmount: number;
+        drawdown: number;
+        totalDrawdown: number;
+      };
+      underperform: {
+        lumpSum: number;
+        remainingAmount: number;
+        drawdown: number;
+        totalDrawdown: number;
+      };
+    };
+  };
+}
+
+export interface SimulateProjectionMonth {
+  monthNo: number;
+  lower: number;
+  upper: number;
+  average: number;
+}
+
+export interface SimulateContributionMonth {
+  monthNo: number;
+  value: number;
+}
+
+export interface TargetProjectionMonth {
+  monthNo: number;
+  value: number;
 }

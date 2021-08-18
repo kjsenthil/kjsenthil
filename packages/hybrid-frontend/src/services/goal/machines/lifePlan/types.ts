@@ -121,6 +121,11 @@ export type UpdateCurrentProjectionsEvent = {
   payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
 };
 
+export type UpdateSimulateProjectionsEvent = {
+  type: string;
+  payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+};
+
 export type PrepopulateContextEvent = {
   type: 'done.invoke.bootstrapping';
   data: PrepopulateContext;

@@ -31,6 +31,7 @@ import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
 import {
   GoalCurrentProjectionsState,
+  GoalSimulateProjectionsState,
   GoalTargetProjectionsState,
   SimulatedProjectionsState,
 } from '../services/projections';
@@ -53,6 +54,7 @@ export interface RootState {
   simulatedProjections: SimulatedProjectionsState;
   goalCurrentProjections: GoalCurrentProjectionsState;
   goalTargetProjections: GoalTargetProjectionsState;
+  goalSimulateProjections: GoalSimulateProjectionsState;
   featureToggle: FeatureToggleState;
 }
 
