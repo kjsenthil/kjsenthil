@@ -9,10 +9,10 @@ import {
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import { max as d3ArrayMax, min as d3ArrayMin } from 'd3-array';
 import styled from 'styled-components';
-import { curveNatural } from '@visx/curve';
+import { curveBasis } from '@visx/curve';
 import { GridRows } from '@visx/grid';
 import { Theme, Typography } from '../../atoms';
-import { useTimeValueScales, useChartStyles } from '../../../hooks';
+import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import {
   PerformanceProjectionsChartAxisBottom,
   PerformanceProjectionsChartAxisLeft,
@@ -23,16 +23,19 @@ import usePerformanceProjectionsChartTooltip, {
   TooltipData,
 } from './PerformanceProjectionsChartTooltip/usePerformanceProjectionsChartTooltip';
 import PerformanceProjectionsChartTooltip from './PerformanceProjectionsChartTooltip/PerformanceProjectionsChartTooltip';
-import { getDatumAtPosX } from '../../../utils/chart';
+import { getDatumAtPosX, normalizeTimeSeriesData } from '../../../utils/chart';
 import { TypedReactMemo } from '../../../utils/common';
 import {
   contributionsAccessor,
   dateAccessor,
   getPerformanceProjectionsDataMaxValue,
-  valueTargetAccessor,
-  valueAccessor,
+  getPerformanceProjectionsDataMinValue,
   lowerBoundAccessor,
+  normalizeHistoricalData,
+  normalizeProjectionsData,
   upperBoundAccessor,
+  valueAccessor,
+  valueTargetAccessor,
 } from './performanceProjectionsData';
 import {
   ProjectionsChartMetadata,
@@ -84,9 +87,9 @@ const Container = styled.div`
 `;
 
 function PerformanceProjectionsChart({
-  projectionsData,
-  projectionsTargetData,
-  historicalData,
+  projectionsData: preNormalizationProjectionsData,
+  projectionsTargetData: preNormalizationProjectionsTargetData,
+  historicalData: preNormalizationHistoricalData,
   goalsData,
   projectionsMetadata,
   showLikelyRange,
@@ -103,6 +106,12 @@ function PerformanceProjectionsChart({
   const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
+
+  const projectionsData = normalizeProjectionsData(preNormalizationProjectionsData);
+  const projectionsTargetData = preNormalizationProjectionsTargetData
+    ? normalizeTimeSeriesData(preNormalizationProjectionsTargetData)
+    : undefined;
+  const historicalData = normalizeHistoricalData(preNormalizationHistoricalData);
 
   const hasHistoricalData = historicalData.length > 0;
   const hasProjectionsData = projectionsData.length > 0;
@@ -125,10 +134,18 @@ function PerformanceProjectionsChart({
     )
   );
 
-  const minChartValue = 0;
+  const minChartValue = Math.max(
+    getPerformanceProjectionsDataMinValue({
+      projectionsData,
+      projectionsTargetData,
+      historicalData,
+    }),
+    0
+  );
   const maxChartValue = getPerformanceProjectionsDataMaxValue({
     projectionsData,
     projectionsTargetData,
+    historicalData,
   });
 
   const { xScale, yScale } = useTimeValueScales({
@@ -390,7 +407,7 @@ function PerformanceProjectionsChart({
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             yScale={yScale}
-            curve={curveNatural}
+            curve={curveBasis}
             strokeWidth={0}
             fill="url(#performance-historical-gradient)"
           />
@@ -398,7 +415,7 @@ function PerformanceProjectionsChart({
             data={historicalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
           />
@@ -408,7 +425,7 @@ function PerformanceProjectionsChart({
             data={historicalData}
             x={graphDateAccessor}
             y={graphContributionsAccessor}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
             strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
@@ -426,7 +443,7 @@ function PerformanceProjectionsChart({
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
             yScale={yScale}
-            curve={curveNatural}
+            curve={curveBasis}
             strokeWidth={0}
             fill="url(#performance-projections-gradient)"
           />
@@ -434,7 +451,7 @@ function PerformanceProjectionsChart({
             data={projectionsData}
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.PROJECTIONS_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.PROJECTIONS_GRAPH}
           />
@@ -465,7 +482,7 @@ function PerformanceProjectionsChart({
             y0={graphProjectedPerformanceBadAccessor}
             y1={graphProjectedPerformanceGoodAccessor}
             yScale={yScale}
-            curve={curveNatural}
+            curve={curveBasis}
             fill={chartStyles.FILL.PROJECTIONS_VARIANCE_BAND_GRAPH}
             opacity={chartStyles.FILL_OPACITY.PROJECTIONS_VARIANCE_BAND_GRAPH}
             mask={
@@ -479,7 +496,7 @@ function PerformanceProjectionsChart({
             x={graphDateAccessor}
             y={graphContributionsAccessor}
             defined={contributionsDefined}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
             strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
@@ -496,7 +513,7 @@ function PerformanceProjectionsChart({
               data={projectionsTargetData}
               x={graphDateAccessor}
               y={graphProjectionTargetAccessor}
-              curve={curveNatural}
+              curve={curveBasis}
               stroke={chartStyles.STROKE_COLOR.GOAL_NOT_MET_GRAPH}
               strokeWidth={chartStyles.STROKE_WIDTH.GOAL_NOT_MET_GRAPH}
               strokeDasharray={chartStyles.STROKE_DASHARRAY.GOAL_NOT_MET_GRAPH}
@@ -549,7 +566,7 @@ function PerformanceProjectionsChart({
                 }}
                 to={{
                   x: tooltipData ? tooltipLeft : defaultTooltipLeft,
-                  y: chartDimension.innerHeight - chartDimension.margin.top,
+                  y: chartDimension.innerHeight,
                 }}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}

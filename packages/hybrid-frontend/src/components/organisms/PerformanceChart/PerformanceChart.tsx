@@ -3,7 +3,7 @@ import { withParentSize } from '@visx/responsive';
 import { AreaClosed, Bar, Circle, Line, LinePath } from '@visx/shape';
 import { LinearGradient } from '@visx/gradient';
 import { GridRows } from '@visx/grid';
-import { curveNatural } from '@visx/curve';
+import { curveBasis } from '@visx/curve';
 import { Group } from '@visx/group';
 import {
   WithParentSizeProps,
@@ -13,12 +13,18 @@ import styled from 'styled-components';
 import { Theme } from '../../atoms';
 import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartTooltip';
-import usePerformanceChartTooltip from './PerformanceChartTooltip/usePerformanceChartTooltip';
+import usePerformanceChartTooltip, {
+  TooltipData,
+} from './PerformanceChartTooltip/usePerformanceChartTooltip';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/PerformanceChartSummaryPanel';
 import { ChartPeriodSelectionProps } from '../../molecules';
-import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart';
+import {
+  normalizeTimeSeriesData,
+  timeSeriesDateAccessor,
+  timeSeriesValueAccessor,
+} from '../../../utils/chart';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { usePerformanceChartDimension } from './hooks';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
@@ -59,8 +65,8 @@ const ControlPanelContainer = styled.div`
 `;
 
 function PerformanceChart({
-  performanceData,
-  contributionsData,
+  performanceData: preNormalizationPerformanceData,
+  contributionsData: preNormalizationContributionsData,
   periodSelectionProps,
   axisBottomConfig,
   parentWidth = 0,
@@ -70,6 +76,9 @@ function PerformanceChart({
   const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
+
+  const performanceData = normalizeTimeSeriesData(preNormalizationPerformanceData);
+  const contributionsData = normalizeTimeSeriesData(preNormalizationContributionsData);
 
   const hasData = performanceData.length > 0 && contributionsData.length > 0;
 
@@ -93,7 +102,10 @@ function PerformanceChart({
   const minChartDate = Math.min(minContributionsDate.getTime(), minValuationsDate.getTime());
   const maxChartDate = Math.max(maxContributionsDate.getTime(), maxValuationsDate.getTime());
   const maxChartValue = Math.max(maxContributionsValue, maxValuationsValue);
-  const minChartValue = Math.min(minContributionsValue, minValuationsValue);
+  const minChartValue = Math.min(
+    Math.max(minContributionsValue, 0),
+    Math.max(minValuationsValue, 0)
+  );
 
   const { xScale, yScale } = useTimeValueScales({
     chartDimension,
@@ -147,7 +159,12 @@ function PerformanceChart({
   let lastContributionsDataPoint;
   let defaultTooltipLeft = 0;
   let defaultTooltipTop = 0;
-  let defaultTooltipData;
+  let defaultTooltipData: TooltipData = {
+    performance: { value: 0, date: new Date() },
+    contribution: { value: 0, date: new Date() },
+    performanceIndicatorPosY: 0,
+    contributionIndicatorPosY: 0,
+  };
 
   if (hasData) {
     lastPerformanceDataPoint = performanceData[performanceData.length - 1];
@@ -158,6 +175,7 @@ function PerformanceChart({
     defaultTooltipData = {
       performance: lastPerformanceDataPoint,
       contribution: lastContributionsDataPoint,
+      performanceIndicatorPosY: yScale(timeSeriesValueAccessor(lastPerformanceDataPoint)),
       contributionIndicatorPosY: yScale(timeSeriesValueAccessor(lastContributionsDataPoint)),
     };
   }
@@ -233,7 +251,7 @@ function PerformanceChart({
                 x={shapeXAccessor}
                 y={shapeYAccessor}
                 yScale={yScale}
-                curve={curveNatural}
+                curve={curveBasis}
                 strokeWidth={0}
                 fill="url(#historical-performance-gradient)"
                 onMouseLeave={() => hideTooltip()}
@@ -242,7 +260,7 @@ function PerformanceChart({
                 data={performanceData}
                 x={shapeXAccessor}
                 y={shapeYAccessor}
-                curve={curveNatural}
+                curve={curveBasis}
                 stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
                 strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
               />
@@ -297,7 +315,7 @@ function PerformanceChart({
                 }}
                 to={{
                   x: tooltipData ? tooltipLeft : defaultTooltipLeft,
-                  y: chartDimension.innerHeight - chartDimension.margin.top,
+                  y: chartDimension.innerHeight,
                 }}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}
@@ -305,7 +323,11 @@ function PerformanceChart({
               />
               <Circle
                 cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
-                cy={tooltipData ? tooltipTop : defaultTooltipTop}
+                cy={
+                  tooltipData
+                    ? tooltipData.performanceIndicatorPosY
+                    : defaultTooltipData.performanceIndicatorPosY
+                }
                 r={chartStyles.RADIUS.INDICATOR}
                 fill={chartStyles.FILL.INDICATOR}
                 stroke={chartStyles.STROKE_COLOR.INDICATOR}

@@ -19,7 +19,6 @@ describe('useTimeValueScales', () => {
       },
     };
     const maxValueBuffer = 0;
-    const minValueBuffer = 0;
 
     const { result } = renderHook(() =>
       useTimeValueScales({
@@ -28,7 +27,6 @@ describe('useTimeValueScales', () => {
         minValue,
         maxValue,
         chartDimension,
-        minValueBuffer,
         maxValueBuffer,
       })
     );

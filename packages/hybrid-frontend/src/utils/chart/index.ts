@@ -3,4 +3,5 @@ export { default as getChartDimensionWithExtras } from './getChartDimensionWithE
 export { default as getDatumAtPosX } from './getDatumAtPosX';
 export { default as getTimeSeriesMinMax } from './getTimeSeriesMinMax';
 export { default as humanizePeriodLabel } from './humanizePeriodLabel';
+export { default as normalizeTimeSeriesData } from './normalizeTimeSeriesData';
 export * from './timeSeriesDateSorter';

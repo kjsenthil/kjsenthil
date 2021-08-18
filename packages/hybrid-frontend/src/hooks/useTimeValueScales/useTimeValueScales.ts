@@ -19,18 +19,16 @@ export interface UseTimeValueScalesProps {
   // e.g. passing 0.1 (10%) will result in the chart's highest point being 10%
   // higher than the underlying data's highest point
   maxValueBuffer?: number;
-
-  // Same principles as above, but applied to the minimum value
-  minValueBuffer?: number;
 }
 
 const DEFAULT_MAX_VALUE_BUFFER = 0.1;
-const DEFAULT_MIN_VALUE_BUFFER = 0.1;
 
 // This domain is used when either minDate or maxDate is undefined
 const DEFAULT_TIME_DOMAIN = [new Date(0), new Date(0)];
-// This domain is used when either minValue or maxValue is undefined
-const DEFAULT_VALUE_DOMAIN = [0, 0];
+// This domain is used when either minValue or maxValue is undefined.
+// The maximum is set to 100. If both values are 0 then the chart won't render
+// very nicely.
+const DEFAULT_VALUE_DOMAIN = [0, 100];
 
 /**
  * Return a time scale for the x-axis and a linear value scale for the y-axis.
@@ -41,7 +39,6 @@ export default function useTimeValueScales({
   maxValue,
   minValue,
   maxValueBuffer = DEFAULT_MAX_VALUE_BUFFER,
-  minValueBuffer = DEFAULT_MIN_VALUE_BUFFER,
   chartDimension,
 }: UseTimeValueScalesProps): {
   xScale: ScaleTime<number, number>;
@@ -77,13 +74,15 @@ export default function useTimeValueScales({
         // that minValue and maxValue have been checked for undefined via the
         // valuesDefined variable.
         domain: valuesDefined
-          ? [minValue!, maxValue! * (1 + maxValueBuffer)]
+          ? // We don't want both minValue and maxValue to be 0 - otherwise the
+            // chart won't render very nicely
+            [minValue!, maxValue! * (1 + maxValueBuffer) || DEFAULT_VALUE_DOMAIN[1]]
           : DEFAULT_VALUE_DOMAIN,
-        range: [innerHeight * (1 - minValueBuffer), margin.top],
+        range: [innerHeight, margin.top],
 
         nice: true,
       }),
-    [innerHeight, margin.top, minValue, maxValue, maxValueBuffer, minValueBuffer]
+    [innerHeight, margin.top, minValue, maxValue, maxValueBuffer]
   );
 
   return {

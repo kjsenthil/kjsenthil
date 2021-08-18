@@ -4,8 +4,11 @@ import * as visxEvent from '@visx/event';
 import usePerformanceChartTooltip from './usePerformanceChartTooltip';
 import { ContributionDatum, PerformanceDatum } from '../performanceData';
 import { generateParametersForUseTooltipHook } from './PerformanceChartTooltipTestUtils';
-import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../../utils/chart/accessors';
-import { getDatumAtPosX } from '../../../../utils/chart';
+import {
+  getDatumAtPosX,
+  timeSeriesDateAccessor,
+  timeSeriesValueAccessor,
+} from '../../../../utils/chart';
 
 jest.mock('@visx/event');
 
@@ -106,6 +109,7 @@ describe('usePerformanceChartTooltip', () => {
       tooltipData: {
         performance: performanceDatum,
         contribution: contributionDatum,
+        performanceIndicatorPosY: yScale(timeSeriesValueAccessor(performanceDatum)),
         contributionIndicatorPosY: yScale(timeSeriesValueAccessor(contributionDatum)),
       },
     });

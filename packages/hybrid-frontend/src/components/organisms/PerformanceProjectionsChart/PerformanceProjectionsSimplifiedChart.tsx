@@ -9,18 +9,20 @@ import {
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import { max as d3ArrayMax, min as d3ArrayMin } from 'd3-array';
 import styled from 'styled-components';
-import { curveNatural } from '@visx/curve';
+import { curveBasis } from '@visx/curve';
 import { Theme, Typography } from '../../atoms';
 import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import { PerformanceProjectionsChartAxisBottom } from './PerformanceProjectionsChartAxes';
 import PerformanceProjectionsChartGoalIndicator from './PerformanceProjectionsChartGoalIndicator/PerformanceProjectionsChartGoalIndicator';
-import { getDatumAtPosX } from '../../../utils/chart';
+import { getDatumAtPosX, normalizeTimeSeriesData } from '../../../utils/chart';
 import { TypedReactMemo } from '../../../utils/common';
 import {
   contributionsAccessor,
   dateAccessor,
   getPerformanceProjectionsDataMaxValue,
   getPerformanceProjectionsDataMinValue,
+  normalizeHistoricalData,
+  normalizeProjectionsData,
   valueAccessor,
   valueTargetAccessor,
 } from './performanceProjectionsData';
@@ -62,9 +64,9 @@ const Container = styled.div`
 `;
 
 function PerformanceProjectionsSimplifiedChart({
-  projectionsData,
-  projectionsTargetData,
-  historicalData,
+  projectionsData: preNormalizationProjectionsData,
+  projectionsTargetData: preNormalizationProjectionsTargetData,
+  historicalData: preNormalizationHistoricalData,
   goalsData,
   projectionsMetadata,
   parentWidth = 0,
@@ -74,6 +76,13 @@ function PerformanceProjectionsSimplifiedChart({
   const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
+
+  // Ensure the chart never renders any negative numbers
+  const projectionsData = normalizeProjectionsData(preNormalizationProjectionsData);
+  const projectionsTargetData = preNormalizationProjectionsTargetData
+    ? normalizeTimeSeriesData(preNormalizationProjectionsTargetData)
+    : undefined;
+  const historicalData = normalizeHistoricalData(preNormalizationHistoricalData);
 
   const hasHistoricalData = historicalData.length > 0;
   const hasProjectionsData = projectionsData.length > 0;
@@ -96,14 +105,18 @@ function PerformanceProjectionsSimplifiedChart({
     )
   );
 
-  const minChartValue = getPerformanceProjectionsDataMinValue({
-    projectionsData,
-    projectionsTargetData,
-    noValueRange: true,
-  });
+  const minChartValue = Math.max(
+    getPerformanceProjectionsDataMinValue({
+      projectionsData,
+      projectionsTargetData,
+      historicalData,
+    }),
+    0
+  );
   const maxChartValue = getPerformanceProjectionsDataMaxValue({
     projectionsData,
     projectionsTargetData,
+    historicalData,
     noValueRange: true,
   });
 
@@ -114,7 +127,6 @@ function PerformanceProjectionsSimplifiedChart({
     minValue: minChartValue,
     maxValue: maxChartValue,
     maxValueBuffer: 0.75,
-    minValueBuffer: 0,
   });
 
   // ----- Chart accessor ----- //
@@ -270,7 +282,7 @@ function PerformanceProjectionsSimplifiedChart({
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
             yScale={yScale}
-            curve={curveNatural}
+            curve={curveBasis}
             strokeWidth={0}
             fill="url(#performance-historical-gradient)"
           />
@@ -279,7 +291,7 @@ function PerformanceProjectionsSimplifiedChart({
             data={historicalData}
             x={graphDateAccessor}
             y={graphHistoricalPerformanceAccessor}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
           />
@@ -297,7 +309,7 @@ function PerformanceProjectionsSimplifiedChart({
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
             yScale={yScale}
-            curve={curveNatural}
+            curve={curveBasis}
             strokeWidth={0}
             fill="url(#performance-projections-gradient)"
           />
@@ -306,7 +318,7 @@ function PerformanceProjectionsSimplifiedChart({
             data={projectionsData}
             x={graphDateAccessor}
             y={graphProjectedPerformanceAccessor}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.PROJECTIONS_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.PROJECTIONS_GRAPH}
           />
@@ -317,7 +329,7 @@ function PerformanceProjectionsSimplifiedChart({
             x={graphDateAccessor}
             y={graphContributionsAccessor}
             defined={contributionsDefined}
-            curve={curveNatural}
+            curve={curveBasis}
             stroke={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
             strokeWidth={chartStyles.STROKE_WIDTH.CONTRIBUTION_GRAPH}
             strokeDasharray={chartStyles.STROKE_DASHARRAY.CONTRIBUTION_GRAPH}
@@ -334,7 +346,7 @@ function PerformanceProjectionsSimplifiedChart({
               data={projectionsTargetData}
               x={graphDateAccessor}
               y={graphProjectionTargetAccessor}
-              curve={curveNatural}
+              curve={curveBasis}
               stroke={chartStyles.STROKE_COLOR.GOAL_NOT_MET_GRAPH}
               strokeWidth={chartStyles.STROKE_WIDTH.GOAL_NOT_MET_GRAPH}
               strokeDasharray={chartStyles.STROKE_DASHARRAY.GOAL_NOT_MET_GRAPH}

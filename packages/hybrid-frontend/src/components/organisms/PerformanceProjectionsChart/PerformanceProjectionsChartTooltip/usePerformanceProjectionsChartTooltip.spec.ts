@@ -5,8 +5,8 @@ import usePerformanceProjectionsChartTooltip from './usePerformanceProjectionsCh
 import {
   contributionsAccessor,
   dateAccessor,
-  valueTargetAccessor,
   valueAccessor,
+  valueTargetAccessor,
 } from '../performanceProjectionsData';
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { generateParametersForUseTooltipHook } from './PerformanceProjectionsChartTooltipTestUtils';
@@ -91,7 +91,7 @@ describe('usePerformanceProjectionsChartTooltip', () => {
     expect(showTooltipSpy).toHaveBeenCalledTimes(1);
     expect(showTooltipSpy).toHaveBeenCalledWith({
       tooltipLeft: mockMousePos.x - chartDimension.margin.left,
-      tooltipTop: yScale(valueAccessor(datum)),
+      tooltipTop: yScale(datum.upperBound),
       tooltipData: {
         performanceProjection: datum,
         performanceIndicatorPosY: yScale(valueAccessor(datum)),

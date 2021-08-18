@@ -23,9 +23,8 @@ export interface TooltipData {
   performance: PerformanceDatum;
   contribution: ContributionDatum;
 
-  // TODO: this is used to determine the position of the circle indicator on
-  //  the contribution line. Is there a better way?
   contributionIndicatorPosY: number | undefined;
+  performanceIndicatorPosY: number | undefined;
 }
 
 export default function usePerformanceChartTooltip({
@@ -90,12 +89,19 @@ export default function usePerformanceChartTooltip({
       });
 
       if (performanceData.length > 0 && contributionsData.length > 0) {
+        const tooltipTopValue = Math.max(
+          performanceDatumAtPosX.value,
+          contributionDatumAtPosX.value
+        );
+
         tooltip.showTooltip({
           tooltipLeft: adjMouseX,
-          tooltipTop: yScale(yAccessor(performanceDatumAtPosX)),
+          tooltipTop: yScale(tooltipTopValue),
           tooltipData: {
             performance: performanceDatumAtPosX,
             contribution: contributionDatumAtPosX,
+
+            performanceIndicatorPosY: yScale(yAccessor(performanceDatumAtPosX)),
             contributionIndicatorPosY: yScale(yAccessor(contributionDatumAtPosX)),
           },
         });

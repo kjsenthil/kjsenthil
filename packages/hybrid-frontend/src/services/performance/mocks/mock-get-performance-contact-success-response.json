@@ -6136,11 +6136,8 @@
           { "date": "2021-04-08T00:00:00", "netContributionsToDate": 262777.4 },
           { "date": "2021-04-09T00:00:00", "netContributionsToDate": 262777.4 },
           { "date": "2021-04-12T00:00:00", "netContributionsToDate": 262777.4 },
-          { "date": "2021-04-13T00:00:00", "netContributionsToDate": 263877.14 },
-          {
-            "date": "2021-05-17T00:00:00+01:00",
-            "netContributionsToDate": 263877.14
-          }
+          { "date": "2021-04-13T00:00:00", "netContributionsToDate": 262777.4 },
+          { "date": "2021-05-17T00:00:00", "netContributionsToDate": 263877.14 }
         ]
       },
       "links": {

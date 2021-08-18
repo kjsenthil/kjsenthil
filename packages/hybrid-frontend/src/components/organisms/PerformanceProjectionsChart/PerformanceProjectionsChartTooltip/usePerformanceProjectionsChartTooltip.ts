@@ -111,13 +111,20 @@ export default function usePerformanceProjectionsChartTooltip({
       );
 
       if (projectionsData.length > 0) {
+        const maxProjectionDatumAtPosXValue = Math.max(
+          projectionDatumAtPosX.value,
+          projectionDatumAtPosX.lowerBound,
+          projectionDatumAtPosX.upperBound,
+          projectionDatumAtPosX.netContributionsToDate
+        );
+
+        const tooltipTopValue = projectionTargetDatumAtPosXExist
+          ? Math.max(projectionTargetDatumAtPosX!.value, maxProjectionDatumAtPosXValue)
+          : maxProjectionDatumAtPosXValue;
+
         tooltip.showTooltip({
           tooltipLeft: adjMouseX,
-          tooltipTop: projectionTargetDatumAtPosXExist
-            ? // The exclamation mark is necessary else TypeScript can't infer
-              // that 'projectionTargetDatumAtPosX' exists at this point
-              yScale(projectionTargetAccessor(projectionTargetDatumAtPosX!))
-            : yScale(performanceAccessor(projectionDatumAtPosX)),
+          tooltipTop: yScale(tooltipTopValue),
           tooltipData: {
             performanceProjection: projectionDatumAtPosX,
             performanceProjectionTarget: projectionTargetDatumAtPosXExist

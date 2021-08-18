@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withParentSize } from '@visx/responsive';
 import { AreaClosed, Line, LinePath } from '@visx/shape';
 import { LinearGradient } from '@visx/gradient';
-import { curveNatural } from '@visx/curve';
+import { curveBasis } from '@visx/curve';
 import { GridColumns } from '@visx/grid';
 import { Group } from '@visx/group';
 import { Text } from '@visx/text';
@@ -13,7 +13,11 @@ import {
 import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisLeft } from './PerformanceChartAxes';
-import { timeSeriesDateAccessor, timeSeriesValueAccessor } from '../../../utils/chart/accessors';
+import {
+  normalizeTimeSeriesData,
+  timeSeriesDateAccessor,
+  timeSeriesValueAccessor,
+} from '../../../utils/chart';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { TypedReactMemo } from '../../../utils/common';
 import PerformanceSimplifiedChartAxisBottom from './PerformanceChartAxes/PerformanceSimplifiedChartAxisBottom';
@@ -38,8 +42,8 @@ const MemoizedGridColumns = React.memo(GridColumns);
 // ---------- Components ---------- //
 
 function PerformanceSimplifiedChart({
-  performanceData,
-  contributionsData,
+  performanceData: preNormalizationPerformanceData,
+  contributionsData: preNormalizationContributionsData,
   dataPeriod,
   parentWidth = 0,
 }: PerformanceSimplifiedChartProps) {
@@ -48,6 +52,9 @@ function PerformanceSimplifiedChart({
   const chartStyles = useChartStyles();
 
   // ----- Chart data ----- //
+
+  const performanceData = normalizeTimeSeriesData(preNormalizationPerformanceData);
+  const contributionsData = normalizeTimeSeriesData(preNormalizationContributionsData);
 
   const hasData = performanceData.length > 0 && contributionsData.length > 0;
 
@@ -71,7 +78,10 @@ function PerformanceSimplifiedChart({
   const minChartDate = Math.min(minContributionsDate.getTime(), minValuationsDate.getTime());
   const maxChartDate = Math.max(maxContributionsDate.getTime(), maxValuationsDate.getTime());
   const maxChartValue = Math.max(maxContributionsValue, maxValuationsValue);
-  const minChartValue = Math.min(minContributionsValue, minValuationsValue);
+  const minChartValue = Math.min(
+    Math.max(minContributionsValue, 0),
+    Math.max(minValuationsValue, 0)
+  );
 
   const { xScale, yScale } = useTimeValueScales({
     chartDimension,
@@ -79,7 +89,6 @@ function PerformanceSimplifiedChart({
     maxDate: new Date(maxChartDate),
     maxValue: maxChartValue,
     minValue: minChartValue,
-    minValueBuffer: 0,
   });
 
   // ----- Chart accessor ----- //
@@ -161,7 +170,7 @@ function PerformanceSimplifiedChart({
               x={shapeXAccessor}
               y={shapeYAccessor}
               yScale={yScale}
-              curve={curveNatural}
+              curve={curveBasis}
               strokeWidth={0}
               fill="url(#historical-performance-gradient)"
             />
@@ -169,7 +178,7 @@ function PerformanceSimplifiedChart({
               data={performanceData}
               x={shapeXAccessor}
               y={shapeYAccessor}
-              curve={curveNatural}
+              curve={curveBasis}
               stroke={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
               strokeWidth={chartStyles.STROKE_WIDTH.PERFORMANCE_GRAPH}
             />
