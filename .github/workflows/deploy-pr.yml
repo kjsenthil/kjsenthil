@@ -534,11 +534,13 @@ jobs:
         run: yarn all:lint
 
       - name: "Login to Azure"
+        if: always()
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: "Deploy Eslint Report"
+      - name: "Deploy ESLint Report"
+        if: always()
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -586,11 +588,13 @@ jobs:
         run: yarn frontend test:coverage
 
       - name: "Login to Azure"
+        if: always()
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: "Deploy Jest Reports"
+        if: always()
         uses: azure/CLI@v1
         with:
           azcliversion: latest
