@@ -115,7 +115,7 @@ describe('Check common elements from header, footer area', () => {
       // act
       await (await investmentMenuBtn()).waitForClickable()
       await (await investmentMenuBtn()).click()
-      await (await lHeader()).waitForClickable()
+      await (await lHeader()).waitForDisplayed({ timeout: 25000 })
       // assert
       let currentUrl = await browser.getUrl()
       console.info('Current URL:', currentUrl)
