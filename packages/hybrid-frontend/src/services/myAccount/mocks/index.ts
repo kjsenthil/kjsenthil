@@ -165,6 +165,26 @@ export const mockClientResponse: ClientResponse = {
       },
       relationships: null,
     },
+    {
+      type: ClientAccountTypes.accounts,
+      id: '20499',
+      attributes: {
+        accountId: 20499,
+        accountName: 'Investment Account ',
+        accountNumber: 'BI204993',
+        accountStatus: 'Open',
+        accountStatusId: 2,
+        bestInvestAccount: 'GIA',
+        capacityType: 'Execution Only',
+        capacityTypeId: 3,
+        ddMandateId: 244,
+        hasIncomeAccount: false,
+      },
+      links: {
+        self: 'https://myaccountsapi.demo2.bestinvest.co.uk/api/accounts/20499',
+      },
+      relationships: null,
+    },
   ],
 };
 
