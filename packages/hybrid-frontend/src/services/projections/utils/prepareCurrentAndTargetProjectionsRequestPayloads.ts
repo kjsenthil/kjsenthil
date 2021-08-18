@@ -29,6 +29,8 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
   assetModel,
   totalNetContributions,
   monthlyContributions,
+  additionalMonthlyContributions,
+  upfrontContribution,
   portfolioCurrentValue,
 }: FetchGoalCurrentProjectionsParams): {
   currentProjectionsPayload: GoalCurrentProjectionsRequestPayload;
@@ -57,7 +59,8 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
     desiredMonthlyDrawdown: monthlyIncome || 0,
     drawdownStartDate: formatDrawdownDate(drawdownStartDate || defaultDrawDownStartDate),
     drawdownEndDate: formatDrawdownDate(drawdownEndDate || defaultDrawDownEndDate),
-    upfrontContribution: 0,
+    monthlyContributions: monthlyContributions + (additionalMonthlyContributions ?? 0),
+    upfrontContribution: upfrontContribution ?? 0,
     includeStatePension: !!shouldIncludeStatePension,
     statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
     lumpSumDate: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
@@ -69,7 +72,6 @@ const prepareCurrentAndTargetProjectionsRequestPayloads = ({
     lumpSumAmount: lumpSum,
     desiredAmount: laterLifeLeftOver,
     netContribution: totalNetContributions,
-    monthlyContributions,
     portfolioCurrentValue,
     preGoalExpectedVolatility: volatility,
     preGoalZScoreLowerBound: zScores.lessLikleyLb,

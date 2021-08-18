@@ -18,7 +18,9 @@ type EventHandlers =
   | 'handleLumpSumAmountChange'
   | 'handleMonthlyIncomeChange'
   | 'handleStatePensionSelection'
-  | 'handleRemainingAmountChange';
+  | 'handleRemainingAmountChange'
+  | 'handleAdditionalMonthlyContributions'
+  | 'handleUpfrontContribution';
 
 type EventHandlerFunctions = {
   [key in EventHandlers]: InputEventFunction;
@@ -119,6 +121,24 @@ const useLifePlanMachineHandlers = ({
     });
   };
 
+  const handleAdditionalMonthlyContributions = (event: InputEvent) => {
+    send('SET_ADDITIONAL_MONTHLY_CONTRIBUTIONS', {
+      payload: {
+        ...projectionsPrerequisitesPayload,
+        additionalMonthlyContributions: normalizeNumberTargetValue(event),
+      },
+    });
+  };
+
+  const handleUpfrontContribution = (event: InputEvent) => {
+    send('SET_UPFRONT_CONTRIBUTION', {
+      payload: {
+        ...projectionsPrerequisitesPayload,
+        upfrontContribution: normalizeNumberTargetValue(event),
+      },
+    });
+  };
+
   const handleGoalDelete = () => {
     send('DELETE');
   };
@@ -143,6 +163,8 @@ const useLifePlanMachineHandlers = ({
     handleMonthlyIncomeChange,
     handleStatePensionSelection,
     handleRemainingAmountChange,
+    handleAdditionalMonthlyContributions,
+    handleUpfrontContribution,
   };
 };
 

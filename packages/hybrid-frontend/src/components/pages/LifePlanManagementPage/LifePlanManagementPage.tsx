@@ -13,6 +13,7 @@ import {
   useDispatchThunkOnRender,
   useLifePlanMachineHandlers,
   useGoalPotTrackerProgressBarData,
+  useUpdateCurrentProjectionsPrerequisites,
 } from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 import PlanningSubPage from './PlanningSubPage/PlanningSubPage';
@@ -28,6 +29,8 @@ const LifePlanManagementPage = () => {
   const { hash: currentUrlHash } = useLocation();
 
   const {
+    goalCurrentProjections: { data: goalCurrentProjections },
+    goalTargetProjections: { data: goalTargetProjections },
     performance: { status: performanceStatus },
   } = useSelector((state: RootState) => state);
 
@@ -130,6 +133,13 @@ const LifePlanManagementPage = () => {
   const currentStateValue =
     typeof stateValue === 'string' ? stateValue : Object.keys(stateValue)[0];
 
+  const { monthlyContributions } = useUpdateCurrentProjectionsPrerequisites();
+  const upfrontContributionRequiredToFundDrawdown =
+    goalTargetProjections?.upfrontContributionRequiredToFundDrawdown ?? 0;
+  const monthlyContributionsRequiredToFundDrawdown =
+    (goalTargetProjections?.monthlyContributionsRequiredToFundDrawdown ?? 0) -
+    (monthlyContributions ?? 0);
+
   const renderContentSide = () =>
     doesGoalExist ? (
       <Grid container>
@@ -197,6 +207,11 @@ const LifePlanManagementPage = () => {
             renderContentSide={renderContentSide}
             shouldIncludeStatePension={shouldIncludeStatePension}
             handleStatePensionSelection={handlers.handleStatePensionSelection}
+            monthlyContributionsRequiredToFundDrawdown={monthlyContributionsRequiredToFundDrawdown}
+            upfrontContributionRequiredToFundDrawdown={upfrontContributionRequiredToFundDrawdown}
+            handleAdditionalMonthlyContributions={handlers.handleAdditionalMonthlyContributions}
+            handleUpfrontContribution={handlers.handleUpfrontContribution}
+            onTrackPercentage={goalCurrentProjections?.onTrackPercentage ?? 0}
           />
         );
       default:

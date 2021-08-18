@@ -169,6 +169,14 @@ const lifePlanConfig: MachineConfig<
           target: '.inputProcessing',
           actions: ['setIncludeStatePension'],
         },
+        SET_ADDITIONAL_MONTHLY_CONTRIBUTIONS: {
+          target: '.inputProcessing',
+          actions: ['setAdditionalMonthlyContributions'],
+        },
+        SET_UPFRONT_CONTRIBUTION: {
+          target: '.inputProcessing',
+          actions: ['setUpfrontContribution'],
+        },
         SAVE: '.saving',
         DELETE: '.deleting',
       },

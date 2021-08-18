@@ -34,6 +34,7 @@ describe('postGoalTargetProjections', () => {
     const data: GoalTargetProjectionsResponse = {
       targetGoalAmount: 243017.1446264885,
       monthlyContributionsRequiredToFundDrawdown: -806.8208820475061,
+      upfrontContributionRequiredToFundDrawdown: -806.8208820475061,
       projections: [
         {
           month: 0,

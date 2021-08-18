@@ -7,11 +7,19 @@ import FundingStepCardTwo from './FundingStepCardTwo';
 import { PerformanceDataPeriod } from '../../../../services/performance';
 import { formatCurrency, CurrencyPresentationVariant } from '../../../../utils/formatters';
 import { RootState } from '../../../../store';
+import { Spacer } from '../../../atoms';
+import { GoalInputCard } from '../../../organisms';
+import { GoalInput } from './GoalCreationFundingSubPage.styles';
 
 interface GoalCreationFundingSubPageProps extends RouteComponentProps {
   renderContentSide: () => React.ReactNode;
   handleStatePensionSelection: (e: React.ChangeEvent<HTMLInputElement>) => void;
   shouldIncludeStatePension: boolean;
+  monthlyContributionsRequiredToFundDrawdown: number;
+  upfrontContributionRequiredToFundDrawdown: number;
+  handleAdditionalMonthlyContributions: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUpfrontContribution: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTrackPercentage: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,12 +27,17 @@ export default function GoalCreationFundingSubPage({
   renderContentSide,
   handleStatePensionSelection,
   shouldIncludeStatePension,
+  monthlyContributionsRequiredToFundDrawdown,
+  upfrontContributionRequiredToFundDrawdown,
+  handleAdditionalMonthlyContributions,
+  handleUpfrontContribution,
+  onTrackPercentage,
 }: GoalCreationFundingSubPageProps) {
   const { hash: currentUrlHash } = useLocation();
 
   const { investmentAccounts } = useSelector((state: RootState) => state);
 
-  const steps = ['#step-1', '#step-2'];
+  const steps = ['#step-1', '#step-2', '#goal-input'];
 
   React.useEffect(() => {
     if (!steps.includes(currentUrlHash)) {
@@ -55,6 +68,7 @@ export default function GoalCreationFundingSubPage({
 
   const stepCardOneElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardTwoElementRef = React.useRef<HTMLElement | null>(null);
+  const goalInputElementRef = React.useRef<HTMLDivElement | null>(null);
 
   const mainContentElements = [
     {
@@ -88,6 +102,38 @@ export default function GoalCreationFundingSubPage({
             navigate('#step-2');
           }}
         />
+      ),
+    },
+
+    {
+      hash: '#goal-input',
+      ref: goalInputElementRef,
+      element: (
+        <GoalInput ref={goalInputElementRef}>
+          <GoalInputCard
+            type="upfront"
+            onTrack={upfrontContributionRequiredToFundDrawdown}
+            onTrackPercentage={onTrackPercentage}
+            onChange={(event) => {
+              handleUpfrontContribution(event);
+            }}
+            onFocus={() => {
+              navigate('#goal-input');
+            }}
+          />
+          <Spacer x={1} />
+          <GoalInputCard
+            type="monthly"
+            onTrack={monthlyContributionsRequiredToFundDrawdown}
+            onTrackPercentage={onTrackPercentage}
+            onChange={(event) => {
+              handleAdditionalMonthlyContributions(event);
+            }}
+            onFocus={() => {
+              navigate('#goal-input');
+            }}
+          />
+        </GoalInput>
       ),
     },
   ];

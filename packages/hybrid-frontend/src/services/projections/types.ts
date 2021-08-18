@@ -154,6 +154,8 @@ export interface FetchGoalCurrentProjectionsParams
   lumpSumDate?: Date | null;
   laterLifeLeftOver: number;
   fees: number;
+  additionalMonthlyContributions?: number;
+  upfrontContribution?: number;
 }
 
 export type GoalTargetProjectionsState = CommonState<GoalTargetProjectionsResponse>;
@@ -197,6 +199,7 @@ export interface GoalTargetProjectionsRequestPayload {
 export interface GoalTargetProjectionsResponse {
   targetGoalAmount: number;
   monthlyContributionsRequiredToFundDrawdown: number;
+  upfrontContributionRequiredToFundDrawdown: number;
   projections: GoalTargetProjectionMonth[];
 }
 

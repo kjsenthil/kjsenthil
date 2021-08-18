@@ -32,6 +32,9 @@ const context: LifePlanMachineContext = {
   remainingValue: 0,
   errors: null,
   hasFetchedProjections: false,
+  monthlyContributions: 0,
+  additionalMonthlyContributions: 0,
+  upfrontContribution: 0,
 };
 
 export default context;

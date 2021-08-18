@@ -17,6 +17,8 @@ import {
   PrepopulateContextEvent,
   SetIndexEvent,
   SetIncludeStatePensionEvent,
+  SetAdditionalMonthlyContributionsEvent,
+  SetUpfrontContributionEvent,
 } from './types';
 import * as math from '../../../../utils/math';
 import * as validators from './validators';
@@ -92,6 +94,18 @@ const setLaterLifeLeftOver = assign<LifePlanMachineContext, SetLaterLifeLeftOver
 
 const setIncludeStatePension = assign<LifePlanMachineContext, SetIncludeStatePensionEvent>({
   shouldIncludeStatePension: (_, evt) => evt.payload.shouldIncludeStatePension,
+});
+
+const setAdditionalMonthlyContributions = assign<
+  LifePlanMachineContext,
+  SetAdditionalMonthlyContributionsEvent
+>({
+  monthlyContributions: (_, evt) => evt.payload.additionalMonthlyContributions,
+  additionalMonthlyContributions: (_, evt) => evt.payload.additionalMonthlyContributions,
+});
+
+const setUpfrontContribution = assign<LifePlanMachineContext, SetUpfrontContributionEvent>({
+  upfrontContribution: (_, evt) => evt.payload.upfrontContribution,
 });
 
 const calculateDrawdownDates = assign<LifePlanMachineContext>(
@@ -181,6 +195,8 @@ export default ({
   setDrawdownAges,
   setLaterLifeLeftOver,
   setIncludeStatePension,
+  setAdditionalMonthlyContributions,
+  setUpfrontContribution,
   setHasFetchedProjections,
   calculateAge,
   calcuateLumpSumDate,

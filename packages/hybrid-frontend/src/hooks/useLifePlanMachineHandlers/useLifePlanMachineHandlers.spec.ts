@@ -164,6 +164,20 @@ describe('useLifePlanMachineHandlers', () => {
     });
   });
 
+  it('calls send with SET_ADDITIONAL_MONTHLY_CONTRIBUTIONS on handleAdditionalMonthlyContributions with event target value as 123 and prerequisites', () => {
+    handlers.handleAdditionalMonthlyContributions(cast({ target: { value: '123' } }));
+    expect(mockSend).toHaveBeenCalledWith('SET_ADDITIONAL_MONTHLY_CONTRIBUTIONS', {
+      payload: { ...prerequisites, additionalMonthlyContributions: 123 },
+    });
+  });
+
+  it('calls send with SET_UPFRONT_CONTRIBUTION on handleUpfrontContribution with event target value as 123 and prerequisites', () => {
+    handlers.handleUpfrontContribution(cast({ target: { value: '123' } }));
+    expect(mockSend).toHaveBeenCalledWith('SET_UPFRONT_CONTRIBUTION', {
+      payload: { ...prerequisites, upfrontContribution: 123 },
+    });
+  });
+
   it('calls send with CUSTOM_EVENT on handleCustomEvent', () => {
     handlers.handleCustomEvent('CUSTOM_EVENT', { data: 'somedata' });
     expect(mockSend).toHaveBeenCalledWith('CUSTOM_EVENT', {

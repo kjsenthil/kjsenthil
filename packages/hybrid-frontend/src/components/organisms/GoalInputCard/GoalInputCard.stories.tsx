@@ -10,7 +10,7 @@ export default {
 const defaultArgs: GoalInputCardProps = {
   type: 'monthly',
   onTrack: 334,
-  value: '',
+  onTrackPercentage: 0.52,
   onChange: () => {},
 };
 
@@ -18,7 +18,11 @@ const Template: Story<GoalInputCardProps> = ({ ...args }) => {
   const [value, setValue] = React.useState(args.value);
 
   return (
-    <GoalInputCard {...args} onChange={(_name, newValue) => setValue(newValue)} value={value} />
+    <GoalInputCard
+      {...args}
+      onChange={(event) => setValue(Number(event.target.value))}
+      value={value}
+    />
   );
 };
 

@@ -1,32 +1,42 @@
 import * as React from 'react';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
-import { Typography } from '../../atoms';
+import {
+  formatCurrency,
+  CurrencyPresentationVariant,
+  formatPercent,
+  PercentPresentationVariant,
+} from '../../../utils/formatters';
+import { Typography, Spacer } from '../../atoms';
 import { FormInput } from '../../molecules';
 
-import { GoalInputStyledCard } from './GoalInputCard.styles';
+import { GoalInputStyledCard, SuggestionText } from './GoalInputCard.styles';
 
 export interface GoalInputCardProps {
   type: 'monthly' | 'upfront';
   onTrack: number;
-  value: number | '';
-  onChange: (name: string, newValue: number | '') => void;
+  onTrackPercentage: number;
+  value?: number | '';
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
   onBlur?: () => void;
 }
 
-const GoalInputCard = ({ type, onTrack, value, onChange }: GoalInputCardProps) => {
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value === '' ? '' : Number(event.target.value);
-    onChange(event.target.name, newValue);
-  };
-
+const GoalInputCard = ({
+  type,
+  onTrack,
+  onTrackPercentage,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+}: GoalInputCardProps) => {
   const formattedOnTrack = formatCurrency(onTrack, CurrencyPresentationVariant.ACTUAL_TOPLINE);
+  const formattedOnTrackPercentage = formatPercent(
+    onTrackPercentage,
+    PercentPresentationVariant.PROJECTION
+  );
 
-  return (
-    <GoalInputStyledCard>
-      <Typography color="black" colorShade="dark" variant="sh2" gutterBottom>
-        {type === 'monthly' ? 'Additional monthly contribution' : 'Add cash or transfer in today'}
-      </Typography>
-
+  const suggestionText = (
+    <SuggestionText>
       <Typography color="grey" variant="b2">
         {type === 'monthly' ? (
           <>
@@ -38,6 +48,16 @@ const GoalInputCard = ({ type, onTrack, value, onChange }: GoalInputCardProps) =
           </>
         )}
       </Typography>
+    </SuggestionText>
+  );
+
+  return (
+    <GoalInputStyledCard>
+      <Typography color="black" colorShade="dark" variant="sh2" gutterBottom>
+        {type === 'monthly' ? 'Additional monthly contribution' : 'Add cash or transfer in today'}
+      </Typography>
+
+      {parseFloat(formattedOnTrackPercentage) < 100 ? suggestionText : <Spacer y={0} />}
 
       <FormInput
         label=""
@@ -45,9 +65,12 @@ const GoalInputCard = ({ type, onTrack, value, onChange }: GoalInputCardProps) =
         type="number"
         hideNumberSpinButton
         fullWidth
-        onChange={handleInputChange}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={value}
         inputProps={{ 'data-testid': `goal-input-${type}` }}
+        shouldDelayOnChange
       />
     </GoalInputStyledCard>
   );

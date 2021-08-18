@@ -29,6 +29,9 @@ export interface LifePlanMachineContext {
   laterLifeLeftOver: number;
   retirementPotValue: number;
   shouldIncludeStatePension: boolean;
+  monthlyContributions: number;
+  additionalMonthlyContributions: number;
+  upfrontContribution: number;
   remainingValue: number;
   hasFetchedProjections: boolean;
   errors: Partial<Record<InputFieldsKeys, string>> | null;
@@ -116,6 +119,16 @@ export type SetIncludeStatePensionEvent = {
   payload: Pick<LifePlanMachineContext, 'shouldIncludeStatePension'>;
 };
 
+export type SetAdditionalMonthlyContributionsEvent = {
+  type: 'SET_ADDITIONAL_MONTHLY_CONTRIBUTIONS';
+  payload: Pick<LifePlanMachineContext, 'additionalMonthlyContributions'>;
+};
+
+export type SetUpfrontContributionEvent = {
+  type: 'SET_UPFRONT_CONTRIBUTION';
+  payload: Pick<LifePlanMachineContext, 'upfrontContribution'>;
+};
+
 export type UpdateCurrentProjectionsEvent = {
   type: string;
   payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
@@ -153,6 +166,8 @@ export type LifePlanMachineEvents =
   | SetLumpSumAgeEvent
   | SetLaterLifeLeftOverEvent
   | SetIncludeStatePensionEvent
+  | SetAdditionalMonthlyContributionsEvent
+  | SetUpfrontContributionEvent
   | SetErrorsEvent
   | SwitchToToFunding
   | SwitchToToFlanning
@@ -175,5 +190,7 @@ export type PrepopulateContext =
       | 'lumpSumAge'
       | 'laterLifeLeftOver'
       | 'shouldIncludeStatePension'
+      | 'additionalMonthlyContributions'
+      | 'upfrontContribution'
     >
   | undefined;
