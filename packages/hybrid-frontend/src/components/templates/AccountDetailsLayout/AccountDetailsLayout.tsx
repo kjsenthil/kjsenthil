@@ -1,14 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from '@reach/router';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Card from '@material-ui/core/Card';
 import { NavPaths } from '../../../config/paths';
-import { BasicInfo } from '../../../hooks';
+import { Box, Icon } from '../../atoms';
+import { BasicInfo, useBreakpoint } from '../../../hooks';
 import { RootState } from '../../../store';
 import { MyAccountLayout } from '..';
-import { NavLink, ButtonWithDropdown } from '../../molecules';
-import { StyledHeader, StyledNav, StyledList } from './AccountDetailsLayout.styles';
+import { ButtonWithDropdown } from '../../molecules';
+import {
+  StyledHeader,
+  StyledNav,
+  StyledGrid,
+  StyledLink,
+  StyledList,
+} from './AccountDetailsLayout.styles';
 
 export interface AccountDetailsLayoutProps {
   children: React.ReactNode;
@@ -42,12 +50,17 @@ const links = [
     path: NavPaths.ADD_CASH_PAGE,
   },
   {
+    name: 'Monthly savings',
+    path: '/',
+  },
+  {
     name: 'Withdraw cash',
     path: '/',
   },
   {
     name: 'Invest',
     path: '/',
+    icon: <Icon name="waves" />,
   },
 ];
 
@@ -55,6 +68,8 @@ const AccountDetailsLayout = ({ basicInfo, children }: AccountDetailsLayoutProps
   const { investmentAccounts } = useSelector((state: RootState) => ({
     investmentAccounts: state.investmentAccounts.data,
   }));
+  const { isMobile } = useBreakpoint();
+  const currentUrl = useLocation().pathname;
 
   return (
     <MyAccountLayout
@@ -81,11 +96,20 @@ const AccountDetailsLayout = ({ basicInfo, children }: AccountDetailsLayoutProps
             />
           </StyledHeader>
           <StyledNav>
-            {links.map((item) => (
-              <NavLink key={`navlink-${item.name}`} to={item.path}>
-                {item.name}
-              </NavLink>
-            ))}
+            <Box px={isMobile ? 1 : 10}>
+              <StyledGrid isMobile={isMobile} container alignItems="center" wrap="nowrap">
+                {links.map((item) => (
+                  <StyledLink
+                    key={`navlink-${item.name}`}
+                    to={item.path}
+                    selected={item.path === currentUrl}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </StyledLink>
+                ))}
+              </StyledGrid>
+            </Box>
           </StyledNav>
         </>
       }
