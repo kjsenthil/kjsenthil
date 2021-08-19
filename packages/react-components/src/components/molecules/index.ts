@@ -10,9 +10,9 @@ import { SimplifiedPortfolioTileProps } from './SimplifiedPortfolioTile';
 import { PillsNavigationTabProps, PillsNavigationProps } from './PillsNavigation';
 
 export { default as Alert } from './Alert';
+export { default as ButtonWithDropdown } from './ButtonWithDropdown';
 export { default as ChartPeriodSelection } from './ChartPeriodSelection';
 export { default as ComponentsWithCaption } from './ComponentsWithCaption';
-export { default as ButtonWithDropdown } from './ButtonWithDropdown';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
 export { default as DisabledComponent } from './DisabledComponent';
 export { default as FormInput } from './FormInput';
@@ -24,6 +24,12 @@ export { default as Legend } from './Legend';
 export { default as MainCard } from './MainCard';
 export { default as Modal } from './Modal';
 export { default as NavLink } from './NavLink';
+export { default as PillsNavigation } from './PillsNavigation';
+export {
+  PillsNavigationTab,
+  PillsNavigationSelectableTabComponent,
+  PillNavigationCreatorTabComponent,
+} from './PillsNavigation';
 export { default as ProgressBarWithLegend } from './ProgressBarWithLegend';
 export { default as RadioGroup } from './RadioGroup';
 export { default as SimplifiedPortfolioTile } from './SimplifiedPortfolioTile';
@@ -33,12 +39,7 @@ export { default as SubHeader } from './SubHeader';
 export { default as TabsNavigation } from './TabsNavigation';
 export { default as TagBox } from './TagBox';
 export { default as TypographyWithTooltip } from './TypographyWithTooltip';
-export { default as PillsNavigation } from './PillsNavigation';
-export {
-  PillsNavigationTab,
-  PillsNavigationSelectableTabComponent,
-  PillNavigationCreatorTabComponent,
-} from './PillsNavigation';
+export { default as UpsellCard } from './UpsellCard';
 
 /* material-ui molecules */
 export {

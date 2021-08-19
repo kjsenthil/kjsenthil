@@ -4,6 +4,7 @@ import { navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import {
+  Button,
   DisabledComponent,
   Link,
   Spacer,
@@ -15,6 +16,7 @@ import {
   GoalSetUpNewCard,
   MainCard,
   Modal,
+  UpsellCard,
   usePerformanceProjectionsChartDimension,
 } from '@tsw/react-components';
 import { MyAccountLayout } from '../../templates';
@@ -301,6 +303,20 @@ const LifePlanPage = () => {
           </DisabledComponent>
         </YourImportantMomentsContainer>
       </MainCard>
+      <Spacer y={5} />
+
+      <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
+        <Typography color="white" fontWeight="600" variant="b2">
+          Not sure about putting your plan into action? Don&apos;t worry.
+          <br />
+          Our experienced, friendly coaches can talk through your goal with you and take a look at
+          your different options.
+        </Typography>
+        <Button wrap="nowrap" color="white" variant="contained">
+          Book appointment
+        </Button>
+      </UpsellCard>
+
       <Modal
         open={isModalOpen}
         onClose={modalCloseHandler}

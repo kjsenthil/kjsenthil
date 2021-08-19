@@ -42,4 +42,8 @@ describe('BIAccountsPage', () => {
   test('the primary heading should be Investments', () => {
     expect(screen.getByText('Primary heading = Investments')).toBeInTheDocument();
   });
+
+  it('renders coach card successfully', () => {
+    expect(screen.getByText('Speak to a coach')).toBeInTheDocument();
+  });
 });

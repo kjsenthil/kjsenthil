@@ -12,7 +12,7 @@ export default {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'gradient', 'primary', 'secondary', 'tertiary', 'grey'],
+      options: [undefined, 'gradient', 'primary', 'secondary', 'tertiary', 'grey', 'white'],
     },
     variant: {
       control: {

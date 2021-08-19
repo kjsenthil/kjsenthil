@@ -7,7 +7,15 @@ import CircularProgress from '../CircularProgress';
 // without contaminating this component with framework specific detail
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/
 export interface ButtonProps extends Omit<MUIButtonProps, 'color' | 'variant'> {
-  color?: 'inherit' | 'primary' | 'secondary' | 'tertiary' | 'gradient' | 'grey' | 'error';
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'gradient'
+    | 'grey'
+    | 'white'
+    | 'error';
   variant?: 'contained' | 'dashed' | 'outlined';
   isLoading?: boolean;
   wrap?: 'nowrap' | 'wrap';
@@ -31,9 +39,20 @@ const determineColorStyles = ({
     } else if (variant === 'dashed') {
       style += `border: 1px dashed ${mainColor};`;
     } else if (variant === 'contained') {
-      const textColor = color === 'grey' ? palette.primary.dark2 : palette.common.white;
+      if (color === 'white') {
+        style = `
+        background-color: ${palette.common.white};
+        color: ${palette.primary.main};
 
-      style = `
+        &:hover {
+          background-color: ${palette.common.white};
+          filter: brightness(90%);
+        }
+      `;
+      } else {
+        const textColor = color === 'grey' ? palette.primary.dark2 : palette.common.white;
+
+        style = `
         background-color: ${mainColor};
         color: ${textColor};
         
@@ -42,6 +61,7 @@ const determineColorStyles = ({
           color: ${textColor};
         }
       `;
+      }
     }
   } else {
     style = `

@@ -22,6 +22,7 @@ import {
   PerformanceDataPeriod,
   humanizePeriodLabel,
   getPossessiveSuffix,
+  UpsellCard,
 } from '@tsw/react-components';
 import { MyAccountLayout } from '../../templates';
 import {
@@ -207,6 +208,21 @@ const BIAccountsPage = () => {
               <Skeleton height={performanceChartDimension.height} />
             )}
           </MainCard>
+        </Grid>
+
+        <Spacer y={5} />
+        <Grid item xs={12}>
+          <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
+            <Typography color="white" fontWeight="600" variant="b2">
+              Not sure about putting your plan into action? Don&apos;t worry.
+              <br />
+              Our experienced, friendly coaches can talk through your goal with you and take a look
+              at your different options.
+            </Typography>
+            <Button wrap="nowrap" color="white" variant="contained">
+              Book appointment
+            </Button>
+          </UpsellCard>
         </Grid>
       </Grid>
     </MyAccountLayout>
