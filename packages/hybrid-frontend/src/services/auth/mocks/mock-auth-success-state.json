@@ -1,0 +1,22 @@
+{
+  "accessTokens": [
+    {
+      "application": "application",
+      "accessToken": "accessToken",
+      "refreshToken": "refreshToken",
+      "sessionId": "sessionId"
+    },
+    {
+      "application": "application",
+      "accessToken": "accessToken",
+      "refreshToken": "refreshToken",
+      "sessionId": "sessionId"
+    }
+  ],
+  "isCredLoggedIn": true,
+  "isPinLoggedIn": true,
+  "credLoginError": "",
+  "twoStepAuthCode": "twoStepAuthCode",
+  "pinLoginError": "",
+  "contactId": 283732
+}

@@ -1,6 +1,3 @@
-// TODO: probably should replace this with industry standard react-query or swr
-//  libraries
-
 import * as React from 'react';
 import { CommonState } from '../../services/types';
 
@@ -29,7 +26,7 @@ export interface UseServerSideDataReturn {
  *
  * @param {function} fetcher - A function that executes a Redux dispatch()
  * function
- * @param {CommonState['status]} thunkState - The thunk's state, straight from
+ * @param {CommonState['status']} thunkState - The thunk's state, straight from
  * Redux
  * @param {Partial<UseServerSideDataConfig>} config - Configure this hook's
  * behaviour
@@ -39,7 +36,7 @@ export interface UseServerSideDataReturn {
  */
 export default function useDispatchThunkOnRender(
   fetcher: () => void,
-  thunkState: CommonState['status'], // This should be
+  thunkState: CommonState['status'],
   config: Partial<UseServerSideDataConfig> = DEFAULT_CONFIG
 ) {
   const { maxRetries, enabled, additionalDependencies }: UseServerSideDataConfig = {

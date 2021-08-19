@@ -20,7 +20,8 @@ export interface InvestmentAccountsProps {
 const useInvestmentAccounts = (
   { shouldDispatch }: { shouldDispatch: boolean } = { shouldDispatch: true }
 ): InvestmentAccountsProps => {
-  const { investmentSummary, investmentAccounts } = useSelector((state: RootState) => ({
+  const { contactId, investmentSummary, investmentAccounts } = useSelector((state: RootState) => ({
+    contactId: state.auth.contactId,
     investmentSummary: state.investmentSummary.data,
     investmentAccounts: state.investmentAccounts.data,
   }));
@@ -34,10 +35,10 @@ const useInvestmentAccounts = (
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (shouldDispatch && !isClientAvailable) {
+    if (shouldDispatch && !isClientAvailable && contactId) {
       dispatch(fetchClient());
     }
-  }, []);
+  }, [shouldDispatch, isClientAvailable, contactId]);
 
   useEffect(() => {
     if (

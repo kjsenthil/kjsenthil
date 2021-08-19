@@ -29,6 +29,7 @@ import {
   setPerformanceDataPeriod,
 } from '../../../services/performance';
 import {
+  useAccountIds,
   useBasicInfo,
   useContributionsData,
   useDispatchThunkOnRender,
@@ -47,6 +48,9 @@ const BIAccountsPage = () => {
   const basicInfo = useBasicInfo();
   const { accountsSummary, investmentAccounts } = useInvestmentAccounts({ shouldDispatch: false });
 
+  const accountIds = useAccountIds();
+  const hasAccountIds = accountIds && accountIds.length > 0;
+
   const dispatch = useDispatch();
 
   // Historical performance data
@@ -61,7 +65,7 @@ const BIAccountsPage = () => {
     dispatchGetPerformanceContact,
     performanceStatus,
     {
-      enabled: !!performanceData,
+      enabled: !!performanceData && hasAccountIds,
     }
   );
 

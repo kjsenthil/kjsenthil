@@ -8,6 +8,7 @@ import {
   mockClientResponse,
   mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
+import mockAuthSuccessState from '../../services/auth/mocks/mock-auth-success-state.json';
 
 jest.mock('../../services/myAccount/api', () => ({
   getClient: jest.fn(),
@@ -27,6 +28,7 @@ describe('useBasicInfo', () => {
     it('returns empty details', () => {
       store = configureStore({
         reducer: {
+          auth: () => ({}),
           client: () => ({
             data: undefined,
           }),
@@ -69,6 +71,9 @@ describe('useBasicInfo', () => {
 
       store = configureStore({
         reducer: {
+          auth: () => ({
+            ...mockAuthSuccessState,
+          }),
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestmentSummaryResponse,
           investmentAccounts: () => ({

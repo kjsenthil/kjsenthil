@@ -9,6 +9,7 @@ import {
 } from '../../../services/myAccount/mocks';
 import mockCurrentGoalsResponse from '../../../services/goal/mocks/get-goals-success-response.json';
 import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import mockAuthSuccessState from '../../../services/auth/mocks/mock-auth-success-state.json';
 import * as hooks from '../../../hooks';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
@@ -29,6 +30,7 @@ jest.mock('../../../hooks', () => {
     ...originalModule,
     useGoalImages: jest.fn(),
     useUpdateCurrentProjectionsPrerequisites: jest.fn(),
+    useAccountIds: jest.fn(() => ['20500', '20871']),
   };
 });
 
@@ -72,6 +74,10 @@ const mockPerformanceData = {
 describe('LifePlanPage', () => {
   const store = configureStore({
     reducer: {
+      auth: () => ({
+        status: 'success',
+        ...mockAuthSuccessState,
+      }),
       client: () => ({
         status: 'success',
         ...mockClientResponse,

@@ -2,6 +2,7 @@ import { BasicInfo } from './useBasicInfo';
 
 export { default as useGoals } from './useGoals';
 export { default as useBasicInfo } from './useBasicInfo';
+export { default as useAccountIds } from './useAccountIds';
 export { default as useGoalImages } from './useGoalImages';
 export { default as usePerformanceData } from './usePerformanceData';
 export { default as useStateIsAvailable } from './useStateIsAvailable';

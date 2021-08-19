@@ -9,6 +9,7 @@ import {
   mockClientResponse,
   mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
+import mockAuthSuccessState from '../../services/auth/mocks/mock-auth-success-state.json';
 
 const getRenderedHook = (store: Store) => {
   const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
@@ -23,6 +24,7 @@ describe('useInvestmentAccounts', () => {
     it('returns empty details', () => {
       store = configureStore({
         reducer: {
+          auth: () => ({}),
           client: () => ({
             data: undefined,
           }),
@@ -51,6 +53,9 @@ describe('useInvestmentAccounts', () => {
     it('returns investment accounts for a given client', () => {
       store = configureStore({
         reducer: {
+          auth: () => ({
+            ...mockAuthSuccessState,
+          }),
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestmentSummaryResponse,
           investmentAccounts: () => ({

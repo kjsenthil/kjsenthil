@@ -19,6 +19,7 @@ import {
 } from '@tsw/react-components';
 import { MyAccountLayout } from '../../templates';
 import {
+  useAccountIds,
   useBasicInfo,
   useDispatchThunkOnRender,
   useGoalImages,
@@ -66,6 +67,10 @@ const LifePlanPage = () => {
   } = useSelector((state: RootState) => state);
 
   const basicInfo = useBasicInfo();
+
+  const accountIds = useAccountIds();
+  const hasAccountIds = accountIds && accountIds.length > 0;
+
   const dispatch = useAppDispatch();
 
   const performanceProjectionsChartDimension = usePerformanceProjectionsChartDimension();
@@ -121,7 +126,7 @@ const LifePlanPage = () => {
     },
     performanceStatus,
     {
-      enabled: !historicalData.length,
+      enabled: !historicalData.length && hasAccountIds,
     }
   );
 

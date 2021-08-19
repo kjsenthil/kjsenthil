@@ -16,10 +16,17 @@ jest.mock('../api');
 
 type StateMap = { auth: AuthState; performance: PerformanceState };
 
-function getPerformanceStoreAndStateHistory() {
+interface GetPerformanceStoreAndStateHistoryProps {
+  // This is used to test the case when there are no account IDs in Redux
+  noAccountIds?: boolean;
+}
+
+function getPerformanceStoreAndStateHistory({
+  noAccountIds,
+}: GetPerformanceStoreAndStateHistoryProps = {}) {
   return getStoreAndStateHistory<StateMap, ReducersMapObject>({
     client: (): DeepPartial<ClientState> => ({
-      included: [{ attributes: { accountId: 12345678 } }],
+      included: noAccountIds ? undefined : [{ attributes: { accountId: 12345678 } }],
     }),
     performance: performanceReducer,
   });
@@ -116,6 +123,43 @@ describe('performanceSlice', () => {
 
         expect(stateHistory).toHaveLength(2);
         expectStateMatchesUpdated(expectedStates, stateHistory);
+      });
+
+      it('calls the thunk and errors out as expected when there are no account IDs', async () => {
+        const mockError = new Error(`Some error`);
+        const mockGetPerformanceAccountsAggregated = api.getPerformanceAccountsAggregated;
+        (mockGetPerformanceAccountsAggregated as jest.Mock).mockRejectedValue(mockError);
+
+        const expectedStates: Array<PerformanceState> = [
+          // This state is the result of the 'pending' action
+          {
+            data: undefined,
+            included: undefined,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
+            error: undefined,
+            status: 'loading',
+          },
+
+          // This state is the result of the 'error' action
+          {
+            data: undefined,
+            included: undefined,
+            performanceDataPeriod: PerformanceDataPeriod['5Y'],
+            error: `There are no account IDs to retrieve performance data for`,
+            status: 'error',
+          },
+        ];
+
+        const { store, stateHistory } = getPerformanceStoreAndStateHistory({
+          noAccountIds: true,
+        });
+        await store.dispatch(fetchPerformanceAction);
+
+        expect(stateHistory).toHaveLength(2);
+        expectStateMatchesUpdated(expectedStates, stateHistory);
+
+        // The API shouldn't have been called because there are no account IDs
+        expect(mockGetPerformanceAccountsAggregated).not.toHaveBeenCalled();
       });
     });
   });
