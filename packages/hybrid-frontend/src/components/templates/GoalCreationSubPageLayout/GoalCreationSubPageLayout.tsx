@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { useBreakpoint } from '@tsw/react-components';
 import useSideContentAndDividerTriangleYOffsetBasedOnUrlHash from '../GoalCreationLayout/hooks/useSideContentAndDividerTriangleYOffsetBasedOnUrlHash';
 import OverallLayout from './OverallLayout/OverallLayout';
 import { ContentMain, ContentMainChildContainer } from './ContentMain/ContentMain.styles';
 import ContentDivider from './ContentDivider/ContentDivider';
 import { ContentSide } from './ContentSide/ContentSide.styles';
 import ContentSideMover from './ContentSide/ContentSideMover';
-import { useStateIsAvailable, useBreakpoint } from '../../../hooks';
+import { useStateIsAvailable } from '../../../hooks';
 
 type ElementRef = React.MutableRefObject<HTMLElement | null>;
 

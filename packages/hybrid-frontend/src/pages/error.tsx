@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '../components/atoms';
+import { Typography } from '@tsw/react-components';
 
 const ErrorPage = () => (
   <>

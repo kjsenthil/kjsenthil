@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '../../atoms';
+import { Theme } from '@tsw/react-components';
 
 export const Disclaimer = styled.div`
   ${({ theme }) => `

@@ -585,7 +585,9 @@ jobs:
             ${{ runner.os }}-modules-
 
       - name: "Run unit tests and code coverage"
-        run: yarn frontend test:coverage
+        run: |
+          yarn frontend test:coverage
+          yarn components test:coverage
 
       - name: "Login to Azure"
         if: always()
@@ -599,8 +601,10 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/coverage -d "\$web/fe-coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/jesttestreport -d "\$web/fe-jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/coverage -d "\$web/cmp-coverage" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/jesttestreport -d "\$web/cmp-jesttestreport" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}" --type "block"
 
   api_tests:
     name: "Api Tests"
@@ -1131,7 +1135,7 @@ jobs:
           cat .env.production
 
       - name: "Build Storybook"
-        run: yarn frontend build-storybook -o "./storybook-static"
+        run: yarn components build-storybook -o "./storybook-static"
 
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -1143,7 +1147,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/storybook-static -d "\$web" --account-name "${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }}"
 
     outputs:
       url: ${{ needs.get_pr_terraform_outputs.outputs.storybook_web_endpoint }}
@@ -1198,7 +1202,9 @@ jobs:
             const output = `
             #### Lint & Testing results
             **Linting Results:** [${{ needs.deploy_storybook.outputs.url }}/eslint/index.html](${{ needs.deploy_storybook.outputs.url }}/eslint/index.html)
-            **Unit Test Coverage Report:** [${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html)
+            **Unit Test Coverage Reports:**
+            [${{ needs.deploy_storybook.outputs.url }}/fe-coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/fe-coverage/lcov-report/index.html)
+            [${{ needs.deploy_storybook.outputs.url }}/cmp-coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/cmp-coverage/lcov-report/index.html)
             **Unit Test Report:** [${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html)
             **API Test Results:** [${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html](${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html)
 
@@ -1397,7 +1403,8 @@ jobs:
                     }
                   },
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":hammer_and_wrench:   Workflow run for this deployment" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Workflow run", "emoji": true }, "value": "Link to this run instance", "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "action_id": "button-action" }},
-                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Jest Coverage report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Jest coverage report", "emoji": true }, "value": "Link to Jest coverage report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/coverage/lcov-report/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   FE Jest Coverage report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "FE Jest coverage report", "emoji": true }, "value": "Link to FE Jest coverage report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/fe-coverage/lcov-report/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
+                  { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Components Jest Coverage report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Components Jest coverage report", "emoji": true }, "value": "Link to Components Jest coverage report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/cmp-coverage/lcov-report/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   Jest test report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "Jest test report", "emoji": true }, "value": "Link to Jest test report", "url": '${{ needs.unit_test.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/jesttestreport/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": ":page_facing_up:   ESlint report" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "eslint report", "emoji": true }, "value": "Link to ESlint report", "url": '${{ needs.linting.result }}' === 'success' && '${{ needs.deploy_pr_terraform.result }}' === 'success' ? '${{ needs.deploy_storybook.outputs.url }}/eslint/index.html' : 'https://www.google.com/404.html', "action_id": "button-action" }},
                   {

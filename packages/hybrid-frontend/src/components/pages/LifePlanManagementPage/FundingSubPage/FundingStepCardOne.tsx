@@ -1,7 +1,5 @@
 import * as React from 'react';
-import StepCard from '../../../organisms/StepCard';
-import AccountsTable from '../../../organisms/AccountsTable';
-import { AccountsTableProps } from '../../../organisms/AccountsTable/AccountsTable';
+import { AccountsTable, AccountsTableProps, StepCard } from '@tsw/react-components';
 
 export interface FundingStepCardOneProps {
   accountsTableProps: AccountsTableProps;

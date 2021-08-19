@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { AppBar, Toolbar, Typography } from '../../atoms';
+import { AppBar, Toolbar, Typography } from '@tsw/react-components';
 
 export const StyledAppBar = styled(AppBar)`
   ${({ theme }) => `

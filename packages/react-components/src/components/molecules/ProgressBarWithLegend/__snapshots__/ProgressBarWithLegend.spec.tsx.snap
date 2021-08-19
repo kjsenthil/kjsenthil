@@ -1,0 +1,416 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrgoressBarWithLegend matches snapshot 1`] = `
+Object {
+  "result": Object {
+    "asFragment": [Function],
+    "baseElement": .c0 {
+  position: relative;
+  width: 100%;
+  height: 2.375rem;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.c2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 75%;
+  border-radius: 6px;
+  background: #a5f2ec;
+  -webkit-animation: jbfzvH 1s ease-out;
+  animation: jbfzvH 1s ease-out;
+  z-index: 1;
+}
+
+.c3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 70%;
+  border-radius: 6px;
+  background: linear-gradient(to left,#00e8d9,#00c4bd 50%);
+  -webkit-animation: jZJhoi 1s ease-out;
+  animation: jZJhoi 1s ease-out;
+  z-index: 1;
+}
+
+.c4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.375rem;
+  width: 20%;
+  border-radius: 6px;
+  background: #009492;
+  -webkit-animation: gDKouL 1s ease-out;
+  animation: gDKouL 1s ease-out;
+  z-index: 1;
+}
+
+.c1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  border: 2px dashed #ebb300;
+}
+
+.c8 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #6a6775;
+  white-space: nowrap;
+}
+
+.c10 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: bold;
+  color: #380c57;
+  white-space: nowrap;
+}
+
+.c5 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+}
+
+.c6 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 20%;
+  -webkit-animation: gDKouL 1s ease-out;
+  animation: gDKouL 1s ease-out;
+  z-index: 1;
+}
+
+.c11 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 50%;
+  -webkit-animation: bDhWlw 1s ease-out;
+  animation: bDhWlw 1s ease-out;
+  z-index: 1;
+}
+
+.c12 {
+  min-width: 110px;
+  max-width: 50%;
+  width: 5%;
+  -webkit-animation: dvwyrU 1s ease-out;
+  animation: dvwyrU 1s ease-out;
+  z-index: 1;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+<body>
+      <div>
+        <div
+          aria-valuenow="75"
+          class="c0"
+          role="progressbar"
+        >
+          <div
+            class="c1"
+          />
+          <div
+            class="c2"
+          />
+          <div
+            class="c3"
+          />
+          <div
+            class="c4"
+          />
+        </div>
+        <div
+          class="MuiBox-root MuiBox-root-1"
+          data-testid="Spacer"
+        />
+        <div
+          class="c5"
+        >
+          <div
+            class="c6"
+            width="20"
+          >
+            <div
+              class="c7"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root c8 MuiTypography-body1"
+                >
+                  LUMP SUM
+                </h6>
+                <div
+                  class="c9"
+                >
+                  <h6
+                    class="MuiTypography-root c10 MuiTypography-body1"
+                  >
+                    £20,000
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c11"
+            width="50"
+          >
+            <div
+              class="c7"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root c8 MuiTypography-body1"
+                >
+                  FROM AGE 67 - 89
+                </h6>
+                <div
+                  class="c9"
+                >
+                  <h6
+                    class="MuiTypography-root c10 MuiTypography-body1"
+                  >
+                    £1,080,000
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c12"
+            width="5"
+          >
+            <div
+              class="c7"
+            >
+              <div>
+                <h6
+                  class="MuiTypography-root c8 MuiTypography-body1"
+                >
+                  REMAINING
+                </h6>
+                <div
+                  class="c9"
+                >
+                  <h6
+                    class="MuiTypography-root c10 MuiTypography-body1"
+                  >
+                    £72,000
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>,
+    "container": <div>
+      <div
+        aria-valuenow="75"
+        class="sc-iCoGMd hiSefx"
+        role="progressbar"
+      >
+        <div
+          class="sc-pNWdM dERqcy"
+        />
+        <div
+          class="sc-fujyAs kMeqDE"
+        />
+        <div
+          class="sc-fujyAs daZvg"
+        />
+        <div
+          class="sc-fujyAs hmLVXY"
+        />
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-1"
+        data-testid="Spacer"
+      />
+      <div
+        class="sc-hHEiqL iFujOp"
+      >
+        <div
+          class="sc-dlMDgC OgPMv"
+          width="20"
+        >
+          <div
+            class="sc-kfYoZR xHplD"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+              >
+                LUMP SUM
+              </h6>
+              <div
+                class="sc-fKgJPI hUVRAB"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                >
+                  £20,000
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-dlMDgC bMaVKg"
+          width="50"
+        >
+          <div
+            class="sc-kfYoZR xHplD"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+              >
+                FROM AGE 67 - 89
+              </h6>
+              <div
+                class="sc-fKgJPI hUVRAB"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                >
+                  £1,080,000
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-dlMDgC hlCSgx"
+          width="5"
+        >
+          <div
+            class="sc-kfYoZR xHplD"
+          >
+            <div>
+              <h6
+                class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+              >
+                REMAINING
+              </h6>
+              <div
+                class="sc-fKgJPI hUVRAB"
+              >
+                <h6
+                  class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                >
+                  £72,000
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    "debug": [Function],
+    "findAllByAltText": [Function],
+    "findAllByDisplayValue": [Function],
+    "findAllByLabelText": [Function],
+    "findAllByPlaceholderText": [Function],
+    "findAllByRole": [Function],
+    "findAllByTestId": [Function],
+    "findAllByText": [Function],
+    "findAllByTitle": [Function],
+    "findByAltText": [Function],
+    "findByDisplayValue": [Function],
+    "findByLabelText": [Function],
+    "findByPlaceholderText": [Function],
+    "findByRole": [Function],
+    "findByTestId": [Function],
+    "findByText": [Function],
+    "findByTitle": [Function],
+    "getAllByAltText": [Function],
+    "getAllByDisplayValue": [Function],
+    "getAllByLabelText": [Function],
+    "getAllByPlaceholderText": [Function],
+    "getAllByRole": [Function],
+    "getAllByTestId": [Function],
+    "getAllByText": [Function],
+    "getAllByTitle": [Function],
+    "getByAltText": [Function],
+    "getByDisplayValue": [Function],
+    "getByLabelText": [Function],
+    "getByPlaceholderText": [Function],
+    "getByRole": [Function],
+    "getByTestId": [Function],
+    "getByText": [Function],
+    "getByTitle": [Function],
+    "queryAllByAltText": [Function],
+    "queryAllByDisplayValue": [Function],
+    "queryAllByLabelText": [Function],
+    "queryAllByPlaceholderText": [Function],
+    "queryAllByRole": [Function],
+    "queryAllByTestId": [Function],
+    "queryAllByText": [Function],
+    "queryAllByTitle": [Function],
+    "queryByAltText": [Function],
+    "queryByDisplayValue": [Function],
+    "queryByLabelText": [Function],
+    "queryByPlaceholderText": [Function],
+    "queryByRole": [Function],
+    "queryByTestId": [Function],
+    "queryByText": [Function],
+    "queryByTitle": [Function],
+    "rerender": [Function],
+    "unmount": [Function],
+  },
+}
+`;

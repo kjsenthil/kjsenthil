@@ -1,15 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from '@reach/router';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Card from '@material-ui/core/Card';
+import {
+  Box,
+  Card,
+  Icon,
+  ListItemText,
+  ListItem,
+  ButtonWithDropdown,
+  useBreakpoint,
+} from '@tsw/react-components';
 import { NavPaths } from '../../../config/paths';
-import { Box, Icon } from '../../atoms';
-import { BasicInfo, useBreakpoint } from '../../../hooks';
+import { BasicInfo } from '../../../hooks';
 import { RootState } from '../../../store';
 import { MyAccountLayout } from '..';
-import { ButtonWithDropdown } from '../../molecules';
 import {
   StyledHeader,
   StyledNav,

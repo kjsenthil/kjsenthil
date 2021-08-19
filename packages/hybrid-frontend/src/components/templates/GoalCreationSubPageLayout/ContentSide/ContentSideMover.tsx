@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { useBreakpoint } from '@tsw/react-components';
 import { ContentSideMoverContainer } from './ContentSide.styles';
-import { useBreakpoint } from '../../../../hooks';
 
 interface ContentSideMoverProps {
   offsetY: number;

@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { action } from '@storybook/addon-actions';
-import theme from '../src/themes/mui';
 import { configureStore } from '@reduxjs/toolkit';
+import theme from '../../react-components/src/themes/mui';
 import { mockClientResponse, mockInvestmentSummaryResponse } from '../src/services/myAccount/mocks';
 
 const mockStore = configureStore({

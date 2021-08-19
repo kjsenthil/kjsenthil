@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
+import { ProjectionsChartProjectionDatum } from '@tsw/react-components';
 import { RootState } from '../../store';
-import { ProjectionsChartProjectionDatum, ProjectionYear } from '../../services/projections';
+import { ProjectionYear } from '../../services/projections';
 
 export default function useSimulatedProjectionsData(): ProjectionsChartProjectionDatum[] {
   const { data } = useSelector((state: RootState) => state.simulatedProjections);

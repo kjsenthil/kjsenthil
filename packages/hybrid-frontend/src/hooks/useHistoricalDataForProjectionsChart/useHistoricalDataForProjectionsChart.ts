@@ -1,9 +1,11 @@
+import {
+  ProjectionsChartHistoricalDatum,
+  timeSeriesDateSorterDescending,
+} from '@tsw/react-components';
 import getMonthlyHistoricalData from './getMonthlyHistoricalData';
 import getAnnualHistoricalData from './getAnnualHistoricalData';
 import usePerformanceData from '../usePerformanceData';
 import useContributionsData from '../useContributionsData';
-import { ProjectionsChartHistoricalDatum } from '../../services/performance/types';
-import { timeSeriesDateSorterDescending } from '../../utils/chart/timeSeriesDateSorter';
 
 /**
  * This hook returns all historical data in a format appropriate for the

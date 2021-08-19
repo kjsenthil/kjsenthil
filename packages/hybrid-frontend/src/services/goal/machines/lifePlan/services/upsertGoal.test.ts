@@ -1,6 +1,6 @@
+import { RiskModel } from '@tsw/react-components';
 import upsertGoal from './upsertGoal';
 import context from '../context';
-import { RiskModel } from '../../../../types';
 
 const callback = jest.fn();
 

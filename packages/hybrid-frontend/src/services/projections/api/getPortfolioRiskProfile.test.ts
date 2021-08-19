@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { RiskModel, SedolCode } from '@tsw/react-components';
 import { API_ENDPOINTS } from '../../../config';
-import { RiskModel, SedolCode } from '../../types';
 import { PortfolioRiskProfile, RiskProfileData } from '../types';
 import getPortfolioRiskProfile from './getPortfolioRiskProfile';
 

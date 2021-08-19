@@ -2,7 +2,6 @@
   "extends": "@tsw/typescript-config/base.json",
   "compilerOptions": {},
   "include": [
-    "public",
     "src",
     "test-utils",
     "gatsby-config.ts",
@@ -10,7 +9,8 @@
     "gatsby-browser.tsx",
     "gatsby-ssr.tsx",
     "plugins",
-    "../../node_modules/jest-extended/types/**/*.d.ts"
+    "../../node_modules/jest-extended/types/**/*.d.ts",
+    "../react-components/**/*.d.ts"
   ],
   "exclude": ["node_modules", "public", ".cache"]
 }

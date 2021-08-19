@@ -1,7 +1,7 @@
+import { RiskModel } from '@tsw/react-components';
 import updateCurrentProjections from './updateCurrentProjections';
 import context from '../context';
 import guards from '../guards';
-import { RiskModel } from '../../../../types';
 import { CurrentProjectionsPrerequisitePayload } from '../../../../projections';
 
 jest.mock('../guards');

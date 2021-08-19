@@ -1,4 +1,5 @@
 import React from 'react';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import LifePlanPage from './LifePlanPage';
@@ -8,7 +9,6 @@ import {
 } from '../../../services/myAccount/mocks';
 import mockCurrentGoalsResponse from '../../../services/goal/mocks/get-goals-success-response.json';
 import mockGetPerformanceResponse from '../../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
-import { PerformanceDataPeriod } from '../../../services/performance';
 import * as hooks from '../../../hooks';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
@@ -16,9 +16,10 @@ jest.mock('../../templates/MyAccountLayout', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-jest.mock('../../organisms/PerformanceProjectionsChart/PerformanceProjectionsChart', () => ({
+jest.mock('@tsw/react-components', () => ({
+  ...jest.requireActual('@tsw/react-components'),
   __esModule: true,
-  default: () => <div>Projections Chart</div>,
+  PerformanceProjectionsChart: () => <div>Projections Chart</div>,
 }));
 
 jest.mock('../../../hooks', () => {

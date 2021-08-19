@@ -1,4 +1,4 @@
-import { InvestmentAccount } from '../../types';
+import { InvestmentAccount } from '@tsw/react-components';
 
 const calculateInvestableCash = (investmentAccounts: Array<InvestmentAccount>) =>
   investmentAccounts

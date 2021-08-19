@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Theme } from '../../../atoms';
+import { Theme } from '@tsw/react-components';
 
 // Need to have 'relative' positioning because its content moves around the page
 export const ContentSide = styled.div`

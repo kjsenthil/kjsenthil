@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { MainCard, Button, Typography } from '@tsw/react-components';
 import MyAccountLayout, { MyAccountLayoutProps } from './MyAccountLayout';
-import { Button, Typography } from '../../atoms';
-import { MainCard } from '../../molecules';
 
 export default {
   title: 'Digital Hybrid/Templates/Dashboard Layout',

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { PerformanceDataPeriod } from '../../services/performance';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import { RootState } from '../../store/index';
 
 export default function usePerformanceDataPeriod(): PerformanceDataPeriod {

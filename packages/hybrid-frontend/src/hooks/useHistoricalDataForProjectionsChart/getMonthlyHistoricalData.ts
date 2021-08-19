@@ -1,5 +1,7 @@
-import { ProjectionsChartHistoricalDatum } from '../../services/performance/types';
-import { timeSeriesDateSorterDescending } from '../../utils/chart/timeSeriesDateSorter';
+import {
+  ProjectionsChartHistoricalDatum,
+  timeSeriesDateSorterDescending,
+} from '@tsw/react-components';
 
 export interface GetMonthlyHistoricalDataConfig {
   // If true, will not sort the provided historical data array in descending

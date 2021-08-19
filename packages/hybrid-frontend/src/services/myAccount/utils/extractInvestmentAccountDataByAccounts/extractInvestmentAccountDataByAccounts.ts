@@ -1,6 +1,6 @@
+import { InvestmentAccountData } from '@tsw/react-components';
 import { ClientAccountItem, InvestmentSummary } from '../../types';
 import { getEquityAndCashAllocation, getMonthlySavingsAmount } from '../../api';
-import { InvestmentAccountData } from '../../../types';
 
 const extractInvestmentAccountDataByAccounts = async (
   investmentSummaryData: InvestmentSummary[],

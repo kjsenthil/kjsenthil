@@ -1,13 +1,10 @@
-import { InvestmentAccount } from '../..';
-import {
-  PerformanceDataPeriod,
-  NetContributionValueWithDate,
-  PerformanceValueWithDate,
-  filterAndMapPerformanceData,
-  filterAndMapContributionData,
-} from '../../../performance';
-import { PeriodReturn } from '../../types';
+import { InvestmentAccount, PerformanceDataPeriod, PeriodReturn } from '@tsw/react-components';
 import calculateInvestmentReturn from '../calculateInvestmentReturn';
+import { NetContributionValueWithDate, PerformanceValueWithDate } from '../../../performance';
+import {
+  filterAndMapContributionData,
+  filterAndMapPerformanceData,
+} from '../../../performance/utils';
 
 const calculateInvestmentReturnForAllPeriods = (
   performanceData: Array<PerformanceValueWithDate>,

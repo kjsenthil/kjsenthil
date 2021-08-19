@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, navigate, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import { Box, Button, Container, Grid, Typography } from '../../atoms';
+import { Box, Button, Container, Grid, Typography } from '@tsw/react-components';
 import { ChildImage } from '../../../types';
 
 const sideImagesQuery = graphql`
@@ -62,7 +62,7 @@ const OnBoardLayout = ({
                 {children}
               </Grid>
               <Grid item xs={12}>
-                <Grid container justify="space-between">
+                <Grid container justifyContent="space-between">
                   <Grid item xs={3}>
                     <Button variant="outlined" color="primary" onClick={() => navigate(-1)}>
                       Back

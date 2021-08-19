@@ -3,21 +3,23 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from '@reach/router';
 import {
   Box,
+  CurrencyPresentationVariant,
   Divider,
+  Footer,
+  HeaderMenu,
+  HeaderMenuProps,
   Icon,
   LinearProgress,
   Spacer,
   Typography,
+  formatCurrency,
   useMediaQuery,
   useTheme,
-} from '../../atoms';
-import { Footer, HeaderMenu } from '../../organisms';
-import { HeaderMenuProps } from '../../organisms/HeaderMenu';
+} from '@tsw/react-components';
 import { BasicInfo, useFeatureFlagToggle } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import { NavPaths } from '../../../config/paths';
-import { MYACCOUNTS_HOME_URL } from '../../../config';
+import { ACTIVE_ENV, MYACCOUNTS_HOME_URL } from '../../../config';
 import { FeatureFlagNames } from '../../../constants';
 import { setFeatureToggleFlag } from '../../../services/featureToggle';
 
@@ -58,7 +60,7 @@ const MyAccountLayout = ({
 }: MyAccountLayoutProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm' as any));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
   const currentUrl = useLocation().pathname;
 
@@ -78,6 +80,8 @@ const MyAccountLayout = ({
         )}
         currentUrl={currentUrl}
         expFeatureSwitch={expFeatureSwitch}
+        isNonProd={ACTIVE_ENV !== 'production'}
+        myAccountsUrl={MYACCOUNTS_HOME_URL}
         links={[
           {
             name: 'Investment',

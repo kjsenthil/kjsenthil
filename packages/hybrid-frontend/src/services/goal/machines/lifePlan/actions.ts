@@ -1,10 +1,6 @@
 import { assign, AssignAction } from 'xstate';
-import {
-  monthDifference,
-  calculateAgeToday,
-  calculateDateAfterYears,
-  yearDifference,
-} from '../../../../utils/date';
+import { monthDifference, yearDifference } from '@tsw/react-components';
+import { calculateAgeToday, calculateDateAfterYears } from '../../../../utils/date';
 import {
   LifePlanMachineContext,
   LifePlanMachineEvents,

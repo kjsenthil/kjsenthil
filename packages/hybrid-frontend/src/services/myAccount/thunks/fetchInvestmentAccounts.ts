@@ -1,11 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { InvestmentAccount } from '@tsw/react-components';
 import { getPerformanceAccountsAggregated } from '../../performance';
-import {
-  InvestmentAccount,
-  ClientState,
-  InvestmentSummary,
-  InvestmentSummaryState,
-} from '../types';
+import { ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
 import { extractClientAccounts } from '../utils';
 import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
 

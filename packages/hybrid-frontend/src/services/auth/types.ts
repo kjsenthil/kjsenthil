@@ -1,10 +1,6 @@
+import { LoginFormData, PinLoginItem } from '@tsw/react-components';
 import { GenericResponseData, GenericRequestPayload } from '../api/types';
 import { CommonState } from '../types';
-
-export interface PinLoginItem {
-  position: number;
-  value: number;
-}
 
 export type CredLoginResponse = GenericResponseData<{
   twoStepAuthCode: string;
@@ -45,11 +41,6 @@ export interface TokenItem {
   accessToken: string;
   refreshToken: string;
   sessionId: string;
-}
-
-export interface LoginFormData {
-  password: string;
-  username: string;
 }
 
 export interface AuthState extends Omit<CommonState, 'data' | 'error'> {

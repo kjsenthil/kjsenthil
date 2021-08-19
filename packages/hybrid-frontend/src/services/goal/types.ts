@@ -1,3 +1,4 @@
+import { ProjectionsChartGoalDatum } from '@tsw/react-components';
 import { CommonState } from '../types';
 import { RiskAppetites } from './constants';
 
@@ -199,16 +200,6 @@ export interface GoalCreationState extends CommonState {
   goalCapture: Partial<CaptureGoalData>;
   goalDetails: GoalDetails;
   error: string | undefined;
-}
-
-// This kind of data is used by the projections chart
-export interface ProjectionsChartGoalDatum {
-  date: Date;
-  label: string;
-  icon: string;
-
-  // If progress is undefined, the progress bar below the label won't be shown
-  progress?: number;
 }
 
 export interface GoalDatum extends ProjectionsChartGoalDatum {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useBreakpoint } from '../../../../hooks';
+import { useBreakpoint } from '@tsw/react-components';
 import { OverallLayoutContainer } from './OverallLayout.styles';
 
 interface OverallLayoutProps {

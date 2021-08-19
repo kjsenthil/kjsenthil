@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { RiskModel, SedolCode } from '../../types';
+import { RiskModel, SedolCode } from '@tsw/react-components';
 import { AllAssets } from '../types';
 
 export const mockAssets: AllAssets = {

@@ -1,14 +1,18 @@
 import * as React from 'react';
+import {
+  CurrencyPresentationVariant,
+  FormInput,
+  Spacer,
+  TypographyWithTooltip,
+  StepCard,
+  formatCurrency,
+} from '@tsw/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
   SubPageStepCardContentWithInputsAndSignContainer,
   SubPageStepCardInputContainer,
 } from '../CommonSubPage/CommonSubPage.styles';
-import { FormInput, TypographyWithTooltip } from '../../../molecules';
-import StepCard from '../../../organisms/StepCard';
 import EqualSign from '../CommonSubPage/EqualSign';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../../utils/formatters';
-import { Spacer } from '../../../atoms';
 
 export interface PlanningStepCardTwoProps {
   onFocus: () => void;

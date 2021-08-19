@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import List from '@material-ui/core/List';
-import { Grid } from '../../atoms';
-import { NavLink } from '../../molecules';
+import { Grid, NavLink } from '@tsw/react-components';
 
 export const StyledHeader = styled.div`
   ${({ theme }) => `

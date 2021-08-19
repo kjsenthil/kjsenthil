@@ -1,5 +1,5 @@
-import { PerformanceDataPeriod } from '../performance/constants';
-import { InvestmentAccountData, ClientAccountTypes, CommonState, SedolCode } from '../types';
+import { SedolCode, InvestmentAccount } from '@tsw/react-components';
+import { ClientAccountTypes, CommonState } from '../types';
 
 export interface BasicInvestmentSummary {
   totalInvested: number;
@@ -67,21 +67,6 @@ export interface NetContributionResponse {
     relationships?: null;
   };
   included?: null;
-}
-
-export interface InvestmentAccountReturnAndPercentage {
-  value: number;
-  percent: number;
-}
-
-export type PeriodReturn = {
-  [key in PerformanceDataPeriod]: InvestmentAccountReturnAndPercentage;
-};
-
-export interface InvestmentAccount extends InvestmentAccountData {
-  accountType: string;
-  accountTotalNetContribution: number;
-  periodReturn: PeriodReturn;
 }
 
 export interface InvestmentAccountsState extends CommonState<Array<InvestmentAccount>> {}

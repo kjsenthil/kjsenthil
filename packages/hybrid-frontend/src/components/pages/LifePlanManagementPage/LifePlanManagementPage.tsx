@@ -2,12 +2,19 @@ import * as React from 'react';
 import { navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from '@reach/router';
+import {
+  GoalPotTracker,
+  GoalTrackingWidget,
+  PerformanceProjectionsChart,
+  Spacer,
+  Grid,
+  useBreakpoint,
+} from '@tsw/react-components';
 import { RootState } from '../../../store';
 import { InputFieldsKeys } from '../../../services/goal/machines/lifePlan';
 import { GoalCategory, GoalDefaults } from '../../../services/goal';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import {
-  useBreakpoint,
   useLifePlanMachine,
   useProjectionsChartData,
   useDispatchThunkOnRender,
@@ -19,8 +26,6 @@ import { NavPaths } from '../../../config/paths';
 import PlanningSubPage from './PlanningSubPage/PlanningSubPage';
 import GoalCreationFundingSubPage from './FundingSubPage/GoalCreationFundingSubPage';
 import { GoalCreationLayout } from '../../templates';
-import { GoalPotTracker, GoalTrackingWidget, PerformanceProjectionsChart } from '../../organisms';
-import { Spacer, Grid } from '../../atoms';
 
 const goToLifePlanPage = () => navigate(NavPaths.LIFE_PLAN_PAGE);
 

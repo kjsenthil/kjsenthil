@@ -1,16 +1,31 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import { Box, Button, Grid, Icon, Spacer, Typography } from '../../atoms';
+import {
+  Box,
+  Button,
+  CurrencyPresentationVariant,
+  Grid,
+  Icon,
+  Spacer,
+  Typography,
+  axisBottomConfig,
+  SummaryPanel,
+  ChartPeriodSelection,
+  DisabledComponent,
+  MainCard,
+  formatCurrency,
+  PerformanceChart,
+  AccountsTableHeader,
+  AccountsTable,
+  usePerformanceChartDimension,
+  PerformanceDataPeriod,
+  humanizePeriodLabel,
+  getPossessiveSuffix,
+} from '@tsw/react-components';
 import { MyAccountLayout } from '../../templates';
-import SummaryPanel from '../../organisms/SummaryPanel';
-import PerformanceChart from '../../organisms/PerformanceChart';
-import { AccountsTableHeader } from '../../../constants';
-import AccountsTable from '../../organisms/AccountsTable';
-import { usePerformanceChartDimension } from '../../organisms/PerformanceChart/hooks';
 import {
   fetchPerformanceAccountsAggregated,
-  PerformanceDataPeriod,
   setPerformanceDataPeriod,
 } from '../../../services/performance';
 import {
@@ -22,12 +37,7 @@ import {
   usePerformanceDataPeriod,
 } from '../../../hooks';
 import { RootState } from '../../../store';
-import { axisBottomConfig } from '../../../config/chart';
-import { ChartPeriodSelection, DisabledComponent, MainCard } from '../../molecules';
 import { calculateInvestmentReturn } from '../../../services/myAccount';
-import humanizePeriodLabel from '../../../utils/chart/humanizePeriodLabel';
-import { getPossessiveSuffix } from '../../../utils/string';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 
 const BIAccountsPage = () => {
   const {
@@ -87,7 +97,7 @@ const BIAccountsPage = () => {
         secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
       }}
     >
-      <Grid item container xs={12} spacing={1} justify="flex-end">
+      <Grid item container xs={12} spacing={1} justifyContent="flex-end">
         <Grid item xs={12} sm={9}>
           <Typography variant="h2" color="primary" colorShade="dark2">
             Total Value:{' '}

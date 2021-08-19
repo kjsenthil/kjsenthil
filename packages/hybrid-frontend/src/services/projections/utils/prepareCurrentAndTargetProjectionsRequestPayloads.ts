@@ -1,9 +1,10 @@
+import { formatDate, monthDifference } from '@tsw/react-components';
 import {
   GoalCurrentProjectionsRequestPayload,
   GoalTargetProjectionsRequestPayload,
   FetchGoalCurrentProjectionsParams,
 } from '../types';
-import { calculateDateAfterYears, formatDate, monthDifference } from '../../../utils/date';
+import { calculateDateAfterYears } from '../../../utils/date';
 import { GoalDefaults } from '../../goal';
 
 /**

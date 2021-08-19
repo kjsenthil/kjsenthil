@@ -1,5 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthState, LoginFormData } from '../types';
+import { LoginFormData } from '@tsw/react-components';
+import { AuthState } from '../types';
 import { postLogin } from '../api';
 
 const credLogin = createAsyncThunk('auth/credLogin', async (loginFormValues: LoginFormData) => {

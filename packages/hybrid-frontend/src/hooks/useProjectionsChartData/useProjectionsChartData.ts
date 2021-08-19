@@ -1,17 +1,17 @@
+import {
+  ProjectionsChartHistoricalDatum,
+  ProjectionsChartMetadata,
+  ProjectionsChartProjectionDatum,
+  ProjectionsChartProjectionTargetDatum,
+} from '@tsw/react-components';
 import useProjectionsMetadataForProjectionsChart from '../useProjectionsMetadataForProjectionsChart';
 import useProjectionsTargetDataForProjectionsChart from '../useProjectionsTargetDataForProjectionsChart';
 import useCurrentProjectionsDataForProjectionsChart from '../useCurrentProjectionsDataForProjectionsChart';
-import { ProjectionsChartHistoricalDatum } from '../../services/performance';
 import useHistoricalDataForProjectionsChart from '../useHistoricalDataForProjectionsChart';
 import useGoalsDataForChart, {
   GoalOptionsForChart,
   GoalDataForChart,
 } from '../useGoalsDataForChart';
-import {
-  ProjectionsChartMetadata,
-  ProjectionsChartProjectionDatum,
-  ProjectionsChartProjectionTargetDatum,
-} from '../../services/projections';
 
 interface ProjectionsChartData {
   projectionsData: ProjectionsChartProjectionDatum[];

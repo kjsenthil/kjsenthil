@@ -1,8 +1,7 @@
 import * as React from 'react';
+import { FormInput, StepCard } from '@tsw/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import { SubPageStepCardContentWithInputsContainer } from '../CommonSubPage/CommonSubPage.styles';
-import { FormInput } from '../../../molecules';
-import StepCard from '../../../organisms/StepCard';
 
 export interface PlanningStepCardThreeProps {
   onFocus: () => void;
@@ -47,7 +46,7 @@ const PlanningStepCardThree = React.forwardRef(
           onChange={handleLumpSumAmountChange}
           onFocus={onFocus}
           error={displayError('lumpSum')}
-          value={lumpSumAmount || undefined}
+          value={String(lumpSumAmount) || ''}
           shouldDelayOnChange
         />
         <FormInput
@@ -59,7 +58,7 @@ const PlanningStepCardThree = React.forwardRef(
           onChange={handleLumpSumAgeChange}
           onFocus={onFocus}
           error={displayError('lumpSumAge')}
-          value={lumpSumAge || undefined}
+          value={String(lumpSumAge) || ''}
           shouldDelayOnChange
         />
       </SubPageStepCardContentWithInputsContainer>

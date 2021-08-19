@@ -1,4 +1,5 @@
-import { ProjectionsChartMetadata, TARGET_RETIREMENT_AGE } from '../../services/projections';
+import { ProjectionsChartMetadata } from '@tsw/react-components';
+import { TARGET_RETIREMENT_AGE } from '../../services/projections';
 import useBasicInfo from '../useBasicInfo';
 
 export default function useProjectionsMetadataForProjectionsChart(): ProjectionsChartMetadata {

@@ -3,11 +3,9 @@ import { Provider } from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
 import { configureStore } from '@reduxjs/toolkit';
 import MockDate from 'mockdate';
+import { ProjectionsChartProjectionTargetDatum } from '@tsw/react-components';
 import useProjectionsTargetDataForProjectionsChart from './useProjectionsTargetDataForProjectionsChart';
-import {
-  GoalTargetProjectionMonth,
-  ProjectionsChartProjectionTargetDatum,
-} from '../../services/projections/types';
+import { GoalTargetProjectionMonth } from '../../services/projections';
 
 describe('useProjectionsTargetDataForProjectionsChart', () => {
   beforeEach(() => {

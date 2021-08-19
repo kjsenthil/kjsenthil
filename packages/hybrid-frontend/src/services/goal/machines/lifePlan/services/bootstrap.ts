@@ -1,4 +1,4 @@
-import { yearDifference } from '../../../../../utils/date';
+import { yearDifference } from '@tsw/react-components';
 import { GoalsApiResponse } from '../../../types';
 import { PrepopulateContext, LifePlanMachineContext } from '../types';
 

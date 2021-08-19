@@ -1,8 +1,10 @@
 import * as React from 'react';
+import { useBreakpoint } from '@tsw/react-components';
 import { screen, renderWithTheme } from '@tsw/test-util';
 import GoalCreationSubPageLayout from './GoalCreationSubPageLayout';
-import { useBreakpoint, useStateIsAvailable } from '../../../hooks';
+import { useStateIsAvailable } from '../../../hooks';
 
+jest.mock('@tsw/react-components');
 jest.mock('../../../hooks');
 
 describe('GoalCreationSubPageLayout', () => {

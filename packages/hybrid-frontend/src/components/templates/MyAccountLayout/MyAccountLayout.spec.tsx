@@ -1,22 +1,20 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderWithProviders, screen } from '@tsw/test-util';
+import { CurrencyPresentationVariant, formatCurrency } from '@tsw/react-components';
 import { featureToggleSlice as featureToggleReducer } from '../../../services/featureToggle/reducers';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import MyAccountLayout from './MyAccountLayout';
 
-jest.mock('../../organisms', () => ({
+jest.mock('@tsw/react-components', () => ({
+  ...jest.requireActual('@tsw/react-components'),
+  __esModule: true,
+  LinearProgress: () => <div data-testid="linear-progress-bar" />,
   HeaderMenu: () => <div data-testid="header" />,
   Footer: () => <div data-testid="footer" />,
 }));
 
 jest.mock('@reach/router', () => ({
   useLocation: () => ({ pathname: '/' }),
-}));
-
-jest.mock('../../atoms/LinearProgress', () => ({
-  __esModule: true,
-  default: () => <div data-testid="linear-progress-bar" />,
 }));
 
 const basicInfo = {

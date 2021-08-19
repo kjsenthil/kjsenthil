@@ -1,6 +1,6 @@
+import { InvestmentAccountData } from '@tsw/react-components';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { InvestmentAccountData } from '../../types';
 import { PortfolioAssetAllocationResponse } from '../types';
 
 const getPortfolioAssetAllocation = async (

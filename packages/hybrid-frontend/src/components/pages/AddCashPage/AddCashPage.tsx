@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { AccountSummaryPanel } from '@tsw/react-components';
 import { RootState } from '../../../store';
 import { AccountDetailsLayout } from '../../templates';
 import { useBasicInfo } from '../../../hooks';
-import AccountSummaryPanel from '../../organisms/AccountSummaryPanel/AccountSummaryPanel';
 import useInvestmentSummary from '../../../hooks/useInvestmentSummary';
 
 const AddCashPage = () => {

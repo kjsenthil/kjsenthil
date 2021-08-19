@@ -1,15 +1,15 @@
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import performance from '../../../performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import calculateInvestmentReturnForAllPeriods from './calculateInvestmentReturnForAllPeriods';
 import calculateInvestmentReturn from '../calculateInvestmentReturn';
-import * as performnaceFuncs from '../../../performance';
+import { filterAndMapContributionData, filterAndMapPerformanceData } from '../../../performance';
 
-jest.mock('../../../performance', () => ({
+jest.mock('@tsw/react-components', () => ({
+  ...jest.requireActual('@tsw/react-components'),
   PerformanceDataPeriod: {
     '1W': '7d',
     '1M': '1m',
   },
-  filterAndMapContributionData: jest.fn(),
-  filterAndMapPerformanceData: jest.fn(),
 }));
 
 jest.mock('../calculateInvestmentReturn', () => ({
@@ -17,8 +17,13 @@ jest.mock('../calculateInvestmentReturn', () => ({
   default: jest.fn(),
 }));
 
-const mockFilterAndMapPerformanceData = performnaceFuncs.filterAndMapPerformanceData as jest.Mock;
-const mockFilterAndMapContributionData = performnaceFuncs.filterAndMapContributionData as jest.Mock;
+jest.mock('../../../performance/utils', () => ({
+  filterAndMapContributionData: jest.fn(),
+  filterAndMapPerformanceData: jest.fn(),
+}));
+
+const mockFilterAndMapPerformanceData = filterAndMapPerformanceData as jest.Mock;
+const mockFilterAndMapContributionData = filterAndMapContributionData as jest.Mock;
 
 const mockCalculateInvestmentReturn = calculateInvestmentReturn as jest.Mock;
 
@@ -43,7 +48,7 @@ const sortedContributionData2 = [
 ];
 
 describe('calculateInvestmentReturnForAllPeriods', () => {
-  it('returns an object with total preformance return for all periods', () => {
+  it('returns an object with total performance return for all periods', () => {
     const performanceData = performance.data.attributes.values;
     const contributionData = performance.included[0].attributes.netContributions;
 
@@ -74,7 +79,7 @@ describe('calculateInvestmentReturnForAllPeriods', () => {
     expect(mockFilterAndMapContributionData).toHaveBeenCalledTimes(2);
     expect(mockFilterAndMapPerformanceData).toHaveBeenCalledTimes(2);
 
-    Object.values(performnaceFuncs.PerformanceDataPeriod).forEach((period) => {
+    Object.values(PerformanceDataPeriod).forEach((period) => {
       expect(mockFilterAndMapPerformanceData).toHaveBeenCalledWith(performanceData, period);
       expect(mockFilterAndMapContributionData).toHaveBeenCalledWith(contributionData, period);
     });

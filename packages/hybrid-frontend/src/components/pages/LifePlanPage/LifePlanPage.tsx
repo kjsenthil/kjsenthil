@@ -3,15 +3,21 @@ import Img from 'gatsby-image';
 import { navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import { Link, Spacer, Typography } from '../../atoms';
-import { MyAccountLayout } from '../../templates';
 import {
+  DisabledComponent,
+  Link,
+  Spacer,
+  Typography,
+  ProjectionCalculateModal,
+  PerformanceProjectionsChart,
   GoalMainCardPlaceholder,
   GoalProgressCard,
   GoalSetUpNewCard,
-  PerformanceProjectionsChart,
-  ProjectionCalculateModal,
-} from '../../organisms';
+  MainCard,
+  Modal,
+  usePerformanceProjectionsChartDimension,
+} from '@tsw/react-components';
+import { MyAccountLayout } from '../../templates';
 import {
   useBasicInfo,
   useDispatchThunkOnRender,
@@ -22,7 +28,6 @@ import {
   useUpdateCurrentProjectionsPrerequisites,
 } from '../../../hooks';
 import { Disclaimer, YourImportantMomentsContainer } from './LifePlanPage.styles';
-import { DisabledComponent, MainCard, Modal } from '../../molecules';
 import { RootState, useAppDispatch } from '../../../store';
 import useAllAssets from '../../../services/assets/hooks/useAllAssets';
 import {
@@ -32,7 +37,6 @@ import {
   GoalDefaults,
   GoalType,
 } from '../../../services/goal';
-import usePerformanceProjectionsChartDimension from '../../organisms/PerformanceProjectionsChart/hooks/usePerformanceProjectionsChartDimension';
 import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
@@ -230,7 +234,7 @@ const LifePlanPage = () => {
             <Typography display="inline" variant="b3" color="grey" colorShade="dark1">
               Such forecasts are not a reliable indicator of future performance
             </Typography>
-            <Link special component="button" onClick={linkClickHandler}>
+            <Link special onClick={linkClickHandler}>
               Tell me more
             </Link>
           </Disclaimer>

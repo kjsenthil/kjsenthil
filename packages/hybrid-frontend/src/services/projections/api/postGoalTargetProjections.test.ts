@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { RiskModel } from '@tsw/react-components';
 import { API_ENDPOINTS } from '../../../config';
 import { GoalTargetProjectionsRequestPayload, GoalTargetProjectionsResponse } from '../types';
-import { RiskModel } from '../../types';
 import postGoalTargetProjections from './postGoalTargetProjections';
 
 const mockAxios = new MockAdapter(axios);

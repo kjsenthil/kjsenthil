@@ -27,7 +27,11 @@ const LogoutPage = (_: LogoutPageProps) => {
     dispatch(logout());
   }, []);
 
-  return <LayoutContainer maxWidth={false} disableGutters />;
+  return (
+    <LayoutContainer maxWidth={false} disableGutters>
+      <span>Logging out</span>
+    </LayoutContainer>
+  );
 };
 
 export default LogoutPage;

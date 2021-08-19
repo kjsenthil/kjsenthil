@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { ContributionDatum } from '../../components/organisms/PerformanceChart/performanceData';
+import { ContributionDatum, mapContributionsData } from '@tsw/react-components';
 import { RootState } from '../../store';
-import { mapContributionsData, filterAndMapContributionData } from '../../services/performance';
+import { filterAndMapContributionData } from '../../services/performance/utils';
 
 export interface UseContributionsDataProps {
   // If true, will ignore performance data period (will always return the full

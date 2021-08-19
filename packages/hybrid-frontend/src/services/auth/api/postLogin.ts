@@ -1,6 +1,7 @@
+import { LoginFormData } from '@tsw/react-components';
 import api from '../../api';
 import { API_ENDPOINTS, MY_ACCOUNTS_API_CLIENT_ID } from '../../../config';
-import { CredLoginRequest, CredLoginResponse, LoginFormData } from '../types';
+import { CredLoginRequest, CredLoginResponse } from '../types';
 
 const postLogin = async ({ username, password }: LoginFormData) => {
   const payload: CredLoginRequest = {

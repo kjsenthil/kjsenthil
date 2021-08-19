@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { mapContributionsData, mapPerformanceData } from '@tsw/react-components';
 import useHistoricalDataForProjectionsChart from './useHistoricalDataForProjectionsChart';
 import usePerformanceData from '../usePerformanceData';
-import useContributionsData from '../useContributionsData';
 
+import useContributionsData from '../useContributionsData';
 import mockGetPerformanceContactResponse from '../../services/performance/mocks/mock-get-performance-contact-success-response.json';
 import mockHistoricalDataMonthly from '../../services/performance/mocks/mock-historical-data-monthly.json';
-import { mapContributionsData, mapPerformanceData } from '../../services/performance/utils';
 
 jest.mock('../usePerformanceData');
 jest.mock('../useContributionsData');

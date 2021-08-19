@@ -1,11 +1,11 @@
 import { ReducersMapObject } from 'redux';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import * as api from '../api';
 import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
 import performanceReducer, {
   fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
 } from './performanceSlice';
-import { PerformanceDataPeriod } from '../constants';
 import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
 import mockPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import { AuthState } from '../../auth';

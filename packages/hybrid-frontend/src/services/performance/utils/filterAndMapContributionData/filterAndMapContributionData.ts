@@ -1,6 +1,5 @@
-import findDateByPeriod from '../../../../utils/date/findDateByPeriod';
+import { findDateByPeriod, mapContributionsData } from '@tsw/react-components';
 import { IncludedNetContributions } from '../../types';
-import mapContributionsData from '../mapContributionsData';
 
 const filterAndMapContributionData = (
   contributionData: IncludedNetContributions['attributes']['netContributions'],

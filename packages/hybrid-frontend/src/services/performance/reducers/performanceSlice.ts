@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
 import { fetchPerformanceAccountsAggregated } from '../thunks';
-import { PerformanceDataPeriod } from '../constants';
 import { commonActionReducerMapBuilder } from '../../utils';
 
 const initialState: PerformanceState = {

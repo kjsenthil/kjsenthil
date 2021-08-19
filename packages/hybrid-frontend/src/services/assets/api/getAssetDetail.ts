@@ -1,6 +1,6 @@
+import { AssetData } from '@tsw/react-components';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { AssetData } from '../types';
 
 const getAssetDetail = async (sedol: string): Promise<AssetData | undefined> => {
   // the endpoint URL will include a {sedol} placeholder for the SEDOL

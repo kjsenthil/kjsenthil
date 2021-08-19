@@ -1,4 +1,4 @@
-import { monthDifference } from '../../../utils/date';
+import { monthDifference } from '@tsw/react-components';
 import { CaptureGoalData } from '../types';
 
 // Needs unit tests

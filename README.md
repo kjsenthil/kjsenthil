@@ -30,10 +30,21 @@ Copy the `.env.example` file as `.env.development` in the hybrid-frontend, and e
     cp ./packages/hybrid-frontend/.env.example ./packages/hybrid-frontend/.env.development
 
 ---
+## Packages  / Modules
+To allow co-locating all of our code together, we are employing a mono-repo approach via [Yarn 2 workspaces](https://yarnpkg.com/features/workspaces). This allows us to configure each code base individually but retain a central location for running builds/packages and housing shared dependencies.
+
+To this end, there are numerous modules in this repository which all serve different purposes in the project. Below is a summary of each of the modules in this repository:
+1. **Function Apps** - Contains all source code, compilation and deployment for the [Azure Function Apps](https://docs.microsoft.com/en-gb/azure/azure-functions/functions-reference) that Digital Hybrid use. These are generally custom API backend which we use to support the running of the new Bestinvest website
+1. **React Components** - The module contains all the base react components that are used across the new Bestinvest website. In general, each of the components is unaware of the state of the website of the data which it is displaying, allowing the specialisation of these by consumers of the module. This module is shared with downstream teams to ensure a consistent look and feel across TSW websites
+1. **Hybrid Frontend** - In conjunction with react components, this module contains the composition of react components into the templates and pages that appear in the new Bestinvest website. Also housed in this module is the functional logic that populates the website, and the components which appear within it
+1. **Shared Config** - Houses some base configuration for `eslint` and `typescript` that are used by all other modules in the mono-repo
+1. **Testing** - Folder which contains the modules for automation tests such as API and UI tests
+1. **Utils** - Folder containing some shared utilities for other modules such as telemetry, tracking and unit test helpers.
+
+---
 
 ## Development
-
-To allow co-locating all of our code together, we are employing a mono-repo approach via [Yarn 2 workspaces](https://yarnpkg.com/features/workspaces). This allows us to configure each code base individually but retain a central location for running builds/packages and housing shared dependencies.
+As above, [Yarn workspaces](https://yarnpkg.com/features/workspaces) is employed in our repository. Below are some useful commands and details that you will find useful when developing with the Digital Hybrid mono-repo 
 
 :warning: All `yarn` commands should be run at the root of the repository
 
@@ -51,6 +62,9 @@ To save your fingers, shortcuts have been provided for all currently available w
 1. Front-end
    1. `yarn frontend <script-name>`
    1. `yarn fe <script-name>`
+1. Components
+   1. `yarn components <script-name>`
+   1. `yarn cmp <script-name>`
 
 Equally, you can run a command for all workspaces with the following syntax:
 

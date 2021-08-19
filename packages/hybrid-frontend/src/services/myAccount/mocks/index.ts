@@ -1,4 +1,10 @@
-import { InvestmentAccountData, ClientAccountTypes } from '../../types';
+import {
+  InvestmentAccount,
+  InvestmentAccountData,
+  PerformanceDataPeriod,
+  PeriodReturn,
+} from '@tsw/react-components';
+import { ClientAccountTypes } from '../../types';
 import {
   BreakdownAllocationResponse,
   ClientResponse,
@@ -6,11 +12,8 @@ import {
   InvestmentSummaryResponse,
   MonthlySavingsResponse,
   ClientAccountItem,
-  InvestmentAccount,
   BasicInvestmentSummary,
-  PeriodReturn,
 } from '../types';
-import { PerformanceDataPeriod } from '../../performance';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
   totalCash: 183322.11000000002,

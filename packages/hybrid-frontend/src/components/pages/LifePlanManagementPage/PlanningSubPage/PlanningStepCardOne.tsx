@@ -1,13 +1,11 @@
 import * as React from 'react';
 import pluralize from 'pluralize';
+import { FormInput, StepCard, Typography } from '@tsw/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
   SubPageStepCardContentWithInputsContainer,
   SubPageStepCardInputContainer,
 } from '../CommonSubPage/CommonSubPage.styles';
-import { FormInput } from '../../../molecules';
-import StepCard from '../../../organisms/StepCard';
-import { Typography } from '../../../atoms';
 
 export interface PlanningStepCardOneProps {
   onFocus: () => void;
@@ -66,7 +64,7 @@ const PlanningStepCardOne = React.forwardRef(
               onChange={handleFromAgeChange}
               onFocus={onFocus}
               error={displayError('drawdownStartAge')}
-              value={drawdownStartAge || undefined}
+              value={String(drawdownStartAge) || ''}
               shouldDelayOnChange
             />
             <Typography variant="b3" color="primary" colorShade="dark2">
@@ -84,7 +82,7 @@ const PlanningStepCardOne = React.forwardRef(
               onChange={handleToAgeChange}
               onFocus={onFocus}
               error={displayError('drawdownEndAge')}
-              value={drawdownEndAge || undefined}
+              value={String(drawdownEndAge) || ''}
               shouldDelayOnChange
             />
             <Typography variant="b3" color="primary" colorShade="dark2">

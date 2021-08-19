@@ -1,6 +1,5 @@
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import { CommonState } from '../types';
-import { TimeSeriesDatum } from '../../utils/data';
-import { PerformanceDataPeriod } from './constants';
 
 export interface GetPerformanceContactResponse {
   // All numbers have 2 decimal places
@@ -51,11 +50,6 @@ export interface PerformanceState
     PerformanceAccountsAggregatedResponse['included']
   > {
   performanceDataPeriod: PerformanceDataPeriod;
-}
-
-export interface ProjectionsChartHistoricalDatum extends TimeSeriesDatum {
-  netContributionsToDate: number;
-  metadata?: Record<string, unknown>;
 }
 
 export type NetContributionValueWithDate = { date: string; netContributionsToDate: number };

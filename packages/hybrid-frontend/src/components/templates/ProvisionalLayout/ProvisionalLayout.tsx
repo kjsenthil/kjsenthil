@@ -3,11 +3,10 @@ import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import theme from '../../../themes/mui';
-import { Container } from '../../atoms';
+import { Container, digitalHybridTheme } from '@tsw/react-components';
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactChild;
 }
 
 const ProvisionalLayout = ({ children }: LayoutProps) => (
@@ -15,8 +14,8 @@ const ProvisionalLayout = ({ children }: LayoutProps) => (
   // MUI classes must be injested in <head> first, then styled-components
   // https://material-ui.com/guides/interoperability/#styled-components
   <StylesProvider>
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={digitalHybridTheme}>
+      <ThemeProvider theme={digitalHybridTheme}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters>
           {children}

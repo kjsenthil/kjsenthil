@@ -2,10 +2,16 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
-import { Grid, Button, Icon } from '../../atoms';
-import { LoginForm } from '../../organisms';
-import PinLogin from '../../organisms/PinLogin';
-import { LoginFormData, PinLoginItem, credLogin, pinLogin } from '../../../services/auth';
+import {
+  Grid,
+  Button,
+  Icon,
+  LoginForm,
+  LoginFormData,
+  PinLoginItem,
+  PinLogin,
+} from '@tsw/react-components';
+import { credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
 import { NavPaths } from '../../../config/paths';
@@ -51,7 +57,7 @@ const LoginPage = (_: LoginPageProps) => {
 
   return !hasAccessTokens ? (
     <LayoutContainer maxWidth={false} disableGutters>
-      <LoginGrid container justify="center" alignItems="center" spacing={7}>
+      <LoginGrid container justifyContent="center" alignItems="center" spacing={7}>
         <Grid item xs={12}>
           <LoginForm
             onSubmit={onLoginFormSubmit}
@@ -74,7 +80,7 @@ const LoginPage = (_: LoginPageProps) => {
         )}
 
         <Grid item>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Button
               color="primary"
               startIcon={<Icon name="arrowHeadLeft" fontSize="large" />}

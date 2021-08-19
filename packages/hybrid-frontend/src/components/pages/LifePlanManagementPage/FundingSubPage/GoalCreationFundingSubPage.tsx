@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { navigate, RouteComponentProps, useLocation } from '@reach/router';
+import {
+  CurrencyPresentationVariant,
+  GoalInputCard,
+  PerformanceDataPeriod,
+  Spacer,
+  formatCurrency,
+} from '@tsw/react-components';
 import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 import FundingStepCardOne from './FundingStepCardOne';
 import FundingStepCardTwo from './FundingStepCardTwo';
-import { PerformanceDataPeriod } from '../../../../services/performance';
-import { formatCurrency, CurrencyPresentationVariant } from '../../../../utils/formatters';
 import { RootState } from '../../../../store';
-import { Spacer } from '../../../atoms';
-import { GoalInputCard } from '../../../organisms';
 import { GoalInput } from './GoalCreationFundingSubPage.styles';
 
 interface GoalCreationFundingSubPageProps extends RouteComponentProps {

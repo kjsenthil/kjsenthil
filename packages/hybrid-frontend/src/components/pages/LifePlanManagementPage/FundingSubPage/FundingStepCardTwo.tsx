@@ -1,8 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { FormControlLabel, Radio, Theme } from '../../../atoms';
-import { RadioGroup, TypographyWithTooltip } from '../../../molecules';
-import StepCard from '../../../organisms/StepCard';
+import {
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  StepCard,
+  TypographyWithTooltip,
+  Theme,
+} from '@tsw/react-components';
 
 export interface FundingStepCardOneProps {
   shouldIncludeStatePension: boolean;

@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { useBreakpoint } from '@tsw/react-components';
 import { DividerContainer, DividerLine, DividerTriangle } from './ContentDivider.styles';
-import { useBreakpoint } from '../../../../hooks';
 
 interface ContentDividerProps {
   offsetY: number;

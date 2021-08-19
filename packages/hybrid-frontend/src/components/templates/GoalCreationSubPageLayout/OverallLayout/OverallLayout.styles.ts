@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Theme } from '../../../atoms';
+import { Theme } from '@tsw/react-components';
 
 interface OverallLayoutStyledProps {
   theme: Theme;

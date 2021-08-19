@@ -1,6 +1,5 @@
 import { group as d3Group, maxIndex as d3MaxIndex } from 'd3-array';
-import { ProjectionsChartHistoricalDatum } from '../../services/performance/types';
-import { timeSeriesDateAccessor } from '../../utils/chart/accessors';
+import { ProjectionsChartHistoricalDatum, timeSeriesDateAccessor } from '@tsw/react-components';
 
 /**
  * For each year of performance / contributions data, return the latest

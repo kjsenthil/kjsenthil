@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
+import { ProjectionsChartProjectionTargetDatum } from '@tsw/react-components';
 import { RootState } from '../../store';
-import { ProjectionsChartProjectionTargetDatum } from '../../services/projections/types';
 import { calculateDateAfterMonths } from '../../utils/date';
 
 export default function useProjectionsTargetDataForProjectionsChart(): ProjectionsChartProjectionTargetDatum[] {

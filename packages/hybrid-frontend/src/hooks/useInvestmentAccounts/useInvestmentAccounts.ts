@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { InvestmentAccount } from '@tsw/react-components';
 import { RootState } from '../../store';
 import {
   BasicInvestmentSummary,
-  InvestmentAccount,
   calculateBasicInvestmentSummary,
   fetchInvestmentAccounts,
   fetchClient,

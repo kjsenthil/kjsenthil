@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { InvestmentAccountData } from '@tsw/react-components';
 
 import {
   extractClientAccounts,
@@ -15,7 +16,6 @@ import {
 } from '../../services/projections';
 import useAllAssets from '../../services/assets/hooks/useAllAssets';
 import { RootState } from '../../store';
-import { InvestmentAccountData } from '../../services/types';
 
 const useUpdateCurrentProjectionsPrerequisites = (): Partial<CurrentProjectionsPrerequisitePayload> => {
   const { client, investmentSummary, investmentAccounts } = useSelector(
