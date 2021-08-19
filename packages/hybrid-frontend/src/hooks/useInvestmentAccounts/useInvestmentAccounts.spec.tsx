@@ -2,6 +2,7 @@ import * as React from 'react';
 import { renderHook, ResultContainer } from '@testing-library/react-hooks';
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import useInvestmentAccounts, { InvestmentAccountsProps } from './useInvestmentAccounts';
 import {
   mockInvestmentAccounts,
@@ -9,12 +10,19 @@ import {
   mockClientResponse,
   mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
+import mockGetPerformanceResponse from '../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import mockAuthSuccessState from '../../services/auth/mocks/mock-auth-success-state.json';
 
 const getRenderedHook = (store: Store) => {
   const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
   return renderHook(() => useInvestmentAccounts(), { wrapper });
+};
+
+const mockPerformanceData = {
+  ...mockGetPerformanceResponse,
+  PerformanceDataPeriod: PerformanceDataPeriod['5Y'],
+  error: undefined,
 };
 
 describe('useInvestmentAccounts', () => {
@@ -31,6 +39,9 @@ describe('useInvestmentAccounts', () => {
           investmentSummary: () => ({
             data: undefined,
           }),
+          performance: () => ({
+            data: undefined,
+          }),
           investmentAccounts: () => ({}),
         },
       });
@@ -40,7 +51,6 @@ describe('useInvestmentAccounts', () => {
       expect(renderedHook.result.current).toStrictEqual({
         investmentAccounts: undefined,
         accountsSummary: {
-          totalCash: 0,
           totalGainLoss: 0,
           totalGainLossPercentage: 0,
           totalInvested: 0,
@@ -58,6 +68,10 @@ describe('useInvestmentAccounts', () => {
           }),
           client: () => mockClientResponse,
           investmentSummary: () => mockInvestmentSummaryResponse,
+          performance: () => ({
+            status: 'success',
+            ...mockPerformanceData,
+          }),
           investmentAccounts: () => ({
             data: mockInvestmentAccounts,
           }),

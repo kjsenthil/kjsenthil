@@ -16,10 +16,9 @@ import {
 } from '../types';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
-  totalCash: 183322.11000000002,
-  totalGainLoss: 122249.170119,
-  totalGainLossPercentage: 55.04,
-  totalInvested: 635376.130119,
+  totalGainLoss: 4582.13,
+  totalGainLossPercentage: 93.56,
+  totalInvested: 9489.37,
 };
 
 const periodReturn: PeriodReturn = {

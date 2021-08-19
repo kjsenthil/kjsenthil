@@ -3,7 +3,6 @@ import { ClientAccountTypes, CommonState } from '../types';
 
 export interface BasicInvestmentSummary {
   totalInvested: number;
-  totalCash: number;
   totalGainLoss: number;
   totalGainLossPercentage: number;
 }

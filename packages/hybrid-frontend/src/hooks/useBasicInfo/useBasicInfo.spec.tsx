@@ -2,12 +2,14 @@ import * as React from 'react';
 import { renderHook, ResultContainer } from '@testing-library/react-hooks';
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { PerformanceDataPeriod } from '@tsw/react-components';
 import useBasicInfo, { BasicInfo } from './useBasicInfo';
 import {
   mockInvestmentAccounts,
   mockClientResponse,
   mockInvestmentSummaryResponse,
 } from '../../services/myAccount/mocks';
+import mockGetPerformanceResponse from '../../services/performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import mockAuthSuccessState from '../../services/auth/mocks/mock-auth-success-state.json';
 
 jest.mock('../../services/myAccount/api', () => ({
@@ -19,6 +21,12 @@ const getRenderedHook = (store: Store) => {
   const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
   return renderHook(() => useBasicInfo(), { wrapper });
+};
+
+const mockPerformanceData = {
+  ...mockGetPerformanceResponse,
+  PerformanceDataPeriod: PerformanceDataPeriod['5Y'],
+  error: undefined,
 };
 
 describe('useBasicInfo', () => {
@@ -33,6 +41,9 @@ describe('useBasicInfo', () => {
             data: undefined,
           }),
           investmentSummary: () => ({
+            data: undefined,
+          }),
+          performance: () => ({
             data: undefined,
           }),
           investmentAccounts: () => ({
@@ -63,8 +74,8 @@ describe('useBasicInfo', () => {
         lastName: mockClientResponse.data.attributes.lastName,
         dateOfBirth: new Date(mockClientResponse.data.attributes.dateOfBirth),
         clientAge: 48,
-        totalInvested: 635376.130119,
-        totalGainLoss: 122249.170119,
+        totalInvested: 9489.37,
+        totalGainLoss: 4582.13,
         totalInvestableCash: 139778.85,
         isLoading: false,
       };
@@ -78,6 +89,10 @@ describe('useBasicInfo', () => {
           investmentSummary: () => mockInvestmentSummaryResponse,
           investmentAccounts: () => ({
             data: mockInvestmentAccounts,
+          }),
+          performance: () => ({
+            status: 'success',
+            ...mockPerformanceData,
           }),
         },
       });

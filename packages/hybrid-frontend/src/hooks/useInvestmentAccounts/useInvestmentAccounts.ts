@@ -4,13 +4,12 @@ import { InvestmentAccount } from '@tsw/react-components';
 import { RootState } from '../../store';
 import {
   BasicInvestmentSummary,
-  calculateBasicInvestmentSummary,
   fetchInvestmentAccounts,
   fetchClient,
-  fetchInvestmentSummary,
 } from '../../services/myAccount';
 import useStateIsLoading from '../useStateIsLoading';
 import useStateIsAvailable from '../useStateIsAvailable';
+import { fetchPerformanceAccountsAggregated } from '../../services/performance';
 
 export interface InvestmentAccountsProps {
   accountsSummary: BasicInvestmentSummary;
@@ -20,15 +19,15 @@ export interface InvestmentAccountsProps {
 const useInvestmentAccounts = (
   { shouldDispatch }: { shouldDispatch: boolean } = { shouldDispatch: true }
 ): InvestmentAccountsProps => {
-  const { contactId, investmentSummary, investmentAccounts } = useSelector((state: RootState) => ({
+  const { contactId, investmentAccounts, performance } = useSelector((state: RootState) => ({
     contactId: state.auth.contactId,
-    investmentSummary: state.investmentSummary.data,
     investmentAccounts: state.investmentAccounts.data,
+    performance: state.performance.data?.attributes,
   }));
 
-  const isInvestmentSummaryLoading = useStateIsLoading('investmentSummary');
+  const isPerformanceLoading = useStateIsLoading('performance');
+  const isPerformanceAvailable = useStateIsAvailable('performance');
   const isClientAvailable = useStateIsAvailable('client');
-  const isInvestmentSummaryAvailable = useStateIsAvailable('investmentSummary');
   const areAccountsAvailable = useStateIsAvailable('investmentAccounts');
   const areAccountsLoading = useStateIsLoading('investmentAccounts');
 
@@ -41,29 +40,28 @@ const useInvestmentAccounts = (
   }, [shouldDispatch, isClientAvailable, contactId]);
 
   useEffect(() => {
-    if (
-      shouldDispatch &&
-      isClientAvailable &&
-      !isInvestmentSummaryAvailable &&
-      !isInvestmentSummaryLoading
-    ) {
-      dispatch(fetchInvestmentSummary());
+    if (shouldDispatch && isClientAvailable && !isPerformanceAvailable && !isPerformanceLoading) {
+      dispatch(fetchPerformanceAccountsAggregated());
     }
-  }, [isClientAvailable, isInvestmentSummaryAvailable, isInvestmentSummaryLoading]);
+  }, [isClientAvailable, isPerformanceAvailable, isPerformanceLoading]);
 
   useEffect(() => {
     if (
       shouldDispatch &&
       isClientAvailable &&
-      isInvestmentSummaryAvailable &&
+      isPerformanceAvailable &&
       !areAccountsAvailable &&
       !areAccountsLoading
     ) {
       dispatch(fetchInvestmentAccounts());
     }
-  }, [isClientAvailable, isInvestmentSummaryAvailable, areAccountsLoading]);
+  }, [isClientAvailable, isPerformanceAvailable, areAccountsLoading]);
 
-  const accountsSummary = calculateBasicInvestmentSummary(investmentSummary || []);
+  const accountsSummary = {
+    totalInvested: performance?.accountValue || 0,
+    totalGainLoss: performance?.performance.value || 0,
+    totalGainLossPercentage: performance?.performance.percentage || 0,
+  };
 
   return {
     accountsSummary,
