@@ -9,25 +9,25 @@ interface RequestPayload {
   drawdownType?: DrawdownType,
   drawdownOneOff?: {
     targetAmount: number,
-    targetDate: Date	
+    targetDate: string	
   },
   drawdownMonthly?: {
     amount: number,
-	  startDate: Date,
-	  endDate: Date
+	  startDate: string,
+	  endDate: string
   },
   drawdownAnnually?: {
     amount: number,
-	  startDate: Date,
-	  endDate: Date
+	  startDate: string,
+	  endDate: string
   },
   drawdownRetirement?: {
     regularDrawdown: number,
-	  startDate: Date,
-	  endDate: Date,
+	  startDate: string,
+	  endDate: string,
 	  lumpSum?: {
       amount?: number,
-	    date?: Date,
+	    date?: string,
     },
     remainingAmount?: number,
 	  statePensionAmount?: number,

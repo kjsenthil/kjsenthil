@@ -18,7 +18,7 @@ describe("Calculate on track percentage", () => {
       validDateRequestPayload.drawdownType = DrawdownType.OneOff;
       validDateRequestPayload.drawdownOneOff = {
         targetAmount : 500000,
-        targetDate : new Date(currentDate.setMonth(currentDate.getMonth()+344))
+        targetDate : new Date(currentDate.setMonth(currentDate.getMonth()+344)).toISOString().slice(0, 10)
       }
       const result = calculateOnTrackPercentage(validDateRequestPayload, new Date());
       expect(result).toBe(227.66602562264245);

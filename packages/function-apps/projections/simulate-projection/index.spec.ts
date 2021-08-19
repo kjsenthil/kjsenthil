@@ -123,7 +123,7 @@ describe("tests for validate function", () => {
     targetDate.setDate(targetDate.getDate() +1);
     invalidDateRequestPayload.drawdownOneOff = {
       targetAmount : -10,
-      targetDate: targetDate
+      targetDate: targetDate.toISOString().slice(0, 10)
     }
 
     expect(
@@ -177,7 +177,7 @@ describe("tests for validate function", () => {
     targetDate.setDate(targetDate.getDate() -1);
     invalidDateRequestPayload.drawdownOneOff = {
       targetAmount : 100,
-      targetDate: targetDate
+      targetDate: targetDate.toISOString().slice(0, 10)
     }
 
     expect(
@@ -243,8 +243,8 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Monthly;
     invalidDateRequestPayload.drawdownMonthly = {
       amount: -15,
-      endDate: new Date(),
-      startDate: new Date()
+      endDate: new Date().toISOString().slice(0, 10),
+      startDate: new Date().toISOString().slice(0, 10),
     }
 
     expect(
@@ -278,8 +278,8 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Monthly;
     invalidDateRequestPayload.drawdownMonthly = {
       amount: 1505,
-      endDate: endDate,
-      startDate: startDate
+      endDate: endDate.toISOString().slice(0, 10),
+      startDate: startDate.toISOString().slice(0, 10),
     }
 
     expect(
@@ -345,8 +345,8 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Annual;
     invalidDateRequestPayload.drawdownAnnually = {
       amount: -15,
-      endDate: new Date(),
-      startDate: new Date()
+      endDate: new Date().toISOString().slice(0, 10),
+      startDate: new Date().toISOString().slice(0, 10),
     }
 
     expect(
@@ -380,8 +380,8 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Annual;
     invalidDateRequestPayload.drawdownAnnually = {
       amount: 1505,
-      endDate: endDate,
-      startDate: startDate
+      endDate: endDate.toISOString().slice(0, 10),
+      startDate: startDate.toISOString().slice(0, 10),
     }
 
     expect(
@@ -456,11 +456,11 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Retirement;
     invalidDateRequestPayload.drawdownRetirement = {
       regularDrawdown: -15,
-      endDate: new Date(),
-      startDate: new Date(),
+      endDate: new Date().toISOString().slice(0, 10),
+      startDate: new Date().toISOString().slice(0, 10),
       lumpSum: {
         amount: -10,
-        date: lumpSumDate
+        date: lumpSumDate.toISOString().slice(0, 10),
       },
       remainingAmount: -100,
       statePensionAmount: -150
@@ -511,11 +511,11 @@ describe("tests for validate function", () => {
     invalidDateRequestPayload.drawdownType = DrawdownType.Retirement;
     invalidDateRequestPayload.drawdownRetirement = {
       regularDrawdown: 105,
-      endDate: new Date(),
-      startDate: startDate,
+      endDate: new Date().toISOString().slice(0, 10),
+      startDate: startDate.toISOString().slice(0, 10),
       lumpSum: {
         amount: 10,
-        date: lumpSumDate
+        date: lumpSumDate.toISOString().slice(0, 10),
       },
       remainingAmount: 100,
       statePensionAmount: 150

@@ -13,7 +13,12 @@ function yearsDiff(dateFrom: Date, dateTo: Date): number {
   return dateTo.getFullYear() - dateFrom.getFullYear();
 }
 
+function parseDate(date: string): Date {
+  return new Date(Date.parse(date))
+}
+
 export {
   monthsDiff,
-  yearsDiff
+  yearsDiff,
+  parseDate
 };

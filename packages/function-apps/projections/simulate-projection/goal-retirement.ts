@@ -1,4 +1,4 @@
-import { monthsDiff } from "./helpers";
+import { monthsDiff, parseDate } from "./helpers";
 import { ContributionMonth, Drawdown, ExpectedReturns, GoldProjectionResponse, ProjectionMonth, RequestPayload, ResponsePayload, Stats, TargetProjectionMonth } from "./types";
 
 function getRetirementProjection(inboundPayload: RequestPayload, today: Date): ResponsePayload {
@@ -15,9 +15,11 @@ function getRetirementProjection(inboundPayload: RequestPayload, today: Date): R
 }
 
 function getRetirementTealProjectionRecursive(inboundPayload: RequestPayload, today: Date): ResponsePayload {
-  let lumpSumDate = inboundPayload.drawdownRetirement?.lumpSum?.date;
+  let startDate = inboundPayload.drawdownRetirement?.startDate ? parseDate(inboundPayload.drawdownRetirement.startDate) : new Date();
+  let endDate = inboundPayload.drawdownRetirement?.endDate ? parseDate(inboundPayload.drawdownRetirement.endDate) : new Date();
+  let lumpSumDate = inboundPayload.drawdownRetirement?.lumpSum?.date ? parseDate(inboundPayload.drawdownRetirement.lumpSum.date) : null;
   if (lumpSumDate == null)
-    lumpSumDate = inboundPayload.drawdownRetirement?.startDate ?? new Date();
+    lumpSumDate = startDate;
 
   let contributionPeriodUptoLumpSum = monthsDiff(today, lumpSumDate) - 1;
   //if lump sum date is past  then lump sum considered as zero
@@ -28,15 +30,15 @@ function getRetirementTealProjectionRecursive(inboundPayload: RequestPayload, to
 
   contributionPeriodUptoLumpSum = contributionPeriodUptoLumpSum < 0 ? 0 : contributionPeriodUptoLumpSum;
 
-  let goalContributingPeriod = monthsDiff(today, inboundPayload.drawdownRetirement?.startDate ?? new Date()) - 1;
+  let goalContributingPeriod = monthsDiff(today, startDate) - 1;
   goalContributingPeriod = goalContributingPeriod < 0 ? 0 : goalContributingPeriod;
 
-  const contributionPeriodFromLumpSumAndDrawdown = (contributionPeriodUptoLumpSum == 0) ? goalContributingPeriod : monthsDiff(lumpSumDate, inboundPayload.drawdownRetirement?.startDate ?? new Date());
+  const contributionPeriodFromLumpSumAndDrawdown = (contributionPeriodUptoLumpSum == 0) ? goalContributingPeriod : monthsDiff(lumpSumDate, startDate);
 
   const preGoalExpectedReturn = calculateExpectedReturn(inboundPayload.preGoal.expectedReturnPercentage / 100, (inboundPayload.feesPercentage ?? 0) / 100, inboundPayload.preGoal.volatilityPercentage / 100);
   const postGoalExpectedReturn = calculateExpectedReturn((inboundPayload.postGoal?.expectedReturnPercentage ?? 0) / 100, (inboundPayload.feesPercentage ?? 0) / 100, (inboundPayload.postGoal?.volatilityPercentage ?? 0) / 100);
 
-  const goalDrawdownPeriod = goalContributingPeriod == 0 ? monthsDiff(today, inboundPayload.drawdownRetirement?.endDate ?? new Date()) : monthsDiff(inboundPayload.drawdownRetirement?.startDate ?? new Date(), inboundPayload.drawdownRetirement?.endDate ?? new Date()) + 1;
+  const goalDrawdownPeriod = goalContributingPeriod == 0 ? monthsDiff(today, endDate) : monthsDiff(startDate, endDate) + 1;
 
   const goalTargetMonth = goalContributingPeriod + goalDrawdownPeriod + 1;
 
@@ -83,16 +85,16 @@ function getRetirementTealProjectionRecursive(inboundPayload: RequestPayload, to
 }
 
 function getGoldProjection(inboundPayload: RequestPayload, today: Date): GoldProjectionResponse {
-  let lumpSumDate = inboundPayload.drawdownRetirement?.lumpSum?.date;
+  let startDate = inboundPayload.drawdownRetirement?.startDate ? parseDate(inboundPayload.drawdownRetirement.startDate) : new Date();
+  let endDate = inboundPayload.drawdownRetirement?.endDate ? parseDate(inboundPayload.drawdownRetirement.endDate) : new Date();
+  let lumpSumDate = inboundPayload.drawdownRetirement?.lumpSum?.date ? parseDate(inboundPayload.drawdownRetirement.lumpSum.date) : null;
   if (lumpSumDate == null)
-    lumpSumDate = inboundPayload.drawdownRetirement?.startDate ?? new Date();
-
-  let startDate = inboundPayload?.drawdownRetirement?.startDate ?? new Date();
+    lumpSumDate = startDate;
 
   const contributionPeriodUptoLumpSum = monthsDiff(today, lumpSumDate) - 1;
   const goalContributingMonths = monthsDiff(today, startDate) - 1;
   const contributionPeriodFromLumpSumAndDrawdown = monthsDiff(lumpSumDate, startDate);
-  const goalDrawdownMonths = monthsDiff(startDate, inboundPayload.drawdownRetirement?.endDate ?? new Date()) + 1;
+  const goalDrawdownMonths = monthsDiff(startDate, endDate) + 1;
   const preGoalExpectedMonthlyReturn = calculateMonthlyNetExpectedReturn(inboundPayload.preGoal.expectedReturnPercentage / 100, (inboundPayload.feesPercentage ?? 0) / 100);
   const postGoalExpectedMonthlyReturn = calculateMonthlyNetExpectedReturn((inboundPayload.postGoal?.expectedReturnPercentage ?? 0) / 100, (inboundPayload.feesPercentage ?? 0) / 100);
   const goalTargetMonth = contributionPeriodUptoLumpSum + contributionPeriodFromLumpSumAndDrawdown + goalDrawdownMonths + 1;

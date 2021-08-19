@@ -34,13 +34,13 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       },
       drawdownType: DrawdownType.Retirement,
       drawdownRetirement: {
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         regularDrawdown: 7500,
         remainingAmount: 100000,
         lumpSum: {
           amount: 100000,
-          date: new Date("2040-04-10")
+          date: new Date("2040-04-10").toISOString().slice(0, 10),
         }
       }
     } as RequestPayload;
@@ -215,12 +215,12 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       currentPortfolioValue: 250000,
       drawdownRetirement: {
         regularDrawdown: 7500,
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         remainingAmount: 100000,
         lumpSum: {
           amount: 100000,
-          date: new Date(pastDate)
+          date: pastDate
         }
       },
       upfrontContribution: 0,
@@ -309,11 +309,11 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       currentPortfolioValue: 250000,
       drawdownRetirement: {
         regularDrawdown: 7500,
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
           amount: 100000,
-          date: new Date(pastDate)
+          date: pastDate
         },
         remainingAmount: 100000,
         statePensionAmount: 10000
@@ -405,10 +405,10 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       monthlyContribution: 624,
       currentPortfolioValue: 250000,
       drawdownRetirement: {
-        startDate: new Date(pastDate),
-        endDate: new Date("2076-04-10"),
+        startDate: pastDate,
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
-          date: new Date(pastDate),
+          date: pastDate,
           amount: 100000
         },
         regularDrawdown: 7500,
@@ -584,13 +584,13 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       feesPercentage: 0,
       drawdownType: DrawdownType.Retirement,
       drawdownRetirement: {
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         regularDrawdown: 3000,
         remainingAmount: 2000,
         lumpSum: {
           amount: 1000,
-          date: new Date("2040-04-10")
+          date: new Date("2040-04-10").toISOString().slice(0, 10),
         }
       }
     } as RequestPayload;
@@ -1382,12 +1382,12 @@ describe("Tests for getGoldProjection Function with lump sum and desired remaini
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
       drawdownRetirement: {
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         regularDrawdown: 7500,
         lumpSum: {
           amount: 100000,
-          date: new Date("2040-04-10")
+          date: new Date("2040-04-10").toISOString().slice(0, 10),
         },
         remainingAmount: 100000
       },
@@ -1468,12 +1468,12 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
       drawdownRetirement: {
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         regularDrawdown: 9999,
         lumpSum: {
           amount: 100000,
-          date: new Date(pastDate)
+          date: pastDate
         },
         remainingAmount: 100000
       },
@@ -1531,12 +1531,12 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
       drawdownRetirement: {
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         regularDrawdown: 0,
         lumpSum: {
           amount: 100000,
-          date: new Date(pastDate)
+          date: pastDate
         },
         remainingAmount: 100000
       },
@@ -1586,11 +1586,11 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
       drawdownRetirement: {
         remainingAmount: 100000,
         regularDrawdown: 9999,
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
           amount: 100000,
-          date: new Date("2055-04-10")
+          date: new Date("2055-04-10").toISOString().slice(0, 10),
         }
       },
       upfrontContribution: 0,
@@ -1654,11 +1654,11 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
       drawdownRetirement: {
         remainingAmount: 100000,
         regularDrawdown: 7500,
-        startDate: new Date(pastDate),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date(pastDate).toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
           amount: 100000,
-          date: new Date(pastDate)
+          date: pastDate
         }
       },
       upfrontContribution: 0,
@@ -1725,11 +1725,11 @@ describe("Tests for getGoldProjection function with state pension", () => {
       currentPortfolioValue: 250000,
       drawdownRetirement: {
         regularDrawdown: 7500,
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
           amount: 100000,
-          date: new Date("2040-04-10")
+          date: new Date("2040-04-10").toISOString().slice(0, 10),
         },
         statePensionAmount: 12000,
         remainingAmount: 100000
@@ -1810,11 +1810,11 @@ describe("Tests for getGoldProjection function with pre and post goal zeros", ()
       currentPortfolioValue: 250000,
       drawdownRetirement: {
         regularDrawdown: 3000,
-        startDate: new Date("2055-04-10"),
-        endDate: new Date("2076-04-10"),
+        startDate: new Date("2055-04-10").toISOString().slice(0, 10),
+        endDate: new Date("2076-04-10").toISOString().slice(0, 10),
         lumpSum: {
           amount: 1000,
-          date: new Date("2040-04-10")
+          date: new Date("2040-04-10").toISOString().slice(0, 10),
         },
         statePensionAmount: 0,
         remainingAmount: 2000

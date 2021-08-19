@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
 import { getRetirementProjection } from './goal-retirement';
-import { monthsDiff } from './helpers';
+import { monthsDiff, parseDate } from './helpers';
 import { DrawdownType, RequestPayload, ResponsePayload, ValidationError } from './types';
 
 const simulateProjectionMain: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
@@ -222,7 +222,7 @@ function validateDrawdownOneOff(inboundPayload: RequestPayload, errors: Array<Va
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownOneOff.targetDate == null) {
+      if (typeof inboundPayload.drawdownOneOff.targetDate == 'undefined'  || !Date.parse(inboundPayload.drawdownOneOff.targetDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-011",
           property: "drawdownOneOff.targetDate",
@@ -232,8 +232,8 @@ function validateDrawdownOneOff(inboundPayload: RequestPayload, errors: Array<Va
       }
       else
       {
-        const currentDate = new Date();
-        if (inboundPayload.drawdownOneOff.targetDate >= currentDate) {
+        const currentDate = parseDate(new Date().toISOString().slice(0, 10));
+        if (parseDate(inboundPayload.drawdownOneOff.targetDate) >= currentDate) {
           const error: ValidationError = {
             code: "val-simulateproj-039",
             property: "drawdownOneOff.targetDate",
@@ -267,7 +267,7 @@ function validateDrawdownMonthly(inboundPayload: RequestPayload, errors: Array<V
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownMonthly.startDate == null) {
+      if (typeof inboundPayload.drawdownMonthly.startDate == 'undefined'  || !Date.parse(inboundPayload.drawdownMonthly.startDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-014",
           property: "drawdownMonthly.startDate",
@@ -275,8 +275,7 @@ function validateDrawdownMonthly(inboundPayload: RequestPayload, errors: Array<V
         }
         errors.push(error)
       }
-
-      if (inboundPayload.drawdownMonthly.endDate == null) {
+      if (typeof inboundPayload.drawdownMonthly.endDate == 'undefined'  || !Date.parse(inboundPayload.drawdownMonthly.endDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-015",
           property: "drawdownMonthly.endDate",
@@ -285,8 +284,8 @@ function validateDrawdownMonthly(inboundPayload: RequestPayload, errors: Array<V
         errors.push(error)
       }
       else{
-        const currentDate = new Date();
-        if (inboundPayload.drawdownMonthly.endDate <= currentDate){
+        const currentDate = parseDate(new Date().toISOString().slice(0, 10));
+        if (parseDate(inboundPayload.drawdownMonthly.endDate) <= currentDate){
           const error: ValidationError = {
             code: "val-simulateproj-038",
             property: "drawdownMonthly.endDate",
@@ -296,7 +295,7 @@ function validateDrawdownMonthly(inboundPayload: RequestPayload, errors: Array<V
         }
       }
 
-      if (inboundPayload.drawdownMonthly.startDate && inboundPayload.drawdownMonthly.endDate && monthsDiff(inboundPayload.drawdownMonthly.startDate, inboundPayload.drawdownMonthly.endDate) < 1) {
+      if (inboundPayload.drawdownMonthly.startDate && inboundPayload.drawdownMonthly.endDate && monthsDiff(parseDate(inboundPayload.drawdownMonthly.startDate), parseDate(inboundPayload.drawdownMonthly.endDate)) < 1) {
         const error: ValidationError = {
           code: "val-simulateproj-016",
           property: "drawdownMonthly.endDate",
@@ -329,7 +328,7 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownAnnually.startDate == null) {
+      if (typeof inboundPayload.drawdownAnnually.startDate == 'undefined'  || !Date.parse(inboundPayload.drawdownAnnually.startDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-019",
           property: "drawdownAnnually.startDate",
@@ -338,7 +337,7 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownAnnually.endDate == null) {
+      if (typeof inboundPayload.drawdownAnnually.endDate == 'undefined'  || !Date.parse(inboundPayload.drawdownAnnually.endDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-020",
           property: "drawdownAnnually.endDate",
@@ -347,8 +346,8 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
         errors.push(error)
       }
       else {
-        const currentDate = new Date();
-        if (inboundPayload.drawdownAnnually.endDate <= currentDate){
+        const currentDate = parseDate(new Date().toISOString().slice(0, 10));
+        if (parseDate(inboundPayload.drawdownAnnually.endDate) <= currentDate){
           const error: ValidationError = {
             code: "val-simulateproj-037",
             property: "drawdownAnnually.endDate",
@@ -358,7 +357,7 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
         }
       }
 
-      if (inboundPayload.drawdownAnnually.startDate && inboundPayload.drawdownAnnually.endDate && (inboundPayload.drawdownAnnually.endDate.getFullYear() - inboundPayload.drawdownAnnually.startDate.getFullYear() < 1))  {
+      if (inboundPayload.drawdownAnnually.startDate && inboundPayload.drawdownAnnually.endDate && (parseDate(inboundPayload.drawdownAnnually.endDate).getFullYear() - parseDate(inboundPayload.drawdownAnnually.startDate).getFullYear() < 1))  {
         const error: ValidationError = {
           code: "val-simulateproj-021",
           property: "drawdownAnnually.endDate",
@@ -391,7 +390,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownRetirement.startDate == null) {
+      if (typeof inboundPayload.drawdownRetirement.startDate == 'undefined'  || !Date.parse(inboundPayload.drawdownRetirement.startDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-024",
           property: "drawdownRetirement.startDate",
@@ -400,7 +399,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownRetirement.endDate == null) {
+      if (typeof inboundPayload.drawdownRetirement.endDate == 'undefined'  || !Date.parse(inboundPayload.drawdownRetirement.endDate)) {
         const error: ValidationError = {
           code: "val-simulateproj-025",
           property: "drawdownRetirement.endDate",
@@ -409,7 +408,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
         errors.push(error)
       }
 
-      if (inboundPayload.drawdownRetirement.startDate && inboundPayload.drawdownRetirement.endDate && monthsDiff(inboundPayload.drawdownRetirement.startDate, inboundPayload.drawdownRetirement.endDate) < 1) {
+      if (inboundPayload.drawdownRetirement.startDate && inboundPayload.drawdownRetirement.endDate && monthsDiff(parseDate(inboundPayload.drawdownRetirement.startDate), parseDate(inboundPayload.drawdownRetirement.endDate)) < 1) {
         const error: ValidationError = {
           code: "val-simulateproj-026",
           property: "drawdownRetirement.endDate",
@@ -429,8 +428,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
             errors.push(error)
           }
 
-          if(inboundPayload.drawdownRetirement.lumpSum.date == null)
-          {
+          if (typeof inboundPayload.drawdownRetirement.lumpSum.date == 'undefined'  || !Date.parse(inboundPayload.drawdownRetirement.lumpSum.date)) {
             const error: ValidationError = {
               code: "val-simulateproj-028",
               property: "drawdownRetirement.lumpSum.date",
@@ -440,7 +438,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
           }
           else{
             if (typeof inboundPayload.drawdownRetirement.startDate != 'undefined')
-              if (inboundPayload.drawdownRetirement.startDate > inboundPayload.drawdownRetirement.lumpSum.date){
+              if (parseDate(inboundPayload.drawdownRetirement.startDate) > parseDate(inboundPayload.drawdownRetirement.lumpSum.date)){
                 const error: ValidationError = {
                   code: "val-simulateproj-029",
                   property: "drawdownRetirement.lumpSum.date",
