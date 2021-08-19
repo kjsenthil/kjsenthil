@@ -1,4 +1,5 @@
 import { GoalProgressCardProps } from './GoalProgressCard';
+import { GoalSelectionProps } from './GoalSelection';
 
 export * from './PerformanceChart';
 export * from './PerformanceProjectionsChart';
@@ -33,3 +34,4 @@ export { default as StepCard } from './StepCard';
 export { default as SummaryPanel } from './SummaryPanel';
 
 export type { GoalProgressCardProps };
+export type { GoalSelectionProps };
