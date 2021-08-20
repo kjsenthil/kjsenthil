@@ -6,6 +6,7 @@ import {
   BasicInvestmentSummary,
   fetchInvestmentAccounts,
   fetchClient,
+  fetchInvestmentSummary,
 } from '../../services/myAccount';
 import useStateIsLoading from '../useStateIsLoading';
 import useStateIsAvailable from '../useStateIsAvailable';
@@ -27,6 +28,8 @@ const useInvestmentAccounts = (
 
   const isPerformanceLoading = useStateIsLoading('performance');
   const isPerformanceAvailable = useStateIsAvailable('performance');
+  const isInvestmentSummaryLoading = useStateIsLoading('investmentSummary');
+  const isInvestmentSummaryAvailable = useStateIsAvailable('investmentSummary');
   const isClientAvailable = useStateIsAvailable('client');
   const areAccountsAvailable = useStateIsAvailable('investmentAccounts');
   const areAccountsLoading = useStateIsLoading('investmentAccounts');
@@ -43,19 +46,36 @@ const useInvestmentAccounts = (
     if (shouldDispatch && isClientAvailable && !isPerformanceAvailable && !isPerformanceLoading) {
       dispatch(fetchPerformanceAccountsAggregated());
     }
-  }, [isClientAvailable, isPerformanceAvailable, isPerformanceLoading]);
+  }, [shouldDispatch, isClientAvailable, isPerformanceAvailable, isPerformanceLoading]);
 
   useEffect(() => {
     if (
       shouldDispatch &&
       isClientAvailable &&
-      isPerformanceAvailable &&
+      !isInvestmentSummaryAvailable &&
+      !isInvestmentSummaryLoading
+    ) {
+      dispatch(fetchInvestmentSummary());
+    }
+  }, [shouldDispatch, isClientAvailable, isInvestmentSummaryAvailable, isInvestmentSummaryLoading]);
+
+  useEffect(() => {
+    if (
+      shouldDispatch &&
+      isClientAvailable &&
+      isInvestmentSummaryAvailable &&
       !areAccountsAvailable &&
       !areAccountsLoading
     ) {
       dispatch(fetchInvestmentAccounts());
     }
-  }, [isClientAvailable, isPerformanceAvailable, areAccountsLoading]);
+  }, [
+    shouldDispatch,
+    isClientAvailable,
+    isInvestmentSummaryAvailable,
+    areAccountsAvailable,
+    areAccountsLoading,
+  ]);
 
   const accountsSummary = {
     totalInvested: performance?.accountValue || 0,
