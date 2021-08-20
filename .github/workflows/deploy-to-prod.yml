@@ -940,7 +940,7 @@ jobs:
             ${{ runner.os }}-modules-
 
       - name: "Create env file"
-        working-directory: ./packages/hybrid-frontend
+        working-directory: ./packages/react-components
         run: |
           touch .env.production
           echo 'API_ENDPOINTS=${{ needs.deploy_production_terraform.outputs.api_endpoints }}' >> .env.production
@@ -952,7 +952,7 @@ jobs:
           cat .env.production
 
       - name: "Build Storybook"
-        run: GATSBY_ACTIVE_ENV=production yarn frontend build-storybook -o "./storybook-static"
+        run: GATSBY_ACTIVE_ENV=production yarn components build-storybook -o "./storybook-static"
 
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -966,7 +966,7 @@ jobs:
           inlineScript: |
             az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
             az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
 
   close_prod_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
