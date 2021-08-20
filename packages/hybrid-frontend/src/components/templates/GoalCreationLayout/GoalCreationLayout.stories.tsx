@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { MainCard, Typography } from '@tsw/react-components';
+import { MainCard, Typography } from '@tswdts/react-components';
 import GoalCreationLayout, { GoalCreationLayoutProps } from './GoalCreationLayout';
 
 const noControl = {

@@ -23,7 +23,7 @@ import {
   humanizePeriodLabel,
   getPossessiveSuffix,
   UpsellCard,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { MyAccountLayout } from '../../templates';
 import {
   fetchPerformanceAccountsAggregated,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useBreakpoint } from '@tsw/react-components';
+import { useBreakpoint } from '@tswdts/react-components';
 import useSideContentAndDividerTriangleYOffsetBasedOnUrlHash from '../GoalCreationLayout/hooks/useSideContentAndDividerTriangleYOffsetBasedOnUrlHash';
 import OverallLayout from './OverallLayout/OverallLayout';
 import { ContentMain, ContentMainChildContainer } from './ContentMain/ContentMain.styles';

@@ -4,7 +4,7 @@ import {
   GoalProgressCard,
   GoalProgressCardProps,
   useBreakpoint,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { GoalProgressCardsContainer, LifePlanLayoutContainer } from './LifePlanLayout.styles';
 import Title from './Title/Title';
 import SectionHeading from './SectionHeading/SectionHeading';

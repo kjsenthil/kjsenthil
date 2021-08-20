@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Theme } from '@material-ui/core';
 import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
-import { Button, Icon, Spacer, Typography } from '@tsw/react-components';
+import { Button, Icon, Spacer, Typography } from '@tswdts/react-components';
 import { LayoutContainer } from '../../templates';
 import { NavPaths } from '../../../config/paths';
 

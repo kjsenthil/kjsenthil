@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ContributionDatum, mapContributionsData } from '@tsw/react-components';
+import { ContributionDatum, mapContributionsData } from '@tswdts/react-components';
 import { RootState } from '../../store';
 import { filterAndMapContributionData } from '../../services/performance/utils';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import pluralize from 'pluralize';
-import { FormInput, StepCard, Typography } from '@tsw/react-components';
+import { FormInput, StepCard, Typography } from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
   SubPageStepCardContentWithInputsContainer,

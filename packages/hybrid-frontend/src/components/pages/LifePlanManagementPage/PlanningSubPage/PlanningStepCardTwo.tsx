@@ -6,7 +6,7 @@ import {
   TypographyWithTooltip,
   StepCard,
   formatCurrency,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
   SubPageStepCardContentWithInputsAndSignContainer,

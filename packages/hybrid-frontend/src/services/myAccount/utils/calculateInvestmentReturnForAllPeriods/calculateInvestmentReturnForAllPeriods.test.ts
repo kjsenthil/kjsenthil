@@ -1,11 +1,11 @@
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import performance from '../../../performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
 import calculateInvestmentReturnForAllPeriods from './calculateInvestmentReturnForAllPeriods';
 import calculateInvestmentReturn from '../calculateInvestmentReturn';
 import { filterAndMapContributionData, filterAndMapPerformanceData } from '../../../performance';
 
-jest.mock('@tsw/react-components', () => ({
-  ...jest.requireActual('@tsw/react-components'),
+jest.mock('@tswdts/react-components', () => ({
+  ...jest.requireActual('@tswdts/react-components'),
   PerformanceDataPeriod: {
     '1W': '7d',
     '1M': '1m',

@@ -10,7 +10,7 @@ import {
   LoginFormData,
   PinLoginItem,
   PinLogin,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';

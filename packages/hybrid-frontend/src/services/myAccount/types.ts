@@ -1,4 +1,4 @@
-import { SedolCode, InvestmentAccount } from '@tsw/react-components';
+import { SedolCode, InvestmentAccount } from '@tswdts/react-components';
 import { ClientAccountTypes, CommonState } from '../types';
 
 export interface BasicInvestmentSummary {

@@ -5,7 +5,7 @@ import {
   PillsNavigation,
   PillsNavigationSelectableTabComponent,
   PillsNavigationTab,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import EditThisGoalLinkTabComponent from './EditThisGoalLinkTabComponent/EditThisGoalLinkTabComponent';
 import { DefaultViewSelectionValue, LifePlanLayoutView } from '../config/config';
 

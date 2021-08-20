@@ -1,5 +1,5 @@
 import { ReducersMapObject } from 'redux';
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import * as api from '../api';
 import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
 import performanceReducer, {

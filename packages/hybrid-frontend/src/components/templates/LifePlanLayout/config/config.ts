@@ -1,4 +1,4 @@
-import { GoalSelectionProps as GoalSelectionOrganismProps } from '@tsw/react-components';
+import { GoalSelectionProps as GoalSelectionOrganismProps } from '@tswdts/react-components';
 
 export type GoalSelectionTiles = GoalSelectionOrganismProps['tiles'];
 

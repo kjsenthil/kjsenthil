@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { MainCard, Button, Typography } from '@tsw/react-components';
+import { MainCard, Button, Typography } from '@tswdts/react-components';
 import MyAccountLayout, { MyAccountLayoutProps } from './MyAccountLayout';
 
 export default {

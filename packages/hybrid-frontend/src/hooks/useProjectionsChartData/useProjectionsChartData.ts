@@ -3,7 +3,7 @@ import {
   ProjectionsChartMetadata,
   ProjectionsChartProjectionDatum,
   ProjectionsChartProjectionTargetDatum,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import useProjectionsMetadataForProjectionsChart from '../useProjectionsMetadataForProjectionsChart';
 import useProjectionsTargetDataForProjectionsChart from '../useProjectionsTargetDataForProjectionsChart';
 import useCurrentProjectionsDataForProjectionsChart from '../useCurrentProjectionsDataForProjectionsChart';

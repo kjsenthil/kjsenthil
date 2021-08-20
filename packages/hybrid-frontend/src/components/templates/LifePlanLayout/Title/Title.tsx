@@ -5,7 +5,7 @@ import {
   formatPercent,
   PercentPresentationVariant,
   Typography,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 
 export interface TitleProps {
   onTrackPercentage: number;

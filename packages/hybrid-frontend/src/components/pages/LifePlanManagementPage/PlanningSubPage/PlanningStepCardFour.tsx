@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormInput, StepCard } from '@tsw/react-components';
+import { FormInput, StepCard } from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import { SubPageStepCardContentWithInputsContainer } from '../CommonSubPage/CommonSubPage.styles';
 

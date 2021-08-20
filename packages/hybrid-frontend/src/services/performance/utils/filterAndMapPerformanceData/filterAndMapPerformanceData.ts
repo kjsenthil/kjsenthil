@@ -1,4 +1,4 @@
-import { findDateByPeriod, mapPerformanceData } from '@tsw/react-components';
+import { findDateByPeriod, mapPerformanceData } from '@tswdts/react-components';
 import { PerformanceAccountsAggregatedResponse } from '../../types';
 
 const filterAndMapPerformanceData = (

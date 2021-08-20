@@ -1,4 +1,4 @@
-import { ProjectionsChartGoalDatum } from '@tsw/react-components';
+import { ProjectionsChartGoalDatum } from '@tswdts/react-components';
 import { CommonState } from '../types';
 import { RiskAppetites } from './constants';
 

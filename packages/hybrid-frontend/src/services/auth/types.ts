@@ -1,4 +1,4 @@
-import { LoginFormData, PinLoginItem } from '@tsw/react-components';
+import { LoginFormData, PinLoginItem } from '@tswdts/react-components';
 import { GenericResponseData, GenericRequestPayload } from '../api/types';
 import { CommonState } from '../types';
 

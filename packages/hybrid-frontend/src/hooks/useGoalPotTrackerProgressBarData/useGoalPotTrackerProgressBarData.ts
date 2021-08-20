@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ProgressBarWithLegendProps } from '@tsw/react-components';
+import { ProgressBarWithLegendProps } from '@tswdts/react-components';
 import { RootState } from '../../store';
 import { GoalCurrentProjectionsResponse } from '../../services/projections/types';
 

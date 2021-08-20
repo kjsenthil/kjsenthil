@@ -1,4 +1,4 @@
-import { InvestmentAccountData } from '@tsw/react-components';
+import { InvestmentAccountData } from '@tswdts/react-components';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 import { PortfolioAssetAllocationResponse } from '../types';

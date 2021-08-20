@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useBreakpoint } from '@tsw/react-components';
+import { useBreakpoint } from '@tswdts/react-components';
 import { DividerContainer, DividerLine, DividerTriangle } from './ContentDivider.styles';
 
 interface ContentDividerProps {

@@ -1,4 +1,4 @@
-import { ProjectionsChartMetadata } from '@tsw/react-components';
+import { ProjectionsChartMetadata } from '@tswdts/react-components';
 import { TARGET_RETIREMENT_AGE } from '../../services/projections';
 import useBasicInfo from '../useBasicInfo';
 

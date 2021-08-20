@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, navigate, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import { Box, Button, Container, Grid, Typography } from '@tsw/react-components';
+import { Box, Button, Container, Grid, Typography } from '@tswdts/react-components';
 import { ChildImage } from '../../../types';
 
 const sideImagesQuery = graphql`

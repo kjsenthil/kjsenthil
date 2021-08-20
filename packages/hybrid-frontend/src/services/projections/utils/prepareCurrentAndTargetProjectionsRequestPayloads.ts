@@ -1,4 +1,4 @@
-import { formatDate, monthDifference } from '@tsw/react-components';
+import { formatDate, monthDifference } from '@tswdts/react-components';
 import {
   GoalCurrentProjectionsRequestPayload,
   GoalTargetProjectionsRequestPayload,

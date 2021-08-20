@@ -1,4 +1,4 @@
-import { formatDate } from '@tsw/react-components';
+import { formatDate } from '@tswdts/react-components';
 import generateCurrencyPayload from './generateCurrencyPayload';
 import { goalsDefaultValues } from '../config';
 import { GoalAdviceType, GoalCategory, RetirementInputs, RetirementPayload } from '../types';

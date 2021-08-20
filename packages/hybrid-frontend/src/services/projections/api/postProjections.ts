@@ -1,4 +1,4 @@
-import { ProjectionRequest } from '@tsw/react-components';
+import { ProjectionRequest } from '@tswdts/react-components';
 import { ProjectionResponse } from '../types';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';

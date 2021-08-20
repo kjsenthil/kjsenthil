@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mapContributionsData, mapPerformanceData } from '@tsw/react-components';
+import { mapContributionsData, mapPerformanceData } from '@tswdts/react-components';
 import useHistoricalDataForProjectionsChart from './useHistoricalDataForProjectionsChart';
 import usePerformanceData from '../usePerformanceData';
 

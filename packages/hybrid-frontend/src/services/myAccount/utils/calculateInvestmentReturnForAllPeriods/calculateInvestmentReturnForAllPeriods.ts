@@ -1,4 +1,4 @@
-import { InvestmentAccount, PerformanceDataPeriod, PeriodReturn } from '@tsw/react-components';
+import { InvestmentAccount, PerformanceDataPeriod, PeriodReturn } from '@tswdts/react-components';
 import calculateInvestmentReturn from '../calculateInvestmentReturn';
 import { NetContributionValueWithDate, PerformanceValueWithDate } from '../../../performance';
 import {

@@ -7,7 +7,7 @@ import {
   PerformanceDataPeriod,
   Spacer,
   formatCurrency,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 import FundingStepCardOne from './FundingStepCardOne';
 import FundingStepCardTwo from './FundingStepCardTwo';

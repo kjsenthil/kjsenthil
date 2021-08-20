@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { fireEvent, renderWithTheme, screen } from '@tsw/test-util';
-import { GoalProgressCardProps } from '@tsw/react-components';
+import { GoalProgressCardProps } from '@tswdts/react-components';
 import LifePlanLayout from './LifePlanLayout';
 import { DefaultViewSelectionValue, GoalName, LifePlanLayoutView } from './config/config';
 

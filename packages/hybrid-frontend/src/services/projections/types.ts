@@ -1,4 +1,4 @@
-import { RiskModel, SedolCode } from '@tsw/react-components';
+import { RiskModel, SedolCode } from '@tswdts/react-components';
 import { CommonState } from '../types';
 import { ClientResponse, InvestmentSummary } from '../myAccount';
 import { AllAssets } from '../assets';

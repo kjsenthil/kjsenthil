@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { InvestmentAccount } from '@tsw/react-components';
+import { InvestmentAccount } from '@tswdts/react-components';
 import { commonActionReducerMapBuilder } from '../../utils';
 import { fetchInvestmentAccounts } from '../thunks';
 import { InvestmentAccountsState } from '../types';

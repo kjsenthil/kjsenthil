@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
 import { configureStore } from '@reduxjs/toolkit';
 import MockDate from 'mockdate';
-import { ProjectionsChartProjectionTargetDatum } from '@tsw/react-components';
+import { ProjectionsChartProjectionTargetDatum } from '@tswdts/react-components';
 import useProjectionsTargetDataForProjectionsChart from './useProjectionsTargetDataForProjectionsChart';
 import { GoalTargetProjectionMonth } from '../../services/projections';
 

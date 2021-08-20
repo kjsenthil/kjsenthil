@@ -9,7 +9,7 @@ import {
   Spacer,
   Grid,
   useBreakpoint,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { RootState } from '../../../store';
 import { InputFieldsKeys } from '../../../services/goal/machines/lifePlan';
 import { GoalCategory, GoalDefaults } from '../../../services/goal';

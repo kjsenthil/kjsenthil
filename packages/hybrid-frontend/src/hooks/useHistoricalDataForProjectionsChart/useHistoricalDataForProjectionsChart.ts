@@ -1,7 +1,7 @@
 import {
   ProjectionsChartHistoricalDatum,
   timeSeriesDateSorterDescending,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import getMonthlyHistoricalData from './getMonthlyHistoricalData';
 import getAnnualHistoricalData from './getAnnualHistoricalData';
 import usePerformanceData from '../usePerformanceData';

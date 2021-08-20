@@ -1,4 +1,4 @@
-import { RiskModel, SedolCode } from '@tsw/react-components';
+import { RiskModel, SedolCode } from '@tswdts/react-components';
 
 export const projectionsDefaults = { riskModel: RiskModel.TAA6, sedolCode: SedolCode.BYX8KW0 };
 

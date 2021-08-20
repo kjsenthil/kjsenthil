@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
-import { RiskModel, SedolCode } from '@tsw/react-components';
+import { RiskModel, SedolCode } from '@tswdts/react-components';
 import projectionsReducer, { fetchSimulatedProjections } from './simulatedProjectionsSlice';
 import * as api from '../api';
 import { mockClientResponse, mockInvestmentSummaryResponse } from '../../myAccount/mocks';

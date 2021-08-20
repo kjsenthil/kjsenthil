@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Theme } from '@tsw/react-components';
+import { Theme } from '@tswdts/react-components';
 
 export const LifePlanLayoutContainer = styled.div`
   ${({ theme }: { theme: Theme }) => `

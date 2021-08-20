@@ -1,10 +1,14 @@
 {
-  "name": "@tsw/react-components",
+  "name": "@tswdts/react-components",
   "version": "1.0.0",
   "main": "src/index.ts",
   "description": "React components shared across all TSW websites",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TSWDTS/digital-hybrid.git"
+  },
   "publishConfig": {
-    "registry": "https://github.com/TSWDTS/digital-hybrid.git"
+    "registry": "https://npm.pkg.github.com"
   },
   "engines": {
     "node": "^14.16.0",
@@ -21,7 +25,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage --collectCoverage && yarn jest-coverage-badges output './badges'",
     "typecheck": "yarn g:typecheck",
-    "typecheck:watch": "yarn typecheck -w --pretty"
+    "typecheck:watch": "yarn typecheck -w --pretty",
+    "publish": "yarn npm login --publish && yarn npm publish"
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.0",

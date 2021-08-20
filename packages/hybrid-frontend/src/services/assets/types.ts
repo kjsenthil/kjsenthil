@@ -1,4 +1,4 @@
-import { RiskModel, SedolCode } from '@tsw/react-components';
+import { RiskModel, SedolCode } from '@tswdts/react-components';
 
 export interface Fund {
   equityProportion: number;

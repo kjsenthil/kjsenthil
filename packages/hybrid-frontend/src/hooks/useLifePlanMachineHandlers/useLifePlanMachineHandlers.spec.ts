@@ -1,5 +1,5 @@
 import { Interpreter } from 'xstate';
-import { RiskModel } from '@tsw/react-components';
+import { RiskModel } from '@tswdts/react-components';
 import useLifePlanMachineHandlers, {
   LifePlanMachineHandlers,
   InputEvent,

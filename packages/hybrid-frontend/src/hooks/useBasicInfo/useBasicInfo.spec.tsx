@@ -2,7 +2,7 @@ import * as React from 'react';
 import { renderHook, ResultContainer } from '@testing-library/react-hooks';
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import useBasicInfo, { BasicInfo } from './useBasicInfo';
 import {
   mockInvestmentAccounts,

@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import { PinLoginItem } from '@tsw/react-components';
+import { PinLoginItem } from '@tswdts/react-components';
 import { AuthState } from '../types';
 import { postPin } from '../api';
 

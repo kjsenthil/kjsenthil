@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Container, Theme } from '@tsw/react-components';
+import { Container, Theme } from '@tswdts/react-components';
 
 const LayoutContainer = styled(Container)`
   ${({ theme }: { theme: Theme }) => `

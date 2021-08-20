@@ -7,7 +7,7 @@ import {
   StepCard,
   TypographyWithTooltip,
   Theme,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 
 export interface FundingStepCardOneProps {
   shouldIncludeStatePension: boolean;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography } from '@tsw/react-components';
+import { Typography } from '@tswdts/react-components';
 import { EqualSignContainer } from './CommonSubPage.styles';
 
 export default function EqualSign() {

@@ -1,4 +1,4 @@
-import { InvestmentAccount } from '@tsw/react-components';
+import { InvestmentAccount } from '@tswdts/react-components';
 
 const calculateInvestableCash = (investmentAccounts: Array<InvestmentAccount>) =>
   investmentAccounts

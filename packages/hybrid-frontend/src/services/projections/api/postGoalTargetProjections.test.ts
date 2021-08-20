@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { RiskModel } from '@tsw/react-components';
+import { RiskModel } from '@tswdts/react-components';
 import { API_ENDPOINTS } from '../../../config';
 import { GoalTargetProjectionsRequestPayload, GoalTargetProjectionsResponse } from '../types';
 import postGoalTargetProjections from './postGoalTargetProjections';

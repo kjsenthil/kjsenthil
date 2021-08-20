@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
 import { fetchPerformanceAccountsAggregated } from '../thunks';
 import { commonActionReducerMapBuilder } from '../../utils';

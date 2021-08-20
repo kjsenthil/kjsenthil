@@ -1,4 +1,4 @@
-import { RiskModel } from '@tsw/react-components';
+import { RiskModel } from '@tswdts/react-components';
 import upsertGoal from './upsertGoal';
 import context from '../context';
 

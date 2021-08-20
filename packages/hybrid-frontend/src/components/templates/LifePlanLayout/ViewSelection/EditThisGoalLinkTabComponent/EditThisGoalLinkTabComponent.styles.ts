@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, Theme } from '@tsw/react-components';
+import { Link, Theme } from '@tswdts/react-components';
 
 // The styles below override a lot of the default MUI Tab element's styles to
 // achieve the desired "float-right" effect.

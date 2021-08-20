@@ -11,7 +11,7 @@ import {
   Spacer,
   TabsNavigation,
   TabsNavigationProps,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import LayoutContainer from '../LayoutContainer';
 import { GoalTitle, GoalTitleIcon, StyledAppBar, StyledToolBar } from './GoalCreationLayout.styles';
 

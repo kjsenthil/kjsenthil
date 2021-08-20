@@ -9,7 +9,7 @@ import {
   ListItem,
   ButtonWithDropdown,
   useBreakpoint,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { NavPaths } from '../../../config/paths';
 import { BasicInfo } from '../../../hooks';
 import { RootState } from '../../../store';

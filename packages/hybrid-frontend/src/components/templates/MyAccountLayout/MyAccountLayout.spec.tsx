@@ -1,12 +1,12 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderWithProviders, screen } from '@tsw/test-util';
-import { CurrencyPresentationVariant, formatCurrency } from '@tsw/react-components';
+import { CurrencyPresentationVariant, formatCurrency } from '@tswdts/react-components';
 import { featureToggleSlice as featureToggleReducer } from '../../../services/featureToggle/reducers';
 import MyAccountLayout from './MyAccountLayout';
 
-jest.mock('@tsw/react-components', () => ({
-  ...jest.requireActual('@tsw/react-components'),
+jest.mock('@tswdts/react-components', () => ({
+  ...jest.requireActual('@tswdts/react-components'),
   __esModule: true,
   LinearProgress: () => <div data-testid="linear-progress-bar" />,
   HeaderMenu: () => <div data-testid="header" />,

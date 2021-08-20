@@ -3,7 +3,7 @@ import {
   InvestmentAccountData,
   PerformanceDataPeriod,
   PeriodReturn,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { ClientAccountTypes } from '../../types';
 import {
   BreakdownAllocationResponse,

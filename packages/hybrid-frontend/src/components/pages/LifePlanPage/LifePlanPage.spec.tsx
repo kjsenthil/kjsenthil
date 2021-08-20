@@ -1,5 +1,5 @@
 import React from 'react';
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
 import LifePlanPage from './LifePlanPage';
@@ -17,8 +17,8 @@ jest.mock('../../templates/MyAccountLayout', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-jest.mock('@tsw/react-components', () => ({
-  ...jest.requireActual('@tsw/react-components'),
+jest.mock('@tswdts/react-components', () => ({
+  ...jest.requireActual('@tswdts/react-components'),
   __esModule: true,
   PerformanceProjectionsChart: () => <div>Projections Chart</div>,
 }));

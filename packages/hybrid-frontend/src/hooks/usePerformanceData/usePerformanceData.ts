@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { mapPerformanceData } from '@tsw/react-components';
+import { mapPerformanceData } from '@tswdts/react-components';
 import filterAndMapPerformanceData from '../../services/performance/utils/filterAndMapPerformanceData';
 import { RootState } from '../../store';
 

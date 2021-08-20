@@ -1,4 +1,4 @@
-import { AssetData } from '@tsw/react-components';
+import { AssetData } from '@tswdts/react-components';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 

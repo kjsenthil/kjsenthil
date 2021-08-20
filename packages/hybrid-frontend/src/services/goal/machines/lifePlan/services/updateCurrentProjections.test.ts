@@ -1,4 +1,4 @@
-import { RiskModel } from '@tsw/react-components';
+import { RiskModel } from '@tswdts/react-components';
 import updateCurrentProjections from './updateCurrentProjections';
 import context from '../context';
 import guards from '../guards';

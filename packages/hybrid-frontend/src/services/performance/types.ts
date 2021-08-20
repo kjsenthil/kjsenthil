@@ -1,4 +1,4 @@
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import { CommonState } from '../types';
 
 export interface GetPerformanceContactResponse {

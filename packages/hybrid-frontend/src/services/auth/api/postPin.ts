@@ -1,5 +1,5 @@
 import { sendEvent } from '@tsw/tracking-util';
-import { PinLoginItem } from '@tsw/react-components';
+import { PinLoginItem } from '@tswdts/react-components';
 import api from '../../api';
 import { MY_ACCOUNTS_API_CLIENT_ID, API_ENDPOINTS } from '../../../config';
 import { PinLoginRequest, PinLoginResponse } from '../types';

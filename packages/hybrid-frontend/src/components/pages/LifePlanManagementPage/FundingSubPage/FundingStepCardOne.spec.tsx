@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import { PerformanceDataPeriod } from '@tsw/react-components';
+import { PerformanceDataPeriod } from '@tswdts/react-components';
 import FundingStepCardOne from './FundingStepCardOne';
 
 describe('FundingStepCardOne', () => {

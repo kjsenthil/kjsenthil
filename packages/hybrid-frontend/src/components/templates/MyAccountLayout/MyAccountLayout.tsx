@@ -15,7 +15,7 @@ import {
   formatCurrency,
   useMediaQuery,
   useTheme,
-} from '@tsw/react-components';
+} from '@tswdts/react-components';
 import { BasicInfo, useFeatureFlagToggle } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
 import { NavPaths } from '../../../config/paths';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AccountSummaryPanel } from '@tsw/react-components';
+import { AccountSummaryPanel } from '@tswdts/react-components';
 import { RootState } from '../../../store';
 import { AccountDetailsLayout } from '../../templates';
 import { useBasicInfo } from '../../../hooks';

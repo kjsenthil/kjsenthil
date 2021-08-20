@@ -5095,11 +5095,11 @@ __metadata:
     "@testing-library/react-hooks": ^5.1.1
     "@testing-library/user-event": ^13.1.5
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
-    "@tsw/react-components": "workspace:packages/react-components"
     "@tsw/telemetry": "workspace:packages/utils/telemetry"
     "@tsw/test-util": "workspace:packages/utils/test"
     "@tsw/tracking-util": "workspace:packages/utils/tracking"
     "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@tswdts/react-components": "workspace:packages/react-components"
     "@types/axios": ^0.14.0
     "@types/camelcase-keys": ^5.1.1
     "@types/chart.js": ^2.9.30
@@ -5162,74 +5162,6 @@ __metadata:
     start-server-and-test: ^1.11.7
     styled-components: ^5.2.1
     xstate: ^4.20.0
-  languageName: unknown
-  linkType: soft
-
-"@tsw/react-components@workspace:packages/react-components":
-  version: 0.0.0-use.local
-  resolution: "@tsw/react-components@workspace:packages/react-components"
-  dependencies:
-    "@babel/core": ^7.12.16
-    "@juggle/resize-observer": ^3.3.0
-    "@material-ui/core": ^4.12.3
-    "@material-ui/icons": ^4.11.2
-    "@material-ui/lab": ^4.0.0-alpha.60
-    "@material-ui/styles": ^4.11.4
-    "@react-spring/web": ^9.2.1
-    "@reduxjs/toolkit": ^1.5.1
-    "@storybook/addon-actions": ^6.1.18
-    "@storybook/addon-essentials": ^6.1.18
-    "@storybook/addon-links": ^6.1.18
-    "@storybook/react": ^6.1.18
-    "@testing-library/jest-dom": ^5.11.9
-    "@testing-library/react": ^11.2.3
-    "@testing-library/react-hooks": ^5.1.1
-    "@testing-library/user-event": ^13.1.5
-    "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
-    "@tsw/test-util": "workspace:packages/utils/test"
-    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
-    "@types/d3-array": ^2.9.0
-    "@types/d3-format": ^2.0.0
-    "@types/d3-interpolate-path": ^2.0.0
-    "@types/d3-time-format": ^3.0.0
-    "@types/jest": ^26.0.20
-    "@types/node": ^14.14.22
-    "@types/react": ^17.0.0
-    "@types/react-dom": ^17.0.0
-    "@types/styled-components": ^5.1.7
-    "@typescript-eslint/eslint-plugin": ^4.22.0
-    "@visx/axis": ^1.7.0
-    "@visx/curve": ^1.7.0
-    "@visx/event": ^1.7.0
-    "@visx/gradient": ^1.7.0
-    "@visx/grid": ^1.7.0
-    "@visx/group": ^1.7.0
-    "@visx/responsive": ^1.7.0
-    "@visx/scale": ^1.7.0
-    "@visx/shape": ^1.7.0
-    "@visx/text": ^1.7.0
-    "@visx/tooltip": ^1.7.2
-    babel-jest: ^26.6.3
-    babel-loader: ^8.2.2
-    babel-plugin-styled-components: ^1.12.0
-    babel-preset-gatsby: ^0.11.0
-    csstype: ^3.0.8
-    d3-array: ^2.12.1
-    d3-format: ^2.0.0
-    d3-scale: ^3.3.0
-    d3-shape: ^2.1.0
-    d3-time-format: ^3.0.0
-    dayjs: ^1.10.4
-    gatsby: ^2.26.1
-    jest: ^26.6.3
-    jest-coverage-badges: ^1.1.2
-    jest-extended: ^0.11.5
-    jest-html-reporter: ^3.3.0
-    jest-styled-components: ^7.0.5
-    mockdate: ^3.0.5
-    react: ^16.12.0
-    react-disable: ^0.1.0
-    styled-components: ^5.2.1
   languageName: unknown
   linkType: soft
 
@@ -5305,6 +5237,74 @@ __metadata:
     ts-node: ^10.0.0
     wdio-chromedriver-service: ^7.1.0
     webdriverio: ^7.7.4
+  languageName: unknown
+  linkType: soft
+
+"@tswdts/react-components@workspace:packages/react-components":
+  version: 0.0.0-use.local
+  resolution: "@tswdts/react-components@workspace:packages/react-components"
+  dependencies:
+    "@babel/core": ^7.12.16
+    "@juggle/resize-observer": ^3.3.0
+    "@material-ui/core": ^4.12.3
+    "@material-ui/icons": ^4.11.2
+    "@material-ui/lab": ^4.0.0-alpha.60
+    "@material-ui/styles": ^4.11.4
+    "@react-spring/web": ^9.2.1
+    "@reduxjs/toolkit": ^1.5.1
+    "@storybook/addon-actions": ^6.1.18
+    "@storybook/addon-essentials": ^6.1.18
+    "@storybook/addon-links": ^6.1.18
+    "@storybook/react": ^6.1.18
+    "@testing-library/jest-dom": ^5.11.9
+    "@testing-library/react": ^11.2.3
+    "@testing-library/react-hooks": ^5.1.1
+    "@testing-library/user-event": ^13.1.5
+    "@tsw/eslint-config": "workspace:packages/shared-config/eslint"
+    "@tsw/test-util": "workspace:packages/utils/test"
+    "@tsw/typescript-config": "workspace:packages/shared-config/typescript"
+    "@types/d3-array": ^2.9.0
+    "@types/d3-format": ^2.0.0
+    "@types/d3-interpolate-path": ^2.0.0
+    "@types/d3-time-format": ^3.0.0
+    "@types/jest": ^26.0.20
+    "@types/node": ^14.14.22
+    "@types/react": ^17.0.0
+    "@types/react-dom": ^17.0.0
+    "@types/styled-components": ^5.1.7
+    "@typescript-eslint/eslint-plugin": ^4.22.0
+    "@visx/axis": ^1.7.0
+    "@visx/curve": ^1.7.0
+    "@visx/event": ^1.7.0
+    "@visx/gradient": ^1.7.0
+    "@visx/grid": ^1.7.0
+    "@visx/group": ^1.7.0
+    "@visx/responsive": ^1.7.0
+    "@visx/scale": ^1.7.0
+    "@visx/shape": ^1.7.0
+    "@visx/text": ^1.7.0
+    "@visx/tooltip": ^1.7.2
+    babel-jest: ^26.6.3
+    babel-loader: ^8.2.2
+    babel-plugin-styled-components: ^1.12.0
+    babel-preset-gatsby: ^0.11.0
+    csstype: ^3.0.8
+    d3-array: ^2.12.1
+    d3-format: ^2.0.0
+    d3-scale: ^3.3.0
+    d3-shape: ^2.1.0
+    d3-time-format: ^3.0.0
+    dayjs: ^1.10.4
+    gatsby: ^2.26.1
+    jest: ^26.6.3
+    jest-coverage-badges: ^1.1.2
+    jest-extended: ^0.11.5
+    jest-html-reporter: ^3.3.0
+    jest-styled-components: ^7.0.5
+    mockdate: ^3.0.5
+    react: ^16.12.0
+    react-disable: ^0.1.0
+    styled-components: ^5.2.1
   languageName: unknown
   linkType: soft
 

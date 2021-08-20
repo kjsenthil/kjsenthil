@@ -1,4 +1,4 @@
-import { InvestmentAccountData } from '@tsw/react-components';
+import { InvestmentAccountData } from '@tswdts/react-components';
 import { ClientAccountItem, InvestmentSummary } from '../../types';
 import { getEquityAndCashAllocation, getMonthlySavingsAmount } from '../../api';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GoalSelection as GoalSelectionOrganism } from '@tsw/react-components';
+import { GoalSelection as GoalSelectionOrganism } from '@tswdts/react-components';
 import { goalSelectionAllTiles, LifePlanLayoutView } from '../config/config';
 
 export interface GoalSelectionProps {

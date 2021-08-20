@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { GoalProgressCardProps } from '@tsw/react-components';
+import { GoalProgressCardProps } from '@tswdts/react-components';
 import LifePlanLayout, { LifePlanLayoutProps } from './LifePlanLayout';
 import { DefaultViewSelectionValue, GoalName, LifePlanLayoutView } from './config/config';
 

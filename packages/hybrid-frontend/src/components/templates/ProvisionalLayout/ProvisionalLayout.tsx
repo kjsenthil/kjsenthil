@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Container, digitalHybridTheme } from '@tsw/react-components';
+import { Container, digitalHybridTheme } from '@tswdts/react-components';
 
 interface LayoutProps {
   children: React.ReactChild;
