@@ -21,3 +21,12 @@ resource "azurerm_api_management_named_value" "xplan_app_id" {
   display_name        = "xplan-app-id"
   value               = var.xplan_app_id
 }
+
+resource "azurerm_api_management_named_value" "xplan_baseurl" {
+  name                = "xplan-baseurl"
+  resource_group_name = var.resource_group_name
+  api_management_name = module.apim.name
+  display_name        = "xplan-baseurl"
+  value               = var.api_backends.xplan-api.url
+}
+

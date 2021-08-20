@@ -23,12 +23,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -78,12 +78,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -148,12 +148,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -206,12 +206,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -264,12 +264,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -336,12 +336,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",
@@ -391,12 +391,12 @@
 					{
 						"name": "Origin",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "Referer",
 						"exists_action": "override",
-						"value": "https://tbigroupuat2.xplan.iress.co.uk/"
+						"value": "{{xplan-baseurl}}"
 					},
 					{
 						"name": "X-Xplan-App-Id",

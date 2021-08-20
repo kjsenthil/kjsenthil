@@ -44,11 +44,13 @@ variable "myaccount_signing_key" {
 variable "xplan_app_id" {
   type        = string
   description = "xplan Application Id"
+  sensitive   = true
 }
 
 variable "xplan_username" {
   type        = string
   description = "xplan basic auth username"
+  sensitive   = true
 }
 
 variable "xplan_password" {
