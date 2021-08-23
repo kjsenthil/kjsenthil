@@ -11,6 +11,18 @@ export default {
         type: 'boolean',
       },
     },
+    color: {
+      control: {
+        type: 'radio',
+      },
+      options: ['primary', 'secondary', 'tertiary', 'grey', 'gold'],
+    },
+    colorShade: {
+      control: {
+        type: 'radio',
+      },
+      options: ['light1', 'light2', 'main', 'dark1', 'dark2'],
+    },
   },
 } as Meta;
 

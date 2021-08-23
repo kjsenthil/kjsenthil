@@ -19,3 +19,9 @@ export function TypedReactMemo<C extends React.ComponentType<any>>(
 ) {
   return (React.memo(Component, propsComparator) as any) as C;
 }
+
+/**
+ * If T is a type with optional field f, Require<T, 'f'> results in a copy of T where f is required.
+ * Like Required<T> but to mark specific fields as required.
+ */
+export type Require<T, K extends keyof T> = Pick<Required<T>, K> & Omit<T, K>;

@@ -9,7 +9,7 @@ export interface IconProps extends Pick<SvgIconProps, 'fontSize'> {
 
 const Icon = ({ name, color, ...props }: IconProps) => (
   <SvgIcon {...props} color={color as SvgIconProps['color']}>
-    <path d={icons[name]} />
+    <path d={icons[name]} fillRule="evenodd" />
   </SvgIcon>
 );
 

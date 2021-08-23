@@ -48,6 +48,7 @@ export { default as TabsNavigation } from './TabsNavigation';
 export { default as TagBox } from './TagBox';
 export { default as TypographyWithTooltip } from './TypographyWithTooltip';
 export { default as UpsellCard } from './UpsellCard';
+export { default as SignpostModal } from './SignpostModal';
 
 /* material-ui molecules */
 export {

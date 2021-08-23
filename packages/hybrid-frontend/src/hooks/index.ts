@@ -27,6 +27,7 @@ export { default as useGoalCurrentProjections } from './useGoalCurrentProjection
 export { default as useStickyRef } from './useStickyRef';
 export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSummary';
 export { default as useGoalSimulateProjections } from './useGoalSimulateProjections';
-export { default as useSimulateProjectionsDataFroProjectionsChart } from './useSimulateProjectionsDataForProjectionsChart';
+export { default as useSimulateProjectionsDataForProjectionsChart } from './useSimulateProjectionsDataForProjectionsChart';
+export { default as useCoachImage } from './useCoachImage';
 
 export type { BasicInfo };

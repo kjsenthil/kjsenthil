@@ -13,6 +13,7 @@ import { TooltipProps } from './Tooltip';
 import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
 import { PillProps } from './Button/Pill/Pill';
+import { LinkProps } from './Link';
 
 export { Button, LinearProgress, TextField, Typography, ChartIndicator, ProgressBar };
 
@@ -23,6 +24,7 @@ export type {
   FormattedTextFieldUncontrolledProps,
   IconProps,
   LinearProgressProps,
+  LinkProps,
   PillProps,
   ProgressBarProps,
   SpacerProps,
