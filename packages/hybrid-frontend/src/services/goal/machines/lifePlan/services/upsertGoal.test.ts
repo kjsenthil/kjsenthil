@@ -34,9 +34,6 @@ describe('services', () => {
             drawdownEndAge: 99,
             annualIncome: 72000,
             monthlyIncome: 6000,
-            lumpSum: 10000,
-            lumpSumAge: 65,
-            laterLifeLeftOver: 10000,
           },
           event
         )
@@ -48,9 +45,6 @@ describe('services', () => {
         drawdownEndAge: expect.toInclude('is required'),
         annualIncome: expect.toInclude('is required'),
         monthlyIncome: expect.toInclude('is required'),
-        lumpSum: expect.toInclude('is required'),
-        lumpSumAge: expect.toInclude('is required'),
-        laterLifeLeftOver: expect.toInclude('is required'),
       });
 
       expect(callback).toHaveBeenCalledTimes(0);
@@ -62,13 +56,12 @@ describe('services', () => {
         await service(
           {
             ...context,
-            drawdownStartAge: 55,
+            drawdownStartAge: 65,
             drawdownEndAge: 99,
             annualIncome: 72000,
             monthlyIncome: 6000,
             lumpSum: 10000,
             lumpSumAge: 65,
-            laterLifeLeftOver: 10000,
           },
           event
         )
@@ -81,13 +74,12 @@ describe('services', () => {
         service(
           {
             ...context,
-            drawdownStartAge: 55,
+            drawdownStartAge: 65,
             drawdownEndAge: 99,
             annualIncome: 72000,
             monthlyIncome: 6000,
             lumpSum: 10000,
             lumpSumAge: 65,
-            laterLifeLeftOver: 10000,
           },
           event
         )

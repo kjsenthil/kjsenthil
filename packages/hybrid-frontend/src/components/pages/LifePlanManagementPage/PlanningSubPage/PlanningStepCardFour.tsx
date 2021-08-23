@@ -41,7 +41,7 @@ const PlanningStepCardFour = React.forwardRef(
           fullWidth
           onChange={handleRemainingAmountChange}
           onFocus={onFocus}
-          error={displayError('lumpSum')}
+          error={displayError('laterLifeLeftOver')}
           value={String(remainingAmount) || ''}
           shouldDelayOnChange
         />

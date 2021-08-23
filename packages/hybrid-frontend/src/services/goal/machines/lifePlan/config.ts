@@ -80,9 +80,10 @@ const lifePlanConfig: MachineConfig<
       on: {
         SET_DRAWDOWN_AGES: [
           {
-            target: '.validate',
+            target: '.validateDrawdownAges',
             actions: [
               'resetErrors',
+              'resetHasFetchedProjections',
               'setDrawdownAges',
               'calculateDrawdownDates',
               'calculateDrawdownPeriodLength',
@@ -98,20 +99,28 @@ const lifePlanConfig: MachineConfig<
         SET_INCOME: [
           {
             target: '.inputProcessing',
-            actions: ['setIncome', 'calculateRetirementPotValue'],
+            actions: ['resetHasFetchedProjections', 'setIncome', 'calculateRetirementPotValue'],
           },
         ],
         SET_LUMP_SUM_AMOUNT: {
           target: '.preInputProcessing',
-          actions: ['setLumpSumAmount', 'calculateRetirementPotValue'],
+          actions: [
+            'resetHasFetchedProjections',
+            'setLumpSumAmount',
+            'calculateRetirementPotValue',
+          ],
         },
         SET_LUMP_SUM_AGE: {
-          target: '.preInputProcessing',
-          actions: ['setLumpSumAge', 'calcuateLumpSumDate'],
+          target: '.validateLumpSumAge',
+          actions: ['resetHasFetchedProjections', 'setLumpSumAge', 'calcuateLumpSumDate'],
         },
         SET_LATER_LIFE_LEFT_OVER: {
           target: '.preInputProcessing',
-          actions: ['setLaterLifeLeftOver', 'calculateRetirementPotValue'],
+          actions: [
+            'resetHasFetchedProjections',
+            'setLaterLifeLeftOver',
+            'calculateRetirementPotValue',
+          ],
         },
         FETCH_PROJETIONS: {
           target: '.inputProcessing',
@@ -127,7 +136,7 @@ const lifePlanConfig: MachineConfig<
             src: 'bootstrap',
             onDone: {
               target: 'normal',
-              actions: ['prepopulate', ...afterInvokeCalculation],
+              actions: ['prepopulate', 'calculateAge', ...afterInvokeCalculation],
             },
             onError: {
               target: 'invalid',
@@ -142,14 +151,28 @@ const lifePlanConfig: MachineConfig<
             '': [{ target: 'inputProcessing', cond: 'doesGoalExist' }, { target: 'normal' }],
           },
         },
-        validate: {
+        validateDrawdownAges: {
           after: {
-            500: [
+            5: [
               {
                 target: 'normal',
                 cond: 'areDrawdownDatesValid',
               },
-              { target: 'invalid', actions: ['validateDrawdownAges'] },
+              {
+                target: 'invalid',
+                actions: ['validateDrawdownAges'],
+              },
+            ],
+          },
+        },
+        validateLumpSumAge: {
+          after: {
+            5: [
+              {
+                target: 'normal',
+                cond: 'isLumpSumDateValid',
+              },
+              { target: 'invalid', actions: ['resetErrors', 'validateLumpSumAge'] },
             ],
           },
         },

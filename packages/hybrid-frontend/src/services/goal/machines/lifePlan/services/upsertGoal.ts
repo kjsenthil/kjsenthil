@@ -1,14 +1,12 @@
 import { LifePlanMachineContext } from '../types';
+import { validateLumpSumAge } from '../validators';
 import tryInvokeService from './tryInvokeService';
 
-const fields = {
+const requiredFields = {
   drawdownStartAge: 'Drawdown start age',
   drawdownEndAge: 'Drawdown end age',
   annualIncome: 'Annual income',
   monthlyIncome: 'Monthly income',
-  lumpSum: 'Lump sum income',
-  lumpSumAge: 'Lump sum withdrawal age',
-  laterLifeLeftOver: 'Leftover money',
 };
 
 const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext, event) => Promise<T>) => (
@@ -17,11 +15,11 @@ const upsertGoal = <T = unknown>(callback: (ctx: LifePlanMachineContext, event) 
 ): Promise<T> =>
   tryInvokeService<T>(
     () => {
-      const errors: Record<string, string> = {};
+      const errors: Record<string, string> = validateLumpSumAge(ctx);
 
-      Object.keys(fields).forEach((field) => {
+      Object.keys(requiredFields).forEach((field) => {
         if (!ctx[field]) {
-          errors[field] = `${fields[field]} is required`;
+          errors[field] = `${requiredFields[field]} is required`;
         }
       });
 

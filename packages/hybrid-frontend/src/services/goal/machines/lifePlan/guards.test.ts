@@ -19,6 +19,49 @@ describe('guards', () => {
     });
   });
 
+  describe('isLumpSumAgeUpToDrawdownStartAge', () => {
+    it('returns true if lump sum age is less than or equal to drawdown start age', () => {
+      expect(
+        guards.isLumpSumAgeUpToDrawdownStartAge({
+          ...context,
+          drawdownStartAge: 51,
+          lumpSumAge: 50,
+        })
+      ).toBeTrue();
+    });
+    expect(
+      guards.isLumpSumAgeUpToDrawdownStartAge({ ...context, drawdownStartAge: 50, lumpSumAge: 50 })
+    ).toBeTrue();
+
+    it('returns false if lump sum age is greater than drawdown start age', () => {
+      expect(
+        guards.isLumpSumAgeUpToDrawdownStartAge({
+          ...context,
+          drawdownStartAge: 49,
+          lumpSumAge: 50,
+        })
+      ).toBeFalse();
+    });
+  });
+
+  describe('isLumpSumAgeGreaterThanUserAge', () => {
+    it('returns true if lump sum age is greater than client age', () => {
+      expect(
+        guards.isLumpSumAgeGreaterThanUserAge({ ...context, lumpSumAge: 51, clientAge: 50 })
+      ).toBeTrue();
+    });
+
+    it('returns false if client age is less than or equal to lump sum age', () => {
+      expect(
+        guards.isLumpSumAgeGreaterThanUserAge({ ...context, lumpSumAge: 50, clientAge: 50 })
+      ).toBeFalse();
+
+      expect(
+        guards.isLumpSumAgeGreaterThanUserAge({ ...context, lumpSumAge: 49, clientAge: 50 })
+      ).toBeFalse();
+    });
+  });
+
   describe('isDrawdownEndAgeUpTo100', () => {
     it('returns true if drawdown end age is less than or equal to 100', () => {
       expect(guards.isDrawdownEndAgeUpTo100({ ...context, drawdownEndAge: 100 })).toBeTrue();

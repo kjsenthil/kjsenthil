@@ -8,6 +8,12 @@ const isUserAgeUpToDrawdownStartAge = (ctx: LifePlanMachineContext) =>
 const isDrawdownEndAgeGreaterThanStartAge = (ctx: LifePlanMachineContext) =>
   ctx.drawdownEndAge > ctx.drawdownStartAge;
 
+const isLumpSumAgeUpToDrawdownStartAge = (ctx: LifePlanMachineContext) =>
+  ctx.drawdownStartAge >= ctx.lumpSumAge;
+
+const isLumpSumAgeGreaterThanUserAge = (ctx: LifePlanMachineContext) =>
+  ctx.lumpSumAge > ctx.clientAge;
+
 const doesGoalExist = (ctx: LifePlanMachineContext) => !!ctx.index;
 
 const shouldFetchProjections = (ctx: LifePlanMachineContext) =>
@@ -18,11 +24,17 @@ const areDrawdownDatesValid = (ctx: LifePlanMachineContext) =>
   isUserAgeUpToDrawdownStartAge(ctx) &&
   isDrawdownEndAgeGreaterThanStartAge(ctx);
 
+const isLumpSumDateValid = (ctx: LifePlanMachineContext) =>
+  isLumpSumAgeUpToDrawdownStartAge(ctx) && isLumpSumAgeGreaterThanUserAge(ctx);
+
 export default {
   isDrawdownEndAgeUpTo100,
   isUserAgeUpToDrawdownStartAge,
+  isLumpSumAgeGreaterThanUserAge,
   isDrawdownEndAgeGreaterThanStartAge,
+  isLumpSumAgeUpToDrawdownStartAge,
   doesGoalExist,
   areDrawdownDatesValid,
+  isLumpSumDateValid,
   shouldFetchProjections,
 };

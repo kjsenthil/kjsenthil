@@ -56,7 +56,8 @@ export interface LifePlanMachineSchema {
       states: {
         bootstrapping: {};
         preInputProcessing: {};
-        validate: {};
+        validateDrawdownAges: {};
+        validateLumpSumAge: {};
         normal: {};
         invalid: {};
         inputProcessing: {};

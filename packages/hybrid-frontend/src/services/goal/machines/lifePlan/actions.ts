@@ -30,6 +30,10 @@ const setDrawdownAges = assign<LifePlanMachineContext, SetAgesDrawdownEvent>(
   })
 );
 
+const resetHasFetchedProjections = assign<LifePlanMachineContext, SetIndexEvent>({
+  hasFetchedProjections: false,
+});
+
 const setHasFetchedProjections = assign<LifePlanMachineContext, SetIndexEvent>({
   hasFetchedProjections: true,
 });
@@ -176,6 +180,10 @@ const validateDrawdownAges = assign<LifePlanMachineContext>((ctx) => ({
   errors: { ...ctx.errors, ...validators.validateDrawdownAges(ctx) },
 }));
 
+const validateLumpSumAge = assign<LifePlanMachineContext>((ctx) => ({
+  errors: { ...ctx.errors, ...validators.validateLumpSumAge(ctx) },
+}));
+
 const setErrors = assign<LifePlanMachineContext, SetErrorsEvent>((ctx, evt) => ({
   errors: { ...ctx.errors, ...evt.data },
 }));
@@ -193,6 +201,7 @@ export default ({
   setIncludeStatePension,
   setAdditionalMonthlyContributions,
   setUpfrontContribution,
+  resetHasFetchedProjections,
   setHasFetchedProjections,
   calculateAge,
   calcuateLumpSumDate,
@@ -206,5 +215,6 @@ export default ({
   resetErrors,
   prepopulate,
   validateDrawdownAges,
+  validateLumpSumAge,
   reEvaluateDrawdownStartAge,
 } as unknown) as AssignAction<LifePlanMachineContext, LifePlanMachineEvents>;

@@ -35,6 +35,9 @@ const DummyMachine = Machine<LifePlanMachineContext, any, any>({
     SET_HAS_FETCHED_PROJECTIONS: {
       actions: [actions.setHasFetchedProjections],
     },
+    RESET_HAS_FETCHED_PROJECTIONS: {
+      actions: [actions.resetHasFetchedProjections],
+    },
     PREPOPULATE: {
       actions: [actions.prepopulate],
     },
@@ -95,6 +98,14 @@ describe('lifePlan actions', () => {
 
       service.send('SET_HAS_FETCHED_PROJECTIONS');
       expect(service.state.context.hasFetchedProjections).toBeTrue();
+    });
+
+    it('resets hasFetchedProjections', () => {
+      service.send('SET_HAS_FETCHED_PROJECTIONS');
+      expect(service.state.context.hasFetchedProjections).toBeTrue();
+
+      service.send('RESET_HAS_FETCHED_PROJECTIONS');
+      expect(service.state.context.hasFetchedProjections).toBeFalse();
     });
   });
 
