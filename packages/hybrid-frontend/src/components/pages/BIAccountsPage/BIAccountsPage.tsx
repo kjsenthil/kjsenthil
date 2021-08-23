@@ -23,6 +23,7 @@ import {
   humanizePeriodLabel,
   getPossessiveSuffix,
   UpsellCard,
+  AccountFilter,
 } from '@tswdts/react-components';
 import { MyAccountLayout } from '../../templates';
 import {
@@ -35,14 +36,18 @@ import {
   useBasicInfo,
   useContributionsData,
   useDispatchThunkOnRender,
+  useFeatureFlagToggle,
   useInvestmentAccounts,
   usePerformanceData,
   usePerformanceDataPeriod,
 } from '../../../hooks';
 import { RootState } from '../../../store';
 import { calculateInvestmentReturn } from '../../../services/myAccount';
+import { FeatureFlagNames } from '../../../constants';
 
 const BIAccountsPage = () => {
+  const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
+
   const {
     performance: { status: performanceStatus, error: performanceError },
   } = useSelector((state: RootState) => state);
@@ -100,6 +105,28 @@ const BIAccountsPage = () => {
 
   const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
 
+  const stickyHeaderChildComponent = (
+    <Grid
+      container
+      justifyContent="space-between"
+      alignContent="center"
+      alignItems="center"
+      spacing={1}
+    >
+      <Grid item xs={12} sm={8}>
+        {expFeatureFlag?.isEnabled && <AccountFilter />}
+      </Grid>
+      <Grid item xs={12} sm={3}>
+        <ChartPeriodSelection
+          currentPeriod={performanceDataPeriod}
+          performanceDataPeriod={PerformanceDataPeriod}
+          setCurrentPeriod={setDataPeriod}
+          periodTextDisplay={(period) => (period === '7d' ? '1w' : period)}
+        />
+      </Grid>
+    </Grid>
+  );
+
   return (
     <MyAccountLayout
       basicInfo={basicInfo}
@@ -107,7 +134,18 @@ const BIAccountsPage = () => {
         primary: `Investments`,
         secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
       }}
+      stickyHeaderChildComponent={stickyHeaderChildComponent}
     >
+      {expFeatureFlag?.isEnabled && (
+        <Box mb={5}>
+          <Grid container>
+            <Grid item xs={12}>
+              <AccountFilter />
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+
       <Grid item container xs={12} spacing={1} justifyContent="flex-end">
         <Grid item xs={12} sm={9}>
           <Typography variant="h2" color="primary" colorShade="dark2">

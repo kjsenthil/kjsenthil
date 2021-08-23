@@ -7,7 +7,13 @@ import { DigitalCoachBoxProps } from './DigitalCoachBox';
 import { TabsNavigationProps } from './TabsNavigation';
 import { GoalLifePlanCardProps } from './GoalLifePlanCard';
 import { SimplifiedPortfolioTileProps } from './SimplifiedPortfolioTile';
-import { PillsNavigationTabProps, PillsNavigationProps } from './PillsNavigation';
+import {
+  PillsNavigationTabProps,
+  PillsNavigationProps,
+  PillNavigationOnChangeProps,
+} from './PillsNavigation';
+
+import { FormSelectProps } from './FormSelect';
 
 export { default as Alert } from './Alert';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';
@@ -25,11 +31,13 @@ export { default as MainCard } from './MainCard';
 export { default as Modal } from './Modal';
 export { default as NavLink } from './NavLink';
 export { default as PillsNavigation } from './PillsNavigation';
+export { default as StickyHeader } from './StickyHeader';
 export {
   PillsNavigationTab,
   PillsNavigationSelectableTabComponent,
   PillNavigationCreatorTabComponent,
 } from './PillsNavigation';
+
 export { default as ProgressBarWithLegend } from './ProgressBarWithLegend';
 export { default as RadioGroup } from './RadioGroup';
 export { default as SimplifiedPortfolioTile } from './SimplifiedPortfolioTile';
@@ -55,6 +63,7 @@ export {
 export type {
   ChartPeriodSelectionProps,
   TypographyWithTooltipProps,
+  FormSelectProps,
   LegendProps,
   ProgressBarWithLegendProps,
   DigitalCoachBoxProps,
@@ -63,4 +72,5 @@ export type {
   SimplifiedPortfolioTileProps,
   PillsNavigationTabProps,
   PillsNavigationProps,
+  PillNavigationOnChangeProps,
 };

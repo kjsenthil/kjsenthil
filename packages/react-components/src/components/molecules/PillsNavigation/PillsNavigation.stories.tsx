@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import PillsNavigation, { PillsNavigationProps } from './PillsNavigation';
+import PillsNavigation, {
+  PillNavigationOnChangeProps,
+  PillsNavigationProps,
+} from './PillsNavigation';
 import PillsNavigationTab from './PillsNavigationTab/PillsNavigationTab.styles';
 import {
   PillNavigationCreatorTabComponent,
@@ -25,7 +28,7 @@ const Template: Story<PillsNavigationProps> = () => {
   return (
     <PillsNavigation
       value={currentValue}
-      onChange={handlePillsNavigationChange as any /** need to fix this */}
+      onChange={handlePillsNavigationChange as PillNavigationOnChangeProps}
     >
       <PillsNavigationTab
         component={PillsNavigationSelectableTabComponent}

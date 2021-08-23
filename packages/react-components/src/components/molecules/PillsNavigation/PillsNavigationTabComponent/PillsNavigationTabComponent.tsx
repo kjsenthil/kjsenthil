@@ -9,7 +9,7 @@ export const PillsNavigationSelectableTabComponent = React.forwardRef<
 >((props, ref) => (
   <Pill
     variant={props['aria-selected'] ? 'selected' : 'selectable'}
-    selectedColor="tertiary"
+    selectedColor="primary"
     isIcon={false}
     {...props}
     ref={ref}

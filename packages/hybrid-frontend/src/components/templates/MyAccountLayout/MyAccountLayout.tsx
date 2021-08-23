@@ -15,8 +15,9 @@ import {
   formatCurrency,
   useMediaQuery,
   useTheme,
+  StickyHeader,
 } from '@tswdts/react-components';
-import { BasicInfo, useFeatureFlagToggle } from '../../../hooks';
+import { BasicInfo, useFeatureFlagToggle, useStickyRef } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
 import { NavPaths } from '../../../config/paths';
 import { ACTIVE_ENV, MYACCOUNTS_HOME_URL } from '../../../config';
@@ -36,6 +37,7 @@ export interface MyAccountLayoutProps {
   heading?: PageHeading;
   headerProps?: Omit<HeaderMenuProps, 'cash'>;
   accountDetailsMenu?: React.ReactNode;
+  stickyHeaderChildComponent?: React.ReactNode;
 }
 
 const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
@@ -57,12 +59,14 @@ const MyAccountLayout = ({
   isLoading,
   headerProps,
   accountDetailsMenu,
+  stickyHeaderChildComponent,
 }: MyAccountLayoutProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
   const currentUrl = useLocation().pathname;
+  const { stickyEnabled, elementRef } = useStickyRef();
 
   const expFeatureSwitch = (isEnabled: boolean) => {
     dispatch(setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled }));
@@ -113,6 +117,13 @@ const MyAccountLayout = ({
           },
         ]}
       />
+
+      {stickyHeaderChildComponent && (
+        <StickyHeader ref={elementRef} stickyEnabled={stickyEnabled}>
+          {stickyHeaderChildComponent}
+        </StickyHeader>
+      )}
+
       {accountDetailsMenu}
       {basicInfo.isLoading || isLoading ? (
         <LinearProgress color="primary" />
