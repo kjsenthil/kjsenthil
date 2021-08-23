@@ -26,6 +26,7 @@ import {
   goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
   goalTargetProjectionsSlice as goalTargetProjectionsReducer,
 } from '../services/projections/reducers';
+import { annualisedReturnSummarySlice as annualisedReturnSummaryReducer } from '../services/returns/reducers';
 import { featureToggleSlice as featureToggleReducer } from '../services/featureToggle/reducers';
 import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
@@ -42,6 +43,7 @@ import {
 } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 import { FeatureToggleState } from '../services/featureToggle';
+import { AnnualisedReturnSummaryState } from '../services/returns';
 
 export interface RootState {
   auth: AuthState;
@@ -54,6 +56,7 @@ export interface RootState {
   simulatedProjections: SimulatedProjectionsState;
   goalCurrentProjections: GoalCurrentProjectionsState;
   goalTargetProjections: GoalTargetProjectionsState;
+  annualisedReturnSummary: AnnualisedReturnSummaryState;
   goalSimulateProjections: GoalSimulateProjectionsState;
   featureToggle: FeatureToggleState;
 }
@@ -75,6 +78,7 @@ const persistConfig: PersistConfig<RootState> = {
     'simulatedProjections',
     'goalCurrentProjections',
     'goalTargetProjections',
+    'annualisedReturnSummary',
   ],
   transforms: [authWhitelist],
   key: 'root',
@@ -92,6 +96,7 @@ const reducersMap: ReducersMapObject = {
   simulatedProjections: simulatedProjectionsReducer,
   goalCurrentProjections: goalCurrentProjectionsReducer,
   goalTargetProjections: goalTargetProjectionsReducer,
+  annualisedReturnSummary: annualisedReturnSummaryReducer,
   featureToggle: featureToggleReducer,
 };
 

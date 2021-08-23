@@ -30,6 +30,7 @@ import {
   setPerformanceDataPeriod,
 } from '../../../services/performance';
 import {
+  useAnnualisedReturnSummary,
   useAccountIds,
   useBasicInfo,
   useContributionsData,
@@ -47,7 +48,11 @@ const BIAccountsPage = () => {
   } = useSelector((state: RootState) => state);
 
   const basicInfo = useBasicInfo();
-  const { accountsSummary, investmentAccounts } = useInvestmentAccounts({ shouldDispatch: false });
+  const { accountsSummary, investmentAccounts } = useInvestmentAccounts({
+    shouldDispatch: false,
+  });
+
+  const { annualisedReturnSummary } = useAnnualisedReturnSummary();
 
   const accountIds = useAccountIds();
   const hasAccountIds = accountIds && accountIds.length > 0;
@@ -62,6 +67,7 @@ const BIAccountsPage = () => {
   const hasDataForPerformanceChart = performanceData.length > 0 && contributionsData.length > 0;
 
   const dispatchGetPerformanceContact = () => dispatch(fetchPerformanceAccountsAggregated());
+
   const { maxRetriesHit: performanceFetchMaxRetriesHit } = useDispatchThunkOnRender(
     dispatchGetPerformanceContact,
     performanceStatus,
@@ -134,6 +140,7 @@ const BIAccountsPage = () => {
               percent: investmentReturn.percent,
               label: returnLabel,
             }}
+            annualisedReturnPercentage={(annualisedReturnSummary?.annualisedReturnValue || 0) / 100}
           />
         </Grid>
 

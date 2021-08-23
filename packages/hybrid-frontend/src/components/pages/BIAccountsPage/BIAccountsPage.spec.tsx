@@ -10,6 +10,7 @@ import {
 } from '../../../services/myAccount';
 import BIAccountsPage from './BIAccountsPage';
 import performanceReducer from '../../../services/performance/reducers/performanceSlice';
+import { annualisedReturnSummarySlice as annualisedReturnSummaryReducer } from '../../../services/returns/reducers';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
@@ -30,6 +31,7 @@ describe('BIAccountsPage', () => {
         performance: performanceReducer,
         investmentSummary: investmentSummaryReducer,
         investmentAccounts: investmentAccountsReducer,
+        annualisedReturnSummary: annualisedReturnSummaryReducer,
       },
     });
     renderWithProviders(<BIAccountsPage />, store);

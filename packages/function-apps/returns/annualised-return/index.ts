@@ -234,9 +234,7 @@ function validateInput(inboundPayload: RequestPayload): ValidationError[] {
         property: "currentPortfolio_amount",
         message: "currentPortfolio_amount_not_defined",
       });
-    } else if (
-      inboundPayload.currentPortfolioData.currentPortfolioAmount >= 0
-    ) {
+    } else if (inboundPayload.currentPortfolioData.currentPortfolioAmount > 0) {
       errors.push({
         code: "val-annualreturns-008",
         property: "currentPortfolio_amount",

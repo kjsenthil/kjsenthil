@@ -14,6 +14,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "yarn g:format --write src/**/*.{js,ts,tsx,md,json}; yarn lint:fix",
+    "format:all": "yarn g:format --write src",
     "lint": "mkdir -p eslintreport && yarn lint:check --format html > eslintreport/index.html",
     "lint:check": "yarn g:lint src/**/*.{js,ts,tsx}",
     "lint:fix": "yarn lint:check --fix",

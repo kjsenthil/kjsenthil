@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { InvestmentAccount } from '@tswdts/react-components';
-import { getPerformanceAccountsAggregated } from '../../performance';
+import { getPerformanceAccountsAggregated, NetContributionValueWithDate } from '../../performance';
+import { AnnualisedReturnsResponse, postAnnualisedReturns } from '../../returns';
 import { ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
 import { extractClientAccounts } from '../utils';
 import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
@@ -38,7 +39,43 @@ const fetchInvestmentAccounts = createAsyncThunk(
         const performanceResponse = await getPerformanceAccountsAggregated(
           Number(investSummaryItem.id)
         );
-        const netContributions = performanceResponse?.included[0]?.attributes?.netContributions;
+
+        let netContributions: NetContributionValueWithDate[] = [];
+        let annualisedReturnSummaryAmount: AnnualisedReturnsResponse;
+        // Only call annualised return if there is valid performance data
+        if (performanceResponse) {
+          netContributions = performanceResponse?.included[0]?.attributes?.netContributions || [];
+
+          const firstPerfData = performanceResponse?.data?.attributes?.values.find(
+            (perfItem) => perfItem.date === netContributions[0].date
+          );
+
+          const currDateTime = new Date();
+
+          const annualisedReturnPayload = {
+            firstPerformanceData: {
+              date: firstPerfData?.date,
+              firstPerformanceAmount: firstPerfData?.value,
+            },
+            netContributionData: netContributions,
+            currentPortfolioData: {
+              date: currDateTime.toISOString(),
+              currentPortfolioAmount: -accountTotalHoldings,
+            },
+          };
+
+          try {
+            annualisedReturnSummaryAmount = await postAnnualisedReturns(annualisedReturnPayload);
+          } catch (error) {
+            annualisedReturnSummaryAmount = {
+              annualisedReturnValue: undefined,
+              transactionData: [],
+            };
+          }
+        } else {
+          annualisedReturnSummaryAmount = { annualisedReturnValue: undefined, transactionData: [] };
+        }
+
         const netContributionToDate =
           netContributions && netContributions.length > 0
             ? netContributions[netContributions.length - 1].netContributionsToDate
@@ -54,9 +91,10 @@ const fetchInvestmentAccounts = createAsyncThunk(
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,
           periodReturn: calculateInvestmentReturnForAllPeriods(
-            performanceResponse?.data.attributes.values ?? [],
-            performanceResponse?.included[0].attributes.netContributions ?? []
+            performanceResponse?.data?.attributes?.values ?? [],
+            performanceResponse?.included[0]?.attributes?.netContributions ?? []
           ),
+          annualisedReturn: annualisedReturnSummaryAmount?.annualisedReturnValue,
         };
       }
     );

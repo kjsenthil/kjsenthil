@@ -15,7 +15,7 @@ import {
   formatPercent,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { IconButton, Grid, Spacer, Tooltip, Typography } from '../../atoms';
+import { IconButton, Grid, Spacer, Tooltip, Typography, Box } from '../../atoms';
 import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
 
 export interface AccountsHeaderCell {
@@ -39,6 +39,7 @@ export interface AccountsTableProps {
       | 'accountCash'
       | 'monthlyInvestment'
       | 'periodReturn'
+      | 'annualisedReturn'
     >)[];
   period: PerformanceDataPeriod;
   footerRow?: AccountsFooterCell[];
@@ -46,6 +47,12 @@ export interface AccountsTableProps {
 
 const formatPercentActualTopline = (val: number) =>
   formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE);
+
+const percentFormatterWithSign = (val: number) =>
+  formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE, {
+    displayPlus: true,
+    injectSpaceAfterPlusMinus: true,
+  });
 
 const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableProps) => (
   <TableContainer>
@@ -115,7 +122,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.monthlyInvestment !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
-                    <Typography variant="b2" color="secondary" colorShade="dark2">
+                    <Typography variant="b2" color="primary" colorShade="dark2">
                       {formatCurrency(
                         row.monthlyInvestment,
                         CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -124,6 +131,20 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                   </Grid>
                 </AccountsTableCell>
               )}
+
+              <AccountsTableCell>
+                <Grid container justifyContent="flex-end" alignItems="center">
+                  <Grid item>
+                    <Box px={2}>
+                      <Typography variant="b2" color="primary" colorShade="dark2">
+                        {row?.annualisedReturn
+                          ? percentFormatterWithSign(row?.annualisedReturn / 100)
+                          : `0%`}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </AccountsTableCell>
 
               {row.periodReturn && row.periodReturn[period] !== undefined && (
                 <AccountsTableCell>

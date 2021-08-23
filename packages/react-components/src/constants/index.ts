@@ -23,6 +23,11 @@ export const AccountsTableHeader = (
     value: 'CASH',
   },
   {
+    value: 'ANNUALISED RETURN',
+    tooltip:
+      'The Annualised Return calculation depends on the first performance data, transactions from the net contributions and also the current portfolio data',
+  },
+  {
     value: labelReturn,
     tooltip:
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',

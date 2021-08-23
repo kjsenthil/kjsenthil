@@ -1,21 +1,32 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Store } from 'redux';
 import * as api from '../../performance/api';
+import * as returnsApi from '../../returns/api';
 import { authSlice as authReducer } from '../../auth';
 import investmentAccountsReducer, { fetchInvestmentAccounts } from './investmentAccountsSlice';
 
 import { mockClientResponse, mockInvestmentSummaryResponse } from '../mocks';
 import mockPerformanceAccountsAggregated from '../../performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import mockPostAnnualisedReturnsData from '../../returns/mocks/mock-post-annualised-returns.json';
+
+jest.mock('../api');
 
 jest.mock('../../performance/api', () => ({
   getPerformanceAccountsAggregated: jest.fn(),
 }));
 
+jest.mock('../../returns/api', () => ({
+  postAnnualisedReturns: jest.fn(),
+}));
+
 describe('investmentAccountsSlice', () => {
   let store: Store;
   const mockGetPerformance = api.getPerformanceAccountsAggregated as jest.Mock;
+  const mockPostAnnualisedReturns = returnsApi.postAnnualisedReturns as jest.Mock;
+
   beforeEach(() => {
     mockGetPerformance.mockResolvedValue(mockPerformanceAccountsAggregated);
+    mockPostAnnualisedReturns.mockResolvedValue(mockPostAnnualisedReturnsData);
 
     store = configureStore({
       reducer: {

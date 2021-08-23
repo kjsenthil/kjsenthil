@@ -1,0 +1,39 @@
+{
+  "data": {
+    "annualisedReturnValue": 20.77898137116826,
+    "transactionData": [
+      {
+        "date": "2015-01-01",
+        "transactionAmount": 1000
+      },
+      {
+        "date": "2016-01-01",
+        "transactionAmount": 1500
+      },
+      {
+        "date": "2017-01-01",
+        "transactionAmount": -800
+      },
+      {
+        "date": "2018-01-01",
+        "transactionAmount": -500
+      },
+      {
+        "date": "2019-01-01",
+        "transactionAmount": 1000
+      },
+      {
+        "date": "2020-01-01",
+        "transactionAmount": 1200
+      },
+      {
+        "date": "2021-01-01",
+        "transactionAmount": 1000
+      },
+      {
+        "date": "2021-07-21",
+        "transactionAmount": -9200
+      }
+    ]
+  }
+}

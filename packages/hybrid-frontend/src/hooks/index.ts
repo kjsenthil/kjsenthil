@@ -24,6 +24,7 @@ export { default as useProjectionsMetadataForProjectionsChart } from './useProje
 export { default as useProjectionsTargetDataForProjectionsChart } from './useProjectionsTargetDataForProjectionsChart';
 export { default as useCurrentProjectionsDataForProjectionsChart } from './useCurrentProjectionsDataForProjectionsChart';
 export { default as useGoalCurrentProjections } from './useGoalCurrentProjections';
+export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSummary';
 export { default as useGoalSimulateProjections } from './useGoalSimulateProjections';
 export { default as useSimulateProjectionsDataFroProjectionsChart } from './useSimulateProjectionsDataForProjectionsChart';
 

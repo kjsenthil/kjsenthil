@@ -5,6 +5,7 @@ export interface BasicInvestmentSummary {
   totalInvested: number;
   totalGainLoss: number;
   totalGainLossPercentage: number;
+  totalAnnualisedReturn?: number;
 }
 
 export interface ClientAccountItem {

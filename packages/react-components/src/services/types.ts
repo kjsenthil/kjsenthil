@@ -8,6 +8,7 @@ export interface InvestmentAccountData {
   equityPercentage?: number;
   cashPercentage?: number;
   monthlyInvestment?: number;
+  annualisedReturn?: number;
 }
 
 export enum RiskModel {
