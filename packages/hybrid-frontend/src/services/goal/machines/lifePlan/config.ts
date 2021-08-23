@@ -99,7 +99,12 @@ const lifePlanConfig: MachineConfig<
         SET_INCOME: [
           {
             target: '.inputProcessing',
-            actions: ['resetHasFetchedProjections', 'setIncome', 'calculateRetirementPotValue'],
+            actions: [
+              'resetHasFetchedProjections',
+              'setIncome',
+              'calculateTomorrowsMoney',
+              'calculateRetirementPotValue',
+            ],
           },
         ],
         SET_LUMP_SUM_AMOUNT: {
