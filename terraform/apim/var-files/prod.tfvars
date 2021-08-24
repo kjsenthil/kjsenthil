@@ -15,27 +15,27 @@ sg_rules      = []
 api_backends = {
   "bestinvest-identity-api" = {
     name                       = "bestinvest-identity-api"
-    url                        = "https://identityapi.demo2.bestinvest.co.uk/api/"
+    url                        = "https://identityapi.bestinvest.co.uk/api/"
     validate_certificate_chain = true
   },
   "bestinvest-myaccounts-api" = {
     name                       = "bestinvest-myaccounts-api"
-    url                        = "https://myaccountsapi.demo2.bestinvest.co.uk/api/"
+    url                        = "https://myaccountsapi.bestinvest.co.uk/api/"
     validate_certificate_chain = true
   },
   "bestinvest-online-api" = {
     name                       = "bestinvest-online-api"
-    url                        = "https://online.demo2.bestinvest.co.uk/api/"
+    url                        = "https://online.bestinvest.co.uk/api/"
     validate_certificate_chain = true
   },
   "bestinvest-oisapi-api" = {
     name                       = "bestinvest-oisapi-api"
-    url                        = "https://identityapi.demo2.bestinvest.co.uk/api/"
+    url                        = "https://identityapi.bestinvest.co.uk/api/"
     validate_certificate_chain = true
   },
   "xplan-api" = {
     name                       = "xplan-api"
-    url                        = "https://tbigroupuat2.xplan.iress.co.uk/"
+    url                        = "https://tbi.xplan.iress.co.uk/"
     validate_certificate_chain = true
   }
 }
