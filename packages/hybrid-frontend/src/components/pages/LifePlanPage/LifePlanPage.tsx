@@ -312,11 +312,15 @@ const LifePlanPage = () => {
           Our experienced, friendly coaches can talk through your goal with you and take a look at
           your different options.
         </Typography>
-        <Button wrap="nowrap" color="white" variant="contained">
+        <Button
+          wrap="nowrap"
+          color="white"
+          variant="contained"
+          href="https://online.bestinvest.co.uk/bestinvest-plus#/"
+        >
           Book appointment
         </Button>
       </UpsellCard>
-
       <Modal
         open={isModalOpen}
         onClose={modalCloseHandler}
