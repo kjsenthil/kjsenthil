@@ -14,6 +14,7 @@ resource "azurerm_storage_account" "artifact_storage" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
   account_kind             = "Storage"
+  min_tls_version          = "TLS1_2"
 
   tags = merge(var.tags, local.default_tags)
 }

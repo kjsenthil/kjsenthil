@@ -6,6 +6,7 @@ resource "azurerm_storage_account" "this" {
   account_tier              = var.account_tier
   account_replication_type  = var.account_replication_type
   enable_https_traffic_only = var.enable_https_traffic_only
+  min_tls_version           = "TLS1_2"
   tags                      = merge(map("tf_module_path", "./terraform/modules/static_website_storage_account"), var.tags)
 
   static_website {

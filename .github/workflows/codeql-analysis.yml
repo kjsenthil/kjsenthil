@@ -52,7 +52,6 @@ jobs:
       - name: Run tfsec
         uses: tfsec/tfsec-sarif-action@master
         with:
-          working_directory: ./terraform
           sarif_file: tfsec.sarif
 
       - name: Upload SARIF file

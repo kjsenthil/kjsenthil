@@ -6,7 +6,9 @@ resource "azurerm_key_vault" "key_vault" {
   enabled_for_disk_encryption = false
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   purge_protection_enabled    = true
+  soft_delete_retention_days  = 7
   sku_name                    = "standard"
+
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = var.principal_id
@@ -15,6 +17,7 @@ resource "azurerm_key_vault" "key_vault" {
       "Get"
     ]
   }
+
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id

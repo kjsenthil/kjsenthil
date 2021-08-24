@@ -1,7 +1,8 @@
 resource "azurerm_resource_group" "resource_group" {
-  name     = "rg-${local.short_location}-${var.environment}-tfstates-dh"
-  location = var.location
-  tags     = local.default_tags
+  name            = "rg-${local.short_location}-${var.environment}-tfstates-dh"
+  location        = var.location
+  min_tls_version = "TLS1_2"
+  tags            = local.default_tags
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -10,6 +11,7 @@ resource "azurerm_storage_account" "storage_account" {
   location                 = azurerm_resource_group.resource_group.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  min_tls_version          = "TLS1_2"
   tags                     = local.default_tags
 }
 
