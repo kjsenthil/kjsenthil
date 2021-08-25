@@ -1,6 +1,6 @@
 export interface PinLoginItem {
   position: number;
-  value: number;
+  value?: number;
 }
 
 export interface LoginFormData {

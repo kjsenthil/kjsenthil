@@ -1,27 +1,9 @@
 import React, { useState } from 'react';
-import { initStatePins } from '../../../constants';
-import { PinLoginItem } from '../../../services/auth';
-import { Grid, Typography, Button, Box, useMediaQuery, useTheme } from '../../atoms';
+import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from '../../atoms';
 import { Alert, FormInput } from '../../molecules';
-
-const buildPinFieldLabel = (pinPosition) => {
-  switch (pinPosition) {
-    case 1:
-      return '1st digit of your pin';
-    case 2:
-      return '2nd digit of your pin';
-    case 3:
-      return '3rd digit of your pin';
-    case 4:
-      return '4th digit of your pin';
-    case 5:
-      return '5th digit of your pin';
-    case 6:
-      return '6th digit of your pin';
-    default:
-  }
-  return '';
-};
+import { initStatePins } from '../../../constants';
+import { PinLoginItem } from '../../../services';
+import { convertToOrdinal } from '../../../utils/string';
 
 export interface PinLoginProps {
   errorMessage?: string;
@@ -30,8 +12,9 @@ export interface PinLoginProps {
 }
 
 const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) => {
-  const [inputs, setInputs] = useState<PinLoginItem[]>(initStatePins);
   const theme = useTheme();
+
+  const [inputs, setInputs] = useState<PinLoginItem[]>(initStatePins);
   const handleChange = (posIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: remove this when we upgrade to React 17
     event.persist();
@@ -61,16 +44,12 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
         <Box maxWidth={600} m="auto">
           <Grid container spacing={2} justifyContent="center">
             {inputs.map((pinField, index) => (
-              <Grid
-                item
-                xs={isMobile ? 9 : undefined}
-                key={String(pinField.position) + String(pinField.value)}
-              >
+              <Grid item xs={isMobile ? 9 : undefined} key={String(pinField.position)}>
                 <FormInput
                   type="number"
                   name={`pin-${index + 1}`}
-                  label={String(buildPinFieldLabel(pinField.position))}
-                  value={String(pinField.value)}
+                  value={pinField.value ? String(pinField.value) : ''}
+                  label={`${convertToOrdinal(pinField.position)} digit of your pin`}
                   onChange={handleChange(index)}
                   fullWidth={isMobile}
                 />

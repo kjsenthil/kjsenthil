@@ -37,14 +37,11 @@ export const AccountsTableHeader = (
 export const initStatePins = [
   {
     position: 2,
-    value: 2,
   },
   {
     position: 4,
-    value: 4,
   },
   {
     position: 6,
-    value: 6,
   },
 ];

@@ -10,9 +10,9 @@ describe('LoginForm', () => {
 
   beforeEach(() => {
     renderWithTheme(<PinLogin onPinSubmit={onSubmit} errorMessage="" successMessage="" />);
-    field1 = screen.getByDisplayValue(2);
-    field2 = screen.getByDisplayValue(4);
-    field3 = screen.getByDisplayValue(6);
+    field1 = screen.getByLabelText('2nd digit of your pin');
+    field2 = screen.getByLabelText('4th digit of your pin');
+    field3 = screen.getByLabelText('6th digit of your pin');
   });
 
   test('Renders the 3 pin fields in document', () => {
