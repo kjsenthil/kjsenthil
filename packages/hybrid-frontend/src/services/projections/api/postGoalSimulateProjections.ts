@@ -10,6 +10,10 @@ const postGoalSimulateProjections = async (payload?: GoalSimulateProjectionsRequ
     payload
   );
 
+  // in all app we use onTrack but simulate API returns onTrackPercentage
+  if (response.data?.goal?.onTrack?.percentage) {
+    response.data.goal.onTrack.percentage /= 100;
+  }
   return response.data;
 };
 

@@ -117,7 +117,9 @@ describe('postGoalSimulateProjections', () => {
       .reply(200, data);
 
     const response = await postGoalSimulateProjections(params);
+    const expectedResponse = { ...data };
+    expectedResponse.goal.onTrack.percentage /= 100;
 
-    expect(response).toStrictEqual(data);
+    expect(response).toStrictEqual(expectedResponse);
   });
 });
