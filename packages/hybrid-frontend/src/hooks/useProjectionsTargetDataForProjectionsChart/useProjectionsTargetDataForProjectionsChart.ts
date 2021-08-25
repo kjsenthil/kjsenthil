@@ -4,19 +4,21 @@ import { RootState } from '../../store';
 import { calculateDateAfterMonths } from '../../utils/date';
 
 export default function useProjectionsTargetDataForProjectionsChart(): ProjectionsChartProjectionTargetDatum[] {
-  const { data } = useSelector((state: RootState) => state.goalTargetProjections);
+  const { data: { goal } = { goal: null } } = useSelector(
+    (state: RootState) => state.goalSimulateProjections
+  );
 
-  if (!data) {
+  if (!goal?.onTrack.targetProjectionData) {
     return [];
   }
 
   const today = new Date();
 
-  return data.projections.map(({ month, projectedValue }) => ({
+  return goal.onTrack.targetProjectionData.map(({ monthNo, value }) => ({
     // Month data received from the API goes from 0 -> n (i.e. 0, 1, 2, etc.
     // month(s) from the current year). We convert it to actual dates here for
     // our chart
-    date: calculateDateAfterMonths(today, month),
-    value: projectedValue,
+    date: calculateDateAfterMonths(today, monthNo),
+    value,
   }));
 }

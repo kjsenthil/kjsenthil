@@ -20,7 +20,7 @@ import {
   useDispatchThunkOnRender,
   useLifePlanMachineHandlers,
   useGoalPotTrackerProgressBarData,
-  useUpdateCurrentProjectionsPrerequisites,
+  useUpdateSimulateProjectionsPrerequisites,
 } from '../../../hooks';
 import { NavPaths } from '../../../config/paths';
 import PlanningSubPage from './PlanningSubPage/PlanningSubPage';
@@ -34,8 +34,7 @@ const LifePlanManagementPage = () => {
   const { hash: currentUrlHash } = useLocation();
 
   const {
-    goalCurrentProjections: { data: goalCurrentProjections },
-    goalTargetProjections: { data: goalTargetProjections },
+    goalSimulateProjections: { data: goalSimulateProjections },
     performance: { status: performanceStatus },
   } = useSelector((state: RootState) => state);
 
@@ -138,11 +137,11 @@ const LifePlanManagementPage = () => {
   const currentStateValue =
     typeof stateValue === 'string' ? stateValue : Object.keys(stateValue)[0];
 
-  const { monthlyContributions } = useUpdateCurrentProjectionsPrerequisites();
+  const { monthlyContributions } = useUpdateSimulateProjectionsPrerequisites();
   const upfrontContributionRequiredToFundDrawdown =
-    goalTargetProjections?.upfrontContributionRequiredToFundDrawdown ?? 0;
+    goalSimulateProjections?.goal.onTrack.upfrontContributionsToReach ?? 0;
   const monthlyContributionsRequiredToFundDrawdown =
-    (goalTargetProjections?.monthlyContributionsRequiredToFundDrawdown ?? 0) -
+    (goalSimulateProjections?.goal.onTrack.monthlyContributionsToReach ?? 0) -
     (monthlyContributions ?? 0);
 
   const renderContentSide = () =>
@@ -216,7 +215,7 @@ const LifePlanManagementPage = () => {
             upfrontContributionRequiredToFundDrawdown={upfrontContributionRequiredToFundDrawdown}
             handleAdditionalMonthlyContributions={handlers.handleAdditionalMonthlyContributions}
             handleUpfrontContribution={handlers.handleUpfrontContribution}
-            onTrackPercentage={goalCurrentProjections?.onTrackPercentage ?? 0}
+            onTrackPercentage={goalSimulateProjections?.goal?.onTrack?.percentage ?? 0}
           />
         );
       default:

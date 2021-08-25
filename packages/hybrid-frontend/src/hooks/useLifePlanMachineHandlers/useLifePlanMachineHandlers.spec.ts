@@ -4,7 +4,7 @@ import useLifePlanMachineHandlers, {
   LifePlanMachineHandlers,
   InputEvent,
 } from './useLifePlanMachineHandlers';
-import useUpdateCurrentProjectionsPrerequisites from '../useUpdateCurrentProjectionsPrerequisites';
+import useUpdateSimulateProjectionsPrerequisites from '../useUpdateSimulateProjectionsPrerequisites';
 import {
   LifePlanMachineContext,
   LifePlanMachineEvents,
@@ -12,12 +12,12 @@ import {
 } from '../../services/goal/machines/lifePlan';
 import context from '../../services/goal/machines/lifePlan/context';
 
-jest.mock('../useUpdateCurrentProjectionsPrerequisites', () => ({
+jest.mock('../useUpdateSimulateProjectionsPrerequisites', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
-const mockUseUpdateCurrentProjectionsPrerequisites = useUpdateCurrentProjectionsPrerequisites as jest.Mock;
+const mockUseUpdateSimulateProjectionsPrerequisites = useUpdateSimulateProjectionsPrerequisites as jest.Mock;
 
 const cast = (event: Object) => (event as unknown) as InputEvent;
 
@@ -46,7 +46,7 @@ describe('useLifePlanMachineHandlers', () => {
   const ctx = { ...context, drawdownStartAge: 65, drawdownEndAge: 89 };
 
   beforeEach(() => {
-    mockUseUpdateCurrentProjectionsPrerequisites.mockReturnValue(prerequisites);
+    mockUseUpdateSimulateProjectionsPrerequisites.mockReturnValue(prerequisites);
     mockSend = (jest.fn() as unknown) as jest.Mock<
       Interpreter<LifePlanMachineContext, LifePlanMachineSchema, LifePlanMachineEvents>['send']
     >;

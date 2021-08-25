@@ -5,11 +5,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import MockDate from 'mockdate';
 import { ProjectionsChartProjectionTargetDatum } from '@tswdts/react-components';
 import useProjectionsTargetDataForProjectionsChart from './useProjectionsTargetDataForProjectionsChart';
-import { GoalTargetProjectionMonth } from '../../services/projections';
+import { TargetProjectionMonth } from '../../services/projections';
 
 describe('useProjectionsTargetDataForProjectionsChart', () => {
   beforeEach(() => {
-    MockDate.set('2020-01-01');
+    MockDate.set('2020-01-01T00:00:00');
   });
 
   afterEach(() => {
@@ -19,28 +19,30 @@ describe('useProjectionsTargetDataForProjectionsChart', () => {
   it('returns an empty array if projections data is not available', () => {
     const mockStore = configureStore({
       reducer: {
-        goalTargetProjections: () => ({
-          data: undefined,
+        goalSimulateProjections: () => ({
+          data: { goal: undefined },
         }),
       },
     });
     const wrapper = ({ children }) => <Provider store={mockStore}>{children}</Provider>;
 
-    const { result } = renderHook(() => useProjectionsTargetDataForProjectionsChart(), { wrapper });
+    const { result } = renderHook(() => useProjectionsTargetDataForProjectionsChart(), {
+      wrapper,
+    });
 
     expect(result.current).toHaveLength(0);
   });
 
   it('returns chart-appropriate projections data if there is data', () => {
     const currentYear = new Date().getFullYear();
-    const mockData: GoalTargetProjectionMonth[] = [
+    const mockData: TargetProjectionMonth[] = [
       {
-        month: 0,
-        projectedValue: 1000,
+        monthNo: 0,
+        value: 1000,
       },
       {
-        month: 1,
-        projectedValue: 2000,
+        monthNo: 1,
+        value: 2000,
       },
     ];
     const mockExpected: ProjectionsChartProjectionTargetDatum[] = [
@@ -56,14 +58,16 @@ describe('useProjectionsTargetDataForProjectionsChart', () => {
 
     const mockStore = configureStore({
       reducer: {
-        goalTargetProjections: () => ({
-          data: { projections: mockData },
+        goalSimulateProjections: () => ({
+          data: { goal: { onTrack: { targetProjectionData: mockData } } },
         }),
       },
     });
     const wrapper = ({ children }) => <Provider store={mockStore}>{children}</Provider>;
 
-    const { result } = renderHook(() => useProjectionsTargetDataForProjectionsChart(), { wrapper });
+    const { result } = renderHook(() => useProjectionsTargetDataForProjectionsChart(), {
+      wrapper,
+    });
 
     expect(result.current).toEqual(mockExpected);
   });

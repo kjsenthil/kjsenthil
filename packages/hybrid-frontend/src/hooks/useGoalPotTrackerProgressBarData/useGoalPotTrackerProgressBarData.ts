@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { ProgressBarWithLegendProps } from '@tswdts/react-components';
 import { RootState } from '../../store';
-import { GoalCurrentProjectionsResponse } from '../../services/projections/types';
+import { GoalSimulateProjectionsResponse } from '../../services/projections/types';
 
 export interface GoalPotTrackerProgressBarProps {
   doesGoalExist: boolean;
@@ -21,6 +21,32 @@ export interface GoalPotTrackerProgressBarReturn {
   drawdownMonthlyIncome: number;
 }
 
+export function getProjectionsData(
+  doesGoalExist: boolean,
+  data?: GoalSimulateProjectionsResponse
+): {
+  desiredDiscountedOutflow?: number;
+  onTrackPercentage?: number;
+  affordableUnDiscountedOutflowAverage?: number;
+  shortfallSurplusAverage?: number;
+  affordableLumpSum?: number;
+  affordableDrawdown?: number;
+  affordableTotalDrawdown?: number;
+  affordableRemainingAmount?: number;
+} {
+  const { goal } = doesGoalExist && data ? data : ({} as GoalSimulateProjectionsResponse);
+  return {
+    desiredDiscountedOutflow: goal?.desiredDiscountedOutflow,
+    onTrackPercentage: goal?.onTrack?.percentage,
+    affordableUnDiscountedOutflowAverage: goal?.affordableUnDiscountedOutflowAverage,
+    shortfallSurplusAverage: goal?.shortfallSurplusAverage,
+    affordableLumpSum: goal?.drawdownRetirement?.affordable?.lumpSum,
+    affordableDrawdown: goal?.drawdownRetirement?.affordable?.drawdown,
+    affordableTotalDrawdown: goal?.drawdownRetirement?.affordable?.totalDrawdown,
+    affordableRemainingAmount: goal?.drawdownRetirement?.affordable?.remainingAmount,
+  };
+}
+
 const useGoalPotTrackerProgressBarData = ({
   doesGoalExist,
   goalPotTotal,
@@ -30,24 +56,21 @@ const useGoalPotTrackerProgressBarData = ({
   laterLifeLeftOver,
 }: GoalPotTrackerProgressBarProps): GoalPotTrackerProgressBarReturn => {
   const {
-    goalCurrentProjections: { data },
+    goalSimulateProjections: { data },
   } = useSelector((state: RootState) => state);
 
-  const goalCurrentProjectionsData =
-    doesGoalExist && data ? data : ({} as GoalCurrentProjectionsResponse);
+  const goal = getProjectionsData(doesGoalExist, data);
 
-  const {
-    desiredOutflow = goalPotTotal,
-    onTrackPercentage = 0,
-    affordableLumpSum = lumpSum,
-    affordableOutflow = goalPotTotal,
-    affordableDrawdown = 0,
-    surplusOrShortfall = 0,
-    totalAffordableDrawdown = goalPotTotal - lumpSum - laterLifeLeftOver,
-    affordableRemainingAmount = laterLifeLeftOver,
-  } = goalCurrentProjectionsData;
-
-  const outflow = (onTrackPercentage || 0) <= 1 ? desiredOutflow : affordableOutflow;
+  const desiredOutflow = goal?.desiredDiscountedOutflow ?? goalPotTotal;
+  const onTrackPercentage = goal?.onTrackPercentage ?? 0;
+  const affordableLumpSum = goal?.affordableLumpSum ?? lumpSum;
+  const affordableOutflow = goal?.affordableUnDiscountedOutflowAverage ?? goalPotTotal;
+  const affordableDrawdown = goal?.affordableDrawdown ?? 0;
+  const surplusOrShortfall = goal?.shortfallSurplusAverage ?? 0;
+  const totalAffordableDrawdown =
+    goal?.affordableTotalDrawdown ?? goalPotTotal - lumpSum - laterLifeLeftOver;
+  const affordableRemainingAmount = goal?.affordableRemainingAmount ?? laterLifeLeftOver;
+  const outflow = (onTrackPercentage || 0) <= 100 ? desiredOutflow : affordableOutflow;
 
   const goalPotTrackerProgressBarData: ProgressBarWithLegendProps['progressBarData'] = [
     {

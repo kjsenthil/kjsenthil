@@ -4,7 +4,7 @@ import {
   LifePlanMachineEvents,
   LifePlanMachineSchema,
 } from '../../services/goal/machines/lifePlan';
-import useUpdateCurrentProjectionsPrerequisites from '../useUpdateCurrentProjectionsPrerequisites';
+import useUpdateSimulateProjectionsPrerequisites from '../useUpdateSimulateProjectionsPrerequisites';
 
 export type InputEvent = React.ChangeEvent<HTMLInputElement>;
 type InputEventFunction = (event: InputEvent) => void;
@@ -47,7 +47,7 @@ const useLifePlanMachineHandlers = ({
   send,
   context: { drawdownEndAge, drawdownStartAge },
 }: LifePlanMachineHandlersProps): LifePlanMachineHandlers => {
-  const projectionsPrerequisitesPayload = useUpdateCurrentProjectionsPrerequisites();
+  const projectionsPrerequisitesPayload = useUpdateSimulateProjectionsPrerequisites();
 
   const handleFromAgeChange = (event: InputEvent) => {
     send('SET_DRAWDOWN_AGES', {

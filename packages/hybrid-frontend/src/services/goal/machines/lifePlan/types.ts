@@ -1,4 +1,4 @@
-import { CurrentProjectionsPrerequisitePayload } from '../../../projections';
+import { SimulateProjectionsPrerequisitePayload } from '../../../projections';
 
 export interface LifePlanMachineContext {
   index: number | null;
@@ -84,12 +84,12 @@ export type SetAgesDrawdownEvent = {
 };
 
 export type SetIncomeEvent = {
-  type: 'SET_INCOME' | 'done.invoke.updateCurrentProjection';
+  type: 'SET_INCOME' | 'done.invoke.updateSimulateProjection';
   payload: (
     | { annualIncome: number; monthlyIncome: undefined }
     | { annualIncome: undefined; monthlyIncome: number }
   ) &
-    Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+    Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'>;
 };
 
 export type SwitchToToFunding = {
@@ -130,14 +130,9 @@ export type SetUpfrontContributionEvent = {
   payload: Pick<LifePlanMachineContext, 'upfrontContribution'>;
 };
 
-export type UpdateCurrentProjectionsEvent = {
-  type: string;
-  payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
-};
-
 export type UpdateSimulateProjectionsEvent = {
   type: string;
-  payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+  payload: Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'>;
 };
 
 export type PrepopulateContextEvent = {
@@ -153,14 +148,14 @@ export type SetIndexEvent = {
 };
 
 export type SetErrorsEvent = {
-  type: 'error.platform.updateCurrentProjection';
+  type: 'error.platform.updateSimulateProjection';
   data: Record<InputFieldsKeys, string>;
 };
 
 export type LifePlanMachineEvents =
   | PrepopulateContextEvent
   | SetIndexEvent
-  | UpdateCurrentProjectionsEvent
+  | UpdateSimulateProjectionsEvent
   | SetAgesDrawdownEvent
   | SetIncomeEvent
   | SetLumpSumAmountEvent
@@ -176,7 +171,7 @@ export type LifePlanMachineEvents =
   | { type: 'DELETE'; payload?: undefined }
   | {
       type: 'FETCH_PROJETIONS';
-      payload: Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'>;
+      payload: Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'>;
     };
 
 export type PrepopulateContext =

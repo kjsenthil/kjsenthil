@@ -10,8 +10,7 @@ describe('useStateIsLoading', () => {
     const mockStore = configureStore({
       reducer: {
         currentGoals: () => ({ status: 'loading' }),
-        goalTargetProjections: () => ({ status: 'loading' }),
-        goalCurrentProjections: () => ({ status: 'idle' }),
+        goalSimulateProjections: () => ({ status: 'idle' }),
         auth: () => ({ status: 'success' }),
         investmentSummary: () => ({ status: 'failure' }),
       },
@@ -22,17 +21,14 @@ describe('useStateIsLoading', () => {
 
   describe('when an array is given', () => {
     it('returns true if all required states have status === loading', () => {
-      const { result } = renderHook(
-        () => useStateIsLoading(['currentGoals', 'goalTargetProjections']),
-        { wrapper }
-      );
+      const { result } = renderHook(() => useStateIsLoading(['currentGoals']), { wrapper });
 
       expect(result.current).toBeTrue();
     });
 
     it('returns true if one of the required states have status === loading', () => {
       const { result } = renderHook(
-        () => useStateIsLoading(['goalTargetProjections', 'investmentSummary']),
+        () => useStateIsLoading(['currentGoals', 'investmentSummary']),
         { wrapper }
       );
 
@@ -41,7 +37,7 @@ describe('useStateIsLoading', () => {
 
     it('returns false if none of the required states have status !== success', () => {
       const { result } = renderHook(
-        () => useStateIsLoading(['goalCurrentProjections', 'investmentSummary', 'auth']),
+        () => useStateIsLoading(['goalSimulateProjections', 'investmentSummary', 'auth']),
         { wrapper }
       );
 

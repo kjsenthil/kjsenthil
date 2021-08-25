@@ -29,9 +29,8 @@ import {
   fetchInvestmentAccounts,
 } from '../../services/myAccount';
 import {
-  fetchGoalCurrentProjections,
-  fetchTargetProjections,
-  prepareCurrentAndTargetProjectionsRequestPayloads,
+  fetchGoalSimulateProjections,
+  prepareSimulateProjectionsRequestPayload,
 } from '../../services/projections';
 import {
   LifePlanMachineEvents,
@@ -62,30 +61,23 @@ const useLifePlanMachine = (): {
     };
   });
 
-  const callCurrentProjections = async (context: LifePlanMachineContext, event) => {
-    const {
-      currentProjectionsPayload,
-      targetProjectionsPayload,
-    } = prepareCurrentAndTargetProjectionsRequestPayloads({
+  const callSimulateProjections = async (context: LifePlanMachineContext, event) => {
+    const payload = prepareSimulateProjectionsRequestPayload({
       ...context,
       ...event.payload,
     });
-    const dispatchedFetchCurrentProjections = await dispatch(
-      fetchGoalCurrentProjections(currentProjectionsPayload)
+    const dispatchedFetchSimulateProjections = await dispatch(
+      fetchGoalSimulateProjections(payload)
     );
-    unwrapResult(dispatchedFetchCurrentProjections);
-    const dispatchedFetchTargetProjections = await dispatch(
-      fetchTargetProjections(targetProjectionsPayload)
-    );
-    unwrapResult(dispatchedFetchTargetProjections);
+    unwrapResult(dispatchedFetchSimulateProjections);
   };
 
-  const updateCurrentProjections = lifePlanMachineServices.updateCurrentProjections(
-    callCurrentProjections
+  const updateSimulateProjections = lifePlanMachineServices.updateSimulateProjections(
+    callSimulateProjections
   );
 
   const upsertGoal = lifePlanMachineServices.upsertGoal(async (context, event) => {
-    await callCurrentProjections(context, event);
+    await callSimulateProjections(context, event);
     const {
       index,
       drawdownStartAge,
@@ -131,7 +123,7 @@ const useLifePlanMachine = (): {
         guards: lifePlanMachineGuards,
         services: {
           bootstrap,
-          updateCurrentProjections,
+          updateSimulateProjections,
           upsertGoal,
           deleteGoal,
         },

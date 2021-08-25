@@ -38,11 +38,7 @@ export default function GoalCreationSubPageLayout({
   sideContentFirstOnMobile,
 }: GoalCreationSubPageLayoutProps) {
   const { isMobile } = useBreakpoint();
-  const isStateLoading = useStateIsAvailable([
-    'goalCurrentProjections',
-    'goalTargetProjections',
-    'currentGoals',
-  ]);
+  const isStateLoading = useStateIsAvailable(['goalSimulateProjections', 'currentGoals']);
 
   const overallLayoutElementRef = React.useRef<HTMLElement | null>(null);
   const sideContentElementRef = React.useRef<HTMLElement | null>(null);

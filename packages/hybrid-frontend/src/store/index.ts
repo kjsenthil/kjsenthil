@@ -23,19 +23,13 @@ import {
 import { performanceSlice as performanceReducer } from '../services/performance/reducers';
 import {
   simulatedProjectionsSlice as simulatedProjectionsReducer,
-  goalCurrentProjectionsSlice as goalCurrentProjectionsReducer,
-  goalTargetProjectionsSlice as goalTargetProjectionsReducer,
+  goalSimulateProjectionsSlice as goalSimulateProjectionsReducer,
 } from '../services/projections/reducers';
 import { annualisedReturnSummarySlice as annualisedReturnSummaryReducer } from '../services/returns/reducers';
 import { featureToggleSlice as featureToggleReducer } from '../services/featureToggle/reducers';
 import { CurrentGoalsState, GoalCreationState } from '../services/goal';
 import { AuthState } from '../services/auth';
-import {
-  GoalCurrentProjectionsState,
-  GoalSimulateProjectionsState,
-  GoalTargetProjectionsState,
-  SimulatedProjectionsState,
-} from '../services/projections';
+import { GoalSimulateProjectionsState, SimulatedProjectionsState } from '../services/projections';
 import {
   InvestmentAccountsState,
   ClientState,
@@ -54,8 +48,6 @@ export interface RootState {
   currentGoals: CurrentGoalsState;
   performance: PerformanceState;
   simulatedProjections: SimulatedProjectionsState;
-  goalCurrentProjections: GoalCurrentProjectionsState;
-  goalTargetProjections: GoalTargetProjectionsState;
   annualisedReturnSummary: AnnualisedReturnSummaryState;
   goalSimulateProjections: GoalSimulateProjectionsState;
   featureToggle: FeatureToggleState;
@@ -76,8 +68,7 @@ const persistConfig: PersistConfig<RootState> = {
     'performance',
     'investmentAccounts',
     'simulatedProjections',
-    'goalCurrentProjections',
-    'goalTargetProjections',
+    'goalSimulateProjections',
     'annualisedReturnSummary',
   ],
   transforms: [authWhitelist],
@@ -94,10 +85,9 @@ const reducersMap: ReducersMapObject = {
   currentGoals: currentGoalsReducer,
   performance: performanceReducer,
   simulatedProjections: simulatedProjectionsReducer,
-  goalCurrentProjections: goalCurrentProjectionsReducer,
-  goalTargetProjections: goalTargetProjectionsReducer,
   annualisedReturnSummary: annualisedReturnSummaryReducer,
   featureToggle: featureToggleReducer,
+  goalSimulateProjections: goalSimulateProjectionsReducer,
 };
 
 const reducers = combineReducers(reducersMap);

@@ -29,39 +29,48 @@ jest.mock('../../../hooks', () => {
   return {
     ...originalModule,
     useGoalImages: jest.fn(),
-    useUpdateCurrentProjectionsPrerequisites: jest.fn(),
+    useUpdateSimulateProjectionsPrerequisites: jest.fn(),
     useAccountIds: jest.fn(() => ['20500', '20871']),
   };
 });
 
 const mockUseGoalImages = hooks.useGoalImages as jest.Mock;
-const mockUseUpdateCurrentProjectionsPrerequisites = hooks.useUpdateCurrentProjectionsPrerequisites as jest.Mock;
+const mockUseUpdateSimulateProjectionsPrerequisites = hooks.useUpdateSimulateProjectionsPrerequisites as jest.Mock;
 
-const mockCurrentProjectionsData = [
+const mockSimulateProjectionsData = [
   {
-    contributionLine: 10000,
-    upperBound: 20000,
-    lowerBound: 5000,
-    projectedValue: 12000,
-    month: 1,
+    upper: 20000,
+    lower: 5000,
+    average: 12000,
+    monthNo: 1,
   },
   {
-    contributionLine: 11000,
-    upperBound: 21000,
-    lowerBound: 6000,
-    projectedValue: 13000,
-    month: 10,
+    upper: 21000,
+    lower: 6000,
+    average: 13000,
+    monthNo: 10,
+  },
+];
+
+const mockContributionData = [
+  {
+    value: 10000,
+    monthNo: 1,
+  },
+  {
+    value: 11000,
+    monthNo: 10,
   },
 ];
 
 const mockTargetProjectionsData = [
   {
-    month: 0,
-    projectedValue: 1000,
+    monthNo: 0,
+    value: 1000,
   },
   {
-    month: 1,
-    projectedValue: 2000,
+    monthNo: 1,
+    value: 2000,
   },
 ];
 
@@ -98,38 +107,36 @@ describe('LifePlanPage', () => {
         status: 'success',
         data: mockCurrentGoalsResponse,
       }),
-      goalCurrentProjections: () => ({
+      goalSimulateProjections: () => ({
         status: 'success',
         data: {
-          desiredOutflow: 245368.8,
-          onTrackPercentage: 0.37483978271484375,
-          affordableDrawdown: 347.0716516113281,
-          affordableLumpSum: 0,
-          affordableRemainingAmount: 0,
-          affordableOutflow: 91973.98767700195,
-          surplusOrShortfall: 153394.81232299804,
-          valueAtRetirement: 0.07741928261073262,
-          totalAffordableDrawdown: 91973.98767700195,
-          projectedGoalAgeTotal: 73093.11048848694,
-          possibleDrawdown: 347.0718785441286,
-          marketUnderperform: {
-            desiredOutflow: 245368.8,
-            onTrackPercentage: 0.36944580078125,
-            affordableDrawdown: 342.077255859375,
-            affordableLumpSum: 0,
-            affordableRemainingAmount: 0,
-            affordableOutflow: 90650.47280273437,
-            surplusOrShortfall: 154718.32719726564,
-            valueAtRetirement: 0.25640099215629014,
-            totalAffordableDrawdown: 90650.47280273437,
+          projectionData: mockSimulateProjectionsData,
+          contributionData: mockContributionData,
+          goal: {
+            onTrack: {
+              percentage: 37.483978271484375,
+              targetProjectionData: mockTargetProjectionsData,
+            },
+            desiredDiscountedOutflow: 245368.8,
+            affordableUnDiscountedOutflowAverage: 91973.98767700195,
+            shortfallSurplusAverage: 153394.81232299804,
+            affordableUndiscountedOutflowUnderperform: 90650.47280273437,
+            shortfallSurplusUnderperform: 154718.32719726564,
+            drawdownRetirement: {
+              affordable: {
+                lumpSum: 0,
+                remainingAmount: 0,
+                drawdown: 347.0716516113281,
+                totalDrawdown: 91973.98767700195,
+              },
+              underperform: {
+                lumpSum: 0,
+                remainingAmount: 0,
+                drawdown: 342.077255859375,
+                totalDrawdown: 90650.47280273437,
+              },
+            },
           },
-          projections: mockCurrentProjectionsData,
-        },
-      }),
-      goalTargetProjections: () => ({
-        status: 'success',
-        data: {
-          projections: mockTargetProjectionsData,
         },
       }),
       simulatedProjections: () => ({
@@ -144,11 +151,11 @@ describe('LifePlanPage', () => {
       lifePlan: { childImageSharp: { fluid: '' } },
       setUpNew: { childImageSharp: { fluid: '' } },
     });
-    mockUseUpdateCurrentProjectionsPrerequisites.mockReturnValue({});
+    mockUseUpdateSimulateProjectionsPrerequisites.mockReturnValue({});
     renderWithProviders(<LifePlanPage />, store);
   });
 
-  it('renders the projections chart and disclaimer', async () => {
+  it('renders the projections chart and forecasts disclaimer', async () => {
     expect(screen.getByText('Projections Chart')).toBeInTheDocument();
     expect(
       screen.getByText('Such forecasts are not a reliable indicator of future performance')

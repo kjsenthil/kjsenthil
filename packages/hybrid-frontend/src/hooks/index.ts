@@ -19,15 +19,13 @@ export { default as useLifePlanMachineHandlers } from './useLifePlanMachineHandl
 export { default as useSimulatedProjectionsData } from './useSimulatedProjectionsData';
 export { default as useGoalPotTrackerProgressBarData } from './useGoalPotTrackerProgressBarData';
 export { default as useHistoricalDataForProjectionsChart } from './useHistoricalDataForProjectionsChart';
-export { default as useUpdateCurrentProjectionsPrerequisites } from './useUpdateCurrentProjectionsPrerequisites';
 export { default as useProjectionsMetadataForProjectionsChart } from './useProjectionsMetadataForProjectionsChart';
 export { default as useProjectionsTargetDataForProjectionsChart } from './useProjectionsTargetDataForProjectionsChart';
-export { default as useCurrentProjectionsDataForProjectionsChart } from './useCurrentProjectionsDataForProjectionsChart';
-export { default as useGoalCurrentProjections } from './useGoalCurrentProjections';
+export { default as useGoalSimulateProjections } from './useGoalSimulateProjections';
+export { default as useSimulateProjectionsDataFroProjectionsChart } from './useSimulateProjectionsDataForProjectionsChart';
+export { default as useUpdateSimulateProjectionsPrerequisites } from './useUpdateSimulateProjectionsPrerequisites';
 export { default as useStickyRef } from './useStickyRef';
 export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSummary';
-export { default as useGoalSimulateProjections } from './useGoalSimulateProjections';
-export { default as useSimulateProjectionsDataForProjectionsChart } from './useSimulateProjectionsDataForProjectionsChart';
 export { default as useCoachImage } from './useCoachImage';
 
 export type { BasicInfo };

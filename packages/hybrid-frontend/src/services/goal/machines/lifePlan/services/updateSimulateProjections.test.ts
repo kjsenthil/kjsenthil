@@ -2,7 +2,7 @@ import { RiskModel } from '@tswdts/react-components';
 import updateSimulateProjections from './updateSimulateProjections';
 import context from '../context';
 import guards from '../guards';
-import { CurrentProjectionsPrerequisitePayload } from '../../../../projections';
+import { SimulateProjectionsPrerequisitePayload } from '../../../../projections';
 
 jest.mock('../guards');
 
@@ -16,12 +16,13 @@ describe('services', () => {
   const mockIsDrawdownEndAgeUpTo100 = guards.isDrawdownEndAgeUpTo100 as jest.Mock;
 
   const projectionsPrerequisitesPayloadPayload: Omit<
-    CurrentProjectionsPrerequisitePayload,
+    SimulateProjectionsPrerequisitePayload,
     'riskProfile'
   > = {
     portfolioCurrentValue: 0,
     monthlyContributions: 0,
     totalNetContributions: 0,
+    upfrontContributionRequiredToFundDrawdown: 0,
     assetModel: {
       id: 111,
       riskModel: RiskModel.TAA1,

@@ -1,7 +1,5 @@
 import { RiskModel, SedolCode } from '@tswdts/react-components';
 import { CommonState } from '../types';
-import { ClientResponse, InvestmentSummary } from '../myAccount';
-import { AllAssets } from '../assets';
 import { DrawdownType } from '../../constants';
 
 export interface ProjectionYear {
@@ -50,65 +48,9 @@ export interface GoalValidationError {
   message: string;
   code: string;
 }
-export type GoalCurrentProjectionsState = CommonState<GoalCurrentProjectionsResponse>;
 
-export interface GoalCurrentProjectionsRequestPayload {
-  timeHorizon: number;
-  preGoalRiskModel: string;
-  monthlyContributions: number;
-  portfolioCurrentValue: number;
-  desiredMonthlyDrawdown: number;
-  drawdownStartDate: string;
-  drawdownEndDate: string;
-  upfrontContribution: number;
-  preGoalExpectedReturn: number;
-  preGoalExpectedVolatility: number;
-  preGoalZScoreLowerBound: number;
-  preGoalZScoreUpperBound: number;
-  feesPercentage: number;
-  postGoalRiskModel: string;
-  lumpSumAmount: number;
-  lumpSumDate: string;
-  statePensionAmount: number;
-  desiredAmount: number;
-  postGoalExpectedReturn: number;
-  postGoalExpectedVolatility: number;
-  postGoalZScoreLowerBound: number;
-  postGoalZScoreUpperBound: number;
-  netContribution: number;
-  isConeGraph: boolean;
-  includeStatePension: boolean;
-}
-
-export interface GoalCurrentProjectionsScenarioData {
-  affordableDrawdown: number;
-  affordableLumpSum: number;
-  affordableOutflow: number;
-  affordableRemainingAmount: number;
-  desiredOutflow: number;
-  onTrackPercentage: number;
-  surplusOrShortfall: number;
-  totalAffordableDrawdown: number;
-  valueAtRetirement: number;
-}
-
-export interface GoalCurrentProjectionsResponse extends GoalCurrentProjectionsScenarioData {
-  possibleDrawdown: number;
-  projectedGoalAgeTotal: number;
-  marketUnderperform: GoalCurrentProjectionsScenarioData;
-  projections: GoalCurrentProjectionMonth[];
-}
-
-export interface GoalCurrentProjectionMonth {
-  month: number;
-  lowerBound: number;
-  upperBound: number;
-  projectedValue: number;
-  contributionLine: number;
-}
-
-export interface FetchGoalCurrentProjectionsParams
-  extends Omit<CurrentProjectionsPrerequisitePayload, 'riskProfile'> {
+export interface FetchGoalSimulateProjectionsParams
+  extends Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'> {
   clientAge: number;
   monthlyIncome: number;
   drawdownStartDate: Date | null;
@@ -122,57 +64,8 @@ export interface FetchGoalCurrentProjectionsParams
   upfrontContribution?: number;
 }
 
-export type GoalTargetProjectionsState = CommonState<GoalTargetProjectionsResponse>;
-
-export interface FetchGoalTargetProjectionsParams {
-  clientAge: number;
-  drawdownAmount: number;
-  desiredValueAtEndOfDrawdown: number;
-  drawdownStartDate: Date;
-  drawdownEndDate: Date;
-  shouldIncludeStatePension: boolean;
-  fees: number;
-  lumpSumDate: Date;
-  goalLumpSum: number;
-  investmentSummary?: InvestmentSummary[];
-  includedClientAccounts?: ClientResponse['included'];
-  fundData: AllAssets;
-}
-
-export interface GoalTargetProjectionsRequestPayload {
-  timeToAge100: number;
-  portfolioValue: number;
-  upfrontContribution: number;
-  feesPercentage: number;
-  goalLumpSum: number;
-  lumpSumDate: string;
-  preGoalRiskModel: RiskModel;
-  postGoalRiskModel: RiskModel;
-  preGoalExpectedReturn: number;
-  postGoalExpectedReturn: number;
-  preGoalVolatility: number;
-  postGoalVolatility: number;
-  drawdownStartDate: string;
-  drawdownEndDate: string;
-  desiredMonthlyDrawdown: number;
-  desiredValueAtEndOfDrawdown: number;
-  includeStatePension: boolean;
-  statePensionAmount: number;
-}
-
-export interface GoalTargetProjectionsResponse {
-  targetGoalAmount: number;
-  monthlyContributionsRequiredToFundDrawdown: number;
+export type SimulateProjectionsPrerequisitePayload = {
   upfrontContributionRequiredToFundDrawdown: number;
-  projections: GoalTargetProjectionMonth[];
-}
-
-export interface GoalTargetProjectionMonth {
-  month: number; // This starts from 0
-  projectedValue: number;
-}
-
-export type CurrentProjectionsPrerequisitePayload = {
   portfolioCurrentValue: number;
   monthlyContributions: number;
   assetModel: AssetModelResponse;

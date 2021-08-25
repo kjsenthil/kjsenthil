@@ -8,7 +8,7 @@ import {
 } from '../../services/myAccount';
 import {
   AssetModelResponse,
-  CurrentProjectionsPrerequisitePayload,
+  SimulateProjectionsPrerequisitePayload,
   getAssetModel,
   getPortfolioAssetAllocation,
   getPortfolioRiskProfile,
@@ -17,7 +17,7 @@ import {
 import useAllAssets from '../../services/assets/hooks/useAllAssets';
 import { RootState } from '../../store';
 
-const useUpdateCurrentProjectionsPrerequisites = (): Partial<CurrentProjectionsPrerequisitePayload> => {
+const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjectionsPrerequisitePayload> => {
   const { client, investmentSummary, investmentAccounts } = useSelector(
     (state: RootState) => state
   );
@@ -108,4 +108,4 @@ const useUpdateCurrentProjectionsPrerequisites = (): Partial<CurrentProjectionsP
   };
 };
 
-export default useUpdateCurrentProjectionsPrerequisites;
+export default useUpdateSimulateProjectionsPrerequisites;

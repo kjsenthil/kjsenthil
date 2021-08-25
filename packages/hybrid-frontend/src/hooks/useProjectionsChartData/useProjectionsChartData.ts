@@ -6,7 +6,7 @@ import {
 } from '@tswdts/react-components';
 import useProjectionsMetadataForProjectionsChart from '../useProjectionsMetadataForProjectionsChart';
 import useProjectionsTargetDataForProjectionsChart from '../useProjectionsTargetDataForProjectionsChart';
-import useCurrentProjectionsDataForProjectionsChart from '../useCurrentProjectionsDataForProjectionsChart';
+import useSimulateProjectionsDataForProjectionsChart from '../useSimulateProjectionsDataForProjectionsChart';
 import useHistoricalDataForProjectionsChart from '../useHistoricalDataForProjectionsChart';
 import useGoalsDataForChart, {
   GoalOptionsForChart,
@@ -27,7 +27,7 @@ const useProjectionsChartData = (
   projectionsMetadata: useProjectionsMetadataForProjectionsChart(),
   historicalData: useHistoricalDataForProjectionsChart(),
   projectionsTargetData: useProjectionsTargetDataForProjectionsChart(), // might wanna specify goal
-  projectionsData: useCurrentProjectionsDataForProjectionsChart(), // might wanna specify goal
+  projectionsData: useSimulateProjectionsDataForProjectionsChart(), // might wanna specify goal
   goalsData: useGoalsDataForChart(goalOptionsForChart),
 });
 

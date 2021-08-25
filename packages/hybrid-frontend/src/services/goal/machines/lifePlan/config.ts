@@ -15,7 +15,7 @@ const createinputProcessingState = () => ({
   entry: afterInvokeCalculation,
   invoke: {
     id: 'inputProcessing',
-    src: 'updateCurrentProjections',
+    src: 'updateSimulateProjections',
     onDone: {
       target: 'normal',
       actions: ['resetErrors', 'setHasFetchedProjections'],

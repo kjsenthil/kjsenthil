@@ -28,7 +28,7 @@ import {
   useProjectionsChartData,
   useSimulatedProjectionsData,
   useStateIsAvailable,
-  useUpdateCurrentProjectionsPrerequisites,
+  useUpdateSimulateProjectionsPrerequisites,
 } from '../../../hooks';
 import { Disclaimer, YourImportantMomentsContainer } from './LifePlanPage.styles';
 import { RootState, useAppDispatch } from '../../../store';
@@ -44,10 +44,9 @@ import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
 import { goalCreationPaths } from '../../../config/paths';
 import {
-  fetchGoalCurrentProjections,
   fetchSimulatedProjections,
-  fetchTargetProjections,
-  prepareCurrentAndTargetProjectionsRequestPayloads,
+  fetchGoalSimulateProjections,
+  prepareSimulateProjectionsRequestPayload,
 } from '../../../services/projections';
 
 const LifePlanPage = () => {
@@ -63,8 +62,10 @@ const LifePlanPage = () => {
     investmentSummary: { data: investmentSummaryData },
     currentGoals: { data: currentGoals = [] },
     simulatedProjections: { status: simulatedProjectionsStatus },
-    goalCurrentProjections: { data: goalCurrentProjections, status: goalCurrentProjectionsStatus },
-    goalTargetProjections: { status: goalTargetProjectionsStatus },
+    goalSimulateProjections: {
+      data: goalSimulateProjections,
+      status: goalSimulateProjectionsStatus,
+    },
     performance: { status: performanceStatus },
   } = useSelector((state: RootState) => state);
 
@@ -103,8 +104,7 @@ const LifePlanPage = () => {
     !isUncategorisedGoal &&
     !!historicalData.length &&
     !!goalsData.length &&
-    !!projectionsData.length &&
-    !!projectionsTargetData.length;
+    !!projectionsData.length;
 
   const { dateOfBirth } = basicInfo;
   const fundData = useAllAssets();
@@ -113,7 +113,7 @@ const LifePlanPage = () => {
     (goal) => goal.fields.category === GoalCategory.RETIREMENT
   );
 
-  const projectionsPrerequisitesPayload = useUpdateCurrentProjectionsPrerequisites();
+  const projectionsPrerequisitesPayload = useUpdateSimulateProjectionsPrerequisites();
   const {
     riskProfile,
     assetModel,
@@ -159,9 +159,8 @@ const LifePlanPage = () => {
     clientData &&
     investmentSummaryData &&
     retirementGoal &&
-    !['success', 'loading'].includes(goalTargetProjectionsStatus) &&
+    !['success', 'loading'].includes(goalSimulateProjectionsStatus) &&
     !projectionsTargetData.length &&
-    !['success', 'loading'].includes(goalCurrentProjectionsStatus) &&
     !projectionsData.length;
 
   React.useEffect(() => {
@@ -172,10 +171,7 @@ const LifePlanPage = () => {
       portfolioCurrentValue !== undefined &&
       totalNetContributions !== undefined
     ) {
-      const {
-        currentProjectionsPayload,
-        targetProjectionsPayload,
-      } = prepareCurrentAndTargetProjectionsRequestPayloads({
+      const projectionsPayload = prepareSimulateProjectionsRequestPayload({
         clientAge: projectionsMetadata.todayAge,
         drawdownStartDate: calculateDateAfterYears(
           dateOfBirth,
@@ -194,9 +190,10 @@ const LifePlanPage = () => {
         monthlyContributions,
         portfolioCurrentValue,
         totalNetContributions,
+        upfrontContribution: 0,
+        upfrontContributionRequiredToFundDrawdown: 0,
       });
-      dispatch(fetchGoalCurrentProjections(currentProjectionsPayload));
-      dispatch(fetchTargetProjections(targetProjectionsPayload));
+      dispatch(fetchGoalSimulateProjections(projectionsPayload));
     }
   }, [
     fundData,
@@ -264,18 +261,18 @@ const LifePlanPage = () => {
 
       <MainCard title="Your important moments">
         <YourImportantMomentsContainer>
-          {retirementGoal && goalCurrentProjections && (
+          {retirementGoal && goalSimulateProjections && (
             <GoalProgressCard
-              onTrackPercentage={goalCurrentProjections.onTrackPercentage ?? 0}
+              onTrackPercentage={goalSimulateProjections.goal?.onTrack?.percentage ?? 0}
               affordableValues={[
-                goalCurrentProjections.affordableLumpSum ?? 0,
-                goalCurrentProjections.totalAffordableDrawdown ?? 0,
-                goalCurrentProjections.affordableRemainingAmount ?? 0,
+                goalSimulateProjections.goal?.drawdownRetirement?.affordable?.lumpSum ?? 0,
+                goalSimulateProjections.goal?.drawdownRetirement?.affordable?.totalDrawdown ?? 0,
+                goalSimulateProjections.goal?.drawdownRetirement?.affordable?.remainingAmount ?? 0,
               ]}
-              goalValue={goalCurrentProjections.desiredOutflow ?? 0}
-              shortfallValue={goalCurrentProjections.surplusOrShortfall ?? 0}
+              goalValue={goalSimulateProjections.goal?.desiredDiscountedOutflow ?? 0}
+              shortfallValue={goalSimulateProjections?.goal?.shortfallSurplusAverage ?? 0}
               shortfallUnderperformValue={
-                goalCurrentProjections.marketUnderperform.surplusOrShortfall ?? 0
+                goalSimulateProjections?.goal?.shortfallSurplusUnderperform ?? 0
               }
               title={
                 retirementGoal && retirementGoal.fields

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import useGoalPotTrackerProgressBarData, {
   GoalPotTrackerProgressBarProps,
   GoalPotTrackerProgressBarReturn,
+  getProjectionsData,
 } from './useGoalPotTrackerProgressBarData';
 
 const getRenderedHook = (store: Store, props: GoalPotTrackerProgressBarProps) => {
@@ -58,7 +59,7 @@ const defaultResult = {
 
 const data = {
   desiredOutflow: 1000000,
-  onTrackPercentage: 0.6,
+  onTrackPercentage: 60,
   affordableLumpSum: 10000,
   affordableOutflow: 100000,
   affordableDrawdown: 1000,
@@ -125,13 +126,50 @@ const affordableOutflowResults = {
   ],
 };
 
+const defaultProjectionDataResult = {
+  affordableDrawdown: undefined,
+  affordableLumpSum: undefined,
+  affordableRemainingAmount: undefined,
+  affordableTotalDrawdown: undefined,
+  affordableUnDiscountedOutflowAverage: undefined,
+  desiredDiscountedOutflow: undefined,
+  onTrackPercentage: undefined,
+  shortfallSurplusAverage: undefined,
+};
+
+const buildStore = (onTrackPercentage: number) =>
+  configureStore({
+    reducer: {
+      goalSimulateProjections: () => ({
+        data: {
+          goal: {
+            desiredDiscountedOutflow: data.desiredOutflow,
+            onTrack: {
+              percentage: onTrackPercentage,
+            },
+            affordableUnDiscountedOutflowAverage: data.affordableOutflow,
+            shortfallSurplusAverage: data.surplusOrShortfall,
+            drawdownRetirement: {
+              affordable: {
+                lumpSum: data.affordableLumpSum,
+                drawdown: data.affordableDrawdown,
+                totalDrawdown: data.totalAffordableDrawdown,
+                remainingAmount: data.affordableRemainingAmount,
+              },
+            },
+          },
+        },
+      }),
+    },
+  });
+
 describe('useGoalPotTrackerProgressBarData', () => {
   let renderedHook: ResultContainer<GoalPotTrackerProgressBarReturn>;
 
-  describe('when no goalCurrentProjections is not present', () => {
+  describe('when no goalSimulateProjections is not present', () => {
     const store = configureStore({
       reducer: {
-        goalCurrentProjections: () => ({
+        goalSimulateProjections: () => ({
           data: undefined,
         }),
       },
@@ -150,29 +188,24 @@ describe('useGoalPotTrackerProgressBarData', () => {
     });
   });
 
-  describe('when goalCurrentProjections is present', () => {
-    const store = configureStore({
-      reducer: {
-        goalCurrentProjections: () => ({
-          data,
-        }),
-      },
-    });
+  describe('when goalSimulateProjections is present', () => {
+    const store = buildStore(data.onTrackPercentage);
 
     it('returns default results from props if doesGoalExist is false', () => {
       renderedHook = getRenderedHook(store, { ...props, doesGoalExist: false });
       expect(renderedHook.result.current).toStrictEqual(defaultResult);
     });
 
-    describe('when onTrackPercentage is less than or equal to 1', () => {
+    describe('when onTrackPercentage is less than or equal to 100', () => {
       it('returns results from store if doesGoalExist is true calculating percentrage using desiredOutflow', () => {
         renderedHook = getRenderedHook(store, { ...props, doesGoalExist: true });
         expect(renderedHook.result.current).toStrictEqual(desiredOutflowResults);
       });
 
       it('returns results from store if doesGoalExist is true calculating percentrage using desiredOutflow', () => {
-        data.onTrackPercentage = 1;
-        renderedHook = getRenderedHook(store, { ...props, doesGoalExist: true });
+        data.onTrackPercentage = 100;
+        const maxPercentageStore = buildStore(data.onTrackPercentage);
+        renderedHook = getRenderedHook(maxPercentageStore, { ...props, doesGoalExist: true });
         expect(renderedHook.result.current).toStrictEqual({
           ...desiredOutflowResults,
           onTrack: data.onTrackPercentage,
@@ -180,14 +213,90 @@ describe('useGoalPotTrackerProgressBarData', () => {
       });
     });
 
-    describe('when onTrackPercentage is more than 1', () => {
+    describe('when onTrackPercentage is more than 100', () => {
       it('returns results from store if doesGoalExist is true calculating percentrage using affordableOutflow', () => {
-        data.onTrackPercentage = 1.1;
-        renderedHook = getRenderedHook(store, { ...props, doesGoalExist: true });
+        data.onTrackPercentage = 110;
+        const moreThan100OnTrackPercentageStore = buildStore(data.onTrackPercentage);
+        renderedHook = getRenderedHook(moreThan100OnTrackPercentageStore, {
+          ...props,
+          doesGoalExist: true,
+        });
         expect(renderedHook.result.current).toStrictEqual({
           ...affordableOutflowResults,
           onTrack: data.onTrackPercentage,
         });
+      });
+    });
+  });
+
+  describe('when getProjectionsData is called', () => {
+    it('returns default values if doesGoalExist is false and data exists', () => {
+      const response = getProjectionsData(false, {
+        contributionData: [],
+        projectionData: [],
+        goal: {
+          affordableUnDiscountedOutflowAverage: 5,
+          affordableUndiscountedOutflowUnderperform: 5,
+          desiredDiscountedOutflow: 5,
+          shortfallSurplusAverage: 5,
+          shortfallSurplusUnderperform: 5,
+          onTrack: {
+            percentage: 20,
+            monthlyContributionsToReach: 500,
+            targetProjectionData: [],
+            upfrontContributionsToReach: 1000,
+          },
+        },
+      });
+      expect(response).toStrictEqual(defaultProjectionDataResult);
+    });
+
+    it('returns default values if doesGoalExist is true and data does not exists', () => {
+      const response = getProjectionsData(true, undefined);
+      expect(response).toStrictEqual(defaultProjectionDataResult);
+    });
+
+    it('returns correct values if doesGoalExist is true and data exists', () => {
+      const response = getProjectionsData(true, {
+        contributionData: [],
+        projectionData: [],
+        goal: {
+          affordableUnDiscountedOutflowAverage: 500,
+          affordableUndiscountedOutflowUnderperform: 100,
+          desiredDiscountedOutflow: 50,
+          shortfallSurplusAverage: 500,
+          shortfallSurplusUnderperform: 500,
+          onTrack: {
+            percentage: 20,
+            monthlyContributionsToReach: 500,
+            targetProjectionData: [],
+            upfrontContributionsToReach: 1000,
+          },
+          drawdownRetirement: {
+            affordable: {
+              drawdown: 300,
+              lumpSum: 1000,
+              remainingAmount: 0,
+              totalDrawdown: 10000,
+            },
+            underperform: {
+              drawdown: 300,
+              lumpSum: 1000,
+              remainingAmount: 0,
+              totalDrawdown: 10000,
+            },
+          },
+        },
+      });
+      expect(response).toStrictEqual({
+        affordableDrawdown: 300,
+        affordableLumpSum: 1000,
+        affordableRemainingAmount: 0,
+        affordableTotalDrawdown: 10000,
+        affordableUnDiscountedOutflowAverage: 500,
+        desiredDiscountedOutflow: 50,
+        onTrackPercentage: 20,
+        shortfallSurplusAverage: 500,
       });
     });
   });

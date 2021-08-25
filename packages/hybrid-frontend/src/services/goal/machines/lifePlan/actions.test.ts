@@ -313,7 +313,7 @@ describe('lifePlan actions', () => {
 
       service.send('CALUCLATE_LUMP_SUM_DATE');
 
-      expect(service.state.context.lumpSumDate).toStrictEqual(new Date(2045, 2, 10));
+      expect(service.state.context.lumpSumDate).toStrictEqual(new Date('2045-03-10T00:00:00.000Z'));
     });
   });
 

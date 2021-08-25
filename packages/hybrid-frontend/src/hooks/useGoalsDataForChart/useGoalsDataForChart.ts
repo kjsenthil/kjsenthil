@@ -10,7 +10,7 @@ import {
 import useBasicInfo from '../useBasicInfo';
 import useGoals from '../useGoals';
 import { calculateDateAfterYears } from '../../utils/date';
-import useGoalCurrentProjections from '../useGoalCurrentProjections';
+import useGoalSimulateProjections from '../useGoalSimulateProjections';
 
 export interface GoalOptionsForChart {
   goalCategory: GoalCategory;
@@ -36,15 +36,15 @@ const useGoalsDataForChart = ({
 }: GoalOptionsForChart): GoalDataForChart[] => {
   const { dateOfBirth } = useBasicInfo({ shouldDispatch: false });
 
-  const goalCurrentProjections = useGoalCurrentProjections();
+  const goalSimulateProjections = useGoalSimulateProjections();
 
   // These are needed to check whether the "Lump sum" and "Remaining" goal
   // indicators will be shown or not.
   let remainingAmount = 0;
   let lumpSumAmount = 0;
-  if (goalCurrentProjections) {
-    remainingAmount = goalCurrentProjections.affordableRemainingAmount;
-    lumpSumAmount = goalCurrentProjections.affordableLumpSum;
+  if (goalSimulateProjections?.goal?.drawdownRetirement) {
+    remainingAmount = goalSimulateProjections.goal.drawdownRetirement.affordable.remainingAmount;
+    lumpSumAmount = goalSimulateProjections.goal.drawdownRetirement.affordable.lumpSum;
   }
 
   const goalsFromState = useGoals(true);

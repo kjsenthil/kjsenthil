@@ -15,10 +15,7 @@ const mockStore = configureStore({
       status: 'success',
       ...mockInvestmentSummaryResponse,
     }),
-    goalCurrentProjections: () => ({
-      status: 'idle',
-    }),
-    goalTargetProjections: () => ({
+    goalSimulateProjections: () => ({
       status: 'idle',
     }),
     currentGoals: () => ({
