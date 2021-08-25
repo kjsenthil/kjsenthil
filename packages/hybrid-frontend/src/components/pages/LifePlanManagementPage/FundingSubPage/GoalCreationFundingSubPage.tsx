@@ -11,6 +11,7 @@ import {
 import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 import FundingStepCardOne from './FundingStepCardOne';
 import FundingStepCardTwo from './FundingStepCardTwo';
+import FundingDisclaimer from './FundingDisclaimer';
 import { RootState } from '../../../../store';
 import { GoalInput } from './GoalCreationFundingSubPage.styles';
 
@@ -72,6 +73,7 @@ export default function GoalCreationFundingSubPage({
   const stepCardOneElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardTwoElementRef = React.useRef<HTMLElement | null>(null);
   const goalInputElementRef = React.useRef<HTMLDivElement | null>(null);
+  const disclaimerElementRef = React.useRef<HTMLElement | null>(null);
 
   const mainContentElements = [
     {
@@ -107,7 +109,6 @@ export default function GoalCreationFundingSubPage({
         />
       ),
     },
-
     {
       hash: '#goal-input',
       ref: goalInputElementRef,
@@ -138,6 +139,11 @@ export default function GoalCreationFundingSubPage({
           />
         </GoalInput>
       ),
+    },
+    {
+      hash: '#disclaimer',
+      ref: disclaimerElementRef,
+      element: <FundingDisclaimer />,
     },
   ];
 
