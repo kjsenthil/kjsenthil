@@ -438,7 +438,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
           }
           else{
             if (typeof inboundPayload.drawdownRetirement.startDate != 'undefined')
-              if (parseDate(inboundPayload.drawdownRetirement.startDate) > parseDate(inboundPayload.drawdownRetirement.lumpSum.date)){
+              if (parseDate(inboundPayload.drawdownRetirement.startDate) < parseDate(inboundPayload.drawdownRetirement.lumpSum.date)){
                 const error: ValidationError = {
                   code: "val-simulateproj-029",
                   property: "drawdownRetirement.lumpSum.date",

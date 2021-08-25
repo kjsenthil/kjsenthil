@@ -451,7 +451,8 @@ describe("tests for validate function", () => {
 
   it("when drawdown type is Retirement and drawdownRetirement has invalid values validation errors are thrown", () => {
     const invalidDateRequestPayload = createRequestPayload();
-    const lumpSumDate = new Date(2021,1,15);
+    const lumpSumDate = new Date();
+    lumpSumDate.setDate(lumpSumDate.getDate() +1);
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.Retirement;
     invalidDateRequestPayload.drawdownRetirement = {
@@ -505,8 +506,8 @@ describe("tests for validate function", () => {
 
   it("when drawdown type is Retirement and drawdownRetirement has valid values validation will return no error", () => {
     const invalidDateRequestPayload = createRequestPayload();
-    const startDate = new Date(1975,1,5);
-    const lumpSumDate = new Date(2021,1,15);
+    const startDate = new Date(2021,1,5);
+    const lumpSumDate = new Date(2021,1,1);
     invalidDateRequestPayload.includeGoal = true;
     invalidDateRequestPayload.drawdownType = DrawdownType.Retirement;
     invalidDateRequestPayload.drawdownRetirement = {
