@@ -7,7 +7,6 @@
       "description": "This will return all questions used to profile a customer.",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET"
         },
         "backend_id": "bestinvest-online-api"
@@ -20,7 +19,6 @@
       "description": "This will return the ready made portfolio sedol number for each of the risk profiles (i.e. Defensive, Balanaced, Growth etc)",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET"
         },
         "backend_id": "bestinvest-online-api"
@@ -34,7 +32,6 @@
       "path_params": ["sedol"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET"
         },
         "backend_id": "bestinvest-online-api"
@@ -48,7 +45,6 @@
       "path_params": ["sedol"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET"
         },
         "backend_id": "bestinvest-online-api"
@@ -61,7 +57,6 @@
       "description": "This returns the projection of fund performance over 5 years.",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Authorization"]
         },
@@ -76,7 +71,6 @@
       "path_params": ["riskName"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Authorization"]
         },
@@ -90,7 +84,6 @@
       "description": "This lets the user login to Identity API.",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type"]
         },
@@ -104,7 +97,6 @@
       "description": "This lets the user to enter PIN for two factor authentication",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type"]
         },
@@ -118,7 +110,6 @@
       "description": "Connects to the projections function app and returns the asset allocation of a given portfolio",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -133,7 +124,6 @@
       "description": "Connects to the projections function app and returns the closest aligned risk profile for a given portfolio",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -148,7 +138,6 @@
       "description": "Connects to the current-projection function app and returns the current projection for the given inputs",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -163,7 +152,6 @@
       "description": "Connects to the target-projection function app and returns the current projection for the given inputs",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -178,7 +166,6 @@
       "description": "This refreshes the generated idenity token",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type"]
         },
@@ -193,7 +180,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -209,7 +195,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -225,7 +210,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -240,7 +224,6 @@
       "description": "This lets the user to investment summary for all given accounts ",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -256,7 +239,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -272,7 +254,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -288,7 +269,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -304,7 +284,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -320,7 +299,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -335,7 +313,6 @@
       "description": "This lets the user to get breakdown of allocation for multiple accounts",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -350,7 +327,6 @@
       "description": "This lets the user to get performance aggregated for multiple accounts",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -365,7 +341,6 @@
       "description": "This lets the user to get net contributions for multiple accounts",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -380,7 +355,6 @@
       "description": "Queries for all feature toggles which are held inside Azure App Config",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -396,7 +370,6 @@
       "path_params": ["id"],
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "GET",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -411,7 +384,6 @@
       "description": "Connects to the simulate-projection function app and returns the simulate projection for the given inputs",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },
@@ -426,7 +398,6 @@
       "description": "Connects to the annualised-return function app and returns the annualised return for the given inputs",
       "policy": {
         "cors": {
-          "allowed_origins": ["*"],
           "method": "POST",
           "headers": ["Content-Type", "Origin", "Authorization"]
         },

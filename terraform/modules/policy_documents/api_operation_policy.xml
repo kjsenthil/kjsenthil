@@ -15,7 +15,9 @@
      %{ if config.cors_allowed_origins != null }
         <allowed-origins>
           %{ for origin in config.cors_allowed_origins }
-            <origin>${ origin }</origin>
+                %{ if origin != null && origin != "" }
+                  <origin>${ origin }</origin>
+                %{ endif ~}
           %{ endfor ~}
         </allowed-origins>
       %{ endif ~}
