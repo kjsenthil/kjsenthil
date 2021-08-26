@@ -8,19 +8,16 @@ import useInvestmentSummary from '../../../hooks/useInvestmentSummary';
 
 const AddCashPage = () => {
   const basicInfo = useBasicInfo();
-  // TODO - select this dynamically
   const { investmentSummary } = useInvestmentSummary();
-  const { investmentAccounts } = useSelector((state: RootState) => ({
-    investmentAccounts: state.investmentAccounts.data,
+  const { selectedAccount } = useSelector((state: RootState) => ({
+    selectedAccount: state.selectedAccount.account,
   }));
-  const accountId = investmentAccounts?.find((item) => item.id)?.id;
-  const selectedAccount = investmentSummary?.find((item) => item.id === accountId)?.attributes;
+  const accountId = selectedAccount?.id;
+  const account = investmentSummary?.find((item) => item.id === accountId)?.attributes;
 
-  const cash = selectedAccount ? selectedAccount?.cash : 0;
-  const investment = selectedAccount ? selectedAccount?.funds + selectedAccount?.shares : 0;
-  const total = selectedAccount
-    ? selectedAccount?.cash + selectedAccount?.funds + selectedAccount?.shares
-    : 0;
+  const cash = account ? account?.cash : 0;
+  const investment = account ? account?.funds + account?.shares : 0;
+  const total = account ? account?.cash + account?.funds + account?.shares : 0;
 
   return (
     <AccountDetailsLayout basicInfo={basicInfo}>

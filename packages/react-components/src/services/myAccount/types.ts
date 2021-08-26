@@ -12,6 +12,7 @@ export type PeriodReturn = {
 
 export interface InvestmentAccount extends InvestmentAccountData {
   accountType: string;
+  accountNumber?: string;
   accountTotalNetContribution: number;
   periodReturn: PeriodReturn;
 }

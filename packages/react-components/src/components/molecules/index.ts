@@ -19,6 +19,7 @@ export { default as Alert } from './Alert';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';
 export { default as ChartPeriodSelection } from './ChartPeriodSelection';
 export { default as ComponentsWithCaption } from './ComponentsWithCaption';
+export { default as DropdownToggle } from './DropdownToggle';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
 export { default as DisabledComponent } from './DisabledComponent';
 export { default as FormInput } from './FormInput';

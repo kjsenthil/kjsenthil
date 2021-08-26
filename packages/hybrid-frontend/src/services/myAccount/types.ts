@@ -12,6 +12,7 @@ export interface ClientAccountItem {
   id: string;
   name: string;
   type: string;
+  accountNumber?: string;
 }
 
 export interface ClientState
@@ -39,6 +40,10 @@ export interface ClientAccount {
     self: string;
   };
   relationships: Record<string, DataRelationship>[] | null;
+}
+
+export interface AccountState extends CommonState {
+  account: InvestmentAccount;
 }
 
 export interface DataRelationship {

@@ -503,7 +503,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-csTbgd deDNFR"
+          class="MuiCardContent-root sc-gIvpjk iCsXpV"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -578,7 +578,7 @@ Object {
                       data-testid="Spacer"
                     />
                     <span
-                      class="sc-bYwzuL KuNlK"
+                      class="sc-jJMGnK cdinGG"
                       title="Some description"
                     >
                       <svg
@@ -623,14 +623,14 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-gGLxEB ipOZov"
+                  class="sc-FRrlG hGAElN"
                 >
                   <div
-                    class="sc-ckTSus jFbLMP"
+                    class="sc-fXazdy eFSdLm"
                     width="20"
                   >
                     <div
-                      class="sc-bBjRSN goYPYN"
+                      class="sc-khIgEk dnyiXL"
                     >
                       <div>
                         <h6
@@ -658,11 +658,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-ckTSus cDNpmk"
+                    class="sc-fXazdy gQcaVp"
                     width="50"
                   >
                     <div
-                      class="sc-bBjRSN goYPYN"
+                      class="sc-khIgEk dnyiXL"
                     >
                       <div>
                         <h6
@@ -690,11 +690,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-ckTSus KidTp"
+                    class="sc-fXazdy gvWmEA"
                     width="5"
                   >
                     <div
-                      class="sc-bBjRSN goYPYN"
+                      class="sc-khIgEk dnyiXL"
                     >
                       <div>
                         <h6
@@ -777,7 +777,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <span
-                    class="sc-bYwzuL KuNlK"
+                    class="sc-jJMGnK cdinGG"
                     title="Some description"
                   >
                     <svg

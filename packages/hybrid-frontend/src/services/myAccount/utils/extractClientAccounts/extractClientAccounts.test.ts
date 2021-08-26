@@ -5,9 +5,9 @@ describe('extractClientAccounts', () => {
   it('returns an array of client accounts', () => {
     const accounts = extractClientAccounts(mockClientResponse.included);
     expect(accounts).toStrictEqual([
-      { id: '20500', name: 'ISA', type: 'accounts' },
-      { id: '20871', name: 'SIPP', type: 'accounts' },
-      { id: '20499', name: 'GIA', type: 'accounts' },
+      { accountNumber: 'BI205006', id: '20500', name: 'ISA', type: 'accounts' },
+      { accountNumber: 'BI208716', id: '20871', name: 'SIPP', type: 'accounts' },
+      { accountNumber: 'BI204993', id: '20499', name: 'GIA', type: 'accounts' },
     ]);
   });
 

@@ -26,7 +26,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
 
     const investmentAccountsPromises = investmentSummary.data.map(
       async (investSummaryItem: InvestmentSummary) => {
-        const { name: accountName = '', type: accountType = '' } =
+        const { name: accountName = '', type: accountType = '', accountNumber = '' } =
           extractedClientAccounts.find(
             (clientAccount) => clientAccount.id === investSummaryItem.id
           ) || {};
@@ -84,6 +84,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
         return {
           id: investSummaryItem.id,
           accountName,
+          accountNumber,
           accountType,
           accountTotalHoldings,
           accountTotalNetContribution: netContributionToDate,

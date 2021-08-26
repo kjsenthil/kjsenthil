@@ -30,12 +30,14 @@ export interface AnimationToggleProps {
   top: number;
   theme: Theme;
   animationTime?: number;
+  isFullWidth?: boolean;
 }
 
 const AnimateToggle = styled.div`
   ${({
     shouldShow,
     animationTime = 0.2,
+    isFullWidth = false,
     top,
     theme: {
       typography: { pxToRem },
@@ -44,7 +46,9 @@ const AnimateToggle = styled.div`
     position: absolute;
     top: ${pxToRem(top)};
     opacity: ${shouldShow ? 1 : 0};
+    z-index: ${shouldShow ? 1 : -1};
     animation: ${shouldShow ? show : hide} ${animationTime}s ease-in-out;
+    width: ${isFullWidth ? '100%' : 'unset'};
   `}
 `;
 

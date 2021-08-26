@@ -1,12 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import { Grid, NavLink } from '@tswdts/react-components';
 
 export const StyledHeader = styled.div`
   ${({ theme }) => `
     background-color: ${theme.palette.grey.light1};
     padding: ${theme.spacing(9)}px;
+    svg { background-color: ${theme.palette.grey[200]};
     border-bottom: 1px solid ${theme.palette.grey.light1};
   `}
 `;
@@ -41,7 +42,9 @@ export const StyledLink = styled(NavLink)`
   `}
 `;
 
-export const StyledList = styled(List)`
-  margin: 0;
-  padding: 0;
+export const StyledListItem = styled(ListItem)`
+  ${({ theme }) => `
+    &:not(:last-child) {
+      border-bottom: 2px solid ${theme.palette.grey.light2};
+  `}
 `;
