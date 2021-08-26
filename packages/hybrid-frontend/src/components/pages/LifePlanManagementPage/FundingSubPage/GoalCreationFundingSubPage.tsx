@@ -7,6 +7,7 @@ import {
   PerformanceDataPeriod,
   Spacer,
   formatCurrency,
+  DisabledComponent,
 } from '@tswdts/react-components';
 import GoalCreationSubPageLayout from '../../../templates/GoalCreationSubPageLayout';
 import FundingStepCardOne from './FundingStepCardOne';
@@ -14,6 +15,8 @@ import FundingStepCardTwo from './FundingStepCardTwo';
 import FundingDisclaimer from './FundingDisclaimer';
 import { RootState } from '../../../../store';
 import { GoalInput } from './GoalCreationFundingSubPage.styles';
+import { useFeatureFlagToggle } from '../../../../hooks';
+import { FeatureFlagNames } from '../../../../constants';
 
 interface GoalCreationFundingSubPageProps extends RouteComponentProps {
   renderContentSide: () => React.ReactNode;
@@ -70,6 +73,20 @@ export default function GoalCreationFundingSubPage({
     ),
   ];
 
+  const experimentalFeature = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
+  const isExperimentalFeatureEnabled = !!experimentalFeature?.isEnabled;
+
+  const DisabledExperimental = ({ children }: { children: React.ReactNode }) => {
+    if (isExperimentalFeatureEnabled) {
+      return <>{children}</>;
+    }
+    return (
+      <DisabledComponent placement="top" arrow title="Coming soon">
+        {children}
+      </DisabledComponent>
+    );
+  };
+
   const stepCardOneElementRef = React.useRef<HTMLElement | null>(null);
   const stepCardTwoElementRef = React.useRef<HTMLElement | null>(null);
   const goalInputElementRef = React.useRef<HTMLDivElement | null>(null);
@@ -99,14 +116,16 @@ export default function GoalCreationFundingSubPage({
       hash: '#step-2',
       ref: stepCardTwoElementRef,
       element: (
-        <FundingStepCardTwo
-          ref={stepCardTwoElementRef}
-          shouldIncludeStatePension={shouldIncludeStatePension}
-          onChange={(event) => {
-            handleStatePensionSelection(event);
-            navigate('#step-2');
-          }}
-        />
+        <DisabledExperimental>
+          <FundingStepCardTwo
+            ref={stepCardTwoElementRef}
+            shouldIncludeStatePension={shouldIncludeStatePension}
+            onChange={(event) => {
+              handleStatePensionSelection(event);
+              navigate('#step-2');
+            }}
+          />
+        </DisabledExperimental>
       ),
     },
     {
