@@ -42,7 +42,7 @@ const prepareSimulateProjectionsRequestPayload = ({
 
   const { erValue, volatility, zScores } = assetModel;
 
-  const formatDrawdownDate = (date: Date) => formatDate(date, 'YYYY-MM-DD', false);
+  const customFormatDate = (date: Date) => formatDate(date, 'YYYY-MM-DD', false);
 
   return {
     timeHorizonToProject: timeHorizon,
@@ -55,12 +55,15 @@ const prepareSimulateProjectionsRequestPayload = ({
     drawdownType: DrawdownType.Retirement,
     drawdownRetirement: {
       regularDrawdown: monthlyIncome || 0,
-      startDate: formatDrawdownDate(drawdownStartDate || defaultDrawDownStartDate),
-      endDate: formatDrawdownDate(drawdownEndDate || defaultDrawDownEndDate),
-      lumpSum: {
-        amount: lumpSum,
-        date: formatDrawdownDate(lumpSumDate || drawdownStartDate || defaultDrawDownStartDate),
-      },
+      startDate: customFormatDate(drawdownStartDate || defaultDrawDownStartDate),
+      endDate: customFormatDate(drawdownEndDate || defaultDrawDownEndDate),
+      lumpSum:
+        lumpSum && lumpSumDate
+          ? {
+              amount: lumpSum,
+              date: customFormatDate(lumpSumDate),
+            }
+          : undefined,
       remainingAmount: laterLifeLeftOver,
       statePensionAmount: shouldIncludeStatePension ? 9339.2 : 0,
     },
