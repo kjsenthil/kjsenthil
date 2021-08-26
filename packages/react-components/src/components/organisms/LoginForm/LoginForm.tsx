@@ -49,7 +49,7 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) =
         </Typography>
       </Grid>
       <Grid item xs={12} sm={12} lg={6}>
-        <Form onSubmit={onFormSubmit}>
+        <Form onSubmit={onFormSubmit} method="POST">
           <Box maxWidth={389} m="auto">
             <Grid container justifyContent="center" spacing={3}>
               <Grid item xs={12}>
