@@ -8,6 +8,11 @@ output "frontend_web_endpoint" {
   description = "The Gatsby App web endpoint."
 }
 
+output "frontend_web_cname" {
+  value       =  var.environment_prefix == "staging" || var.environment_prefix == "prod" ? coalesce(format("https://%s",module.front_end.website_cname_record[0]),"") : null
+  description = "The Gatsby App CNAME record."
+}
+
 output "storybook_web_endpoint" {
   value       = var.environment_prefix != "staging" ? module.storybook[0].web_endpoint : null
   description = "The storybook web endpoint."

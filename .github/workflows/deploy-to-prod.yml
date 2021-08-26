@@ -292,6 +292,7 @@ jobs:
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=website-cname::$( terraform output -json | jq -r .frontend_web_cname.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
@@ -302,6 +303,7 @@ jobs:
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
+      website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
@@ -784,6 +786,7 @@ jobs:
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=website-cname::$( terraform output -json | jq -r .frontend_web_cname.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
@@ -795,6 +798,7 @@ jobs:
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
@@ -1002,7 +1006,9 @@ jobs:
         shell: bash
         run: |
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
+          echo "Staging website cname: ${{ needs.deploy_staging_terraform.outputs.website_cname }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
+          echo "Production website cname: ${{ needs.deploy_production_terraform.outputs.website_cname }}"
           echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
 
   post-to-slack:
@@ -1275,7 +1281,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to DH website - Staging",
-                      "url": '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' ? '${{ needs.deploy_staging_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' ? '${{ needs.deploy_staging_terraform.outputs.website_cname }}' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },
@@ -1293,7 +1299,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to DH website - Production",
-                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.website_endpoint }}' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.website_cname }}' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },

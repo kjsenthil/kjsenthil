@@ -12,6 +12,7 @@ output "name" {
   value       = azurerm_storage_account.this.name
   description = "Name of the static storage account"
 }
+
 output "website_cname_record" {
   value = azurerm_dns_cname_record.cdn[*].fqdn
   description = "Web endpoint friendly alias (cname) DNS record name"

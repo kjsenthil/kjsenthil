@@ -726,7 +726,7 @@ jobs:
 
   get_staging_rg_outputs:
     name: "Get staging resource group outputs"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: staging
     needs:
       - detect_changes
@@ -766,7 +766,7 @@ jobs:
 
   get_staging_apim_outputs:
     name: "Get staging APIM outputs"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: staging
     needs:
       - detect_changes
@@ -819,7 +819,7 @@ jobs:
 
   plan_staging:
     name: "Terraform plan Staging"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: staging
     needs:
       - detect_changes
@@ -906,7 +906,7 @@ jobs:
 
   get_prod_rg_outputs:
     name: "Get prod resource group outputs"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: prod
     needs:
       - detect_changes
@@ -946,7 +946,7 @@ jobs:
 
   get_prod_apim_outputs:
     name: "Get prod APIM outputs"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: prod
     needs:
       - detect_changes
@@ -998,7 +998,7 @@ jobs:
 
   plan_prod:
     name: "Terraform plan Prod"
-    if: ${{ always() && (needs.detect_changes.outputs.has_tf_infra_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
+    if: always()
     environment: prod
     needs:
       - detect_changes
