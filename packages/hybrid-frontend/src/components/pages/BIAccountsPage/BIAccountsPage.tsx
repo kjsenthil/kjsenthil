@@ -169,10 +169,9 @@ const BIAccountsPage = () => {
       <Grid item container spacing={6}>
         <Grid item xs={12}>
           <SummaryPanel
-            totalValue={accountsSummary?.totalInvested}
             totalNetContributions={summaryContributions}
-            totalReturn={accountsSummary?.totalGainLoss}
-            totalReturnPercentage={accountsSummary?.totalGainLossPercentage}
+            lifetimeReturn={accountsSummary?.totalGainLoss}
+            lifetimeReturnPercentage={accountsSummary?.totalGainLossPercentage}
             periodBasedReturn={{
               value: investmentReturn.value,
               percent: investmentReturn.percent,

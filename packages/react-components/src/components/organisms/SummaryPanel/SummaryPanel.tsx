@@ -1,18 +1,19 @@
 import * as React from 'react';
+import { useBreakpoint } from '../../../hooks';
 import {
   formatCurrency,
   formatPercent,
   CurrencyPresentationVariant,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { Divider, Spacer, Grid, useTheme, useMediaQuery } from '../../atoms';
+import { Divider, Spacer, Grid } from '../../atoms';
 import { Legend, LegendProps } from '../../molecules';
-import SummaryWrapper, { SummaryCard, SummaryOfTotalsWrapper } from './SummaryPanel.styles';
+import { SummaryCard } from './SummaryPanel.styles';
 
 export interface SummaryPanelProps {
   totalNetContributions: number;
-  totalReturn: number;
-  totalReturnPercentage: number;
+  lifetimeReturn: number;
+  lifetimeReturnPercentage: number;
   totalValue?: number;
   annualisedReturnPercentage?: number;
   periodBasedReturn?: {
@@ -23,28 +24,23 @@ export interface SummaryPanelProps {
 }
 
 const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
+  netContribution: {
+    title: 'NET CONTRIBUTIONS',
+    tooltip: 'Contributions minus withdrawals',
+  },
   lifetimeReturn: {
     title: 'LIFETIME RETURN',
     tooltip:
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
   },
+  annualisedReturn: {
+    title: 'ANNUALISED RETURN',
+    tooltip: 'Annualised return is the average amount earned each year over a given time period',
+  },
   periodBasedReturn: {
     title: 'LAST 5 YEARS RETURN',
     tooltip:
       'Return figure relates to the gain or loss over the specified period including the impact of fees',
-  },
-  annualisedReturn: {
-    title: 'ANNUALISED RETURN',
-    tooltip:
-      'Return figure relates to the gain or loss over the specified period including the impact of fees',
-  },
-  totalValue: {
-    title: 'TOTAL VALUE',
-    tooltip: 'Total value = Investments plus cash',
-  },
-  netContribution: {
-    title: 'NET CONTRIBUTIONS',
-    tooltip: 'Contributions minus withdrawals',
   },
 };
 
@@ -63,15 +59,13 @@ const currencyFormatterWithSign = (val: number) =>
   });
 
 export default function SummaryPanel({
-  totalValue,
   totalNetContributions,
-  totalReturn,
-  totalReturnPercentage,
+  lifetimeReturn,
+  lifetimeReturnPercentage,
   annualisedReturnPercentage,
   periodBasedReturn,
 }: SummaryPanelProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useBreakpoint();
 
   const renderVerticalDivider = (
     <>
@@ -99,26 +93,19 @@ export default function SummaryPanel({
     />
   );
 
-  const renderTotalValue = (
+  const renderLifetimeReturn = (
     <Legend
-      {...legendProps.totalValue}
-      value={totalValue}
-      valueFormatter={currencyFormatter}
+      {...legendProps.lifetimeReturn}
+      value={lifetimeReturn}
+      valueFormatter={currencyFormatterWithSign}
       valueSizeVariant="h5"
+      percentageChange={lifetimeReturnPercentage}
+      percentageFormatter={percentFormatterWithSign}
+      percentageNewLine={isMobile}
     />
   );
 
-  const renderTotalReturn = (
-    <Legend
-      {...legendProps.lifetimeReturn}
-      value={totalReturn}
-      valueFormatter={currencyFormatterWithSign}
-      valueSizeVariant="h5"
-      percentageChange={totalReturnPercentage}
-      percentageFormatter={percentFormatterWithSign}
-    />
-  );
-  const renderPeriodBasedreturn = periodBasedReturn ? (
+  const renderPeriodBasedreturn = periodBasedReturn && (
     <>
       {isMobile || renderVerticalDivider}
       <Legend
@@ -129,67 +116,52 @@ export default function SummaryPanel({
         valueSizeVariant="h5"
         percentageChange={periodBasedReturn.percent}
         percentageFormatter={percentFormatterWithSign}
+        percentageNewLine={isMobile}
       />
     </>
-  ) : (
-    <>
-      {isMobile || renderVerticalDivider}
-      {renderTotalReturn}
-    </>
   );
+
   return (
     <SummaryCard>
-      <SummaryWrapper isMobile={isMobile} container spacing={3} justifyContent="space-between">
-        <SummaryOfTotalsWrapper
-          isMobile={isMobile && !!periodBasedReturn}
-          item
-          xs={isMobile ? 12 : 8}
-          container
-          spacing={2}
-          wrap="nowrap"
-          justifyContent="flex-start"
-        >
-          <Grid item xs={isMobile ? 12 : undefined}>
-            {totalValue ? renderTotalValue : renderNetContributions}
+      {isMobile ? (
+        <Grid container spacing={3} justifyContent="space-evenly">
+          <Grid item xs={6}>
+            {renderNetContributions}
           </Grid>
-          <Grid
-            item
-            container
-            xs={!!periodBasedReturn || isMobile ? 12 : 6}
-            wrap="nowrap"
-            alignItems="center"
-            spacing={2}
-            alignContent="flex-start"
-            zeroMinWidth
-            justifyContent={isMobile ? 'space-between' : 'flex-start'}
-          >
-            <>
-              {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
-              <Grid item xs={isMobile ? 6 : undefined}>
-                {totalValue ? renderNetContributions : renderTotalReturn}
-              </Grid>
-              {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
-              <Grid item xs={isMobile ? 6 : undefined}>
-                {annualisedReturnPercentage
-                  ? renderAnnualisedReturn
-                  : !!periodBasedReturn && renderTotalReturn}
-              </Grid>
-            </>
+
+          <Grid item xs={6}>
+            {renderLifetimeReturn}
           </Grid>
-        </SummaryOfTotalsWrapper>
-        {isMobile && <Divider orientation="horizontal" />}
-        <Grid
-          item
-          container
-          xs={isMobile ? 12 : 4}
-          direction="row"
-          justifyContent={isMobile ? 'flex-start' : 'flex-end'}
-          alignItems="center"
-          wrap="nowrap"
-        >
-          {renderPeriodBasedreturn}
+
+          <Grid item xs={6}>
+            {renderAnnualisedReturn}
+          </Grid>
+
+          <Grid item xs={6}>
+            {renderPeriodBasedreturn}
+          </Grid>
         </Grid>
-      </SummaryWrapper>
+      ) : (
+        <Grid container justifyContent="space-between" alignContent="center">
+          <Grid item xs={8}>
+            <Grid container justifyContent="flex-start">
+              <Grid item>{renderNetContributions}</Grid>
+
+              <Grid item>{renderVerticalDivider}</Grid>
+
+              <Grid item>{renderLifetimeReturn}</Grid>
+
+              <Grid item>{renderVerticalDivider}</Grid>
+
+              <Grid item>{renderAnnualisedReturn}</Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={4} container justifyContent="flex-end" alignItems="center" wrap="nowrap">
+            {renderPeriodBasedreturn}
+          </Grid>
+        </Grid>
+      )}
     </SummaryCard>
   );
 }

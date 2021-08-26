@@ -25,7 +25,7 @@ export const AccountsTableHeader = (
   {
     value: 'ANNUALISED RETURN',
     tooltip:
-      'The Annualised Return calculation depends on the first performance data, transactions from the net contributions and also the current portfolio data',
+      'Return figure relates to the gain or loss over the specified period including the impact of fees',
   },
   {
     value: labelReturn,

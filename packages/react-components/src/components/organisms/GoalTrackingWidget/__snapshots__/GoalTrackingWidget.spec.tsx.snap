@@ -110,7 +110,7 @@ Object {
   white-space: nowrap;
 }
 
-.c15 {
+.c14 {
   font-size: 0.75rem;
   line-height: 1rem;
   -webkit-letter-spacing: 0.01875rem;
@@ -122,7 +122,7 @@ Object {
   white-space: nowrap;
 }
 
-.c18 {
+.c17 {
   background-color: #eeedfc;
   width: 100%;
   height: 2px;
@@ -144,20 +144,6 @@ Object {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
 }
 
 .c10 {
@@ -182,7 +168,7 @@ Object {
   z-index: 1;
 }
 
-.c16 {
+.c15 {
   min-width: 110px;
   max-width: 50%;
   width: 50%;
@@ -191,7 +177,7 @@ Object {
   z-index: 1;
 }
 
-.c17 {
+.c16 {
   min-width: 110px;
   max-width: 50%;
   width: 5%;
@@ -346,19 +332,26 @@ Object {
                             LUMP SUM
                           </h6>
                           <div
-                            class="c14"
+                            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
-                            <h6
-                              class="MuiTypography-root c15 MuiTypography-body1"
+                            <div
+                              class="MuiGrid-root MuiGrid-item"
                             >
-                              £20,000
-                            </h6>
+                              <h6
+                                class="MuiTypography-root c14 MuiTypography-body1"
+                              >
+                                £20,000
+                              </h6>
+                            </div>
+                            <div
+                              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                            />
                           </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="c16"
+                      class="c15"
                       width="50"
                     >
                       <div
@@ -371,19 +364,26 @@ Object {
                             FROM AGE 67 - 89
                           </h6>
                           <div
-                            class="c14"
+                            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
-                            <h6
-                              class="MuiTypography-root c15 MuiTypography-body1"
+                            <div
+                              class="MuiGrid-root MuiGrid-item"
                             >
-                              £1,080,000
-                            </h6>
+                              <h6
+                                class="MuiTypography-root c14 MuiTypography-body1"
+                              >
+                                £1,080,000
+                              </h6>
+                            </div>
+                            <div
+                              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                            />
                           </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="c17"
+                      class="c16"
                       width="5"
                     >
                       <div
@@ -396,13 +396,20 @@ Object {
                             REMAINING
                           </h6>
                           <div
-                            class="c14"
+                            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
-                            <h6
-                              class="MuiTypography-root c15 MuiTypography-body1"
+                            <div
+                              class="MuiGrid-root MuiGrid-item"
                             >
-                              £72,000
-                            </h6>
+                              <h6
+                                class="MuiTypography-root c14 MuiTypography-body1"
+                              >
+                                £72,000
+                              </h6>
+                            </div>
+                            <div
+                              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                            />
                           </div>
                         </div>
                       </div>
@@ -423,7 +430,7 @@ Object {
                 data-testid="Spacer"
               >
                 <div
-                  class="c18"
+                  class="c17"
                 />
               </div>
               <div
@@ -496,7 +503,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-dFRpbK lbWnsZ"
+          class="MuiCardContent-root sc-csTbgd deDNFR"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -616,10 +623,10 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-ckTSus dZEyll"
+                  class="sc-gGLxEB ipOZov"
                 >
                   <div
-                    class="sc-fbIWvP A-dDJy"
+                    class="sc-ckTSus jFbLMP"
                     width="20"
                   >
                     <div
@@ -632,19 +639,26 @@ Object {
                           LUMP SUM
                         </h6>
                         <div
-                          class="sc-cOifOu juYHOJ"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
-                          <h6
-                            class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
                           >
-                            £20,000
-                          </h6>
+                            <h6
+                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                            >
+                              £20,000
+                            </h6>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="sc-fbIWvP fDYlvR"
+                    class="sc-ckTSus cDNpmk"
                     width="50"
                   >
                     <div
@@ -657,19 +671,26 @@ Object {
                           FROM AGE 67 - 89
                         </h6>
                         <div
-                          class="sc-cOifOu juYHOJ"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
-                          <h6
-                            class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
                           >
-                            £1,080,000
-                          </h6>
+                            <h6
+                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                            >
+                              £1,080,000
+                            </h6>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="sc-fbIWvP cZjtGg"
+                    class="sc-ckTSus KidTp"
                     width="5"
                   >
                     <div
@@ -682,13 +703,20 @@ Object {
                           REMAINING
                         </h6>
                         <div
-                          class="sc-cOifOu juYHOJ"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
-                          <h6
-                            class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
                           >
-                            £72,000
-                          </h6>
+                            <h6
+                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                            >
+                              £72,000
+                            </h6>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                          />
                         </div>
                       </div>
                     </div>

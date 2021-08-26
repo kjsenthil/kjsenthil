@@ -34,7 +34,7 @@ output "api_base_url" {
 }
 
 output "myaccounts_home_url" {
-  value       = "https://my.demo2.bestinvest.co.uk/dashboard"
+  value       = var.environment_prefix == "prod" ? "https://my.bestinvest.co.uk/dashboard" : "https://my.demo2.bestinvest.co.uk/dashboard"
   description = "My Accounts Home Page"
 }
 

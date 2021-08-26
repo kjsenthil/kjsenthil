@@ -98,7 +98,7 @@ Object {
   white-space: nowrap;
 }
 
-.c13 {
+.c12 {
   font-size: 0.75rem;
   line-height: 1rem;
   -webkit-letter-spacing: 0.01875rem;
@@ -120,20 +120,6 @@ Object {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
 }
 
 .c8 {
@@ -158,7 +144,7 @@ Object {
   z-index: 1;
 }
 
-.c14 {
+.c13 {
   min-width: 110px;
   max-width: 50%;
   width: 30%;
@@ -167,7 +153,7 @@ Object {
   z-index: 1;
 }
 
-.c15 {
+.c14 {
   min-width: 110px;
   max-width: 50%;
   width: 70%;
@@ -250,19 +236,26 @@ Object {
                       TITLE A
                     </h6>
                     <div
-                      class="c12"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                     >
-                      <h6
-                        class="MuiTypography-root c13 MuiTypography-body1"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        £10
-                      </h6>
+                        <h6
+                          class="MuiTypography-root c12 MuiTypography-body1"
+                        >
+                          £10
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                class="c14"
+                class="c13"
                 width="30"
               >
                 <div
@@ -275,19 +268,26 @@ Object {
                       TITLE B
                     </h6>
                     <div
-                      class="c12"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                     >
-                      <h6
-                        class="MuiTypography-root c13 MuiTypography-body1"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        £30
-                      </h6>
+                        <h6
+                          class="MuiTypography-root c12 MuiTypography-body1"
+                        >
+                          £30
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                class="c15"
+                class="c14"
                 width="70"
               >
                 <div
@@ -300,13 +300,20 @@ Object {
                       TITLE C
                     </h6>
                     <div
-                      class="c12"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                     >
-                      <h6
-                        class="MuiTypography-root c13 MuiTypography-body1"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        £70
-                      </h6>
+                        <h6
+                          class="MuiTypography-root c12 MuiTypography-body1"
+                        >
+                          £70
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                      />
                     </div>
                   </div>
                 </div>
@@ -318,7 +325,7 @@ Object {
     </body>,
     "container": <div>
       <div
-        class="sc-eGJWMs dkPCC"
+        class="sc-bXexck dUMdjU"
       >
         <div
           class="MuiBox-root MuiBox-root-1"
@@ -361,10 +368,10 @@ Object {
             data-testid="Spacer"
           />
           <div
-            class="sc-ckTSus dZEyll"
+            class="sc-gGLxEB ipOZov"
           >
             <div
-              class="sc-fbIWvP jjCIQO"
+              class="sc-ckTSus dCXydj"
               width="10"
             >
               <div
@@ -377,19 +384,26 @@ Object {
                     TITLE A
                   </h6>
                   <div
-                    class="sc-cOifOu juYHOJ"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                   >
-                    <h6
-                      class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
                     >
-                      £10
-                    </h6>
+                      <h6
+                        class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                      >
+                        £10
+                      </h6>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                    />
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="sc-fbIWvP eWkUfO"
+              class="sc-ckTSus hMikFn"
               width="30"
             >
               <div
@@ -402,19 +416,26 @@ Object {
                     TITLE B
                   </h6>
                   <div
-                    class="sc-cOifOu juYHOJ"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                   >
-                    <h6
-                      class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
                     >
-                      £30
-                    </h6>
+                      <h6
+                        class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                      >
+                        £30
+                      </h6>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                    />
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="sc-fbIWvP GQXbN"
+              class="sc-ckTSus djnrMw"
               width="70"
             >
               <div
@@ -427,13 +448,20 @@ Object {
                     TITLE C
                   </h6>
                   <div
-                    class="sc-cOifOu juYHOJ"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                   >
-                    <h6
-                      class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
                     >
-                      £70
-                    </h6>
+                      <h6
+                        class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                      >
+                        £70
+                      </h6>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto"
+                    />
                   </div>
                 </div>
               </div>

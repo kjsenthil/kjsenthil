@@ -6,7 +6,7 @@ import { Typography } from '../../atoms';
 describe('StickyHeader', () => {
   beforeEach(() => {
     renderWithTheme(
-      <StickyHeader stickyEnabled>
+      <StickyHeader>
         <Typography>Test Content</Typography>
       </StickyHeader>
     );

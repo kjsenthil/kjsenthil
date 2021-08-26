@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, RefObject } from 'react';
 
-export interface StickyRefProps {
+export interface StickyRefReturnProps {
   stickyEnabled: boolean;
-  elementRef: RefObject<HTMLDivElement>;
+  stickyRef: RefObject<HTMLDivElement>; // only recognized as div at the moment instead of span, html, etc
 }
 
-const useStickyRef = (): StickyRefProps => {
+const useStickyRef = (): StickyRefReturnProps => {
   const [stickyEnabled, setSticky] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
-    if (elementRef.current) {
-      setSticky(elementRef.current.getBoundingClientRect().top <= 0);
+    if (stickyRef.current) {
+      setSticky(stickyRef.current.getBoundingClientRect().top < -50);
     }
   };
 
@@ -23,7 +23,7 @@ const useStickyRef = (): StickyRefProps => {
     };
   }, []);
 
-  return { stickyEnabled, elementRef };
+  return { stickyEnabled, stickyRef };
 };
 
 export default useStickyRef;

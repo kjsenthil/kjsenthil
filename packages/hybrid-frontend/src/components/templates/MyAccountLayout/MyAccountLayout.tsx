@@ -40,18 +40,6 @@ export interface MyAccountLayoutProps {
   stickyHeaderChildComponent?: React.ReactNode;
 }
 
-const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
-  <div data-testid="page-heading">
-    <Typography variant="h2">{secondary}</Typography>
-    <Typography variant="h1">{primary}</Typography>
-    {tertiary && (
-      <Typography variant="h4" color="grey" colorShade="dark1" fontWeight="bold">
-        {tertiary}
-      </Typography>
-    )}
-  </div>
-);
-
 const MyAccountLayout = ({
   children,
   basicInfo,
@@ -66,11 +54,24 @@ const MyAccountLayout = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
   const currentUrl = useLocation().pathname;
-  const { stickyEnabled, elementRef } = useStickyRef();
+  const { stickyEnabled, stickyRef } = useStickyRef();
 
   const expFeatureSwitch = (isEnabled: boolean) => {
     dispatch(setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled }));
   };
+
+  const Heading = ({ primary, secondary, tertiary }: PageHeading) => (
+    <div data-testid="page-heading">
+      <Typography variant="h2">{secondary}</Typography>
+      <Typography variant="h1">{primary}</Typography>
+      {tertiary && (
+        <Typography variant="h4" color="grey" colorShade="dark1" fontWeight="bold">
+          {tertiary}
+        </Typography>
+      )}
+      <div ref={stickyRef} />
+    </div>
+  );
 
   return (
     <LayoutContainer maxWidth="lg" disableGutters>
@@ -118,10 +119,8 @@ const MyAccountLayout = ({
         ]}
       />
 
-      {stickyHeaderChildComponent && (
-        <StickyHeader ref={elementRef} stickyEnabled={stickyEnabled}>
-          {stickyHeaderChildComponent}
-        </StickyHeader>
+      {stickyEnabled && stickyHeaderChildComponent && (
+        <StickyHeader>{stickyHeaderChildComponent}</StickyHeader>
       )}
 
       {accountDetailsMenu}

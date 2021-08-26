@@ -53,7 +53,12 @@ const useAnnualisedReturnSummary = (
     ) {
       dispatch(fetchAnnualisedReturnSummary());
     }
-  }, [shouldDispatch, isAnnualisedReturnSummaryAvailable]); // not adding isAnnualisedReturnSummaryLoading to avoid infinite call in case of API validation errors
+  }, [
+    shouldDispatch,
+    isClientAvailable,
+    isInvestmentSummaryAvailable,
+    isAnnualisedReturnSummaryAvailable,
+  ]); // not adding isAnnualisedReturnSummaryLoading to avoid infinite call in case of API validation errors
 
   return { annualisedReturnSummary };
 };

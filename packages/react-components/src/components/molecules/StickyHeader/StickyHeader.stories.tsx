@@ -14,7 +14,6 @@ const Template: Story<StickyHeaderProps> = (args) => <StickyHeader {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  stickyEnabled: true,
   children: (
     <Grid container justify="center">
       <Grid item xs={6} container justify="center">

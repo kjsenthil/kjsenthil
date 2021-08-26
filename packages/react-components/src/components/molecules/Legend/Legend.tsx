@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LegendContainer, IconWrapper, ValueContainer } from './Legend.styles';
+import { LegendContainer, IconWrapper } from './Legend.styles';
 import TagBox from '../TagBox';
 import {
   Spacer,
@@ -9,6 +9,8 @@ import {
   ChartIndicatorProps,
   Tooltip,
   Icon,
+  Box,
+  Grid,
 } from '../../atoms';
 import { Counter, CounterProps } from '../../particles';
 
@@ -27,6 +29,7 @@ export interface LegendProps {
   shouldAnimate?: boolean;
   counterProps?: Omit<CounterProps, 'valueFormatter' | 'value'>;
   tooltip?: string;
+  percentageNewLine?: boolean;
 }
 
 const LegendValue = ({
@@ -37,6 +40,7 @@ const LegendValue = ({
   percentageChange,
   shouldAnimate = false,
   counterProps = {},
+  percentageNewLine = false,
 }: Omit<LegendProps, 'title' | 'chartIndicatorProps' | 'value'> & {
   value: Value;
 }) => {
@@ -68,23 +72,26 @@ const LegendValue = ({
   );
 
   return (
-    <ValueContainer>
-      <Typography variant={valueSizeVariant} color="primary" colorShade="dark2" spaceNoWrap>
-        {legendValue}
-      </Typography>
-      {percentageChange !== undefined && (
-        <>
-          <Spacer x={1} />
-          <TagBox
-            variant="percentage"
-            formatter={percentageFormatter}
-            shouldAnimate={shouldAnimate}
-          >
-            {percentageChange}
-          </TagBox>
-        </>
-      )}
-    </ValueContainer>
+    <Grid container alignItems="center">
+      <Grid item>
+        <Typography variant={valueSizeVariant} color="primary" colorShade="dark2" spaceNoWrap>
+          {legendValue}
+        </Typography>
+      </Grid>
+      <Grid item xs={percentageNewLine ? 12 : 'auto'}>
+        {percentageChange !== undefined && (
+          <Box marginLeft={1}>
+            <TagBox
+              variant="percentage"
+              formatter={percentageFormatter}
+              shouldAnimate={shouldAnimate}
+            >
+              {percentageChange}
+            </TagBox>
+          </Box>
+        )}
+      </Grid>
+    </Grid>
   );
 };
 

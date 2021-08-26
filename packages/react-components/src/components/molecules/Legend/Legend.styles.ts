@@ -9,12 +9,6 @@ export const LegendContainer = styled.div`
   `}
 `;
 
-export const ValueContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-`;
-
 export const IconWrapper = styled.span`
   ${({ theme }: { theme: Theme }) => `
     color: ${theme.palette.grey['300']};

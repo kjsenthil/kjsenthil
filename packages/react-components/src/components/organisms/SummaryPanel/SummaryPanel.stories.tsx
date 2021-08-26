@@ -11,10 +11,10 @@ export default {
 const Template: Story<SummaryPanelProps> = (args) => <SummaryPanel {...args} />;
 
 const defaultArgs: SummaryPanelProps = {
-  totalValue: 148238.52,
   totalNetContributions: 120726.83,
-  totalReturn: 27512.14,
-  totalReturnPercentage: 0.2534,
+  lifetimeReturn: 27512.14,
+  lifetimeReturnPercentage: 0.2534,
+  annualisedReturnPercentage: 0.2,
   periodBasedReturn: {
     value: 7632.04,
     percent: 0.4511,
@@ -24,10 +24,3 @@ const defaultArgs: SummaryPanelProps = {
 
 export const Default = Template.bind({});
 Default.args = defaultArgs;
-
-export const WithAnnualisedReturn = Template.bind({});
-WithAnnualisedReturn.args = {
-  ...defaultArgs,
-  totalValue: undefined,
-  annualisedReturnPercentage: 0.2,
-};
