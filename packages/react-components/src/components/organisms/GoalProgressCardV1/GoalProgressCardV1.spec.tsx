@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import GoalProgressCard, { GoalProgressCardProps } from './GoalProgressCard';
+import GoalProgressCardV1, { GoalProgressCardV1Props } from './GoalProgressCardV1';
 
 jest.mock('../../atoms/Tooltip', () => ({
   __esModule: true,
@@ -12,8 +12,8 @@ jest.mock('../../atoms/Tooltip', () => ({
   ),
 }));
 
-describe('GoalProgressCard', () => {
-  const defaultCardProps: GoalProgressCardProps = {
+describe('GoalProgressCardV1', () => {
+  const defaultCardProps: GoalProgressCardV1Props = {
     onTrackPercentage: 0.72,
     affordableValues: [700000, 500000, 242555],
     goalValue: 1975000,
@@ -28,7 +28,7 @@ describe('GoalProgressCard', () => {
   };
 
   test('component renders with expected goal data', () => {
-    renderWithTheme(<GoalProgressCard {...defaultCardProps} />);
+    renderWithTheme(<GoalProgressCardV1 {...defaultCardProps} />);
     const expectedTexts = [
       'Retirement',
       'Some tooltip text',

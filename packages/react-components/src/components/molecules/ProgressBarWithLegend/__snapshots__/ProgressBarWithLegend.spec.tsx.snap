@@ -100,29 +100,29 @@ Object {
 }
 
 .c6 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 20%;
-  -webkit-animation: gDKouL 1s ease-out;
-  animation: gDKouL 1s ease-out;
+  -webkit-animation: kkQgsn 1s ease-out;
+  animation: kkQgsn 1s ease-out;
   z-index: 1;
 }
 
 .c10 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 50%;
-  -webkit-animation: bDhWlw 1s ease-out;
-  animation: bDhWlw 1s ease-out;
+  -webkit-animation: djJjuY 1s ease-out;
+  animation: djJjuY 1s ease-out;
   z-index: 1;
 }
 
 .c11 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 5%;
-  -webkit-animation: dvwyrU 1s ease-out;
-  animation: dvwyrU 1s ease-out;
+  -webkit-animation: eqTxIk 1s ease-out;
+  animation: eqTxIk 1s ease-out;
   z-index: 1;
 }
 
@@ -291,11 +291,11 @@ Object {
         class="sc-hHEiqL iFujOp"
       >
         <div
-          class="sc-dlMDgC OgPMv"
+          class="sc-dlMDgC iTRVGB"
           width="20"
         >
           <div
-            class="sc-kfYoZR xHplD"
+            class="sc-bCwfaz fQcQfT"
           >
             <div>
               <h6
@@ -323,11 +323,11 @@ Object {
           </div>
         </div>
         <div
-          class="sc-dlMDgC bMaVKg"
+          class="sc-dlMDgC iMmJcT"
           width="50"
         >
           <div
-            class="sc-kfYoZR xHplD"
+            class="sc-bCwfaz fQcQfT"
           >
             <div>
               <h6
@@ -355,11 +355,11 @@ Object {
           </div>
         </div>
         <div
-          class="sc-dlMDgC hlCSgx"
+          class="sc-dlMDgC gxFtVX"
           width="5"
         >
           <div
-            class="sc-kfYoZR xHplD"
+            class="sc-bCwfaz fQcQfT"
           >
             <div>
               <h6

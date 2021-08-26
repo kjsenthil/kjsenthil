@@ -160,29 +160,29 @@ Object {
 }
 
 .c11 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 20%;
-  -webkit-animation: gDKouL 1s ease-out;
-  animation: gDKouL 1s ease-out;
+  -webkit-animation: kkQgsn 1s ease-out;
+  animation: kkQgsn 1s ease-out;
   z-index: 1;
 }
 
 .c15 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 50%;
-  -webkit-animation: bDhWlw 1s ease-out;
-  animation: bDhWlw 1s ease-out;
+  -webkit-animation: djJjuY 1s ease-out;
+  animation: djJjuY 1s ease-out;
   z-index: 1;
 }
 
 .c16 {
-  min-width: 110px;
+  min-width: 120px;
   max-width: 50%;
   width: 5%;
-  -webkit-animation: dvwyrU 1s ease-out;
-  animation: dvwyrU 1s ease-out;
+  -webkit-animation: eqTxIk 1s ease-out;
+  animation: eqTxIk 1s ease-out;
   z-index: 1;
 }
 
@@ -503,7 +503,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-gIvpjk iCsXpV"
+          class="MuiCardContent-root sc-fHCHyC hlcYrj"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -626,7 +626,7 @@ Object {
                   class="sc-FRrlG hGAElN"
                 >
                   <div
-                    class="sc-fXazdy eFSdLm"
+                    class="sc-fXazdy eNzlOg"
                     width="20"
                   >
                     <div
@@ -658,7 +658,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-fXazdy gQcaVp"
+                    class="sc-fXazdy gwVjyO"
                     width="50"
                   >
                     <div
@@ -690,7 +690,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-fXazdy gvWmEA"
+                    class="sc-fXazdy kGoGQi"
                     width="5"
                   >
                     <div

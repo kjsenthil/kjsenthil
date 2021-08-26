@@ -14,9 +14,9 @@ import {
   GoalIcon,
   GoalValues,
   IconContainer,
-} from './GoalProgressCard.styles';
+} from './GoalProgressCardV1.styles';
 
-export interface GoalProgressCardProps {
+export interface GoalProgressCardV1Props {
   onTrackPercentage: number;
   affordableValues: number[];
   goalValue: number;
@@ -30,7 +30,7 @@ export interface GoalProgressCardProps {
   navigateToEditGoalPage: () => void;
 }
 
-const GoalProgressCard = ({
+const GoalProgressCardV1 = ({
   onTrackPercentage,
   affordableValues,
   goalValue,
@@ -42,7 +42,7 @@ const GoalProgressCard = ({
   tooltipText,
   investmentAccounts,
   navigateToEditGoalPage,
-}: GoalProgressCardProps) => {
+}: GoalProgressCardV1Props) => {
   const totalAffordableValue = affordableValues.reduce((total, value) => total + value, 0);
 
   const formattedOnTrackPercentage = formatPercent(
@@ -125,4 +125,4 @@ const GoalProgressCard = ({
   );
 };
 
-export default GoalProgressCard;
+export default GoalProgressCardV1;

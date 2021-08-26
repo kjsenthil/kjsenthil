@@ -1,4 +1,4 @@
-import { GoalProgressCardProps } from './GoalProgressCard';
+import { GoalProgressCardV1Props as GoalProgressCardProps } from './GoalProgressCardV1';
 import { GoalSelectionProps } from './GoalSelection';
 
 export * from './PerformanceChart';
@@ -16,7 +16,7 @@ export { default as Footer } from './Footer';
 export { default as GoalInputCard } from './GoalInputCard';
 export { default as GoalMainCardPlaceholder } from './GoalMainCardPlaceholder';
 export { default as GoalPotTracker } from './GoalPotTracker';
-export { default as GoalProgressCard } from './GoalProgressCard';
+export { default as GoalProgressCard } from './GoalProgressCardV1';
 export { default as GoalSelection } from './GoalSelection';
 export { default as GoalSetUpNewCard } from './GoalSetUpNewCard';
 export { default as GoalTrackingWidget } from './GoalTrackingWidget';

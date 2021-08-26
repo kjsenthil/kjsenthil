@@ -11,8 +11,9 @@ import {
   TypographyProps,
   Theme,
 } from '../../atoms';
+import { StyleableComponent } from '../../../types';
 
-export interface TypographyWithTooltipProps {
+export interface TypographyWithTooltipProps extends StyleableComponent {
   tooltip: string;
   tooltipSpace?: number; // Quick way to set the x-axis spacer distance
   children?: React.ReactNode;
@@ -38,9 +39,10 @@ export default function TypographyWithTooltip({
   tooltipProps,
   iconProps,
   spacerProps,
+  className,
 }: TypographyWithTooltipProps) {
   return (
-    <Typography {...typographyProps} component="div">
+    <Typography {...typographyProps} component="div" className={className}>
       {children}
       <Spacer x={tooltipSpace} inline {...spacerProps} />
       <Tooltip title={tooltip} {...tooltipProps}>

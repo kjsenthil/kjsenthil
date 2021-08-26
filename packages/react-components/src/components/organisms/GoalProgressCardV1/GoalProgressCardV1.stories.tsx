@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import GoalProgressCard, { GoalProgressCardProps } from './GoalProgressCard';
+import GoalProgressCardV1, { GoalProgressCardV1Props } from './GoalProgressCardV1';
 
 export default {
-  title: 'Digital Hybrid/Organisms/Goal Progress Card',
-  component: GoalProgressCard,
+  title: 'Digital Hybrid/Organisms/Goal Progress Card (deprecated)',
+  component: GoalProgressCardV1,
   argTypes: {
     title: {
       control: {
@@ -14,7 +14,7 @@ export default {
   },
 } as Meta;
 
-const defaultArgs: GoalProgressCardProps = {
+const defaultArgs: GoalProgressCardV1Props = {
   onTrackPercentage: 0.72,
   affordableValues: [700000, 500000, 242000],
   goalValue: 1975000,
@@ -28,13 +28,13 @@ const defaultArgs: GoalProgressCardProps = {
   navigateToEditGoalPage: () => {},
 };
 
-const Template: Story<GoalProgressCardProps> = (args) => (
+const Template: Story<GoalProgressCardV1Props> = (args) => (
   <div
     style={{
       width: '349px',
     }}
   >
-    <GoalProgressCard {...args} />
+    <GoalProgressCardV1 {...args} />
   </div>
 );
 
