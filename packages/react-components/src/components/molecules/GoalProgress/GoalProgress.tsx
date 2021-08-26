@@ -38,7 +38,7 @@ const GoalProgress = ({
 
         <Spacer x={3} />
 
-        <Typography variant="b3" color="grey">{`IN ${remainingYears} ${yearText}`}</Typography>
+        <Typography variant="b5" color="grey">{`IN ${remainingYears} ${yearText}`}</Typography>
       </LabelContainer>
 
       <ProgressBar progress={progress} />

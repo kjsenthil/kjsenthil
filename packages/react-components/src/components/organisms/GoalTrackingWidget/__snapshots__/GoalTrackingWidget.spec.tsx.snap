@@ -4,7 +4,67 @@ exports[`GoalTrackingCardContent  matches snapshot 1`] = `
 Object {
   "result": Object {
     "asFragment": [Function],
-    "baseElement": .c5 {
+    "baseElement": .c1 {
+  font-size: 1.625rem;
+  line-height: normal;
+  -webkit-letter-spacing: 0.025rem;
+  -moz-letter-spacing: 0.025rem;
+  -ms-letter-spacing: 0.025rem;
+  letter-spacing: 0.025rem;
+  font-weight: 800;
+  color: #380c57;
+  white-space: break-spaces;
+}
+
+.c2 {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #6a6775;
+  white-space: break-spaces;
+}
+
+.c3 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: normal;
+  color: #6a6775;
+  white-space: break-spaces;
+}
+
+.c13 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #6a6775;
+  white-space: nowrap;
+}
+
+.c14 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: nowrap;
+}
+
+.c5 {
   position: relative;
   width: 100%;
   height: 2.375rem;
@@ -60,66 +120,6 @@ Object {
   width: 100%;
   border-radius: 6px;
   border: 2px dashed #ebb300;
-}
-
-.c1 {
-  font-size: 1.75rem;
-  line-height: 2rem;
-  -webkit-letter-spacing: 0.025rem;
-  -moz-letter-spacing: 0.025rem;
-  -ms-letter-spacing: 0.025rem;
-  letter-spacing: 0.025rem;
-  font-weight: 900;
-  color: #380c57;
-  white-space: normal;
-}
-
-.c2 {
-  font-size: 0.875rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: bold;
-  color: #6a6775;
-  white-space: normal;
-}
-
-.c3 {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: normal;
-  color: #6a6775;
-  white-space: normal;
-}
-
-.c13 {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: bold;
-  color: #6a6775;
-  white-space: nowrap;
-}
-
-.c14 {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: bold;
-  color: #380c57;
-  white-space: nowrap;
 }
 
 .c17 {
@@ -537,7 +537,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <h3
-                    class="MuiTypography-root sc-jrsJWt cVvHck MuiTypography-body1"
+                    class="MuiTypography-root sc-bdnxRM kDyhle MuiTypography-body1"
                   >
                     £1,172,000
                   </h3>
@@ -545,7 +545,7 @@ Object {
                       /  
                   </span>
                   <h6
-                    class="MuiTypography-root sc-jrsJWt EphFk MuiTypography-body1"
+                    class="MuiTypography-root sc-bdnxRM jXxfPd MuiTypography-body1"
                   >
                     £1,227,000
                   </h6>
@@ -562,7 +562,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <div
-                    class="MuiTypography-root sc-jrsJWt bOAEnK MuiTypography-body1"
+                    class="MuiTypography-root sc-bdnxRM hRIlsf MuiTypography-body1"
                   >
                     You're on track to have
                      
@@ -602,20 +602,20 @@ Object {
                 />
                 <div
                   aria-valuenow="75"
-                  class="sc-iCoGMd hiSefx"
+                  class="sc-fujyAs iugzGY"
                   role="progressbar"
                 >
                   <div
-                    class="sc-pNWdM dERqcy"
+                    class="sc-jrsJWt iuJOlM"
                   />
                   <div
-                    class="sc-fujyAs kMeqDE"
+                    class="sc-pNWdM cInLJe"
                   />
                   <div
-                    class="sc-fujyAs daZvg"
+                    class="sc-pNWdM gpoqqi"
                   />
                   <div
-                    class="sc-fujyAs hmLVXY"
+                    class="sc-pNWdM bwInNO"
                   />
                 </div>
                 <div
@@ -634,7 +634,7 @@ Object {
                     >
                       <div>
                         <h6
-                          class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+                          class="MuiTypography-root sc-bdnxRM crCxET MuiTypography-body1"
                         >
                           LUMP SUM
                         </h6>
@@ -645,7 +645,7 @@ Object {
                             class="MuiGrid-root MuiGrid-item"
                           >
                             <h6
-                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                              class="MuiTypography-root sc-bdnxRM jXNAHh MuiTypography-body1"
                             >
                               £20,000
                             </h6>
@@ -666,7 +666,7 @@ Object {
                     >
                       <div>
                         <h6
-                          class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+                          class="MuiTypography-root sc-bdnxRM crCxET MuiTypography-body1"
                         >
                           FROM AGE 67 - 89
                         </h6>
@@ -677,7 +677,7 @@ Object {
                             class="MuiGrid-root MuiGrid-item"
                           >
                             <h6
-                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                              class="MuiTypography-root sc-bdnxRM jXNAHh MuiTypography-body1"
                             >
                               £1,080,000
                             </h6>
@@ -698,7 +698,7 @@ Object {
                     >
                       <div>
                         <h6
-                          class="MuiTypography-root sc-jrsJWt eUUvOi MuiTypography-body1"
+                          class="MuiTypography-root sc-bdnxRM crCxET MuiTypography-body1"
                         >
                           REMAINING
                         </h6>
@@ -709,7 +709,7 @@ Object {
                             class="MuiGrid-root MuiGrid-item"
                           >
                             <h6
-                              class="MuiTypography-root sc-jrsJWt jMfUyw MuiTypography-body1"
+                              class="MuiTypography-root sc-bdnxRM jXNAHh MuiTypography-body1"
                             >
                               £72,000
                             </h6>
@@ -763,7 +763,7 @@ Object {
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12"
               >
                 <div
-                  class="MuiTypography-root sc-jrsJWt bOAEnK MuiTypography-body1"
+                  class="MuiTypography-root sc-bdnxRM hRIlsf MuiTypography-body1"
                 >
                   You're likely to have 
                   £2,340

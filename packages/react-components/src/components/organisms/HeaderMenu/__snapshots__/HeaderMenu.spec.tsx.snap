@@ -1,16 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HeaderMenu renders the header menu 1`] = `
+.c6 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+}
+
+.c7 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: normal;
+  color: #000;
+  white-space: break-spaces;
+}
+
 .c8 {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
   color: #6c00bf;
   border: 1px solid #6c00bf;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.018125rem;
-  -moz-letter-spacing: 0.018125rem;
-  -ms-letter-spacing: 0.018125rem;
-  letter-spacing: 0.018125rem;
-  font-weight: bold;
   height: 40px;
   border-radius: 6px;
   min-width: 80px;
@@ -30,15 +56,17 @@ exports[`HeaderMenu renders the header menu 1`] = `
 }
 
 .c9 {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
   background-color: #6c00bf;
   color: #fff;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.018125rem;
-  -moz-letter-spacing: 0.018125rem;
-  -ms-letter-spacing: 0.018125rem;
-  letter-spacing: 0.018125rem;
-  font-weight: bold;
   height: 40px;
   border-radius: 6px;
   min-width: 80px;
@@ -67,30 +95,6 @@ exports[`HeaderMenu renders the header menu 1`] = `
   font-size: 0.875rem;
 }
 
-.c6 {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: bold;
-  color: #380c57;
-  white-space: normal;
-}
-
-.c7 {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: normal;
-  color: #000;
-  white-space: normal;
-}
-
 .c3 {
   background-color: #eeedfc;
   width: 100%;
@@ -99,9 +103,15 @@ exports[`HeaderMenu renders the header menu 1`] = `
 }
 
 .c1 {
-  font-weight: bold;
-  font-size: 0.875rem;
-  font-family: FSElliot,Roboto;
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
   color: #6c00bf;
 }
 

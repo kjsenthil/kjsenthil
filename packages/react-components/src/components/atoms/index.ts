@@ -3,7 +3,7 @@ import Button, { ButtonProps } from './Button';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
 import LinearProgress, { LinearProgressProps } from './LinearProgress';
 import ProgressBar, { ProgressBarProps } from './ProgressBar';
-import Typography, { TypographyProps } from './Typography';
+import Typography, { TypographyProps, typographyCss } from './Typography';
 import TextField, {
   FormattedTextFieldControlledProps,
   FormattedTextFieldUncontrolledProps,
@@ -15,7 +15,15 @@ import { IconProps } from './Icon';
 import { PillProps } from './Button/Pill/Pill';
 import { LinkProps } from './Link';
 
-export { Button, LinearProgress, TextField, Typography, ChartIndicator, ProgressBar };
+export {
+  Button,
+  LinearProgress,
+  TextField,
+  Typography,
+  ChartIndicator,
+  ProgressBar,
+  typographyCss,
+};
 
 export type {
   ButtonProps,

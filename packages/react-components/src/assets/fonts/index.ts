@@ -1,11 +1,11 @@
-import FSElliot from './FSElliot-Regular.otf';
-import FSElliotBold from './FSElliot-Bold.otf';
-import FSElliotHeavy from './FSElliot-Heavy.otf';
+import MontserratRegular from './Montserrat-Regular.ttf';
+import MontserratBold from './Montserrat-Bold.ttf';
+import MontserratHeavy from './Montserrat-Heavy.ttf';
 
 const Fonts = {
-  FSElliot,
-  FSElliotBold,
-  FSElliotHeavy,
+  MontserratRegular,
+  MontserratBold,
+  MontserratHeavy,
 };
 
 export default Fonts;

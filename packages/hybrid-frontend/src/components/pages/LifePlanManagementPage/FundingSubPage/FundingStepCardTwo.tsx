@@ -27,10 +27,9 @@ const FundingStepCardTwo = React.forwardRef(
     <StepCard ref={ref} step={2} title="Include your State Pension?">
       <FundingStepCardTwoChildContainer>
         <TypographyWithTooltip typographyProps={{ variant: 'b3' }} tooltip="">
-          {`Since the government will provide your state pension, we’ll deduct
-           this from your target retirement pot. We use today's maximum figure of
-            £9,339.20 a year assuming you contribute National Insurance for 30 
-            years.`}
+          {`Since the government will provide your state pension, we’ll deduct` +
+            ` this from your target retirement pot. We use today's maximum figure of` +
+            ` £9,339.20 a year assuming you contribute National Insurance for 30 years.`}
         </TypographyWithTooltip>
 
         <RadioGroup row value={String(shouldIncludeStatePension)} onChange={onChange}>

@@ -21,6 +21,7 @@
     "all:build": "yarn workspaces foreach -ptv run build",
     "all:build:zip": "yarn workspaces foreach run -ptv build:zip",
     "all:test": "yarn workspaces foreach -ptv run test",
+    "all:test:coverage": "yarn workspaces foreach -ptv run test:coverage",
     "all:lint": "yarn workspaces foreach -ptv run lint",
     "all:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "all:test:e2e": "yarn workspaces foreach -ptv run test:e2e",

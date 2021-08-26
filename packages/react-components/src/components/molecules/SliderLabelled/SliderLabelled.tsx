@@ -86,7 +86,7 @@ const SliderLabelled: React.FC<SliderLabelledProps> = ({
           <HereLabel hereValue={hereValuePercentage}>
             <PointerIcon name="arrowHeadUp" />
             <HereText>
-              <Typography variant="b3" color="grey" fontWeight="300">
+              <Typography variant="b5" color="grey" fontWeight="300">
                 You are here
               </Typography>
             </HereText>

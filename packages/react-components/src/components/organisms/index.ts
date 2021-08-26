@@ -8,7 +8,6 @@ export type { AccountsTableProps } from './AccountsTable';
 export type { HeaderMenuProps } from './HeaderMenu';
 
 export { default as AccountSummaryPanel } from './AccountSummaryPanel';
-export { default as AccountTypeSelection } from './AccountTypeSelection';
 export { default as AccountsTable } from './AccountsTable';
 export { default as AccountFilter } from './AccountFilter';
 export { default as AssetDetails } from './AssetDetails';

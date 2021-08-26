@@ -1,27 +1,15 @@
 import React from 'react';
 import {
+  Theme,
   SimplePaletteColorOptions,
   Typography as MUITypography,
   TypographyProps as MUITypographyProps,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { Palette } from '@material-ui/core/styles/createPalette';
 
 export type ColorShade = keyof SimplePaletteColorOptions;
 export type Color = 'primary' | 'secondary' | 'tertiary' | 'white' | 'black' | 'grey' | 'error';
-export type Variant =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'sh1'
-  | 'sh2'
-  | 'sh3'
-  | 'sh4'
-  | 'b1'
-  | 'b2'
-  | 'b3';
+export type Variant = keyof typeof variantComponentMap;
 
 export interface TypographyProps extends Omit<MUITypographyProps, 'color' | 'variant'> {
   color?: Color | 'inherit';
@@ -32,66 +20,69 @@ export interface TypographyProps extends Omit<MUITypographyProps, 'color' | 'var
   component?: React.ElementType;
 }
 
-const determineColor = (
-  color: Color | 'inherit',
-  palette: Palette,
-  variant: Variant = 'b3',
-  colorShade?: ColorShade
-) => {
+const determineColor = ({
+  color,
+  palette,
+  variant = 'b5',
+  colorShade,
+}: Pick<TypographyProps, 'color' | 'colorShade' | 'variant'> & { palette: Theme['palette'] }) => {
   if (color === 'inherit') {
     return 'inherit';
   }
-  if (['black', 'white'].includes(color)) {
-    return palette.common[color];
+  if (['black', 'white'].includes(color as Color)) {
+    return palette.common[color as Color];
   }
-  if (['primary', 'secondary', 'tertiary', 'grey', 'error'].includes(color)) {
-    return palette[color][colorShade || 'main'];
+  if (['primary', 'secondary', 'tertiary', 'grey', 'error'].includes(color as Color)) {
+    return palette[color as Color][colorShade || 'main'];
   }
-  if (['b1', 'b2', 'b3'].includes(variant)) {
+  if (['b1', 'b2', 'b3', 'b4', 'b5'].includes(variant)) {
     return palette.common.black;
   }
   return palette.primary[colorShade || 'dark2'];
 };
 
 const sizes = {
-  h1: { fontSize: 56, lineHeight: 68, letterSpacing: 0.9, fontWeight: 900 },
-  h2: { fontSize: 40, lineHeight: 48, letterSpacing: 0.7, fontWeight: 900 },
-  h3: { fontSize: 28, lineHeight: 32, letterSpacing: 0.4, fontWeight: 900 },
-  h4: { fontSize: 24, lineHeight: 28, letterSpacing: 0.3, fontWeight: 900 },
-  h5: { fontSize: 20, lineHeight: 24, letterSpacing: 0.3, fontWeight: 900 },
-  sh1: { fontSize: 18, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'bold' },
-  sh2: { fontSize: 16, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'bold' },
-  sh3: { fontSize: 14, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'bold' },
-  sh4: { fontSize: 12, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'bold' },
-  b1: { fontSize: 24, lineHeight: 28, letterSpacing: 0.5, fontWeight: 'normal' },
-  b2: { fontSize: 14, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'normal' },
-  b3: { fontSize: 12, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
+  h1: { fontSize: 56, lineHeight: 'normal', letterSpacing: 0.4, fontWeight: 800 },
+  h2: { fontSize: 38, lineHeight: 'normal', letterSpacing: 0.7, fontWeight: 800 },
+  h3: { fontSize: 26, lineHeight: 'normal', letterSpacing: 0.4, fontWeight: 800 },
+  h4: { fontSize: 22, lineHeight: 28, letterSpacing: 0.3, fontWeight: 800 },
+  h5: { fontSize: 18, lineHeight: 28, letterSpacing: 0.3, fontWeight: 800 },
+  sh1: { fontSize: 17, lineHeight: 24, letterSpacing: 0.3, fontWeight: 600 },
+  sh2: { fontSize: 15, lineHeight: 20, letterSpacing: 0.2, fontWeight: 600 },
+  sh3: { fontSize: 13, lineHeight: 16, letterSpacing: 0.2, fontWeight: 600 },
+  sh4: { fontSize: 11, lineHeight: 16, letterSpacing: 0.2, fontWeight: 600 },
+  b1: { fontSize: 22, lineHeight: 28, letterSpacing: 0.5, fontWeight: 'normal' },
+  b2: { fontSize: 16, lineHeight: 24, letterSpacing: 0.3, fontWeight: 'normal' },
+  b3: { fontSize: 14, lineHeight: 28, letterSpacing: 0.3, fontWeight: 'normal' },
+  b4: { fontSize: 12, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'normal' },
+  b5: { fontSize: 11, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
 };
 
+export const typographyCss = ({
+  colorShade,
+  variant = 'b3',
+  color,
+  fontWeight: customFontWeight,
+  spaceNoWrap,
+  theme: {
+    palette,
+    typography: { pxToRem },
+  },
+}: Omit<TypographyProps, 'component'> & { theme: Theme }) => {
+  const { fontSize, lineHeight, letterSpacing, fontWeight = customFontWeight } = sizes[variant];
+  return `
+    font-size: ${pxToRem(fontSize)};
+    line-height: ${lineHeight === 'normal' ? lineHeight : pxToRem(Number(lineHeight))};
+    letter-spacing: ${pxToRem(letterSpacing)};
+    font-weight: ${fontWeight};
+    color: ${determineColor({ color, palette, variant, colorShade })};
+    white-space: ${spaceNoWrap ? 'nowrap' : 'break-spaces'};
+`;
+};
 const StyledTypography = styled(({ variant, colorShade, color, spaceNoWrap, ...props }) => (
   <MUITypography {...props} />
 ))`
-  ${({
-    colorShade,
-    variant,
-    color,
-    fontWeight,
-    spaceNoWrap,
-    theme: {
-      palette,
-      typography: { pxToRem },
-    },
-  }) => {
-    const variantSizes = sizes[variant];
-    return `
-      font-size: ${pxToRem(variantSizes?.fontSize)};
-      line-height: ${pxToRem(variantSizes?.lineHeight)};
-      letter-spacing: ${pxToRem(variantSizes?.letterSpacing)};
-      font-weight: ${fontWeight || variantSizes?.fontWeight};
-      color: ${determineColor(color, palette, variant, colorShade)};
-      white-space: ${spaceNoWrap ? 'nowrap' : 'normal'};
-  `;
-  }}
+  ${(props) => typographyCss(props)}
 `;
 
 export const variantComponentMap = {
@@ -107,9 +98,11 @@ export const variantComponentMap = {
   b1: 'p',
   b2: 'p',
   b3: 'p',
+  b4: 'p',
+  b5: 'p',
 };
 
-const Typography = ({ variant = 'b3', ...props }: TypographyProps) => (
+const Typography = ({ variant = 'b5', ...props }: TypographyProps) => (
   <StyledTypography variant={variant} component={variantComponentMap[variant]} {...props} />
 );
 

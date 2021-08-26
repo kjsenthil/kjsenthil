@@ -32,13 +32,13 @@ export interface PerformanceProjectionsChartTickComponentBottomAxisProps extends
 export function getAgeText(formattedValue: string | undefined, todayAge: number): string {
   const tickYear = Number(formattedValue);
 
-  if (Number.isNaN(tickYear)) return `AGE UNKNOWN`;
+  if (Number.isNaN(tickYear)) return `AGE\u00a0UNKNOWN`;
 
   const todayYear = new Date().getFullYear();
 
   const age = todayAge + (tickYear - todayYear);
 
-  return `AGE ${age}`;
+  return `AGE\u00a0${age}`;
 }
 
 export default function PerformanceProjectionsChartTickComponentBottomAxis({

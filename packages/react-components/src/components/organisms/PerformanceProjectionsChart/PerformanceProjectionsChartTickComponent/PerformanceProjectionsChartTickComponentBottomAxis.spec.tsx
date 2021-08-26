@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { renderWithTheme, screen } from '@tsw/test-util';
+import { renderWithTheme } from '@tsw/test-util';
 import PerformanceProjectionsChartTickComponentBottomAxis, {
   getAgeText,
   PerformanceProjectionsChartTickComponentBottomAxisProps,
@@ -33,41 +33,33 @@ describe('PerformanceProjectionsChartTickComponentBottomAxis', () => {
     };
 
     test("The tick component renders correctly for display mode 'default'", () => {
-      renderWithTheme(
-        <svg>
-          <ComponentWithChartStyles displayMode="default" formattedValue={`${todayYear}`} />
-          <ComponentWithChartStyles displayMode="default" formattedValue={`${nextYear}`} />
-        </svg>
-      );
-
-      expect(screen.getByText('TODAY')).toBeVisible();
-      expect(screen.getByText(`AGE ${todayAge}`)).toBeVisible();
-
-      expect(screen.getByText(`${nextYear}`)).toBeVisible();
-      expect(screen.getByText(`AGE ${todayAge + 1}`)).toBeVisible();
+      expect(
+        renderWithTheme(
+          <svg>
+            <ComponentWithChartStyles displayMode="default" formattedValue={`${todayYear}`} />
+            <ComponentWithChartStyles displayMode="default" formattedValue={`${nextYear}`} />
+          </svg>
+        )
+      ).toMatchSnapshot();
     });
 
     test("The tick component renders correctly for display mode 'simplified'", () => {
-      renderWithTheme(
-        <svg>
-          <ComponentWithChartStyles displayMode="simplified" formattedValue={`${todayYear}`} />
-          <ComponentWithChartStyles displayMode="simplified" formattedValue={`${nextYear}`} />
-        </svg>
-      );
-
-      expect(screen.getByText('TODAY')).toBeVisible();
-      expect(screen.queryByText(`AGE ${todayAge}`)).toBeNull();
-
-      expect(screen.queryByText(`${nextYear}`)).toBeNull();
-      expect(screen.getByText(`AGE ${todayAge + 1}`)).toBeVisible();
+      expect(
+        renderWithTheme(
+          <svg>
+            <ComponentWithChartStyles displayMode="simplified" formattedValue={`${todayYear}`} />
+            <ComponentWithChartStyles displayMode="simplified" formattedValue={`${nextYear}`} />
+          </svg>
+        )
+      ).toMatchSnapshot();
     });
   });
 
   describe('getAgeText function', () => {
     const getAgeTextCases: Array<[string | undefined, number, string]> = [
-      [`${new Date().getFullYear()}`, 30, 'AGE 30'],
-      [`${new Date().getFullYear() + 10}`, 30, 'AGE 40'],
-      [undefined, 30, 'AGE UNKNOWN'],
+      [`${new Date().getFullYear()}`, 30, 'AGE\u00a030'],
+      [`${new Date().getFullYear() + 10}`, 30, 'AGE\u00a040'],
+      [undefined, 30, 'AGE\u00a0UNKNOWN'],
     ];
 
     test.each(getAgeTextCases)(

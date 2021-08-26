@@ -28,8 +28,7 @@ const PlanningStepCardFour = React.forwardRef(
       title={`Would you like to have money left over at ${drawdownEndAge}?`}
       digitalCoachBoxProps={{
         title: 'It might help to know...',
-        description: `Some people like to leave some money to their family or
-         just have a buffer at the end of their planned retirement.`,
+        description: `Some people like to leave some money to their family or just have a buffer at the end of their planned retirement.`,
       }}
     >
       <SubPageStepCardContentWithInputsContainer>

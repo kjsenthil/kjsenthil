@@ -34,6 +34,7 @@ export const UpsellCardContainer = styled(({ isLoading, isMobile, theme, ...prop
       linear-gradient(261deg, #6a29ff, #5206a9);
     gap: ${theme.spacing(5)}px;
     p {
+      /* consider using typographyCss with isMobile as option */
       font-size: ${isMobile ? 16 : 15}px;
       line-height: ${isMobile ? 24 : 20}px;
       letter-spacing: ${isMobile ? 0.3 : 0.2}px;

@@ -8,7 +8,7 @@ import Fonts from '../assets/fonts';
 
 type FontWeight = 'normal' | 'bold' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
-const FONT_NAME = 'FSElliot';
+const FONT_NAME = 'Montserrat';
 
 const createFontFace = (
   fontName: string,
@@ -21,17 +21,17 @@ const createFontFace = (
   fontDisplay: 'swap',
   fontWeight,
   src: `local('${fontName}'),
-      url(${font}) format('openType')
+      url(${font}) format('trueType')
     `,
 });
 
-const fsElliot = createFontFace(FONT_NAME, Fonts.FSElliot, 'normal');
-const fsElliotBold = createFontFace(FONT_NAME, Fonts.FSElliotBold, 'bold');
-const fsElliotHeavy = createFontFace(FONT_NAME, Fonts.FSElliotHeavy, 900);
+const MontserratRegular = createFontFace(FONT_NAME, Fonts.MontserratRegular, 'normal');
+const MontserratBold = createFontFace(FONT_NAME, Fonts.MontserratBold, 'bold');
+const MontserratHeavy = createFontFace(FONT_NAME, Fonts.MontserratHeavy, 900);
 
 const digitalHybridTheme = createTheme({
   typography: {
-    fontFamily: ['FSElliot', 'Roboto'].join(','),
+    fontFamily: ['Montserrat', 'Roboto'].join(','),
   },
 
   palette: {
@@ -89,7 +89,7 @@ const digitalHybridTheme = createTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': [fsElliot, fsElliotBold, fsElliotHeavy],
+        '@font-face': [MontserratRegular, MontserratBold, MontserratHeavy],
         html: {
           letterSpacing: '0.29px',
         },

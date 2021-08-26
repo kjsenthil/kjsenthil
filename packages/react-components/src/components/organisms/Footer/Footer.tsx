@@ -16,7 +16,7 @@ const Footer = () => (
       </Grid>
     </Grid>
     <Grid item xs={12}>
-      <Typography variant="b2" color="primary" colorShade="dark1" gutterBottom>
+      <Typography variant="b4" color="primary" colorShade="dark1" gutterBottom>
         Past performance or any yields quoted should not be considered reliable indicators of future
         returns. Restricted advice can be provided as part of other services offered by Bestinvest,
         upon request and on a fee basis. Before investing in funds please check the specific risk
@@ -66,7 +66,7 @@ const Footer = () => (
       </Grid>
     </Grid>
     <Grid item xs={12}>
-      <Typography variant="b3" color="primary" colorShade="dark1" gutterBottom>
+      <Typography variant="b5" color="primary" colorShade="dark1" gutterBottom>
         The Tilney Bestinvest Group of Companies comprises the firms Bestinvest (Brokers) Ltd (Reg.
         No. 2830297), Tilney Investment Management (reg. No. 02010520), Bestinvest (Consultants) Ltd
         (Reg. No. 1550116) and HW Financial Services Ltd (Reg. No. 02030706) all of which are

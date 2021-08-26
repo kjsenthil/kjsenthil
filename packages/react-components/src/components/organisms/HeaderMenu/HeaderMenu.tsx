@@ -193,7 +193,7 @@ const HeaderMenu = ({
         <Grid item xs={6}>
           <CashText align={forSubMenu ? 'left' : 'right'}>
             <Typography variant="sh4">{cash}</Typography>
-            <Typography variant="b3">cash ready to invest</Typography>
+            <Typography variant="b5">cash ready to invest</Typography>
           </CashText>
         </Grid>
 

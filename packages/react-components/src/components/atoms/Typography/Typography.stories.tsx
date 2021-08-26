@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import Typography, { TypographyProps } from './index';
+import { variantComponentMap } from './Typography';
 
 export default {
   title: 'Digital Hybrid/Atoms/Typography',
@@ -9,21 +10,7 @@ export default {
     variant: {
       control: {
         type: 'radio',
-        options: [
-          undefined,
-          'h1',
-          'h2',
-          'h3',
-          'h4',
-          'h5',
-          'sh1',
-          'sh2',
-          'sh3',
-          'sh4',
-          'b1',
-          'b2',
-          'b3',
-        ],
+        options: [undefined, ...Object.keys(variantComponentMap)],
       },
     },
     color: {

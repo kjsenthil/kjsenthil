@@ -28,7 +28,6 @@ const StyledSwitcher = styled(({ withInnerLabel, ...props }) => <MUISwitcher {..
 
         position: relative;
         color: ${palette.common.white}; 
-        font-family: "FSElliot";
         font-weight: bold;
         font-size: ${pxToRem(12)};
         padding: 0; 

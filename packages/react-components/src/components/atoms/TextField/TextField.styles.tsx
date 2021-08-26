@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { InputBase as MUIInputBase } from '@material-ui/core';
 import { TextFieldProps } from './types';
+import { typographyCss } from '../Typography/Typography';
 
 // This removes the up and down buttons for webkit browsers that can appear
 // when input type is "number"
@@ -19,15 +20,13 @@ const hiddenNumberSpinButtonStyles = css`
 const StyledTextField = styled(({ hasError, hideNumberSpinButton, ...props }: TextFieldProps) => (
   <MUIInputBase {...props} />
 ))`
-  ${({
-    hasError,
-    hideNumberSpinButton,
-    fullWidth,
-    theme: {
+  ${({ hasError, hideNumberSpinButton, fullWidth, theme }) => {
+    const {
       palette,
       typography: { pxToRem },
-    },
-  }) => `
+    } = theme;
+
+    return `
       &.MuiInputAdornment-root {
         margin: 0 ${pxToRem(12)};
       }
@@ -38,15 +37,11 @@ const StyledTextField = styled(({ hasError, hideNumberSpinButton, ...props }: Te
         width: ${fullWidth ? '100%' : pxToRem(182)};
 
         .MuiInputBase-input {
+          ${typographyCss({ variant: 'sh2', theme })}
           height: ${pxToRem(48)};
           padding: 0;
           padding-left: ${pxToRem(12)};
-
           box-sizing: inherit;
-          font-size: ${pxToRem(16)};
-          font-weight: bold;
-          line-height: 1.25;
-          letter-spacing: ${pxToRem(0.29)};
           background-color: ${palette.common.white};
           border-radius: 4px;
           border: ${
@@ -68,7 +63,8 @@ const StyledTextField = styled(({ hasError, hideNumberSpinButton, ...props }: Te
           }
         }
       }
-    `}
+    `;
+  }}
 `;
 
 export default StyledTextField;

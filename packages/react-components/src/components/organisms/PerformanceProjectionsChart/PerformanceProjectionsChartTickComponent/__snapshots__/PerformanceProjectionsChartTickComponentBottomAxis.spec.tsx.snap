@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PerformanceProjectionsChartTickComponentBottomAxis PerformanceProjectionsChartTickComponentBottomAxis component The tick component renders correctly for display mode 'default' 1`] = `
+Object {
+  "result": Object {
+    "asFragment": [Function],
+    "baseElement": <body>
+      <div>
+        <svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="0"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                TODAY
+              </tspan>
+            </text>
+          </svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="15"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                AGE 30
+              </tspan>
+            </text>
+          </svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="0"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                2022
+              </tspan>
+            </text>
+          </svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="15"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                AGE 31
+              </tspan>
+            </text>
+          </svg>
+        </svg>
+      </div>
+      <svg
+        style="width: 0px; height: 0px; position: absolute; top: -100%; left: -100%;"
+      >
+        <text
+          id="__react_svg_text_measurement_id"
+          style="font-weight: bold;"
+        >
+          AGE 31
+        </text>
+      </svg>
+    </body>,
+    "container": <div>
+      <svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="0"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              TODAY
+            </tspan>
+          </text>
+        </svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="15"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              AGE 30
+            </tspan>
+          </text>
+        </svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="0"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              2022
+            </tspan>
+          </text>
+        </svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="15"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              AGE 31
+            </tspan>
+          </text>
+        </svg>
+      </svg>
+    </div>,
+    "debug": [Function],
+    "findAllByAltText": [Function],
+    "findAllByDisplayValue": [Function],
+    "findAllByLabelText": [Function],
+    "findAllByPlaceholderText": [Function],
+    "findAllByRole": [Function],
+    "findAllByTestId": [Function],
+    "findAllByText": [Function],
+    "findAllByTitle": [Function],
+    "findByAltText": [Function],
+    "findByDisplayValue": [Function],
+    "findByLabelText": [Function],
+    "findByPlaceholderText": [Function],
+    "findByRole": [Function],
+    "findByTestId": [Function],
+    "findByText": [Function],
+    "findByTitle": [Function],
+    "getAllByAltText": [Function],
+    "getAllByDisplayValue": [Function],
+    "getAllByLabelText": [Function],
+    "getAllByPlaceholderText": [Function],
+    "getAllByRole": [Function],
+    "getAllByTestId": [Function],
+    "getAllByText": [Function],
+    "getAllByTitle": [Function],
+    "getByAltText": [Function],
+    "getByDisplayValue": [Function],
+    "getByLabelText": [Function],
+    "getByPlaceholderText": [Function],
+    "getByRole": [Function],
+    "getByTestId": [Function],
+    "getByText": [Function],
+    "getByTitle": [Function],
+    "queryAllByAltText": [Function],
+    "queryAllByDisplayValue": [Function],
+    "queryAllByLabelText": [Function],
+    "queryAllByPlaceholderText": [Function],
+    "queryAllByRole": [Function],
+    "queryAllByTestId": [Function],
+    "queryAllByText": [Function],
+    "queryAllByTitle": [Function],
+    "queryByAltText": [Function],
+    "queryByDisplayValue": [Function],
+    "queryByLabelText": [Function],
+    "queryByPlaceholderText": [Function],
+    "queryByRole": [Function],
+    "queryByTestId": [Function],
+    "queryByText": [Function],
+    "queryByTitle": [Function],
+    "rerender": [Function],
+    "unmount": [Function],
+  },
+}
+`;
+
+exports[`PerformanceProjectionsChartTickComponentBottomAxis PerformanceProjectionsChartTickComponentBottomAxis component The tick component renders correctly for display mode 'simplified' 1`] = `
+Object {
+  "result": Object {
+    "asFragment": [Function],
+    "baseElement": <body>
+      <svg
+        style="width: 0px; height: 0px; position: absolute; top: -100%; left: -100%;"
+      >
+        <text
+          id="__react_svg_text_measurement_id"
+          style="font-weight: bold;"
+        >
+          AGE 31
+        </text>
+      </svg>
+      <div>
+        <svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="0"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                TODAY
+              </tspan>
+            </text>
+          </svg>
+          <svg
+            font-size="12"
+            style="overflow: visible;"
+            x="0"
+            y="0"
+          >
+            <text
+              fill="#aeaabf"
+              font-family="Montserrat,Roboto"
+              font-size="12"
+              style="font-weight: bold;"
+              text-anchor="start"
+              transform=""
+              x="0"
+              y="0"
+            >
+              <tspan
+                dy="0"
+                x="0"
+              >
+                AGE 31
+              </tspan>
+            </text>
+          </svg>
+        </svg>
+      </div>
+    </body>,
+    "container": <div>
+      <svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="0"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              TODAY
+            </tspan>
+          </text>
+        </svg>
+        <svg
+          font-size="12"
+          style="overflow: visible;"
+          x="0"
+          y="0"
+        >
+          <text
+            fill="#aeaabf"
+            font-family="Montserrat,Roboto"
+            font-size="12"
+            style="font-weight: bold;"
+            text-anchor="start"
+            transform=""
+            x="0"
+            y="0"
+          >
+            <tspan
+              dy="0"
+              x="0"
+            >
+              AGE 31
+            </tspan>
+          </text>
+        </svg>
+      </svg>
+    </div>,
+    "debug": [Function],
+    "findAllByAltText": [Function],
+    "findAllByDisplayValue": [Function],
+    "findAllByLabelText": [Function],
+    "findAllByPlaceholderText": [Function],
+    "findAllByRole": [Function],
+    "findAllByTestId": [Function],
+    "findAllByText": [Function],
+    "findAllByTitle": [Function],
+    "findByAltText": [Function],
+    "findByDisplayValue": [Function],
+    "findByLabelText": [Function],
+    "findByPlaceholderText": [Function],
+    "findByRole": [Function],
+    "findByTestId": [Function],
+    "findByText": [Function],
+    "findByTitle": [Function],
+    "getAllByAltText": [Function],
+    "getAllByDisplayValue": [Function],
+    "getAllByLabelText": [Function],
+    "getAllByPlaceholderText": [Function],
+    "getAllByRole": [Function],
+    "getAllByTestId": [Function],
+    "getAllByText": [Function],
+    "getAllByTitle": [Function],
+    "getByAltText": [Function],
+    "getByDisplayValue": [Function],
+    "getByLabelText": [Function],
+    "getByPlaceholderText": [Function],
+    "getByRole": [Function],
+    "getByTestId": [Function],
+    "getByText": [Function],
+    "getByTitle": [Function],
+    "queryAllByAltText": [Function],
+    "queryAllByDisplayValue": [Function],
+    "queryAllByLabelText": [Function],
+    "queryAllByPlaceholderText": [Function],
+    "queryAllByRole": [Function],
+    "queryAllByTestId": [Function],
+    "queryAllByText": [Function],
+    "queryAllByTitle": [Function],
+    "queryByAltText": [Function],
+    "queryByDisplayValue": [Function],
+    "queryByLabelText": [Function],
+    "queryByPlaceholderText": [Function],
+    "queryByRole": [Function],
+    "queryByTestId": [Function],
+    "queryByText": [Function],
+    "queryByTitle": [Function],
+    "rerender": [Function],
+    "unmount": [Function],
+  },
+}
+`;

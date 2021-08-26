@@ -32,8 +32,7 @@ const PlanningStepCardThree = React.forwardRef(
       title="Would you like to take out a cash lump sum?"
       digitalCoachBoxProps={{
         title: 'It might help to know...',
-        description: `At retirement, you can normally take up to 25% of your
-           pension from age ${drawdownStartAge} as a tax free cash lump sum.`,
+        description: `At retirement, you can normally take up to 25% of your pension from age ${drawdownStartAge} as a tax free cash lump sum.`,
       }}
     >
       <SubPageStepCardContentWithInputsContainer>

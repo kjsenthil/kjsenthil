@@ -235,7 +235,7 @@ const LifePlanPage = () => {
           </MainCard>
           <Spacer y={1.5} />
           <Disclaimer>
-            <Typography display="inline" variant="b3" color="grey" colorShade="dark1">
+            <Typography display="inline" variant="b5" color="grey" colorShade="dark1">
               Such forecasts are not a reliable indicator of future performance
             </Typography>
             <Link special onClick={linkClickHandler}>

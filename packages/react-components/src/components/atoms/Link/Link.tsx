@@ -1,36 +1,49 @@
 import * as React from 'react';
-import { Link as MUILink, LinkProps as MUILinkProps } from '@material-ui/core';
+import { Link as MUILink, LinkProps as MUILinkProps, Theme } from '@material-ui/core';
 import styled from 'styled-components';
 import { Require } from '../../../utils/common';
-import { Color, ColorShade } from '../Typography/Typography';
+import { Color, ColorShade, Variant, typographyCss } from '../Typography';
 
-const StyledLink = styled(({ color, colorShade, innerRef, ...props }: StyledLinkProps) => (
-  <MUILink {...props} innerRef={innerRef} />
-))`
-  ${({ theme, color, colorShade }) => `
-    font-weight: bold;
-    font-size: ${theme.typography.pxToRem(14)};
-    font-family: ${theme.typography.fontFamily};
-    color: ${theme.palette[color][colorShade]};
-  `}
-`;
-
-export interface LinkProps extends Omit<MUILinkProps, 'color' | 'underline'> {
+export interface LinkProps extends Omit<MUILinkProps, 'color' | 'underline' | 'variant'> {
   special?: boolean;
   color?: Color;
   colorShade?: ColorShade;
+  variant?: Variant;
 }
 
-interface StyledLinkProps extends Require<LinkProps, 'color' | 'colorShade'> {
+interface StyledLinkProps extends Require<LinkProps, 'color' | 'colorShade' | 'variant'> {
   underline: 'always' | 'hover';
   innerRef: React.ForwardedRef<any>;
   component?: 'button';
 }
 
+const StyledLink = styled(({ color, colorShade, variant, innerRef, ...props }: StyledLinkProps) => (
+  <MUILink {...props} innerRef={innerRef} />
+))`
+  ${({
+    theme,
+    variant,
+    color,
+    colorShade,
+  }: {
+    theme: Theme;
+    variant: Variant;
+    color: Color;
+    colorShade: ColorShade;
+  }) => `
+    ${typographyCss({ variant, theme })};
+    color: ${theme.palette[color][colorShade]};
+  `}
+`;
+
 const Link = React.forwardRef(
-  ({ special, color = 'primary', colorShade = 'main', ...linkProps }: LinkProps, innerRef) => {
+  (
+    { special, variant = 'sh3', color = 'primary', colorShade = 'main', ...linkProps }: LinkProps,
+    innerRef
+  ) => {
     const props: StyledLinkProps = {
       color,
+      variant,
       colorShade,
       ...linkProps,
       innerRef,

@@ -10,12 +10,13 @@ const CoachingModal = ({ image }: CoachingModalProps) => (
   <SignpostModal
     title="Speak to a coach"
     content={
-      <Typography variant="b2">
-        Our coaches are qualified financial planners who can try to help you with goals and
-        investments.{' '}
+      <Typography variant="b4">
+        Our coaches are qualified financial planners who can try to help you with{'\n'}
+        goals and investments.{' '}
         <Link
           special
           color="primary"
+          variant="sh3"
           colorShade="light1"
           href="https://www.bestinvest.co.uk/our-service/bestinvest-plus"
         >

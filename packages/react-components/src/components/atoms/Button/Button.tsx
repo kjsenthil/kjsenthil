@@ -2,6 +2,7 @@ import React from 'react';
 import { Button as MUIButton, ButtonProps as MUIButtonProps, Theme } from '@material-ui/core';
 import styled, { css } from 'styled-components';
 import CircularProgress from '../CircularProgress';
+import { typographyCss } from '../Typography/Typography';
 
 // TODO: consider allowing the use of Gatsby's Link for client side navigation
 // without contaminating this component with framework specific detail
@@ -115,13 +116,15 @@ const BaseButton = styled(ButtonNoElevation)`
     isPill,
     startIcon,
     wrap = 'wrap',
-    theme: {
-      typography: { pxToRem },
-      palette,
-    },
+    theme,
     size,
     isIcon,
   }: ButtonProps & { theme: Theme }) => {
+    const {
+      typography: { pxToRem },
+      palette,
+    } = theme;
+
     const colorStyles = determineColorStyles({ palette, variant, color });
     const paddingStyle = determinePadding({ isIcon, isPill, startIcon, size });
 
@@ -131,7 +134,7 @@ const BaseButton = styled(ButtonNoElevation)`
     }
 
     return css`
-      font-size: ${pxToRem(12)};
+      ${typographyCss({ variant: 'sh4', theme })};
       ${colorStyles};
 
       &.Mui-disabled {
@@ -145,9 +148,6 @@ const BaseButton = styled(ButtonNoElevation)`
         }
       }
 
-      line-height: ${pxToRem(16)};
-      letter-spacing: ${pxToRem(0.29)};
-      font-weight: bold;
       height: ${height};
       border-radius: ${isPill ? '21.5px' : '6px'};
       min-width: ${isIcon ? '40px' : '80px'};

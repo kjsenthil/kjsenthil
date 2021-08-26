@@ -67,7 +67,7 @@ const PlanningStepCardOne = React.forwardRef(
               value={String(drawdownStartAge) || ''}
               shouldDelayOnChange
             />
-            <Typography variant="b3" color="primary" colorShade="dark2">
+            <Typography variant="b5" color="primary" colorShade="dark2">
               {`That's year ${drawdownStartYear}`}
             </Typography>
           </SubPageStepCardInputContainer>
@@ -85,7 +85,7 @@ const PlanningStepCardOne = React.forwardRef(
               value={String(drawdownEndAge) || ''}
               shouldDelayOnChange
             />
-            <Typography variant="b3" color="primary" colorShade="dark2">
+            <Typography variant="b5" color="primary" colorShade="dark2">
               {`That's year ${drawdownEndYear}`}
             </Typography>
           </SubPageStepCardInputContainer>
