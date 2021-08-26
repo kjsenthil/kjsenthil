@@ -19,7 +19,7 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
     // TODO: remove this when we upgrade to React 17
     event.persist();
     setInputs((currInputs) => {
-      const newCurrInputs = [...currInputs];
+      const newCurrInputs = currInputs.map((input) => ({ ...input }));
       newCurrInputs[posIndex].value = Number(event.target.value);
       return newCurrInputs;
     });
