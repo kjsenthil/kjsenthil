@@ -26,6 +26,8 @@ const prepareSimulateProjectionsRequestPayload = ({
   assetModel,
   totalNetContributions,
   monthlyContributions,
+  additionalMonthlyContributions,
+  upfrontContribution,
   portfolioCurrentValue,
 }: FetchGoalSimulateProjectionsParams): GoalSimulateProjectionsRequestPayload => {
   const ageDiffTo100 = 100 - clientAge;
@@ -44,9 +46,9 @@ const prepareSimulateProjectionsRequestPayload = ({
 
   return {
     timeHorizonToProject: timeHorizon,
-    feesPercentage: fees * 100,
-    upfrontContribution: 0,
-    monthlyContribution: monthlyContributions,
+    feesPercentage: fees,
+    upfrontContribution: upfrontContribution ?? 0,
+    monthlyContribution: monthlyContributions + (additionalMonthlyContributions ?? 0),
     currentNetContribution: totalNetContributions,
     currentPortfolioValue: portfolioCurrentValue,
     includeGoal: true,
