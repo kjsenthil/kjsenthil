@@ -28,7 +28,6 @@ module.exports = {
     '^.+\\.[jt]sx?$': '<rootDir>/test-utils/jest-preprocess.js',
   },
   transformIgnorePatterns: ['node_modules/(?!(gatsby)/)'],
-
   reporters: [
     'default',
     [

@@ -30,6 +30,7 @@ export { default as GoalTile } from './GoalTile';
 export { default as Legend } from './Legend';
 export { default as MainCard } from './MainCard';
 export { default as Modal } from './Modal';
+export { default as ModalWithHeader } from './ModalWithHeader';
 export { default as NavLink } from './NavLink';
 export { default as PillsNavigation } from './PillsNavigation';
 export { default as StickyHeader } from './StickyHeader';

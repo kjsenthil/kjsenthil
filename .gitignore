@@ -101,3 +101,7 @@ function-app-zips/
 
 #VS code local settings
 .vscode/*
+
+# Visual Studio cache/options directory
+.vs/*
+.vs/slnx.sqlite

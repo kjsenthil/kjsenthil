@@ -13,6 +13,7 @@ import {
   MonthlySavingsResponse,
   ClientAccountItem,
   BasicInvestmentSummary,
+  IsaContributionResponse,
 } from '../types';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
@@ -64,7 +65,7 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     id: '23456',
     accountType: 'accounts',
     accountTotalNetContribution: 4000,
-    accountName: 'ISA ',
+    accountName: 'ISA',
     accountCash: 139678.85,
     accountTotalHoldings: 545908.9554399999,
     accountReturn: 116295.09544,
@@ -360,5 +361,16 @@ export const mockBreakdownAllocation: BreakdownAllocationResponse = {
       self: 'https://myaccountsapi.demo2.bestinvest.co.uk/api/breakdown-allocation/12345',
     },
     relationships: null,
+  },
+};
+
+export const mockIsaContribution: IsaContributionResponse = {
+  data: {
+    type: 'isa-contributions',
+    id: '',
+    attributes: {
+      allowance: 20000,
+      contributions: 1000,
+    },
   },
 };

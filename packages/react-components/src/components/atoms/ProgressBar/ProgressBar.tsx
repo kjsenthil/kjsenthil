@@ -31,12 +31,17 @@ export default function ProgressBar({
 
   const renderProgressBars = () => {
     const theme = useTheme();
-    const linearGradient = `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
+    let defaultColor = `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
+
+    const barBackgroundColors = barBackgroundsFromProps ?? [];
+    defaultColor =
+      barBackgroundColors[0] ??
+      `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
 
     if (isMultiValue) {
       const barBackgrounds = barBackgroundsFromProps ?? [
         theme.palette.tertiary.dark1,
-        linearGradient,
+        defaultColor,
         theme.palette.tertiary.light2,
       ];
       const barBackgroundsLength = barBackgrounds.length;
@@ -51,7 +56,7 @@ export default function ProgressBar({
 
           // fallback to a linear gradient fill
           const selectedBackground =
-            index < barBackgroundsLength ? barBackgrounds[index] : linearGradient;
+            index < barBackgroundsLength ? barBackgrounds[index] : defaultColor;
 
           return (
             <ProgressBarFill
@@ -70,7 +75,7 @@ export default function ProgressBar({
     return (
       <ProgressBarFill
         borderRadius={borderRadius}
-        barBackground={linearGradient}
+        barBackground={defaultColor}
         barHeight={height}
         barWidth={(progress as number) * 100}
       />

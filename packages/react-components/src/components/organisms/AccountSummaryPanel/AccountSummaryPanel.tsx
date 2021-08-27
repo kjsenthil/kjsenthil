@@ -1,13 +1,20 @@
 import React from 'react';
 import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
-import { Divider, Grid, Spacer, useMediaQuery, useTheme } from '../../atoms';
+import { Divider, Grid, Spacer } from '../../atoms';
 import { Legend } from '../../molecules';
 import { SummaryCard, SummaryOfTotalsWrapper } from './AccountSummaryPanel.styles';
+import IsaAllowance from '../IsaAllowance';
+import { AccountType } from '../../../constants';
+import { useBreakpoint } from '../../../hooks';
 
 export interface AccountSummaryValuesProps {
   cashValue: number;
   investmentValue: number;
   totalValue: number;
+  accountType?: string;
+  isaTitle?: string;
+  isaContribution?: number;
+  isaAllowance?: number;
 }
 
 const currencyFormatter = (val: number) =>
@@ -17,30 +24,32 @@ const AccountSummaryPanel = ({
   cashValue,
   investmentValue,
   totalValue,
+  accountType,
+  isaTitle = '',
+  isaContribution = 0,
+  isaAllowance = 0,
 }: AccountSummaryValuesProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useBreakpoint();
 
   const renderVerticalDivider = (
     <>
-      <Spacer x={3} />
+      <Spacer x={20} />
       <Divider orientation="vertical" y={4} />
-      <Spacer x={3} />
+      <Spacer x={20} />
     </>
   );
-
   return (
-    <SummaryCard>
+    <SummaryCard isMobile={isMobile}>
       <SummaryOfTotalsWrapper
         isMobile={isMobile}
         item
-        xs={isMobile ? 12 : 8}
-        container
+        xs={isMobile ? 12 : 6}
         spacing={2}
         wrap="nowrap"
         justifyContent="flex-start"
+        container
       >
-        <Grid item xs={isMobile ? 6 : undefined}>
+        <Grid item xs={isMobile ? 6 : 4}>
           <Legend
             title="Cash"
             value={cashValue}
@@ -49,7 +58,7 @@ const AccountSummaryPanel = ({
           />
         </Grid>
         {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
-        <Grid item xs={isMobile ? 6 : undefined}>
+        <Grid item xs={isMobile ? 6 : 4}>
           <Legend
             title="Investments"
             value={investmentValue}
@@ -59,7 +68,7 @@ const AccountSummaryPanel = ({
         </Grid>
         {isMobile || <Grid item>{renderVerticalDivider}</Grid>}
 
-        <Grid item xs={isMobile ? 12 : undefined}>
+        <Grid item xs={isMobile ? 12 : 4}>
           <Legend
             title="Total"
             value={totalValue}
@@ -68,7 +77,24 @@ const AccountSummaryPanel = ({
           />
         </Grid>
       </SummaryOfTotalsWrapper>
-      {/* TODO - ISA allowance to come here if account is ISA */}
+      {accountType === AccountType.ISA && (
+        <SummaryOfTotalsWrapper
+          isMobile={isMobile}
+          item
+          xs={isMobile ? 12 : 6}
+          wrap="nowrap"
+          justifyContent="flex-end"
+          container
+        >
+          <Grid container item xs={isMobile ? 12 : 8}>
+            <IsaAllowance
+              title={isaTitle}
+              contributions={isaContribution}
+              totalAllowance={isaAllowance}
+            />
+          </Grid>
+        </SummaryOfTotalsWrapper>
+      )}
     </SummaryCard>
   );
 };

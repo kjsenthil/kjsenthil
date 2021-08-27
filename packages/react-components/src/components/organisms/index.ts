@@ -9,6 +9,7 @@ export type { HeaderMenuProps } from './HeaderMenu';
 
 export { default as AccountSummaryPanel } from './AccountSummaryPanel';
 export { default as AccountsTable } from './AccountsTable';
+export { default as AddCashCard } from './AddCashCard';
 export { default as AccountFilter } from './AccountFilter';
 export { default as AssetDetails } from './AssetDetails';
 export { default as Footer } from './Footer';
@@ -32,6 +33,7 @@ export { default as SimulationForm } from './SimulationForm';
 export { default as StatusComponent } from './StatusComponent';
 export { default as StepCard } from './StepCard';
 export { default as SummaryPanel } from './SummaryPanel';
+export { default as SuccessModal } from './SuccessModal';
 
 export type { GoalProgressCardProps };
 export type { GoalSelectionProps };

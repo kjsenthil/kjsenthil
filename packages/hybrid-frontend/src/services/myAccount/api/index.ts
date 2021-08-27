@@ -3,3 +3,4 @@ export { default as getEquityAndCashAllocation } from './getEquityAndCashAllocat
 export { default as getInvestmentSummary } from './getInvestmentSummary';
 export { default as getMonthlySavings } from './getMonthlySavings';
 export { default as getMonthlySavingsAmount } from './getMonthlySavingsAmount';
+export { default as getIsaContribution } from './getIsaContribution';

@@ -21,6 +21,9 @@ export interface ClientState
 export interface InvestmentSummaryState
   extends CommonState<InvestmentSummaryResponse['data'], InvestmentSummaryResponse['included']> {}
 
+export interface IsaContributionState
+  extends CommonState<IsaContributionResponse['data'], IsaContributionResponse['included']> {}
+
 export interface ClientAccount {
   type: ClientAccountTypes;
   id: string;
@@ -175,4 +178,21 @@ export interface BreakdownAllocationResponse {
     relationships: null | unknown;
     type: string;
   };
+}
+
+export interface IsaContribution {
+  type: 'isa-contributions';
+  id: string;
+  attributes: {
+    allowance: number;
+    contributions: number;
+  };
+  links?: {
+    self: string;
+  };
+  relationships?: null;
+}
+export interface IsaContributionResponse {
+  data: IsaContribution;
+  included?: null;
 }
