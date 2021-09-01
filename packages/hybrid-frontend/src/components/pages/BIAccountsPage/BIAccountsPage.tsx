@@ -171,7 +171,7 @@ const BIAccountsPage = () => {
           <SummaryPanel
             totalNetContributions={summaryContributions}
             lifetimeReturn={accountsSummary?.totalGainLoss}
-            lifetimeReturnPercentage={accountsSummary?.totalGainLossPercentage}
+            lifetimeReturnPercentage={(accountsSummary?.totalGainLossPercentage || 0) / 100}
             periodBasedReturn={{
               value: investmentReturn.value,
               percent: investmentReturn.percent,
