@@ -1,11 +1,11 @@
 import { InvestmentAccountData } from '@tswdts/react-components';
 import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
-import { PortfolioAssetAllocationResponse } from '../types';
+import { PortfolioAssetAllocationData, PortfolioAssetAllocationResponse } from '../types';
 
 const getPortfolioAssetAllocation = async (
   investmentAccounts: InvestmentAccountData[]
-): Promise<number> => {
+): Promise<PortfolioAssetAllocationData> => {
   const path = API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION;
 
   const response = await api.post<PortfolioAssetAllocationResponse>(
@@ -18,7 +18,10 @@ const getPortfolioAssetAllocation = async (
     }))
   );
 
-  return response.data.portfolioEquityPercentage ?? 0;
+  return {
+    portfolioEquityPercentage: response.data.portfolioEquityPercentage ?? 0,
+    portfolioCashPercentage: response.data.portfolioCashPercentage ?? 0,
+  };
 };
 
 export default getPortfolioAssetAllocation;

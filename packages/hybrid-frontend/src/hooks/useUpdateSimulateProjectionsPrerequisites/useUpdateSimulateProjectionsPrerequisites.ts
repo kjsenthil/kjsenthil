@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { InvestmentAccountData } from '@tswdts/react-components';
+import { InvestmentAccountData, RiskModel } from '@tswdts/react-components';
 
 import {
   extractClientAccounts,
@@ -13,6 +13,7 @@ import {
   getPortfolioAssetAllocation,
   getPortfolioRiskProfile,
   PortfolioRiskProfile,
+  PortfolioAssetAllocationData,
 } from '../../services/projections';
 import useAllAssets from '../../services/assets/hooks/useAllAssets';
 import { RootState } from '../../store';
@@ -25,9 +26,10 @@ const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjection
   const fundData = useAllAssets();
   const [assetModel, setAssetModel] = useState<AssetModelResponse>();
   const [riskProfile, setRiskProfile] = useState<PortfolioRiskProfile>();
-  const [portfolioEquityPercentage, setPortfolioEquityPercentage] = useState<undefined | number>(
-    undefined
-  );
+  const [
+    portfolioAssetAllocation,
+    setPortfolioAssetAllocation,
+  ] = useState<PortfolioAssetAllocationData>();
   const [portfolioCurrentValue, setPortfolioCurrentValue] = useState<undefined | number>(undefined);
   const [monthlyContributions, setMonthlyContributions] = useState<undefined | number>(undefined);
   const [totalNetContributions, setTotalNetContributions] = useState<undefined | number>(undefined);
@@ -46,7 +48,7 @@ const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjection
   useEffect(() => {
     (async () => {
       if (accountTotals) {
-        setPortfolioEquityPercentage(await getPortfolioAssetAllocation(accountTotals));
+        setPortfolioAssetAllocation(await getPortfolioAssetAllocation(accountTotals));
       }
     })();
   }, [accountTotals]);
@@ -80,16 +82,33 @@ const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjection
 
   useEffect(() => {
     (async () => {
-      if (portfolioEquityPercentage !== undefined && !riskProfile) {
+      if (
+        portfolioAssetAllocation?.portfolioCashPercentage !== undefined &&
+        portfolioAssetAllocation.portfolioCashPercentage === 100 &&
+        !riskProfile
+      ) {
+        setAssetModel(
+          (): AssetModelResponse => ({
+            erValue: 0,
+            volatility: 0,
+            riskModel: RiskModel.TAA1,
+            id: 0,
+            zScores: { lessLikelyUb: 0, lessLikleyLb: 0, moreLikelyLb: 0, moreLikelyUb: 0 },
+          })
+        );
+      } else if (
+        portfolioAssetAllocation?.portfolioEquityPercentage !== undefined &&
+        !riskProfile
+      ) {
         setRiskProfile(
           await getPortfolioRiskProfile({
-            portfolioEquityPercentage,
+            portfolioEquityPercentage: portfolioAssetAllocation?.portfolioEquityPercentage ?? 0,
             equityFunds: fundData.allAsset.nodes,
           })
         );
       }
     })();
-  }, [fundData, portfolioEquityPercentage, riskProfile]);
+  }, [fundData, portfolioAssetAllocation, riskProfile]);
 
   useEffect(() => {
     (async () => {

@@ -92,6 +92,11 @@ export interface PortfolioAssetAllocationResponse {
   portfolioCashPercentage: number | null;
 }
 
+export interface PortfolioAssetAllocationData {
+  portfolioEquityPercentage: number;
+  portfolioCashPercentage: number;
+}
+
 export type GoalSimulateProjectionsState = CommonState<GoalSimulateProjectionsResponse>;
 
 export interface GoalSimulateProjectionsRequestPayload {

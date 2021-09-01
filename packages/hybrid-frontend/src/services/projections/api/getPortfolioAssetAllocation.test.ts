@@ -25,6 +25,6 @@ describe('getPortfolioAssetAllocation', () => {
 
     const response = await getPortfolioAssetAllocation(mockInvestmentAccountsData);
 
-    expect(response).toStrictEqual(mockAllocation.portfolioEquityPercentage);
+    expect(response).toStrictEqual(mockAllocation);
   });
 });
