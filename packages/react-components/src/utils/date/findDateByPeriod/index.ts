@@ -1,19 +1,24 @@
-import { UnitType } from 'dayjs';
+import { OpUnitType, QUnitType } from 'dayjs';
 import calculateAbsoluteFloorDiff from '../calculateAbsoluteFloorDiff';
 
 type DateType = Date | number | string;
 
 const findDateByPeriod = (dates: Array<DateType>, period: string): DateType | null => {
-  const periodMatch = period.match(/(^\d+)([dmy])$/);
+  if (dates.length === 0) {
+    return null;
+  }
+
+  const periodMatch = period.match(/(^\d+)([dmyw])$/);
 
   if (!periodMatch) {
     return null;
   }
 
-  const periodUnits: Record<'d' | 'm' | 'y', UnitType> = {
+  const periodUnits: Record<'d' | 'm' | 'y' | 'w', QUnitType | OpUnitType> = {
     d: 'day',
     m: 'month',
     y: 'year',
+    w: 'week',
   };
 
   const [, periodValue, periodUnit] = periodMatch;
@@ -38,6 +43,10 @@ const findDateByPeriod = (dates: Array<DateType>, period: string): DateType | nu
       currDate,
       periodUnits[periodUnit]
     );
+
+    if (diffBetweenCurrAndLast === Number(periodValue)) {
+      return currDate;
+    }
 
     const diffBetweenCurrAndNext = calculateAbsoluteFloorDiff(
       currDate,

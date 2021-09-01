@@ -1,49 +1,43 @@
 import findDateByPeriod from '.';
 
-const dates = [
-  '2016-05-09T00:00:00',
-  '2016-05-10T00:00:00',
-  '2016-03-05T00:00:00',
-  '2016-03-11T00:00:00',
-  '2016-03-12T00:00:00',
-  '2016-01-11T00:00:00',
-  '2016-03-15T00:00:00',
-  '2016-03-10T00:00:00',
-  '2016-03-20T00:00:00',
-  '2016-04-01T00:00:00',
-  '2016-04-05T00:00:00',
-  '2016-06-08T00:00:00',
-  '2016-06-07T00:00:00',
-  '2016-06-10T00:00:00',
-  '2016-06-09T00:00:00',
-  '2011-07-11T00:00:00',
-];
+import testDates from './test-dates.json';
 
-describe('findDatePeriod', () => {
-  it('returns a date from an array by a given number of days with an exact match', () => {
-    expect(findDateByPeriod(dates, '1d')).toStrictEqual('2016-06-09T00:00:00');
-    expect(findDateByPeriod(dates, '2d')).toStrictEqual('2016-06-08T00:00:00');
-    expect(findDateByPeriod(dates, '3d')).toStrictEqual('2016-06-07T00:00:00');
-  });
+describe('findDateByPeriod', () => {
+  const testCases = [
+    ['5y', '2016-05-13T00:00:00'],
+    ['4y', '2017-04-13T00:00:00'],
+    ['3y', '2018-04-13T00:00:00'],
+    ['2y', '2019-04-12T00:00:00'],
+    ['1y', '2020-04-13T00:00:00'],
+    ['6m', '2020-10-13T00:00:00'],
+    ['3m', '2021-01-13T00:00:00'],
+    ['2m', '2021-02-12T00:00:00'],
+    ['1m', '2021-03-12T00:00:00'],
+    ['5w', '2021-03-09T00:00:00'],
+    ['4w', '2021-03-16T00:00:00'],
+    ['3w', '2021-03-23T00:00:00'],
+    ['2w', '2021-03-30T00:00:00'],
+    ['1w', '2021-04-06T00:00:00'],
+    ['9d', '2021-04-02T00:00:00'],
+    ['8d', '2021-04-05T00:00:00'],
+    ['7d', '2021-04-06T00:00:00'],
+    ['6d', '2021-04-07T00:00:00'],
+    ['5d', '2021-04-08T00:00:00'],
+    ['4d', '2021-04-09T00:00:00'],
+    ['3d', '2021-04-12T00:00:00'],
+    ['2d', '2021-04-12T00:00:00'],
+    ['1d', '2021-04-12T00:00:00'],
+  ];
 
-  it('returns the cloest date from an array of a given number of days when no exact match is found', () => {
-    expect(findDateByPeriod(dates, '5d')).toStrictEqual('2016-06-07T00:00:00');
-    expect(findDateByPeriod(dates, '4d')).toStrictEqual('2016-06-07T00:00:00');
-  });
+  test.each(testCases)(
+    'Using mock historical performance API data, it finds the correct start date for period %p',
+    (period, expected) => {
+      // The 'testDates' array is extracted from an actual historical performance API call
+      expect(findDateByPeriod(testDates, period)).toBe(expected);
+    }
+  );
 
-  it('returns a date from an array by a given number of months', () => {
-    expect(findDateByPeriod(dates, '1m')).toStrictEqual('2016-05-09T00:00:00');
-    expect(findDateByPeriod(dates, '3m')).toStrictEqual('2016-03-05T00:00:00');
-    expect(findDateByPeriod(dates, '6m')).toStrictEqual('2016-01-11T00:00:00');
-  });
-
-  it('returns a date from an array by a given number of years', () => {
-    expect(findDateByPeriod(dates, '1y')).toStrictEqual('2016-01-11T00:00:00');
-    expect(findDateByPeriod(dates, '2y')).toStrictEqual('2016-01-11T00:00:00');
-    expect(findDateByPeriod(dates, '5y')).toStrictEqual('2011-07-11T00:00:00');
-    expect(findDateByPeriod(dates, '9y')).toStrictEqual('2011-07-11T00:00:00');
-    expect(findDateByPeriod(dates, '10y')).toStrictEqual('2011-07-11T00:00:00');
-  });
+  // Edge cases
 
   it('returns the only date in an array of 1', () => {
     expect(findDateByPeriod(['2011-07-11T00:00:00'], '1y')).toStrictEqual('2011-07-11T00:00:00');
