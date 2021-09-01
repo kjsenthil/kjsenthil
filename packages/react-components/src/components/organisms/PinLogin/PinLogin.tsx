@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from '../../atoms';
 import { Alert, FormInput } from '../../molecules';
-import { initStatePins } from '../../../constants';
 import { PinLoginItem } from '../../../services';
 import { convertToOrdinal } from '../../../utils/string';
+import randomPinIndices from '../../../services/auth/utils/randomPinIndices';
 
 export interface PinLoginProps {
   errorMessage?: string;
@@ -14,7 +14,7 @@ export interface PinLoginProps {
 const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) => {
   const theme = useTheme();
 
-  const [inputs, setInputs] = useState<PinLoginItem[]>(initStatePins);
+  const [inputs, setInputs] = useState<PinLoginItem[]>(randomPinIndices());
   const handleChange = (posIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: remove this when we upgrade to React 17
     event.persist();
@@ -46,10 +46,11 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
             {inputs.map((pinField, index) => (
               <Grid item xs={isMobile ? 9 : undefined} key={String(pinField.position)}>
                 <FormInput
-                  type="number"
+                  data-testid="pin-login-form"
+                  type="password"
                   name={`pin-${index + 1}`}
                   value={pinField.value ? String(pinField.value) : ''}
-                  label={`${convertToOrdinal(pinField.position)} digit of your pin`}
+                  label={`${convertToOrdinal(pinField.position)}`}
                   onChange={handleChange(index)}
                   fullWidth={isMobile}
                 />

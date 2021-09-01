@@ -1,6 +1,14 @@
-import { usernameInput, passwordInput, loginBtn, alertMsg, pinLoginBtn } from './login.locators'
+import {
+  usernameInput,
+  passwordInput,
+  loginBtn,
+  alertMsg,
+  pinLoginBtn,
+  pinLoginField1,
+  pinLoginField2, pinLoginField3
+} from './login.locators';
 import { url } from '../../environments/stage'
-import { open } from '../../components/browser/browser.actions'
+import { open } from '../browser/browser.actions'
 import { expect } from 'chai'
 import { getPageHeading } from '../myAccounts/myAccounts.actions'
 
@@ -34,6 +42,17 @@ export const performLogin = async (username: string, password: string) => {
 }
 
 export const pinLoginAction = async () => {
+  await populatePinField(await pinLoginField1())
+  await populatePinField(await pinLoginField2())
+  await populatePinField(await pinLoginField3())
+
   await (await pinLoginBtn()).waitForClickable()
   await (await pinLoginBtn()).click()
+}
+
+const populatePinField = async (pinLoginField: WebdriverIO.Element) => {
+  await pinLoginField.waitForClickable()
+  const pinLabel = await pinLoginField.getComputedLabel()
+  const pinValue = pinLabel.substr(0, 1)
+  pinLoginField.setValue(pinValue)
 }

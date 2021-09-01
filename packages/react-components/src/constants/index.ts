@@ -33,15 +33,3 @@ export const AccountsTableHeader = (
       'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
   },
 ];
-
-export const initStatePins = [
-  {
-    position: 2,
-  },
-  {
-    position: 4,
-  },
-  {
-    position: 6,
-  },
-];

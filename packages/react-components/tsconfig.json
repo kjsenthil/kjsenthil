@@ -3,6 +3,7 @@
   "compilerOptions": {},
   "include": [
     "src",
+    "../../node_modules/jest-extended/types/**/*.d.ts"
   ],
   "exclude": ["node_modules", "public", ".cache"]
 }

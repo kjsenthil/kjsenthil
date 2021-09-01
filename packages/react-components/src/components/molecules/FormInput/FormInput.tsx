@@ -4,7 +4,7 @@ import { FormInputWrapper } from '../../particles';
 
 export interface FormInputProps extends TextFieldProps {
   name: string;
-  value: string;
+  value?: string;
   label: string;
   error?: string;
   shouldDelayOnChange?: boolean;
@@ -61,6 +61,7 @@ const FormInput = ({ value, shouldDelayOnChange, onChange, ...props }: FormInput
     >
       <TextField
         {...props}
+        data-testid={`form-input-field-${name}`}
         id={id || name}
         value={val !== undefined ? val : value ?? ''}
         hasError={!!error}
