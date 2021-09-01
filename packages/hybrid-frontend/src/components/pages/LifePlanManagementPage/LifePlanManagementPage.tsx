@@ -153,7 +153,7 @@ const LifePlanManagementPage = () => {
               showLikelyRange
               {...projectionsData}
               panelOptions={{
-                displayContributions: false,
+                displayContributions: true,
                 displayLikelyRangeToggle: false,
                 displayLikelyRangeLegend: false,
               }}

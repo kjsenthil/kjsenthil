@@ -19,6 +19,8 @@ export interface PerformanceProjectionsChartSummaryPanelProps {
   // Used by the Likely Range toggle
   showLikelyRange: boolean;
   toggleLikelyRange?: () => void;
+
+  showLikelyRangeLegend: boolean;
 }
 
 const currencyFormatter = (val: number) => formatCurrency(val, CurrencyPresentationVariant.CHART);
@@ -31,6 +33,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
   performanceTargetNotMet,
   showLikelyRange,
   toggleLikelyRange,
+  showLikelyRangeLegend,
 }: PerformanceProjectionsChartSummaryPanelProps) {
   return (
     <SummaryPanelContainer>
@@ -42,15 +45,17 @@ export default function PerformanceProjectionsChartSummaryPanel({
           chartIndicatorProps={{ variant: 'solid', color: 'tertiary' }}
         />
 
-        {performanceLowEnd !== undefined && performanceHighEnd !== undefined && (
-          <Legend
-            title="Likely range"
-            value={[performanceLowEnd, performanceHighEnd]}
-            valueFormatter={currencyFormatter}
-            chartIndicatorProps={{ variant: 'rectangle', color: 'tertiary' }}
-            tooltip="The future is uncertain, so ‘likely range’ shows a spectrum of possible outcomes for how much money you could have over time. There’s a 10% chance you could end up with less but there’s also a 10% chance you could end up with more."
-          />
-        )}
+        {showLikelyRangeLegend &&
+          performanceLowEnd !== undefined &&
+          performanceHighEnd !== undefined && (
+            <Legend
+              title="Likely range"
+              value={[performanceLowEnd, performanceHighEnd]}
+              valueFormatter={currencyFormatter}
+              chartIndicatorProps={{ variant: 'rectangle', color: 'tertiary' }}
+              tooltip="The future is uncertain, so ‘likely range’ shows a spectrum of possible outcomes for how much money you could have over time. There’s a 10% chance you could end up with less but there’s also a 10% chance you could end up with more."
+            />
+          )}
 
         {performanceTargetNotMet !== undefined && (
           <Legend

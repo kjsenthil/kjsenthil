@@ -36,6 +36,7 @@ const defaultArgs: StoryProps = {
   performanceHighEnd: 10000,
   contributions: 10000,
   performanceTargetNotMet: undefined,
+  showLikelyRangeLegend: true,
 };
 
 export const Default = Template.bind({});

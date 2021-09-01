@@ -13,6 +13,7 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
         performanceTargetNotMet={40000}
         showLikelyRange
         toggleLikelyRange={() => {}}
+        showLikelyRangeLegend
       />
     );
 

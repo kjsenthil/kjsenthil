@@ -344,6 +344,7 @@ function PerformanceProjectionsChart({
         performanceTargetNotMet={performanceTargetNotMet}
         showLikelyRange={showLikelyRange}
         toggleLikelyRange={panelOptions.displayLikelyRangeToggle ? toggleLikelyRange : undefined}
+        showLikelyRangeLegend={panelOptions.displayLikelyRangeLegend ?? false}
       />
 
       <svg
