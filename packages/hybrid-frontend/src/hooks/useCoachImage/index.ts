@@ -1,1 +1,1 @@
-export { default } from './useCoachImage';
+export { default } from './useCoachImages';

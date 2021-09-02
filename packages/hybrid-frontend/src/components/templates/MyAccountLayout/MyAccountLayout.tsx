@@ -17,7 +17,7 @@ import {
   useTheme,
   StickyHeader,
 } from '@tswdts/react-components';
-import { BasicInfo, useFeatureFlagToggle, useStickyRef } from '../../../hooks';
+import { BasicInfo, useCoachImages, useFeatureFlagToggle, useStickyRef } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
 import { NavPaths } from '../../../config/paths';
 import { ACTIVE_ENV, MYACCOUNTS_HOME_URL } from '../../../config';
@@ -55,6 +55,7 @@ const MyAccountLayout = ({
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
   const currentUrl = useLocation().pathname;
   const { stickyEnabled, stickyRef } = useStickyRef();
+  const coachImages = useCoachImages();
 
   const expFeatureSwitch = (isEnabled: boolean) => {
     dispatch(setFeatureToggleFlag({ name: FeatureFlagNames.EXP_FEATURE, isEnabled }));
@@ -87,6 +88,7 @@ const MyAccountLayout = ({
         expFeatureSwitch={expFeatureSwitch}
         isNonProd={ACTIVE_ENV !== 'production'}
         myAccountsUrl={MYACCOUNTS_HOME_URL}
+        coachImages={coachImages}
         links={[
           {
             name: 'Investment',

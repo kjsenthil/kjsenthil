@@ -6,7 +6,7 @@ import { Color, ColorShade, Variant, typographyCss } from '../Typography';
 
 export interface LinkProps extends Omit<MUILinkProps, 'color' | 'underline' | 'variant'> {
   special?: boolean;
-  color?: Color;
+  color?: Color | 'inherit';
   colorShade?: ColorShade;
   variant?: Variant;
 }
@@ -28,11 +28,10 @@ const StyledLink = styled(({ color, colorShade, variant, innerRef, ...props }: S
   }: {
     theme: Theme;
     variant: Variant;
-    color: Color;
+    color: Color | 'inherit';
     colorShade: ColorShade;
   }) => `
-    ${typographyCss({ variant, theme })};
-    color: ${theme.palette[color][colorShade]};
+    ${typographyCss({ variant, theme, color, colorShade })};
   `}
 `;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { Button, Icon, Typography } from '../../atoms';
 import SignpostModal, { SignpostModalProps } from './SignpostModal';
-import imageFile from '../../../assets/img/coach.png';
+import imageFile from '../../../assets/img/coachPortrait.png';
 
 export default {
   title: 'Digital Hybrid/Molecules/Signpost Modal',

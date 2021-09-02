@@ -13,13 +13,28 @@ export const StyledPaper = styled((props) => <Paper {...props} />)`
 `;
 
 export const StyledBox = styled((props) => <Box {...props} />)`
-  max-height: 169px;
   display: grid;
   grid-template-columns: 1fr 100px;
   grid-template-rows: 0.75fr 1.5fr 0.5fr;
   ${({ theme }: { theme: Theme }) => css`
     padding: ${theme.spacing(1)}px;
+
+    ::before {
+      content: '';
+      right: 30%;
+      top: -5%;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid ${theme.palette.background.paper};
+    }
   `}
+
+  @media (max-width: 830px) {
+    line-height: 4;
+  }
 `;
 
 interface GridItemProps {

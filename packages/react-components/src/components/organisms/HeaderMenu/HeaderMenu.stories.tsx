@@ -15,6 +15,31 @@ export const Default = Template.bind({});
 /* eslint-disable-next-line no-alert */
 const expFeatureSwitch = (isEnabled: boolean) => alert(`isEnabled: ${isEnabled}`);
 
+const coachImages = {
+  coachPortrait: {
+    childImageSharp: {
+      fluid: {
+        aspectRatio: 0.65,
+        src: 'coachPortrait.png',
+        srcSet:
+          '/coachPortrait.png 25w,/coachPortrait.png 50w,/coachPortrait.png 100w,coachPortrait.png 150w,/coachPortrait.png 200w,/coachPortrait.png 300w',
+        sizes: '(max-width: 100px) 100vw, 100px',
+      },
+    },
+  },
+  coachIcon: {
+    childImageSharp: {
+      fluid: {
+        aspectRatio: 0.65,
+        src: 'coachIcon.png',
+        srcSet:
+          '/coachIcon.png 25w,/coachIcon.png 50w,/coachIcon.png 100w,coachIcon.png 150w,/coachIcon.png 200w,/coachIcon.png 300w',
+        sizes: '(max-width: 100px) 100vw, 100px',
+      },
+    },
+  },
+};
+
 const defaultArgs: HeaderMenuProps = {
   isNonProd: false,
   myAccountsUrl: 'https://google.com',
@@ -22,6 +47,7 @@ const defaultArgs: HeaderMenuProps = {
   homePath: '/',
   expFeatureSwitch,
   currentUrl: '/investment',
+  coachImages,
   links: [
     {
       name: 'Investment',

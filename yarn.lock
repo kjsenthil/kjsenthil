@@ -5296,6 +5296,7 @@ __metadata:
     d3-time-format: ^3.0.0
     dayjs: ^1.10.4
     gatsby: ^2.26.1
+    gatsby-image: ^3.11.0
     jest: ^26.6.3
     jest-coverage-badges: ^1.1.2
     jest-extended: ^0.11.5
@@ -14761,6 +14762,17 @@ fsevents@^1.2.7:
     object-fit-images: ^3.2.4
     prop-types: ^15.7.2
   checksum: a67f9b0fea2bbb8acaf9704988ab22f12522aed82aea61a98fcf14565c79be1fcf29a91f543836e5e33347dc0353fd5e14378cfab5f7cf4622604fa0293233b8
+  languageName: node
+  linkType: hard
+
+"gatsby-image@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "gatsby-image@npm:3.11.0"
+  dependencies:
+    "@babel/runtime": ^7.14.6
+    object-fit-images: ^3.2.4
+    prop-types: ^15.7.2
+  checksum: da7e8d6fcde678969f4fdc22b2eda1235525ebf848bf1c04fc618920356ea0d8a55bec8a552f01cd7d7c7b3313c1af08dbd2efed198bc87ca4c9831518db4356
   languageName: node
   linkType: hard
 

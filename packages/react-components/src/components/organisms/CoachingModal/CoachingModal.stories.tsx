@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import CoachingModal from './CoachingModal';
-import imageFile from '../../../assets/img/coach.png';
+import imageFile from '../../../assets/img/coachPortrait.png';
 
 export default {
   title: 'Digital Hybrid/Organisms/Coaching Modal',

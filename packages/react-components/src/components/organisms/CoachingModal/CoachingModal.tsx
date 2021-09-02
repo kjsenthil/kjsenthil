@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Icon, Link, Typography } from '../../atoms';
+import { Button, Link, Typography } from '../../atoms';
 import { SignpostModal } from '../../molecules';
+import StyledIcon from './CoachingModal.styles';
 
 export interface CoachingModalProps {
   image: React.ReactElement;
@@ -26,7 +27,7 @@ const CoachingModal = ({ image }: CoachingModalProps) => (
     }
     button={
       <Button
-        startIcon={<Icon name="calendar" />}
+        startIcon={<StyledIcon name="calendar" />}
         color="gradient"
         href="https://online.bestinvest.co.uk/bestinvest-plus#/"
       >

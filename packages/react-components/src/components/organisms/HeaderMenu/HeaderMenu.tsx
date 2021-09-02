@@ -1,35 +1,45 @@
 import { navigate } from 'gatsby';
+import Img from 'gatsby-image';
 import React, { useState } from 'react';
 import {
-  useMediaQuery,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  Toolbar,
-  Button,
-  Grid,
-  Menu,
-  MenuItem,
-  Drawer,
-  Icon,
   Box,
-  Typography,
-  MenuIcon,
+  Button,
+  Divider,
+  Drawer,
+  Grid,
+  Icon,
   IconButton,
   Link,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Menu,
+  MenuIcon,
+  MenuItem,
   Switcher,
-  Divider,
+  Toolbar,
+  Typography,
+  useMediaQuery,
 } from '../../atoms';
 import { NavLink, SubHeader } from '../../molecules';
 import {
-  SwitcherLabel,
-  LogoImage,
-  StyledAppBar,
   CashText,
+  CoachIcon,
+  CoachIconContainer,
+  CoachTextContainer,
   DrawerContainer,
+  LogoImage,
+  ModalContainer,
+  MyAccountsContainer,
+  StyledAppBar,
+  RotatedIcon,
+  StyledSubHeader,
+  SwitcherLabel,
 } from './HeaderMenu.styles';
 import Spacer from '../../atoms/Spacer/Spacer';
+import CalendarIcon from './CalendarIcon';
+import CoachingModal from '../CoachingModal';
 
 type LinkWithSwitch = {
   onClick: (isEnabled: boolean) => void;
@@ -53,6 +63,22 @@ type LinkData = {
   icon?: React.ReactElement;
 } & LinkType;
 
+type GatsbyImage = {
+  childImageSharp: {
+    fluid: {
+      aspectRatio: number;
+      src: string;
+      srcSet: string;
+      sizes: string;
+    };
+  };
+};
+
+type CoachImages = {
+  coachPortrait: GatsbyImage;
+  coachIcon: GatsbyImage;
+};
+
 export interface HeaderMenuProps {
   homePath: string;
   links: Array<LinkData>;
@@ -62,6 +88,7 @@ export interface HeaderMenuProps {
   cash: string;
   isNonProd: boolean;
   myAccountsUrl: string;
+  coachImages: CoachImages;
 }
 
 const HeaderMenu = ({
@@ -73,11 +100,13 @@ const HeaderMenu = ({
   isExpFeatureFlagEnabled,
   isNonProd,
   myAccountsUrl,
+  coachImages,
 }: HeaderMenuProps) => {
   const isLargerScreen = useMediaQuery('(min-width: 830px)'); // This is temperory - design will change later and breakdown better specified
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleProfileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setProfileAnchorEl(event.currentTarget);
@@ -129,8 +158,54 @@ const HeaderMenu = ({
       ? (link as LinkWithSwitch).onClick
       : () => navigate((link as LinkWithPath).path);
 
+  const renderMyAccountsLink = () => (
+    <MyAccountsContainer>
+      <RotatedIcon name="upload" />
+      <Link color="inherit" special href={myAccountsUrl}>
+        Back to old Bestinvest
+      </Link>
+    </MyAccountsContainer>
+  );
+
+  const renderCoachSignpost = () => (
+    <CoachIconContainer>
+      <ModalContainer>
+        {showModal ? (
+          <CoachingModal
+            image={
+              <Img
+                fluid={coachImages.coachPortrait.childImageSharp.fluid}
+                alt="Portrait image of coach"
+              />
+            }
+          />
+        ) : null}
+      </ModalContainer>
+      <CoachTextContainer>
+        <Typography variant="sh1" color="inherit">
+          YOUR COACH
+        </Typography>
+        <Link
+          color="white"
+          special
+          onClick={() =>
+            isLargerScreen
+              ? setShowModal(!showModal)
+              : navigate('https://online.bestinvest.co.uk/bestinvest-plus#/')
+          }
+        >
+          Book an appointment
+        </Link>
+      </CoachTextContainer>
+      <CoachIcon coachIconUrl={coachImages.coachIcon.childImageSharp.fluid.src}>
+        <CalendarIcon />
+      </CoachIcon>
+    </CoachIconContainer>
+  );
+
   const renderDrawerList = () => (
     <>
+      {isExpFeatureFlagEnabled ? <StyledSubHeader>{renderCoachSignpost()}</StyledSubHeader> : null}
       {links.filter(filterForEnv).map((link, i) => (
         <ListItem
           key={link.name}
@@ -310,31 +385,56 @@ const HeaderMenu = ({
 
         <Divider />
 
-        <SubHeader>
-          {isLargerScreen ? (
-            <Grid container justifyContent="space-between" alignItems="center">
-              <Grid item>
-                {isNonProd && (
-                  <SwitcherLabel
-                    labelPlacement="start"
-                    control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
-                    label="Experimental Features"
-                  />
-                )}
-              </Grid>
+        {isExpFeatureFlagEnabled ? (
+          <StyledSubHeader>
+            {isLargerScreen ? (
+              <Grid container justifyContent="space-between" alignItems="center">
+                <Grid item>{renderMyAccountsLink()}</Grid>
+                <Grid item>
+                  {isNonProd && (
+                    <SwitcherLabel
+                      labelPlacement="start"
+                      control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
+                      label="Experimental Features"
+                    />
+                  )}
+                </Grid>
 
-              <Grid item>
-                <Button color="primary" variant="outlined" href={myAccountsUrl}>
-                  My Accounts Login
-                </Button>
+                <Grid item>{renderCoachSignpost()}</Grid>
               </Grid>
-            </Grid>
-          ) : (
-            <Grid item container wrap="nowrap" justifyContent="space-between" alignItems="center">
-              {renderCashAndInvestActions(true)}
-            </Grid>
-          )}
-        </SubHeader>
+            ) : (
+              <Grid item container justifyContent="center">
+                {renderMyAccountsLink()}
+              </Grid>
+            )}
+          </StyledSubHeader>
+        ) : (
+          <SubHeader>
+            {isLargerScreen ? (
+              <Grid container justifyContent="space-between" alignItems="center">
+                <Grid item>
+                  {isNonProd && (
+                    <SwitcherLabel
+                      labelPlacement="start"
+                      control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
+                      label="Experimental Features"
+                    />
+                  )}
+                </Grid>
+
+                <Grid item>
+                  <Button color="primary" variant="outlined" href={myAccountsUrl}>
+                    My Accounts Login
+                  </Button>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item container wrap="nowrap" justifyContent="space-between" alignItems="center">
+                {renderCashAndInvestActions(true)}
+              </Grid>
+            )}
+          </SubHeader>
+        )}
       </StyledAppBar>
     </Box>
   );
