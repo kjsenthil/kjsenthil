@@ -55,14 +55,18 @@ const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjection
 
   useEffect(() => {
     (async () => {
-      if (investmentSummary.data && client.included && !accountTotals) {
+      if (investmentSummary.data && investmentAccounts.data && client.included && !accountTotals) {
         const clientAccounts = extractClientAccounts(client.included);
         setAccountTotals(
-          await extractInvestmentAccountDataByAccounts(investmentSummary.data, clientAccounts)
+          await extractInvestmentAccountDataByAccounts(
+            investmentSummary.data,
+            clientAccounts,
+            investmentAccounts.data
+          )
         );
       }
     })();
-  }, [investmentSummary.data, client.included, accountTotals]);
+  }, [investmentSummary.data, client.included, accountTotals, investmentAccounts.data]);
 
   useEffect(() => {
     if (accountTotals) {

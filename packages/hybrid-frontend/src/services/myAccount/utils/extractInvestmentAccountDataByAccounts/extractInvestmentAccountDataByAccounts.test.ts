@@ -1,9 +1,37 @@
+import { PerformanceDataPeriod, PeriodReturn } from '@tswdts/react-components';
 import extractInvestmentAccountDataByAccounts from '.';
 import getEquityAndCashAllocation from '../../api/getEquityAndCashAllocation';
 import getMonthlySavingsAmount from '../../api/getMonthlySavingsAmount';
 
 jest.mock('../../api/getEquityAndCashAllocation');
 jest.mock('../../api/getMonthlySavingsAmount');
+
+const periodReturn: PeriodReturn = {
+  [PerformanceDataPeriod['1W']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['1M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['3M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['6M']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['1Y']]: {
+    value: 100,
+    percent: 10,
+  },
+  [PerformanceDataPeriod['5Y']]: {
+    value: 100,
+    percent: 10,
+  },
+};
 
 describe('extractInvestmentAccountDataByAccounts', () => {
   it('returns investment account data by accounts ', async () => {
@@ -14,10 +42,38 @@ describe('extractInvestmentAccountDataByAccounts', () => {
 
     (getMonthlySavingsAmount as jest.Mock).mockResolvedValueOnce(0);
 
-    const mockInvestmentAccounts = [
+    const mockInvestmentClientAccounts = [
       { id: '21977', name: 'ISA ', type: 'accounts' },
       { id: '21978', name: 'Investment Account ', type: 'accounts' },
     ];
+
+    const mockInvestmentAccounts = [
+      {
+        id: '21977',
+        accountName: 'ISA ',
+        accountType: 'accounts',
+        accountTotalNetContribution: 0,
+        periodReturn,
+        accountTotalHoldings: 0,
+        accountCash: 0,
+        accountReturn: 0,
+        accountReturnPercentage: 0,
+        monthlyInvestment: 100,
+      },
+      {
+        id: '21978',
+        accountName: 'Investment Account ',
+        accountType: 'accounts',
+        accountTotalNetContribution: 0,
+        periodReturn,
+        accountTotalHoldings: 0,
+        accountCash: 0,
+        accountReturn: 0,
+        accountReturnPercentage: 0,
+        monthlyInvestment: 150,
+      },
+    ];
+
     const mockResponse = [
       {
         accountCash: 0,
@@ -28,7 +84,7 @@ describe('extractInvestmentAccountDataByAccounts', () => {
         equityPercentage: 100,
         cashPercentage: 50,
         id: '21977',
-        monthlyInvestment: 0,
+        monthlyInvestment: 100,
       },
       {
         accountCash: 9.93,
@@ -39,7 +95,7 @@ describe('extractInvestmentAccountDataByAccounts', () => {
         equityPercentage: 100,
         cashPercentage: 50,
         id: '21978',
-        monthlyInvestment: undefined,
+        monthlyInvestment: 150,
       },
     ];
 
@@ -82,6 +138,7 @@ describe('extractInvestmentAccountDataByAccounts', () => {
 
     const accountsResults = await extractInvestmentAccountDataByAccounts(
       mockInvestmentSummaryData,
+      mockInvestmentClientAccounts,
       mockInvestmentAccounts
     );
     expect(accountsResults).toStrictEqual(mockResponse);

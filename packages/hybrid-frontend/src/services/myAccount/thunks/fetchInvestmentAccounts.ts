@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { InvestmentAccount } from '@tswdts/react-components';
 import { getPerformanceAccountsAggregated, NetContributionValueWithDate } from '../../performance';
 import { AnnualisedReturnsResponse, postAnnualisedReturns } from '../../returns';
+import { getMonthlySavingsAmount } from '../api';
 import { ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
 import { extractClientAccounts } from '../utils';
 import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
@@ -40,6 +41,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
           Number(investSummaryItem.id)
         );
 
+        const monthlyInvestment = await getMonthlySavingsAmount(investSummaryItem.id);
         let netContributions: NetContributionValueWithDate[] = [];
         let annualisedReturnSummaryAmount: AnnualisedReturnsResponse;
         // Only call annualised return if there is valid performance data
@@ -96,6 +98,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
             performanceResponse?.included[0]?.attributes?.netContributions ?? []
           ),
           annualisedReturn: annualisedReturnSummaryAmount?.annualisedReturnValue,
+          monthlyInvestment,
         };
       }
     );
