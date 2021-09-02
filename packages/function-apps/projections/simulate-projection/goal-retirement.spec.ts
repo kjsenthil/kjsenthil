@@ -1,7 +1,7 @@
 import { Context } from "@azure/functions";
-import { calculateCompoundInterestMultiplierAtDrawdown, calculateCompoundInterestMultiplierPreDrawdown, calculateContribution, calculateDrawdown, calculateExpectedReturn, calculateGoldProjectionValue, calculateHoldingsWithOnTrackPercentage, calculateMonthlyContributionsRequiredToFundDrawdown, calculateMonthlyNetExpectedReturn, calculatePercentage, calculateProjectionValue, calculateUpfrontContributionRequired, calculateValueAtDrawdownStart, calculateValueAtDrawdownStartRetainingFundsAfterDrawdown, getGoldProjection, getRetirementTealProjectionRecursive } from "./goal-retirement";
+import { calculateCompoundInterestMultiplierAtDrawdown, calculateCompoundInterestMultiplierPreDrawdown, calculateContribution, calculateExpectedReturn, calculateGoldProjectionValue, calculateHoldingsWithOnTrackPercentage, calculateMonthlyContributionsRequiredToFundDrawdown, calculateMonthlyNetExpectedReturn, calculatePercentage, calculateProjectionValue, calculateUpfrontContributionRequired, calculateValueAtDrawdownStart, calculateValueAtDrawdownStartRetainingFundsAfterDrawdown, getGoldProjection, getRetirementTealProjectionRecursive } from "./goal-retirement";
 import { monthsDiff } from "./helpers";
-import { ContributionMonth, Drawdown, DrawdownType, ExpectedReturns, ProjectionMonth, RequestPayload, TargetProjectionMonth } from "./types";
+import { ContributionMonth, DrawdownType, ExpectedReturns, ProjectionMonth, RequestPayload, TargetProjectionMonth } from "./types";
 
 describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   let context: Context;
@@ -755,71 +755,6 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
             monthNo:900,
             value: -249000.1251220703
         } as ContributionMonth);
-  });
-});
-
-describe("tests for calculateDrawdown function", () => {
-  it("should return expected value when state pension is false", () => {
-    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
-    const goalContributingPeriod = 404;
-    const portfolioCurrentValue = 250000;
-    const upfrontContribution = 0;
-    const monthlyContributions = 624;
-    const remainingAmount = 0;
-    const lumpSumAmount = 0.1;
-    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
-    const goalDrawdownPeriod = 253;
-    const statePensionAmount: number = null;
-    expect(
-      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, statePensionAmount))
-      .toEqual(
-        {
-          possibleDrawdown: 7243.810933644129,
-          projectedGoalAgeTotal: 1419501.989856692,
-          remainingAmountAtGoalAge: 0
-        } as Drawdown);
-  });
-
-  it("should return expected value when state pension is true with zero state pension amount", () => {
-    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
-    const goalContributingPeriod = 404;
-    const portfolioCurrentValue = 250000;
-    const upfrontContribution = 0;
-    const monthlyContributions = 624;
-    const remainingAmount = 0;
-    const lumpSumAmount = 0.1;
-    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
-    const goalDrawdownPeriod = 253;
-    const statePensionAmount = 0;
-    expect(
-      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, statePensionAmount))
-      .toEqual(
-        {
-          possibleDrawdown: 7243.810933644129,
-          projectedGoalAgeTotal: 1419501.989856692,
-          remainingAmountAtGoalAge: 0
-        } as Drawdown);
-  });
-
-  it("should return expected value when state pension is true with state pension amount more than zero", () => {
-    const preGoalMonthlyNetExpectedReturn = 0.0031933138078821255;
-    const goalContributingPeriod = 404;
-    const portfolioCurrentValue = 250000;
-    const upfrontContribution = 0;
-    const monthlyContributions = 624;
-    const remainingAmount = 0;
-    const lumpSumAmount = 0.1;
-    const postGoalMonthlyNetExpectedReturn = 0.0021249875904596482;
-    const goalDrawdownPeriod = 253;
-    const statePensionAmount = 10000;
-    expect(
-      calculateDrawdown(preGoalMonthlyNetExpectedReturn, goalContributingPeriod, portfolioCurrentValue, upfrontContribution, monthlyContributions, remainingAmount, lumpSumAmount, postGoalMonthlyNetExpectedReturn, goalDrawdownPeriod, statePensionAmount))
-      .toEqual(
-        {
-          possibleDrawdown: 8077.144266977462,
-          projectedGoalAgeTotal: 1419501.989856692,
-          remainingAmountAtGoalAge: 0
-        } as Drawdown);
   });
 });
 
@@ -1709,6 +1644,80 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
         value: 0,
       } as TargetProjectionMonth);
   });
+
+  it("should return correct response when no lump sum", async () => {
+    const today = new Date("2021-07-09");
+    const inboundPayload = {
+      timeHorizonToProject: 659,
+      feesPercentage: 0,
+      upfrontContribution: 0,
+      monthlyContribution: 0,
+      currentNetContribution: 100,
+      currentPortfolioValue: 95.02850000000001,
+      includeGoal: true,
+      drawdownType: DrawdownType.Retirement,
+      drawdownRetirement: {
+        startDate: new Date("2041-05-10").toISOString().slice(0, 10),
+        endDate: new Date("2063-05-10").toISOString().slice(0, 10),
+        regularDrawdown: 8333,
+        lumpSum: {
+          amount: 0,
+          date: null
+        },
+        remainingAmount: 0,
+        statePensionAmount:0
+      },
+      preGoal: {
+        expectedReturnPercentage: 4.29,
+        volatilityPercentage: 16.38,
+        ZScoreLowerBound:-0.272325239183257,
+        ZScoreUpperBound:0.301814981820253
+      },
+      postGoal: {
+        expectedReturnPercentage:4.29,
+        volatilityPercentage:16.38,
+        ZScoreLowerBound:-0.178059487303358,
+        ZScoreUpperBound:0.249883361189068
+      },
+    } as RequestPayload;
+
+
+    // Action
+    const result = getGoldProjection(inboundPayload, today);
+
+    expect(result.targetProjectionData[2]).toEqual([]);
+
+    // Assertion
+    expect(result.monthlyContributionsToReach).toBeCloseTo(1361.20, 2)
+    expect(result.upfrontContributionsToReach).toBeCloseTo(166981.70, 2)
+
+    expect(result.targetProjectionData[0]).toEqual(
+      {
+        monthNo: 0,
+        value: 250000
+      } as TargetProjectionMonth);
+
+    expect(result.targetProjectionData[1].value).toBeCloseTo(240767.40, 2);
+
+
+    expect(result.targetProjectionData.length).toEqual(901);
+
+    //After the drawdown end date expect to have zero amount left
+    expect(result.targetProjectionData[660].value).toBeCloseTo(0, 0);
+
+    expect(result.targetProjectionData[661]).toEqual(
+      {
+        monthNo: 661,
+        value: 0,
+      } as TargetProjectionMonth);
+
+    expect(result.targetProjectionData[900]).toEqual(
+      {
+        monthNo: 900,
+        value: 0,
+      } as TargetProjectionMonth);
+  });
+
 })
 
 describe("Tests for getGoldProjection function with state pension", () => {

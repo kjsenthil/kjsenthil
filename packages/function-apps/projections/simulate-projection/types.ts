@@ -107,12 +107,6 @@ interface ExpectedReturns {
   monthlyVolatility: number;
 }
 
-interface Drawdown {
-  possibleDrawdown: number;
-  projectedGoalAgeTotal: number;
-  remainingAmountAtGoalAge: number;
-}
-
 interface Stats {
   desiredOutflow: number;
   affordableDrawdown: number;
@@ -123,8 +117,6 @@ interface Stats {
   valueAtRetirement: number;
   totalAffordableDrawdown: number;
   onTrackPercentage: number;
-  projectedGoalAgeTotal: number;
-  possibleDrawdown: number;
 }
 
 class ProjectionMonth {
@@ -152,5 +144,5 @@ enum DrawdownType {
   Retirement = "Retirement"
 }
 
-export type { RequestPayload, ResponsePayload, ValidationError, GoldProjectionResponse, ExpectedReturns, Drawdown, Stats }
+export type { RequestPayload, ResponsePayload, ValidationError, GoldProjectionResponse, ExpectedReturns, Stats }
 export { ContributionMonth, DrawdownType, ProjectionMonth, TargetProjectionMonth }
