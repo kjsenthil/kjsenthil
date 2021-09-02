@@ -252,6 +252,14 @@ const BIAccountsPage = () => {
               <Skeleton height={performanceChartDimension.height} />
             )}
           </MainCard>
+          <Box p={2} pl={4}>
+            <Typography variant="b3" color="grey" colorShade="dark1">
+              <i>
+                Performance figures are shown net of ongoing charges and include any income
+                reinvested net of any taxes taken at source
+              </i>
+            </Typography>
+          </Box>
         </Grid>
 
         <Spacer y={5} />

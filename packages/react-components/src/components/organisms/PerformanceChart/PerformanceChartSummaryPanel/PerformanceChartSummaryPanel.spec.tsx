@@ -20,7 +20,7 @@ describe('PerformanceChartSummaryPanel', () => {
       '£2,000',
       'NET CONTRIBUTED',
       '£1,000',
-      'TOTAL RETURN',
+      'LIFETIME RETURN',
       '£999',
       '99.9%',
     ];
