@@ -503,7 +503,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-xGAEC cOlnfg"
+          class="MuiCardContent-root sc-dWBRfb iQykHr"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -623,10 +623,10 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-kHWWYL cXbRai"
+                  class="sc-hOPeYd erBnvT"
                 >
                   <div
-                    class="sc-hOPeYd dnPDyX"
+                    class="sc-dsXzNU gnkxYi"
                     width="20"
                   >
                     <div
@@ -658,7 +658,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-hOPeYd hGcMap"
+                    class="sc-dsXzNU OGKZs"
                     width="50"
                   >
                     <div
@@ -690,7 +690,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-hOPeYd gldKdR"
+                    class="sc-dsXzNU jSYUwo"
                     width="5"
                   >
                     <div

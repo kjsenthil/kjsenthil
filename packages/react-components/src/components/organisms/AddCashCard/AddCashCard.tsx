@@ -5,9 +5,11 @@ import { useBreakpoint } from '../../../hooks';
 
 export interface AddCashCardProps {
   selectedAccountName: string;
+
+  openModal: () => void;
 }
 
-const AddCashCard = ({ selectedAccountName = '' }: AddCashCardProps) => {
+const AddCashCard = ({ selectedAccountName = '', openModal }: AddCashCardProps) => {
   const { isMobile } = useBreakpoint();
   return (
     <MainCard title="Add Cash">
@@ -23,6 +25,7 @@ const AddCashCard = ({ selectedAccountName = '' }: AddCashCardProps) => {
             startIcon={<Icon name="plus" />}
             variant="contained"
             fullWidth
+            onClick={openModal}
           >
             Add Cash
           </Button>

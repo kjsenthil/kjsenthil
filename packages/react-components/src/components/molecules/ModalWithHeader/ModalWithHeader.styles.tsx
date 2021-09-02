@@ -2,24 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import { Dialog, DialogContent, DialogTitle, Icon, IconButton } from '../../atoms';
 
-export const StyledDialogContainer = styled(({ modalBackgroundImgSrc, modalWidth, ...props }) => (
-  <Dialog open {...props} />
-))`
+export const StyledDialogContainer = styled(
+  ({ modalBackgroundImgSrc, modalWidth, headerBackgroundColor, withHeader, ...props }) => (
+    <Dialog open {...props} />
+  )
+)`
   ${({
     modalBackgroundImgSrc,
+    headerBackgroundColor,
+    withHeader,
     modalWidth,
     theme,
   }: {
     theme: any;
     modalBackgroundImgSrc: string;
+    headerBackgroundColor: string;
+    withHeader: boolean;
     modalWidth: string;
   }) => `
     max-height: ${theme.spacing(100)}%;
 
-    .MuiDialog-container {
-        opacity: 0.3;
+    ${
+      withHeader === true
+        ? `.MuiDialogContent-root {
+          padding:0;
+        }`
+        : ``
     }
 
+    .MuiDialog-container {
+      opacity: 0.3;
+  }
+  ${headerBackgroundColor ? `.MuiDialogTitle-root {background-color:${headerBackgroundColor}}` : ``}
     .MuiDialog-paper {
         border-radius: ${theme.spacing(2)}px;
         max-height: 100%;
@@ -61,14 +75,26 @@ export const StyledDialogContainer = styled(({ modalBackgroundImgSrc, modalWidth
 
 export const StyledDialogTitle = styled(DialogTitle)`
   ${({ theme }) => `
-    padding: ${theme.spacing(1)}px ${theme.spacing(1)}px ${theme.spacing(1)}px inherit;
+    padding: ${theme.spacing(1)}px;
   `}
 `;
 
-export const StyledDialogHeaderTitle = styled(DialogTitle)`
-  ${({ theme }) => `
-    width:100%;
-    padding: ${theme.spacing(1)}px ${theme.spacing(1)}px ${theme.spacing(1)}px inherit;
+export const HeaderContainer = styled.div`
+  display: flex;
+`;
+
+export const HeaderTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
+
+export const StyledDialogHeaderTitle = styled(({ isMobile, ...props }) => (
+  <DialogTitle {...props} />
+))`
+  ${({ isMobile, theme }: { theme: any; isMobile: boolean }) => `
+    width: 100%;
+    padding: ${isMobile ? theme.spacing(2.5) : theme.spacing(4.5)}px;
   `}
 `;
 
@@ -103,13 +129,12 @@ export const HeaderBarList = styled.li<{
   `}
 `;
 
-export const StyledDialogContent = styled(DialogContent)`
+export const StyledDialogContentWithoutHeader = styled(DialogContent)`
   ${({ theme }) => `
-    padding-right: ${theme.spacing(1)}px;
-    margin-right: ${theme.spacing(3.5)}px;
-    margin-bottom: ${theme.spacing(4)}px;
+    padding:${theme.spacing(4)}px;
     max-height: ${theme.spacing(200)}px;
-    min-height: ${theme.spacing(25)}px;
+    min-height: ${theme.spacing(30)}px;
+    justify-content:flex-start;
     .MuiDialogContent-dividers {
       padding-right: ${theme.spacing(1)}px;
       margin-right: ${theme.spacing(3)}px;
@@ -121,10 +146,6 @@ export const StyledIcon = styled(Icon)`
   ${({ theme }) => `
     margin-right: ${theme.spacing(1)}px;
   `}
-`;
-
-export const StyledCrossIcon = styled.div`
-  height: 60%;
 `;
 
 export const StyledIconButton = styled(IconButton)`

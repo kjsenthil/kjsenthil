@@ -13,6 +13,7 @@ const Template: Story<AddCashCardProps> = (args) => <AddCashCard {...args} />;
 
 const DefaultProps: AddCashCardProps = {
   selectedAccountName: AccountType.ISA,
+  openModal: () => {},
 };
 export const Default = Template.bind({});
 Default.args = DefaultProps;

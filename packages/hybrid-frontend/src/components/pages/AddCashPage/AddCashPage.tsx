@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, AccountSummaryPanel, AddCashCard } from '@tswdts/react-components';
+import { Grid, AccountSummaryPanel, AddCashCard, AddCashModal } from '@tswdts/react-components';
 import { RootState } from '../../../store';
 import { AccountDetailsLayout } from '../../templates';
 import { useBasicInfo } from '../../../hooks';
@@ -14,6 +14,14 @@ const AddCashPage = () => {
   const { selectedAccount } = useSelector((state: RootState) => ({
     selectedAccount: state.selectedAccount.account,
   }));
+
+  // TODO: replace this with actual values once confirmed for all account types and its mapping, 31/08/2021, ZEESHAN
+  const addCashModalProps = {
+    title: 'Add Cash',
+    subTitle: 'STOCK & SHARE ISA',
+    minAmount: 0,
+  };
+  const [addCashModalOpen, setAddCashModalOpen] = React.useState(false);
   const accountId = selectedAccount?.id;
   const account = investmentSummary?.find((item) => item.id === accountId)?.attributes;
   const selectedAccountType = selectedAccount?.accountName?.toLowerCase();
@@ -25,7 +33,9 @@ const AddCashPage = () => {
   const isaContributions = isaContribution?.attributes;
   const totalAllowance = isaContributions?.allowance || 0;
   const contributions = isaContributions?.contributions || 0;
+  const maxAmountAllowed = contributions - totalAllowance;
 
+  const closeModalClickHandler = () => setAddCashModalOpen(false);
   return (
     <AccountDetailsLayout basicInfo={basicInfo}>
       <Grid container spacing={5}>
@@ -41,7 +51,17 @@ const AddCashPage = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <AddCashCard selectedAccountName={selectedAccountType ?? ''} />
+          <AddCashCard
+            selectedAccountName={selectedAccountType ?? ''}
+            openModal={() => setAddCashModalOpen(true)}
+          />
+          <AddCashModal
+            {...addCashModalProps}
+            accountType={selectedAccountType}
+            maxAmount={maxAmountAllowed}
+            isOpen={addCashModalOpen}
+            onClose={closeModalClickHandler}
+          />
         </Grid>
       </Grid>
     </AccountDetailsLayout>
