@@ -20,7 +20,9 @@ const simulateProjectionMain: AzureFunction = async function (context: Context, 
       responseBody = getSimulateProjection(input, new Date());
     }
   } catch (e) {
-    responseBody = { errorMessage: e.message };
+    if (e instanceof Error) {
+      responseBody = { errorMessage: e.message };
+    }
     responseStatus = 400;
   }
   context.res = {

@@ -14,7 +14,10 @@ const riskProfileMain: AzureFunction = async function (context: Context, req: Ht
         }
     }
     catch (e) {
-        responseBody = { "errorMessage": e.message }
+        if (e instanceof Error) {
+            responseBody = { "errorMessage": e.message }
+        }
+
         responseStatus = 400
     }
 

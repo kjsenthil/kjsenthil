@@ -33,7 +33,9 @@ const getIdMain: AzureFunction = async function (
       returnBody = response.data.message;
     }
   } catch (e) {
-    returnBody = { errorMessage: e.message };
+    if (e instanceof Error) {
+      returnBody = {errorMessage: e.message};
+    }
 
     returnStatus = 400;
   }

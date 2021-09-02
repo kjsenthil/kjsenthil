@@ -34,7 +34,9 @@ const annualisedReturn: AzureFunction = async function (
       } else responseBody = getAnnualisedReturn(transactionData);
     }
   } catch (e) {
-    responseBody = { errorMessage: e.message };
+    if (e instanceof Error) {
+      responseBody = { errorMessage: e.message };
+    }
     responseStatus = 400;
   }
 

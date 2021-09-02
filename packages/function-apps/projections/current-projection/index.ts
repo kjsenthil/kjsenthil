@@ -2,7 +2,7 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { Drawdown, ExpectedReturns, ProjectionMonth, RequestPayload, ResponsePayload, Stats, ValidationError } from "./types";
 
 const currentProjection: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    let responseBody: {}
+    let responseBody = {}
     let responseStatus = 200
 
     try {
@@ -20,7 +20,9 @@ const currentProjection: AzureFunction = async function (context: Context, req: 
 
     }
     catch (e) {
-        responseBody = { "errorMessage": e.message }
+        if (e instanceof Error) {
+            responseBody = { "errorMessage": e.message }
+        }
         responseStatus = 400
     }
 

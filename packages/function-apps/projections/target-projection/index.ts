@@ -21,7 +21,9 @@ const targetProjectionMain: AzureFunction = async function (
       responseBody = getTargetProjection(input, new Date());
     }
   } catch (e) {
-    responseBody = { errorMessage: e.message };
+    if (e instanceof Error) {
+      responseBody = { errorMessage: e.message };
+    }
     responseStatus = 400;
   }
   context.res = {

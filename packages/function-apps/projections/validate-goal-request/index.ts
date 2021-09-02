@@ -14,7 +14,9 @@ const validateGoalRequestMain: AzureFunction = async function (context: Context,
         responseBody = validationResult;
     }
     catch (e) {
-        responseBody = { "errorMessage": e.message }
+        if (e instanceof Error) {
+            responseBody = { "errorMessage": e.message }
+        }
         responseStatus = 400
     }
 
