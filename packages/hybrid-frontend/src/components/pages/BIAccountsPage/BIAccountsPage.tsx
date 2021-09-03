@@ -21,7 +21,6 @@ import {
   usePerformanceChartDimension,
   PerformanceDataPeriod,
   humanizePeriodLabel,
-  getPossessiveSuffix,
   UpsellCard,
   AccountFilter,
 } from '@tswdts/react-components';
@@ -150,14 +149,7 @@ const BIAccountsPage = () => {
   );
 
   return (
-    <MyAccountLayout
-      basicInfo={basicInfo}
-      heading={{
-        primary: `Investments`,
-        secondary: `${basicInfo.firstName}${getPossessiveSuffix(basicInfo.firstName)}`,
-      }}
-      stickyHeaderChildComponent={stickyHeaderChildComponent}
-    >
+    <MyAccountLayout basicInfo={basicInfo} stickyHeaderChildComponent={stickyHeaderChildComponent}>
       {expFeatureFlag?.isEnabled && (
         <Box mb={5}>
           <Grid container>

@@ -14,12 +14,7 @@ import { annualisedReturnSummarySlice as annualisedReturnSummaryReducer } from '
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,
-  default: ({ children, heading: { primary } }) => (
-    <div>
-      <p>Primary heading = {primary}</p>
-      {children}
-    </div>
-  ),
+  default: ({ children }) => <div>{children}</div>,
 }));
 
 describe('BIAccountsPage', () => {
@@ -39,10 +34,6 @@ describe('BIAccountsPage', () => {
 
   test('BIAccountsPage title has been successfully rendered', () => {
     expect(screen.getByText('Total Value: £0')).toBeInTheDocument();
-  });
-
-  test('the primary heading should be Investments', () => {
-    expect(screen.getByText('Primary heading = Investments')).toBeInTheDocument();
   });
 
   it('renders coach card successfully', () => {
