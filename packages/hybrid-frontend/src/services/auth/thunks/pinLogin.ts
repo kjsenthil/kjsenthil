@@ -2,6 +2,8 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { PinLoginItem } from '@tswdts/react-components';
 import { AuthState } from '../types';
 import { postPin } from '../api';
+import { COOKIE_DOMAIN } from '../../../config';
+import { setTokensInCookies } from '../../utils';
 
 export const pinLogin = createAsyncThunk(
   'auth/pinLogin',
@@ -21,6 +23,8 @@ export const pinLoginActionReducerMapBuilder = (builder: ActionReducerMapBuilder
       state.pinLoginError = '';
     })
     .addCase(pinLogin.fulfilled, (state, { payload: { tokens, contactId } }) => {
+      // store API tokens in cookie
+      setTokensInCookies(tokens, { cookieDomain: COOKIE_DOMAIN });
       state.status = 'success';
       state.accessTokens = tokens;
       state.contactId = contactId;

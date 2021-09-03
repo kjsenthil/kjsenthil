@@ -3,3 +3,4 @@ export { default as commonActionReducerMapBuilder } from './commonActionReducerM
 export { default as setLoadingAction } from './setLoadingAction';
 export { default as setDataAction } from './setDataAction';
 export { default as setErrorAction } from './setErrorAction';
+export { default as setTokensInCookies } from './setTokens';

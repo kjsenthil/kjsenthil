@@ -1,6 +1,8 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState } from '../types';
 import { postRefreshToken } from '../api';
+import { COOKIE_DOMAIN } from '../../../config';
+import { setTokensInCookies } from '../../utils';
 
 export const refreshToken = createAsyncThunk('auth/refreshToken', async (_, { getState }) => {
   const {
@@ -19,6 +21,8 @@ export const refreshTokenActionReducerMapBuilder = (
       state.status = 'loading';
     })
     .addCase(refreshToken.fulfilled, (state, { payload: { tokens } }) => {
+      // store API tokens in cookie
+      setTokensInCookies(tokens, { cookieDomain: COOKIE_DOMAIN });
       state.status = 'success';
       state.accessTokens = tokens;
     })

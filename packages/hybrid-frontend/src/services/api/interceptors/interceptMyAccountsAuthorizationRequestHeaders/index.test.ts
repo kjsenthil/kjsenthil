@@ -1,8 +1,10 @@
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import interceptMyAccountsAuthorizationRequestHeaders from '.';
 import { ACCESS_TOKEN_REQUIRED_ENDPOINTS, AUTH_ENDPOINTS } from '../../../../config';
 import { AuthState } from '../../../auth';
+import { ApiAppName } from '../../../../constants';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -29,6 +31,17 @@ const URLS_NOT_NEEDING_AUTHORIZATION = [...Object.values(AUTH_ENDPOINTS)];
 
 const URLS_NEEDING_AUTHORIZATION = Object.values(ACCESS_TOKEN_REQUIRED_ENDPOINTS);
 
+let mockGetCookie: jest.Mock;
+
+jest.mock('js-cookie', () => ({
+  __esModule: true, // mock the exports
+  default: {
+    get: jest.fn().mockImplementation((...args) => {
+      mockGetCookie(...args);
+    }),
+  },
+}));
+
 describe('interceptMyAccountsAuthorizationRequestHeaders', () => {
   beforeAll(() => {
     axios.interceptors.request.use(interceptMyAccountsAuthorizationRequestHeaders(getState));
@@ -46,5 +59,29 @@ describe('interceptMyAccountsAuthorizationRequestHeaders', () => {
     expect(response.config.headers.Authorization).toStrictEqual(
       `Bearer ${accessTokens[0].accessToken}`
     );
+  });
+
+  describe('interceptMyAccountsAuthorizationRequestHeaders With Cookie', () => {
+    beforeAll(() => {
+      axios.interceptors.request.use(interceptMyAccountsAuthorizationRequestHeaders(getState));
+      mockGetCookie = Cookies.get as jest.Mock;
+    });
+
+    it.each(URLS_NOT_NEEDING_AUTHORIZATION)('does not set Authorization for %p', async (url) => {
+      mockAxios.onGet(url).replyOnce(200);
+      const response = await axios.get(url);
+      expect(response.config.headers.Authorization).toBeUndefined();
+      expect(mockGetCookie).toHaveBeenCalledTimes(0);
+    });
+
+    it.each(URLS_NEEDING_AUTHORIZATION)('sets Authorization for %p', async (url) => {
+      mockAxios.onGet(url).replyOnce(200);
+      const response = await axios.get(url);
+
+      expect(mockGetCookie).toHaveBeenCalledWith(ApiAppName.myAccounts);
+      expect(response.config.headers.Authorization).toStrictEqual(
+        `Bearer ${accessTokens[0].accessToken}`
+      );
+    });
   });
 });

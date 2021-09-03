@@ -5108,6 +5108,7 @@ __metadata:
     "@types/d3-interpolate-path": ^2.0.0
     "@types/d3-time-format": ^3.0.0
     "@types/jest": ^26.0.20
+    "@types/js-cookie": ^2.2.7
     "@types/node": ^14.14.22
     "@types/react": ^17.0.0
     "@types/react-dom": ^17.0.0
@@ -5149,6 +5150,7 @@ __metadata:
     jest-extended: ^0.11.5
     jest-html-reporter: ^3.3.0
     jest-styled-components: ^7.0.5
+    js-cookie: ^3.0.1
     lint-staged: ^10.5.3
     mockdate: ^3.0.5
     pluralize: ^8.0.0
@@ -5777,6 +5779,13 @@ __metadata:
     jest-diff: ^26.0.0
     pretty-format: ^26.0.0
   checksum: ae39675412f08d884926254e9b12bfd2b5a4e4d204c94d3148cb942174a474930d0c60540133c968f22241d4712b7940c96cbc883096eb326a4d5b206fb78bd0
+  languageName: node
+  linkType: hard
+
+"@types/js-cookie@npm:^2.2.7":
+  version: 2.2.7
+  resolution: "@types/js-cookie@npm:2.2.7"
+  checksum: 851f47e94ca1fc43661d8f51614d67a613e7810c91b876d0a3b311ce72f7df800107fd02a08cb6948184e12c120b4f058edca2f50424d8798bdcffd6627281e3
   languageName: node
   linkType: hard
 
@@ -19025,6 +19034,13 @@ fsevents@^1.2.7:
   version: 0.4.3
   resolution: "jpeg-js@npm:0.4.3"
   checksum: 9e5bacc9135efa7da340b62e81fa56fab0c8516ef617228758132af5b7d31b516cc6e1500cdffb82d3161629be341be980099f2b37eb76b81e26db6e3e848c77
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "js-cookie@npm:3.0.1"
+  checksum: bb48de67e2a6bd1ae3dfd6b2d5a167c33dd0c5a37e909206161eb0358c98f17cb55acd55827a58e9eea3630d89444e7479f7938ef4420dda443218b8c434a4c3
   languageName: node
   linkType: hard
 

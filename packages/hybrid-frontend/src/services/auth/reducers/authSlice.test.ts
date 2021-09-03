@@ -3,6 +3,7 @@ import { Store } from 'redux';
 import authReducer, { credLogin, pinLogin, refreshToken } from './authSlice';
 import * as api from '../api';
 import { tokens } from '../mocks';
+import { setTokensInCookies } from '../../utils';
 
 const contactId = 1234567;
 
@@ -10,6 +11,10 @@ jest.mock('../api', () => ({
   postLogin: jest.fn(),
   postPin: jest.fn(),
   postRefreshToken: jest.fn(),
+}));
+
+jest.mock('../../utils', () => ({
+  setTokensInCookies: jest.fn(),
 }));
 
 describe('authSlice', () => {
@@ -112,6 +117,12 @@ describe('authSlice', () => {
     });
 
     describe('when call is fulfilled', () => {
+      let mockSetTokensInCookies: jest.Mock;
+
+      beforeAll(() => {
+        mockSetTokensInCookies = setTokensInCookies as jest.Mock;
+      });
+
       it('sets tokens and contect Id and handles login session', async () => {
         await store.dispatch(pinLoginAction);
         const { status, isPinLoggedIn, accessTokens } = store.getState().auth;
@@ -119,6 +130,18 @@ describe('authSlice', () => {
         expect(status).toStrictEqual('success');
         expect(isPinLoggedIn).toBe(true);
         expect(accessTokens).toStrictEqual(tokens);
+      });
+
+      it('the access tokens in cookie', async () => {
+        await store.dispatch(pinLoginAction);
+        const { status, isPinLoggedIn, accessTokens } = store.getState().auth;
+        expect(status).toStrictEqual('success');
+        expect(isPinLoggedIn).toBe(true);
+        expect(accessTokens).toStrictEqual(tokens);
+        expect(mockSetTokensInCookies).toHaveBeenCalledWith(accessTokens, {
+          cookieDomain: undefined,
+        });
+        expect(mockSetTokensInCookies).toBeCalledTimes(1);
       });
     });
 
@@ -158,12 +181,27 @@ describe('authSlice', () => {
     });
 
     describe('when call is fulfilled', () => {
+      let mockSetTokensInCookies: jest.Mock;
+
+      beforeAll(() => {
+        mockSetTokensInCookies = setTokensInCookies as jest.Mock;
+      });
       it('sets the access tokens', async () => {
         await store.dispatch(refreshTokenAction);
         const { status, accessTokens } = store.getState().auth;
 
         expect(status).toStrictEqual('success');
         expect(accessTokens).toStrictEqual(tokens);
+      });
+      it('sets the access tokens in cookie', async () => {
+        await store.dispatch(refreshTokenAction);
+        const { status, accessTokens } = store.getState().auth;
+        expect(status).toStrictEqual('success');
+        expect(accessTokens).toStrictEqual(tokens);
+        expect(mockSetTokensInCookies).toHaveBeenCalledWith(accessTokens, {
+          cookieDomain: undefined,
+        });
+        expect(mockSetTokensInCookies).toBeCalledTimes(1);
       });
     });
 

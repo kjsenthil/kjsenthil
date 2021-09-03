@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { navigate } from '@reach/router';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -5,6 +6,7 @@ import { NavPaths } from '../../../config/paths';
 import { logout } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
+import { ApiAppName } from '../../../constants';
 
 interface LogoutPageProps {
   path?: string;
@@ -24,6 +26,8 @@ const LogoutPage = (_: LogoutPageProps) => {
   }, [accessTokens]);
 
   useEffect(() => {
+    Cookies.remove(ApiAppName.myAccounts);
+    Cookies.remove(ApiAppName.ois);
     dispatch(logout());
   }, []);
 
