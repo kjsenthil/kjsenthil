@@ -40,6 +40,11 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 0.03,
     accountReturn: 6837.39,
     accountReturnPercentage: 1.761,
+    accountInvestments: 123.23,
+    accountLifetimeReturn: {
+      value: 345.45,
+      percentage: 340,
+    },
     periodReturn: {
       ...periodReturn,
       '5y': {
@@ -57,6 +62,11 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 563.21,
     accountReturn: 5382.01,
     accountReturnPercentage: 8.55,
+    accountInvestments: 12.23,
+    accountLifetimeReturn: {
+      value: 34.45,
+      percentage: 34,
+    },
     periodReturn: {
       ...periodReturn,
       '5y': {
@@ -74,6 +84,11 @@ export const mockInvestmentAccountsTableData = [
     accountCash: 0.0,
     accountReturn: 15292.74,
     accountReturnPercentage: 1.761,
+    accountInvestments: 1.23,
+    accountLifetimeReturn: {
+      value: 3.45,
+      percentage: 3,
+    },
     periodReturn: {
       ...periodReturn,
       '5y': {

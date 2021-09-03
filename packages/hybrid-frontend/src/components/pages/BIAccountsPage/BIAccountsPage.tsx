@@ -93,11 +93,33 @@ const BIAccountsPage = () => {
       0
     ) || 0;
 
+  const tableData = (investmentAccounts || []).map(
+    ({
+      accountType,
+      accountName,
+      accountInvestments,
+      accountCash,
+      accountTotalHoldings,
+      accountLifetimeReturn,
+      annualisedReturn,
+      periodReturn,
+    }) => ({
+      accountType,
+      accountName,
+      accountInvestments,
+      accountCash,
+      accountTotalHoldings,
+      accountLifetimeReturn,
+      annualisedReturn,
+      periodReturn,
+    })
+  );
+
   const accountsTableData =
-    investmentAccounts?.filter((account) => account.accountType === 'accounts') || [];
+    tableData?.filter((account) => account.accountType === 'accounts') || [];
 
   const linkedAccountsTableData =
-    investmentAccounts?.filter((account) => account.accountType === 'linked-accounts') || [];
+    tableData?.filter((account) => account.accountType === 'linked-accounts') || [];
 
   const setDataPeriod = (period: PerformanceDataPeriod) => {
     dispatch(setPerformanceDataPeriod(period));
@@ -184,7 +206,7 @@ const BIAccountsPage = () => {
         {accountsTableData.length > 0 && (
           <Grid item xs={12}>
             <MainCard
-              title="Your Accounts"
+              title="My Accounts"
               renderActionEl={() => (
                 <DisabledComponent arrow placement="top" title="Coming soon">
                   <Button variant="outlined" startIcon={<Icon name="plus" />}>

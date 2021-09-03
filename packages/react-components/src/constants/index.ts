@@ -6,21 +6,27 @@ export enum AccountType {
 }
 
 export const AccountsTableHeader = (
-  labelReturn: string = 'LIFETIME RETURN'
+  labelReturn: string = 'LAST 5 YEARS RETURN'
 ): AccountsHeaderCell[] => [
   {
     value: 'ACCOUNT',
   },
   {
-    value: 'TOTAL HOLDINGS',
-    tooltip: 'Total Holdings = Investments plus Cash',
-  },
-  {
-    value: 'NET CONTRIBUTIONS',
-    tooltip: 'Total net contribution = Contributions minus Withdrawals',
+    value: 'INVESTMENTS',
+    tooltip: 'The total current value of your investments.',
   },
   {
     value: 'CASH',
+    tooltip: 'How much cash you have on account.',
+  },
+  {
+    value: 'TOTAL HOLDINGS',
+    tooltip: 'The total current value of your investments and cash.',
+  },
+  {
+    value: 'LIFETIME RETURN',
+    tooltip:
+      'Lifetime return shows how well your investments have performed since you first held them on BestInvest. This includes both growth and income returns.',
   },
   {
     value: 'ANNUALISED RETURN',
@@ -29,7 +35,6 @@ export const AccountsTableHeader = (
   },
   {
     value: labelReturn,
-    tooltip:
-      'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
+    tooltip: 'The profit or loss you made last year, minus any fees.',
   },
 ];

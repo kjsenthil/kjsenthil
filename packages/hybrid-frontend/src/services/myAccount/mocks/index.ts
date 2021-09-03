@@ -1,6 +1,7 @@
 import {
   InvestmentAccount,
   InvestmentAccountData,
+  InvestmentAccountLifetimeReturnAndPercentage,
   PerformanceDataPeriod,
   PeriodReturn,
 } from '@tswdts/react-components';
@@ -49,6 +50,11 @@ const periodReturn: PeriodReturn = {
   },
 };
 
+const accountLifetimeReturn: InvestmentAccountLifetimeReturnAndPercentage = {
+  value: 543.26,
+  percentage: 54,
+};
+
 export const mockInvestmentAccounts: InvestmentAccount[] = [
   {
     id: '12345',
@@ -59,6 +65,8 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountTotalHoldings: 100,
     accountReturn: 0,
     accountReturnPercentage: 0,
+    accountInvestments: 0,
+    accountLifetimeReturn,
     periodReturn,
   },
   {
@@ -70,6 +78,8 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountTotalHoldings: 545908.9554399999,
     accountReturn: 116295.09544,
     accountReturnPercentage: 40.11,
+    accountInvestments: 139678.85,
+    accountLifetimeReturn,
     periodReturn,
   },
   {
@@ -81,6 +91,8 @@ export const mockInvestmentAccounts: InvestmentAccount[] = [
     accountCash: 43543.26,
     accountReturn: 5954.074679,
     accountReturnPercentage: 14.93,
+    accountInvestments: 43543.26,
+    accountLifetimeReturn,
     periodReturn,
   },
 ];
@@ -241,6 +253,7 @@ export const mockInvestmentAccountsData: InvestmentAccountData[] = [
     accountTotalHoldings: 100,
     accountReturn: 0,
     accountReturnPercentage: 0,
+    accountInvestments: 0,
   },
   {
     id: '23456',
@@ -249,6 +262,7 @@ export const mockInvestmentAccountsData: InvestmentAccountData[] = [
     accountTotalHoldings: 545908.9554399999,
     accountReturn: 116295.09544,
     accountReturnPercentage: 40.11,
+    accountInvestments: 139678.85,
   },
   {
     id: '34567',
@@ -257,6 +271,7 @@ export const mockInvestmentAccountsData: InvestmentAccountData[] = [
     accountCash: 43543.26,
     accountReturn: 5954.074679,
     accountReturnPercentage: 14.93,
+    accountInvestments: 43543.26,
   },
 ];
 

@@ -18,12 +18,13 @@ describe('AccountsTable', () => {
   it('renders a AccountsTable', () => {
     const testTexts = [
       'ACCOUNT',
+      'INVESTMENTS',
+      '£123',
       'TOTAL HOLDINGS',
       '£38,382',
-      'NET CONTRIBUTIONS',
-      '£31,994',
-      'CASH',
       'LIFETIME RETURN',
+      '£345',
+      'LAST 5 YEARS RETURN',
       '+£6,837',
       mockInvestmentAccountsTableData[0].accountName ?? '',
     ];

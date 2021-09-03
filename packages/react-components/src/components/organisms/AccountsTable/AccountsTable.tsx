@@ -15,7 +15,7 @@ import {
   formatPercent,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { IconButton, Grid, Spacer, Tooltip, Typography, Box } from '../../atoms';
+import { IconButton, Grid, Spacer, Tooltip, Typography } from '../../atoms';
 import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
 
 export interface AccountsHeaderCell {
@@ -34,11 +34,12 @@ export interface AccountsTableProps {
   dataRow: (Pick<InvestmentAccount, 'id' | 'accountName'> &
     PartialPick<
       InvestmentAccount,
-      | 'accountTotalNetContribution'
       | 'accountTotalHoldings'
       | 'accountCash'
       | 'monthlyInvestment'
       | 'periodReturn'
+      | 'accountInvestments'
+      | 'accountLifetimeReturn'
       | 'annualisedReturn'
     >)[];
   period: PerformanceDataPeriod;
@@ -62,19 +63,25 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
           {headerRow &&
             headerRow.map((headerRowItem: AccountsHeaderCell) => (
               <AccountsTableCell key={`${headerRowItem.value}-key`}>
-                <Typography variant="sh3" display="inline">
-                  {headerRowItem.value}
-                </Typography>
-                {headerRowItem.tooltip && (
-                  <>
-                    <Spacer x={0.5} inline />
-                    <Tooltip title={headerRowItem.tooltip}>
-                      <IconButton aria-label={`${headerRowItem.value} Info`} size="small">
-                        <AccountsTableHeaderInfo name="infoCircleIcon" />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                )}
+                <Grid container wrap="nowrap">
+                  <Grid container item>
+                    <Typography variant="sh3" display="inline">
+                      {headerRowItem.value}
+                    </Typography>
+                  </Grid>
+                  <Grid container item xs={8}>
+                    {headerRowItem.tooltip && (
+                      <>
+                        <Spacer x={0.5} inline />
+                        <Tooltip title={headerRowItem.tooltip}>
+                          <IconButton aria-label={`${headerRowItem.value} Info`} size="small">
+                            <AccountsTableHeaderInfo name="infoCircleIcon" />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                    )}
+                  </Grid>
+                </Grid>
               </AccountsTableCell>
             ))}
         </TableRow>
@@ -87,22 +94,11 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 <Typography variant="sh3">{row.accountName}</Typography>
               </AccountsTableCell>
 
-              {row.accountTotalHoldings !== undefined && (
+              {row.accountInvestments !== undefined && (
                 <AccountsTableCell>
                   <Typography variant="b2" color="primary" colorShade="dark2">
                     {formatCurrency(
-                      row.accountTotalHoldings,
-                      CurrencyPresentationVariant.ACTUAL_TOPLINE
-                    )}
-                  </Typography>
-                </AccountsTableCell>
-              )}
-
-              {row.accountTotalNetContribution !== undefined && (
-                <AccountsTableCell>
-                  <Typography variant="b2" color="primary" colorShade="dark2">
-                    {formatCurrency(
-                      row.accountTotalNetContribution,
+                      row.accountInvestments,
                       CurrencyPresentationVariant.ACTUAL_TOPLINE
                     )}
                   </Typography>
@@ -119,6 +115,17 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 </AccountsTableCell>
               )}
 
+              {row.accountTotalHoldings !== undefined && (
+                <AccountsTableCell>
+                  <Typography variant="b2" color="primary" colorShade="dark2">
+                    {formatCurrency(
+                      row.accountTotalHoldings,
+                      CurrencyPresentationVariant.ACTUAL_TOPLINE
+                    )}
+                  </Typography>
+                </AccountsTableCell>
+              )}
+
               {row.monthlyInvestment !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
@@ -132,19 +139,37 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 </AccountsTableCell>
               )}
 
-              <AccountsTableCell>
-                <Grid container justifyContent="flex-end" alignItems="center">
-                  <Grid item>
-                    <Box px={2}>
+              {row.accountLifetimeReturn !== undefined && (
+                <AccountsTableCell>
+                  <AccountReturn>
+                    <Typography variant="b2" color="primary" colorShade="dark2">
+                      {formatCurrency(
+                        row.accountLifetimeReturn.value,
+                        CurrencyPresentationVariant.ACTUAL_TOPLINE
+                      )}
+                    </Typography>
+
+                    <Spacer x={2} />
+                    <TagBox variant="percentage" formatter={formatPercentActualTopline}>
+                      {row.accountLifetimeReturn.percentage / 100}
+                    </TagBox>
+                  </AccountReturn>
+                </AccountsTableCell>
+              )}
+
+              {row.annualisedReturn !== undefined && (
+                <AccountsTableCell>
+                  <Grid container justifyContent="flex-start" alignItems="center">
+                    <Grid item>
                       <Typography variant="b2" color="primary" colorShade="dark2">
-                        {row?.annualisedReturn
+                        {row?.annualisedReturn !== 0
                           ? percentFormatterWithSign(row?.annualisedReturn / 100)
                           : `0%`}
                       </Typography>
-                    </Box>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </AccountsTableCell>
+                </AccountsTableCell>
+              )}
 
               {row.periodReturn && row.periodReturn[period] !== undefined && (
                 <AccountsTableCell>

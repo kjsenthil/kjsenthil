@@ -37,11 +37,20 @@ const fetchInvestmentAccounts = createAsyncThunk(
           investSummaryItem.attributes.funds +
           investSummaryItem.attributes.shares;
 
+        const accountInvestments =
+          investSummaryItem.attributes.funds + investSummaryItem.attributes.shares;
+
         const performanceResponse = await getPerformanceAccountsAggregated(
           Number(investSummaryItem.id)
         );
 
+        const accountLifetimeReturn = performanceResponse?.data.attributes.performance ?? {
+          value: 0,
+          percentage: 0,
+        };
+
         const monthlyInvestment = await getMonthlySavingsAmount(investSummaryItem.id);
+
         let netContributions: NetContributionValueWithDate[] = [];
         let annualisedReturnSummaryAmount: AnnualisedReturnsResponse;
         // Only call annualised return if there is valid performance data
@@ -93,11 +102,13 @@ const fetchInvestmentAccounts = createAsyncThunk(
           accountCash: investSummaryItem.attributes.cash,
           accountReturn: investSummaryItem.attributes.gainLoss,
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,
+          accountInvestments,
+          accountLifetimeReturn,
           periodReturn: calculateInvestmentReturnForAllPeriods(
             performanceResponse?.data?.attributes?.values ?? [],
             performanceResponse?.included[0]?.attributes?.netContributions ?? []
           ),
-          annualisedReturn: annualisedReturnSummaryAmount?.annualisedReturnValue,
+          annualisedReturn: annualisedReturnSummaryAmount?.annualisedReturnValue ?? 0,
           monthlyInvestment,
         };
       }
