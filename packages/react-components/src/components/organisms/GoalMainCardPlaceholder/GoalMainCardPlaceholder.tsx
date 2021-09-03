@@ -2,6 +2,7 @@ import * as React from 'react';
 import MainCard, { MainCardProps } from '../../molecules/MainCard';
 import Tooltip from '../../atoms/Tooltip';
 import { Grid, Spacer, Link, Typography, Button } from '../../atoms';
+import { DisabledComponent } from '../../molecules';
 
 export interface GoalMainCardPlaceholderProps extends Omit<MainCardProps, 'children'> {
   imageElement: React.ReactElement;
@@ -78,15 +79,16 @@ const GoalMainCardPlaceholder = ({
               )}
 
               <GoalActions buttons={buttons} onAddGoal={onAddGoal} vertical={shouldBeVertical} />
-
-              <Grid item container alignItems="center" justifyContent="center">
-                <Grid item>
-                  <Spacer y={2} />
-                  <Link onClick={onCreateDefaultGoal}>
-                    I don&#39;t have a specific goal. Just show me my projections.
-                  </Link>
+              <DisabledComponent arrow title="Coming Soon">
+                <Grid item container alignItems="center" justifyContent="center">
+                  <Grid item>
+                    <Spacer y={2} />
+                    <Link onClick={onCreateDefaultGoal}>
+                      I don&#39;t have a specific goal. Just show me my projections.
+                    </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </DisabledComponent>
             </Grid>
           </Grid>
         </>
