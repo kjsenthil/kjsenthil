@@ -184,9 +184,10 @@ const LifePlanPage = () => {
           retirementGoal?.fields?.objectiveFrequencyEndAge || GoalDefaults.DRAW_DOWN_END_AGE
         ),
         monthlyIncome: Number(retirementGoal?.fields?.regularDrawdown?.val?.value?.val),
-        lumpSum: 0, // determine if needed
-        laterLifeLeftOver: 0, // determine if needed
-        shouldIncludeStatePension: false, // determine if needed,
+        lumpSum: Number(retirementGoal?.fields?.biRetirementLumpSum),
+        lumpSumDate: new Date(retirementGoal?.fields?.biRetirementLumpSumDate?.val!),
+        laterLifeLeftOver: Number(retirementGoal?.fields?.biRetirementRemainingAmount),
+        shouldIncludeStatePension: (retirementGoal?.fields?.biStatePensionAmount || 0) > 0.1,
         fees: 0,
         assetModel,
         monthlyContributions,
