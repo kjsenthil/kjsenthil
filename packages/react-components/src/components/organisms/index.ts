@@ -20,6 +20,7 @@ export { default as GoalPotTracker } from './GoalPotTracker';
 export { default as GoalProgressCard } from './GoalProgressCardV1';
 export { default as GoalSelection } from './GoalSelection';
 export { default as GoalSetUpNewCard } from './GoalSetUpNewCard';
+export { default as GoalStartModal } from './GoalStartModal';
 export { default as GoalTrackingWidget } from './GoalTrackingWidget';
 export { default as HeaderMenu } from './HeaderMenu';
 export { default as LoginForm } from './LoginForm';

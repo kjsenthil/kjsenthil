@@ -9,6 +9,7 @@ import {
   Spacer,
   Grid,
   useBreakpoint,
+  GoalStartModal,
 } from '@tswdts/react-components';
 import { RootState } from '../../../store';
 import { InputFieldsKeys } from '../../../services/goal/machines/lifePlan';
@@ -32,6 +33,8 @@ const goToLifePlanPage = () => navigate(NavPaths.LIFE_PLAN_PAGE);
 const LifePlanManagementPage = () => {
   const dispatch = useDispatch();
   const { hash: currentUrlHash } = useLocation();
+  const [isModalOpen, setIsModalOpen] = React.useState(true);
+  const modalCloseHandler = () => setIsModalOpen(false);
 
   const {
     goalSimulateProjections: { data: goalSimulateProjections },
@@ -238,6 +241,11 @@ const LifePlanManagementPage = () => {
     }
   };
 
+  const renderGoalStartModal = () =>
+    !isLoading && !doesGoalExist ? (
+      <GoalStartModal open={isModalOpen} onClose={modalCloseHandler} />
+    ) : null;
+
   return (
     <GoalCreationLayout
       iconAlt="goal image"
@@ -271,6 +279,7 @@ const LifePlanManagementPage = () => {
       }}
     >
       {renderSubPage()}
+      {renderGoalStartModal()}
     </GoalCreationLayout>
   );
 };
