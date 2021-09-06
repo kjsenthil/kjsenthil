@@ -22,6 +22,7 @@ export { default as ComponentsWithCaption } from './ComponentsWithCaption';
 export { default as DropdownToggle } from './DropdownToggle';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
 export { default as DisabledComponent } from './DisabledComponent';
+export { default as ExpandableBulletList } from './ExpandableBulletList';
 export { default as FormInput } from './FormInput';
 export { default as FormSelect } from './FormSelect';
 export { default as GoalLifePlanCard } from './GoalLifePlanCard';
