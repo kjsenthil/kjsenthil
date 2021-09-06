@@ -1,10 +1,8 @@
-import Cookies from 'js-cookie';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import interceptMyAccountsAuthorizationRequestHeaders from '.';
 import { ACCESS_TOKEN_REQUIRED_ENDPOINTS, AUTH_ENDPOINTS } from '../../../../config';
 import { AuthState } from '../../../auth';
-import { ApiAppName } from '../../../../constants';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -59,29 +57,5 @@ describe('interceptMyAccountsAuthorizationRequestHeaders', () => {
     expect(response.config.headers.Authorization).toStrictEqual(
       `Bearer ${accessTokens[0].accessToken}`
     );
-  });
-
-  describe('interceptMyAccountsAuthorizationRequestHeaders With Cookie', () => {
-    beforeAll(() => {
-      axios.interceptors.request.use(interceptMyAccountsAuthorizationRequestHeaders(getState));
-      mockGetCookie = Cookies.get as jest.Mock;
-    });
-
-    it.each(URLS_NOT_NEEDING_AUTHORIZATION)('does not set Authorization for %p', async (url) => {
-      mockAxios.onGet(url).replyOnce(200);
-      const response = await axios.get(url);
-      expect(response.config.headers.Authorization).toBeUndefined();
-      expect(mockGetCookie).toHaveBeenCalledTimes(0);
-    });
-
-    it.each(URLS_NEEDING_AUTHORIZATION)('sets Authorization for %p', async (url) => {
-      mockAxios.onGet(url).replyOnce(200);
-      const response = await axios.get(url);
-
-      expect(mockGetCookie).toHaveBeenCalledWith(ApiAppName.myAccounts);
-      expect(response.config.headers.Authorization).toStrictEqual(
-        `Bearer ${accessTokens[0].accessToken}`
-      );
-    });
   });
 });

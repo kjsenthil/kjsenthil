@@ -40,7 +40,7 @@ export interface TokenItem {
   application: string;
   accessToken: string;
   refreshToken: string;
-  sessionId: string;
+  sessionId?: string;
 }
 
 export interface AuthState extends Omit<CommonState, 'data' | 'error'> {

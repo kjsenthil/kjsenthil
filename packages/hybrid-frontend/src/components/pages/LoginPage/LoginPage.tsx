@@ -11,10 +11,12 @@ import {
   PinLoginItem,
   PinLogin,
 } from '@tswdts/react-components';
+import Cookies from 'js-cookie';
 import { credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
 import { NavPaths } from '../../../config/paths';
+import { ApiAppName } from '../../../constants';
 
 export const LoginGrid = styled(Grid)`
   padding-top: 10rem;
@@ -35,7 +37,8 @@ const LoginPage = (_: LoginPageProps) => {
     pinLoginError,
   } = useSelector((state: RootState) => state.auth);
 
-  const hasAccessTokens = accessTokens.length > 0;
+  const myAccountsAccessToken = Cookies.get(ApiAppName.myAccounts);
+  const hasAccessTokens = accessTokens.length > 0 || myAccountsAccessToken;
 
   useEffect(() => {
     if (hasAccessTokens) {

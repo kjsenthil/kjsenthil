@@ -1,5 +1,7 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
-import { AuthState } from '../types';
+import jwt_decode from 'jwt-decode';
+import { AuthState, TokenItem } from '../types';
+import { ApiAppName } from '../../../constants';
 import {
   credLogin,
   pinLogin,
@@ -16,6 +18,11 @@ export const initialState: AuthState = {
   isPinLoggedIn: false,
 };
 
+interface JwtPayload {
+  contact: number;
+  accounts: string;
+}
+
 const logout = createAction('auth/logout');
 
 const authSlice = createSlice({
@@ -24,6 +31,17 @@ const authSlice = createSlice({
   reducers: {
     setAccessTokens: (state, action) => {
       state.accessTokens = action.payload;
+    },
+    setAccessTokensFromCookie: (
+      state,
+      action: { type: string; payload: { myAccounts: TokenItem; ois: TokenItem } }
+    ) => {
+      state.accessTokens = [
+        { ...action.payload.myAccounts, application: ApiAppName.myAccounts },
+        { ...action.payload.ois, application: ApiAppName.ois },
+      ];
+      const jwtDecoded = jwt_decode(action.payload.myAccounts.accessToken) as JwtPayload;
+      state.contactId = jwtDecoded.contact;
     },
   },
   extraReducers: (builder) => {
@@ -34,6 +52,6 @@ const authSlice = createSlice({
 });
 
 export { credLogin, pinLogin, refreshToken, logout };
-export const { setAccessTokens } = authSlice.actions;
+export const { setAccessTokens, setAccessTokensFromCookie } = authSlice.actions;
 
 export default authSlice.reducer;

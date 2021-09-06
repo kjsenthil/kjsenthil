@@ -5151,6 +5151,7 @@ __metadata:
     jest-html-reporter: ^3.3.0
     jest-styled-components: ^7.0.5
     js-cookie: ^3.0.1
+    jwt-decode: ^3.1.2
     lint-staged: ^10.5.3
     mockdate: ^3.0.5
     pluralize: ^8.0.0
@@ -11985,6 +11986,8 @@ __metadata:
 "digital-hybrid@workspace:.":
   version: 0.0.0-use.local
   resolution: "digital-hybrid@workspace:."
+  dependencies:
+    jwt-decode: ^3.1.2
   languageName: unknown
   linkType: soft
 
@@ -19408,6 +19411,13 @@ fsevents@^1.2.7:
   version: 4.2.1
   resolution: "just-extend@npm:4.2.1"
   checksum: ff9fdede240fad313efeeeb68a660b942e5586d99c0058064c78884894a2690dc09bba44c994ad4e077e45d913fef01a9240c14a72c657b53687ac58de53b39c
+  languageName: node
+  linkType: hard
+
+"jwt-decode@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "jwt-decode@npm:3.1.2"
+  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
   languageName: node
   linkType: hard
 
