@@ -38,15 +38,21 @@ export default function useChartStyles() {
     },
 
     STROKE_COLOR: {
+      OUTER_BORDER: grey['200'],
       GRID: grey['200'],
-      INDICATOR: grey['400'],
+
+      INDICATOR: grey['300'],
+      DOT_INDICATOR_OUTER: 'transparent',
+      DOT_INDICATOR_INNER: 'transparent',
+
       PERFORMANCE_GRAPH: primary.main,
-      CONTRIBUTION_GRAPH: secondary.dark1,
+      CONTRIBUTION_GRAPH: secondary.dark1 ?? secondary.main,
       PROJECTIONS_GRAPH: tertiary.main,
       GOAL_NOT_MET_GRAPH: gold.main,
     },
 
     STROKE_OPACITY: {
+      OUTER_BORDER: 0.8,
       GRID: 0.8,
     },
 
@@ -57,9 +63,14 @@ export default function useChartStyles() {
     },
 
     STROKE_WIDTH: {
-      GRID: 2,
+      OUTER_BORDER: 2,
+      GRID: 1,
+
       INDICATOR_CIRCLE: 1,
       INDICATOR_LINE: 2,
+      DOT_INDICATOR_INNER: 0,
+      DOT_INDICATOR_OUTER: 0,
+
       PERFORMANCE_GRAPH: 4,
       CONTRIBUTION_GRAPH: 2,
       PROJECTIONS_GRAPH: 4,
@@ -67,7 +78,10 @@ export default function useChartStyles() {
     },
 
     FILL: {
+      BACKGROUND: common.white,
+      AXIS_TICK_AREA: '#f8f8fe', // This is the background color for the x-axis and y-axis tick areas
       INDICATOR: common.white,
+      DOT_INDICATOR_OUTER: common.white,
       PROJECTIONS_VARIANCE_BAND_GRAPH: tertiary.light1,
     },
 
@@ -77,6 +91,9 @@ export default function useChartStyles() {
 
     RADIUS: {
       INDICATOR: 5,
+
+      DOT_INDICATOR_OUTER: 10,
+      DOT_INDICATOR_INNER: 3,
     },
 
     WIDTH: {

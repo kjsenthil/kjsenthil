@@ -90,7 +90,9 @@ const LifePlanPage = () => {
   });
 
   const isUncategorisedGoal = goalsData[0] && goalsData[0].category === GoalCategory.UNCATEGORIZED;
-  const simulatedProjectionsData = useSimulatedProjectionsData();
+  const simulatedProjectionsData = useSimulatedProjectionsData({
+    firstDate: historicalData && historicalData.length > 0 ? historicalData[0].date : undefined,
+  });
 
   const hasFetchedGoals = useStateIsAvailable(['currentGoals']);
 

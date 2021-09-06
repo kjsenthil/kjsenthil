@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Typography } from '../../../../atoms';
 import { LikelyRangeToggleContainer } from './LikelyRangeToggle.styles';
 import LikelyRangeToggleBox from './LikelyRangeToggleBox';
+import { useBreakpoint } from '../../../../../hooks';
 
 export interface LikelyRangeToggleProps {
   showLikelyRange: boolean;
@@ -12,12 +13,14 @@ export default function LikelyRangeToggle({
   showLikelyRange,
   toggleLikelyRange,
 }: LikelyRangeToggleProps) {
+  const { isMobile } = useBreakpoint();
+
   const handleToggleClick = () => {
     toggleLikelyRange();
   };
 
   return (
-    <LikelyRangeToggleContainer>
+    <LikelyRangeToggleContainer isMobile={isMobile}>
       <Typography variant="sh4" color="grey" colorShade="dark1">
         LIKELY RANGE
       </Typography>

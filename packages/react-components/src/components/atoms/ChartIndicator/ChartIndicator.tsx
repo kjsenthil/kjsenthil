@@ -9,7 +9,7 @@ import {
 } from './ChartIndicator.styles';
 
 export interface ChartIndicatorProps {
-  variant: 'solid' | 'dashed-3' | 'dashed-4' | 'rectangle';
+  variant: 'solid' | 'dashed-3' | 'dashed-4' | 'dashed-2' | 'rectangle';
   colorShade?: ColorShade;
   color?: Color;
   secondaryColor?: Color;
@@ -23,10 +23,10 @@ const DashedIndicator = ({
   numOfDashes,
 }: {
   colorShade?: ColorShade;
-  numOfDashes: 3 | 4;
+  numOfDashes: 2 | 3 | 4;
   color?: Color;
 }) => (
-  <DashedIndicatorContainer thick={numOfDashes === 3}>
+  <DashedIndicatorContainer thick={numOfDashes < 4}>
     {Array.from({ length: numOfDashes }).map((_, i) => (
       /* eslint-disable-next-line react/no-array-index-key */
       <IndicatorDash key={i} color={color} colorShade={colorShade} />
@@ -38,6 +38,9 @@ const ChartIndicator = ({ variant, color, colorShade }: ChartIndicatorProps) => 
   switch (variant) {
     case 'solid':
       return <SolidIndicator color={color} colorShade={colorShade} />;
+
+    case 'dashed-2':
+      return <DashedIndicator numOfDashes={2} color={color} />;
 
     case 'dashed-3':
       return <DashedIndicator numOfDashes={3} color={color} />;

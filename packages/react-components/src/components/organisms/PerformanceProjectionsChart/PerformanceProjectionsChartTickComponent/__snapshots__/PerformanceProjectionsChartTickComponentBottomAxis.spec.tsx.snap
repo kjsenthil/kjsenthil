@@ -45,55 +45,7 @@ Object {
               text-anchor="start"
               transform=""
               x="0"
-              y="15"
-            >
-              <tspan
-                dy="0"
-                x="0"
-              >
-                AGE 30
-              </tspan>
-            </text>
-          </svg>
-          <svg
-            font-size="12"
-            style="overflow: visible;"
-            x="0"
-            y="0"
-          >
-            <text
-              fill="#aeaabf"
-              font-family="Montserrat,Roboto"
-              font-size="12"
-              style="font-weight: bold;"
-              text-anchor="start"
-              transform=""
-              x="0"
               y="0"
-            >
-              <tspan
-                dy="0"
-                x="0"
-              >
-                2022
-              </tspan>
-            </text>
-          </svg>
-          <svg
-            font-size="12"
-            style="overflow: visible;"
-            x="0"
-            y="0"
-          >
-            <text
-              fill="#aeaabf"
-              font-family="Montserrat,Roboto"
-              font-size="12"
-              style="font-weight: bold;"
-              text-anchor="start"
-              transform=""
-              x="0"
-              y="15"
             >
               <tspan
                 dy="0"
@@ -156,55 +108,7 @@ Object {
             text-anchor="start"
             transform=""
             x="0"
-            y="15"
-          >
-            <tspan
-              dy="0"
-              x="0"
-            >
-              AGE 30
-            </tspan>
-          </text>
-        </svg>
-        <svg
-          font-size="12"
-          style="overflow: visible;"
-          x="0"
-          y="0"
-        >
-          <text
-            fill="#aeaabf"
-            font-family="Montserrat,Roboto"
-            font-size="12"
-            style="font-weight: bold;"
-            text-anchor="start"
-            transform=""
-            x="0"
             y="0"
-          >
-            <tspan
-              dy="0"
-              x="0"
-            >
-              2022
-            </tspan>
-          </text>
-        </svg>
-        <svg
-          font-size="12"
-          style="overflow: visible;"
-          x="0"
-          y="0"
-        >
-          <text
-            fill="#aeaabf"
-            font-family="Montserrat,Roboto"
-            font-size="12"
-            style="font-weight: bold;"
-            text-anchor="start"
-            transform=""
-            x="0"
-            y="15"
           >
             <tspan
               dy="0"

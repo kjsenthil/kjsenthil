@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Typography, ProgressBar } from '../../../atoms';
-import { Container } from './PerformanceProjectionsChartGoalIndicator.styles';
-import GoalImage from './GoalImage';
+import { Typography } from '../../../atoms';
+import PerformanceProjectionsChartGoalIndicatorContainer from './PerformanceProjectionsChartGoalIndicatorContainer/PerformanceProjectionsChartGoalIndicatorContainer';
 
 export interface PerformanceProjectionsChartGoalIndicatorProps {
   // Determine the position of the indicator, in px, relative to top left
@@ -9,25 +8,25 @@ export interface PerformanceProjectionsChartGoalIndicatorProps {
   left?: number;
 
   label: string;
-  icon: string;
-  progress?: number;
 }
 
 export default function PerformanceProjectionsChartGoalIndicator({
   top,
   left,
   label,
-  icon,
-  progress,
 }: PerformanceProjectionsChartGoalIndicatorProps) {
   return (
-    <Container top={top} left={left}>
-      <Typography noWrap variant="sh4" color="grey" align="center">
+    <PerformanceProjectionsChartGoalIndicatorContainer top={top} left={left}>
+      <Typography
+        noWrap
+        spaceNoWrap
+        variant="sh4"
+        color="primary"
+        colorShade="dark2"
+        align="center"
+      >
         {label}
       </Typography>
-
-      {progress !== undefined && <ProgressBar progress={progress} />}
-      <GoalImage imageSrc={icon} />
-    </Container>
+    </PerformanceProjectionsChartGoalIndicatorContainer>
   );
 }

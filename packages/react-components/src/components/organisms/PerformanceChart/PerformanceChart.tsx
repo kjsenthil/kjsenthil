@@ -28,7 +28,7 @@ import {
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { usePerformanceChartDimension } from './hooks';
 import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
-import { PerformanceDataPeriod } from '../../../services/performance';
+import { PerformanceDataPeriod } from '../../../services';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
@@ -108,7 +108,8 @@ function PerformanceChart({
   );
 
   const { xScale, yScale } = useTimeValueScales({
-    chartDimension,
+    xScaleRange: [chartDimension.margin.left, chartDimension.innerWidth],
+    yScaleRange: [chartDimension.innerHeight, chartDimension.margin.top],
     minDate: new Date(minChartDate),
     maxDate: new Date(maxChartDate),
     maxValue: maxChartValue,

@@ -33,7 +33,7 @@ export default function PerformanceProjectionsChartAxisBottom({
       top={chartDimension.height - chartDimension.margin.bottom - chartDimension.margin.top}
       numTicks={5}
       tickFormat={d3TimeFormatter[D3TimeFormatterType.YEAR_ONLY]}
-      tickLength={0}
+      tickLength={8}
       tickStroke="transparent"
       tickComponent={(tickRendererProps) => (
         <PerformanceProjectionsChartTickComponentBottomAxis

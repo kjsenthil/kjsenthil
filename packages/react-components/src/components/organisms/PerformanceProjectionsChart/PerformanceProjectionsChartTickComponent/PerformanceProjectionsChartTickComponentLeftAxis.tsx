@@ -24,7 +24,8 @@ export default function PerformanceProjectionsChartTickComponentLeftAxis({
   return (
     <Text
       x={x}
-      y={y}
+      // This negative y offset brings the tick label to above the grid line
+      y={y - 10}
       {...tickLabelProps}
       fill={chartStyles.TEXT_COLOR.AXES}
       fontSize={chartStyles.TEXT_SIZE.AXES}

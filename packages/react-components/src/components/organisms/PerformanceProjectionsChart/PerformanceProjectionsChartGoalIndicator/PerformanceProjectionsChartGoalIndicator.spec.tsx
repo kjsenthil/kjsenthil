@@ -4,9 +4,7 @@ import PerformanceProjectionsChartGoalIndicator from './PerformanceProjectionsCh
 
 describe('PerformanceProjectionsChartGoalIndicator', () => {
   test('The goal indicator renders as expected', () => {
-    renderWithTheme(
-      <PerformanceProjectionsChartGoalIndicator label="Goal Indicator" icon="" progress={0.1} />
-    );
+    renderWithTheme(<PerformanceProjectionsChartGoalIndicator label="Goal Indicator" />);
 
     expect(screen.getByText('Goal Indicator')).toBeVisible();
   });

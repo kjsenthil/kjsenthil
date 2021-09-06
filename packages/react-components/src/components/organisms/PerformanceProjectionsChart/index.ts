@@ -1,4 +1,4 @@
-export * from './PerformanceProjectionsSimplifiedChartCard';
-export { default as usePerformanceProjectionsChartDimension } from './hooks/usePerformanceProjectionsChartDimension';
+export { default as PerformanceProjectionsChart } from './PerformanceProjectionsChart';
+export type { PerformanceProjectionsChartProps } from './PerformanceProjectionsChart';
 
-export { default } from './PerformanceProjectionsSimplifiedChart';
+export { default as usePerformanceProjectionsChartDimension } from './hooks/usePerformanceProjectionsChartDimension';

@@ -22,11 +22,18 @@ describe('PerformanceProjectionsChartAxes', () => {
 
     const TestComponent = () => {
       const { xScale, yScale } = useTimeValueScales({
+        xScaleRange: [
+          chartDimension.margin.left,
+          chartDimension.width - chartDimension.margin.right,
+        ],
+        yScaleRange: [
+          chartDimension.height - chartDimension.margin.top - chartDimension.margin.bottom,
+          chartDimension.margin.top,
+        ],
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2020, 0, 10),
         minValue: 0,
         maxValue: 100,
-        chartDimension,
       });
 
       return (

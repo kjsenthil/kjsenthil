@@ -22,11 +22,18 @@ describe('useTimeValueScales', () => {
 
     const { result } = renderHook(() =>
       useTimeValueScales({
+        xScaleRange: [
+          chartDimension.margin.left,
+          chartDimension.width - chartDimension.margin.right,
+        ],
+        yScaleRange: [
+          chartDimension.height - chartDimension.margin.top - chartDimension.margin.bottom,
+          chartDimension.margin.top,
+        ],
         minDate,
         maxDate,
         minValue,
         maxValue,
-        chartDimension,
         maxValueBuffer,
       })
     );
@@ -34,9 +41,7 @@ describe('useTimeValueScales', () => {
     // x-axis scale assertions
 
     expect(result.current.xScale(minDate)).toBe(chartDimension.margin.left);
-    expect(result.current.xScale(maxDate)).toBe(
-      chartDimension.width - chartDimension.margin.left - chartDimension.margin.right
-    );
+    expect(result.current.xScale(maxDate)).toBe(chartDimension.width - chartDimension.margin.right);
 
     // y-axis scale assertions
 

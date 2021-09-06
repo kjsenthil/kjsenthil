@@ -24,7 +24,7 @@ export default function PerformanceProjectionsChartAxisLeft({
       left={chartDimension.margin.left}
       hideAxisLine
       numTicks={6}
-      tickLength={20}
+      tickLength={10}
       tickStroke="transparent"
       tickFormat={d3ValueFormatter}
       tickComponent={(tickRendererProps) => (

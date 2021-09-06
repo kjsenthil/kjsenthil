@@ -17,17 +17,18 @@ describe('PerformanceProjectionsChartSummaryPanel', () => {
       />
     );
 
-    const testTexts = [
+    // These legend texts appear once on the component
+    const legendTexts = [
       'PROJECTED VALUE',
       '£10,000',
-      'CONTRIBUTIONS',
+      'NET CONTRIBUTION',
       '£20,000',
       'TARGET VALUE',
       '£40,000',
       '£9,000 - £11,000', // This is the likely range
     ];
 
-    testTexts.forEach((testText) => {
+    legendTexts.forEach((testText) => {
       expect(screen.getByText(testText)).toBeVisible();
     });
 

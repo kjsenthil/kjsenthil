@@ -10,7 +10,7 @@ import {
 } from '../performanceProjectionsData';
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { generateParametersForUseTooltipHook } from './PerformanceProjectionsChartTooltipTestUtils';
-import { ProjectionsChartProjectionDatum } from '../../../../services/projections';
+import { ProjectionsChartProjectionDatum } from '../../../../services';
 
 jest.mock('@visx/event');
 
@@ -90,7 +90,7 @@ describe('usePerformanceProjectionsChartTooltip', () => {
 
     expect(showTooltipSpy).toHaveBeenCalledTimes(1);
     expect(showTooltipSpy).toHaveBeenCalledWith({
-      tooltipLeft: mockMousePos.x - chartDimension.margin.left,
+      tooltipLeft: mockMousePos.x,
       tooltipTop: yScale(datum.upperBound),
       tooltipData: {
         performanceProjection: datum,

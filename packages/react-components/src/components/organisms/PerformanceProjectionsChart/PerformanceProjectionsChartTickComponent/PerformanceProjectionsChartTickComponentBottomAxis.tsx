@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TickRendererProps } from '@visx/axis';
 import { Text } from '@visx/text';
-import { useChartStyles } from '../../../../hooks';
+import { useBreakpoint, useChartStyles } from '../../../../hooks';
 
 export interface PerformanceProjectionsChartTickComponentBottomAxisProps extends TickRendererProps {
   // Note: we have to pass chartStyles as a prop rather than having
@@ -25,20 +25,36 @@ export interface PerformanceProjectionsChartTickComponentBottomAxisProps extends
   finalYear?: number;
 }
 
+export interface GetAgeTextProps {
+  tickYear: number | undefined;
+  todayAge: number | undefined;
+
+  // If true, will show the age number only rather than "AGE N". This is used in
+  // mobile views.
+  showAgeNumberOnly?: boolean;
+}
+
 /**
  * The formatted value passed to our tick component will be a full year string.
  * This function adds an age text to the formatted value.
  */
-export function getAgeText(formattedValue: string | undefined, todayAge: number): string {
-  const tickYear = Number(formattedValue);
+export function getAgeText({ todayAge, tickYear, showAgeNumberOnly }: GetAgeTextProps): string {
+  const prefix = showAgeNumberOnly ? '' : 'AGE\u00a0';
 
-  if (Number.isNaN(tickYear)) return `AGE\u00a0UNKNOWN`;
+  if (
+    tickYear === undefined ||
+    todayAge === undefined ||
+    Number.isNaN(tickYear) ||
+    Number.isNaN(todayAge)
+  ) {
+    return `${prefix}UNKNOWN`;
+  }
 
   const todayYear = new Date().getFullYear();
 
   const age = todayAge + (tickYear - todayYear);
 
-  return `AGE\u00a0${age}`;
+  return `${prefix}${age}`;
 }
 
 export default function PerformanceProjectionsChartTickComponentBottomAxis({
@@ -51,59 +67,37 @@ export default function PerformanceProjectionsChartTickComponentBottomAxis({
   formattedValue,
   ...tickLabelProps
 }: PerformanceProjectionsChartTickComponentBottomAxisProps) {
+  const { isMobile } = useBreakpoint();
+
   // When the tick is for today's year, then we always display "TODAY".
-  // In simplified display mode, only the "TODAY" year text is shown. No other
-  // year text ticks are shown.
   const todayYear = new Date().getFullYear();
-  const yearText = Number(formattedValue) === todayYear ? 'TODAY' : formattedValue;
-  const showYearText =
-    displayMode === 'default' || (displayMode === 'simplified' && yearText === 'TODAY');
+  const tickYear = Number(formattedValue);
+  const text =
+    tickYear === todayYear
+      ? 'TODAY'
+      : getAgeText({
+          tickYear,
+          todayAge,
+          showAgeNumberOnly: isMobile,
+        });
 
-  // We always show ages in simplified display mode, except for the "TODAY"
-  // tick.
-  const showAgeText =
-    displayMode === 'default' || (displayMode === 'simplified' && yearText !== 'TODAY');
-
-  // There is a y-offset for age texts (because they are on line #2). We don't
-  // need this offset when the years are not shown, however.
-  const ageTextYOffset = !showYearText ? 0 : 15;
-
-  const textDxOffset = finalYear && Number(formattedValue) === finalYear ? '-4%' : undefined;
+  // We move the final tick a bit to the left to avoid it being clipped
+  const textDxOffset = finalYear && Number(formattedValue) === finalYear ? -40 : undefined;
 
   return (
-    <>
-      {showYearText && (
-        <Text
-          x={x}
-          dx={textDxOffset}
-          y={y}
-          {...tickLabelProps}
-          fill={chartStyles.TEXT_COLOR.AXES}
-          fontSize={chartStyles.TEXT_SIZE.AXES}
-          fontFamily={chartStyles.TEXT_FONT.COMMON}
-          width={56}
-          lineHeight={15}
-          style={{ fontWeight: 'bold' }}
-        >
-          {yearText}
-        </Text>
-      )}
-      {showAgeText && (
-        <Text
-          x={x}
-          dx={textDxOffset}
-          y={y + ageTextYOffset}
-          {...tickLabelProps}
-          fill={chartStyles.TEXT_COLOR.AXES}
-          fontSize={chartStyles.TEXT_SIZE.AXES}
-          fontFamily={chartStyles.TEXT_FONT.COMMON}
-          width={56}
-          lineHeight={15}
-          style={{ fontWeight: 'bold' }}
-        >
-          {getAgeText(formattedValue, todayAge)}
-        </Text>
-      )}
-    </>
+    <Text
+      x={x}
+      dx={textDxOffset}
+      y={y}
+      {...tickLabelProps}
+      fill={chartStyles.TEXT_COLOR.AXES}
+      fontSize={chartStyles.TEXT_SIZE.AXES}
+      fontFamily={chartStyles.TEXT_FONT.COMMON}
+      width={56}
+      lineHeight={15}
+      style={{ fontWeight: 'bold' }}
+    >
+      {text}
+    </Text>
   );
 }

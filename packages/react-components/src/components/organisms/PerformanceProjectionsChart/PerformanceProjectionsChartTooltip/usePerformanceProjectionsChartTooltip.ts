@@ -8,7 +8,7 @@ import { ChartDimension } from '../../../../config/chart';
 import {
   ProjectionsChartProjectionDatum,
   ProjectionsChartProjectionTargetDatum,
-} from '../../../../services/projections';
+} from '../../../../services';
 import { TimeSeriesDatum } from '../../../../utils/data';
 import { monthDifference } from '../../../../utils/date';
 
@@ -83,12 +83,9 @@ export default function usePerformanceProjectionsChartTooltip({
       // is what containerRef is set to.
       const { x: mouseX } = localPoint(e) ?? { x: 0, y: 0 };
 
-      // Adjust the x-position for margins
-      const adjMouseX = mouseX - chartDimension.margin.left;
-
       const projectionDatumAtPosX = getDatumAtPosX<ProjectionsChartProjectionDatum>({
         data: projectionsData,
-        posX: adjMouseX,
+        posX: mouseX,
         xScale,
         dateAccessor,
       });
@@ -96,7 +93,7 @@ export default function usePerformanceProjectionsChartTooltip({
         projectionsTargetData &&
         getDatumAtPosX<ProjectionsChartProjectionTargetDatum>({
           data: projectionsTargetData,
-          posX: adjMouseX,
+          posX: mouseX,
           xScale,
           dateAccessor,
         });
@@ -123,7 +120,7 @@ export default function usePerformanceProjectionsChartTooltip({
           : maxProjectionDatumAtPosXValue;
 
         tooltip.showTooltip({
-          tooltipLeft: adjMouseX,
+          tooltipLeft: mouseX,
           tooltipTop: yScale(tooltipTopValue),
           tooltipData: {
             performanceProjection: projectionDatumAtPosX,

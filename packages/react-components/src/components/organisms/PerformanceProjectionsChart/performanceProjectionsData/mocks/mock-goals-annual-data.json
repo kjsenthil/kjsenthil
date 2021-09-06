@@ -1,10 +1,24 @@
 {
   "data": [
     {
+      "date": "2041-01-01T00:00:00.000Z",
+      "progress": 0.4,
+      "icon": "/goal-graphic.png",
+      "label": "Lump sum",
+      "targetAmount": 2000000
+    },
+    {
       "date": "2051-01-01T00:00:00.000Z",
       "progress": 0.4,
       "icon": "/goal-graphic.png",
-      "label": "Retire",
+      "label": "Retirement",
+      "targetAmount": 2000000
+    },
+    {
+      "date": "2061-01-01T00:00:00.000Z",
+      "progress": 0.4,
+      "icon": "/goal-graphic.png",
+      "label": "Remaining",
       "targetAmount": 2000000
     }
   ]

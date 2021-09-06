@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ScaleTime, ScaleLinear } from 'd3-scale';
 import { scaleLinear, scaleTime } from '@visx/scale';
-import { ChartDimension } from '../../config/chart';
 
 export interface UseTimeValueScalesProps {
-  chartDimension: ChartDimension;
+  yScaleRange: number[];
+  xScaleRange: number[];
 
   // x-axis scale props
   minDate?: Date;
@@ -39,15 +39,12 @@ export default function useTimeValueScales({
   maxValue,
   minValue,
   maxValueBuffer = DEFAULT_MAX_VALUE_BUFFER,
-  chartDimension,
+  xScaleRange,
+  yScaleRange,
 }: UseTimeValueScalesProps): {
   xScale: ScaleTime<number, number>;
   yScale: ScaleLinear<number, number>;
 } {
-  const { margin, height, width } = chartDimension;
-  const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = width - margin.left - margin.right;
-
   const datesDefined = minDate && maxDate;
   const valuesDefined =
     minValue !== undefined &&
@@ -62,9 +59,9 @@ export default function useTimeValueScales({
         // that minDate and maxDate have been checked for undefined via the
         // datesDefined variable.
         domain: datesDefined ? [minDate!, maxDate!] : DEFAULT_TIME_DOMAIN,
-        range: [margin.left, innerWidth],
+        range: xScaleRange,
       }),
-    [innerWidth, margin.left, minDate?.getTime(), maxDate?.getTime()]
+    [xScaleRange[0], xScaleRange[1], minDate?.getTime(), maxDate?.getTime()]
   );
 
   const yScale = React.useMemo(
@@ -78,11 +75,11 @@ export default function useTimeValueScales({
             // chart won't render very nicely
             [minValue!, maxValue! * (1 + maxValueBuffer) || DEFAULT_VALUE_DOMAIN[1]]
           : DEFAULT_VALUE_DOMAIN,
-        range: [innerHeight, margin.top],
+        range: yScaleRange,
 
         nice: true,
       }),
-    [innerHeight, margin.top, minValue, maxValue, maxValueBuffer]
+    [yScaleRange[0], yScaleRange[1], minValue, maxValue, maxValueBuffer]
   );
 
   return {

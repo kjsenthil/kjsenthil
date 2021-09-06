@@ -1,4 +1,4 @@
-import { ProjectionsChartProjectionDatum } from '../../../../../services/projections';
+import { ProjectionsChartProjectionDatum } from '../../../../../services';
 
 // Ensure the chart never renders any negative numbers
 export default function normalizeProjectionsData(
