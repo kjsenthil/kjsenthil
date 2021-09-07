@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b9750bad-570e-4990-a6b6-05b29611c960",
+		"_postman_id": "e4497ec8-9318-48e4-8516-87e49d9262f8",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2153,6 +2153,158 @@
 					]
 				},
 				{
+					"name": "Standing Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/readymade/standingdata/",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"Assets",
+								"readymade",
+								"standingdata",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/readymade/standingdata/",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"Assets",
+										"readymade",
+										"standingdata",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 11:07:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"tilneyStandingData\":[{\"id\":1,\"sedol\":\"BYX8KL9\",\"category\":\"Defensive\",\"taamodel\":\"TAA1\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILN0715\",\"minimumInvestmentAmount\":100.05},{\"id\":3,\"sedol\":\"BFY1N37\",\"category\":\"Income\",\"taamodel\":\"TAA3\",\"unitType\":\"Inc\",\"investmentCodeName\":\"TILINCC\",\"minimumInvestmentAmount\":100.05},{\"id\":4,\"sedol\":\"BFY1NH1\",\"category\":\"Balanced\",\"taamodel\":\"TAA4\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILBALC\",\"minimumInvestmentAmount\":100.05},{\"id\":5,\"sedol\":\"BYX8KR5\",\"category\":\"Growth\",\"taamodel\":\"TAA5\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILN3743\",\"minimumInvestmentAmount\":100.05},{\"id\":6,\"sedol\":\"BYX8KW0\",\"category\":\"Adventurous\",\"taamodel\":\"TAA6\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILN4550\",\"minimumInvestmentAmount\":100.05},{\"id\":7,\"sedol\":\"BFY1PL9\",\"category\":\"Maximum Growth\",\"taamodel\":\"TAA7\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILMGC\",\"minimumInvestmentAmount\":100.05},{\"id\":8,\"sedol\":\"BYX8L38\",\"category\":\"Ethical\",\"taamodel\":\"TAA3E\",\"unitType\":\"Acc\",\"investmentCodeName\":\"TILNE2535\",\"minimumInvestmentAmount\":100.05}],\"contributionsSettings\":[{\"name\":\"InvestmentAmountLimits - ISAFund\",\"value\":\"100, 20000\"},{\"name\":\"CashDepositAmountLimits - ISA\",\"value\":\"100, 20000\"},{\"name\":\"JuniorISA_InitialInvestment_Limits\",\"value\":\"100, 9000\"},{\"name\":\"CashDepositAmountLimits - JISA\",\"value\":\"100, 9000\"},{\"name\":\"CashDepositAmountLimits - SIPP\",\"value\":\"100, 99999\"},{\"name\":\"CashDepositAmountLimits - GIA\",\"value\":\"100, 99999\"},{\"name\":\"InvestmentAmountLimits - GIAFund\",\"value\":\"100, 99999\"},{\"name\":\"MonthlySavingsAmountLimits - ISA\",\"value\":\"50, 20000\"},{\"name\":\"MonthlySavingsAmountLimits - JISA\",\"value\":\"50, 9000\"},{\"name\":\"MonthlySavingsAmountLimits - GIA\",\"value\":\"50, 99999\"},{\"name\":\"MonthlySavingsAmountLimits - SIPP\",\"value\":\"80, 99999\"},{\"name\":\"InvestmentAmountLimits - SIPPFund\",\"value\":\"80, 99999\"}]}"
+						}
+					]
+				},
+				{
+					"name": "Asset allocation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/assetallocation/BYX8KL9",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"Assets",
+								"assetallocation",
+								"BYX8KL9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Assets/assetallocation/BYX8KL9",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"Assets",
+										"assetallocation",
+										"BYX8KL9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:a2f8a1fa-1755-40f5-8780-c11453ac4a54"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 02 Sep 2021 11:29:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[{\"assetallocation\":[{\"name\":\"Equity\",\"proportion\":20.46000000},{\"name\":\"High Yield Bonds\",\"proportion\":0.00000000},{\"name\":\"Quality Bonds\",\"proportion\":36.37000000},{\"name\":\"Property\",\"proportion\":2.49000000},{\"name\":\"Commodities\",\"proportion\":5.28000000},{\"name\":\"Hedge\",\"proportion\":28.91000000},{\"name\":\"Fund Cash\",\"proportion\":6.49000000}],\"toptenholdings\":null,\"performance\":{\"year1\":108.51,\"year2\":96.70,\"year3\":101.89,\"year4\":100.67,\"year5\":null}}]"
+						}
+					]
+				},
+				{
 					"name": "Portfolio Risk Profile",
 					"event": [
 						{
@@ -2506,14 +2658,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7071/api/current-projection",
-							"protocol": "http",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/Projections/current-projection",
 							"host": [
-								"localhost"
+								"{{digitalHybrid.baseUrl}}"
 							],
-							"port": "7071",
 							"path": [
-								"api",
+								"{{apiPath}}",
+								"Projections",
 								"current-projection"
 							]
 						}
@@ -2704,7 +2855,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"accountName\": \"isa\",\r\n        \"accountValue\": 500.00,\r\n        \"equityPercentage\": 71.45\r\n    },\r\n    {\r\n        \"accountName\": \"gia\",\r\n        \"accountValue\": 200.50,\r\n        \"equityPercentage\": 95.2\r\n    }\r\n]",
+							"raw": "[\r\n    {\r\n        \"accountName\": \"isa\",\r\n        \"accountValue\": 500.00,\r\n        \"equityPercentage\": 71.45,\r\n        \"cashPercentage\": 0\r\n    },\r\n    {\r\n        \"accountName\": \"gia\",\r\n        \"accountValue\": 200.50,\r\n        \"equityPercentage\": 95.2,\r\n        \"cashPercentage\": 0\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2799,6 +2950,551 @@
 							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
 						}
 					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{myAccounts.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Share Dealing",
+			"item": [
+				{
+					"name": "market-open",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/market-open",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"market-open"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/market-open",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"market-open"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 11:02:35 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"market-open\",\r\n    \"Id\": null,\r\n    \"Attributes\": {\r\n      \"MarketOpen\": true\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/market-open/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "share-quote",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the quoteGuid from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('Data');\r",
+									"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Data).to.have.a.property('Attributes');\r",
+									"    pm.expect(jsonData.Data.Attributes).to.be.not.empty;\r",
+									"\r",
+									"    pm.expect(jsonData.Data.Attributes).to.have.a.property('QuoteGuid');\r",
+									"    pm.expect(jsonData.Data.Attributes.QuoteGuid).to.be.not.empty;\r",
+									"    pm.environment.set(\"myAccounts.shareQuoteGuid\", jsonData.Data.Attributes.QuoteGuid);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"share-quote\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": {{myAccounts.GiaAccountId}},\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"OrderType\": \"Buy\",\r\n                \"Amount\": 19,\r\n                \"Units\": 0,\r\n                \"OrderSizeType\": \"Amount\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/share-quote",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"share-quote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "share-quote-status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"share-quote\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": 20329,\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"OrderType\": \"Buy\",\r\n                \"Amount\": 20,\r\n                \"Units\": 0,\r\n                \"OrderSizeType\": \"Amount\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/share-quote-status?quoteGuid={{myAccounts.shareQuoteGuid}}",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"share-quote-status"
+							],
+							"query": [
+								{
+									"key": "quoteGuid",
+									"value": "{{myAccounts.shareQuoteGuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "limit-cost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the quoteGuid from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('Data');\r",
+									"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Data).to.have.a.property('Attributes');\r",
+									"    pm.expect(jsonData.Data.Attributes).to.be.not.empty;\r",
+									"\r",
+									"    pm.expect(jsonData.Data.Attributes).to.have.a.property('quoteGuid');\r",
+									"    pm.expect(jsonData.Data.Attributes.quoteGuid).to.be.not.empty;\r",
+									"    pm.environment.set(\"myAccounts.shareQuoteGuid\", jsonData.Data.Attributes.quoteGuid);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"limit-cost\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": {{myAccounts.GiaAccountId}},\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"Amount\": 0,\r\n                \"Units\": 1,\r\n                \"OrderType\": \"Sell\",\r\n                \"OrderSizeType\": \"Units\",\r\n                \"LimitPrice\": 1.32,\r\n                \"LimitOrderCalendarDaysToExpiry\": 1\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/limit-cost",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"limit-cost"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"type\": \"limit-cost\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": {{myAccounts.GiaAccountId}},\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"Amount\": 0,\r\n                \"Units\": 132,\r\n                \"OrderType\": \"Sell\",\r\n                \"OrderSizeType\": \"Units\",\r\n                \"LimitPrice\": 1.32,\r\n                \"LimitOrderCalendarDaysToExpiry\": 1\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/limit-cost",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"limit-cost"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "666"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 16:39:58 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"limit-cost\",\r\n    \"Id\": null,\r\n    \"Attributes\": {\r\n      \"AccountId\": \"63811\",\r\n      \"UpdatedBy\": null,\r\n      \"Order\": {\r\n        \"Isin\": \"GB00BH4HKS39\",\r\n        \"Amount\": 0.0,\r\n        \"Units\": 132.0,\r\n        \"OrderType\": \"Sell\",\r\n        \"OrderSizeType\": \"Units\",\r\n        \"LimitPrice\": 1.32,\r\n        \"LimitOrderCalendarDaysToExpiry\": 1,\r\n        \"Cost\": {\r\n          \"Commission\": 7.5,\r\n          \"PtmLevy\": 0.0,\r\n          \"StampDuty\": 0.500\r\n        }\r\n      }\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/limit-cost/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "share-order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the shareOrderId from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('Data');\r",
+									"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Data).to.have.a.property('Attributes');\r",
+									"    pm.expect(jsonData.Data.Attributes).to.be.not.empty;\r",
+									"\r",
+									"    pm.expect(jsonData.Data.Attributes).to.have.a.property('OrderId');\r",
+									"    pm.expect(jsonData.Data.Attributes.OrderId).to.be.not.empty;\r",
+									"    pm.environment.set(\"myAccounts.shareOrderId\", jsonData.Data.Attributes.OrderId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"type\": \"share-order\",\r\n    \"id\": null,\r\n    \"attributes\": {\r\n      \"AccountId\": {{myAccounts.GiaAccountId}},\r\n      \"UpdateBy\": \"user-name\",\r\n      \"QuoteId\": \"236803ae-19f3-4f7c-a29c-66a6c0ad3bc3\",\r\n      \"Order\":\r\n      {\r\n     \"Isin\": \"GB00BH4HKS39\",\r\n     \"Amount\": 20,\r\n     \"Units\": 0,\r\n     \"OrderType\": \"Buy\",\r\n     \"OrderSizeType\": \"Amount\",\r\n     \"ExecutionType\": \"limit\",\r\n     \"LimitPrice\": 1.32,\r\n     \"LimitOrderCalendarDaysToExpiry\": 25\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/share-order",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"share-order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"data\": {\r\n    \"type\": \"share-order\",\r\n    \"id\": null,\r\n    \"attributes\": {\r\n      \"AccountId\": {{myAccounts.GiaAccountId}},\r\n      \"UpdateBy\": \"user-name\",\r\n      \"QuoteId\": \"236803ae-19f3-4f7c-a29c-66a6c0ad3bc3\",\r\n      \"Order\":\r\n      {\r\n     \"Isin\": \"GB00BH4HKS39\",\r\n     \"Amount\": 20,\r\n     \"Units\": 0,\r\n     \"OrderType\": \"Buy\",\r\n     \"OrderSizeType\": \"Amount\",\r\n     \"ExecutionType\": \"limit\",\r\n     \"LimitPrice\": 1.32,\r\n     \"LimitOrderCalendarDaysToExpiry\": 25\r\n      }\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/share-order",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"share-order"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "255"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 16:42:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"share-order\",\r\n    \"Id\": \"12345678\",\r\n    \"Attributes\": {},\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/share-order/12345678\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "share-order-status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"share-quote\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": 20329,\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"OrderType\": \"Buy\",\r\n                \"Amount\": 20,\r\n                \"Units\": 0,\r\n                \"OrderSizeType\": \"Amount\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/share-order-status?orderid={{myAccounts.shareOrderId}}",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"share-order-status"
+							],
+							"query": [
+								{
+									"key": "orderid",
+									"value": "{{myAccounts.shareOrderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "share-indicative-price",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"share-quote\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": 20329,\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"OrderType\": \"Buy\",\r\n                \"Amount\": 20,\r\n                \"Units\": 0,\r\n                \"OrderSizeType\": \"Amount\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/share-indicative-price?isin=GB00B019KW72",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"share-indicative-price"
+							],
+							"query": [
+								{
+									"key": "isin",
+									"value": "GB00B019KW72"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -4226,18 +4922,24 @@
 					"name": "Bad Request",
 					"originalRequest": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+							"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/login",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/login",
 							"host": [
-								"{{baseUrl}}"
+								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
-								"api",
+								"{{apiPath}}",
 								"login"
 							]
 						}
@@ -4247,44 +4949,82 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
 							"key": "Content-Type",
-							"value": "application/json"
+							"value": "application/problem+json; charset=utf-8"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Sep 2021 11:03:29 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+					"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-7ea44f611039c340ac8d2347750795bb-35ffd7e5acb3844c-01\",\n    \"errors\": {\n        \"$.data.attributes.apiClientId\": [\n            \"The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. Path: $.data.attributes.apiClientId | LineNumber: 4 | BytePositionInLine: 8.\"\n        ]\n    }\n}"
 				},
 				{
 					"name": "Not Found",
 					"originalRequest": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"et adipisicing cupidatat in\",\n        \"id\": \"consequat\",\n        \"attributes\": {\n            \"apiClientId\": \"eiusmod ea ut\",\n            \"password\": \"ullamco proident ipsum nisi\",\n            \"username\": \"culpa ad officia\"\n        }\n    }\n}"
+							"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"password\": \"{{IdentityAPI.password}}\",\n            \"username\": \"1{{IdentityAPI.username}}\"\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/login",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/login",
 							"host": [
-								"{{baseUrl}}"
+								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
-								"api",
+								"{{apiPath}}",
 								"login"
 							]
 						}
 					},
 					"status": "Not Found",
 					"code": 404,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "plain",
 					"header": [
 						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
 							"key": "Content-Type",
-							"value": "application/json"
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Sep 2021 11:04:22 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+					"body": "{\r\n  \"Errors\": [\r\n    {\r\n      \"Detail\": \"Resource not found.\"\r\n    }\r\n  ]\r\n}"
 				}
 			]
 		},
@@ -4392,65 +5132,107 @@
 					"name": "Bad Request",
 					"originalRequest": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+							"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"1{{apiClientId}}\",\n            \"pin\": [\n                {\n                    \"position\": 2,\n                    \"value\": 2\n                },\n                {\n                    \"position\": 4,\n                    \"value\": 4\n                },\n                {\n                    \"position\": 6,\n                    \"value\": 6\n                }                \n            ],\n            \"twoStepAuthCode\": \"{{twoStepAuthCode}}\"\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/pin",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/pin",
 							"host": [
-								"{{baseUrl}}"
+								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
-								"api",
+								"{{apiPath}}",
 								"pin"
 							]
 						}
 					},
 					"status": "Bad Request",
 					"code": 400,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "plain",
 					"header": [
 						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
 							"key": "Content-Type",
-							"value": "application/json"
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Sep 2021 11:04:51 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+					"body": "{\r\n  \"Errors\": [\r\n    {\r\n      \"Detail\": {\r\n        \"Code\": \"Request_Timed_Out\",\r\n        \"Detail\": \"Timed out.\"\r\n      }\r\n    }\r\n  ]\r\n}"
 				},
 				{
-					"name": "Not Found",
+					"name": "Bad Request Invalid token",
 					"originalRequest": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"do dolor deserunt\",\n        \"id\": \"sunt dolore\",\n        \"attributes\": {\n            \"apiClientId\": \"pariatur voluptate ut esse elit\",\n            \"pin\": [\n                {\n                    \"position\": 98585496,\n                    \"value\": -27821279\n                },\n                {\n                    \"position\": 39008342,\n                    \"value\": 38447167\n                }\n            ],\n            \"twoStepAuthCode\": \"culpa\"\n        }\n    }\n}"
+							"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"apiClientId\": \"{{apiClientId}}\",\n            \"pin\": [\n                {\n                    \"position\": 2,\n                    \"value\": 2\n                },\n                {\n                    \"position\": 4,\n                    \"value\": 4\n                },\n                {\n                    \"position\": 6,\n                    \"value\": 6\n                }                \n            ],\n            \"twoStepAuthCode\": \"{{twoStepAuthCode}}\"\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/pin",
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/pin",
 							"host": [
-								"{{baseUrl}}"
+								"{{digitalHybrid.baseUrl}}"
 							],
 							"path": [
-								"api",
+								"{{apiPath}}",
 								"pin"
 							]
 						}
 					},
-					"status": "Not Found",
-					"code": 404,
-					"_postman_previewlanguage": "json",
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "plain",
 					"header": [
 						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
 							"key": "Content-Type",
-							"value": "application/json"
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 03 Sep 2021 11:05:57 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n \"type\": \"adipisi\",\n \"title\": \"sunt deserunt\",\n \"status\": 52464012,\n \"detail\": \"ut magna\",\n \"instance\": \"dolore nulla do veniam\"\n}"
+					"body": "{\r\n  \"Errors\": [\r\n    {\r\n      \"Detail\": \"Invalid token.\"\r\n    }\r\n  ]\r\n}"
 				}
 			]
 		},

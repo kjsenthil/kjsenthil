@@ -404,6 +404,90 @@
         "backend_url": "returns_function_app",
         "rewrite_url": "/annualised-return"
       }
+    },
+    {
+      "operation_id": "myaccount-market-open",
+      "display_name": "Myaccount-market-open",
+      "url_template": "/myaccount/market-open",
+      "description": "This lets the user to get market open status",
+      "policy": {
+        "cors": {
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/market-open"
+      }
+    },
+    {
+      "operation_id": "myaccount-share-quote",
+      "display_name": "Myaccount share quote",
+      "url_template": "/myaccount/share-quote",
+      "description": "This lets the user to get share quote for given ISIN code",
+      "policy": {
+        "cors": {
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/share-quote"
+      }
+    },
+    {
+      "operation_id": "myaccount-share-quote-status",
+      "display_name": "Myaccount share quote status",
+      "url_template": "/myaccount/share-quote-status",
+      "description": "This lets the user to get breakdown of allocation for a given account",
+      "policy": {
+        "cors": {
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/share-quote-status"
+      }
+    },
+    {
+      "operation_id": "myaccount-limit-cost",
+      "display_name": "Myaccount Limit cost",
+      "url_template": "/myaccount/limit-cost",
+      "description": "This lets the user to execute limit cost instruction",
+      "policy": {
+        "cors": {
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/limit-cost"
+      }
+    },
+    {
+      "operation_id": "myaccount-share-order",
+      "display_name": "Myaccount share order",
+      "url_template": "/myaccount/share-order",
+      "description": "This lets the user to execute share order",
+      "policy": {
+        "cors": {
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/share-order"
+      }
+    },
+    {
+      "operation_id": "myaccount-share-order-status",
+      "display_name": "Myaccount share order status",
+      "url_template": "/myaccount/share-order-status",
+      "description": "This lets the user get status of the share order",
+      "policy": {
+        "cors": {
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/share-order-status"
+      }
     }
   ]
 }
