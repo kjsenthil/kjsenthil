@@ -284,7 +284,6 @@ const LifePlanPage = () => {
               }
               iconSrc="/goal-graphic.png"
               iconAlt="umbrella at the beach"
-              tooltipText={retirementGoal?.fields?.description ?? ''}
               investmentAccounts={
                 investmentAccounts?.map(({ accountName }) => accountName ?? '') ?? []
               }
@@ -322,6 +321,8 @@ const LifePlanPage = () => {
         </Button>
       </UpsellCard>
       <Modal
+        maxWidth="md"
+        fullWidth
         open={isModalOpen}
         onClose={modalCloseHandler}
         modalTitle="How was this projection calculated?"

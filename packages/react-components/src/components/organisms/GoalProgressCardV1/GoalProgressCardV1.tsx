@@ -5,8 +5,8 @@ import {
   formatPercent,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { ProgressBar, Spacer, Typography } from '../../atoms';
-import { GoalLifePlanCard, TypographyWithTooltip } from '../../molecules';
+import { Icon, ProgressBar, Spacer, Typography } from '../../atoms';
+import { GoalLifePlanCard } from '../../molecules';
 import {
   CardBody,
   CardFooter,
@@ -15,6 +15,9 @@ import {
   GoalValues,
   IconContainer,
 } from './GoalProgressCardV1.styles';
+import Tooltip from '../../atoms/Tooltip';
+import { IconWrapper } from '../../molecules/Legend/Legend.styles';
+import { StaticTooltips } from '../../../constants/tooltips';
 
 export interface GoalProgressCardV1Props {
   onTrackPercentage: number;
@@ -25,7 +28,6 @@ export interface GoalProgressCardV1Props {
   title: string;
   iconSrc: string;
   iconAlt?: string;
-  tooltipText: string;
   investmentAccounts: string[];
   navigateToEditGoalPage: () => void;
 }
@@ -39,7 +41,6 @@ const GoalProgressCardV1 = ({
   iconSrc,
   iconAlt = 'goal image',
   title,
-  tooltipText,
   investmentAccounts,
   navigateToEditGoalPage,
 }: GoalProgressCardV1Props) => {
@@ -83,21 +84,21 @@ const GoalProgressCardV1 = ({
             {"You're on track to have "}
             <b>{formattedOnTrackPercentage}</b>
             {' of your target.'}
-          </Typography>
-
-          <TypographyWithTooltip
-            typographyProps={{
-              display: 'inline',
-              color: 'primary',
-              colorShade: 'dark2',
-            }}
-            tooltip={tooltipText}
-          >
             {`That's a ${shortfallValue < 0 ? 'surplus' : 'shortfall'} of `}
             <b>{formattedShortfallValue}</b>
             {`, or ${formattedShortfallUnderperformValue}`}
             {' if markets underperform.'}
-          </TypographyWithTooltip>
+            <Tooltip title={StaticTooltips.marketsUnderperform}>
+              <IconWrapper>
+                <Icon
+                  name="infoCircleIcon"
+                  aria-label="more information"
+                  color="inherit"
+                  fontSize="inherit"
+                />
+              </IconWrapper>
+            </Tooltip>
+          </Typography>
         </DetailsContainer>
       </CardBody>
 

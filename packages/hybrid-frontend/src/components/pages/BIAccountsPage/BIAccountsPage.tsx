@@ -80,10 +80,11 @@ const BIAccountsPage = () => {
     }
   );
 
-  const returnLabel = humanizePeriodLabel(
+  const humanizedDataPeriod = humanizePeriodLabel(
     performanceDataPeriod,
-    (humanizedPeriod) => `LAST ${humanizedPeriod.toUpperCase()} RETURN`,
-    true
+    (humanizedPeriod) => `${humanizedPeriod}'s`,
+    false,
+    ''
   );
 
   const summaryContributions =
@@ -189,7 +190,7 @@ const BIAccountsPage = () => {
             periodBasedReturn={{
               value: investmentReturn.value,
               percent: investmentReturn.percent,
-              label: returnLabel,
+              dataPeriod: humanizedDataPeriod,
             }}
             annualisedReturnPercentage={(annualisedReturnSummary?.annualisedReturnValue || 0) / 100}
           />
@@ -210,7 +211,7 @@ const BIAccountsPage = () => {
               <Spacer y={2.5} />
               <AccountsTable
                 period={performanceDataPeriod}
-                headerRow={AccountsTableHeader(returnLabel)}
+                headerRow={AccountsTableHeader(humanizedDataPeriod)}
                 dataRow={accountsTableData}
               />
             </MainCard>
@@ -232,7 +233,7 @@ const BIAccountsPage = () => {
               <Spacer y={2.5} />
               <AccountsTable
                 period={performanceDataPeriod}
-                headerRow={AccountsTableHeader(returnLabel)}
+                headerRow={AccountsTableHeader(humanizedDataPeriod)}
                 dataRow={linkedAccountsTableData}
               />
             </MainCard>

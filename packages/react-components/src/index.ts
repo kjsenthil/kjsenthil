@@ -6,6 +6,7 @@ export * from './components/molecules';
 export * from './components/organisms';
 export * from './components/particles';
 export * from './constants';
+export * from './constants/tooltips';
 export * from './hooks';
 export * from './services';
 export * from './themes/colors';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormInput, StepCard } from '@tswdts/react-components';
+import { FormInput, StaticTooltips, StepCard } from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import { SubPageStepCardContentWithInputsContainer } from '../CommonSubPage/CommonSubPage.styles';
 
@@ -17,7 +17,6 @@ const PlanningStepCardThree = React.forwardRef(
   (
     {
       onFocus,
-      drawdownStartAge,
       lumpSumAmount,
       lumpSumAge,
       handleLumpSumAmountChange,
@@ -32,7 +31,8 @@ const PlanningStepCardThree = React.forwardRef(
       title="Would you like to take out a cash lump sum?"
       digitalCoachBoxProps={{
         title: 'It might help to know...',
-        description: `At retirement, you can normally take up to 25% of your pension from age ${drawdownStartAge} as a tax free cash lump sum.`,
+        description: `You can take up to 25% of the money built up in your pension as a tax-free lump sum. This is normally not before the age of ${lumpSumAge}.`,
+        tooltip: StaticTooltips.pensionOptions,
       }}
     >
       <SubPageStepCardContentWithInputsContainer>

@@ -6,6 +6,7 @@ import {
   TypographyWithTooltip,
   StepCard,
   formatCurrency,
+  StaticTooltips,
 } from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
@@ -26,7 +27,7 @@ export interface PlanningStepCardTwoProps {
 }
 
 const InflationAdjustedIncomeDescription = ({ amount }: { amount: number }) => (
-  <TypographyWithTooltip tooltip="Some description">
+  <TypographyWithTooltip tooltip={StaticTooltips.inflationRate}>
     That&#39;s {formatCurrency(amount, CurrencyPresentationVariant.PROJECTION)} in tomorrow&#39;s
     money
   </TypographyWithTooltip>

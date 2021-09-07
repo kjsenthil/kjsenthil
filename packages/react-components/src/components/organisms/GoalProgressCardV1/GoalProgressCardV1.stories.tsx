@@ -23,7 +23,6 @@ const defaultArgs: GoalProgressCardV1Props = {
   title: 'Retirement',
   iconSrc: '/goal-graphic.png',
   iconAlt: 'goal graphic',
-  tooltipText: 'Such forecasts are not a reliable indicator of future returns',
   investmentAccounts: ['ISA', 'GIA', 'SIPP'],
   navigateToEditGoalPage: () => {},
 };

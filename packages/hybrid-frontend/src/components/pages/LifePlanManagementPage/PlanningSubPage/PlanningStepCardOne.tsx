@@ -1,6 +1,6 @@
 import * as React from 'react';
 import pluralize from 'pluralize';
-import { FormInput, StepCard, Typography } from '@tswdts/react-components';
+import { FormInput, StaticTooltips, StepCard, Typography } from '@tswdts/react-components';
 import { InputFieldsKeys } from '../../../../services/goal/machines/lifePlan';
 import {
   SubPageStepCardContentWithInputsContainer,
@@ -51,6 +51,7 @@ const PlanningStepCardOne = React.forwardRef(
             drawdownPeriodLengthYears,
             true
           )}. That’s ${drawdownPeriodDeviationFromAverageComparison} most people.`,
+          tooltip: StaticTooltips.retirementLength,
         }}
       >
         <SubPageStepCardContentWithInputsContainer>

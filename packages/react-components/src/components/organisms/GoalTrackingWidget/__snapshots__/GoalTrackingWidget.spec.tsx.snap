@@ -272,7 +272,7 @@ Object {
                       />
                       <span
                         class="c4"
-                        title="Some description"
+                        title="This is a projection of what proportion of your target you are on track to reach. If you aren't on track to reach your target then we'll tell you about your shortfall here."
                       >
                         <svg
                           aria-hidden="true"
@@ -471,7 +471,7 @@ Object {
                     />
                     <span
                       class="c4"
-                      title="Some description"
+                      title="This is a projection of the monthly amount you'd be able to withdraw over the course of the retirement period you specified."
                     >
                       <svg
                         aria-hidden="true"
@@ -579,7 +579,7 @@ Object {
                     />
                     <span
                       class="sc-jJMGnK cdinGG"
-                      title="Some description"
+                      title="This is a projection of what proportion of your target you are on track to reach. If you aren't on track to reach your target then we'll tell you about your shortfall here."
                     >
                       <svg
                         aria-hidden="true"
@@ -778,7 +778,7 @@ Object {
                   />
                   <span
                     class="sc-jJMGnK cdinGG"
-                    title="Some description"
+                    title="This is a projection of the monthly amount you'd be able to withdraw over the course of the retirement period you specified."
                   >
                     <svg
                       aria-hidden="true"

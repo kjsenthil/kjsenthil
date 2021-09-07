@@ -20,6 +20,7 @@ import ProgressBarWithLegend, {
   ProgressBarWithLegendProps,
 } from '../../molecules/ProgressBarWithLegend';
 import { GoalTrackingCardContent } from './GoalTrackingWidget.styles';
+import { StaticTooltips } from '../../../constants/tooltips';
 
 export interface GoalTrackingWidgetProps
   extends Omit<ProgressBarWithLegendProps, 'currencyFormatter'> {
@@ -73,7 +74,7 @@ const GoalTrackingWidget = ({
               <Grid item container direction="row" alignItems="center">
                 <Spacer x={1} />
                 <TypographyWithTooltip
-                  tooltip="Some description"
+                  tooltip={StaticTooltips.projectionProportion}
                   typographyProps={{ color: 'grey', colorShade: 'dark1' }}
                 >
                   You&#39;re on track to have{' '}
@@ -105,7 +106,7 @@ const GoalTrackingWidget = ({
             )}
             <Grid item container direction="column" xs={12}>
               <TypographyWithTooltip
-                tooltip="Some description"
+                tooltip={StaticTooltips.projectionMonthly}
                 typographyProps={{ color: 'grey', colorShade: 'dark1' }}
               >
                 You&#39;re likely to have {currencyFormatter(drawdownMonthlyIncome)} to spend each

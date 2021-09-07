@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import AccountsTable from './AccountsTable';
-import { PerformanceDataPeriod } from '../../../services/performance';
+import { PerformanceDataPeriod } from '../../../services';
 import { mockInvestmentAccountsTableHeader, mockInvestmentAccountsTableData } from './mocks';
 
 describe('AccountsTable', () => {
@@ -20,11 +20,11 @@ describe('AccountsTable', () => {
       'ACCOUNT',
       'INVESTMENTS',
       '£123',
-      'TOTAL HOLDINGS',
+      'TOTAL VALUE',
       '£38,382',
       'LIFETIME RETURN',
       '£345',
-      'LAST 5 YEARS RETURN',
+      "LAST 5 YEAR'S RETURN",
       '+£6,837',
       mockInvestmentAccountsTableData[0].accountName ?? '',
     ];

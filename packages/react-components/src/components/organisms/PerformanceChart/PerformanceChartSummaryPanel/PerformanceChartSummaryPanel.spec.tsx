@@ -18,7 +18,7 @@ describe('PerformanceChartSummaryPanel', () => {
     const testTexts = [
       'TOTAL VALUE',
       '£2,000',
-      'NET CONTRIBUTED',
+      'NET CONTRIBUTION',
       '£1,000',
       'LIFETIME RETURN',
       '£999',

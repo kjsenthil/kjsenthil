@@ -7,6 +7,7 @@ import {
   CurrencyPresentationVariant,
   PercentPresentationVariant,
 } from '../../../../utils/formatters';
+import { StaticTooltips } from '../../../../constants/tooltips';
 
 export interface PerformanceChartSummaryPanelProps {
   totalPerformance: number;
@@ -19,16 +20,15 @@ export interface PerformanceChartSummaryPanelProps {
 const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
   totalValue: {
     title: 'TOTAL VALUE',
-    tooltip: 'The total value of your investments and cash.',
+    tooltip: StaticTooltips.totalValue,
   },
   netContributed: {
-    title: 'NET CONTRIBUTED',
-    tooltip: 'Your total contributions minus any withdrawals you may have made.',
+    title: 'NET CONTRIBUTION',
+    tooltip: StaticTooltips.netContribution,
   },
   lifetimeReturn: {
     title: 'LIFETIME RETURN',
-    tooltip:
-      'This shows how well your investments have performed since you first held them on Bestinvest. It includes both growth and income returns.',
+    tooltip: StaticTooltips.lifetimeReturn,
   },
 };
 

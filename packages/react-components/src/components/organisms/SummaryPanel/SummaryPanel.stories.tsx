@@ -18,7 +18,7 @@ const defaultArgs: SummaryPanelProps = {
   periodBasedReturn: {
     value: 7632.04,
     percent: 0.4511,
-    label: 'LAST 3 MONTHS RETURN',
+    dataPeriod: "3 month's",
   },
 };
 

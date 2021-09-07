@@ -21,7 +21,6 @@ describe('GoalProgressCardV1', () => {
     shortfallUnderperformValue: 689000,
     iconAlt: 'some alt text',
     iconSrc: '/goal-graphic.png',
-    tooltipText: 'Some tooltip text',
     title: 'Retirement',
     investmentAccounts: ['ISA', 'GIA', 'SIPP'],
     navigateToEditGoalPage: () => {},
@@ -31,7 +30,6 @@ describe('GoalProgressCardV1', () => {
     renderWithTheme(<GoalProgressCardV1 {...defaultCardProps} />);
     const expectedTexts = [
       'Retirement',
-      'Some tooltip text',
       'ISA + GIA + SIPP',
       '£1,443,000',
       '£553,000',

@@ -9,6 +9,7 @@ import {
 import { Divider, Spacer, Grid } from '../../atoms';
 import { Legend, LegendProps } from '../../molecules';
 import { SummaryCard } from './SummaryPanel.styles';
+import { DataPeriodTooltip, StaticTooltips } from '../../../constants/tooltips';
 
 export interface SummaryPanelProps {
   totalNetContributions: number;
@@ -19,29 +20,24 @@ export interface SummaryPanelProps {
   periodBasedReturn?: {
     value: number;
     percent: number;
-    label: string;
+    dataPeriod: string;
   };
 }
 
 const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
   netContribution: {
-    title: 'NET CONTRIBUTIONS',
-    tooltip: 'Contributions minus withdrawals',
+    title: 'NET CONTRIBUTION',
+    tooltip: StaticTooltips.netContribution,
   },
   lifetimeReturn: {
     title: 'LIFETIME RETURN',
-    tooltip:
-      'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.',
+    tooltip: StaticTooltips.lifetimeReturn,
   },
   annualisedReturn: {
     title: 'ANNUALISED RETURN',
-    tooltip: 'Annualised return is the average amount earned each year over a given time period',
+    tooltip: StaticTooltips.annualisedReturn,
   },
-  periodBasedReturn: {
-    title: 'LAST 5 YEARS RETURN',
-    tooltip:
-      'Return figure relates to the gain or loss over the specified period including the impact of fees',
-  },
+  // Period based return calculated inline due to being dynamic for selected period
 };
 
 const percentFormatterWithSign = (val: number) =>
@@ -105,13 +101,13 @@ export default function SummaryPanel({
     />
   );
 
-  const renderPeriodBasedreturn = periodBasedReturn && (
+  const renderPeriodBasedReturn = periodBasedReturn && (
     <>
       {isMobile || renderVerticalDivider}
       <Legend
-        {...legendProps.periodBasedReturn}
-        title={periodBasedReturn.label}
+        title={`LAST ${periodBasedReturn.dataPeriod.toUpperCase()} RETURN`}
         value={periodBasedReturn.value}
+        tooltip={DataPeriodTooltip(periodBasedReturn.dataPeriod)}
         valueFormatter={currencyFormatterWithSign}
         valueSizeVariant="h5"
         percentageChange={periodBasedReturn.percent}
@@ -138,7 +134,7 @@ export default function SummaryPanel({
           </Grid>
 
           <Grid item xs={6}>
-            {renderPeriodBasedreturn}
+            {renderPeriodBasedReturn}
           </Grid>
         </Grid>
       ) : (
@@ -158,7 +154,7 @@ export default function SummaryPanel({
           </Grid>
 
           <Grid item xs={4} container justifyContent="flex-end" alignItems="center" wrap="nowrap">
-            {renderPeriodBasedreturn}
+            {renderPeriodBasedReturn}
           </Grid>
         </Grid>
       )}

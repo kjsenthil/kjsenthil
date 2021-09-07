@@ -8,7 +8,8 @@ export default function humanizePeriodLabel(
   period: string,
   render: (humanizedPeriod: string, periodValue?: number) => string = (humanizedPeriod) =>
     humanizedPeriod,
-  shouldSkipOne: boolean = false
+  shouldSkipOne: boolean = false,
+  suffix: string = 's'
 ): string {
   const periodUnits = { d: 'day', m: 'month', y: 'year' };
 
@@ -17,7 +18,7 @@ export default function humanizePeriodLabel(
   if (regexRes && regexRes.length >= 3) {
     const [, periodValue, periodUnitShort] = regexRes;
 
-    const pluralSuffix = Number(periodValue) > 1 ? 's' : '';
+    const pluralSuffix = Number(periodValue) > 1 ? suffix : '';
     const periodUnit = periodUnits[periodUnitShort];
 
     const unit = `${periodUnit}${pluralSuffix}`;

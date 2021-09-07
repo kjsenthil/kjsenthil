@@ -31,6 +31,8 @@ const FundingDisclaimer = () => {
         </Link>
       </Disclaimer>
       <Modal
+        maxWidth="md"
+        fullWidth
         open={isModalOpen}
         onClose={modalCloseHandler}
         modalTitle="How was this projection calculated?"
