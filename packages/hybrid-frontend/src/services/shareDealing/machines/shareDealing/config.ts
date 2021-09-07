@@ -1,6 +1,6 @@
 import { MachineConfig } from 'xstate';
 import { ShareDealingContext, ShareDealingSchema, ShareDealingEvents } from './types';
-import context from './defaultContext';
+import context from './context';
 
 const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, ShareDealingEvents> = {
   id: 'shareDealing',

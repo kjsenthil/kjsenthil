@@ -12,6 +12,7 @@ import {
   ShareDealingContext,
   ShareDealingEvents,
   SetNumOfUnitsEvent,
+  MarketQuoteDetails,
 } from './types';
 import constants from './constants';
 
@@ -24,7 +25,7 @@ const setShareDetails = assign<ShareDealingContext, SetShareDetailsEvent>((_, ev
   ...event.data,
 }));
 
-const setBuyingOrder = assign({ orderType: 'buying' as 'buying' });
+const setBuyingOrder = assign<ShareDealingContext>({ orderType: 'Buy' });
 
 const setNumOfUnits = assign<ShareDealingContext, SetNumOfUnitsEvent>((ctx, event) => ({
   orderShareAmount: null,
@@ -89,8 +90,8 @@ const resetQuoteDetails = assign<ShareDealingContext>({ quote: null });
 
 const calculateQuoteExpiryInMs = assign<ShareDealingContext>((ctx) => ({
   quoteExpiryInMs:
-    ctx.quote && ctx.quote.quoteExpiryDateTime
-      ? calculateRemainingTimeInMs(ctx.quote.quoteExpiryDateTime)
+    ctx.quote && (ctx.quote as MarketQuoteDetails).quoteExpiryDateTime
+      ? calculateRemainingTimeInMs((ctx.quote as MarketQuoteDetails).quoteExpiryDateTime)
       : constants.DEFAULT_QUOTE_EXPIRY_IN_MS,
 }));
 

@@ -1,5 +1,4 @@
 import { from } from 'env-var';
-import { ApiEndpoints } from './types';
 
 const defaultEnv = from({
   NODE_ENV: process.env.NODE_ENV,
@@ -41,7 +40,7 @@ const env = from({
 
 const isRequired = NODE_ENV !== 'test';
 
-const defaultEndpoints: Record<ApiEndpoints, string> = {
+const defaultEndpoints = {
   MYACCOUNT_BREAKDOWN_ALLOCATION: '/myaccount/breakdown-allocation/{id}',
   MYACCOUNT_CLIENTS: '/myaccount/clients/{id}',
   MYACCOUNT_PERFORMANCE_CONTACT: '/myaccount/performance-contact/{id}',
@@ -71,6 +70,13 @@ const defaultEndpoints: Record<ApiEndpoints, string> = {
   CREATE_OBJECTIVE: '/resourceful/entity/client-v4/objectives',
   LINK_GOAL_TO_OBJECTIVE: '/resourceful/entity/client-v4/goals/{objective-index}/objective_link',
   PROJECTIONS_SIMULATE_PROJECTION: '/projections/simulate-projection',
+  MARKET_OPEN: '/market-open',
+  CREATE_SHARE_QUOTE: '/share-quote',
+  GET_SHARE_QUOTE_STATUS: '/share-quote-status',
+  GET_LIMIT_COST: '/limit-cost',
+  CREATE_SHARE_ORDER: '/share-order',
+  GET_SHARE_ORDER_STATUS: '/share-order-status',
+  GET_SHARE_INDICATIVE_PRICE: '/share-indicative-price',
 };
 
 export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
@@ -84,7 +90,7 @@ export const API_ENDPOINTS = env
   .get('API_ENDPOINTS')
   .required(isRequired)
   .default(defaultEndpoints)
-  .asJsonObject() as Record<ApiEndpoints, string>;
+  .asJsonObject() as typeof defaultEndpoints;
 
 export const GTM_AUTH = env.get('GTM_AUTH').required(isRequired).asString();
 
@@ -125,4 +131,11 @@ export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS,
   API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE,
   API_ENDPOINTS.PROJECTIONS_SIMULATE_PROJECTION,
+  API_ENDPOINTS.MARKET_OPEN,
+  API_ENDPOINTS.CREATE_SHARE_QUOTE,
+  API_ENDPOINTS.GET_SHARE_QUOTE_STATUS,
+  API_ENDPOINTS.GET_LIMIT_COST,
+  API_ENDPOINTS.CREATE_SHARE_ORDER,
+  API_ENDPOINTS.GET_SHARE_ORDER_STATUS,
+  API_ENDPOINTS.GET_SHARE_INDICATIVE_PRICE,
 ];

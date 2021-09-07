@@ -45,11 +45,11 @@ const shareDetails = {
 
 const quote: QuoteDetails = {
   isin: 'GB00BH4HKS39',
+  quoteId: '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3',
   quoteExpiryDateTime: new Date('2021-12-21T00:00:00.100'), // expecting quote expiry to be in 100 ms
   orderType: 'Buy',
-  orderStatus: 'New',
   quotedPrice: 1.0,
-  orderShareUnits: 1,
+  numberOfUnits: 1,
   estimatedTotalOrder: 8.4076,
   cost: {
     commission: 7.5,
@@ -59,12 +59,14 @@ const quote: QuoteDetails = {
 };
 
 const order: OrderDetails = {
+  isin: 'GB00BH4HKS39',
   orderPlacedDate: new Date('2021-12-21T00:05:00'),
   orderType: 'Buy',
   orderStatus: 'New',
   quotedPrice: 1.0,
   shareName: 'Tesla',
-  orderShareUnits: 1,
+  numberOfUnits: 1,
+  orderId: '123456778',
   epicCode: 'VOD',
   estimatedTotalOrder: 8.4076,
   transactionTime: new Date('2021-08-26T13:37:37'),
@@ -121,11 +123,11 @@ describe('Share Dealing State Machine Config', () => {
         service = interpreter().start();
       });
 
-      describe('creating a market buying order', () => {
+      describe('creating a market Buy order', () => {
         it('goes into ordering.creatingOrder.marketOrder on START_BUYING_ORDER event', () => {
           service.send('START_BUYING_ORDER');
           expect(service.state.value).toStrictEqual({ ordering: 'fetchingShareDetails' });
-          expect(service.state.context.orderType).toStrictEqual('buying');
+          expect(service.state.context.orderType).toStrictEqual('Buy');
           expect(service.state.context.orderShareUnits).toBeNull();
           expect(service.state.context.availableCash).toBe(0);
           expect(service.state.context.indicativePrice).toBe(0);
@@ -262,13 +264,13 @@ describe('Share Dealing State Machine Config', () => {
         service = interpreter().start();
       });
 
-      describe('creating a limit buying order', () => {
+      describe('creating a limit Buy order', () => {
         it('goes into ordering.creatingOrder.marketOrder on START_BUYING_ORDER event', async () => {
           service.send('START_BUYING_ORDER');
           expect(service.state.value).toStrictEqual({ ordering: 'fetchingShareDetails' });
           await wait(0);
           expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'marketOrder' } });
-          expect(service.state.context.orderType).toStrictEqual('buying');
+          expect(service.state.context.orderType).toStrictEqual('Buy');
           expect(service.state.context.orderShareUnits).toBeNull();
         });
 

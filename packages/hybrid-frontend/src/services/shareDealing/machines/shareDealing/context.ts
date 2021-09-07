@@ -1,7 +1,10 @@
 import { ShareDealingContext } from './types';
 import constants from './constants';
 
-const defaultContext: ShareDealingContext = {
+const context: ShareDealingContext = {
+  accountId: null,
+  updatedBy: null,
+  isin: null,
   shareName: null,
   indicativePrice: 0,
   indicativePriceDate: null,
@@ -20,4 +23,4 @@ const defaultContext: ShareDealingContext = {
   quote: null,
 };
 
-export default defaultContext;
+export default context;

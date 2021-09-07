@@ -36,8 +36,5 @@
     "cmp": "yarn workspace @tswdts/react-components",
     "test:api": "yarn workspace @tsw/axios-api run test:api",
     "test:mock-ui": "yarn workspace @tsw/wdio-mock-ui run test:ui"
-  },
-  "dependencies": {
-    "jwt-decode": "^3.1.2"
   }
 }

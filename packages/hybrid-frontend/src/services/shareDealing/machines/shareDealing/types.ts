@@ -1,4 +1,4 @@
-export type OrderStatuses = 'New' | 'Pending' | 'Completed';
+import { OrderStatuses } from '../../api/types';
 
 export interface OrderCostDetails {
   commission: number;
@@ -7,34 +7,46 @@ export interface OrderCostDetails {
 }
 
 export interface CommonOrderDetails {
-  orderType: string;
-  orderStatus: OrderStatuses;
-  quotedPrice: number;
-  orderShareUnits: number;
+  isin: string;
+  orderType: 'Buy' | 'Sell';
+  numberOfUnits: number;
   estimatedTotalOrder: number;
   cost: OrderCostDetails;
 }
 
 export interface OrderDetails extends CommonOrderDetails {
+  quotedPrice: number;
   orderPlacedDate: Date;
-  epicCode: 'VOD';
+  orderStatus: OrderStatuses;
+  epicCode: string;
   shareName: string;
-  orderShareUnits: number;
   transactionTime: Date;
+  orderId: string;
 }
 
-export interface QuoteDetails extends CommonOrderDetails {
-  isin: string;
+export interface MarketQuoteDetails extends CommonOrderDetails {
+  quoteId: string;
   quoteExpiryDateTime: Date;
+  quotedPrice: number;
+}
+
+export type QuoteDetails = MarketQuoteDetails | LimitQuoteDetails;
+
+export interface LimitQuoteDetails extends CommonOrderDetails {
+  limitOrderCalendarDaysToExpiry: number;
+  limitPrice: number;
 }
 
 export interface ShareDealingContext {
+  updatedBy: string | null;
+  accountId: number | null;
+  isin: string | null;
   shareName: string | null;
   indicativePrice: number;
   indicativePriceDate: null | Date;
   availableCash: number;
   isMarketOpen: boolean;
-  orderType: null | 'buying' | 'selling';
+  orderType: null | 'Buy' | 'Sell';
   orderMethod: null | 'limit' | 'market';
   orderShareUnits: number | null;
   orderShareAmount: number | null;
@@ -86,7 +98,10 @@ export interface ShareDealingSchema {
 
 export type SetShareDetailsEvent = {
   type: 'done.invoke.fetchingShareDetails';
-  data: Pick<ShareDealingContext, 'indicativePrice' | 'indicativePriceDate' | 'availableCash'>;
+  data: Pick<
+    ShareDealingContext,
+    'indicativePrice' | 'indicativePriceDate' | 'availableCash' | 'accountId' | 'updatedBy' | 'isin'
+  >;
 };
 export type StartBuyingOrderEvent = { type: 'START_BUYING_ORDER' };
 export type StartSellingOrderEvent = { type: 'START_SELLING_ORDER' };
