@@ -5,6 +5,7 @@ declare module '@material-ui/core/styles/createPalette' {
   interface SimplePaletteColorOptions {
     light1?: string;
     light2?: string;
+    light3?: string;
     dark1?: string;
     dark2?: string;
   }
@@ -12,6 +13,7 @@ declare module '@material-ui/core/styles/createPalette' {
   interface PaletteColor {
     light1?: string;
     light2?: string;
+    light3?: string;
     dark1?: string;
     dark2?: string;
   }

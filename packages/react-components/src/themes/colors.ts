@@ -35,6 +35,7 @@ export const digitalHybridColors: CustomColors = {
     main: '#aeaabf',
     light1: '#dddaed',
     light2: '#eeedfc',
+    light3: '#F8F8FE',
     dark1: '#6a6775',
     dark2: '#393840',
   },

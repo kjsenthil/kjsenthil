@@ -6,7 +6,7 @@ const Divider = styled.div`
   ${({ theme, isVertical }: { theme: Theme; isVertical: boolean }) => `
       background-color: ${theme.palette.grey[100]};
       width: ${isVertical ? '3px' : '100%'};
-      height: ${isVertical ? '100%' : '2px'};
+      height: ${isVertical ? '100%' : '1px'};
       border-radius: 1.5px;
    `}
 `;

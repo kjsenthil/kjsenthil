@@ -10,7 +10,8 @@ export interface ProgressBarProps {
   progress: number | number[];
   borderRadius?: number;
   height?: number;
-
+  animationDuration?: number;
+  isAnimationLinear?: boolean;
   // This allows parent components to override bar background colours, if
   // necessary
   barBackgrounds?: string[];
@@ -20,7 +21,9 @@ export default function ProgressBar({
   borderRadius = 4,
   height = 8,
   progress,
+  animationDuration,
   barBackgrounds: barBackgroundsFromProps,
+  isAnimationLinear,
 }: ProgressBarProps) {
   const isMultiValue = Array.isArray(progress);
 
@@ -38,6 +41,12 @@ export default function ProgressBar({
       barBackgroundColors[0] ??
       `linear-gradient(to left, ${theme.palette.tertiary.light1}, ${theme.palette.tertiary.main} 50%)`;
 
+    const progressFillProps = {
+      borderRadius,
+      animationDuration,
+      isAnimationLinear,
+      barHeight: height,
+    };
     if (isMultiValue) {
       const barBackgrounds = barBackgroundsFromProps ?? [
         theme.palette.tertiary.dark1,
@@ -63,9 +72,8 @@ export default function ProgressBar({
               barBackground={selectedBackground}
               // eslint-disable-next-line react/no-array-index-key
               key={`${totalWidth}${index}`}
-              barHeight={height}
               barWidth={totalWidth}
-              borderRadius={borderRadius}
+              {...progressFillProps}
             />
           );
         })
@@ -74,10 +82,9 @@ export default function ProgressBar({
 
     return (
       <ProgressBarFill
-        borderRadius={borderRadius}
         barBackground={defaultColor}
-        barHeight={height}
         barWidth={(progress as number) * 100}
+        {...progressFillProps}
       />
     );
   };

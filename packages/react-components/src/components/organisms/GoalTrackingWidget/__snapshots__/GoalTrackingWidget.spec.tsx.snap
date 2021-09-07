@@ -125,7 +125,7 @@ Object {
 .c17 {
   background-color: #eeedfc;
   width: 100%;
-  height: 2px;
+  height: 1px;
   border-radius: 1.5px;
 }
 
@@ -503,7 +503,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-fXgAZx bcGdwW"
+          class="MuiCardContent-root sc-fIxmyt fMbnBj"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -737,7 +737,7 @@ Object {
               data-testid="Spacer"
             >
               <div
-                class="sc-iqAclL eOidBS"
+                class="sc-iqAclL cjcLLN"
               />
             </div>
             <div

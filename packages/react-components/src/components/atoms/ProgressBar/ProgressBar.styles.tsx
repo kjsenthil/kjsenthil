@@ -32,12 +32,16 @@ export const ProgressBarFill = styled.div`
     barHeight,
     borderRadius,
     barWidth,
+    animationDuration = 1,
+    isAnimationLinear,
   }: {
     theme: Theme;
     barBackground?: string;
     barWidth: number;
     borderRadius: number;
     barHeight: number;
+    animationDuration?: number;
+    isAnimationLinear?: boolean;
   }) => {
     const fillAnimation = keyframes`
       from {
@@ -58,7 +62,7 @@ export const ProgressBarFill = styled.div`
       border-radius: ${borderRadius}px;
 
       background: ${barBackground};
-      animation: ${fillAnimation} 1s ease-out;
+      animation: ${fillAnimation} ${animationDuration}s ${isAnimationLinear ? 'linear' : 'ease-out'};
       z-index: 1;
     `;
   }}

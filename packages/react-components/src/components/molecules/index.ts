@@ -52,6 +52,7 @@ export { default as TagBox } from './TagBox';
 export { default as TypographyWithTooltip } from './TypographyWithTooltip';
 export { default as UpsellCard } from './UpsellCard';
 export { default as SignpostModal } from './SignpostModal';
+export { default as ReceiptCard } from './ReceiptCard';
 
 /* material-ui molecules */
 export {

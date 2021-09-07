@@ -61,6 +61,7 @@ const digitalHybridTheme = createTheme({
 
     grey: {
       ...digitalHybridColors.grey,
+      50: digitalHybridColors.grey.light3,
       100: digitalHybridColors.grey.light2,
       200: digitalHybridColors.grey.light1,
       300: digitalHybridColors.grey.main,
