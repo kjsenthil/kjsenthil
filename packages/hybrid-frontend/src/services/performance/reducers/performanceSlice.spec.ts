@@ -1,16 +1,16 @@
-import { ReducersMapObject } from 'redux';
 import { PerformanceDataPeriod } from '@tswdts/react-components';
-import * as api from '../api';
+import { ReducersMapObject } from 'redux';
+import { DeepPartial } from '../../../utils/common';
+import { AuthState } from '../../auth';
+import { ClientState } from '../../myAccount';
 import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
+import * as api from '../api';
+import mockPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
 import performanceReducer, {
   fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
 } from './performanceSlice';
-import { PerformanceAccountsAggregatedResponse, PerformanceState } from '../types';
-import mockPerformanceAccountsAggregatedResponse from '../mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
-import { AuthState } from '../../auth';
-import { ClientState } from '../../myAccount';
-import { DeepPartial } from '../../../utils/common';
 
 jest.mock('../api');
 
@@ -27,6 +27,7 @@ function getPerformanceStoreAndStateHistory({
   return getStoreAndStateHistory<StateMap, ReducersMapObject>({
     client: (): DeepPartial<ClientState> => ({
       included: noAccountIds ? undefined : [{ attributes: { accountId: 12345678 } }],
+      status: noAccountIds ? 'idle' : 'success',
     }),
     performance: performanceReducer,
   });
@@ -90,6 +91,19 @@ describe('performanceSlice', () => {
         await store.dispatch(fetchPerformanceAction);
 
         expectStateMatchesUpdated(expectedStates, stateHistory);
+        expect(api.getPerformanceAccountsAggregated).toHaveBeenCalledWith([12345678]);
+      });
+
+      it('fetches the supplied account IDs when provided', async () => {
+        (api.getPerformanceAccountsAggregated as jest.Mock).mockResolvedValue(
+          mockPerformanceAccountsAggregatedResponse
+        );
+        const accountIds = [87654321, 12345678];
+
+        const { store } = getPerformanceStoreAndStateHistory();
+        await store.dispatch(fetchPerformanceAccountsAggregated(accountIds));
+
+        expect(api.getPerformanceAccountsAggregated).toHaveBeenCalledWith(accountIds);
       });
     });
 

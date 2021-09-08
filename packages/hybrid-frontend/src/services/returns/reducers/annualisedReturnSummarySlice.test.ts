@@ -1,21 +1,16 @@
-import * as api from '../api';
-import * as performanceApi from '../../performance/api';
 import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';
-import annualisedReturnSummaryReducer from './annualisedReturnSummarySlice';
-import { AnnualisedReturnSummaryState } from '../types';
-
-import { fetchAnnualisedReturnSummary } from '../thunks';
+import * as api from '../api';
 
 import mockPostAnnualisedReturns from '../mocks/mock-post-annualised-returns.json';
 
-import mockPerformanceAccountsAggregatedResponse from '../../performance/mocks/mock-get-performance-accounts-aggregated-success-response-simple.json';
+import { fetchAnnualisedReturnSummary } from '../thunks';
+import annualisedReturnSummaryReducer from './annualisedReturnSummarySlice';
 
 jest.mock('../api');
 jest.mock('../../performance/api');
 
-function getAnnualisedReturnSummaryStoreAndStateHistory() {
-  return getStoreAndStateHistory<AnnualisedReturnSummaryState>(annualisedReturnSummaryReducer);
-}
+const getAnnualisedReturnSummaryStoreAndStateHistory = () =>
+  getStoreAndStateHistory(annualisedReturnSummaryReducer);
 
 describe('annualisedReturnSummarySlice', () => {
   beforeEach(() => {
@@ -30,15 +25,11 @@ describe('annualisedReturnSummarySlice', () => {
     expect(error).toBeUndefined();
   });
 
-  describe('postAnnualisedReturnsAction action', () => {
-    const postAnnualisedReturnsAction = fetchAnnualisedReturnSummary();
+  describe('fetchAnnualisedReturnSummary action', () => {
+    const fetchAnnualisedReturnSummaryAction = fetchAnnualisedReturnSummary();
 
     describe('network fetch success case', () => {
       it('performs the network fetch and store states as expected', async () => {
-        (performanceApi.getPerformanceAccountsAggregated as jest.Mock).mockResolvedValue(
-          mockPerformanceAccountsAggregatedResponse
-        );
-
         (api.postAnnualisedReturns as jest.Mock).mockResolvedValue(mockPostAnnualisedReturns);
 
         const expectedStates = [
@@ -58,7 +49,7 @@ describe('annualisedReturnSummarySlice', () => {
         ];
 
         const { store, stateHistory } = getAnnualisedReturnSummaryStoreAndStateHistory();
-        await store.dispatch(postAnnualisedReturnsAction);
+        await store.dispatch(fetchAnnualisedReturnSummaryAction);
 
         expect(api.postAnnualisedReturns).toHaveBeenCalledTimes(1);
         expectedStates.forEach((expectedState, i) => {
@@ -89,7 +80,7 @@ describe('annualisedReturnSummarySlice', () => {
         ];
 
         const { store, stateHistory } = getAnnualisedReturnSummaryStoreAndStateHistory();
-        await store.dispatch(postAnnualisedReturnsAction);
+        await store.dispatch(fetchAnnualisedReturnSummaryAction);
 
         expect(stateHistory).toHaveLength(2);
         expectedStates.forEach((expectedState, i) => {

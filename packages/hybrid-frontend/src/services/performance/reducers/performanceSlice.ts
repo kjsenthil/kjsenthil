@@ -19,7 +19,8 @@ const performanceSlice = createSlice({
   },
   extraReducers: commonActionReducerMapBuilder<
     PerformanceAccountsAggregatedResponse | undefined,
-    PerformanceState
+    PerformanceState,
+    number[] | undefined
   >(fetchPerformanceAccountsAggregated),
 });
 

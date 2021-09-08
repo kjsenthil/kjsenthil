@@ -27,5 +27,6 @@ export { default as useUpdateSimulateProjectionsPrerequisites } from './useUpdat
 export { default as useStickyRef } from './useStickyRef';
 export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSummary';
 export { default as useCoachImages } from './useCoachImages';
+export { default as useSummaryValues } from './useSummaryValues';
 
 export type { BasicInfo };

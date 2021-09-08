@@ -1,29 +1,35 @@
+import { AccountFilterSelection, InvestmentAccount } from '@tswdts/react-components';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { InvestmentAccount } from '@tswdts/react-components';
-import { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BasicInvestmentSummary,
-  fetchInvestmentAccounts,
   fetchClient,
+  fetchInvestmentAccounts,
   fetchInvestmentSummary,
 } from '../../services/myAccount';
-import useStateIsLoading from '../useStateIsLoading';
-import useStateIsAvailable from '../useStateIsAvailable';
 import { fetchPerformanceAccountsAggregated } from '../../services/performance';
+import { fetchAnnualisedReturnSummary } from '../../services/returns/thunks';
+import { RootState } from '../../store';
+import useStateIsAvailable from '../useStateIsAvailable';
+import useStateIsLoading from '../useStateIsLoading';
+import filterAccounts from './filterAccounts';
 
-export interface InvestmentAccountsProps {
+export interface InvestmentAccounts {
   accountsSummary: BasicInvestmentSummary;
   investmentAccounts?: InvestmentAccount[];
+  hasLinkedAccounts: boolean;
 }
 
 const useInvestmentAccounts = (
-  { shouldDispatch }: { shouldDispatch: boolean } = { shouldDispatch: true }
-): InvestmentAccountsProps => {
-  const { contactId, investmentAccounts, performance } = useSelector((state: RootState) => ({
+  { shouldDispatch }: { shouldDispatch: boolean } = {
+    shouldDispatch: false,
+  },
+  selectedFilter: AccountFilterSelection = AccountFilterSelection.ALL_ACCOUNTS
+): InvestmentAccounts => {
+  const { contactId, investmentAccounts, performanceData } = useSelector((state: RootState) => ({
     contactId: state.auth.contactId,
     investmentAccounts: state.investmentAccounts.data,
-    performance: state.performance.data?.attributes,
+    performanceData: state.performance.data?.attributes,
   }));
 
   const isPerformanceLoading = useStateIsLoading('performance');
@@ -78,14 +84,33 @@ const useInvestmentAccounts = (
   ]);
 
   const accountsSummary = {
-    totalInvested: performance?.accountValue || 0,
-    totalGainLoss: performance?.performance.value || 0,
-    totalGainLossPercentage: performance?.performance.percentage || 0,
+    totalInvested: performanceData?.accountValue || 0,
+    totalGainLoss: performanceData?.performance.value || 0,
+    totalGainLossPercentage: performanceData?.performance.percentage || 0,
   };
+
+  const filteredAccounts = filterAccounts(selectedFilter, investmentAccounts);
+
+  const hasLinkedAccounts =
+    (investmentAccounts?.filter((account) => account.accountType === 'linked-accounts')?.length ??
+      0) > 0;
+
+  useEffect(() => {
+    if (filteredAccounts) {
+      const filteredAccountIds = filteredAccounts
+        .filter((account) => !!account.id)
+        .map((account) => Number(account.id!!));
+      (async () => {
+        await dispatch(fetchPerformanceAccountsAggregated(filteredAccountIds));
+        await dispatch(fetchAnnualisedReturnSummary(filteredAccountIds));
+      })();
+    }
+  }, [selectedFilter]);
 
   return {
     accountsSummary,
-    investmentAccounts,
+    investmentAccounts: filteredAccounts,
+    hasLinkedAccounts,
   };
 };
 

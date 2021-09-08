@@ -1,82 +1,119 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { useBreakpoint } from '../../../hooks';
-import { Button, Divider, Grid, Icon, Tooltip } from '../../atoms';
-import Select, { SelectProps } from '../../atoms/Select';
+import { Button, Divider, Grid, Icon, PillProps, TabProps } from '../../atoms';
+import Select from '../../atoms/Select';
 import {
-  PillsNavigation,
-  PillsNavigationTab,
-  PillsNavigationSelectableTabComponent,
+  DisabledComponent,
   PillNavigationCreatorTabComponent,
   PillNavigationOnChangeProps,
+  PillsNavigation,
+  PillsNavigationSelectableTabComponent,
+  PillsNavigationTab,
 } from '../../molecules';
 
-const AccountFilter = () => {
-  const [currentValue, setCurrentValue] = useState('All accounts');
-  const [openToolTip, setOpenToolTip] = useState(false);
+interface AccountFilterOption {
+  label: string;
+  value: AccountFilterSelection;
+}
 
+export interface AccountFilterProps {
+  hasLinkedAccounts: boolean;
+  selection: string;
+  onSelectionChanged: (newSelection: AccountFilterSelection) => void;
+}
+
+export enum AccountFilterSelection {
+  ALL_ACCOUNTS = 'all-accounts',
+  MY_ACCOUNTS = 'my-accounts',
+  LINKED_ACCOUNTS = 'linked-accounts',
+}
+
+const CREATE_PORTFOLIO = 'create-portfolio';
+const allAccountsOption: AccountFilterOption = {
+  label: 'All accounts',
+  value: AccountFilterSelection.ALL_ACCOUNTS,
+};
+const myAccountsOption: AccountFilterOption = {
+  label: 'My accounts',
+  value: AccountFilterSelection.MY_ACCOUNTS,
+};
+const linkedAccountsOption: AccountFilterOption = {
+  label: 'Linked accounts',
+  value: AccountFilterSelection.LINKED_ACCOUNTS,
+};
+
+const getFilterOptions = (hasLinkedAccounts: boolean) =>
+  hasLinkedAccounts
+    ? [allAccountsOption, myAccountsOption, linkedAccountsOption]
+    : [allAccountsOption];
+
+const CreatePortfolioPill: React.FC<PillProps & TabProps> = (props) => (
+  <DisabledComponent title="Coming soon">
+    <PillNavigationCreatorTabComponent {...props} />
+  </DisabledComponent>
+);
+
+const AccountFilter = ({
+  hasLinkedAccounts,
+  selection,
+  onSelectionChanged,
+}: AccountFilterProps) => {
   const { isMobile } = useBreakpoint();
 
-  const handleNavigationChange = (e: ChangeEvent<{}>, newValue: string) => {
-    setCurrentValue(newValue);
-    setOpenToolTip((prevVal) => !prevVal);
+  const handleFilterChange = (newValue: string) => {
+    if (newValue === CREATE_PORTFOLIO) {
+      return;
+    }
+    onSelectionChanged(newValue as AccountFilterSelection);
   };
 
-  const filterComponent = isMobile ? (
+  const filterOptions = getFilterOptions(hasLinkedAccounts);
+
+  return isMobile ? (
     <Grid container spacing={1} alignItems="center">
       <Grid item xs={10}>
         <Select
-          value={currentValue}
-          onChange={handleNavigationChange as SelectProps['onChange']}
+          value={selection}
+          onChange={(event) => handleFilterChange(event.target.value as string)}
           fullWidth
         >
-          <option value="All accounts">All accounts</option>
-          <option value="My accounts">My accounts</option>
-          <option value="Linked accounts">Linked accounts</option>
+          {filterOptions.map(({ label, value }) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
         </Select>
       </Grid>
       <Grid item xs={1}>
-        <Button variant="dashed" onClick={handleNavigationChange as any}>
-          <Icon name="plus" />
-        </Button>
+        <DisabledComponent title="Coming soon">
+          <Button variant="dashed">
+            <Icon name="plus" />
+          </Button>
+        </DisabledComponent>
       </Grid>
     </Grid>
   ) : (
     <PillsNavigation
-      value={currentValue}
-      onChange={handleNavigationChange as PillNavigationOnChangeProps}
+      value={selection}
+      onChange={((_, value) => handleFilterChange(value)) as PillNavigationOnChangeProps}
     >
-      <PillsNavigationTab
-        component={PillsNavigationSelectableTabComponent}
-        label="All accounts"
-        value="All accounts"
-      />
-
-      <PillsNavigationTab
-        component={PillsNavigationSelectableTabComponent}
-        label="My accounts"
-        value="My accounts"
-      />
-
-      <PillsNavigationTab
-        component={PillsNavigationSelectableTabComponent}
-        label="Linked accounts"
-        value="Linked accounts"
-      />
+      {filterOptions.map(({ label, value }) => (
+        <PillsNavigationTab
+          component={PillsNavigationSelectableTabComponent}
+          label={label}
+          value={value}
+          key={value}
+        />
+      ))}
 
       <Divider orientation="vertical" y={4} />
 
       <PillsNavigationTab
-        component={PillNavigationCreatorTabComponent}
-        label="Create Portfolio"
-        value="Create Portfolio"
+        component={CreatePortfolioPill}
+        label="Create a portfolio"
+        value={CREATE_PORTFOLIO}
       />
     </PillsNavigation>
-  );
-
-  return (
-    <Tooltip title="Coming Soon" open={openToolTip} placement="top" arrow>
-      {filterComponent}
-    </Tooltip>
   );
 };
 

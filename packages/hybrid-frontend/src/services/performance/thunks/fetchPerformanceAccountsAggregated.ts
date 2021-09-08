@@ -5,16 +5,15 @@ import { PerformanceAccountsAggregatedResponse } from '../types';
 
 const fetchPerformanceAccountsAggregated = createAsyncThunk<
   PerformanceAccountsAggregatedResponse | undefined,
-  void
->('performance/fetchPerformanceAccountsAggregated', (_, { getState }) => {
+  number[] | undefined
+>('performance/fetchPerformanceAccountsAggregated', (accountIds, { getState }) => {
   const {
     client: { included },
   } = getState() as { client: ClientState };
+  const accountsIdsToFetch =
+    accountIds ?? included?.map(({ attributes: { accountId } }) => accountId) ?? [];
 
-  // Get account IDs from Redux.
-  const accountIds = included?.map(({ attributes: { accountId } }) => accountId) ?? [];
-
-  if (accountIds.length > 0) return getPerformanceAccountsAggregated(accountIds);
+  if (accountsIdsToFetch.length > 0) return getPerformanceAccountsAggregated(accountsIdsToFetch);
 
   throw new Error(`There are no account IDs to retrieve performance data for`);
 });

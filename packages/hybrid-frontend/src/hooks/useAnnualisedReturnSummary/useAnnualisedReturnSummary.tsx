@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchPerformanceAccountsAggregated } from '../../services/performance';
 import { RootState } from '../../store';
 import { fetchClient, fetchInvestmentSummary } from '../../services/myAccount';
 import useStateIsLoading from '../useStateIsLoading';
@@ -23,6 +24,8 @@ const useAnnualisedReturnSummary = (
   const isClientAvailable = useStateIsAvailable('client');
   const isInvestmentSummaryAvailable = useStateIsAvailable('investmentSummary');
   const isAnnualisedReturnSummaryAvailable = useStateIsAvailable('annualisedReturnSummary');
+  const isPerformanceLoading = useStateIsLoading('performance');
+  const isPerformanceAvailable = useStateIsAvailable('performance');
 
   const dispatch = useDispatch();
 
@@ -44,10 +47,17 @@ const useAnnualisedReturnSummary = (
   }, [shouldDispatch, isClientAvailable, isInvestmentSummaryAvailable, isInvestmentSummaryLoading]);
 
   useEffect(() => {
+    if (shouldDispatch && isClientAvailable && !isPerformanceAvailable && !isPerformanceLoading) {
+      dispatch(fetchPerformanceAccountsAggregated());
+    }
+  }, [shouldDispatch, isClientAvailable, isPerformanceAvailable, isPerformanceLoading]);
+
+  useEffect(() => {
     if (
       shouldDispatch &&
       isClientAvailable &&
       isInvestmentSummaryAvailable &&
+      isPerformanceAvailable &&
       !isAnnualisedReturnSummaryAvailable &&
       !isAnnualisedReturnSummaryLoading
     ) {
@@ -56,6 +66,7 @@ const useAnnualisedReturnSummary = (
   }, [
     shouldDispatch,
     isClientAvailable,
+    isPerformanceAvailable,
     isInvestmentSummaryAvailable,
     isAnnualisedReturnSummaryAvailable,
   ]); // not adding isAnnualisedReturnSummaryLoading to avoid infinite call in case of API validation errors

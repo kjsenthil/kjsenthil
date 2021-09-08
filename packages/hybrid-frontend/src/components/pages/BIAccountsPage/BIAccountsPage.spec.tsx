@@ -1,16 +1,16 @@
-import React from 'react';
-import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
+import { renderWithProviders, screen } from '@tsw/test-util';
+import React from 'react';
 import { Store } from 'redux';
 import { authSlice as authReducer } from '../../../services/auth';
 import {
   clientSlice as clientReducer,
-  InvestmentSummarySlice as investmentSummaryReducer,
   investmentAccountsSlice as investmentAccountsReducer,
+  InvestmentSummarySlice as investmentSummaryReducer,
 } from '../../../services/myAccount';
-import BIAccountsPage from './BIAccountsPage';
-import performanceReducer from '../../../services/performance/reducers/performanceSlice';
+import { performanceSlice as performanceReducer } from '../../../services/performance';
 import { annualisedReturnSummarySlice as annualisedReturnSummaryReducer } from '../../../services/returns/reducers';
+import BIAccountsPage from './BIAccountsPage';
 
 jest.mock('../../templates/MyAccountLayout', () => ({
   __esModule: true,

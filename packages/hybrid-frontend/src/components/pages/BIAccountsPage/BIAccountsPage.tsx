@@ -1,48 +1,49 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import {
+  AccountFilter,
+  AccountFilterSelection,
+  AccountsTable,
+  AccountsTableHeader,
+  axisBottomConfig,
   Box,
   Button,
-  CurrencyPresentationVariant,
-  Grid,
-  Icon,
-  Spacer,
-  Typography,
-  axisBottomConfig,
-  SummaryPanel,
   ChartPeriodSelection,
+  CurrencyPresentationVariant,
   DisabledComponent,
-  MainCard,
   formatCurrency,
-  PerformanceChart,
-  AccountsTableHeader,
-  AccountsTable,
-  usePerformanceChartDimension,
-  PerformanceDataPeriod,
+  Grid,
   humanizePeriodLabel,
+  Icon,
+  LinearProgress,
+  MainCard,
+  PerformanceChart,
+  PerformanceDataPeriod,
+  Spacer,
+  SummaryPanel,
+  Typography,
   UpsellCard,
-  AccountFilter,
+  usePerformanceChartDimension,
 } from '@tswdts/react-components';
-import { MyAccountLayout } from '../../templates';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FeatureFlagNames } from '../../../constants';
 import {
-  fetchPerformanceAccountsAggregated,
-  setPerformanceDataPeriod,
-} from '../../../services/performance';
-import {
-  useAnnualisedReturnSummary,
   useAccountIds,
   useBasicInfo,
   useContributionsData,
   useDispatchThunkOnRender,
   useFeatureFlagToggle,
-  useInvestmentAccounts,
   usePerformanceData,
   usePerformanceDataPeriod,
+  useSummaryValues,
 } from '../../../hooks';
-import { RootState } from '../../../store';
 import { calculateInvestmentReturn } from '../../../services/myAccount';
-import { FeatureFlagNames } from '../../../constants';
+import {
+  fetchPerformanceAccountsAggregated,
+  setPerformanceDataPeriod,
+} from '../../../services/performance';
+import { RootState } from '../../../store';
+import { MyAccountLayout } from '../../templates';
 
 const BIAccountsPage = () => {
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
@@ -51,12 +52,24 @@ const BIAccountsPage = () => {
     performance: { status: performanceStatus, error: performanceError },
   } = useSelector((state: RootState) => state);
 
-  const basicInfo = useBasicInfo();
-  const { accountsSummary, investmentAccounts } = useInvestmentAccounts({
-    shouldDispatch: false,
-  });
+  const [selectedAccountFilter, setSelectedAccountFilter] = useState<AccountFilterSelection>(
+    AccountFilterSelection.ALL_ACCOUNTS
+  );
 
-  const { annualisedReturnSummary } = useAnnualisedReturnSummary();
+  const basicInfo = useBasicInfo();
+  const {
+    accountsSummary,
+    investmentAccounts,
+    hasLinkedAccounts,
+    annualisedReturnSummary,
+    summaryContributions,
+    summaryIsLoading,
+  } = useSummaryValues(selectedAccountFilter);
+
+  // Reset filters if experimental features disabled
+  useEffect(() => {
+    setSelectedAccountFilter(AccountFilterSelection.ALL_ACCOUNTS);
+  }, [expFeatureFlag]);
 
   const accountIds = useAccountIds();
   const hasAccountIds = accountIds && accountIds.length > 0;
@@ -86,12 +99,6 @@ const BIAccountsPage = () => {
     false,
     ''
   );
-
-  const summaryContributions =
-    investmentAccounts?.reduce(
-      (totalContribution, account) => account.accountTotalNetContribution + totalContribution,
-      0
-    ) || 0;
 
   const tableData = (investmentAccounts || []).map(
     ({
@@ -136,7 +143,13 @@ const BIAccountsPage = () => {
       spacing={1}
     >
       <Grid item xs={12} sm={8}>
-        {expFeatureFlag?.isEnabled && <AccountFilter />}
+        {expFeatureFlag?.isEnabled && (
+          <AccountFilter
+            hasLinkedAccounts={hasLinkedAccounts}
+            selection={selectedAccountFilter}
+            onSelectionChanged={setSelectedAccountFilter}
+          />
+        )}
       </Grid>
       <Grid item xs={12} sm={3}>
         <ChartPeriodSelection
@@ -155,7 +168,11 @@ const BIAccountsPage = () => {
         <Box mb={5}>
           <Grid container>
             <Grid item xs={12}>
-              <AccountFilter />
+              <AccountFilter
+                hasLinkedAccounts={hasLinkedAccounts}
+                selection={selectedAccountFilter}
+                onSelectionChanged={setSelectedAccountFilter}
+              />
             </Grid>
           </Grid>
         </Box>
@@ -183,17 +200,23 @@ const BIAccountsPage = () => {
       <Spacer y={7} />
       <Grid item container spacing={6}>
         <Grid item xs={12}>
-          <SummaryPanel
-            totalNetContributions={summaryContributions}
-            lifetimeReturn={accountsSummary?.totalGainLoss}
-            lifetimeReturnPercentage={(accountsSummary?.totalGainLossPercentage || 0) / 100}
-            periodBasedReturn={{
-              value: investmentReturn.value,
-              percent: investmentReturn.percent,
-              dataPeriod: humanizedDataPeriod,
-            }}
-            annualisedReturnPercentage={(annualisedReturnSummary?.annualisedReturnValue || 0) / 100}
-          />
+          {summaryIsLoading ? (
+            <LinearProgress />
+          ) : (
+            <SummaryPanel
+              totalNetContributions={summaryContributions}
+              lifetimeReturn={accountsSummary?.totalGainLoss}
+              lifetimeReturnPercentage={(accountsSummary?.totalGainLossPercentage || 0) / 100}
+              periodBasedReturn={{
+                value: investmentReturn.value,
+                percent: investmentReturn.percent,
+                dataPeriod: humanizedDataPeriod,
+              }}
+              annualisedReturnPercentage={
+                (annualisedReturnSummary?.annualisedReturnValue || 0) / 100
+              }
+            />
+          )}
         </Grid>
 
         {accountsTableData.length > 0 && (

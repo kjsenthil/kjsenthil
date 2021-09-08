@@ -12,7 +12,7 @@ export { default as AccountSummaryPanel } from './AccountSummaryPanel';
 export { default as AccountsTable } from './AccountsTable';
 export { default as AddCashCard } from './AddCashCard';
 export { default as AddCashModal } from './AddCashModal';
-export { default as AccountFilter } from './AccountFilter';
+export { default as AccountFilter, AccountFilterSelection } from './AccountFilter';
 export { default as AssetDetails } from './AssetDetails';
 export { default as Footer } from './Footer';
 export { default as GoalInputCard } from './GoalInputCard';
@@ -36,5 +36,4 @@ export { default as StepCard } from './StepCard';
 export { default as SummaryPanel } from './SummaryPanel';
 export { default as SuccessModal } from './SuccessModal';
 
-export type { GoalProgressCardProps };
-export type { GoalSelectionProps };
+export type { GoalProgressCardProps, GoalSelectionProps };

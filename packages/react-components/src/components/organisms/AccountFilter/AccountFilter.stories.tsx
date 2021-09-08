@@ -1,13 +1,29 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import AccountFilter from './AccountFilter';
+import AccountFilter, { AccountFilterProps } from './AccountFilter';
 
 export default {
   title: 'Digital Hybrid/Organisms/Account Filter',
   component: AccountFilter,
-  argTypes: {},
+  argTypes: {
+    selection: {
+      table: { disable: true },
+    },
+    onSelectionChanged: {
+      table: { disable: true },
+    },
+  },
 } as Meta;
 
-const Template: Story = (args) => <AccountFilter {...args} />;
+type TemplateProps = Omit<AccountFilterProps, 'selection' | 'onSelectionChanged'>;
+
+const Template: Story<TemplateProps> = (props) => {
+  const [selected, setSelected] = useState('all-accounts');
+
+  return <AccountFilter {...props} selection={selected} onSelectionChanged={setSelected} />;
+};
 
 export const Default = Template.bind({});
+Default.args = {
+  hasLinkedAccounts: true,
+};
