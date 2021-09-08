@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, TextFieldProps } from '../../atoms';
+import { Icon, InputAdornment, TextField, TextFieldProps } from '../../atoms';
 import { FormInputWrapper } from '../../particles';
 
 export interface FormInputProps extends TextFieldProps {
@@ -7,11 +7,18 @@ export interface FormInputProps extends TextFieldProps {
   value?: string;
   label: string;
   error?: string;
+  isCurrency?: boolean;
   shouldDelayOnChange?: boolean;
 }
 
-const FormInput = ({ value, shouldDelayOnChange, onChange, ...props }: FormInputProps) => {
-  const { id, name, error, startAdornment, label, placeholder, fullWidth } = props;
+const FormInput = ({
+  isCurrency,
+  value,
+  shouldDelayOnChange,
+  onChange,
+  ...props
+}: FormInputProps) => {
+  const { id, name, error, startAdornment, type, label, placeholder, fullWidth } = props;
 
   const [val, setValue] = React.useState<string | undefined>(undefined);
   const [changeStarted, setChangeStarted] = React.useState(false);
@@ -40,6 +47,12 @@ const FormInput = ({ value, shouldDelayOnChange, onChange, ...props }: FormInput
     timeoutId.current = (timeout as unknown) as number;
   }, [val]);
 
+  const currencyAdornment = (
+    <InputAdornment position="start">
+      <Icon name="britishPound" />
+    </InputAdornment>
+  );
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (shouldDelayOnChange) {
@@ -53,10 +66,11 @@ const FormInput = ({ value, shouldDelayOnChange, onChange, ...props }: FormInput
   return (
     <FormInputWrapper
       label={label}
+      hideLabel={isCurrency}
       error={error}
       id={id || name}
       hasValue={!!value}
-      hasLeadingIcon={!!startAdornment}
+      hasLeadingIcon={!!startAdornment || !!isCurrency}
       fullWidth={!!fullWidth}
     >
       <TextField
@@ -67,7 +81,11 @@ const FormInput = ({ value, shouldDelayOnChange, onChange, ...props }: FormInput
         hasError={!!error}
         placeholder={placeholder || label}
         fullWidth={fullWidth}
+        isCurrency={isCurrency}
         onChange={handleOnChange}
+        startAdornment={isCurrency ? currencyAdornment : startAdornment}
+        type={isCurrency ? 'number' : type}
+        hideNumberSpinButton={isCurrency}
       />
     </FormInputWrapper>
   );

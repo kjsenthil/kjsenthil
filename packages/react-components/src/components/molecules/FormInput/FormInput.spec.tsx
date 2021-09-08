@@ -2,6 +2,15 @@ import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
 import FormInput from './FormInput';
 
+jest.mock('../../atoms', () => {
+  const originalModule = jest.requireActual('../../atoms');
+
+  return {
+    ...originalModule,
+    Icon: ({ name }) => <div title={name} />,
+  };
+});
+
 /* eslint-disable jsx-a11y/control-has-associated-label */
 describe('FormInput', () => {
   const label = 'Text';
@@ -9,6 +18,12 @@ describe('FormInput', () => {
   it('renders a label', () => {
     renderWithTheme(<FormInput name="text" label={label} value="" />);
     expect(screen.getByText(label)).toBeInTheDocument();
+  });
+
+  it('renders a currency field', () => {
+    renderWithTheme(<FormInput isCurrency label="Value" name="text" />);
+    expect(screen.getByPlaceholderText('Value')).toHaveAttribute('type', 'number');
+    expect(screen.getByTitle('britishPound')).toBeInTheDocument();
   });
 
   describe('Form input as text field', () => {

@@ -11,11 +11,15 @@ export default {
       control: {
         type: 'boolean',
       },
-      options: ['True', 'False'],
     },
     error: {
       control: {
         type: 'text',
+      },
+    },
+    disabled: {
+      control: {
+        type: 'boolean',
       },
     },
   },
@@ -53,4 +57,19 @@ TextInputWithStartIcon.args = {
       <Icon name="account" />
     </InputAdornment>
   ),
+};
+
+export const TextInputWithCurrencyIcon = Template.bind({});
+TextInputWithCurrencyIcon.args = {
+  fullWidth: true,
+  isCurrency: true,
+  label: 'Value',
+};
+
+export const TextInputWithCurrencyIconError = Template.bind({});
+TextInputWithCurrencyIconError.args = {
+  error: 'Insufficient cash on account',
+  fullWidth: true,
+  isCurrency: true,
+  label: 'Value',
 };
