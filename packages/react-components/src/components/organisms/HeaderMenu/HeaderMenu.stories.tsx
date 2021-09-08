@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { Icon } from '../../atoms';
+import { navigate } from 'gatsby';
 import HeaderMenu, { HeaderMenuProps } from './HeaderMenu';
+import imageFile from '../../../assets/img/coachPortrait.png';
+import imageIcon from '../../../assets/img/coachIcon.png';
 
 export default {
   title: 'Digital Hybrid/Organisms/Header Menu',
@@ -15,14 +17,17 @@ export const Default = Template.bind({});
 /* eslint-disable-next-line no-alert */
 const expFeatureSwitch = (isEnabled: boolean) => alert(`isEnabled: ${isEnabled}`);
 
+const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  expFeatureSwitch(evt.target.checked);
+};
+
 const coachImages = {
   coachPortrait: {
     childImageSharp: {
       fluid: {
         aspectRatio: 0.65,
-        src: 'coachPortrait.png',
-        srcSet:
-          '/coachPortrait.png 25w,/coachPortrait.png 50w,/coachPortrait.png 100w,coachPortrait.png 150w,/coachPortrait.png 200w,/coachPortrait.png 300w',
+        src: imageFile,
+        srcSet: `/${imageFile} 25w,/${imageFile} 50w,/${imageFile}  100w,${imageFile} 150w,/${imageFile}  200w,/${imageFile}  300w`,
         sizes: '(max-width: 100px) 100vw, 100px',
       },
     },
@@ -31,9 +36,8 @@ const coachImages = {
     childImageSharp: {
       fluid: {
         aspectRatio: 0.65,
-        src: 'coachIcon.png',
-        srcSet:
-          '/coachIcon.png 25w,/coachIcon.png 50w,/coachIcon.png 100w,coachIcon.png 150w,/coachIcon.png 200w,/coachIcon.png 300w',
+        src: imageIcon,
+        srcSet: `/${imageIcon} 25w,/${imageIcon} 50w,/${imageIcon}  100w,${imageIcon} 150w,/${imageIcon}  200w,/${imageIcon}  300w`,
         sizes: '(max-width: 100px) 100vw, 100px',
       },
     },
@@ -41,19 +45,36 @@ const coachImages = {
 };
 
 const defaultArgs: HeaderMenuProps = {
-  isNonProd: false,
   myAccountsUrl: 'https://google.com',
-  cash: '£101,100.00',
   homePath: '/',
-  expFeatureSwitch,
-  currentUrl: '/investment',
+  switchHandler,
+  currentUrl: '/investments',
   coachImages,
+  navigate,
   links: [
     {
-      name: 'Investment',
-      path: '/investment',
+      name: 'Investments',
+      path: '/investments',
       shouldShowInDrawer: true,
       shouldShowInMainMenu: true,
+      type: 'link',
+      childLinks: [
+        {
+          name: 'Stocks & Shares ISA',
+          path: '/stocks-shares',
+          disabled: true,
+        },
+        {
+          name: 'Self-invested Personal Pension',
+          path: '/self-invested',
+          disabled: true,
+        },
+        {
+          name: 'Investment accounts',
+          path: '/investment-accounts',
+          disabled: true,
+        },
+      ],
     },
     {
       name: 'Life plan',
@@ -61,20 +82,31 @@ const defaultArgs: HeaderMenuProps = {
       shouldShowInDrawer: true,
       shouldShowInMainMenu: true,
     },
-    { name: 'My accounts login', path: 'https://google.com', shouldShowInDrawer: true },
     {
-      name: 'Experimental features',
-      type: 'switch',
-      onClick: expFeatureSwitch,
+      name: 'Documents',
+      path: '/documents',
       shouldShowInDrawer: true,
+      shouldShowInMainMenu: true,
+      disabled: true,
     },
     {
-      name: 'Logout',
-      path: '/logout',
+      name: 'Help & Support',
+      path: '/help-support',
       shouldShowInDrawer: true,
-      shouldShowInDropdownMenu: true,
-      color: 'error',
-      icon: <Icon name="exit" color="error" />,
+      shouldShowInMainMenu: true,
+      disabled: true,
+    },
+    {
+      name: 'Profile',
+      path: '/profile',
+      shouldShowInDrawer: true,
+      shouldShowInMainMenu: false,
+      childLinks: [
+        {
+          name: 'Logout',
+          path: '/logout',
+        },
+      ],
     },
   ],
 };

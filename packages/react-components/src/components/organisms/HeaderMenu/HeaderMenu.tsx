@@ -1,43 +1,56 @@
-import { navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { useState } from 'react';
 import {
   Box,
   Button,
+  ClearIcon,
   Divider,
   Drawer,
   Grid,
   Icon,
-  IconButton,
+  InputAdornment,
   Link,
-  List,
   ListItem,
   ListItemSecondaryAction,
-  ListItemText,
-  Menu,
   MenuIcon,
-  MenuItem,
   Switcher,
-  Toolbar,
-  Typography,
   useMediaQuery,
+  useTheme,
+  Typography,
 } from '../../atoms';
-import { NavLink, SubHeader } from '../../molecules';
+import { DisabledComponent, NavLink, SubHeader } from '../../molecules';
 import {
-  CashText,
+  Availability,
+  CallBack,
+  CallContainer,
+  CashAndInvestGrid,
+  Circle,
   CoachIcon,
   CoachIconContainer,
   CoachTextContainer,
   DrawerContainer,
+  DrawerFooterContainer,
+  IconGridDivider,
+  InvestButton,
   LogoImage,
   ModalContainer,
   MyAccountsContainer,
-  StyledAppBar,
+  ProfileMenuItem,
   RotatedIcon,
+  StyledAppBar,
+  StyledCallBackLink,
+  StyledMenuNavGrid,
+  StyledMobileMenuList,
+  StyledIconButton,
+  StyledInputBase,
+  StyledProfileList,
   StyledSubHeader,
+  StyledToolbar,
   SwitcherLabel,
 } from './HeaderMenu.styles';
+import { StyledChildNavLink } from '../../molecules/NavLinkWithDropDown/NavLinkWithDropDown.styles';
 import Spacer from '../../atoms/Spacer/Spacer';
+import NavLinkWithDropDown, { NavLinkWithDropDownProps } from '../../molecules/NavLinkWithDropDown';
 import CalendarIcon from './CalendarIcon';
 import CoachingModal from '../CoachingModal';
 
@@ -48,19 +61,24 @@ type LinkWithSwitch = {
 
 type LinkWithPath = {
   path: string;
-  type?: 'link';
+  type?: string;
 };
 
 type LinkType = LinkWithSwitch | LinkWithPath;
 
-type LinkData = {
+export type LinkData = {
   name: string;
-  shouldShowInMainMenu?: boolean;
-  shouldShowInDrawer?: boolean;
-  shouldShowInDropdownMenu?: boolean;
-  shouldDisplayInNonProdOnly?: boolean;
+  shouldShowInMainMenu: boolean;
+  shouldShowInDrawer: boolean;
   color?: 'primary' | 'error';
   icon?: React.ReactElement;
+  disabled?: boolean;
+  type?: string;
+  childLinks?: {
+    path: string;
+    name: string;
+    disabled?: boolean;
+  }[];
 } & LinkType;
 
 type GatsbyImage = {
@@ -82,50 +100,65 @@ type CoachImages = {
 export interface HeaderMenuProps {
   homePath: string;
   links: Array<LinkData>;
-  expFeatureSwitch: (isEnabled: boolean) => void;
+  switchHandler: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   isExpFeatureFlagEnabled?: boolean;
   currentUrl: string;
-  cash: string;
-  isNonProd: boolean;
-  myAccountsUrl: string;
+  isNonProd?: boolean;
+  myAccountsUrl?: string;
   coachImages: CoachImages;
+  navigate: (path: string) => {};
 }
 
 const HeaderMenu = ({
-  cash,
   currentUrl,
   homePath,
   links,
-  expFeatureSwitch,
-  isExpFeatureFlagEnabled,
-  isNonProd,
+  isNonProd = true,
+  switchHandler,
+  isExpFeatureFlagEnabled = true,
   myAccountsUrl,
   coachImages,
+  navigate,
 }: HeaderMenuProps) => {
-  const isLargerScreen = useMediaQuery('(min-width: 830px)'); // This is temperory - design will change later and breakdown better specified
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
 
-  const handleProfileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setProfileAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileMenuClose = () => {
-    setProfileAnchorEl(null);
+  const handleProfileMenuClick = () => {
+    setProfileMenuOpen(!profileMenuOpen);
   };
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setMenuOpen(true);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setMenuOpen(false);
   };
 
-  const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    expFeatureSwitch(evt.target.checked);
+  const handlePhonelineStatus = () => {
+    const today = new Date(Date.now());
+    const day = today.getDay();
+    const time = today.getHours();
+    if (day === 0 || day === 6 || time >= 18 || time < 9) {
+      return (
+        <>
+          <Circle data-testid="circle-phoneline-icon" color={theme.palette.error.main} />
+          <Availability>We are currently unavailable</Availability>
+        </>
+      );
+    }
+    return (
+      <>
+        <Circle data-testid="circle-phoneline-icon" color={theme.palette.success.main} />
+        <Availability>We are open, call us: 020 7189 9999</Availability>
+      </>
+    );
   };
 
   const renderSwitcher = (withInnerLabel: boolean, onClick: (evt) => void) => (
@@ -139,29 +172,32 @@ const HeaderMenu = ({
 
   const navigateHome = () => navigate(homePath);
 
-  const filterForEnv = (link: LinkData) =>
-    link.shouldDisplayInNonProdOnly === undefined || link.shouldDisplayInNonProdOnly === isNonProd;
-  const renderMenuNavDropdownLinks = () =>
-    links
-      .filter((link) => link.shouldShowInDropdownMenu && filterForEnv(link))
-      .map((link) => (
-        <MenuItem
-          key={`${link.name}-MenuItem`}
-          onClick={() => navigate((link as LinkWithPath).path)}
-        >
-          {link.name}
-        </MenuItem>
-      ));
+  const renderProfileMenuDropdownLinks = (link: LinkData['childLinks']) =>
+    link?.map((childLink) => (
+      <ProfileMenuItem
+        tabIndex={0}
+        key={`${childLink.name}-Profile-MenuItem`}
+        onClick={() => navigate((childLink as LinkWithPath).path as string)}
+      >
+        <StyledChildNavLink isMobile={isMobile}>{childLink.name}</StyledChildNavLink>
+      </ProfileMenuItem>
+    ));
 
   const getOnLinkClick = (link: LinkData) =>
-    (link as LinkWithSwitch).onClick
+    link.type === 'switch'
       ? (link as LinkWithSwitch).onClick
-      : () => navigate((link as LinkWithPath).path);
+      : () => navigate((link as LinkWithPath).path as string);
+
+  const styledDivider = (
+    <IconGridDivider>
+      <Divider orientation="vertical" y={4} />
+    </IconGridDivider>
+  );
 
   const renderMyAccountsLink = () => (
     <MyAccountsContainer>
       <RotatedIcon name="upload" />
-      <Link color="inherit" special href={myAccountsUrl}>
+      <Link color="white" special href={myAccountsUrl}>
         Back to old Bestinvest
       </Link>
     </MyAccountsContainer>
@@ -189,9 +225,9 @@ const HeaderMenu = ({
           color="white"
           special
           onClick={() =>
-            isLargerScreen
-              ? setShowModal(!showModal)
-              : navigate('https://online.bestinvest.co.uk/bestinvest-plus#/')
+            isMobile
+              ? navigate('https://online.bestinvest.co.uk/bestinvest-plus#/')
+              : setShowModal(!showModal)
           }
         >
           Book an appointment
@@ -203,61 +239,101 @@ const HeaderMenu = ({
     </CoachIconContainer>
   );
 
-  const renderDrawerList = () => (
+  const disableableNavLinks = (children: React.ReactNode, index: number, disabled?: boolean) => {
+    if (!disabled) {
+      return <div key={`enabled-${index}`}>{children}</div>;
+    }
+    return (
+      <DisabledComponent title="Coming soon" key={`disabled-${index}`}>
+        {children}
+      </DisabledComponent>
+    );
+  };
+
+  const navLinkWithDropDown = (link: LinkData, mobile: boolean) => (
+    <NavLinkWithDropDown
+      key={`${link.name}-${mobile ? 'mobile' : 'desktop'}-menu-dropdown`}
+      name={link.name}
+      type={link.type as string}
+      path={(link as LinkWithPath).path}
+      childLinks={link.childLinks as NavLinkWithDropDownProps['childLinks']}
+      selected={(link as LinkWithPath).path === currentUrl}
+      navigate={navigate}
+    />
+  );
+
+  const menuLink = (link: LinkData) => (
+    <NavLink
+      onClick={getOnLinkClick(link)}
+      selected={(link as LinkWithPath).path === currentUrl}
+      isMobile={isMobile}
+      key={`${link.name}-desktop-menu`}
+      variant="link"
+    >
+      {link.name}
+    </NavLink>
+  );
+
+  const drawerLink = (link: LinkData) => (
     <>
-      {isExpFeatureFlagEnabled ? <StyledSubHeader>{renderCoachSignpost()}</StyledSubHeader> : null}
-      {links.filter(filterForEnv).map((link, i) => (
-        <ListItem
-          key={link.name}
-          divider={links.length - 1 > i}
-          onClick={getOnLinkClick(link) as any}
-          button={link.type === 'switch' ? false : undefined}
+      <ListItem
+        key={`${link.name}-mobile-menu`}
+        onClick={getOnLinkClick(link) as any}
+        button={link.type === 'switch' ? false : undefined}
+      >
+        {!!link.icon && (
+          <>
+            {link.icon}
+            <Spacer x={1} />
+          </>
+        )}
+        <NavLink
+          colorShade={link.color === 'error' ? undefined : 'dark2'}
+          color={link.color ?? 'primary'}
+          selected={(link as LinkWithPath).path === currentUrl}
+          isMobile={isMobile}
+          key={`${link.name}-mobile-link`}
+          variant="link"
         >
-          {!!link.icon && (
-            <>
-              {link.icon}
-              <Spacer x={1} />
-            </>
-          )}
-          <ListItemText>
-            <Typography
-              variant="sh4"
-              colorShade={link.color === 'error' ? undefined : 'dark2'}
-              color={link.color ?? 'primary'}
-            >
-              {link.name}
-            </Typography>
-          </ListItemText>
-          {link.type === 'switch' && (
-            <ListItemSecondaryAction>
-              {renderSwitcher(false, (evt) => getOnLinkClick(link)(evt.target.checked))}
-            </ListItemSecondaryAction>
-          )}
-        </ListItem>
-      ))}
+          {link.name}
+        </NavLink>
+        {link.type === 'switch' && (
+          <ListItemSecondaryAction key={`${link.name}-mobile-switch`}>
+            {renderSwitcher(false, (evt) => getOnLinkClick(link)(evt.target.checked))}
+          </ListItemSecondaryAction>
+        )}
+      </ListItem>
     </>
   );
+
+  const renderDrawerList = () =>
+    links
+      .filter((link) => link.shouldShowInDrawer)
+      .map((link, index) =>
+        link.childLinks
+          ? disableableNavLinks(navLinkWithDropDown(link, true), index, link.disabled)
+          : disableableNavLinks(drawerLink(link), index, link.disabled)
+      );
 
   const renderMenuNavLinks = () =>
     links
       .filter((link) => link.shouldShowInMainMenu)
-      .map((link) => (
-        <Grid item key={`${(link as LinkWithPath).path || link.name} - menu`}>
-          <NavLink
-            onClick={getOnLinkClick(link)}
-            selected={(link as LinkWithPath).path === currentUrl}
-          >
-            <Typography variant="sh4" color="grey">
-              {link.name}
-            </Typography>
-          </NavLink>
+      .map((link, index) => (
+        <Grid
+          item
+          key={`${(link as LinkWithPath).path || link.name}-menu`}
+          {...(link.disabled ? { disabled: true } : {})}
+        >
+          {link.childLinks
+            ? disableableNavLinks(navLinkWithDropDown(link, false), index, link.disabled)
+            : disableableNavLinks(menuLink(link), index, link.disabled)}
         </Grid>
       ));
 
   const renderCashAndInvestActions = (forSubMenu: boolean = true) => {
     const ButtonWrapper = ({ children }: { children: React.ReactElement }) =>
       forSubMenu ? (
-        <Grid item container justifyContent="flex-end" spacing={2} wrap="nowrap">
+        <Grid item container justifyContent="space-between" spacing={2} wrap="nowrap">
           {children}
         </Grid>
       ) : (
@@ -265,30 +341,36 @@ const HeaderMenu = ({
       );
     return (
       <>
-        <Grid item xs={6}>
-          <CashText align={forSubMenu ? 'left' : 'right'}>
-            <Typography variant="sh4">{cash}</Typography>
-            <Typography variant="b5">cash ready to invest</Typography>
-          </CashText>
-        </Grid>
-
         <ButtonWrapper>
           <>
             <Grid item>
-              <Button
-                color="primary"
-                wrap="nowrap"
-                startIcon={<Icon name="cross" />}
-                variant="outlined"
-              >
-                Add cash
-              </Button>
+              <DisabledComponent title="Coming soon">
+                <Button
+                  color="primary"
+                  wrap="nowrap"
+                  startIcon={isMobile ? null : <Icon name="plus" />}
+                  variant="outlined"
+                >
+                  Add cash
+                </Button>
+              </DisabledComponent>
             </Grid>
-            <Grid item>
-              <Button color="primary" startIcon={<Icon name="statistics" />} variant="contained">
-                Invest
-              </Button>
-            </Grid>
+            <CashAndInvestGrid isMobile={isMobile} {...(isMobile ? { item: true, xs: 9 } : {})}>
+              <DisabledComponent title="Coming soon">
+                <InvestButton
+                  color="gradient"
+                  variant="contained"
+                  {...(isMobile
+                    ? {}
+                    : {
+                        startIcon: <Icon name="investStatistics" />,
+                      })}
+                  isMobile={isMobile}
+                >
+                  Invest
+                </InvestButton>
+              </DisabledComponent>
+            </CashAndInvestGrid>
           </>
         </ButtonWrapper>
       </>
@@ -296,18 +378,79 @@ const HeaderMenu = ({
   };
 
   return (
-    <Box data-test-id="header-menu">
-      <StyledAppBar position="relative" data-testid="header-menu" color="inherit" elevation={0}>
-        <Toolbar variant="dense">
+    <Box data-testid="header">
+      <StyledAppBar
+        data-testid="header-menu"
+        color="inherit"
+        elevation={0}
+        isMobile={isMobile}
+        position="relative"
+      >
+        <StyledToolbar variant="dense" isMobile={isMobile}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid container justifyContent="space-between" direction="row" alignItems="center">
               <Grid item xs={2}>
                 <Link onClick={navigateHome}>
-                  <LogoImage />
+                  <LogoImage isMobile={isMobile} />
                 </Link>
               </Grid>
-
-              {isLargerScreen ? (
+              {isMobile ? (
+                <Grid item xs={9}>
+                  <Grid container justifyContent="flex-end">
+                    <StyledIconButton
+                      edge="start"
+                      color="primary"
+                      aria-label={!menuOpen ? 'menu' : 'close menu'}
+                      onClick={!menuOpen ? handleMenuClick : handleMenuClose}
+                    >
+                      {!menuOpen ? <MenuIcon /> : <ClearIcon />}
+                    </StyledIconButton>
+                    <Drawer
+                      anchor="right"
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <DrawerContainer>
+                        {isExpFeatureFlagEnabled ? (
+                          <StyledSubHeader>{renderCoachSignpost()}</StyledSubHeader>
+                        ) : null}
+                        <DisabledComponent title="Coming soon">
+                          <StyledInputBase
+                            placeholder="Markets, products, stocks"
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Icon name="search" color="disabled" />
+                              </InputAdornment>
+                            }
+                          />
+                        </DisabledComponent>
+                        <StyledMobileMenuList isExpFeatureFlagEnabled={isExpFeatureFlagEnabled}>
+                          {isNonProd && (
+                            <SwitcherLabel
+                              labelPlacement="start"
+                              control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
+                              label="Experimental Features"
+                            />
+                          )}
+                          {renderDrawerList()}
+                        </StyledMobileMenuList>
+                        <DrawerFooterContainer>
+                          {renderCashAndInvestActions()}
+                          <CallContainer>
+                            {handlePhonelineStatus()}
+                            <CallBack>
+                              <DisabledComponent title="Coming soon">
+                                <StyledCallBackLink>Request a callback</StyledCallBackLink>
+                              </DisabledComponent>
+                            </CallBack>
+                          </CallContainer>
+                        </DrawerFooterContainer>
+                      </DrawerContainer>
+                    </Drawer>
+                  </Grid>
+                </Grid>
+              ) : (
                 <Grid
                   item
                   container
@@ -316,9 +459,9 @@ const HeaderMenu = ({
                   xs={10}
                   wrap="nowrap"
                 >
-                  <Grid item container justifyContent="flex-start" wrap="nowrap">
+                  <StyledMenuNavGrid item container justifyContent="flex-start" wrap="nowrap">
                     {renderMenuNavLinks()}
-                  </Grid>
+                  </StyledMenuNavGrid>
                   <Grid
                     item
                     container
@@ -329,88 +472,109 @@ const HeaderMenu = ({
                     component="div"
                   >
                     {renderCashAndInvestActions(false)}
+                    {styledDivider}
                     <Grid item>
-                      <Divider orientation="vertical" y={4} />
+                      <DisabledComponent title="Coming soon">
+                        <Button
+                          aria-controls="simple-menu"
+                          aria-haspopup="true"
+                          variant={undefined}
+                          color="primary"
+                          aria-label="list"
+                          // onClick={handleProfileMenuClick} // To be added
+                        >
+                          <Icon name="list" />
+                        </Button>
+                      </DisabledComponent>
                     </Grid>
+                    {styledDivider}
+                    <Grid item>
+                      <DisabledComponent title="Coming soon">
+                        <Button
+                          aria-controls="simple-menu"
+                          aria-haspopup="true"
+                          variant={undefined}
+                          color="primary"
+                          aria-label="search"
+                          // onClick={handleProfileMenuClick} // To be added
+                        >
+                          <Icon name="search" />
+                        </Button>
+                      </DisabledComponent>
+                    </Grid>
+                    {styledDivider}
+                    <Grid item>
+                      <DisabledComponent title="Coming soon">
+                        <Button
+                          aria-controls="simple-menu"
+                          aria-haspopup="true"
+                          variant={undefined}
+                          color="primary"
+                          aria-label="shopping-cart"
+                          // onClick={handleProfileMenuClick}  // To be added
+                        >
+                          <Icon name="cart" />
+                        </Button>
+                      </DisabledComponent>
+                    </Grid>
+                    {styledDivider}
                     <Grid item>
                       <Button
+                        data-testid="profile"
                         aria-controls="simple-menu"
                         aria-haspopup="true"
                         variant={undefined}
                         color="primary"
+                        aria-label="profile"
                         onClick={handleProfileMenuClick}
-                        endIcon={<Icon name="arrowHeadDown" />}
                       >
                         <Icon name="account" />
                       </Button>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={profileAnchorEl}
-                        keepMounted
-                        open={Boolean(profileAnchorEl)}
-                        onClose={handleProfileMenuClose}
-                      >
-                        {renderMenuNavDropdownLinks()}
-                      </Menu>
                     </Grid>
-                  </Grid>
-                </Grid>
-              ) : (
-                <Grid item xs={9}>
-                  <Grid container justifyContent="flex-end">
-                    <IconButton
-                      edge="start"
-                      color="primary"
-                      aria-label="menu"
-                      onClick={handleMenuClick}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                    <Drawer
-                      anchor="right"
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleMenuClose}
-                    >
-                      <DrawerContainer>
-                        <List>{renderDrawerList()}</List>
-                      </DrawerContainer>
-                    </Drawer>
+                    {profileMenuOpen && (
+                      <StyledProfileList profileMenuOpen={profileMenuOpen}>
+                        {renderProfileMenuDropdownLinks(links[4].childLinks)}
+                      </StyledProfileList>
+                    )}
                   </Grid>
                 </Grid>
               )}
             </Grid>
           </Grid>
-        </Toolbar>
-
-        <Divider />
+        </StyledToolbar>
 
         {isExpFeatureFlagEnabled ? (
-          <StyledSubHeader>
-            {isLargerScreen ? (
-              <Grid container justifyContent="space-between" alignItems="center">
-                <Grid item>{renderMyAccountsLink()}</Grid>
-                <Grid item>
-                  {isNonProd && (
-                    <SwitcherLabel
-                      labelPlacement="start"
-                      control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
-                      label="Experimental Features"
-                    />
-                  )}
-                </Grid>
-
-                <Grid item>{renderCoachSignpost()}</Grid>
-              </Grid>
+          <>
+            {isMobile ? (
+              !menuOpen && (
+                <StyledSubHeader isMobile={isMobile}>
+                  <Grid item container justifyContent="center">
+                    {renderMyAccountsLink()}
+                  </Grid>
+                </StyledSubHeader>
+              )
             ) : (
-              <Grid item container justifyContent="center">
-                {renderMyAccountsLink()}
-              </Grid>
+              <StyledSubHeader isMobile={isMobile}>
+                <Grid container justifyContent="space-between" alignItems="center">
+                  <Grid item>{renderMyAccountsLink()}</Grid>
+                  <Grid item>
+                    {isNonProd && (
+                      <SwitcherLabel
+                        labelPlacement="start"
+                        control={<Box ml={1}>{renderSwitcher(true, switchHandler)}</Box>}
+                        label="Experimental Features"
+                      />
+                    )}
+                  </Grid>
+
+                  <Grid item>{renderCoachSignpost()}</Grid>
+                </Grid>
+              </StyledSubHeader>
             )}
-          </StyledSubHeader>
+          </>
         ) : (
-          <SubHeader>
-            {isLargerScreen ? (
+          !isMobile && (
+            <SubHeader style={{ minHeight: '80px' }}>
               <Grid container justifyContent="space-between" alignItems="center">
                 <Grid item>
                   {isNonProd && (
@@ -428,12 +592,8 @@ const HeaderMenu = ({
                   </Button>
                 </Grid>
               </Grid>
-            ) : (
-              <Grid item container wrap="nowrap" justifyContent="space-between" alignItems="center">
-                {renderCashAndInvestActions(true)}
-              </Grid>
-            )}
-          </SubHeader>
+            </SubHeader>
+          )
         )}
       </StyledAppBar>
     </Box>

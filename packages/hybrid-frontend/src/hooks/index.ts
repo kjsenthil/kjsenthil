@@ -26,6 +26,6 @@ export { default as useSimulateProjectionsDataFroProjectionsChart } from './useS
 export { default as useUpdateSimulateProjectionsPrerequisites } from './useUpdateSimulateProjectionsPrerequisites';
 export { default as useStickyRef } from './useStickyRef';
 export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSummary';
-export { default as useCoachImages } from './useCoachImage';
+export { default as useCoachImages } from './useCoachImages';
 
 export type { BasicInfo };

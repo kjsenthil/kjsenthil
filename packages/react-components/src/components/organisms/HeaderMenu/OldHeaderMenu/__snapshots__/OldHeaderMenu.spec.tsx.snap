@@ -1,0 +1,1337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OldHeaderMenu HeaderMenu in desktop view renders the header menu view without experimental features 1`] = `
+.c4 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #aeaabf;
+  white-space: break-spaces;
+}
+
+.c7 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+}
+
+.c8 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: normal;
+  color: #000;
+  white-space: break-spaces;
+}
+
+.c9 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: nowrap;
+  padding: 12px 16px;
+}
+
+.c9.Mui-disabled {
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  opacity: 0.2;
+}
+
+.c9 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c10 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  background-color: #6c00bf;
+  color: #fff;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 12px 16px;
+}
+
+.c10:hover {
+  background-color: #6c00bf;
+  color: #fff;
+}
+
+.c10.Mui-disabled {
+  background-color: #6c00bf;
+  color: #fff;
+  opacity: 0.2;
+}
+
+.c10.Mui-disabled:hover {
+  background-color: #6c00bf;
+  color: #fff;
+}
+
+.c10 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c12 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 40px;
+  width: 40px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 8px;
+}
+
+.c12.Mui-disabled {
+  color: #6c00bf;
+  opacity: 0.2;
+}
+
+.c12 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c17 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 12px 16px;
+}
+
+.c17.Mui-disabled {
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  opacity: 0.2;
+}
+
+.c17 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c11 {
+  background-color: #eeedfc;
+  width: 3px;
+  height: 100%;
+  border-radius: 1.5px;
+}
+
+.c13 {
+  background-color: #eeedfc;
+  width: 100%;
+  height: 1px;
+  border-radius: 1.5px;
+}
+
+.c16.MuiSwitch-root {
+  width: 3.4375rem;
+  height: 1.5625rem;
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 0;
+}
+
+.c16 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  opacity: 1;
+}
+
+.c16 .MuiSwitch-switchBase {
+  padding: 0.3125rem;
+}
+
+.c16 .MuiSwitch-track {
+  opacity: 1;
+  background-color: #fff;
+  border: 2px solid #aeaabf;
+  border-radius: 6.25rem;
+}
+
+.c16 .MuiSwitch-track:before,
+.c16 .MuiSwitch-track:after {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.c16 .MuiSwitch-track:before {
+  content: 'ON';
+  opacity: 0;
+  left: 0.375rem;
+}
+
+.c16 .MuiSwitch-track:after {
+  content: 'OFF';
+  right: 0.3125rem;
+  opacity: 1;
+  color: #393840;
+}
+
+.c16 .MuiSwitch-thumb {
+  box-shadow: none;
+  background-color: #aeaabf;
+  width: 0.9375rem;
+  height: 0.9375rem;
+}
+
+.c16 .Mui-checked {
+  color: #fff;
+}
+
+.c16 .Mui-checked .MuiSwitch-thumb {
+  background-color: #fff;
+}
+
+.c16 .Mui-checked.MuiSwitch-switchBase {
+  -webkit-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  transform: translateX(30px);
+}
+
+.c16 .Mui-checked + .MuiSwitch-track {
+  border: 0;
+}
+
+.c16 .Mui-checked + .MuiSwitch-track:before {
+  opacity: 1;
+}
+
+.c16 .Mui-checked + .MuiSwitch-track:after {
+  opacity: 0;
+}
+
+.c1 {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #6c00bf;
+  white-space: break-spaces;
+}
+
+.c3 {
+  color: #6a6775;
+  background-color: unset;
+  width: unset;
+  height: unset;
+  padding: 40px 20px 31px 20px;
+  margin-right: unset;
+  border-radius: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-family: Montserrat,Roboto;
+  display: inline-block;
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c3:hover {
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c5 {
+  color: #6a6775;
+  background-color: unset;
+  width: unset;
+  height: unset;
+  padding: 40px 20px 31px 20px;
+  margin-right: unset;
+  border-radius: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-family: Montserrat,Roboto;
+  display: inline-block;
+}
+
+.c5:hover {
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c14 .MuiToolbar-root {
+  border-top: 2px solid [object Object];
+}
+
+.c15 {
+  margin: 2px;
+}
+
+.c0 {
+  box-shadow: 1px 2px 44px 0 rgba(139,139,139,0.26);
+}
+
+.c2 {
+  background-image: url('/PurpleBestInvest.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 38px;
+  width: 124px;
+}
+
+.c6 {
+  text-align: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+<div>
+  <div
+    class="MuiBox-root MuiBox-root-1"
+    data-testid="header"
+  >
+    <header
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
+      data-testid="header-menu"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+            >
+              <button
+                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 MuiLink-button MuiTypography-colorPrimary"
+              >
+                <div
+                  class="c2"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-10"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 c3 MuiLink-button MuiTypography-colorPrimary"
+                  >
+                    <h6
+                      class="MuiTypography-root c4 MuiTypography-body1"
+                    >
+                      Investments
+                    </h6>
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 c5 MuiLink-button MuiTypography-colorPrimary"
+                  >
+                    <h6
+                      class="MuiTypography-root c4 MuiTypography-body1"
+                    >
+                      Life plan
+                    </h6>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                >
+                  <div
+                    class="c6"
+                  >
+                    <h6
+                      class="MuiTypography-root c7 MuiTypography-body1"
+                    />
+                    <p
+                      class="MuiTypography-root c8 MuiTypography-body1"
+                    >
+                      cash ready to invest
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c9 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                    wrap="nowrap"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <span
+                        class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            cross
+                          </title>
+                          <path
+                            d="M17.739 6.261c.396.396.471.964-.718 2.152L13.435 12l3.586 3.587c1.19 1.188 1.114 1.756.718 2.152-.396.396-.964.471-2.152-.718L12 13.435 8.413 17.02c-1.188 1.19-1.756 1.114-2.152.718-.396-.396-.471-.964.717-2.152L10.565 12 6.978 8.413C5.79 7.225 5.865 6.657 6.261 6.261c.396-.396.964-.471 2.152.717L12 10.565l3.587-3.587c1.188-1.188 1.756-1.113 2.152-.717z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Add cash
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c10 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <span
+                        class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            statistics
+                          </title>
+                          <path
+                            d="M4 4c.552 0 1 .343 1 2v10c0 .943 0 1.414.293 1.707C5.586 18 6.057 18 7 18h.003C7 17.868 7 17.707 7 17.5v-6c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C8.803 9 9.035 9 9.5 9s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v6c0 .207 0 .368-.003.5h2.006C14 17.868 14 17.707 14 17.5v-9c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C15.803 6 16.035 6 16.5 6s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v9c0 .207 0 .368-.003.5H19c1.657 0 2 .448 2 1s-.343 1-2 1H9c-2.828 0-4.243 0-5.121-.879C3 18.243 3 16.828 3 14V6c0-1.657.448-2 1-2zm12.5 14c.246 0 .38 0 .479-.004h.017v-.017C17 17.88 17 17.745 17 17.5v-9c0-.246 0-.38-.004-.478v-.018h-.017C16.88 8 16.745 8 16.5 8c-.246 0-.38 0-.479.004h-.017v.018C16 8.12 16 8.254 16 8.5v9c0 .246 0 .38.004.479v.017h.017c.099.004.233.004.479.004zm-7 0c.246 0 .38 0 .478-.004h.018v-.017C10 17.88 10 17.745 10 17.5v-6c0-.246 0-.38-.004-.478v-.018h-.018C9.88 11 9.746 11 9.5 11c-.246 0-.38 0-.478.004h-.018v.018C9 11.12 9 11.254 9 11.5v6c0 .246 0 .38.004.479v.017h.018C9.12 18 9.254 18 9.5 18z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Invest
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiBox-root MuiBox-root-2"
+                    data-testid="Spacer"
+                  >
+                    <div
+                      class="c11"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c12 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <title>
+                          account
+                        </title>
+                        <path
+                          d="M6.618 16.465c3.559-.62 7.206-.62 10.765 0l.428.076c1.83.361 3.154 1.884 3.19 3.667v.097c0 .576-.695.901-1.173.549-.389-.287-.626-.709-.862-1.128-.082-.146-.163-.29-.25-.43-.281-.445-.748-.775-1.31-.886l-.382-.068c-3.322-.578-6.726-.578-10.047 0l-.382.068c-.562.111-1.029.441-1.31.886-.087.14-.169.284-.25.43-.236.42-.474.841-.862 1.128-.478.352-1.173.027-1.173-.55v-.096c.035-1.783 1.36-3.306 3.19-3.667l.428-.076zM12 3c3.314 0 6 2.686 6 6s-2.686 6-6 6-6-2.686-6-6 2.686-6 6-6zm0 2C9.79 5 8 6.79 8 9s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                      <span
+                        class="MuiButton-endIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            arrowHeadDown
+                          </title>
+                          <path
+                            d="M17.645 10.592c.433-.309.477-.908.093-1.27l-.08-.075c-.308-.292-.795-.33-1.15-.09l-4.536 3.71-4.48-3.71c-.355-.24-.842-.201-1.15.09l-.08.075c-.384.363-.34.961.093 1.27l5.078 4.237c.319.228.759.228 1.078 0l5.134-4.237z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-3"
+        data-testid="Spacer"
+      >
+        <div
+          class="c13"
+        />
+      </div>
+      <div
+        class="MuiToolbar-root MuiToolbar-regular c14 MuiToolbar-gutters"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <label
+              class="MuiFormControlLabel-root c15 MuiFormControlLabel-labelPlacementStart"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-4"
+              >
+                <span
+                  class="MuiSwitch-root c16 MuiSwitch-sizeSmall"
+                >
+                  <span
+                    aria-disabled="false"
+                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-5 MuiSwitch-switchBase MuiSwitch-colorPrimary"
+                  >
+                    <span
+                      class="MuiIconButton-label"
+                    >
+                      <input
+                        class="PrivateSwitchBase-input-8 MuiSwitch-input"
+                        type="checkbox"
+                        value=""
+                      />
+                      <span
+                        class="MuiSwitch-thumb"
+                      />
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </span>
+                  <span
+                    class="MuiSwitch-track"
+                  />
+                </span>
+              </div>
+              <span
+                class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+              >
+                Experimental Features
+              </span>
+            </label>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text c17 MuiButton-disableElevation"
+              href="https://google.com"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                My Accounts Login
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+</div>
+`;
+
+exports[`OldHeaderMenu HeaderMenu in mobile view renders the header menu view without experimental features 1`] = `
+.c4 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #aeaabf;
+  white-space: break-spaces;
+}
+
+.c7 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+}
+
+.c8 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.01875rem;
+  -moz-letter-spacing: 0.01875rem;
+  -ms-letter-spacing: 0.01875rem;
+  letter-spacing: 0.01875rem;
+  font-weight: normal;
+  color: #000;
+  white-space: break-spaces;
+}
+
+.c9 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: nowrap;
+  padding: 12px 16px;
+}
+
+.c9.Mui-disabled {
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  opacity: 0.2;
+}
+
+.c9 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c10 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  background-color: #6c00bf;
+  color: #fff;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 12px 16px;
+}
+
+.c10:hover {
+  background-color: #6c00bf;
+  color: #fff;
+}
+
+.c10.Mui-disabled {
+  background-color: #6c00bf;
+  color: #fff;
+  opacity: 0.2;
+}
+
+.c10.Mui-disabled:hover {
+  background-color: #6c00bf;
+  color: #fff;
+}
+
+.c10 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c12 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 40px;
+  width: 40px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 8px;
+}
+
+.c12.Mui-disabled {
+  color: #6c00bf;
+  opacity: 0.2;
+}
+
+.c12 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c17 {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #380c57;
+  white-space: break-spaces;
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  height: 40px;
+  border-radius: 6px;
+  min-width: 80px;
+  text-transform: none;
+  white-space: break-space;
+  padding: 12px 16px;
+}
+
+.c17.Mui-disabled {
+  color: #6c00bf;
+  border: 1px solid #6c00bf;
+  opacity: 0.2;
+}
+
+.c17 .MuiButton-iconSizeMedium *:first-child {
+  font-size: 0.875rem;
+}
+
+.c11 {
+  background-color: #eeedfc;
+  width: 3px;
+  height: 100%;
+  border-radius: 1.5px;
+}
+
+.c13 {
+  background-color: #eeedfc;
+  width: 100%;
+  height: 1px;
+  border-radius: 1.5px;
+}
+
+.c16.MuiSwitch-root {
+  width: 3.4375rem;
+  height: 1.5625rem;
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 0;
+}
+
+.c16 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  opacity: 1;
+}
+
+.c16 .MuiSwitch-switchBase {
+  padding: 0.3125rem;
+}
+
+.c16 .MuiSwitch-track {
+  opacity: 1;
+  background-color: #fff;
+  border: 2px solid #aeaabf;
+  border-radius: 6.25rem;
+}
+
+.c16 .MuiSwitch-track:before,
+.c16 .MuiSwitch-track:after {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.c16 .MuiSwitch-track:before {
+  content: 'ON';
+  opacity: 0;
+  left: 0.375rem;
+}
+
+.c16 .MuiSwitch-track:after {
+  content: 'OFF';
+  right: 0.3125rem;
+  opacity: 1;
+  color: #393840;
+}
+
+.c16 .MuiSwitch-thumb {
+  box-shadow: none;
+  background-color: #aeaabf;
+  width: 0.9375rem;
+  height: 0.9375rem;
+}
+
+.c16 .Mui-checked {
+  color: #fff;
+}
+
+.c16 .Mui-checked .MuiSwitch-thumb {
+  background-color: #fff;
+}
+
+.c16 .Mui-checked.MuiSwitch-switchBase {
+  -webkit-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  transform: translateX(30px);
+}
+
+.c16 .Mui-checked + .MuiSwitch-track {
+  border: 0;
+}
+
+.c16 .Mui-checked + .MuiSwitch-track:before {
+  opacity: 1;
+}
+
+.c16 .Mui-checked + .MuiSwitch-track:after {
+  opacity: 0;
+}
+
+.c1 {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  -webkit-letter-spacing: 0.0125rem;
+  -moz-letter-spacing: 0.0125rem;
+  -ms-letter-spacing: 0.0125rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 600;
+  color: #6c00bf;
+  white-space: break-spaces;
+}
+
+.c3 {
+  color: #6a6775;
+  background-color: unset;
+  width: unset;
+  height: unset;
+  padding: 40px 20px 31px 20px;
+  margin-right: unset;
+  border-radius: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-family: Montserrat,Roboto;
+  display: inline-block;
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c3:hover {
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c5 {
+  color: #6a6775;
+  background-color: unset;
+  width: unset;
+  height: unset;
+  padding: 40px 20px 31px 20px;
+  margin-right: unset;
+  border-radius: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-family: Montserrat,Roboto;
+  display: inline-block;
+}
+
+.c5:hover {
+  color: #4a0082;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-left: unset;
+  border-bottom: 2.7px solid #6c00bf;
+  cursor: pointer;
+  padding: 40px 20px 28.7px 20px;
+}
+
+.c14 .MuiToolbar-root {
+  border-top: 2px solid [object Object];
+}
+
+.c15 {
+  margin: 2px;
+}
+
+.c0 {
+  box-shadow: 1px 2px 44px 0 rgba(139,139,139,0.26);
+}
+
+.c2 {
+  background-image: url('/PurpleBestInvest.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 38px;
+  width: 124px;
+}
+
+.c6 {
+  text-align: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+<div>
+  <div
+    class="MuiBox-root MuiBox-root-33"
+    data-testid="header"
+  >
+    <header
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
+      data-testid="header-menu"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+            >
+              <button
+                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 MuiLink-button MuiTypography-colorPrimary"
+              >
+                <div
+                  class="c2"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-10"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 c3 MuiLink-button MuiTypography-colorPrimary"
+                  >
+                    <h6
+                      class="MuiTypography-root c4 MuiTypography-body1"
+                    >
+                      Investments
+                    </h6>
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 c5 MuiLink-button MuiTypography-colorPrimary"
+                  >
+                    <h6
+                      class="MuiTypography-root c4 MuiTypography-body1"
+                    >
+                      Life plan
+                    </h6>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                >
+                  <div
+                    class="c6"
+                  >
+                    <h6
+                      class="MuiTypography-root c7 MuiTypography-body1"
+                    />
+                    <p
+                      class="MuiTypography-root c8 MuiTypography-body1"
+                    >
+                      cash ready to invest
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c9 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                    wrap="nowrap"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <span
+                        class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            cross
+                          </title>
+                          <path
+                            d="M17.739 6.261c.396.396.471.964-.718 2.152L13.435 12l3.586 3.587c1.19 1.188 1.114 1.756.718 2.152-.396.396-.964.471-2.152-.718L12 13.435 8.413 17.02c-1.188 1.19-1.756 1.114-2.152.718-.396-.396-.471-.964.717-2.152L10.565 12 6.978 8.413C5.79 7.225 5.865 6.657 6.261 6.261c.396-.396.964-.471 2.152.717L12 10.565l3.587-3.587c1.188-1.188 1.756-1.113 2.152-.717z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Add cash
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c10 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <span
+                        class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            statistics
+                          </title>
+                          <path
+                            d="M4 4c.552 0 1 .343 1 2v10c0 .943 0 1.414.293 1.707C5.586 18 6.057 18 7 18h.003C7 17.868 7 17.707 7 17.5v-6c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C8.803 9 9.035 9 9.5 9s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v6c0 .207 0 .368-.003.5h2.006C14 17.868 14 17.707 14 17.5v-9c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C15.803 6 16.035 6 16.5 6s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v9c0 .207 0 .368-.003.5H19c1.657 0 2 .448 2 1s-.343 1-2 1H9c-2.828 0-4.243 0-5.121-.879C3 18.243 3 16.828 3 14V6c0-1.657.448-2 1-2zm12.5 14c.246 0 .38 0 .479-.004h.017v-.017C17 17.88 17 17.745 17 17.5v-9c0-.246 0-.38-.004-.478v-.018h-.017C16.88 8 16.745 8 16.5 8c-.246 0-.38 0-.479.004h-.017v.018C16 8.12 16 8.254 16 8.5v9c0 .246 0 .38.004.479v.017h.017c.099.004.233.004.479.004zm-7 0c.246 0 .38 0 .478-.004h.018v-.017C10 17.88 10 17.745 10 17.5v-6c0-.246 0-.38-.004-.478v-.018h-.018C9.88 11 9.746 11 9.5 11c-.246 0-.38 0-.478.004h-.018v.018C9 11.12 9 11.254 9 11.5v6c0 .246 0 .38.004.479v.017h.018C9.12 18 9.254 18 9.5 18z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Invest
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiBox-root MuiBox-root-34"
+                    data-testid="Spacer"
+                  >
+                    <div
+                      class="c11"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text c12 MuiButton-disableElevation"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <title>
+                          account
+                        </title>
+                        <path
+                          d="M6.618 16.465c3.559-.62 7.206-.62 10.765 0l.428.076c1.83.361 3.154 1.884 3.19 3.667v.097c0 .576-.695.901-1.173.549-.389-.287-.626-.709-.862-1.128-.082-.146-.163-.29-.25-.43-.281-.445-.748-.775-1.31-.886l-.382-.068c-3.322-.578-6.726-.578-10.047 0l-.382.068c-.562.111-1.029.441-1.31.886-.087.14-.169.284-.25.43-.236.42-.474.841-.862 1.128-.478.352-1.173.027-1.173-.55v-.096c.035-1.783 1.36-3.306 3.19-3.667l.428-.076zM12 3c3.314 0 6 2.686 6 6s-2.686 6-6 6-6-2.686-6-6 2.686-6 6-6zm0 2C9.79 5 8 6.79 8 9s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                      <span
+                        class="MuiButton-endIcon MuiButton-iconSizeMedium"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>
+                            arrowHeadDown
+                          </title>
+                          <path
+                            d="M17.645 10.592c.433-.309.477-.908.093-1.27l-.08-.075c-.308-.292-.795-.33-1.15-.09l-4.536 3.71-4.48-3.71c-.355-.24-.842-.201-1.15.09l-.08.075c-.384.363-.34.961.093 1.27l5.078 4.237c.319.228.759.228 1.078 0l5.134-4.237z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-35"
+        data-testid="Spacer"
+      >
+        <div
+          class="c13"
+        />
+      </div>
+      <div
+        class="MuiToolbar-root MuiToolbar-regular c14 MuiToolbar-gutters"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <label
+              class="MuiFormControlLabel-root c15 MuiFormControlLabel-labelPlacementStart"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-36"
+              >
+                <span
+                  class="MuiSwitch-root c16 MuiSwitch-sizeSmall"
+                >
+                  <span
+                    aria-disabled="false"
+                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-37 MuiSwitch-switchBase MuiSwitch-colorPrimary"
+                  >
+                    <span
+                      class="MuiIconButton-label"
+                    >
+                      <input
+                        class="PrivateSwitchBase-input-40 MuiSwitch-input"
+                        type="checkbox"
+                        value=""
+                      />
+                      <span
+                        class="MuiSwitch-thumb"
+                      />
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </span>
+                  <span
+                    class="MuiSwitch-track"
+                  />
+                </span>
+              </div>
+              <span
+                class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+              >
+                Experimental Features
+              </span>
+            </label>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text c17 MuiButton-disableElevation"
+              href="https://google.com"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                My Accounts Login
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+</div>
+`;

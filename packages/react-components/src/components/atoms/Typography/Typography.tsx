@@ -56,6 +56,7 @@ const sizes = {
   b3: { fontSize: 14, lineHeight: 28, letterSpacing: 0.3, fontWeight: 'normal' },
   b4: { fontSize: 12, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'normal' },
   b5: { fontSize: 11, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
+  link: { fontSize: 13, lineHeight: 16, letterSpacing: 0.2, fontWeight: 600 },
 };
 
 export const typographyCss = ({
@@ -100,6 +101,7 @@ export const variantComponentMap = {
   b3: 'p',
   b4: 'p',
   b5: 'p',
+  link: 'a',
 };
 
 const Typography = ({ variant = 'b5', ...props }: TypographyProps) => (

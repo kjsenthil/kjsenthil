@@ -76,8 +76,9 @@ export {
   Hidden,
   IconButton,
   Input,
-  InputLabel,
   InputAdornment,
+  InputBase,
+  InputLabel,
   FormControl,
   Menu,
   MenuItem,
@@ -113,5 +114,6 @@ export type {
 
 // At some point we might need to create an Icon wrapper as an atom
 // that dynamically imports each icon by a given name like <Icon name"menu" />
+export { default as ClearIcon } from '@material-ui/icons/Clear';
 export { default as MenuIcon } from '@material-ui/icons/Menu';
 export { default as CheckCircleIcon } from '@material-ui/icons/CheckCircle';

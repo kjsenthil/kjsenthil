@@ -213,6 +213,9 @@ Object {
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
+                    <title>
+                      infoCircleIcon
+                    </title>
                     <path
                       d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                       fill-rule="evenodd"
@@ -281,6 +284,9 @@ Object {
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
+                          <title>
+                            infoCircleIcon
+                          </title>
                           <path
                             d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                             fill-rule="evenodd"
@@ -480,6 +486,9 @@ Object {
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
+                        <title>
+                          infoCircleIcon
+                        </title>
                         <path
                           d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                           fill-rule="evenodd"
@@ -503,7 +512,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-fIxmyt fMbnBj"
+          class="MuiCardContent-root sc-eWnToP jGMhNz"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -520,6 +529,9 @@ Object {
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
+                  <title>
+                    infoCircleIcon
+                  </title>
                   <path
                     d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                     fill-rule="evenodd"
@@ -588,6 +600,9 @@ Object {
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
+                        <title>
+                          infoCircleIcon
+                        </title>
                         <path
                           d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                           fill-rule="evenodd"
@@ -623,10 +638,10 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-jUfyBS dPBKsx"
+                  class="sc-eGJWMs jXKzUN"
                 >
                   <div
-                    class="sc-jQAxuV kcusYh"
+                    class="sc-csTbgd iFVppp"
                     width="20"
                   >
                     <div
@@ -658,7 +673,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-jQAxuV dOnSRf"
+                    class="sc-csTbgd iyqcLH"
                     width="50"
                   >
                     <div
@@ -690,7 +705,7 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-jQAxuV hhvUSz"
+                    class="sc-csTbgd fdYVMf"
                     width="5"
                   >
                     <div
@@ -787,6 +802,9 @@ Object {
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
+                      <title>
+                        infoCircleIcon
+                      </title>
                       <path
                         d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0-2c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-10c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm0 8.3c.515 0 .94-.31.994-.898l.006-.13V11.4c0-.673-.448-1.101-1-1.101-.515 0-.94.373-.994.97L11 11.4v4.872c0 .672.448 1.028 1 1.028z"
                         fill-rule="evenodd"

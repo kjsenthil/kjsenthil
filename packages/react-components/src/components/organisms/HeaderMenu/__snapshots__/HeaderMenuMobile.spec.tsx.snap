@@ -1,108 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HeaderMenu in mobile view with experimental features disabled renders the header menu view without experimental features 1`] = `
-.c6 {
-  font-size: 0.6875rem;
+exports[`Header Menu in Mobile renders the header menu (with experimental features) 1`] = `
+.c2 {
+  font-size: 0.8125rem;
   line-height: 1rem;
   -webkit-letter-spacing: 0.0125rem;
   -moz-letter-spacing: 0.0125rem;
   -ms-letter-spacing: 0.0125rem;
   letter-spacing: 0.0125rem;
   font-weight: 600;
-  color: #380c57;
-  white-space: break-spaces;
-}
-
-.c7 {
-  font-size: 0.6875rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.01875rem;
-  -moz-letter-spacing: 0.01875rem;
-  -ms-letter-spacing: 0.01875rem;
-  letter-spacing: 0.01875rem;
-  font-weight: normal;
-  color: #000;
-  white-space: break-spaces;
-}
-
-.c8 {
-  font-size: 0.6875rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.0125rem;
-  -moz-letter-spacing: 0.0125rem;
-  -ms-letter-spacing: 0.0125rem;
-  letter-spacing: 0.0125rem;
-  font-weight: 600;
-  color: #380c57;
-  white-space: break-spaces;
   color: #6c00bf;
-  border: 1px solid #6c00bf;
-  height: 40px;
-  border-radius: 6px;
-  min-width: 80px;
-  text-transform: none;
-  white-space: nowrap;
-  padding: 12px 16px;
-}
-
-.c8.Mui-disabled {
-  color: #6c00bf;
-  border: 1px solid #6c00bf;
-  opacity: 0.2;
-}
-
-.c8 .MuiButton-iconSizeMedium *:first-child {
-  font-size: 0.875rem;
+  white-space: break-spaces;
 }
 
 .c9 {
-  font-size: 0.6875rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.0125rem;
-  -moz-letter-spacing: 0.0125rem;
-  -ms-letter-spacing: 0.0125rem;
-  letter-spacing: 0.0125rem;
-  font-weight: 600;
-  color: #380c57;
-  white-space: break-spaces;
-  background-color: #6c00bf;
-  color: #fff;
-  height: 40px;
-  border-radius: 6px;
-  min-width: 80px;
-  text-transform: none;
-  white-space: break-space;
-  padding: 12px 16px;
-}
-
-.c9:hover {
-  background-color: #6c00bf;
-  color: #fff;
-}
-
-.c9.Mui-disabled {
-  background-color: #6c00bf;
-  color: #fff;
-  opacity: 0.2;
-}
-
-.c9.Mui-disabled:hover {
-  background-color: #6c00bf;
-  color: #fff;
-}
-
-.c9 .MuiButton-iconSizeMedium *:first-child {
-  font-size: 0.875rem;
-}
-
-.c3 {
-  background-color: #eeedfc;
-  width: 100%;
-  height: 1px;
-  border-radius: 1.5px;
-}
-
-.c1 {
   font-size: 0.8125rem;
   line-height: 1rem;
   -webkit-letter-spacing: 0.0125rem;
@@ -110,274 +21,24 @@ exports[`HeaderMenu in mobile view with experimental features disabled renders t
   -ms-letter-spacing: 0.0125rem;
   letter-spacing: 0.0125rem;
   font-weight: 600;
-  color: #6c00bf;
+  color: #fff;
   white-space: break-spaces;
 }
 
-.c4 .MuiToolbar-root {
+.c5 .MuiToolbar-root {
   border-top: 2px solid [object Object];
 }
 
-.c0 {
-  box-shadow: 1px 2px 44px 0 rgba(139,139,139,0.26);
-}
-
-.c2 {
+.c3 {
   background-image: url('/PurpleBestInvest.svg');
   background-repeat: no-repeat;
-  background-size: auto;
-  height: 38px;
+  background-size: contain;
+  height: 37px;
   width: 124px;
-}
-
-.c5 {
-  text-align: left;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  white-space: nowrap;
-}
-
-<div>
-  <div
-    class="MuiBox-root MuiBox-root-9"
-    data-test-id="header-menu"
-  >
-    <header
-      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
-      data-testid="header-menu"
-    >
-      <div
-        class="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
-            >
-              <button
-                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 MuiLink-button MuiTypography-colorPrimary"
-              >
-                <div
-                  class="c2"
-                />
-              </button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-flex-end"
-              >
-                <button
-                  aria-label="menu"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="MuiBox-root MuiBox-root-10"
-        data-testid="Spacer"
-      >
-        <div
-          class="c3"
-        />
-      </div>
-      <div
-        class="MuiToolbar-root MuiToolbar-regular c4 MuiToolbar-gutters"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
-          >
-            <div
-              class="c5"
-            >
-              <h6
-                class="MuiTypography-root c6 MuiTypography-body1"
-              >
-                £101,100.00
-              </h6>
-              <p
-                class="MuiTypography-root c7 MuiTypography-body1"
-              >
-                cash ready to invest
-              </p>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-wrap-xs-nowrap MuiGrid-justify-content-xs-flex-end"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text c8 MuiButton-disableElevation"
-                tabindex="0"
-                type="button"
-                wrap="nowrap"
-              >
-                <span
-                  class="MuiButton-label"
-                >
-                  <span
-                    class="MuiButton-startIcon MuiButton-iconSizeMedium"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M17.739 6.261c.396.396.471.964-.718 2.152L13.435 12l3.586 3.587c1.19 1.188 1.114 1.756.718 2.152-.396.396-.964.471-2.152-.718L12 13.435 8.413 17.02c-1.188 1.19-1.756 1.114-2.152.718-.396-.396-.471-.964.717-2.152L10.565 12 6.978 8.413C5.79 7.225 5.865 6.657 6.261 6.261c.396-.396.964-.471 2.152.717L12 10.565l3.587-3.587c1.188-1.188 1.756-1.113 2.152-.717z"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  Add cash
-                </span>
-                <span
-                  class="MuiTouchRipple-root"
-                />
-              </button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text c9 MuiButton-disableElevation"
-                tabindex="0"
-                type="button"
-              >
-                <span
-                  class="MuiButton-label"
-                >
-                  <span
-                    class="MuiButton-startIcon MuiButton-iconSizeMedium"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M4 4c.552 0 1 .343 1 2v10c0 .943 0 1.414.293 1.707C5.586 18 6.057 18 7 18h.003C7 17.868 7 17.707 7 17.5v-6c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C8.803 9 9.035 9 9.5 9s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v6c0 .207 0 .368-.003.5h2.006C14 17.868 14 17.707 14 17.5v-9c0-.465 0-.697.038-.89.158-.794.778-1.414 1.572-1.572C15.803 6 16.035 6 16.5 6s.697 0 .89.038c.794.158 1.414.778 1.572 1.572.038.193.038.425.038.89v9c0 .207 0 .368-.003.5H19c1.657 0 2 .448 2 1s-.343 1-2 1H9c-2.828 0-4.243 0-5.121-.879C3 18.243 3 16.828 3 14V6c0-1.657.448-2 1-2zm12.5 14c.246 0 .38 0 .479-.004h.017v-.017C17 17.88 17 17.745 17 17.5v-9c0-.246 0-.38-.004-.478v-.018h-.017C16.88 8 16.745 8 16.5 8c-.246 0-.38 0-.479.004h-.017v.018C16 8.12 16 8.254 16 8.5v9c0 .246 0 .38.004.479v.017h.017c.099.004.233.004.479.004zm-7 0c.246 0 .38 0 .478-.004h.018v-.017C10 17.88 10 17.745 10 17.5v-6c0-.246 0-.38-.004-.478v-.018h-.018C9.88 11 9.746 11 9.5 11c-.246 0-.38 0-.478.004h-.018v.018C9 11.12 9 11.254 9 11.5v6c0 .246 0 .38.004.479v.017h.018C9.12 18 9.254 18 9.5 18z"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  Invest
-                </span>
-                <span
-                  class="MuiTouchRipple-root"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  </div>
-</div>
-`;
-
-exports[`HeaderMenu in mobile view with experimental features enabled renders the header menu view with experimental features 1`] = `
-.c3 {
-  background-color: #eeedfc;
-  width: 100%;
-  height: 1px;
-  border-radius: 1.5px;
-}
-
-.c1 {
-  font-size: 0.8125rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.0125rem;
-  -moz-letter-spacing: 0.0125rem;
-  -ms-letter-spacing: 0.0125rem;
-  letter-spacing: 0.0125rem;
-  font-weight: 600;
-  color: #6c00bf;
-  white-space: break-spaces;
-}
-
-.c8 {
-  font-size: 0.8125rem;
-  line-height: 1rem;
-  -webkit-letter-spacing: 0.0125rem;
-  -moz-letter-spacing: 0.0125rem;
-  -ms-letter-spacing: 0.0125rem;
-  letter-spacing: 0.0125rem;
-  font-weight: 600;
-  color: inherit;
-  white-space: break-spaces;
-}
-
-.c4 .MuiToolbar-root {
-  border-top: 2px solid [object Object];
-}
-
-.c0 {
-  box-shadow: 1px 2px 44px 0 rgba(139,139,139,0.26);
-}
-
-.c5 {
-  background: linear-gradient(267deg,#af61fe 20%,#7024fc 75%);
-  color: white;
-  padding-left: 2.25rem;
-  padding-right: 2.5625rem;
+  margin-left: 4px;
 }
 
 .c7 {
-  -webkit-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  transform: rotate(-90deg);
-}
-
-.c2 {
-  background-image: url('/PurpleBestInvest.svg');
-  background-repeat: no-repeat;
-  background-size: auto;
-  height: 38px;
-  width: 124px;
-}
-
-.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -390,8 +51,47 @@ exports[`HeaderMenu in mobile view with experimental features enabled renders th
   align-items: center;
 }
 
+.c8 {
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.c0 {
+  min-height: 90px;
+  margin: auto;
+  max-width: 1440px;
+  left: 0;
+  right: 0;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  z-index: 1400;
+}
+
+.c4 {
+  padding-right: 4px;
+}
+
+.c6 {
+  background: linear-gradient(267deg,#af61fe 20%,#7024fc 75%);
+  color: #fff;
+  padding-left: 2.25rem;
+  padding-right: 2.5625rem;
+  min-height: 34px;
+}
+
+.c1 {
+  min-height: 90px;
+}
+
 @media (max-width:830px) {
-  .c5 {
+
+}
+
+@media (max-width:830px) {
+  .c6 {
     padding: 0;
   }
 }
@@ -403,14 +103,14 @@ exports[`HeaderMenu in mobile view with experimental features enabled renders th
 <div>
   <div
     class="MuiBox-root MuiBox-root-1"
-    data-test-id="header-menu"
+    data-testid="header"
   >
     <header
       class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
       data-testid="header-menu"
     >
       <div
-        class="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
+        class="MuiToolbar-root MuiToolbar-dense c1 MuiToolbar-gutters"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
@@ -422,10 +122,10 @@ exports[`HeaderMenu in mobile view with experimental features enabled renders th
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
             >
               <button
-                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c1 MuiLink-button MuiTypography-colorPrimary"
+                class="MuiTypography-root MuiLink-root MuiLink-underlineHover c2 MuiLink-button MuiTypography-colorPrimary"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 />
               </button>
             </div>
@@ -437,7 +137,7 @@ exports[`HeaderMenu in mobile view with experimental features enabled renders th
               >
                 <button
                   aria-label="menu"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart"
+                  class="MuiButtonBase-root MuiIconButton-root c4 MuiIconButton-colorPrimary MuiIconButton-edgeStart"
                   tabindex="0"
                   type="button"
                 >
@@ -465,36 +165,30 @@ exports[`HeaderMenu in mobile view with experimental features enabled renders th
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-2"
-        data-testid="Spacer"
-      >
-        <div
-          class="c3"
-        />
-      </div>
-      <div
-        class="MuiToolbar-root MuiToolbar-regular c4 c5 MuiToolbar-gutters"
+        class="MuiToolbar-root MuiToolbar-regular c5 c6 MuiToolbar-gutters"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center"
         >
           <div
-            class="c6"
+            class="c7"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root c7"
+              class="MuiSvgIcon-root c8"
               focusable="false"
               viewBox="0 0 24 24"
             >
+              <title>
+                upload
+              </title>
               <path
                 d="M17 9c1.389.027 2.213.15 2.826.62.208.16.395.346.554.554.59.77.619 2.323.62 4.496V15c0 2.346 0 4.018-.62 4.826-.16.208-.346.394-.554.554-.808.62-1.98.62-4.326.62h-7c-2.346 0-3.518 0-4.326-.62-.208-.16-.394-.346-.554-.554-.561-.73-.614-2.17-.62-4.174v-1.304c.006-2.004.059-3.443.62-4.174.16-.208.346-.394.554-.554C4.787 9.15 5.61 9.027 7 9c1.657 0 2 .448 2 1s-.343 1-2 1c-.412.008-.739.034-1.016.065-.255.029-.403.064-.488.093-.073.024-.097.043-.105.049-.07.053-.131.115-.184.184-.007.008-.024.032-.05.105-.028.085-.063.233-.092.488-.053.471-.063 1.455-.065 2.494v1.044c.002 1.04.012 2.023.065 2.494.029.255.064.403.093.488.025.073.043.097.049.105.053.07.115.131.184.184.008.006.032.024.105.049.085.029.233.064.488.093.55.062 1.297.065 2.516.065h7c1.22 0 1.966-.003 2.516-.065.255-.029.403-.064.488-.093.073-.024.097-.043.105-.049.07-.053.131-.115.184-.184.006-.008.024-.032.05-.105.028-.085.063-.233.092-.488.053-.471.063-1.455.065-2.494v-1.044c-.002-1.04-.012-2.023-.065-2.494-.029-.255-.064-.403-.093-.488-.024-.073-.043-.097-.049-.105-.053-.07-.115-.131-.184-.184-.008-.007-.032-.025-.105-.05-.085-.028-.233-.063-.488-.092-.277-.031-.604-.057-1.016-.065-1.657 0-2-.448-2-1s.343-1 2-1zm-5.603-5.798c.357-.27.85-.27 1.206 0l3.48 2.632c.485.366.534 1.076.105 1.505l-.089.089c-.346.346-.89.39-1.288.107L13 6.24v8.786c0 1.657-.448 2-1 2s-1-.343-1-2V6.24L9.19 7.535c-.398.284-.943.239-1.289-.107l-.089-.089c-.43-.43-.38-1.139.104-1.505z"
                 fill-rule="evenodd"
               />
             </svg>
             <a
-              class="MuiTypography-root MuiLink-root MuiLink-underlineAlways c8 MuiTypography-colorPrimary"
-              href="https://google.com"
+              class="MuiTypography-root MuiLink-root MuiLink-underlineAlways c9 MuiTypography-colorPrimary"
             >
               Back to old Bestinvest
             </a>

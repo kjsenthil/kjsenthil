@@ -12,7 +12,7 @@ import {
   PillsNavigationProps,
   PillNavigationOnChangeProps,
 } from './PillsNavigation';
-
+import { NavLinkWithDropDownProps } from './NavLinkWithDropDown';
 import { FormSelectProps } from './FormSelect';
 
 export { default as Alert } from './Alert';
@@ -33,6 +33,7 @@ export { default as MainCard } from './MainCard';
 export { default as Modal } from './Modal';
 export { default as ModalWithHeader } from './ModalWithHeader';
 export { default as NavLink } from './NavLink';
+export { default as NavLinkWithDropDown } from './NavLinkWithDropDown';
 export { default as PillsNavigation } from './PillsNavigation';
 export { default as StickyHeader } from './StickyHeader';
 export {
@@ -78,4 +79,5 @@ export type {
   PillsNavigationTabProps,
   PillsNavigationProps,
   PillNavigationOnChangeProps,
+  NavLinkWithDropDownProps,
 };
