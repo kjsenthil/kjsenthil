@@ -52,8 +52,8 @@ describe('Logout cookie', () => {
 
   it('dispatches a logout and redirects to login page', () => {
     renderWithProviders(<LogoutPage />, store);
-    expect(mockRemoveCookie).toHaveBeenCalledWith(ApiAppName.myAccounts);
-    expect(mockRemoveCookie).toHaveBeenCalledWith(ApiAppName.ois);
+    expect(mockRemoveCookie).toHaveBeenCalledWith(ApiAppName.myAccounts, { domain: '', path: '/' });
+    expect(mockRemoveCookie).toHaveBeenCalledWith(ApiAppName.ois, { domain: '', path: '/' });
     expect(mockNavigate).toHaveBeenCalledWith(NavPaths.ROOT_PAGE);
   });
 });

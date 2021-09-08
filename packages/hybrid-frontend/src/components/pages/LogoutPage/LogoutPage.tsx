@@ -7,6 +7,7 @@ import { logout } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
 import { ApiAppName } from '../../../constants';
+import { COOKIE_DOMAIN } from '../../../config';
 
 interface LogoutPageProps {
   path?: string;
@@ -26,8 +27,10 @@ const LogoutPage = (_: LogoutPageProps) => {
   }, [accessTokens]);
 
   useEffect(() => {
-    Cookies.remove(ApiAppName.myAccounts);
-    Cookies.remove(ApiAppName.ois);
+    const cookieOptions = { path: '/', domain: COOKIE_DOMAIN ?? '' };
+
+    Cookies.remove(ApiAppName.myAccounts, cookieOptions);
+    Cookies.remove(ApiAppName.ois, cookieOptions);
     dispatch(logout());
   }, []);
 
