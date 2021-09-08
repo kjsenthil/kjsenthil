@@ -8,6 +8,7 @@ import BIAccountsPage from '../components/pages/BIAccountsPage';
 import LifePlanPage from '../components/pages/LifePlanPage';
 import LifePlanManagementPage from '../components/pages/LifePlanManagementPage';
 import AddCashPage from '../components/pages/AddCashPage';
+import WithDrawCashPage from '../components/pages/WithDrawCashPage';
 import { useFeatureFlagToggle } from '../hooks';
 import { FeatureFlagNames } from '../constants';
 import { NavPaths } from '../config/paths';
@@ -34,7 +35,13 @@ const MyAccount = () => {
         Component={LifePlanManagementPage}
       />
       {experimentalFeatureEnabled && (
-        <PrivateRoute path={getBasePath(NavPaths.ADD_CASH_PAGE)} Component={AddCashPage} />
+        <>
+          <PrivateRoute path={getBasePath(NavPaths.ADD_CASH_PAGE)} Component={AddCashPage} />
+          <PrivateRoute
+            path={getBasePath(NavPaths.WITHDRAW_CASH_PAGE)}
+            Component={WithDrawCashPage}
+          />
+        </>
       )}
       <NotFoundPage default />
     </Router>

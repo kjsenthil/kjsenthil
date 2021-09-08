@@ -20,12 +20,13 @@ const MainCard = ({
   respondTo,
   renderActionEl,
   style,
+  ...props
 }: MainCardProps) => {
   const theme = useTheme();
   const isMobile = respondTo ? useMediaQuery(theme.breakpoints.down(respondTo as any)) : false;
 
   return (
-    <CardContainer isLoading={isLoading} isMobile={isMobile} style={style}>
+    <CardContainer isLoading={isLoading} isMobile={isMobile} style={style} {...props}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           {!isLoading && (

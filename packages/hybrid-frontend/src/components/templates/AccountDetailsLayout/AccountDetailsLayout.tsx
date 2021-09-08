@@ -59,7 +59,7 @@ const links = [
   },
   {
     name: 'Withdraw cash',
-    path: '/',
+    path: NavPaths.WITHDRAW_CASH_PAGE,
   },
   {
     name: 'Invest',

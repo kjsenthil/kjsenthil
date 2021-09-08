@@ -34,6 +34,7 @@ export { default as SimulationForm } from './SimulationForm';
 export { default as StatusComponent } from './StatusComponent';
 export { default as StepCard } from './StepCard';
 export { default as SummaryPanel } from './SummaryPanel';
+export { default as WithDrawCashCard } from './WithDrawCashCard';
 export { default as SuccessModal } from './SuccessModal';
 
 export type { GoalProgressCardProps, GoalSelectionProps };
