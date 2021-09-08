@@ -88,4 +88,28 @@ describe('PerformanceProjectionsChartChart', () => {
     expect(screen.getByText('Retirement')).toBeVisible();
     expect(screen.getByText('Remaining')).toBeVisible();
   });
+
+  test('renders ticks for today and the retirement age on the x-axis, but not for other goals or retirement end age', () => {
+    renderWithTheme(
+      <div>
+        <PerformanceProjectionsChart
+          initialWidth={CHART_SIZE}
+          initialHeight={CHART_SIZE}
+          parentWidth={CHART_SIZE}
+          projectionsData={mockProjectionsMonthlyData.map(mapDate)}
+          historicalData={mockHistoricalMonthlyData.map(mapDate)}
+          goalsData={mockGoalsMultiData.data.map(mapDate)}
+          projectionsMetadata={mockProjectionsMetadata}
+          showLikelyRange
+          toggleLikelyRange={() => {}}
+        />
+      </div>
+    );
+
+    expect(screen.getAllByText('TODAY')).toHaveLength(2);
+    expect(screen.getByText('AGE 61')).toBeInTheDocument();
+    expect(screen.queryByText('AGE 48')).not.toBeInTheDocument();
+    expect(screen.queryByText('AGE 96')).not.toBeInTheDocument();
+    expect(screen.queryByText('AGE 106')).not.toBeInTheDocument();
+  });
 });

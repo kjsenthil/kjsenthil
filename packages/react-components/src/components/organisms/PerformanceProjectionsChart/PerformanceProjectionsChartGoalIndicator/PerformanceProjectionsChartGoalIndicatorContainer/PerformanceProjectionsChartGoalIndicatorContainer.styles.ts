@@ -10,7 +10,10 @@ export const ContainerTriangle = styled.div`
     width: ${theme.spacing(1)}px;
     height: ${theme.spacing(1)}px;
     
-    background-color: ${theme.palette.grey['200']};
+    border-bottom: solid ${theme.palette.grey['200']} 2px;
+    border-right: solid ${theme.palette.grey['200']} 2px;
+    
+    background-color: white;
     transform: translate(-50%, -${theme.spacing(0.5)}px) rotate(45deg);
   `}
 `;
@@ -21,7 +24,8 @@ export const ContainerBubble = styled.div<{
   ${({ theme }) => `
     padding: ${theme.spacing(1.0625)}px;
     border-radius: 10px;
-    background-color: ${theme.palette.grey['200']};
+    border: solid ${theme.palette.grey['200']} 2px;
+    background-color: white;
   `}
 `;
 

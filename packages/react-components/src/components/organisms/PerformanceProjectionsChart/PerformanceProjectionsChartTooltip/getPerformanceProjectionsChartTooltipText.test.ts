@@ -9,8 +9,8 @@ describe('getPerformanceProjectionsChartTooltipText', () => {
     number | undefined, // Age as at today
     string // Expected tooltip text
   ][] = [
-    [new Date(2023, 0, 1), 30, 'AGE\u00a033'],
-    [new Date(2021, 0, 1), 30, 'AGE\u00a031'],
+    [new Date(2023, 0, 1), 30, 'AGE 33'],
+    [new Date(2021, 0, 1), 30, 'AGE 31'],
     [new Date(2020, 0, 1), 30, 'TODAY'],
     [new Date(2020, 0, 1), undefined, 'TODAY'],
     [new Date(2021, 0, 1), undefined, '2021'],

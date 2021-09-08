@@ -264,14 +264,10 @@ function PerformanceProjectionsChart({
   }
   axisBottomStaticTicks.push(today);
 
-  // There is a tick for each goal's date
-  goalsData.forEach(({ date }) => {
-    axisBottomStaticTicks.push(date);
-  });
+  const retirementGoal = goalsData.find((goal) => goal.label === 'Retirement');
 
-  // There is a tick for the final date
-  if (hasProjectionsData) {
-    axisBottomStaticTicks.push(projectionsData[projectionsData.length - 1].date);
+  if (retirementGoal) {
+    axisBottomStaticTicks.push(retirementGoal.date);
   }
 
   // ----- Chart tick columns ----- //

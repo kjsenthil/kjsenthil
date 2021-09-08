@@ -60,9 +60,9 @@ describe('PerformanceProjectionsChartTickComponentBottomAxis', () => {
 
   describe('getAgeText function', () => {
     const getAgeTextCases: Array<[number | undefined, number, string]> = [
-      [new Date().getFullYear(), 30, 'AGE\u00a030'],
-      [new Date().getFullYear() + 10, 30, 'AGE\u00a040'],
-      [undefined, 30, 'AGE\u00a0UNKNOWN'],
+      [new Date().getFullYear(), 30, 'AGE 30'],
+      [new Date().getFullYear() + 10, 30, 'AGE 40'],
+      [undefined, 30, 'AGE UNKNOWN'],
     ];
 
     test.each(getAgeTextCases)(

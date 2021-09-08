@@ -51,7 +51,7 @@ Object {
                 dy="0"
                 x="0"
               >
-                AGE 31
+                AGE 31
               </tspan>
             </text>
           </svg>
@@ -64,7 +64,7 @@ Object {
           id="__react_svg_text_measurement_id"
           style="font-weight: bold;"
         >
-          AGE 31
+          31
         </text>
       </svg>
     </body>,
@@ -114,7 +114,7 @@ Object {
               dy="0"
               x="0"
             >
-              AGE 31
+              AGE 31
             </tspan>
           </text>
         </svg>
@@ -187,7 +187,7 @@ Object {
           id="__react_svg_text_measurement_id"
           style="font-weight: bold;"
         >
-          AGE 31
+          31
         </text>
       </svg>
       <div>
@@ -236,7 +236,7 @@ Object {
                 dy="0"
                 x="0"
               >
-                AGE 31
+                AGE 31
               </tspan>
             </text>
           </svg>
@@ -289,7 +289,7 @@ Object {
               dy="0"
               x="0"
             >
-              AGE 31
+              AGE 31
             </tspan>
           </text>
         </svg>

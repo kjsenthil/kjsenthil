@@ -39,7 +39,7 @@ export interface GetAgeTextProps {
  * This function adds an age text to the formatted value.
  */
 export function getAgeText({ todayAge, tickYear, showAgeNumberOnly }: GetAgeTextProps): string {
-  const prefix = showAgeNumberOnly ? '' : 'AGE\u00a0';
+  const prefix = showAgeNumberOnly ? '' : 'AGE ';
 
   if (
     tickYear === undefined ||
