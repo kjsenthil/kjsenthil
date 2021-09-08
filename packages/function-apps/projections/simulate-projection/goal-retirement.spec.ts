@@ -3,6 +3,13 @@ import { calculateCompoundInterestMultiplierAtDrawdown, calculateCompoundInteres
 import { monthsDiff } from "./helpers";
 import { ContributionMonth, DrawdownType, ExpectedReturns, ProjectionMonth, RequestPayload, TargetProjectionMonth } from "./types";
 
+function returnPastDate(today:Date): string {
+  var newPastDate = new Date(today);
+  newPastDate.setDate(newPastDate.getDate() - 1);
+  return newPastDate.toISOString().slice(0, 10);
+}
+
+
 describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   let context: Context;
 
@@ -204,10 +211,71 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
       } as ContributionMonth);
   });
 
+  it("should return expected results when no lump sum", async () => {
+    // Arrange
+    const inboundPayload = {
+      timeHorizonToProject: 564,
+      monthlyContribution: 666.66,
+      currentPortfolioValue: 76688.04,
+      upfrontContribution: 0,
+      currentNetContribution: 71166.66,
+      includeGoal: true,
+      preGoal: {
+        expectedReturnPercentage: 2.20,
+        volatilityPercentage: 5.75,
+        ZScoreLowerBound: -1.319225852,
+        ZScoreUpperBound: 1.292778102
+      },
+      feesPercentage: 0,
+      postGoal: {
+        expectedReturnPercentage: 2.20,
+        volatilityPercentage: 5.75,
+        ZScoreLowerBound: -1.319225852,
+        ZScoreUpperBound: 1.292778102
+      },
+      drawdownType: DrawdownType.Retirement,
+      drawdownRetirement: {
+        startDate: new Date("2033-01-01").toISOString().slice(0, 10),
+        endDate: new Date("2043-01-01").toISOString().slice(0, 10),
+        regularDrawdown: 300,
+        remainingAmount: 0
+      }
+    } as RequestPayload;
+
+    // Action
+    const result = getRetirementTealProjectionRecursive(inboundPayload, new Date("Sept 07,2021"));
+
+    // Assertion
+    expect(result.goal.onTrack.percentage).toBeCloseTo(609.426, 2);
+    expect(result.goal.desiredDiscountedOutflow).toBeCloseTo(36300);
+    expect(result.goal.affordableUnDiscountedOutflowAverage).toBeCloseTo(221221.957, 2);
+    expect(result.goal.drawdownRetirement.affordable.drawdown).toBeCloseTo(1828.28, 2);
+    expect(result.goal.drawdownRetirement.affordable.lumpSum).toBeCloseTo(0, 2);
+    expect(result.projectionData.length).toBeCloseTo(565);
+    
+    // underperform
+    expect(result.goal.drawdownRetirement.underperform.drawdown).toBeCloseTo(1430.584, 2);
+    expect(result.goal.drawdownRetirement.underperform.lumpSum).toBeCloseTo(0, 2);
+
+    expect(result.projectionData[135]).toEqual(
+      {
+        monthNo: 135,
+        lower: 166829.64689149815,
+        average: 197342.22872496472,
+        upper: 226616.99760860763
+      } as ProjectionMonth);
+
+    expect(result.contributionData[135]).toEqual(
+      {
+        monthNo: 135,
+        value: 158670.81936035203
+      } as ContributionMonth);
+  });
+
   it("should return expected results when lump sum date is past date the result is same as lump sum is zero", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 200)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizonToProject: 900,
@@ -301,7 +369,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   it("should return  results same as lump sum zero when lump sum date is past date with state pension", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizonToProject: 900,
@@ -398,7 +466,7 @@ describe("Tests for getRetirementTealProjectionRecursive Function", () => {
   it("should return expected results when drawdown already started", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizonToProject: 900,
@@ -782,7 +850,7 @@ describe("tests for calculateProjectionValue function", () => {
     const contributionPeriodFromLumpSumAndDrawdown = 180;
     const goalTargetMonth = 657;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0, true))
       .toEqual(251422.3285);
   });
 
@@ -800,7 +868,7 @@ describe("tests for calculateProjectionValue function", () => {
     const contributionPeriodFromLumpSumAndDrawdown = 180;
     const goalTargetMonth = 657;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0, true))
       .toEqual(633959.8788845235);
   });
 
@@ -820,7 +888,7 @@ describe("tests for calculateProjectionValue function", () => {
     const goalTargetMonth = 658;
     const projectedAmountOnLumpSumDate = 633959.8788845235;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate, true))
       .toEqual(639265.2020759225);
   });
 
@@ -839,7 +907,7 @@ describe("tests for calculateProjectionValue function", () => {
     const goalTargetMonth = 658;
     const projectedAmountOnLumpSumDate = 633959.8788845235;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate, true))
       .toEqual(1510827.8770760705);
   });
 });
@@ -860,7 +928,7 @@ describe("tests for calculateProjectionValue function", () => {
     const contributionPeriodFromLumpSumAndDrawdown = 180;
     const goalTargetMonth = 657;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0, true))
       .toEqual(251422.3285);
   });
 
@@ -878,7 +946,7 @@ describe("tests for calculateProjectionValue function", () => {
     const contributionPeriodFromLumpSumAndDrawdown = 180;
     const goalTargetMonth = 657;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, 0, true))
       .toEqual(633959.8788845235);
   });
 
@@ -897,7 +965,7 @@ describe("tests for calculateProjectionValue function", () => {
     const goalTargetMonth = 658;
     const projectedAmountOnLumpSumDate = 633959.8788845235;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate, true))
       .toEqual(639265.2020759225);
   });
 
@@ -916,7 +984,7 @@ describe("tests for calculateProjectionValue function", () => {
     const goalTargetMonth = 658;
     const projectedAmountOnLumpSumDate = 633959.8788845235;
     expect(
-      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate))
+      calculateProjectionValue(month, previousMonthProjectedValue, percentage, portfolioCurrentValue, upfrontContribution, monthlyContributions, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, goalTargetMonth, projectedAmountOnLumpSumDate, true))
       .toEqual(1510827.8770760705);
   });
 
@@ -936,7 +1004,7 @@ describe("tests for calculateContribution function", () => {
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, true))
       .toEqual(1624);
   });
 });
@@ -955,7 +1023,7 @@ describe("tests for calculateContribution function when lump sum is withdrawn", 
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, true))
       .toEqual(58390.59);
   });
 });
@@ -973,7 +1041,7 @@ describe("tests for calculateContribution function when goal target period reach
     const contributionPeriodFromLumpSumAndDrawdown: number = 180;
 
     expect(
-      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown))
+      calculateContribution(month, previousMonthContributionLine, monthlyContributions, goalTargetMonth, affordableLumpSum, affordableRemainingAmount, affordableDrawdown, contributionPeriodUptoLumpSum, contributionPeriodFromLumpSumAndDrawdown, true))
       .toEqual(-1488026.3299999998);
   });
 });
@@ -1398,7 +1466,7 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
 
   it("should return correct response when lump sum date is past", async () => {
     const today = new Date("2021-07-09");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
@@ -1461,7 +1529,7 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
 
   it("when desired monthly amount is less than state pension when state pension is included the result should be same as desired monthly drawdown is zero", async () => {
     const today = new Date("2021-07-09");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
@@ -1582,7 +1650,7 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
 
   it("should return a correct response when already in retirement and no contribution", async () => {
     const today = new Date("2021-07-12");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeHorizonToProject: 900,
       currentPortfolioValue: 250000,
@@ -1660,10 +1728,6 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
         startDate: new Date("2041-05-10").toISOString().slice(0, 10),
         endDate: new Date("2063-05-10").toISOString().slice(0, 10),
         regularDrawdown: 8333,
-        lumpSum: {
-          amount: 0,
-          date: null
-        },
         remainingAmount: 0,
         statePensionAmount:0
       },
@@ -1685,37 +1749,24 @@ describe("Tests for getGoldProjection Function without lump sum and desired rema
     // Action
     const result = getGoldProjection(inboundPayload, today);
 
-    expect(result.targetProjectionData[2]).toEqual([]);
-
     // Assertion
-    expect(result.monthlyContributionsToReach).toBeCloseTo(1361.20, 2)
-    expect(result.upfrontContributionsToReach).toBeCloseTo(166981.70, 2)
+    expect(result.monthlyContributionsToReach).toBeCloseTo(3910.702, 2)
+    expect(result.upfrontContributionsToReach).toBeCloseTo(628752.906, 2)
 
     expect(result.targetProjectionData[0]).toEqual(
       {
         monthNo: 0,
-        value: 250000
+        value: 95.02850000000001
       } as TargetProjectionMonth);
 
-    expect(result.targetProjectionData[1].value).toBeCloseTo(240767.40, 2);
+    expect(result.targetProjectionData[1].value).toBeCloseTo(4006.064, 2);
 
 
-    expect(result.targetProjectionData.length).toEqual(901);
+    expect(result.targetProjectionData.length).toEqual(660);
 
     //After the drawdown end date expect to have zero amount left
-    expect(result.targetProjectionData[660].value).toBeCloseTo(0, 0);
+    expect(result.targetProjectionData[659].value).toBeCloseTo(0, 0);
 
-    expect(result.targetProjectionData[661]).toEqual(
-      {
-        monthNo: 661,
-        value: 0,
-      } as TargetProjectionMonth);
-
-    expect(result.targetProjectionData[900]).toEqual(
-      {
-        monthNo: 900,
-        value: 0,
-      } as TargetProjectionMonth);
   });
 
 })

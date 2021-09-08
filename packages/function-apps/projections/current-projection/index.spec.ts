@@ -2,6 +2,12 @@ import { Context } from "@azure/functions";
 import { calculateContributionLine, calculateDrawdown, calculateExpectedReturn, calculateHoldingsWithOnTrackPercentage, calculatePercentage, calculateProjectionValue, currentProjection, getCurrentProjection, monthDiff, validateInput, yearDiff } from "./index";
 import { Drawdown, ExpectedReturns, ProjectionMonth, RequestPayload, ValidationError } from "./types";
 
+function returnPastDate(today:Date): string {
+  var newPastDate = new Date(today);
+  newPastDate.setDate(newPastDate.getDate() - 1);
+  return newPastDate.toISOString().slice(0, 10);
+}
+
 describe("tests for validate function", () => {
   const emptyRequestPayload = {} as RequestPayload
   const validRequestPayload = createRequestPayload()
@@ -426,7 +432,7 @@ describe("Tests for getCurrentProjection Function", () => {
   it("should return expected results when lump sum date is past date the result is same as lump sum is zero", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizon: 900,
@@ -501,7 +507,7 @@ describe("Tests for getCurrentProjection Function", () => {
   it("should return  results same as lump sum zero when lump sum date is past date with state pension", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizon: 900,
@@ -653,7 +659,7 @@ describe("Tests for getCurrentProjection Function", () => {
   it("should return expected results when drawdown already started", async () => {
     // Arrange
     const today = new Date("2021-07-13");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
 
     const inboundPayload = {
       timeHorizon: 900,

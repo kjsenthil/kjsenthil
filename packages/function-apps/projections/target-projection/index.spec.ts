@@ -14,6 +14,12 @@ import {
 } from './index';
 import { Context } from "@azure/functions";
 
+function returnPastDate(today:Date): string {
+  var newPastDate = new Date(today);
+  newPastDate.setDate(newPastDate.getDate() - 1);
+  return newPastDate.toISOString().slice(0, 10);
+}
+
 describe("tests for validate function", () => {
   const emptyRequestPayload = {} as RequestPayload
   const validRequestPayload = createRequestPayload()
@@ -419,7 +425,7 @@ describe("Tests for getTargetProjection Function without lump sum and desired re
 
   it("should return an 200 response when lump sum date is past", async () => {
     const today = new Date("2021-07-09");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeToAge100: 900,
       portfolioValue: 250000,
@@ -476,7 +482,7 @@ describe("Tests for getTargetProjection Function without lump sum and desired re
 
   it("when desired monthly amount is less than state pension when state pension is included the result should be same as desired monthly drawdown is zero", async () => {
     const today = new Date("2021-07-09");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeToAge100: 900,
       portfolioValue: 250000,
@@ -585,7 +591,7 @@ describe("Tests for getTargetProjection Function without lump sum and desired re
 
   it("should return an 200 response when already in retirement and no contribution", async () => {
     const today = new Date("2021-07-12");
-    const pastDate = new Date(new Date().setDate(today.getDate() - 1)).toISOString().slice(0, 10);
+    const pastDate = returnPastDate(today);
     const inboundPayload = {
       timeToAge100: 900,
       portfolioValue: 250000,
