@@ -188,7 +188,7 @@ const LifePlanPage = () => {
         lumpSumDate: new Date(retirementGoal?.fields?.biRetirementLumpSumDate?.val!),
         laterLifeLeftOver: Number(retirementGoal?.fields?.biRetirementRemainingAmount),
         shouldIncludeStatePension: (retirementGoal?.fields?.biStatePensionAmount || 0) > 0.1,
-        fees: 0,
+        fees: 0.4,
         assetModel,
         monthlyContributions,
         portfolioCurrentValue,

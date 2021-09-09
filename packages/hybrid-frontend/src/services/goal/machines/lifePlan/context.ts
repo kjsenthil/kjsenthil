@@ -2,7 +2,7 @@ import { LifePlanMachineContext } from './types';
 
 const context: LifePlanMachineContext = {
   index: null,
-  fees: 0,
+  fees: 0.4,
   defaultStatePension: 0,
   inflation: 0,
   clientAge: 0,
