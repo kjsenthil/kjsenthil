@@ -473,7 +473,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
           }
           errors.push(error)
         }
-        else if (inboundPayload.drawdownRetirement.regularDrawdown < statePensionLimitValue && (inboundPayload.drawdownRetirement.remainingAmount ?? 0) == 0 && (inboundPayload.drawdownRetirement.lumpSum?.amount ?? 0) == 0 )
+        else if (inboundPayload.drawdownRetirement.statePensionAmount > 0 && inboundPayload.drawdownRetirement.regularDrawdown < statePensionLimitValue && (inboundPayload.drawdownRetirement.remainingAmount ?? 0) == 0 && (inboundPayload.drawdownRetirement.lumpSum?.amount ?? 0) == 0 )
         {
           const error: ValidationError = {
             code: "val-simulateproj-041",
