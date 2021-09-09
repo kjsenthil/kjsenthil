@@ -70,8 +70,8 @@ const prepareSimulateProjectionsRequestPayload = ({
     preGoal: {
       expectedReturnPercentage: erValue * 100,
       volatilityPercentage: volatility * 100,
-      ZScoreLowerBound: zScores.lessLikleyLb,
-      ZScoreUpperBound: zScores.lessLikelyUb,
+      ZScoreLowerBound: zScores.moreLikelyLb,
+      ZScoreUpperBound: zScores.moreLikelyUb,
     },
     postGoal: {
       expectedReturnPercentage: erValue * 100,
