@@ -504,6 +504,32 @@ describe("tests for validate function", () => {
         ] as ValidationError[])
   });
 
+  it("when drawdown type is Retirement and drawdownRetirement has the following setup: valid statePension, regularDrawdown < limit, no remaningAmount and no lumpSum amount will return error", () => {
+    const invalidDateRequestPayload = createRequestPayload();
+    const statePensionLimitValue = 778.3;
+    const startDate = new Date(2021,1,5);
+    invalidDateRequestPayload.includeGoal = true;
+    invalidDateRequestPayload.drawdownType = DrawdownType.Retirement;
+    invalidDateRequestPayload.drawdownRetirement = {
+      regularDrawdown: 105,
+      endDate: new Date().toISOString().slice(0, 10),
+      startDate: startDate.toISOString().slice(0, 10),
+      remainingAmount: 0,
+      statePensionAmount: 150
+    }
+
+    expect(
+      validateInput(invalidDateRequestPayload))
+      .toEqual(
+        [
+          {
+            "code": "val-simulateproj-041",
+            "message": "drawdownRetirement_statePensionAmount_equal_zero_regularDrawdown_less_than_" + statePensionLimitValue + "_remainingAmmount_equals_zero_and_lumpSumAmount_equals_zero_cannot_be_at_same_time",
+            "property": "drawdownRetirement",
+          }
+        ] as ValidationError[])
+  });
+
   it("when drawdown type is Retirement and drawdownRetirement has valid values validation will return no error", () => {
     const invalidDateRequestPayload = createRequestPayload();
     const startDate = new Date(2021,1,5);

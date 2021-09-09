@@ -372,6 +372,7 @@ function validateDrawdownAnnually(inboundPayload: RequestPayload, errors: Array<
 }
 
 function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Array<ValidationError>) {
+  const statePensionLimitValue = 778.3;
   if (inboundPayload.drawdownType == DrawdownType.Retirement)
   {
     if (typeof inboundPayload.drawdownRetirement == 'undefined') {
@@ -463,6 +464,7 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
         }
 
       if (typeof inboundPayload.drawdownRetirement.statePensionAmount != 'undefined')
+      {
         if (inboundPayload.drawdownRetirement.statePensionAmount < 0){
           const error: ValidationError = {
             code: "val-simulateproj-031",
@@ -471,6 +473,16 @@ function validateDrawdownRetirement(inboundPayload: RequestPayload, errors: Arra
           }
           errors.push(error)
         }
+        else if (inboundPayload.drawdownRetirement.regularDrawdown < statePensionLimitValue && (inboundPayload.drawdownRetirement.remainingAmount ?? 0) == 0 && (inboundPayload.drawdownRetirement.lumpSum?.amount ?? 0) == 0 )
+        {
+          const error: ValidationError = {
+            code: "val-simulateproj-041",
+            property: "drawdownRetirement",
+            message: "drawdownRetirement_statePensionAmount_equal_zero_regularDrawdown_less_than_" + statePensionLimitValue + "_remainingAmmount_equals_zero_and_lumpSumAmount_equals_zero_cannot_be_at_same_time",
+          }
+          errors.push(error)
+        } 
+      }
     }
   }
 }
