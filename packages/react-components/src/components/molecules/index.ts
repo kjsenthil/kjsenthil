@@ -14,6 +14,7 @@ import {
 } from './PillsNavigation';
 import { NavLinkWithDropDownProps } from './NavLinkWithDropDown';
 import { FormSelectProps } from './FormSelect';
+import { PillWithDropdownProps } from './PillWithDropdown';
 
 export { default as Alert } from './Alert';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';
@@ -41,6 +42,7 @@ export {
   PillsNavigationSelectableTabComponent,
   PillNavigationCreatorTabComponent,
 } from './PillsNavigation';
+export { default as PillWithDropdown } from './PillWithDropdown';
 
 export { default as ProgressBarWithLegend } from './ProgressBarWithLegend';
 export { default as RadioGroup } from './RadioGroup';
@@ -79,5 +81,6 @@ export type {
   PillsNavigationTabProps,
   PillsNavigationProps,
   PillNavigationOnChangeProps,
+  PillWithDropdownProps,
   NavLinkWithDropDownProps,
 };
