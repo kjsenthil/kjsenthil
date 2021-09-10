@@ -45,6 +45,6 @@ export const StyledLink = styled(NavLink)`
 export const StyledListItem = styled(ListItem)`
   ${({ theme }) => `
     &:not(:last-child) {
-      border-bottom: 2px solid ${theme.palette.grey.light2};
+      border-bottom: 2px solid ${theme.palette.grey[100]};
   `}
 `;

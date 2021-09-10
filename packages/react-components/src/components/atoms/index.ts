@@ -72,6 +72,7 @@ export {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  DialogActions,
   Grid,
   Hidden,
   IconButton,

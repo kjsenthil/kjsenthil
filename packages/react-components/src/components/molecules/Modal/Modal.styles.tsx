@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { Dialog, DialogContent, DialogTitle, Icon } from '../../atoms';
+import { Dialog, DialogContent, DialogTitle, Icon, Theme } from '../../atoms';
 
 export const StyledDialogContainer = styled(Dialog)`
-  ${({ theme }) => `
+  ${({ theme }: { theme: Theme }) => `
     max-height: ${theme.spacing(50)}px;
 
     ..MuiDialog-container {
@@ -19,24 +19,24 @@ export const StyledDialogContainer = styled(Dialog)`
     }
 
     *::-webkit-scrollbar-track {
-        background-color: ${theme.palette.grey.light2};
+        background-color: ${theme.palette.grey[100]};
         border-radius: ${theme.spacing(1)}px;
         padding: ${theme.spacing(2)}px;
 
     }
 
     *::-webkit-scrollbar-thumb {
-        background-color: ${theme.palette.grey.main};
+        background-color: ${theme.palette.grey[300]};
         border-radius: ${theme.spacing(1)}px;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        background-color: ${theme.palette.grey.light1};
+        background-color: ${theme.palette.grey[200]};
         border-radius: ${theme.spacing(1)}px;
     }
 
     *::-webkit-scrollbar-thumb:active {
-        background-color: ${theme.palette.grey.light1};
+        background-color: ${theme.palette.grey[100]};
         border-radius: ${theme.spacing(1)}px;
     }
   `}

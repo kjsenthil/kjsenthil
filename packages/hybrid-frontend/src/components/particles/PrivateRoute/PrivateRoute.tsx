@@ -28,6 +28,7 @@ const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
         };
         dispatch(setAccessTokensFromCookie(tokens));
       } catch (e) {
+        /* eslint-disable-next-line no-console */
         console.error(`Could not parse myAccountsAccessToken: ${myAccountsAccessToken}`, e);
       }
     }

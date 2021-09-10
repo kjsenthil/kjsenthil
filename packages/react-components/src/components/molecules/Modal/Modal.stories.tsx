@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import Modal, { ModalProps } from './Modal';
-import { Typography } from '../../atoms';
+import { Typography, Link } from '../../atoms';
 
 export default {
   title: 'Digital Hybrid/Molecules/Modal',
@@ -16,12 +16,20 @@ export default {
   },
 } as Meta;
 
-const Template: Story<ModalProps> = (args) => <Modal {...args} />;
+const Template: Story<ModalProps> = (args) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <Link onClick={() => setOpen(true)}>Open modal</Link>
+      <Modal {...args} open={open} onClose={() => setOpen(false)} />
+    </>
+  );
+};
 
 export const Default = Template.bind({});
 Default.args = {
-  open: true,
   modalTitle: 'How was this projection calculated?',
+  maxWidth: 'xl',
   children: (
     <>
       <Typography variant="b2" color="primary" colorShade="dark2" gutterBottom>
