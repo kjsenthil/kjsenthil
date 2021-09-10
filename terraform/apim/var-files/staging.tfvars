@@ -79,7 +79,7 @@ api_backends = {
   },
   "bestinvest-oisapi-api" = {
     name                       = "bestinvest-oisapi-api"
-    url                        = "https://identityapi.demo2.bestinvest.co.uk/api/"
+    url                        = "https://oisapi.demo2.bestinvest.co.uk/api/"
     validate_certificate_chain = true
   },
   "xplan-api" = {
