@@ -488,6 +488,64 @@
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/share-order-status"
       }
+    },
+    {
+      "operation_id": "myaccount-get-self-Portfolios",
+      "display_name": "Myaccount get Portfolios",
+      "url_template": "/myaccount/self-portfolio/{contactId}",
+      "description": "This lets the user to get portfolios",
+      "path_params": ["contactId"],
+      "policy": {
+        "cors": {
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/self-portfolio/{contactId}"
+      }
+    },
+    {
+      "operation_id": "myaccount-create-self-Portfolios",
+      "display_name": "Myaccount create self Portfolios",
+      "url_template": "/myaccount/self-portfolio",
+      "description": "This lets the user to create portfolios",
+      "policy": {
+        "cors": {
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/self-portfolio"
+      }
+    },
+    {
+      "operation_id": "myaccount-edit-self-Portfolios",
+      "display_name": "Myaccount edit self Portfolios",
+      "url_template": "/myaccount/self-portfolio",
+      "description": "This lets the user to edit portfolios",
+      "policy": {
+        "cors": {
+          "method": "PATCH",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/self-portfolio"
+      }
+    },
+    {
+      "operation_id": "myaccount-delete-self-Portfolios",
+      "display_name": "Myaccount delete self Portfolios",
+      "url_template": "/myaccount/self-portfolio/{id}",
+      "description": "This lets the user to delete portfolios",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "method": "DELETE",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/self-portfolio/{id}"
+      }
     }
   ]
 }

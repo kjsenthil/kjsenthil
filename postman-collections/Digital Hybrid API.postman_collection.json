@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e4497ec8-9318-48e4-8516-87e49d9262f8",
+		"_postman_id": "a14c81fa-07ac-4e09-8739-49dc466bc28f",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2025,6 +2025,684 @@
 							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Self Portfolios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Could retrieve the AccountIds from response\", function() {\r",
+									"    pm.response.to.be.json;\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property('Data');\r",
+									"    pm.expect(jsonData.Data).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Data).length.to.be.greaterThan(0);\r",
+									"    pm.expect(jsonData.Data[0].Attributes).to.be.not.empty;\r",
+									"    pm.expect(jsonData.Data[0].Attributes).to.have.a.property('AccountIds');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/self-portfolio/:contactid",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"self-portfolio",
+								":contactid"
+							],
+							"variable": [
+								{
+									"key": "contactid",
+									"value": "{{myAccounts.contactId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/Aggregated-breakdown-allocation?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"Aggregated-breakdown-allocation"
+									],
+									"query": [
+										{
+											"key": "filter[id]",
+											"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:26:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"breakdown-allocation\",\r\n    \"Id\": \"\",\r\n    \"Attributes\": {\r\n      \"Breakdown\": [\r\n        {\r\n          \"Name\": \"Equity\",\r\n          \"Percentage\": 68.0\r\n        },\r\n        {\r\n          \"Name\": \"Quality Bonds\",\r\n          \"Percentage\": 11.0\r\n        },\r\n        {\r\n          \"Name\": \"High Yield Bonds\",\r\n          \"Percentage\": 0.0\r\n        },\r\n        {\r\n          \"Name\": \"Property\",\r\n          \"Percentage\": 2.0\r\n        },\r\n        {\r\n          \"Name\": \"Commodities\",\r\n          \"Percentage\": 5.0\r\n        },\r\n        {\r\n          \"Name\": \"Hedge\",\r\n          \"Percentage\": 10.0\r\n        },\r\n        {\r\n          \"Name\": \"Fund Cash\",\r\n          \"Percentage\": 4.0\r\n        },\r\n        {\r\n          \"Name\": \"Uninvested Cash\",\r\n          \"Percentage\": 0.0\r\n        }\r\n      ]\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/breakdown-allocation/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Self Portfolio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function() {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"self-portfolio\",\r\n        \"attributes\": {\r\n            \"contactId\": {{myAccounts.contactId}},\r\n            \"name\": \"my new ISA portfolio\",\r\n            \"accountIds\": [\r\n               {{myAccounts.GiaAccountId}}\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/self-portfolio",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"self-portfolio"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/Aggregated-breakdown-allocation?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"Aggregated-breakdown-allocation"
+									],
+									"query": [
+										{
+											"key": "filter[id]",
+											"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:26:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"breakdown-allocation\",\r\n    \"Id\": \"\",\r\n    \"Attributes\": {\r\n      \"Breakdown\": [\r\n        {\r\n          \"Name\": \"Equity\",\r\n          \"Percentage\": 68.0\r\n        },\r\n        {\r\n          \"Name\": \"Quality Bonds\",\r\n          \"Percentage\": 11.0\r\n        },\r\n        {\r\n          \"Name\": \"High Yield Bonds\",\r\n          \"Percentage\": 0.0\r\n        },\r\n        {\r\n          \"Name\": \"Property\",\r\n          \"Percentage\": 2.0\r\n        },\r\n        {\r\n          \"Name\": \"Commodities\",\r\n          \"Percentage\": 5.0\r\n        },\r\n        {\r\n          \"Name\": \"Hedge\",\r\n          \"Percentage\": 10.0\r\n        },\r\n        {\r\n          \"Name\": \"Fund Cash\",\r\n          \"Percentage\": 4.0\r\n        },\r\n        {\r\n          \"Name\": \"Uninvested Cash\",\r\n          \"Percentage\": 0.0\r\n        }\r\n      ]\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/breakdown-allocation/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Self Portfolio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function() {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"Type\": \"self-portfolio\",\r\n        \"Id\": 19618,\r\n        \"Attributes\": {\r\n            \"Name\": \"my new ISA portfolio\",\r\n            \"AccountIds\": [\r\n                {{myAccounts.IsaAccountId}}\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/self-portfolio",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"self-portfolio"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/Aggregated-breakdown-allocation?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"Aggregated-breakdown-allocation"
+									],
+									"query": [
+										{
+											"key": "filter[id]",
+											"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:26:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"breakdown-allocation\",\r\n    \"Id\": \"\",\r\n    \"Attributes\": {\r\n      \"Breakdown\": [\r\n        {\r\n          \"Name\": \"Equity\",\r\n          \"Percentage\": 68.0\r\n        },\r\n        {\r\n          \"Name\": \"Quality Bonds\",\r\n          \"Percentage\": 11.0\r\n        },\r\n        {\r\n          \"Name\": \"High Yield Bonds\",\r\n          \"Percentage\": 0.0\r\n        },\r\n        {\r\n          \"Name\": \"Property\",\r\n          \"Percentage\": 2.0\r\n        },\r\n        {\r\n          \"Name\": \"Commodities\",\r\n          \"Percentage\": 5.0\r\n        },\r\n        {\r\n          \"Name\": \"Hedge\",\r\n          \"Percentage\": 10.0\r\n        },\r\n        {\r\n          \"Name\": \"Fund Cash\",\r\n          \"Percentage\": 4.0\r\n        },\r\n        {\r\n          \"Name\": \"Uninvested Cash\",\r\n          \"Percentage\": 0.0\r\n        }\r\n      ]\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/breakdown-allocation/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Self portfolio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function() {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"My investments\",\r\n    \"AccountIds\": [{{myAccounts.GiaAccountId}}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/self-portfolio/:id",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"self-portfolio",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "19612"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/Aggregated-breakdown-allocation?filter[id]={{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"Aggregated-breakdown-allocation"
+									],
+									"query": [
+										{
+											"key": "filter[id]",
+											"value": "{{myAccounts.GiaAccountId}},{{myAccounts.IsaAccountId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 May 2021 10:26:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"breakdown-allocation\",\r\n    \"Id\": \"\",\r\n    \"Attributes\": {\r\n      \"Breakdown\": [\r\n        {\r\n          \"Name\": \"Equity\",\r\n          \"Percentage\": 68.0\r\n        },\r\n        {\r\n          \"Name\": \"Quality Bonds\",\r\n          \"Percentage\": 11.0\r\n        },\r\n        {\r\n          \"Name\": \"High Yield Bonds\",\r\n          \"Percentage\": 0.0\r\n        },\r\n        {\r\n          \"Name\": \"Property\",\r\n          \"Percentage\": 2.0\r\n        },\r\n        {\r\n          \"Name\": \"Commodities\",\r\n          \"Percentage\": 5.0\r\n        },\r\n        {\r\n          \"Name\": \"Hedge\",\r\n          \"Percentage\": 10.0\r\n        },\r\n        {\r\n          \"Name\": \"Fund Cash\",\r\n          \"Percentage\": 4.0\r\n        },\r\n        {\r\n          \"Name\": \"Uninvested Cash\",\r\n          \"Percentage\": 0.0\r\n        }\r\n      ]\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/breakdown-allocation/\"\r\n    },\r\n    \"Relationships\": null\r\n  },\r\n  \"Included\": null\r\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{myAccounts.baseUrl}}/api/breakdown-allocation/:id",
+									"host": [
+										"{{myAccounts.baseUrl}}"
+									],
+									"path": [
+										"api",
+										"breakdown-allocation",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"est\",\n \"title\": \"nost\",\n \"status\": 30688009,\n \"detail\": \"sunt\",\n \"instance\": \"nostrud\"\n}"
+						}
+					]
 				}
 			],
 			"auth": {
@@ -3440,56 +4118,6 @@
 								{
 									"key": "orderid",
 									"value": "{{myAccounts.shareOrderId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "share-indicative-price",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function() {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true,
-						"disabledSystemHeaders": {}
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"share-quote\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"AccountId\": 20329,\r\n            \"UpdateBy\": \"user-name\",\r\n            \"Order\": {\r\n                \"Isin\": \"GB00BH4HKS39\",\r\n                \"OrderType\": \"Buy\",\r\n                \"Amount\": 20,\r\n                \"Units\": 0,\r\n                \"OrderSizeType\": \"Amount\"\r\n            }\r\n        }\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/share-indicative-price?isin=GB00B019KW72",
-							"host": [
-								"{{digitalHybrid.baseUrl}}"
-							],
-							"path": [
-								"{{apiPath}}",
-								"share-indicative-price"
-							],
-							"query": [
-								{
-									"key": "isin",
-									"value": "GB00B019KW72"
 								}
 							]
 						}
