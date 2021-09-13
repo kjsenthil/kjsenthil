@@ -149,7 +149,7 @@ const MyAccountLayout = ({
               childLinks: [
                 {
                   name: 'Logout',
-                  path: '/logout',
+                  path: NavPaths.LOGOUT_PAGE,
                 },
               ],
             },
