@@ -71,6 +71,8 @@ const LifePlanManagementPage = () => {
     lumpSumAge,
     lumpSumDate,
     shouldIncludeStatePension,
+    additionalMonthlyContributions,
+    upfrontContribution,
     laterLifeLeftOver,
     errors,
     hasFetchedProjections,
@@ -214,9 +216,11 @@ const LifePlanManagementPage = () => {
             renderContentSide={renderContentSide}
             shouldIncludeStatePension={shouldIncludeStatePension}
             handleStatePensionSelection={handlers.handleStatePensionSelection}
+            additionalMonthlyContributions={additionalMonthlyContributions}
             monthlyContributionsRequiredToFundDrawdown={monthlyContributionsRequiredToFundDrawdown}
-            upfrontContributionRequiredToFundDrawdown={upfrontContributionRequiredToFundDrawdown}
             handleAdditionalMonthlyContributions={handlers.handleAdditionalMonthlyContributions}
+            upfrontContribution={upfrontContribution}
+            upfrontContributionRequiredToFundDrawdown={upfrontContributionRequiredToFundDrawdown}
             handleUpfrontContribution={handlers.handleUpfrontContribution}
             onTrackPercentage={goalSimulateProjections?.goal?.onTrack?.percentage ?? 0}
           />

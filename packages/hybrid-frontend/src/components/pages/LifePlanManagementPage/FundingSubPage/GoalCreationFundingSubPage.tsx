@@ -22,9 +22,11 @@ interface GoalCreationFundingSubPageProps extends RouteComponentProps {
   renderContentSide: () => React.ReactNode;
   handleStatePensionSelection: (e: React.ChangeEvent<HTMLInputElement>) => void;
   shouldIncludeStatePension: boolean;
+  additionalMonthlyContributions: number;
   monthlyContributionsRequiredToFundDrawdown: number;
-  upfrontContributionRequiredToFundDrawdown: number;
   handleAdditionalMonthlyContributions: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  upfrontContribution: number;
+  upfrontContributionRequiredToFundDrawdown: number;
   handleUpfrontContribution: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onTrackPercentage: number;
 }
@@ -34,9 +36,11 @@ export default function GoalCreationFundingSubPage({
   renderContentSide,
   handleStatePensionSelection,
   shouldIncludeStatePension,
+  additionalMonthlyContributions,
   monthlyContributionsRequiredToFundDrawdown,
-  upfrontContributionRequiredToFundDrawdown,
   handleAdditionalMonthlyContributions,
+  upfrontContribution,
+  upfrontContributionRequiredToFundDrawdown,
   handleUpfrontContribution,
   onTrackPercentage,
 }: GoalCreationFundingSubPageProps) {
@@ -135,6 +139,7 @@ export default function GoalCreationFundingSubPage({
         <GoalInput ref={goalInputElementRef}>
           <GoalInputCard
             type="upfront"
+            value={upfrontContribution}
             onTrack={upfrontContributionRequiredToFundDrawdown}
             onTrackPercentage={onTrackPercentage}
             onChange={(event) => {
@@ -147,6 +152,7 @@ export default function GoalCreationFundingSubPage({
           <Spacer x={1} />
           <GoalInputCard
             type="monthly"
+            value={additionalMonthlyContributions}
             onTrack={monthlyContributionsRequiredToFundDrawdown}
             onTrackPercentage={onTrackPercentage}
             onChange={(event) => {
