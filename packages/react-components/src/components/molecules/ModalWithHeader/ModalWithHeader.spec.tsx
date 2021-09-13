@@ -11,5 +11,17 @@ describe('Modal', () => {
     );
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Modal Content')).toBeInTheDocument();
+    expect(screen.getByLabelText('close')).toBeInTheDocument();
+  });
+
+  test('Renders a variant without a close icon', () => {
+    renderWithTheme(
+      <ModalWithHeader variant="withoutClose" modalTitle="Test Title" open>
+        Modal Content
+      </ModalWithHeader>
+    );
+    expect(screen.getByText('Test Title')).toBeInTheDocument();
+    expect(screen.getByText('Modal Content')).toBeInTheDocument();
+    expect(screen.queryByLabelText('close')).not.toBeInTheDocument();
   });
 });

@@ -13,6 +13,7 @@ import {
   StyledIconButton,
   HeaderContainer,
 } from './ModalWithHeader.styles';
+import { Color } from '../../atoms/Typography';
 
 export interface ModalProps extends DialogProps {
   modalTitle: string;
@@ -20,7 +21,7 @@ export interface ModalProps extends DialogProps {
   modalBackgroundImgSrc?: string;
   headerBackgroundColor?: string;
   modalWidth?: string;
-  variant?: 'DefaultTitle' | 'withSubTitle';
+  variant?: 'DefaultTitle' | 'withSubTitle' | 'withoutClose';
 }
 
 const ModalWithHeader = ({
@@ -85,6 +86,37 @@ const ModalWithHeader = ({
           {children}
         </StyledDialogContainer>
       );
+    case 'withoutClose':
+      return (
+        <StyledDialogContainer
+          onClose={onClose}
+          {...props}
+          modalBackgroundImgSrc={modalBackgroundImgSrc}
+          withHeader={false}
+          isMobile={isMobile}
+        >
+          <StyledDialogTitle disableTypography>
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="space-between"
+              className="modalTitle"
+            >
+              <Grid item xs={12}>
+                <Typography
+                  variant="h2"
+                  display="inline"
+                  color={theme.palette.primary.dark2 as Color}
+                >
+                  {modalTitle}
+                </Typography>
+              </Grid>
+            </Grid>
+          </StyledDialogTitle>
+
+          <StyledDialogContentWithoutHeader>{children}</StyledDialogContentWithoutHeader>
+        </StyledDialogContainer>
+      );
     case 'DefaultTitle':
       return (
         <StyledDialogContainer
@@ -107,7 +139,7 @@ const ModalWithHeader = ({
               </Grid>
 
               <Grid item xs={1} container justifyContent="flex-end">
-                <StyledIconButton>
+                <StyledIconButton aria-label="close">
                   <Icon name="cross" />
                 </StyledIconButton>
               </Grid>

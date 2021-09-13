@@ -1,17 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { Dialog, DialogContent, DialogTitle, Icon, IconButton } from '../../atoms';
 
 export const StyledDialogContainer = styled(
-  ({ modalBackgroundImgSrc, modalWidth, headerBackgroundColor, withHeader, ...props }) => (
-    <Dialog open {...props} />
-  )
+  ({
+    modalBackgroundImgSrc,
+    modalWidth,
+    headerBackgroundColor,
+    withHeader,
+    isMobile,
+    ...props
+  }) => <Dialog open {...props} />
 )`
   ${({
     modalBackgroundImgSrc,
     headerBackgroundColor,
     withHeader,
     modalWidth,
+    isMobile,
     theme,
   }: {
     theme: any;
@@ -19,6 +26,7 @@ export const StyledDialogContainer = styled(
     headerBackgroundColor: string;
     withHeader: boolean;
     modalWidth: string;
+    isMobile: boolean;
   }) => `
     max-height: ${theme.spacing(100)}%;
 
@@ -38,8 +46,10 @@ export const StyledDialogContainer = styled(
         border-radius: ${theme.spacing(2)}px;
         max-height: 100%;
         background-color: #f9fafc;
-        ${modalWidth ? `max-width:${modalWidth};` : ``}
         ${modalBackgroundImgSrc ? `background-image:url('${modalBackgroundImgSrc}');` : ``}
+        margin: ${isMobile ? 0 : ''};
+        width: ${isMobile ? theme.typography.pxToRem(335) : theme.typography.pxToRem(682)};
+        max-width: ${modalWidth || '100%'};
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -75,7 +85,9 @@ export const StyledDialogContainer = styled(
 
 export const StyledDialogTitle = styled(DialogTitle)`
   ${({ theme }) => `
-    padding: ${theme.spacing(1)}px;
+    padding: ${theme.spacing(3)}px ${theme.spacing(1)}px ${theme.spacing(1)}px ${theme.spacing(
+    1
+  )}px;
   `}
 `;
 
