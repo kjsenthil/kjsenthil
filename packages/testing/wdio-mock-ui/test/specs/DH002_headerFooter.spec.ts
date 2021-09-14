@@ -31,7 +31,7 @@ import {
   loginApiUrl,
   performanceAccountsAggregatedApiUrl,
   pinApiUrl,
-} from '../environments/stage'
+} from '../environments/env'
 import loginMockResponse from '../fixtures/login'
 import pinMockResponse from '../fixtures/pin'
 import accountsMockResponse from '../fixtures/accounts'

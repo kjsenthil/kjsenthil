@@ -1,4 +1,4 @@
-import { loginCredentials } from '../environments/stage'
+import { loginCredentials } from '../environments/env'
 
 export default {
     "Data": {

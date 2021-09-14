@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { url } from '../../environments/stage'
+import { url } from '../../environments/env'
 
 // chart period options
 export enum Period {
@@ -438,31 +438,31 @@ export const lLastPeriodReturnRatingISA2 = () =>
 // #region performance chart
 export const pTotalValueTitle = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:first-child > div:nth-child(2) > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(1) > div:nth-child(2) > h6'
   )
 export const pTotalValue = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:first-child > div:nth-child(2) > div:nth-of-type(1) > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-child(1) > div:nth-child(2) > div > div > h6'
   )
 export const pNetContributedTitle = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:nth-child(2) > div:nth-of-type(2) > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(2) > div:nth-child(2) > h6'
   )
 export const pNetContributedValue = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:nth-child(2) > div:nth-of-type(2) > div > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(2) > div:nth-child(2) > div > div > h6'
   )
 export const pTotalReturnTitle = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:nth-child(3) > div > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > h6'
   )
 export const pTotalReturnValue = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:nth-child(3) > div > div > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > div > div > h6'
   )
 export const pTotalReturnRating = () =>
   $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) > div:nth-of-type(1) > div:nth-child(3) > div > div > div > h6'
+    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > div > div > div h6'
   )
 
 // X axis

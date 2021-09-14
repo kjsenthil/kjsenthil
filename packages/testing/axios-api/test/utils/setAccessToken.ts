@@ -1,6 +1,6 @@
 import axios from "axios";
-import { loginCredentials, pinLoginCredentials } from "../environments/dev";
-import { loginApiUrl, pinApiUrl } from "../environments/dev";
+import { loginCredentials, pinLoginCredentials } from "../environments/env";
+import { loginApiUrl, pinApiUrl } from "../environments/env";
 
 const getTwoStepAuthCode = async () => {
   const { username, password } = loginCredentials;

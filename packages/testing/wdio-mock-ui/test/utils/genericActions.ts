@@ -38,12 +38,14 @@ export function getCustomDate(stringLimit) {
   console.log('Custom date: ' + customDate)
   return customDate
 }
+
 export async function checkTextContains(elem: () => any, expectedValue: string) {
   expect(await (await elem()).waitForDisplayed()).to.be.true
   const text = await (await elem()).getText()
   console.info('Text: ', text)
   return expect(text).to.contain(expectedValue, 'Match not found')
 }
+
 export async function checkTextEquals(elem: () => any, expectedValue: string) {
   expect(await (await elem()).waitForDisplayed()).to.be.true
   const text = await (await elem()).getText()
@@ -65,7 +67,7 @@ export function scrollToElement(elem) {
   })
 }
 
-export function takeScreenshot(name, failure = false) {
+export function takeScreenshot(name: string, failure = false) {
   const stamp = moment().format('YYYYMMDD_THmmss')
   if (!name) name = stamp
   const path = 'output'

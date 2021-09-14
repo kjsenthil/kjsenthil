@@ -9,10 +9,10 @@ import {
   array,
   nullable,
 } from "superstruct";
-import { accountIds } from "../environments/dev";
+import { accountIds } from "../environments/env";
 import { apiEndpoint } from "../utils/apiBuilder";
 import { API_ENDPOINTS } from "../utils/apiEndPoints";
-import { loginCredentials } from "../environments/dev";
+import { loginCredentials } from "../environments/env";
 
 describe("test myaccount endpoints", () => {
   let headers: object;

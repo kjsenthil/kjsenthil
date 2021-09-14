@@ -13,4 +13,3 @@ export const pinLoginField1 = () => $('[data-testid="form-input-field-pin-1"]')
 export const pinLoginField2 = () => $('[data-testid="form-input-field-pin-2"]')
 
 export const pinLoginField3 = () => $('[data-testid="form-input-field-pin-3"]')
-

@@ -29,7 +29,7 @@ import {
   loginApiUrl,
   performanceAccountsAggregatedApiUrl,
   pinApiUrl,
-} from '../environments/stage'
+} from '../environments/env'
 import { Mock } from 'webdriverio'
 import { performLogin } from '../components/login/login.actions'
 import { checkTextContains, checkTextEquals, checkTitle } from '../utils/genericActions'

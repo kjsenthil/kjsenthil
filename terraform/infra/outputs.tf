@@ -13,6 +13,11 @@ output "frontend_web_cname" {
   description = "The Gatsby App CNAME record."
 }
 
+output "frontend_static_web_url" {
+  value       = format("https://%s", module.front_end.web_host)
+  description = "The Gatsby App static web url."
+}
+
 output "storybook_web_endpoint" {
   value       = var.environment_prefix != "staging" ? module.storybook[0].web_endpoint : null
   description = "The storybook web endpoint."

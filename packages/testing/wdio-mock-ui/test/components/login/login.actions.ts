@@ -5,9 +5,10 @@ import {
   alertMsg,
   pinLoginBtn,
   pinLoginField1,
-  pinLoginField2, pinLoginField3
-} from './login.locators';
-import { url } from '../../environments/stage'
+  pinLoginField2,
+  pinLoginField3,
+} from './login.locators'
+import { url } from '../../environments/env'
 import { open } from '../browser/browser.actions'
 import { expect } from 'chai'
 import { getPageHeading } from '../myAccounts/myAccounts.actions'
@@ -37,7 +38,7 @@ export const performLogin = async (username: string, password: string) => {
   expect(alertMsg).to.equal(expectedAlertMsg)
   await pinLoginAction()
   const pageHeading = await getPageHeading()
-  const expectedPageHeading = "FirstName's\nInvestments"
+  const expectedPageHeading = 'Total Value:'
   expect(pageHeading).to.contain(expectedPageHeading)
 }
 

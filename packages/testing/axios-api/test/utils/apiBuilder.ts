@@ -1,4 +1,4 @@
-import { apiBaseUrl } from '../environments/dev'
+import { apiBaseUrl } from '../environments/env'
 
 let BASE_URL = '';
 export const apiEndpoint =  {

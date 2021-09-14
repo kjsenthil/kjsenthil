@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { loginCredentials } from '../environments/stage'
-import { loginApiUrl, pinApiUrl } from '../environments/stage'
+import { loginApiUrl, loginCredentials, pinApiUrl } from '../environments/env'
 
 export const login = async () => {
   const { username, password } = loginCredentials

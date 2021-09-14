@@ -48,7 +48,7 @@ describe('Login test scenarios', () => {
       await pinLoginAction()
       // assert
       const pageHeading = await getPageHeading()
-      const expectedPageHeading = "FirstName's\nInvestments"
+      const expectedPageHeading = 'Total Value:'
       expect(pageHeading).to.contain(expectedPageHeading)
       await logOut()
     })

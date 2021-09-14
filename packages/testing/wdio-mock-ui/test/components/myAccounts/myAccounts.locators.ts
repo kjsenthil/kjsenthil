@@ -1,4 +1,4 @@
-export const pageHeading = () => $("div[data-testid='page-heading']")
+export const pageHeading = () => $("h2")
 
 export const simpleMenu = () => $("button[aria-controls='simple-menu']")
 
