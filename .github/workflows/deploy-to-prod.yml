@@ -292,8 +292,10 @@ jobs:
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=website-cdn-endpoint-name::$( terraform output -json | jq -r .frontend_cdn_endpoint_name.value )
           echo ::set-output name=website-cname::$( terraform output -json | jq -r .frontend_web_cname.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
+          echo ::set-output name=storybook-cdn-endpoint-name::$( terraform output -json | jq -r .storybook_cdn_endpoint_name.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
@@ -305,8 +307,10 @@ jobs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
+      storybook_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.storybook-cdn-endpoint-name }}
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       myaccounts_home_url: ${{ steps.get-terraform-outputs.outputs.myaccounts-home-url }}
@@ -532,14 +536,14 @@ jobs:
           timeout: 600000
           interval: 1000
 
-#      - name: "Run wdio mock UI tests"
-#        run: yarn test:mock-ui
-#        env:
-#          BROWSER: ${{matrix.browser}}
-#          URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
-#          API_BASE_URL: ${{ needs.deploy_staging_terraform.outputs.api_base_url }}
-#          STG_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
-#          STG_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
+  #      - name: "Run wdio mock UI tests"
+  #        run: yarn test:mock-ui
+  #        env:
+  #          BROWSER: ${{matrix.browser}}
+  #          URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
+  #          API_BASE_URL: ${{ needs.deploy_staging_terraform.outputs.api_base_url }}
+  #          STG_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
+  #          STG_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
 
   close_staging_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
@@ -565,6 +569,28 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
+
+  purge_staging_frontend_cdn_cache:
+    name: "Purge staging frontend CDN cache"
+    environment: staging
+    runs-on: ubuntu-latest
+    needs:
+      - deploy_staging_rg_terraform
+      - deploy_staging_apim_terraform
+      - deploy_staging_terraform
+      - deploy_staging_frontend
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge frontend CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_staging_terraform.outputs.website_cdn_endpoint_name}} --profile-name ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_website_name }} --content-paths '/*'
 
   # Deploy Production backend (Terraform)
   deploy_production_rg_terraform:
@@ -786,8 +812,10 @@ jobs:
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=website-cdn-endpoint-name::$( terraform output -json | jq -r .frontend_cdn_endpoint_name.value )
           echo ::set-output name=website-cname::$( terraform output -json | jq -r .frontend_web_cname.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
+          echo ::set-output name=storybook-cdn-endpoint-name::$( terraform output -json | jq -r .storybook_cdn_endpoint_name.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
@@ -798,9 +826,11 @@ jobs:
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
+      website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
+      storybook_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.storybook-cdn-endpoint-name }}
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       myaccounts_home_url: ${{ steps.get-terraform-outputs.outputs.myaccounts-home-url }}
@@ -996,6 +1026,50 @@ jobs:
           inlineScript: |
             az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Deny
             az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Deny
+
+  purge_prod_frontend_cdn_cache:
+    name: "Purge prod frontend CDN cache"
+    environment: prod
+    runs-on: ubuntu-latest
+    needs:
+      - deploy_production_rg_terraform
+      - deploy_production_apim_terraform
+      - deploy_production_terraform
+      - deploy_production_frontend
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge frontend CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_production_terraform.outputs.website_cdn_endpoint_name}} --profile-name ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_website_name }} --content-paths '/*'
+
+  purge_prod_storybook_cdn_cache:
+    name: "Purge prod storybook CDN cache"
+    environment: prod
+    runs-on: ubuntu-latest
+    needs:
+      - deploy_production_rg_terraform
+      - deploy_production_apim_terraform
+      - deploy_production_terraform
+      - deploy_storybook_prod
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge storybook CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_production_terraform.outputs.storybook_cdn_endpoint_name}} --profile-name ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_storybook_name }} --content-paths '/*'
 
   output_website_urls:
     name: "Output website urls"

@@ -430,8 +430,10 @@ jobs:
         run: |
           echo ::set-output name=frontend-storage-account-name::$( terraform output -json | jq -r .frontend_storage_account_name.value )
           echo ::set-output name=website-endpoint::$( terraform output -json | jq -r .frontend_web_endpoint.value )
+          echo ::set-output name=website-cdn-endpoint-name::$( terraform output -json | jq -r .frontend_cdn_endpoint_name.value )
           echo ::set-output name=storybook-web-endpoint::$( terraform output -json | jq -r .storybook_web_endpoint.value )
           echo ::set-output name=storybook-storage-account-name::$( terraform output -json | jq -r .storybook_storage_account_name.value )
+          echo ::set-output name=storybook-cdn-endpoint-name::$( terraform output -json | jq -r .storybook_cdn_endpoint_name.value )
           echo ::set-output name=api-base-url::$( terraform output -json | jq -r .api_base_url.value )
           echo ::set-output name=api-endpoints::$( terraform output -json | jq -r .api_endpoints.value )
           echo ::set-output name=myaccounts-home-url::$( terraform output -json | jq -r .myaccounts_home_url.value )
@@ -442,8 +444,10 @@ jobs:
     outputs:
       frontend_storage_account_name: ${{ steps.set-terraform-outputs.outputs.frontend-storage-account-name }}
       website_endpoint: ${{ steps.set-terraform-outputs.outputs.website-endpoint }}
+      website_cdn_endpoint_name: ${{ steps.set-terraform-outputs.outputs.website-cdn-endpoint-name }}
       storybook_storage_account_name: ${{ steps.set-terraform-outputs.outputs.storybook-storage-account-name }}
       storybook_web_endpoint: ${{ steps.set-terraform-outputs.outputs.storybook-web-endpoint }}
+      storybook_cdn_endpoint_name: ${{ steps.set-terraform-outputs.outputs.storybook-cdn-endpoint-name }}
       api_base_url: ${{ steps.set-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.set-terraform-outputs.outputs.api-endpoints }}
       myaccounts_home_url: ${{ steps.set-terraform-outputs.outputs.myaccounts-home-url }}
@@ -1242,6 +1246,50 @@ jobs:
           inlineScript: |
             az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.get_pr_terraform_outputs.outputs.storybook_storage_account_name }} --default-action Deny
             az storage account update --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{ needs.get_pr_terraform_outputs.outputs.frontend_storage_account_name }} --default-action Deny
+
+  purge_frontend_cdn_cache:
+    name: "Purge frontend CDN cache"
+    environment: development
+    runs-on: ubuntu-latest
+    needs:
+      - get_dev_rg_outputs
+      - get_dev_apim_outputs
+      - get_pr_terraform_outputs
+      - deploy_gatsby
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge frontend CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{needs.get_pr_terraform_outputs.outputs.website_cdn_endpoint_name}} --profile-name ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_website_name }} --content-paths '/*'
+
+  purge_storybook_cdn_cache:
+    name: "Purge storybook CDN cache"
+    environment: development
+    runs-on: ubuntu-latest
+    needs:
+      - get_dev_rg_outputs
+      - get_dev_apim_outputs
+      - get_pr_terraform_outputs
+      - deploy_storybook
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge storybook CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }} --name ${{needs.get_pr_terraform_outputs.outputs.storybook_cdn_endpoint_name}} --profile-name ${{ needs.get_dev_apim_outputs.outputs.cdn_profile_storybook_name }} --content-paths '/*'
 
   publish_results:
     name: "Publish results"

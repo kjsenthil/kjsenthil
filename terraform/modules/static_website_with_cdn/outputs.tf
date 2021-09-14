@@ -14,11 +14,16 @@ output "name" {
 }
 
 output "website_cname_record" {
-  value = azurerm_dns_cname_record.cdn[*].fqdn
+  value       = azurerm_dns_cname_record.cdn[*].fqdn
   description = "Web endpoint friendly alias (cname) DNS record name"
 }
 
 output "custom_domain_id" {
-  value = azurerm_cdn_endpoint_custom_domain.friendly_dns[*].id
+  value       = azurerm_cdn_endpoint_custom_domain.friendly_dns[*].id
   description = "custom domain ID for the CDN endpoint"
+}
+
+output "cdn_endpoint_name" {
+  value       = module.cdn.name
+  description = "Endpoint name of the CDN which fronts the storage account"
 }

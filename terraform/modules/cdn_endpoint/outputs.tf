@@ -7,3 +7,8 @@ output "cdn_id" {
   description = "ID of the CDN endpoint created"
   value       = azurerm_cdn_endpoint.storage_account.id
 }
+
+output "name" {
+  description = "Name of the CDN endpoint created"
+  value       = azurerm_cdn_endpoint.storage_account.name
+}
