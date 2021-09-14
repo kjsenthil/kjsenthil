@@ -17,6 +17,7 @@ import { FormSelectProps } from './FormSelect';
 import { PillWithDropdownProps } from './PillWithDropdown';
 
 export { default as Alert } from './Alert';
+export { default as Banner } from './Banner';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';
 export { default as ChartPeriodSelection } from './ChartPeriodSelection';
 export { default as ComponentsWithCaption } from './ComponentsWithCaption';

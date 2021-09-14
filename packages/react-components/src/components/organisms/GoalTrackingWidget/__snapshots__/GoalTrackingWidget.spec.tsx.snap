@@ -512,7 +512,7 @@ Object {
         class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
       >
         <div
-          class="MuiCardContent-root sc-cKRKFl gQhACP"
+          class="MuiCardContent-root sc-amkrK bzTyNW"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -590,7 +590,7 @@ Object {
                       data-testid="Spacer"
                     />
                     <span
-                      class="sc-jJMGnK cdinGG"
+                      class="sc-cBoqAE hTjmnG"
                       title="This is a projection of what proportion of your target you are on track to reach. If you aren't on track to reach your target then we'll tell you about your shortfall here."
                     >
                       <svg
@@ -638,14 +638,14 @@ Object {
                   data-testid="Spacer"
                 />
                 <div
-                  class="sc-gIvpjk iWkFuh"
+                  class="sc-dtLLSn GgiWd"
                 >
                   <div
-                    class="sc-euEtCV bBykEI"
+                    class="sc-dkQUaI kQerpX"
                     width="20"
                   >
                     <div
-                      class="sc-gSYDnn cftLSt"
+                      class="sc-jffHpj ffXtDU"
                     >
                       <div>
                         <h6
@@ -673,11 +673,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-euEtCV gYcsUC"
+                    class="sc-dkQUaI kyqjuJ"
                     width="50"
                   >
                     <div
-                      class="sc-gSYDnn cftLSt"
+                      class="sc-jffHpj ffXtDU"
                     >
                       <div>
                         <h6
@@ -705,11 +705,11 @@ Object {
                     </div>
                   </div>
                   <div
-                    class="sc-euEtCV bNgjvi"
+                    class="sc-dkQUaI cuisql"
                     width="5"
                   >
                     <div
-                      class="sc-gSYDnn cftLSt"
+                      class="sc-jffHpj ffXtDU"
                     >
                       <div>
                         <h6
@@ -792,7 +792,7 @@ Object {
                     data-testid="Spacer"
                   />
                   <span
-                    class="sc-jJMGnK cdinGG"
+                    class="sc-cBoqAE hTjmnG"
                     title="This is a projection of the monthly amount you'd be able to withdraw over the course of the retirement period you specified."
                   >
                     <svg

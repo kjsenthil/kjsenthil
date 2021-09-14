@@ -8,6 +8,7 @@ export const SummaryOfTotalsWrapper = styled(({ isMobile, ...props }) => <Grid {
     display: flex;
     flex-direction: ${isMobile ? 'column' : 'row'};
     align-items: center;
+
   `}
 `;
 
@@ -15,8 +16,9 @@ export const SummaryCard = styled(({ isMobile, ...props }) => <Card {...props} /
   ${({ theme, isMobile }: { isMobile: boolean; theme: Theme }) => `
     padding: ${theme.spacing(3)}px;
     background-color:  ${theme.palette.background.paper};
-    box-shadow: 1px 2px 44px 0 rgba(139, 139, 139, 0.26);
     border-radius: 16px;
+    border: 1px solid ${theme.palette.grey['200']};
+    box-shadow: none;
     display: flex;
     flex-direction: ${isMobile ? 'column' : 'row'};
   `}
