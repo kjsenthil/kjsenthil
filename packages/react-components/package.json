@@ -27,7 +27,8 @@
     "test:coverage": "jest --coverage --collectCoverage && yarn jest-coverage-badges output './badges'",
     "typecheck": "yarn g:typecheck",
     "typecheck:watch": "yarn typecheck -w --pretty",
-    "publish": "yarn npm login --publish && yarn npm publish"
+    "npm-set-version": "npm version",
+    "npm-publish": "yarn npm login --publish && yarn npm publish"
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.0",

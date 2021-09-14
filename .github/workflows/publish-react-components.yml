@@ -2,7 +2,7 @@ name: "Publish React Components NPM Package"
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   build_cache:
@@ -46,9 +46,24 @@ jobs:
       yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
       modules-path: ${{ steps.cache-meta.outputs.modules-path }}
 
+  determine_version:
+    name: "Determine package version"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Parse GH ref"
+        id: parse-gh-ref
+        run: |
+          echo "${GITHUB_REF/refs\/tags\//} will be used as package version"
+          echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
+
+    outputs:
+      tag: 1.1.2
+
   publish:
     name: "Publish React Components Package"
-    needs: [build_cache]
+    needs:
+      - build_cache
+      - determine_version
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -61,7 +76,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-          scope: '@TSWDTS'
+          scope: "@TSWDTS"
+          registry-url: "https://npm.pkg.github.com"
 
       - name: "Get yarn cache"
         uses: actions/cache@v2
@@ -81,7 +97,8 @@ jobs:
 
       - name: "Publish package to GitHub packages"
         run: |
-          echo "Preparing to publish react components ${{ github.ref }}"
-          yarn components publish --tag ${{ github.ref }}
+          echo "Preparing to publish react components version: ${{ needs.determine_version.outputs.tag }}"
+          yarn components npm-set-version ${{ needs.determine_version.outputs.tag }}
+          yarn components npm-publish
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
