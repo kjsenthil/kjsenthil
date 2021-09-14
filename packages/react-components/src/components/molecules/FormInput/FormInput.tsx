@@ -9,12 +9,14 @@ export interface FormInputProps extends TextFieldProps {
   error?: string;
   isCurrency?: boolean;
   shouldDelayOnChange?: boolean;
+  hideLabel?: boolean;
 }
 
 const FormInput = ({
   isCurrency,
   value,
   shouldDelayOnChange,
+  hideLabel,
   onChange,
   ...props
 }: FormInputProps) => {
@@ -66,7 +68,7 @@ const FormInput = ({
   return (
     <FormInputWrapper
       label={label}
-      hideLabel={isCurrency}
+      hideLabel={hideLabel || isCurrency}
       error={error}
       id={id || name}
       hasValue={!!value}
