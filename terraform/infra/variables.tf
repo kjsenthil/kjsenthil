@@ -73,11 +73,6 @@ variable "apim_subnet_name" {
   description = "Name of the subnet which houses the APIM instance to connect to"
 }
 
-variable "cdn_profile_name" {
-  type        = string
-  description = "Name of the CDN profile to create endpoints on"
-}
-
 variable "cdn_profile_website_name" {
   type        = string
   description = "Name of the CDN profile to create endpoints on for the website"

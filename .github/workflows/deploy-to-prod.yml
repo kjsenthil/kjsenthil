@@ -196,7 +196,6 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
-          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
           echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_website_name.value )
           echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_storybook_name.value )
           echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
@@ -205,7 +204,6 @@ jobs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
-      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
       cdn_profile_website_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-website-name }}
       cdn_profile_storybook_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-storybook-name }}
       app_insights_name: ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
@@ -265,7 +263,6 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
           TF_VAR_cdn_profile_website_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_website_name }}
           TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_storybook_name }}
           TF_VAR_app_insights_name: ${{ needs.deploy_staging_apim_terraform.outputs.app_insights_name }}
@@ -280,7 +277,6 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_name }}
           TF_VAR_cdn_profile_website_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_website_name }}
           TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_storybook_name }}
           TF_VAR_app_insights_name: ${{ needs.deploy_staging_apim_terraform.outputs.app_insights_name }}
@@ -714,7 +710,6 @@ jobs:
           echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
           echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
           echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
-          echo ::set-output name=cdn-profile-name::$( terraform output -json | jq -r .cdn_profile_name.value )
           echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_website_name.value )
           echo ::set-output name=cdn-profile-storybook-name::$( terraform output -json | jq -r .cdn_profile_storybook_name.value )
           echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
@@ -723,7 +718,6 @@ jobs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
       apim_subnet_name: ${{ steps.set-terraform-outputs.outputs.apim-subnet-name }}
-      cdn_profile_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-name }}
       cdn_profile_website_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-website-name }}
       cdn_profile_storybook_name: ${{ steps.set-terraform-outputs.outputs.cdn-profile-storybook-name }}
       app_insights_name: ${{ steps.set-terraform-outputs.outputs.app-insights-name }}
@@ -785,7 +779,6 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
           TF_VAR_cdn_profile_website_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_website_name }}
           TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_storybook_name }}
           TF_VAR_app_insights_name: ${{ needs.deploy_production_apim_terraform.outputs.app_insights_name }}
@@ -800,7 +793,6 @@ jobs:
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
           TF_VAR_apim_vnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
           TF_VAR_apim_subnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_name }}
           TF_VAR_cdn_profile_website_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_website_name }}
           TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_storybook_name }}
           TF_VAR_app_insights_name: ${{ needs.deploy_production_apim_terraform.outputs.app_insights_name }}
