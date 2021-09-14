@@ -5,10 +5,13 @@ import { StoreProvider } from './src/components/particles';
 
 export const onRenderBody = ({ setPreBodyComponents }) => {
   setPreBodyComponents([
+    <>
+    <noscript>Sorry, your browser has JavaScript disabled. Please enable it to use the site.</noscript>
     <script
       async
       src={`//tags.tiqcdn.com/utag/tilneygroup/digital-hybrid-project/${TEALIUM_ENVIRONMENT}/utag.js`}
-    />,
+    />
+    </>,
   ]);
 };
 
