@@ -57,7 +57,7 @@ jobs:
           echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
 
     outputs:
-      tag: 1.1.2
+      tag: ${{ steps.parse-gh-ref.outputs.tag }}
 
   publish:
     name: "Publish React Components Package"
