@@ -14,6 +14,7 @@ import {
 } from './PillsNavigation';
 import { NavLinkWithDropDownProps } from './NavLinkWithDropDown';
 import { FormSelectProps } from './FormSelect';
+import { ConfirmationModalProps } from './ConfirmationModal';
 import { PillWithDropdownProps } from './PillWithDropdown';
 
 export { default as Alert } from './Alert';
@@ -57,6 +58,7 @@ export { default as TypographyWithTooltip } from './TypographyWithTooltip';
 export { default as UpsellCard } from './UpsellCard';
 export { default as SignpostModal } from './SignpostModal';
 export { default as ReceiptCard } from './ReceiptCard';
+export { default as ConfirmationModal } from './ConfirmationModal';
 export { default as DateTime } from './DateTime';
 
 /* material-ui molecules */
@@ -85,4 +87,5 @@ export type {
   PillNavigationOnChangeProps,
   PillWithDropdownProps,
   NavLinkWithDropDownProps,
+  ConfirmationModalProps,
 };
