@@ -496,7 +496,7 @@ jobs:
 
   linting:
     name: "Checks"
-    if: ${{ always() && needs.detect_changes.outputs.has_package_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -551,7 +551,7 @@ jobs:
 
   unit_test:
     name: "Unit tests"
-    if: ${{ always() && needs.detect_changes.outputs.has_package_changes == 'true' }}
+    if: ${{ always() && (needs.detect_changes.outputs.has_package_changes == 'true' || needs.detect_changes.outputs.has_pipeline_changes == 'true') }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -1309,7 +1309,7 @@ jobs:
             **Unit tests coverage reports:**
             *Frontend:* [${{ needs.deploy_storybook.outputs.url }}/fe-coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/fe-coverage/lcov-report/index.html)
             *React-components:* [${{ needs.deploy_storybook.outputs.url }}/cmp-coverage/lcov-report/index.html](${{ needs.deploy_storybook.outputs.url }}/cmp-coverage/lcov-report/index.html)
-            **Unit tests reports:** 
+            **Unit tests reports:**
             *Frontend:* [${{ needs.deploy_storybook.outputs.url }}/fe-jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/fe-jesttestreport/index.html)
             *React-components:* [${{ needs.deploy_storybook.outputs.url }}/cmp-jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/cmp-jesttestreport/index.html)
             **API tests reports:** [${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html](${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html)
@@ -1332,7 +1332,7 @@ jobs:
             **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_apim }}\`
 
             #### Infra Terraform plan - Staging
-            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_infra }}\`            
+            **Outcome:** \`${{ needs.plan_staging.outputs.plan_outcome_infra }}\`
 
             #### Resource Group Terraform plan - Prod
 
@@ -1494,7 +1494,7 @@ jobs:
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.linting.result }}' === 'success' ? ':heavy-check-mark:   Linting Checks' : '${{ needs.linting.result }}' === 'failure' ? ':heavy-cross-mark:   Linting Checks' : ':heavy-minus-sign:   Linting Checks' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.unit_test.result }}' === 'success' ? ':heavy-check-mark:   Unit Tests' : '${{ needs.unit_test.result }}' === 'failure' ? ':heavy-cross-mark:   Unit Tests' : ':heavy-minus-sign:   Unit Tests' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook' : ':heavy-minus-sign:   Build &amp; Deploy Storybook' }},
-                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.api_test.result }}' === 'success' ? ':heavy-check-mark:   API Tests' : '${{ needs.api_test.result }}' === 'failure' ? ':heavy-cross-mark:   API Tests' : ':heavy-minus-sign:   API Tests' }},                 
+                  { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.api_test.result }}' === 'success' ? ':heavy-check-mark:   API Tests' : '${{ needs.api_test.result }}' === 'failure' ? ':heavy-cross-mark:   API Tests' : ':heavy-minus-sign:   API Tests' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.ui_test.result }}' === 'success' ? ':heavy-check-mark:   UI Tests' : '${{ needs.ui_test.result }}' === 'failure' ? ':heavy-cross-mark:   UI Tests' : ':heavy-minus-sign:   UI Tests' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.close_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Storage Account Firewalls' : '${{ needs.close_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Storage Account Firewalls' : ':heavy-minus-sign:   Close Storage Account Firewalls' }},
                   { "type": "section", "text": { "type": "mrkdwn", "text": '${{ needs.deploy_gatsby.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Gatsby App' : '${{ needs.deploy_gatsby.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Gatsby App' : ':heavy-minus-sign:   Build &amp; Deploy Gatsby App' }},
