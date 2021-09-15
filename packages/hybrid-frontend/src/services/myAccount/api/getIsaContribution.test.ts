@@ -7,7 +7,7 @@ import getIsaContribution from './getIsaContribution';
 const mockAxios = new MockAdapter(axios);
 
 const mockContactId = 1234;
-const url = `${API_ENDPOINTS.MYACCOUNT_ISA_CONTRIBUTIONS}`.replace(/\{id\}/, String(mockContactId));
+const url = `${API_ENDPOINTS.ISA_CONTRIBUTIONS}`.replace(/\{id\}/, String(mockContactId));
 
 describe('getIsaContribution', () => {
   it(`makes a call to ${url}`, async () => {

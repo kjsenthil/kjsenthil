@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
   MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS:
     "/myaccount/investment-summary-account",
   MYACCOUNT_CONTRIBUTION: "/myaccount/contribution-account/{id}",
-  MYACCOUNT_ISA_CONTRIBUTIONS: "/myaccount/isa-contributions/{id}",
+  ISA_CONTRIBUTIONS: "/myaccount/isa-contributions/{id}",
   MYACCOUNT_AGGREGATED_NET_CONTRIBUTIONS:
     "/myaccount/netcontribution-accounts-aggregated",
   MYACCOUNT_AGGREGATED_PERFORMANCE_ACCOUNTS:

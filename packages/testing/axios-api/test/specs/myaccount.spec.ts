@@ -520,9 +520,7 @@ describe("test myaccount endpoints", () => {
     // Arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.MYACCOUNT_ISA_CONTRIBUTIONS.replace("{id}", contactId)
-      );
+      .path(API_ENDPOINTS.ISA_CONTRIBUTIONS.replace("{id}", contactId));
     const expectedSchema = object({
       Data: object({
         Type: string(),
