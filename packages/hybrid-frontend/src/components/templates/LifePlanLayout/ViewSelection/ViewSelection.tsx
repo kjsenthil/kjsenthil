@@ -7,17 +7,15 @@ import {
   PillsNavigationTab,
 } from '@tswdts/react-components';
 import EditThisGoalLinkTabComponent from './EditThisGoalLinkTabComponent/EditThisGoalLinkTabComponent';
-import { DefaultViewSelectionValue, LifePlanLayoutView } from '../config/config';
+import { DefaultViewSelectionValue } from '../../../pages/LifePlanPage/GoalSelection/config';
 
 export interface ViewSelectionProps {
-  currentView: LifePlanLayoutView;
-  views: LifePlanLayoutView[];
-
-  editThisGoalHref: string;
-
+  currentView: string;
+  views: string[];
   goToAllGoalsView: () => void;
-  goToSingleGoalView: (newView: LifePlanLayoutView) => void;
+  goToSingleGoalView: (newView: string) => void;
   goToCreateGoalView: () => void;
+  goToEditGoalView: () => void;
 }
 
 export default function ViewSelection({
@@ -26,13 +24,16 @@ export default function ViewSelection({
   goToAllGoalsView,
   goToSingleGoalView,
   goToCreateGoalView,
+  goToEditGoalView,
 }: ViewSelectionProps) {
-  const handleChangeView = (e: React.ChangeEvent<{}>, newView: LifePlanLayoutView) => {
+  const handleChangeView = (e: React.ChangeEvent<{}>, newView: string) => {
     if (newView === DefaultViewSelectionValue.ALL_GOALS) {
       goToAllGoalsView();
     } else if (newView === DefaultViewSelectionValue.CREATE_GOAL) {
       goToCreateGoalView();
-    } else if (newView !== DefaultViewSelectionValue.EDIT_THIS_GOAL) {
+    } else if (newView === DefaultViewSelectionValue.EDIT_THIS_GOAL) {
+      goToEditGoalView();
+    } else {
       goToSingleGoalView(newView);
     }
   };

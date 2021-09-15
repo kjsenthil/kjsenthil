@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderWithTheme, screen } from '@tsw/test-util';
-import GoalProgressCardDetailed, {
+import {
+  GoalProgressCardDetailed,
   GoalProgressCardDetailedProps,
   GoalProgressCardStyle,
 } from './GoalProgressCardDetailed';

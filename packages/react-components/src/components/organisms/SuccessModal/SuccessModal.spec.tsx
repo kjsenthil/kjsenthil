@@ -14,7 +14,6 @@ describe('SuccessModal', () => {
 
   test('component renders with expected goal data', () => {
     renderWithTheme(<SuccessModal {...defaultSuccessModalProps} />);
-    screen.debug();
     const expectedTexts = ['Success!', 'ISA', '100'];
     expectedTexts.forEach((expectedString) =>
       expect(screen.getByText(expectedString, { exact: false })).toBeVisible()

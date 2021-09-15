@@ -5,13 +5,14 @@ import { PrivateRoute } from '../components/particles';
 import NotFoundPage from '../components/pages/NotFoundPage';
 import LogoutPage from '../components/pages/LogoutPage';
 import BIAccountsPage from '../components/pages/BIAccountsPage';
-import LifePlanPage from '../components/pages/LifePlanPage';
+import LifePlanPageV1 from '../components/pages/LifePlanPageV1';
 import LifePlanManagementPage from '../components/pages/LifePlanManagementPage';
 import AddCashPage from '../components/pages/AddCashPage';
 import WithDrawCashPage from '../components/pages/WithDrawCashPage';
 import { useFeatureFlagToggle } from '../hooks';
 import { FeatureFlagNames } from '../constants';
 import { NavPaths } from '../config/paths';
+import LifePlanPage from '../components/pages/LifePlanPage';
 
 const MyAccount = () => {
   const location = useLocation();
@@ -29,7 +30,11 @@ const MyAccount = () => {
     <Router basepath={NavPaths.MY_ACCOUNT_BASE_URL}>
       <LogoutPage path={getBasePath(NavPaths.LOGOUT_PAGE)} />
       <PrivateRoute path="/" Component={BIAccountsPage} />
-      <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPage} />
+      {experimentalFeatureEnabled ? (
+        <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPage} />
+      ) : (
+        <PrivateRoute path={getBasePath(NavPaths.LIFE_PLAN_PAGE)} Component={LifePlanPageV1} />
+      )}
       <PrivateRoute
         path={`${getBasePath(NavPaths.LIFE_PLAN_MANAGEMENT)}/*`}
         Component={LifePlanManagementPage}

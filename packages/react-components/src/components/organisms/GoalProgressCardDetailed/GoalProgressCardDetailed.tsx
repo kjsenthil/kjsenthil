@@ -3,15 +3,16 @@ import { Theme } from '@material-ui/core';
 import {
   Description,
   GoalDetailsContainer,
-  IconContainer,
   GoalStatus,
   HeaderRow,
+  IconContainer,
   Layout,
-  Totals,
   Target,
+  Totals,
 } from './GoalProgressCardDetailed.styles';
-import { Link, LinkProps, ProgressBar, Typography, useTheme } from '../../atoms';
+import { getProgressBarData } from './getProgressBarData';
 import { determineGoalState, GoalState } from './goalState';
+import { Link, LinkProps, ProgressBar, Typography, useTheme } from '../../atoms';
 import {
   CurrencyPresentationVariant,
   formatCurrency,
@@ -19,10 +20,7 @@ import {
   PercentPresentationVariant,
 } from '../../../utils/formatters';
 import { ProgressBarWithLegend } from '../../molecules';
-import {
-  ProgressBarData,
-  ProgressBarLegendValue,
-} from '../../molecules/ProgressBarWithLegend/ProgressBarWithLegend';
+import { ProgressBarData } from '../../molecules/ProgressBarWithLegend/ProgressBarWithLegend';
 import { useBreakpoint } from '../../../hooks';
 
 export enum GoalProgressCardStyle {
@@ -61,14 +59,6 @@ const GoalLink: FunctionComponent<LinkProps> = ({ href, children }) => (
 
 const EDIT_GOAL_PATH = '/my-account/goals/life-plan-management';
 const DELETE_GOAL_PATH = '/my-account/goals/life-plan-management';
-const EMPTY_LEGEND: ProgressBarLegendValue = {
-  title: '',
-  value: '',
-};
-const EMPTY_PROGRESS_BAR_DATA = {
-  progress: 0,
-  legendProps: EMPTY_LEGEND,
-};
 
 const getTooltip = (goalState: GoalState, ageAtStartDate?: number, ageAtEndDate?: number) => {
   switch (goalState) {
@@ -84,95 +74,6 @@ const getTooltip = (goalState: GoalState, ageAtStartDate?: number, ageAtEndDate?
     default:
       return '';
   }
-};
-
-const getProgressBarData = (
-  goalState: GoalState,
-  target: number,
-  affordable: number,
-  lumpSum?: number,
-  affordableDrawdown?: number,
-  ageAtStartDate?: number,
-  ageAtEndDate?: number,
-  remainingAmount?: number
-): ProgressBarData[] => {
-  // If the goal is finished, just show a 100% complete progress bar.
-  if (goalState === GoalState.FINISHED) {
-    return [
-      EMPTY_PROGRESS_BAR_DATA,
-      {
-        progress: 100,
-        legendProps: EMPTY_LEGEND,
-      },
-    ];
-  }
-
-  const progressBarData: ProgressBarData[] = [];
-  let total = target;
-
-  if (lumpSum && goalState === GoalState.NOT_THERE_YET) {
-    progressBarData.push({
-      progress: lumpSum / total,
-      legendProps: {
-        title: 'Lump sum',
-        value: lumpSum,
-        chartIndicatorProps: {
-          variant: 'solid',
-          color: 'tertiary',
-          colorShade: 'dark1',
-        },
-      },
-    });
-  } else {
-    if (lumpSum) total -= lumpSum;
-
-    // If we don't add this, the "affordable" section will be the wrong colour.
-    // It's easier to insert an empty lump sum section than to change the default progress bar
-    // background colours.
-    progressBarData.push(EMPTY_PROGRESS_BAR_DATA);
-  }
-
-  if (affordableDrawdown) {
-    let legendProps = EMPTY_LEGEND;
-    if (lumpSum || remainingAmount) {
-      legendProps = {
-        // N.B. An en-dash (–) is used here, not a hyphen (-)
-        title: `From age ${ageAtStartDate}–${ageAtEndDate}`,
-        value: affordableDrawdown,
-        chartIndicatorProps: {
-          variant: 'solid',
-          color: 'tertiary',
-          colorShade: 'main',
-        },
-      };
-    }
-    progressBarData.push({
-      progress: affordableDrawdown / total,
-      legendProps,
-    });
-  } else {
-    progressBarData.push({
-      progress: affordable / total,
-      legendProps: EMPTY_LEGEND,
-    });
-  }
-
-  if (remainingAmount) {
-    progressBarData.push({
-      progress: remainingAmount / total,
-      legendProps: {
-        title: 'Remaining',
-        value: remainingAmount,
-        chartIndicatorProps: {
-          variant: 'solid',
-          color: 'tertiary',
-          colorShade: 'light2',
-        },
-      },
-    });
-  }
-
-  return progressBarData;
 };
 
 const renderDescription = (
@@ -271,7 +172,7 @@ const renderAccounts = (accounts: string[]) => {
   return accountsText;
 };
 
-const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetailedProps> = ({
+export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetailedProps> = ({
   style = GoalProgressCardStyle.detailed,
   name,
   iconSrc,
@@ -305,16 +206,16 @@ const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetailedProps>
   const affordableAmountFormatted = currencyFormatter(affordableAmount);
   const targetAmountFormatted = currencyFormatter(targetAmount);
 
-  const progressBarData = getProgressBarData(
+  const progressBarData = getProgressBarData({
     goalState,
-    targetAmount,
-    affordableAmount,
+    target: targetAmount,
+    affordable: affordableAmount,
+    affordableDrawdown: totalAffordableDrawdown,
     lumpSum,
-    totalAffordableDrawdown,
+    remainingAmount,
     ageAtStartDate,
     ageAtEndDate,
-    remainingAmount
-  );
+  });
 
   const targetLegend = isMobile
     ? undefined
@@ -390,5 +291,3 @@ const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetailedProps>
     </Layout>
   );
 };
-
-export default GoalProgressCardDetailed;

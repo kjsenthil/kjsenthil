@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import { Typography } from '../../atoms';
+import { Link } from 'gatsby';
+import { Theme, Typography } from '../../atoms';
 
 export const Heading = styled(Typography)`
   ${({ theme }) => css`
@@ -13,15 +14,15 @@ export const Description = styled(Typography)`
   `}
 `;
 
-export const GoalTilesLayout = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-flow: row wrap;
+export const GoalTilesLayout = styled.div<{ theme: Theme; columnsCount: string }>`
+  ${({ theme, columnsCount }) => `
+    display: grid;
+    grid: auto / repeat(${columnsCount}, minmax(${theme.spacing(49.25)}px , 1fr));
     column-gap: ${theme.spacing(3.5)}px;
     row-gap: ${theme.spacing(2.5)}px;
   `}
 `;
 
-export const GoalTileDoubleWidthWrapper = styled.div`
-  flex: 0 1 66.6%;
+export const GatsbyLinkNoDecoration = styled(Link)`
+  text-decoration: none;
 `;

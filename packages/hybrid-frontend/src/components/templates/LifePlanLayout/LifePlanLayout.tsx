@@ -1,29 +1,42 @@
 import * as React from 'react';
 import {
+  Button,
+  GoalProgressCardDetailed,
+  GoalProgressCardDetailedProps,
+  GoalProgressCardStyle,
+  GoalSelection,
+  GoalSelectionProps,
   Spacer,
-  GoalProgressCard,
-  GoalProgressCardProps,
+  Typography,
+  UpsellCard,
   useBreakpoint,
 } from '@tswdts/react-components';
 import { GoalProgressCardsContainer, LifePlanLayoutContainer } from './LifePlanLayout.styles';
 import Title from './Title/Title';
 import SectionHeading from './SectionHeading/SectionHeading';
 import ViewSelection from './ViewSelection/ViewSelection';
-import GoalSelection from './GoalSelection/GoalSelection';
-import { GoalName, LifePlanLayoutView } from './config/config';
+
+export type LifePlanGoalsData = Omit<GoalProgressCardDetailedProps, 'style'> & {
+  category: number;
+};
 
 export interface LifePlanLayoutProps {
-  // These props are for the Pills navigation bar
-  currentView: LifePlanLayoutView;
+  // Determines which Life Plan view we're currently at. Could be either:
+  // - All goals, or
+  // - Single goal (One of retirement, child's education, etc.)
+  currentView: string;
 
-  editThisGoalHref: string;
+  goalSelectionTiles: GoalSelectionProps['tiles'];
+
+  // These props are for the Pills navigation bar. They the navigation bar to
+  // navigate around the Life Plan page
   goToAllGoalsView: () => void;
-  goToSingleGoalView: (newView: LifePlanLayoutView) => void;
+  goToSingleGoalView: (newView: string) => void;
   goToCreateGoalView: () => void;
 
-  // If 'undefined', will render LifePlanLayout in "No goals" view
-  // The key of this record is the goal title
-  goalsData?: Partial<Record<GoalName, GoalProgressCardProps>>;
+  // The layout shows different stuff depending on whether goalsData exists or
+  // not
+  goalsData: LifePlanGoalsData[];
 
   // This is for the very first title of the layout
   allGoalsOnTrackPercentage: number;
@@ -37,7 +50,7 @@ export interface LifePlanLayoutProps {
 
 export default function LifePlanLayout({
   currentView,
-  editThisGoalHref,
+  goalSelectionTiles,
   goToAllGoalsView,
   goToSingleGoalView,
   goToCreateGoalView,
@@ -49,47 +62,43 @@ export default function LifePlanLayout({
   const { isMobile } = useBreakpoint();
 
   const renderMainContent = () => {
-    const hasGoals = goalsData && Object.keys(goalsData).length > 0;
+    const hasGoals = goalsData && goalsData.length > 0;
 
     if (!hasGoals) {
       return null;
     }
+    // To avoid having to use the non-null assertion operator everywhere else
+    goalsData = goalsData!;
 
-    // At this point, we know 'goalsData' exists thanks to the condition
-    // 'hasNoGoals' above, hence the TypeScript exclamation mark (as TypeScript
-    // can't infer this yet.
-    const goalDatum = goalsData![currentView];
+    const selectedGoal = goalsData.find((goal) => currentView === goal.name);
 
-    if (!goalDatum) {
+    if (!selectedGoal) {
       // We're in the "All goal" view
 
       return (
         <>
           <ViewSelection
             currentView={currentView}
-            // At this point, we know 'goalsData' exists thanks to the condition
-            // 'hasNoGoals' above, hence the TypeScript exclamation mark (as TypeScript
-            // can't infer this yet.
-            // We also need the 'as' assertion because Object.keys() always
-            // gives a string[]
-            views={(Object.keys(goalsData!) as GoalName[]).map((goalName) => goalName)}
-            editThisGoalHref={editThisGoalHref}
+            views={goalsData.map((goal) => goal.name)}
             goToAllGoalsView={goToAllGoalsView}
             goToSingleGoalView={goToSingleGoalView}
             goToCreateGoalView={goToCreateGoalView}
+            goToEditGoalView={goToCreateGoalView}
           />
           <Spacer y={5} />
           <Title onTrackPercentage={allGoalsOnTrackPercentage} />
           <Spacer y={5} />
           <GoalProgressCardsContainer isMobile={isMobile}>
-            {
-              // At this point, we know 'goalsData' exists thanks to the condition
-              // 'hasNoGoals' above, hence the TypeScript exclamation mark (as TypeScript
-              // can't infer this yet.
-              Object.values(goalsData!).map(
-                (goalData) => goalData && <GoalProgressCard key={goalData.title} {...goalData} />
-              )
-            }
+            {Object.values(goalsData).map(
+              (goalData) =>
+                goalData && (
+                  <GoalProgressCardDetailed
+                    key={goalData.name}
+                    style={GoalProgressCardStyle.simple}
+                    {...goalData}
+                  />
+                )
+            )}
           </GoalProgressCardsContainer>
           <Spacer y={7.5} />
         </>
@@ -102,25 +111,20 @@ export default function LifePlanLayout({
       <>
         <ViewSelection
           currentView={currentView}
-          // At this point, we know 'goalsData' exists thanks to the condition
-          // 'hasNoGoals' above, hence the TypeScript exclamation mark (as TypeScript
-          // can't infer this yet.
-          // We also need the 'as' assertion because Object.keys() always
-          // gives a string[]
-          views={(Object.keys(goalsData!) as GoalName[]).map((goalName) => goalName)}
-          editThisGoalHref={editThisGoalHref}
+          views={goalsData.map((goal) => goal.name)}
           goToAllGoalsView={goToAllGoalsView}
           goToSingleGoalView={goToSingleGoalView}
           goToCreateGoalView={goToCreateGoalView}
+          goToEditGoalView={goToCreateGoalView}
         />
         <Spacer y={5} />
         <Title
-          onTrackPercentage={goalDatum.onTrackPercentage}
-          onTrackAmount={goalDatum.shortfallValue}
-          onTrackAmountMarketUnderperform={goalDatum.shortfallUnderperformValue}
+          onTrackPercentage={selectedGoal.onTrackPercentage}
+          onTrackAmount={selectedGoal.affordableAmount}
+          onTrackAmountMarketUnderperform={selectedGoal.affordableAmountUnderperform}
         />
         <Spacer y={5} />
-        <GoalProgressCard {...goalDatum} />
+        <GoalProgressCardDetailed {...selectedGoal} />
         <Spacer y={7.5} />
         <SectionHeading text="Your projections" />
         <Spacer y={3} />
@@ -134,7 +138,7 @@ export default function LifePlanLayout({
     <LifePlanLayoutContainer>
       {renderMainContent()}
 
-      <GoalSelection currentView={currentView} />
+      <GoalSelection tiles={goalSelectionTiles} />
       <Spacer y={7.5} />
 
       {toDoListData && (
@@ -144,8 +148,22 @@ export default function LifePlanLayout({
         </>
       )}
 
-      {/* TODO: replace this with Speak to a coach card when it's available */}
-      <div>Speak to a coach</div>
+      <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
+        <Typography color="white" fontWeight="600" variant="b2">
+          Not sure about putting your plan into action? Don&apos;t worry.
+          <br />
+          Our experienced, friendly coaches can talk through your goal with you and take a look at
+          your different options.
+        </Typography>
+        <Button
+          wrap="nowrap"
+          color="white"
+          variant="contained"
+          href="https://online.bestinvest.co.uk/bestinvest-plus#/"
+        >
+          Book appointment
+        </Button>
+      </UpsellCard>
     </LifePlanLayoutContainer>
   );
 }

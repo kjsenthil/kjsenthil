@@ -1,6 +1,7 @@
 import { GoalProgressCardV1Props as GoalProgressCardProps } from './GoalProgressCardV1';
 import { GoalSelectionProps } from './GoalSelection';
 
+export * from './GoalProgressCardDetailed';
 export * from './PerformanceChart';
 export * from './PerformanceProjectionsChart';
 

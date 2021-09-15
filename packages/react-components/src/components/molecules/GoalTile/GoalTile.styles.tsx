@@ -23,4 +23,5 @@ export const GoalIcon = styled.img`
 export const GoalLabel = styled(Typography)`
   margin-left: 24px;
   align-self: center;
+  text-decoration: none;
 `;

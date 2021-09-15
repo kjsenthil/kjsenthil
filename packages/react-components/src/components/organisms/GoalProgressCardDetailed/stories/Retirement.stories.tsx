@@ -4,7 +4,8 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import * as React from 'react';
 import dayjs from 'dayjs';
-import GoalProgressCardDetailed, {
+import {
+  GoalProgressCardDetailed,
   GoalProgressCardDetailedProps,
   GoalProgressCardStyle,
 } from '../GoalProgressCardDetailed';

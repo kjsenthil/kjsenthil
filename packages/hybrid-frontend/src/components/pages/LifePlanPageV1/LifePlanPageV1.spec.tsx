@@ -2,7 +2,7 @@ import React from 'react';
 import { PerformanceDataPeriod } from '@tswdts/react-components';
 import { renderWithProviders, screen } from '@tsw/test-util';
 import { configureStore } from '@reduxjs/toolkit';
-import LifePlanPage from './LifePlanPage';
+import LifePlanPageV1 from './LifePlanPageV1';
 import {
   mockClientResponse,
   mockInvestmentSummaryResponse,
@@ -152,7 +152,7 @@ describe('LifePlanPage', () => {
       setUpNew: { childImageSharp: { fluid: '' } },
     });
     mockUseUpdateSimulateProjectionsPrerequisites.mockReturnValue({});
-    renderWithProviders(<LifePlanPage />, store);
+    renderWithProviders(<LifePlanPageV1 />, store);
   });
 
   it('renders the projections chart and forecasts disclaimer', async () => {
