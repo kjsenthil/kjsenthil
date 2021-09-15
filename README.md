@@ -9,13 +9,6 @@
 [![Destroy PR environment](https://github.com/TSWDTS/digital-hybrid/actions/workflows/destroy-pr.yaml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/destroy-pr.yaml)
 [![Upload workflow metrics to Influx DB](https://github.com/TSWDTS/digital-hybrid/actions/workflows/upload-to-influx.yml/badge.svg)](https://github.com/TSWDTS/digital-hybrid/actions/workflows/upload-to-influx.yml)
 
-## Test coverage
-
-![Test coverage: lines](./badges/badge-lines.svg)
-![Test coverage: functions](./badges/badge-functions.svg)
-![Test coverage: branches](./badges/badge-branches.svg)
-![Test coverage: statements](./badges/badge-statements.svg)
-
 ---
 
 ## Getting started
