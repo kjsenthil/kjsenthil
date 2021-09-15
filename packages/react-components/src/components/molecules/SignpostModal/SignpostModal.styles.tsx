@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Box, Paper, Theme, Typography, TypographyProps } from '../../atoms';
 
-export const StyledPaper = styled((props) => <Paper {...props} />)`
+export const StyledPaper = styled(Paper)`
   ${({ theme }: { theme: Theme }) => css`
     max-width: ${theme.spacing(50)}px;
     padding: ${theme.spacing(0.5)}px;
@@ -12,24 +12,12 @@ export const StyledPaper = styled((props) => <Paper {...props} />)`
   `}
 `;
 
-export const StyledBox = styled((props) => <Box {...props} />)`
+export const StyledBox = styled(Box)`
   display: grid;
   grid-template-columns: 1fr 100px;
   grid-template-rows: 0.75fr 1.5fr 0.5fr;
   ${({ theme }: { theme: Theme }) => css`
     padding: ${theme.spacing(1)}px;
-
-    ::before {
-      content: '';
-      right: 30%;
-      top: -5%;
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid ${theme.palette.background.paper};
-    }
   `}
 
   @media (max-width: 830px) {

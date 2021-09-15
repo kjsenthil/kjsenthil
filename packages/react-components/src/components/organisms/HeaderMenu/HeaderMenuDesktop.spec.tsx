@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithTheme } from '@tsw/test-util';
 import { fireEvent, screen } from '@testing-library/react';
 import { navigate } from 'gatsby';
-import HeaderMenu from './HeaderMenu';
+import HeaderMenu, { HeaderMenuProps } from './HeaderMenu';
 
 jest.mock('gatsby', () => ({
   ...jest.requireActual('gatsby'),
@@ -34,11 +34,14 @@ const coachImages = {
   },
 };
 
-const props = {
+const props: HeaderMenuProps = {
   homePath: '/',
   currentUrl: '/investments',
   switchHandler: () => {},
   coachImages,
+  toggleCalendlyModal: jest.fn(),
+  toggleCoachPopover: jest.fn(),
+  showCoachPopover: false,
   navigate,
   links: [
     {
@@ -139,7 +142,7 @@ describe('HeaderMenu in desktop view', () => {
     expect(result.queryByText('Invest')).toBeInTheDocument();
   });
 
-  it('The link back to MyAccounts should be visible in the subheader', () => {
+  test('the link back to MyAccounts should be visible in the subheader', () => {
     const { result } = renderWithTheme(
       <HeaderMenu {...props} myAccountsUrl="https://google.com" isExpFeatureFlagEnabled />
     );
@@ -149,22 +152,26 @@ describe('HeaderMenu in desktop view', () => {
     expect(myAccountsLink).toHaveAttribute('href', 'https://google.com');
   });
 
-  it('The coach signpost should be visible in the subheader', () => {
+  test('coach signpost is visible in the subheader', () => {
     const { result } = renderWithTheme(<HeaderMenu {...props} isExpFeatureFlagEnabled />);
 
     expect(result.getByText('YOUR COACH')).toBeVisible();
     expect(result.getByText('Book an appointment')).toBeVisible();
   });
 
-  it('Clicking "Book an appointment" should toggle displaying the coaching modal', () => {
+  it('should toggle displaying the coaching modal when "Book an appointment" is clicked', () => {
     const { result } = renderWithTheme(<HeaderMenu {...props} isExpFeatureFlagEnabled />);
-
-    expect(result.queryByText('Speak to a coach')).not.toBeInTheDocument();
 
     fireEvent.click(result.getByText('Book an appointment'));
 
-    expect(result.queryByText('Speak to a coach')).toBeInTheDocument();
-    expect(result.getByRole('img')).toHaveAttribute('src', 'coachPortrait.png');
-    expect(result.getByRole('button', { name: /Book an appointment/i })).toBeVisible();
+    expect(props.toggleCoachPopover).toHaveBeenCalledTimes(1);
+  });
+
+  it('should display the "Speak to a coach" modal when showCoachModal is true', () => {
+    const { result } = renderWithTheme(
+      <HeaderMenu {...props} isExpFeatureFlagEnabled showCoachPopover />
+    );
+
+    expect(result.getByText('Speak to a coach')).toBeInTheDocument();
   });
 });

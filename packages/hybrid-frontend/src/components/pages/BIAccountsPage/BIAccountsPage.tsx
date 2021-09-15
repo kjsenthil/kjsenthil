@@ -21,7 +21,6 @@ import {
   Spacer,
   SummaryPanel,
   Typography,
-  UpsellCard,
   usePerformanceChartDimension,
 } from '@tswdts/react-components';
 import React, { useEffect, useState } from 'react';
@@ -298,26 +297,6 @@ const BIAccountsPage = () => {
               </i>
             </Typography>
           </Box>
-        </Grid>
-
-        <Spacer y={5} />
-        <Grid item xs={12}>
-          <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
-            <Typography color="white" fontWeight="600" variant="b2">
-              Not sure about putting your plan into action? Don&apos;t worry.
-              <br />
-              Our experienced, friendly coaches can talk through your goal with you and take a look
-              at your different options.
-            </Typography>
-            <Button
-              wrap="nowrap"
-              color="white"
-              variant="contained"
-              href="https://online.bestinvest.co.uk/bestinvest-plus#/"
-            >
-              Book appointment
-            </Button>
-          </UpsellCard>
         </Grid>
       </Grid>
     </MyAccountLayout>

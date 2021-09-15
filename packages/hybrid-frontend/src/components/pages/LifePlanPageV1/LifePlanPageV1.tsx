@@ -304,7 +304,7 @@ const LifePlanPageV1 = () => {
       </MainCard>
       <Spacer y={5} />
 
-      <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
+      <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle-overlay">
         <Typography color="white" fontWeight="600" variant="b2">
           Not sure about putting your plan into action? Don&apos;t worry.
           <br />

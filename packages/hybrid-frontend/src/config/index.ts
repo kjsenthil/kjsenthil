@@ -10,6 +10,11 @@ export const ACTIVE_ENV = defaultEnv.get('GATSBY_ACTIVE_ENV').default(NODE_ENV).
 export const IS_SSR = typeof global.window === 'undefined';
 export const IS_PRODUCTION = ACTIVE_ENV === 'production';
 export const COOKIE_DOMAIN = IS_PRODUCTION ? '.bestinvest.co.uk' : undefined;
+export const CALENDLY_URL = IS_PRODUCTION
+  ? 'https://calendly.com/best-invest/coaching-session'
+  : 'https://calendly.com/best-invest-staging/coaching-session';
+
+export const BESTINVEST_PLUS_URL = 'https://online.bestinvest.co.uk/bestinvest-plus#/';
 
 if (IS_SSR) {
   /* eslint-disable-next-line global-require */

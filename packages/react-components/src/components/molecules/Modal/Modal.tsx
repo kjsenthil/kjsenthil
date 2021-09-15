@@ -1,6 +1,7 @@
 import React from 'react';
 import { DialogProps, Icon, IconButton, Typography, Grid } from '../../atoms';
 import {
+  Size,
   StyledDialogContainer,
   StyledDialogContent,
   StyledDialogTitle,
@@ -9,10 +10,11 @@ import {
 
 export interface ModalProps extends DialogProps {
   modalTitle: string;
+  maxHeight?: Size;
 }
 
-const Modal = ({ modalTitle, onClose, children, ...props }: ModalProps) => (
-  <StyledDialogContainer {...props} onClose={onClose}>
+const Modal = ({ modalTitle, maxHeight, onClose, children, ...props }: ModalProps) => (
+  <StyledDialogContainer {...props} onClose={onClose} maxHeight={maxHeight}>
     <StyledDialogTitle disableTypography>
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item xs={10} container alignItems="center">

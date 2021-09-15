@@ -55,8 +55,6 @@ describe('useBasicInfo', () => {
       renderedHook = getRenderedHook(store);
 
       expect(renderedHook.result.current).toStrictEqual({
-        firstName: '',
-        lastName: '',
         isLoading: true,
         clientAge: 31,
         dateOfBirth: new Date(1979, 1, 1),

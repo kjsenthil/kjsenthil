@@ -13,7 +13,7 @@ export interface UpsellCardProps {
   title?: string;
   children: React.ReactNode | FunctionAsChild;
   isLoading?: boolean;
-  background?: 'triangle overlay';
+  background?: 'triangle-overlay';
   respondTo?: 'xs' | 'sm';
   renderActionEl?: (fullWidth: boolean) => React.ReactElement;
   style?: React.CSSProperties;
@@ -33,7 +33,7 @@ const UpsellCard = ({
 
   return (
     <UpsellCardContainer isLoading={isLoading} isMobile={isMobile} theme={theme} style={style}>
-      {background === 'triangle overlay' && (
+      {background === 'triangle-overlay' && (
         <>
           <OverlayTriangle
             top={isMobile ? '-165px' : '0'}

@@ -1,5 +1,5 @@
-import Img from 'gatsby-image';
 import React, { useState } from 'react';
+import Img from 'gatsby-image';
 import {
   Box,
   Button,
@@ -19,6 +19,8 @@ import {
   Typography,
 } from '../../atoms';
 import { DisabledComponent, NavLink, SubHeader } from '../../molecules';
+import { ClickAwayListener } from '../../particles';
+import CoachingPopover from '../CoachingPopover';
 import {
   Availability,
   CallBack,
@@ -52,7 +54,6 @@ import { StyledChildNavLink } from '../../molecules/NavLinkWithDropDown/NavLinkW
 import Spacer from '../../atoms/Spacer/Spacer';
 import NavLinkWithDropDown, { NavLinkWithDropDownProps } from '../../molecules/NavLinkWithDropDown';
 import CalendarIcon from './CalendarIcon';
-import CoachingModal from '../CoachingModal';
 
 type LinkWithSwitch = {
   onClick: (isEnabled: boolean) => void;
@@ -106,6 +107,9 @@ export interface HeaderMenuProps {
   isNonProd?: boolean;
   myAccountsUrl?: string;
   coachImages: CoachImages;
+  showCoachPopover: boolean;
+  toggleCalendlyModal: () => void;
+  toggleCoachPopover: (value?: boolean) => void;
   navigate: (path: string) => {};
 }
 
@@ -118,6 +122,9 @@ const HeaderMenu = ({
   isExpFeatureFlagEnabled = true,
   myAccountsUrl,
   coachImages,
+  toggleCalendlyModal,
+  showCoachPopover,
+  toggleCoachPopover,
   navigate,
 }: HeaderMenuProps) => {
   const theme = useTheme();
@@ -125,7 +132,6 @@ const HeaderMenu = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleProfileMenuClick = () => {
     setProfileMenuOpen(!profileMenuOpen);
@@ -206,16 +212,19 @@ const HeaderMenu = ({
   const renderCoachSignpost = () => (
     <CoachIconContainer>
       <ModalContainer>
-        {showModal ? (
-          <CoachingModal
-            image={
-              <Img
-                fluid={coachImages.coachPortrait.childImageSharp.fluid}
-                alt="Portrait image of coach"
-              />
-            }
-          />
-        ) : null}
+        {showCoachPopover && (
+          <ClickAwayListener mouseEvent="onMouseDown" onClickAway={() => toggleCoachPopover(false)}>
+            <CoachingPopover
+              image={
+                <Img
+                  fluid={coachImages.coachPortrait.childImageSharp.fluid}
+                  alt="Portrait image of coach"
+                />
+              }
+              onButtonClick={toggleCalendlyModal}
+            />
+          </ClickAwayListener>
+        )}
       </ModalContainer>
       <CoachTextContainer>
         <Typography variant="sh1" color="inherit">
@@ -224,11 +233,7 @@ const HeaderMenu = ({
         <Link
           color="white"
           special
-          onClick={() =>
-            isMobile
-              ? navigate('https://online.bestinvest.co.uk/bestinvest-plus#/')
-              : setShowModal(!showModal)
-          }
+          onClick={() => (isMobile ? toggleCalendlyModal() : toggleCoachPopover())}
         >
           Book an appointment
         </Link>
@@ -385,6 +390,7 @@ const HeaderMenu = ({
         elevation={0}
         isMobile={isMobile}
         position="relative"
+        style={{ zIndex: 1201 }}
       >
         <StyledToolbar variant="dense" isMobile={isMobile}>
           <Grid container justifyContent="space-between" alignItems="center">
@@ -410,6 +416,7 @@ const HeaderMenu = ({
                       keepMounted
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
+                      style={{ zIndex: 1200 }} // Must be inline to override z-index set by MUI modal JS
                     >
                       <DrawerContainer>
                         {isExpFeatureFlagEnabled ? (

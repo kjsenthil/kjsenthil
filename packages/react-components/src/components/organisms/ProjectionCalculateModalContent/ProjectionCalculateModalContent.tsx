@@ -11,7 +11,7 @@ const ProjectionCalculateModal = () => (
       Bestinvest Ready-made Portfolio. As we can’t ever guarantee investment performance, please use
       them as a rough indication of possible returns.
     </Typography>
-    <Typography variant="b2" color="primary" colorShade="dark2" gutterBottom>
+    <Typography variant="b2" color="primary" colorShade="dark2" component="span" gutterBottom>
       We’ve based the projections on:
       <ul>
         <li>How much you have invested with us today</li>

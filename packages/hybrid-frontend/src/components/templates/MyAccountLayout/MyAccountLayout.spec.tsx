@@ -29,7 +29,11 @@ const basicInfo = {
 };
 
 describe('MyAccountLayout', () => {
-  const store = configureStore({ reducer: { featureToggle: featureToggleReducer } });
+  const store = configureStore({
+    reducer: {
+      featureToggle: featureToggleReducer,
+    },
+  });
 
   describe('without heading', () => {
     beforeEach(() => {
@@ -55,6 +59,10 @@ describe('MyAccountLayout', () => {
 
     it('renders with footer', async () => {
       expect(await screen.findByTestId('footer')).toBeInTheDocument();
+    });
+
+    it('renders coach card successfully', () => {
+      expect(screen.getByText('Speak to a coach')).toBeInTheDocument();
     });
   });
 

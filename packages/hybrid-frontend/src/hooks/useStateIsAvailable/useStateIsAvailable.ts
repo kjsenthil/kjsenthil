@@ -8,12 +8,10 @@ const useStateIsAvailable = (sliceNames: SliceName | SliceName[]): boolean => {
 
   const sliceNamesArray = Array.isArray(sliceNames) ? sliceNames : [sliceNames];
 
-  const allStatusesSuccessful = sliceNamesArray.every((sliceName) => {
+  return sliceNamesArray.every((sliceName) => {
     const slice = state[sliceName];
     return slice.status === 'success';
   });
-
-  return allStatusesSuccessful;
 };
 
 export default useStateIsAvailable;

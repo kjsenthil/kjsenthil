@@ -1,14 +1,11 @@
 import * as React from 'react';
 import {
-  Button,
   GoalProgressCardDetailed,
   GoalProgressCardDetailedProps,
   GoalProgressCardStyle,
   GoalSelection,
   GoalSelectionProps,
   Spacer,
-  Typography,
-  UpsellCard,
   useBreakpoint,
 } from '@tswdts/react-components';
 import { GoalProgressCardsContainer, LifePlanLayoutContainer } from './LifePlanLayout.styles';
@@ -147,23 +144,6 @@ export default function LifePlanLayout({
           <Spacer y={7.5} />
         </>
       )}
-
-      <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle overlay">
-        <Typography color="white" fontWeight="600" variant="b2">
-          Not sure about putting your plan into action? Don&apos;t worry.
-          <br />
-          Our experienced, friendly coaches can talk through your goal with you and take a look at
-          your different options.
-        </Typography>
-        <Button
-          wrap="nowrap"
-          color="white"
-          variant="contained"
-          href="https://online.bestinvest.co.uk/bestinvest-plus#/"
-        >
-          Book appointment
-        </Button>
-      </UpsellCard>
     </LifePlanLayoutContainer>
   );
 }

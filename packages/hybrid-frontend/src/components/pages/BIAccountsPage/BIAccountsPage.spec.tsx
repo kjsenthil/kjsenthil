@@ -35,8 +35,4 @@ describe('BIAccountsPage', () => {
   test('BIAccountsPage title has been successfully rendered', () => {
     expect(screen.getByText('Total Value: £0')).toBeInTheDocument();
   });
-
-  it('renders coach card successfully', () => {
-    expect(screen.getByText('Speak to a coach')).toBeInTheDocument();
-  });
 });

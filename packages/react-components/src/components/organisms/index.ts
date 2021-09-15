@@ -8,6 +8,7 @@ export * from './PerformanceProjectionsChart';
 export type { AccountsTableProps } from './AccountsTable';
 export type { HeaderMenuProps } from './HeaderMenu';
 export type { OldHeaderMenuProps } from './HeaderMenu/OldHeaderMenu/OldHeaderMenu';
+export type { CoachingPopoverProps } from './CoachingPopover';
 
 export { default as AccountSummaryPanel } from './AccountSummaryPanel';
 export { default as AccountsTable } from './AccountsTable';
@@ -38,5 +39,7 @@ export { default as SummaryPanel } from './SummaryPanel';
 export { default as WithDrawCashCard } from './WithDrawCashCard';
 export { default as SuccessModal } from './SuccessModal';
 export { default as GoalDeleteModal } from './GoalDeleteModal';
+export { default as CalendlyModal } from './CalendlyModal';
+export { default as CoachingPopover } from './CoachingPopover';
 
 export type { GoalProgressCardProps, GoalSelectionProps };

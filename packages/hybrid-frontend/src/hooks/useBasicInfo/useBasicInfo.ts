@@ -11,8 +11,8 @@ export interface BasicInfo {
   totalInvestableCash: number;
   dateOfBirth: Date;
   clientAge: number;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   isLoading: boolean;
 }
 
@@ -37,9 +37,7 @@ const useBasicInfo = (
       totalGainLoss: 0,
       totalInvested: 0,
       totalInvestableCash: 0,
-      firstName: '',
       dateOfBirth: new Date(1979, 1, 1),
-      lastName: '',
       clientAge: 31,
       isLoading: isBasicInfoLoading,
     };

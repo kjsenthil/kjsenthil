@@ -433,7 +433,6 @@ exports[`HeaderMenu in desktop view renders the header menu (with experimental f
   -webkit-justify-content: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
-  z-index: 1400;
 }
 
 .c4 {
@@ -483,6 +482,7 @@ exports[`HeaderMenu in desktop view renders the header menu (with experimental f
     <header
       class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorInherit c0 MuiPaper-elevation0"
       data-testid="header-menu"
+      style="z-index: 1201;"
     >
       <div
         class="MuiToolbar-root MuiToolbar-dense c1 MuiToolbar-gutters"

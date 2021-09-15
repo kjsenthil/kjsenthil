@@ -120,9 +120,6 @@ function assertCommonElements() {
   expect(
     screen.getByText('Achieve your investment goals by adding them to your life plan.')
   ).toBeVisible();
-
-  // We expect the Coach card to be present
-  expect(screen.getByText('Speak to a coach')).toBeVisible();
 }
 
 describe('LifePlanLayout', () => {

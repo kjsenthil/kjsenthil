@@ -165,8 +165,4 @@ describe('LifePlanPage', () => {
   it('renders goals card successfully', () => {
     expect(screen.getByText('Your important moments')).toBeInTheDocument();
   });
-
-  it('renders coach card successfully', () => {
-    expect(screen.getByText('Speak to a coach')).toBeInTheDocument();
-  });
 });

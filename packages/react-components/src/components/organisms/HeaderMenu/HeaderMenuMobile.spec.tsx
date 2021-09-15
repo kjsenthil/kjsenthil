@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithTheme, fireEvent, screen } from '@tsw/test-util';
 import { navigate } from 'gatsby';
 import { useMediaQuery } from '../../atoms';
-import HeaderMenu from './HeaderMenu';
+import HeaderMenu, { HeaderMenuProps } from './HeaderMenu';
 
 jest.mock('../../atoms', () => {
   const originalModule = jest.requireActual('../../atoms');
@@ -43,11 +43,14 @@ const coachImages = {
   },
 };
 
-const props = {
+const props: HeaderMenuProps = {
   homePath: '/',
   currentUrl: '/investments',
   switchHandler: () => {},
   coachImages,
+  showCoachPopover: false,
+  toggleCalendlyModal: jest.fn(),
+  toggleCoachPopover: jest.fn(),
   navigate,
   links: [
     {
@@ -56,7 +59,6 @@ const props = {
       shouldShowInDrawer: true,
       shouldShowInMainMenu: true,
       type: 'link',
-      coachImages,
       childLinks: [
         {
           name: 'Stocks & Shares ISA',
@@ -103,7 +105,7 @@ describe('Header Menu in Mobile', () => {
     expect(result.container).toMatchSnapshot();
   });
 
-  it('The link back to MyAccounts should be visible in the subheader', () => {
+  test('The link back to MyAccounts should be visible in the subheader', () => {
     const { result } = renderWithTheme(
       <HeaderMenu myAccountsUrl="https://google.com" isExpFeatureFlagEnabled {...props} />
     );
@@ -113,7 +115,7 @@ describe('Header Menu in Mobile', () => {
     expect(myAccountsLink).toHaveAttribute('href', 'https://google.com');
   });
 
-  it('The coach signpost should only be visible once the menu has been expanded', () => {
+  test('The coach signpost should only be visible once the menu has been expanded', () => {
     const { result } = renderWithTheme(<HeaderMenu isExpFeatureFlagEnabled {...props} />);
 
     expect(result.getByText('YOUR COACH')).not.toBeVisible();
@@ -123,22 +125,6 @@ describe('Header Menu in Mobile', () => {
 
     expect(result.getByText('YOUR COACH')).toBeVisible();
     expect(result.getByText('Book an appointment')).toBeVisible();
-  });
-
-  it('When the menu is expanded, clicking "Book an appointment" should not display the coaching modal, but should take the user to the appointments page', () => {
-    const { result } = renderWithTheme(<HeaderMenu isExpFeatureFlagEnabled {...props} />);
-
-    fireEvent.click(result.getByRole('button', { name: 'menu' }));
-
-    expect(result.queryByText('Speak to a coach')).not.toBeInTheDocument();
-
-    fireEvent.click(result.getByText('Book an appointment'));
-
-    expect(result.queryByText('Speak to a coach')).not.toBeInTheDocument();
-    expect(result.queryByRole('img')).not.toBeInTheDocument();
-
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith('https://online.bestinvest.co.uk/bestinvest-plus#/');
   });
 
   it('should display a menu icon when menu is closed', () => {

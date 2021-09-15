@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { navigate } from 'gatsby';
 import HeaderMenu, { HeaderMenuProps } from './HeaderMenu';
 import imageFile from '../../../assets/img/coachPortrait.png';
 import imageIcon from '../../../assets/img/coachIcon.png';
@@ -8,18 +7,17 @@ import imageIcon from '../../../assets/img/coachIcon.png';
 export default {
   title: 'Digital Hybrid/Organisms/Header Menu',
   component: HeaderMenu,
+  argTypes: {
+    toggleCalendlyDialog: { action: 'toggleCalendlyDialog' },
+    toggleCoachModal: { action: 'toggleCoachModal' },
+    switchHandler: { action: 'switched' },
+    navigate: { action: 'navigate' },
+  },
 } as Meta;
 
 const Template: Story<HeaderMenuProps> = (args) => <HeaderMenu {...args} />;
 
 export const Default = Template.bind({});
-
-/* eslint-disable-next-line no-alert */
-const expFeatureSwitch = (isEnabled: boolean) => alert(`isEnabled: ${isEnabled}`);
-
-const switchHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-  expFeatureSwitch(evt.target.checked);
-};
 
 const coachImages = {
   coachPortrait: {
@@ -44,13 +42,15 @@ const coachImages = {
   },
 };
 
-const defaultArgs: HeaderMenuProps = {
+const defaultArgs: Omit<
+  HeaderMenuProps,
+  'toggleCalendlyModal' | 'toggleCoachPopover' | 'switchHandler' | 'navigate'
+> = {
   myAccountsUrl: 'https://google.com',
   homePath: '/',
-  switchHandler,
   currentUrl: '/investments',
   coachImages,
-  navigate,
+  showCoachPopover: false,
   links: [
     {
       name: 'Investments',

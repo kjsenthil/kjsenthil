@@ -17,11 +17,16 @@ import {
 import { SubHeader } from '../../molecules';
 
 export const Availability = styled.p`
-  ${({ theme }) => css`
+  ${({
+    theme: {
+      palette,
+      typography: { pxToRem },
+    },
+  }) => css`
     font-size: 12px;
     line-height: 20px;
-    letter-spacing: 0.4;
-    color: ${theme.palette.grey[400]};
+    letter-spacing: ${pxToRem(0.4)};
+    color: ${palette.grey[400]};
   `}
 `;
 
@@ -72,7 +77,6 @@ export const CoachTextContainer = styled.div`
 
   h6 {
     margin-left: -13px;
-  }
   }
 `;
 
@@ -165,7 +169,6 @@ export const StyledAppBar = styled(({ isMobile, ...props }) => <AppBar {...props
     left: 0;
     right: 0;
     justify-content: space-evenly;
-    z-index: 1400;
   `}
 `;
 
