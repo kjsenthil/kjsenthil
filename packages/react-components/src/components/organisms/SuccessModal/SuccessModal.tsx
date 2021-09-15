@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Grid, Button } from '../../atoms';
-import ModalWithHeader from '../../molecules/ModalWithHeader';
+import { ModalWithHeaderV2 } from '../../molecules';
 import { ModalImage, SuccessDialogContainer, DialogMessage } from './SuccessModal.styles';
 import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import { useBreakpoint } from '../../../hooks';
@@ -24,13 +24,7 @@ const SuccessModal = ({
   const { isMobile } = useBreakpoint();
   const formattedAmount = formatCurrency(amount, CurrencyPresentationVariant.ACTUAL_INLINE);
   return (
-    <ModalWithHeader
-      variant="DefaultTitle"
-      modalTitle={title}
-      open={isOpen}
-      maxWidth="sm"
-      modalBackgroundImgSrc="/add-cash-bk.png"
-    >
+    <ModalWithHeaderV2 variant="Confirmation" modalTitle={title} open={isOpen} maxWidth="sm">
       <Grid container spacing={2}>
         <SuccessDialogContainer>
           <Grid item xs={12}>
@@ -64,7 +58,7 @@ const SuccessModal = ({
           </Button>
         </Grid>
       </Grid>
-    </ModalWithHeader>
+    </ModalWithHeaderV2>
   );
 };
 

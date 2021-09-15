@@ -18,9 +18,9 @@ export const StyledDialogContainer = styled(
     .MuiDialog-paper {
       border-radius: ${theme.spacing(2)}px;
       box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.07);
-      background-image:url('/add-cash-bk.png');
+      background-image:url('/logo-background.png');
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: auto;
     }
 
     *::-webkit-scrollbar {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalWithHeader from '../../molecules/ModalWithHeader';
+import { ModalWithHeaderV2 } from '../../molecules';
 import { useBreakpoint } from '../../../hooks';
 import { Button, Grid, Typography } from '../../atoms';
 import { ModalDialogContainer, ModalImage, ModalImageContainer } from './GoalDeleteModal.styles';
@@ -23,12 +23,7 @@ const GoalDeleteModal = ({
 }: GoalDeleteModalProps) => {
   const { isMobile } = useBreakpoint();
   return (
-    <ModalWithHeader
-      variant="withoutClose"
-      modalTitle={title}
-      open={isOpen}
-      modalBackgroundImgSrc="/add-cash-bk.png"
-    >
+    <ModalWithHeaderV2 variant="Confirmation" hideCloseButton modalTitle={title} open={isOpen}>
       <Grid container spacing={2}>
         <ModalImageContainer>
           <Grid item xs={12}>
@@ -59,7 +54,7 @@ const GoalDeleteModal = ({
           </Button>
         </Grid>
       </Grid>
-    </ModalWithHeader>
+    </ModalWithHeaderV2>
   );
 };
 

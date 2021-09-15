@@ -16,6 +16,7 @@ import { NavLinkWithDropDownProps } from './NavLinkWithDropDown';
 import { FormSelectProps } from './FormSelect';
 import { ConfirmationModalProps } from './ConfirmationModal';
 import { PillWithDropdownProps } from './PillWithDropdown';
+import { ModalProps } from './ModalWithHeaderV2';
 
 export { default as Alert } from './Alert';
 export { default as Banner } from './Banner';
@@ -34,6 +35,7 @@ export { default as GoalTile } from './GoalTile';
 export { default as Legend } from './Legend';
 export { default as MainCard } from './MainCard';
 export { default as Modal } from './Modal';
+export { default as ModalWithHeaderV2 } from './ModalWithHeaderV2';
 export { default as ModalWithHeader } from './ModalWithHeader';
 export { default as NavLink } from './NavLink';
 export { default as NavLinkWithDropDown } from './NavLinkWithDropDown';
@@ -73,19 +75,20 @@ export {
 } from '@material-ui/core';
 
 export type {
+  ModalProps,
+  LegendProps,
+  FormSelectProps,
+  TabsNavigationProps,
+  DigitalCoachBoxProps,
+  PillsNavigationProps,
+  GoalLifePlanCardProps,
+  PillWithDropdownProps,
+  ConfirmationModalProps,
+  PillsNavigationTabProps,
+  NavLinkWithDropDownProps,
   ChartPeriodSelectionProps,
   TypographyWithTooltipProps,
-  FormSelectProps,
-  LegendProps,
   ProgressBarWithLegendProps,
-  DigitalCoachBoxProps,
-  TabsNavigationProps,
-  GoalLifePlanCardProps,
-  SimplifiedPortfolioTileProps,
-  PillsNavigationTabProps,
-  PillsNavigationProps,
   PillNavigationOnChangeProps,
-  PillWithDropdownProps,
-  NavLinkWithDropDownProps,
-  ConfirmationModalProps,
+  SimplifiedPortfolioTileProps,
 };
