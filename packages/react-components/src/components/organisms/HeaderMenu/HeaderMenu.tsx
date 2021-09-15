@@ -226,6 +226,7 @@ const HeaderMenu = ({
           </ClickAwayListener>
         )}
       </ModalContainer>
+
       <CoachTextContainer>
         <Typography variant="sh1" color="inherit">
           YOUR COACH
@@ -238,6 +239,7 @@ const HeaderMenu = ({
           Book an appointment
         </Link>
       </CoachTextContainer>
+
       <CoachIcon coachIconUrl={coachImages.coachIcon.childImageSharp.fluid.src}>
         <CalendarIcon />
       </CoachIcon>
@@ -292,6 +294,7 @@ const HeaderMenu = ({
             <Spacer x={1} />
           </>
         )}
+
         <NavLink
           colorShade={link.color === 'error' ? undefined : 'dark2'}
           color={link.color ?? 'primary'}
@@ -302,6 +305,7 @@ const HeaderMenu = ({
         >
           {link.name}
         </NavLink>
+
         {link.type === 'switch' && (
           <ListItemSecondaryAction key={`${link.name}-mobile-switch`}>
             {renderSwitcher(false, (evt) => getOnLinkClick(link)(evt.target.checked))}
@@ -360,6 +364,7 @@ const HeaderMenu = ({
                 </Button>
               </DisabledComponent>
             </Grid>
+
             <CashAndInvestGrid isMobile={isMobile} {...(isMobile ? { item: true, xs: 9 } : {})}>
               <DisabledComponent title="Coming soon">
                 <InvestButton
@@ -400,6 +405,7 @@ const HeaderMenu = ({
                   <LogoImage isMobile={isMobile} />
                 </Link>
               </Grid>
+
               {isMobile ? (
                 <Grid item xs={9}>
                   <Grid container justifyContent="flex-end">
@@ -411,6 +417,7 @@ const HeaderMenu = ({
                     >
                       {!menuOpen ? <MenuIcon /> : <ClearIcon />}
                     </StyledIconButton>
+
                     <Drawer
                       anchor="right"
                       keepMounted
@@ -422,6 +429,7 @@ const HeaderMenu = ({
                         {isExpFeatureFlagEnabled ? (
                           <StyledSubHeader>{renderCoachSignpost()}</StyledSubHeader>
                         ) : null}
+
                         <DisabledComponent title="Coming soon">
                           <StyledInputBase
                             placeholder="Markets, products, stocks"
@@ -432,6 +440,7 @@ const HeaderMenu = ({
                             }
                           />
                         </DisabledComponent>
+
                         <StyledMobileMenuList isExpFeatureFlagEnabled={isExpFeatureFlagEnabled}>
                           {isNonProd && (
                             <SwitcherLabel
@@ -440,8 +449,10 @@ const HeaderMenu = ({
                               label="Experimental Features"
                             />
                           )}
+
                           {renderDrawerList()}
                         </StyledMobileMenuList>
+
                         <DrawerFooterContainer>
                           {renderCashAndInvestActions()}
                           <CallContainer>
@@ -469,6 +480,7 @@ const HeaderMenu = ({
                   <StyledMenuNavGrid item container justifyContent="flex-start" wrap="nowrap">
                     {renderMenuNavLinks()}
                   </StyledMenuNavGrid>
+
                   <Grid
                     item
                     container
@@ -479,7 +491,9 @@ const HeaderMenu = ({
                     component="div"
                   >
                     {renderCashAndInvestActions(false)}
+
                     {styledDivider}
+
                     <Grid item>
                       <DisabledComponent title="Coming soon">
                         <Button
@@ -494,7 +508,9 @@ const HeaderMenu = ({
                         </Button>
                       </DisabledComponent>
                     </Grid>
+
                     {styledDivider}
+
                     <Grid item>
                       <DisabledComponent title="Coming soon">
                         <Button
@@ -509,7 +525,9 @@ const HeaderMenu = ({
                         </Button>
                       </DisabledComponent>
                     </Grid>
+
                     {styledDivider}
+
                     <Grid item>
                       <DisabledComponent title="Coming soon">
                         <Button
@@ -524,7 +542,9 @@ const HeaderMenu = ({
                         </Button>
                       </DisabledComponent>
                     </Grid>
+
                     {styledDivider}
+
                     <Grid item>
                       <Button
                         data-testid="profile"
@@ -538,6 +558,7 @@ const HeaderMenu = ({
                         <Icon name="account" />
                       </Button>
                     </Grid>
+
                     {profileMenuOpen && (
                       <StyledProfileList profileMenuOpen={profileMenuOpen}>
                         {renderProfileMenuDropdownLinks(links[4].childLinks)}
@@ -564,6 +585,7 @@ const HeaderMenu = ({
               <StyledSubHeader isMobile={isMobile}>
                 <Grid container justifyContent="space-between" alignItems="center">
                   <Grid item>{renderMyAccountsLink()}</Grid>
+
                   <Grid item>
                     {isNonProd && (
                       <SwitcherLabel

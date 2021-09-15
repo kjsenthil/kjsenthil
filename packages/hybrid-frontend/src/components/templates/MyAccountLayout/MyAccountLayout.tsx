@@ -5,19 +5,14 @@ import { useLocation } from '@reach/router';
 import {
   Box,
   CalendlyModal,
-  CurrencyPresentationVariant,
   Divider,
   Footer,
   HeaderMenu,
   HeaderMenuProps,
-  Icon,
   LinearProgress,
-  OldHeaderMenu,
-  OldHeaderMenuProps,
   Spacer,
   StickyHeader,
   Typography,
-  formatCurrency,
   useMediaQuery,
   useTheme,
   UpsellCard,
@@ -48,7 +43,6 @@ export interface MyAccountLayoutProps {
   isLoading?: boolean;
   heading?: PageHeading;
   headerProps?: Omit<HeaderMenuProps, 'cash'>;
-  oldHeaderProps?: Omit<OldHeaderMenuProps, 'cash'>;
   accountDetailsMenu?: React.ReactNode;
   stickyHeaderChildComponent?: React.ReactNode;
 }
@@ -59,7 +53,6 @@ const MyAccountLayout = ({
   heading,
   isLoading,
   headerProps,
-  oldHeaderProps,
   accountDetailsMenu,
   stickyHeaderChildComponent,
 }: MyAccountLayoutProps) => {
@@ -123,130 +116,91 @@ const MyAccountLayout = ({
   return (
     <>
       <LayoutContainer maxWidth="lg" disableGutters>
-        {expFeatureFlag?.isEnabled ? (
-          <HeaderMenu
-            {...headerProps}
-            isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
-            isNonProd={ACTIVE_ENV !== 'production'}
-            homePath={NavPaths.MY_ACCOUNT_BASE_URL}
-            currentUrl={currentUrl}
-            switchHandler={switchHandler}
-            myAccountsUrl={MYACCOUNTS_HOME_URL}
-            coachImages={coachImages}
-            navigate={navigate}
-            toggleCalendlyModal={toggleCalendlyModal}
-            showCoachPopover={showCoachPopover}
-            toggleCoachPopover={toggleCoachPopover}
-            links={[
-              {
-                name: 'Investments',
-                path: NavPaths.MY_ACCOUNT_BASE_URL,
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-                type: 'link',
-                childLinks: [
-                  {
-                    name: 'Stocks & Shares ISA',
-                    path: '/test1',
-                    disabled: true,
-                  },
-                  {
-                    name: 'Self-invested Personal Pension',
-                    path: '/test2',
-                    disabled: true,
-                  },
-                  {
-                    name: 'Investment accounts',
-                    path: '/test3',
-                    disabled: true,
-                  },
-                ],
-              },
-              {
-                name: 'Life plan',
-                path: NavPaths.LIFE_PLAN_PAGE,
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-              },
-              {
-                name: 'Documents',
-                path: '/documents',
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-                disabled: true,
-              },
-              {
-                name: 'Help & Support',
-                path: '/help-and-support',
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-                disabled: true,
-              },
-              {
-                name: 'Profile', // The last link should be profile
-                path: '/profile',
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: false,
-                childLinks: [
-                  {
-                    name: 'Logout',
-                    path: NavPaths.LOGOUT_PAGE,
-                  },
-                ],
-              },
-            ]}
-          />
-        ) : (
-          <OldHeaderMenu
-            {...oldHeaderProps}
-            isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
-            homePath={NavPaths.MY_ACCOUNT_BASE_URL}
-            cash={formatCurrency(
-              basicInfo.totalInvestableCash,
-              CurrencyPresentationVariant.ACTUAL_TOPLINE
-            )}
-            currentUrl={currentUrl}
-            switchHandler={switchHandler}
-            isNonProd={ACTIVE_ENV !== 'production'}
-            myAccountsUrl={MYACCOUNTS_HOME_URL}
-            links={[
-              {
-                name: 'Investment',
-                path: NavPaths.MY_ACCOUNT_BASE_URL,
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-              },
-              {
-                name: 'Life plan',
-                path: NavPaths.LIFE_PLAN_PAGE,
-                shouldShowInDrawer: true,
-                shouldShowInMainMenu: true,
-              },
-              { name: 'My accounts login', path: MYACCOUNTS_HOME_URL, shouldShowInDrawer: true },
-              {
-                name: 'Experimental features',
-                type: 'switch',
-                onClick: expFeatureSwitch,
-                shouldShowInDrawer: true,
-                shouldDisplayInNonProdOnly: true,
-              },
-              {
-                name: 'Logout',
-                path: NavPaths.LOGOUT_PAGE,
-                shouldShowInDrawer: true,
-                shouldShowInDropdownMenu: true,
-                color: 'error',
-                icon: <Icon name="exit" color="error" />,
-              },
-            ]}
-          />
-        )}
+        <HeaderMenu
+          {...headerProps}
+          isExpFeatureFlagEnabled={expFeatureFlag?.isEnabled}
+          isNonProd={ACTIVE_ENV !== 'production'}
+          homePath={NavPaths.MY_ACCOUNT_BASE_URL}
+          currentUrl={currentUrl}
+          switchHandler={switchHandler}
+          myAccountsUrl={MYACCOUNTS_HOME_URL}
+          coachImages={coachImages}
+          navigate={navigate}
+          toggleCalendlyModal={toggleCalendlyModal}
+          showCoachPopover={showCoachPopover}
+          toggleCoachPopover={toggleCoachPopover}
+          links={[
+            {
+              name: 'Investments',
+              path: NavPaths.MY_ACCOUNT_BASE_URL,
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: true,
+              type: 'link',
+              childLinks: [
+                {
+                  name: 'Stocks & Shares ISA',
+                  path: '/test1',
+                  disabled: true,
+                },
+                {
+                  name: 'Self-invested Personal Pension',
+                  path: '/test2',
+                  disabled: true,
+                },
+                {
+                  name: 'Investment accounts',
+                  path: '/test3',
+                  disabled: true,
+                },
+              ],
+            },
+            {
+              name: 'Life plan',
+              path: NavPaths.LIFE_PLAN_PAGE,
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: true,
+            },
+            {
+              name: 'Documents',
+              path: '/documents',
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: true,
+              disabled: true,
+            },
+            {
+              name: 'Back to old Bestinvest',
+              path: MYACCOUNTS_HOME_URL,
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: false,
+            },
+            {
+              name: 'Help & Support',
+              path: '/help-and-support',
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: true,
+              disabled: true,
+            },
+            {
+              name: 'Profile', // The last link should be profile
+              path: '/profile',
+              shouldShowInDrawer: true,
+              shouldShowInMainMenu: false,
+              childLinks: [
+                {
+                  name: 'Logout',
+                  path: NavPaths.LOGOUT_PAGE,
+                },
+              ],
+            },
+          ]}
+        />
 
         {stickyEnabled && stickyHeaderChildComponent && (
           <StickyHeader>{stickyHeaderChildComponent}</StickyHeader>
         )}
 
         {accountDetailsMenu}
+
         {basicInfo.isLoading || isLoading ? (
           <LinearProgress color="primary" />
         ) : (
@@ -259,6 +213,7 @@ const MyAccountLayout = ({
             )) || <div ref={stickyRef} />}
 
             {children}
+
             <Spacer y={5} />
 
             <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle-overlay">
@@ -272,12 +227,16 @@ const MyAccountLayout = ({
                 Book appointment
               </Button>
             </UpsellCard>
+
             <Spacer y={3} />
+
             <Divider y={6} />
+
             <Footer />
           </Box>
         )}
       </LayoutContainer>
+
       <CalendlyModal
         calendlyUrl={CALENDLY_URL}
         open={showCalendlyDialog}
