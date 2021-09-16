@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { InputBase as MUIInputBase } from '@material-ui/core';
+import { Theme, InputBase as MUIInputBase } from '@material-ui/core';
 import { TextFieldProps } from './types';
-import { typographyCss } from '../Typography/Typography';
+import { typographyCss } from '../Typography';
 
 // This removes the up and down buttons for webkit browsers that can appear
 // when input type is "number"
@@ -50,8 +50,17 @@ const getCurrencyStyles = (hasError: boolean, disabled: boolean, theme) => {
   `;
 };
 
-const StyledTextField = styled((props: TextFieldProps) => <MUIInputBase {...props} />)`
-  ${({ disabled, hasError, hideNumberSpinButton, isCurrency, fullWidth, theme }) => {
+const StyledTextField = styled(({ hasError, isCurrency, hideNumberSpinButton, ...props }) => (
+  <MUIInputBase {...props} />
+))`
+  ${({
+    disabled,
+    hasError,
+    hideNumberSpinButton,
+    isCurrency,
+    fullWidth,
+    theme,
+  }: TextFieldProps & { theme: Theme }) => {
     const {
       palette,
       typography: { pxToRem },
@@ -78,12 +87,12 @@ const StyledTextField = styled((props: TextFieldProps) => <MUIInputBase {...prop
           border-radius: 4px;
           border: ${hasError
             ? `1px solid ${palette.error.main}`
-            : `2px solid ${palette.grey.light2}`};
+            : `2px solid ${palette.grey[100]}`};
           text-align: ${isCurrency && 'right'};
 
           &::placeholder {
             opacity: 1;
-            color: ${palette.grey.main};
+            color: ${palette.grey[300]};
           }
 
           ${hideNumberSpinButton && hiddenNumberSpinButtonStyles}

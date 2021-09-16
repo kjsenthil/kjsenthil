@@ -59,7 +59,7 @@ exports[`HeaderMenu in desktop view renders the header menu (with experimental f
   border-radius: 6px;
   min-width: 80px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 12px 16px;
 }
 
@@ -89,7 +89,7 @@ exports[`HeaderMenu in desktop view renders the header menu (with experimental f
   min-width: 40px;
   width: 40px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 8px;
 }
 

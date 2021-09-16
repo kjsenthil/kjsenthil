@@ -83,7 +83,7 @@ exports[`OldHeaderMenu HeaderMenu in desktop view renders the header menu view w
   border-radius: 6px;
   min-width: 80px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 12px 16px;
 }
 
@@ -123,7 +123,7 @@ exports[`OldHeaderMenu HeaderMenu in desktop view renders the header menu view w
   min-width: 40px;
   width: 40px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 8px;
 }
 
@@ -152,7 +152,7 @@ exports[`OldHeaderMenu HeaderMenu in desktop view renders the header menu view w
   border-radius: 6px;
   min-width: 80px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 12px 16px;
 }
 
@@ -751,7 +751,7 @@ exports[`OldHeaderMenu HeaderMenu in mobile view renders the header menu view wi
   border-radius: 6px;
   min-width: 80px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 12px 16px;
 }
 
@@ -791,7 +791,7 @@ exports[`OldHeaderMenu HeaderMenu in mobile view renders the header menu view wi
   min-width: 40px;
   width: 40px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 8px;
 }
 
@@ -820,7 +820,7 @@ exports[`OldHeaderMenu HeaderMenu in mobile view renders the header menu view wi
   border-radius: 6px;
   min-width: 80px;
   text-transform: none;
-  white-space: break-space;
+  white-space: break-spaces;
   padding: 12px 16px;
 }
 

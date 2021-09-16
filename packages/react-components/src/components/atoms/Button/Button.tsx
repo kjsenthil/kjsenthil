@@ -152,8 +152,9 @@ const BaseButton = styled(ButtonNoElevation)`
       border-radius: ${isPill ? '21.5px' : '6px'};
       min-width: ${isIcon ? '40px' : '80px'};
       ${isIcon ? 'width: 40px' : ''};
+      ${isPill ? 'width: auto' : ''};
       text-transform: none;
-      white-space: ${wrap === 'wrap' ? 'break-space' : 'nowrap'};
+      white-space: ${wrap === 'wrap' ? 'break-spaces' : 'nowrap'};
       ${paddingStyle}
     `;
   }}

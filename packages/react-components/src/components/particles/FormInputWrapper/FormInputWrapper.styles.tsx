@@ -17,23 +17,25 @@ const hiddenLabelStyles = css`
 `;
 
 export const StyledFormControl = styled(
-  ({
-    hasError,
+  ({ hasError, hasLeadingIcon, fullWidth, hideLabel, ...props }) => <FormControl {...props} />
+)`
+  ${({
     hasLeadingIcon,
+    hasError,
     fullWidth,
-    ...props
+    hideLabel,
+    theme,
   }: FormControlProps & {
     hasError: boolean;
     hasLeadingIcon: boolean;
     hideLabel: boolean;
     theme: Theme;
-  }) => <FormControl {...props} />
-)`
-  ${({ hasLeadingIcon, hasError, fullWidth, hideLabel, theme }) => {
+  }) => {
     const {
       palette,
       typography: { pxToRem },
     } = theme;
+
     return `
       display: flex;
       width: ${fullWidth ? '100%' : 'fit-content'};
@@ -55,7 +57,7 @@ export const StyledFormControl = styled(
             position: absolute;
             margin-right: 0;
             left: ${pxToRem(12)};
-            color: ${hasError ? palette.error.main : palette.grey.main}
+            color: ${hasError ? palette.error.main : palette.grey[300]}
           }
 
           .MuiInputBase-inputAdornedStart {

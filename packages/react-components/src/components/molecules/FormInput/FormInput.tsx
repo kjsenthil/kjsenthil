@@ -10,6 +10,7 @@ export interface FormInputProps extends TextFieldProps {
   isCurrency?: boolean;
   shouldDelayOnChange?: boolean;
   hideLabel?: boolean;
+  hideNumberSpinButton?: boolean;
 }
 
 const FormInput = ({
@@ -17,6 +18,7 @@ const FormInput = ({
   value,
   shouldDelayOnChange,
   hideLabel,
+  hideNumberSpinButton,
   onChange,
   ...props
 }: FormInputProps) => {
@@ -87,7 +89,7 @@ const FormInput = ({
         onChange={handleOnChange}
         startAdornment={isCurrency ? currencyAdornment : startAdornment}
         type={isCurrency ? 'number' : type}
-        hideNumberSpinButton={isCurrency}
+        hideNumberSpinButton={hideNumberSpinButton || isCurrency}
       />
     </FormInputWrapper>
   );

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Typography, Spacer } from '../../atoms';
-import { FormInput } from '..';
 import { StyledGrid, StyledRadio, StyledRadioFormInput } from './RadioFormInput.styles';
-import { FormInputProps } from '../FormInput';
+import FormInput, { FormInputProps } from '../FormInput';
 
 export interface RadioFormInputProps {
   radioLabel: string;
@@ -17,9 +16,10 @@ interface MyRadioInputProps extends React.HTMLAttributes<HTMLDivElement> {
 const RadioFormInput = ({ radioLabel, radioValue, inputProps }: RadioFormInputProps) => {
   const inputRef = React.useRef<HTMLInputElement | undefined>();
   const radioRef = React.useRef<HTMLInputElement | undefined>();
+  const { name, label, isCurrency, value, error, onChange } = inputProps;
+
   const onRadioClick = () => inputRef.current?.focus();
   const onFocus = () => radioRef.current?.click();
-  const { name, label, isCurrency, value, error, onChange } = inputProps;
 
   return (
     <StyledRadioFormInput
@@ -39,6 +39,8 @@ const RadioFormInput = ({ radioLabel, radioValue, inputProps }: RadioFormInputPr
           <Spacer y={1} />
           <FormInput
             inputRef={inputRef}
+            type="number"
+            hideNumberSpinButton
             fullWidth
             isCurrency={isCurrency}
             name={name}
