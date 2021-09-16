@@ -27,7 +27,7 @@ const FundingStepCardTwo = React.forwardRef(
     <StepCard ref={ref} step={2} title="Include your State Pension?">
       <FundingStepCardTwoChildContainer>
         <TypographyWithTooltip typographyProps={{ variant: 'b3' }} tooltip="">
-          {`If you select "Yes" then we will use today's maximum figure of £9,371.27 a year assuming you` +
+          {`If you select "Yes" then we will use today's maximum figure of £9,339.20 a year assuming you` +
             ` contribute National Insurance for 30 years. How much you'll actually receive depends on your National` +
             ` Insurance record. Use the government's website to find out how much your State Pension could be.`}
         </TypographyWithTooltip>
