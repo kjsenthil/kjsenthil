@@ -178,8 +178,8 @@ const HeaderMenu = ({
 
   const navigateHome = () => navigate(homePath);
 
-  const renderProfileMenuDropdownLinks = (link: LinkData['childLinks']) =>
-    link?.map((childLink) => (
+  const renderProfileMenuDropdownLinks = (profileLink: LinkData | undefined) =>
+    profileLink?.childLinks?.map((childLink) => (
       <ProfileMenuItem
         tabIndex={0}
         key={`${childLink.name}-Profile-MenuItem`}
@@ -561,7 +561,9 @@ const HeaderMenu = ({
 
                     {profileMenuOpen && (
                       <StyledProfileList profileMenuOpen={profileMenuOpen}>
-                        {renderProfileMenuDropdownLinks(links[4].childLinks)}
+                        {renderProfileMenuDropdownLinks(
+                          links?.find((linkItem) => linkItem.name === 'Profile')
+                        )}
                       </StyledProfileList>
                     )}
                   </Grid>

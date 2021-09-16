@@ -181,7 +181,7 @@ const MyAccountLayout = ({
               disabled: true,
             },
             {
-              name: 'Profile', // The last link should be profile
+              name: 'Profile',
               path: '/profile',
               shouldShowInDrawer: true,
               shouldShowInMainMenu: false,
