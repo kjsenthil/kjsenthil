@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { calculateInvestableCash } from '../../services/myAccount/utils';
 import { RootState } from '../../store';
 import calculateAgeToday from '../../utils/date/calculateAgeToday';
-import useStateIsAvailable from '../useStateIsAvailable';
 import useInvestmentAccounts from '../useInvestmentAccounts';
+import useStateIsLoading from '../useStateIsLoading';
 
 export interface BasicInfo {
   totalInvested: number;
@@ -14,6 +14,7 @@ export interface BasicInfo {
   firstName?: string;
   lastName?: string;
   isLoading: boolean;
+  basicDataLoadError?: string;
 }
 
 const useBasicInfo = (
@@ -24,7 +25,7 @@ const useBasicInfo = (
     investmentSummary: state.investmentSummary.data,
   }));
 
-  const isBasicInfoLoading = !useStateIsAvailable([
+  const isBasicInfoLoading = useStateIsLoading([
     'client',
     'investmentSummary',
     'investmentAccounts',
@@ -40,6 +41,7 @@ const useBasicInfo = (
       dateOfBirth: new Date(1979, 1, 1),
       clientAge: 31,
       isLoading: isBasicInfoLoading,
+      basicDataLoadError: 'Error loading main data',
     };
   }
 

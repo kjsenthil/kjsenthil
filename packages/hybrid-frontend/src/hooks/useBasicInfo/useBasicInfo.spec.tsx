@@ -55,7 +55,8 @@ describe('useBasicInfo', () => {
       renderedHook = getRenderedHook(store);
 
       expect(renderedHook.result.current).toStrictEqual({
-        isLoading: true,
+        isLoading: false,
+        basicDataLoadError: 'Error loading main data',
         clientAge: 31,
         dateOfBirth: new Date(1979, 1, 1),
         totalGainLoss: 0,

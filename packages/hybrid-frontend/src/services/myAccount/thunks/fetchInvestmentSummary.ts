@@ -8,11 +8,11 @@ export const fetchInvestmentSummary = createAsyncThunk(
   (_, { getState }) => {
     const { client } = getState() as { client: ClientState };
 
-    if (client.included) {
+    if (client.included && client.included.length > 0) {
       return getInvestmentSummary(extractClientAccounts(client.included));
     }
 
-    throw new Error('No client data found in state');
+    throw new Error('No included client data found in state');
   }
 );
 

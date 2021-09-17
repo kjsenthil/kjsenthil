@@ -56,6 +56,7 @@ const BIAccountsPage = () => {
   );
 
   const basicInfo = useBasicInfo();
+
   const {
     accountsSummary,
     investmentAccounts,
@@ -133,7 +134,7 @@ const BIAccountsPage = () => {
 
   const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
 
-  const stickyHeaderChildComponent = (
+  const stickyHeaderChildComponent = !basicInfo.basicDataLoadError && (
     <Grid
       container
       justifyContent="space-between"
@@ -150,6 +151,7 @@ const BIAccountsPage = () => {
           />
         )}
       </Grid>
+
       <Grid item xs={12} sm={3}>
         <ChartPeriodSelection
           currentPeriod={performanceDataPeriod}
@@ -167,11 +169,15 @@ const BIAccountsPage = () => {
         <Box mb={5}>
           <Grid container>
             <Grid item xs={12}>
-              <AccountFilter
-                hasLinkedAccounts={hasLinkedAccounts}
-                selection={selectedAccountFilter}
-                onSelectionChanged={setSelectedAccountFilter}
-              />
+              {basicInfo.basicDataLoadError ? (
+                <Skeleton height={100} />
+              ) : (
+                <AccountFilter
+                  hasLinkedAccounts={hasLinkedAccounts}
+                  selection={selectedAccountFilter}
+                  onSelectionChanged={setSelectedAccountFilter}
+                />
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -187,20 +193,30 @@ const BIAccountsPage = () => {
             )}
           </Typography>
         </Grid>
+
         <Grid item xs={6} sm={3}>
-          <ChartPeriodSelection
-            currentPeriod={performanceDataPeriod}
-            performanceDataPeriod={PerformanceDataPeriod}
-            setCurrentPeriod={setDataPeriod}
-            periodTextDisplay={(period) => (period === '7d' ? '1w' : period)}
-          />
+          {basicInfo.basicDataLoadError ? (
+            <Skeleton height={100} />
+          ) : (
+            <ChartPeriodSelection
+              currentPeriod={performanceDataPeriod}
+              performanceDataPeriod={PerformanceDataPeriod}
+              setCurrentPeriod={setDataPeriod}
+              periodTextDisplay={(period) => (period === '7d' ? '1w' : period)}
+            />
+          )}
         </Grid>
       </Grid>
+
       <Spacer y={7} />
+
       <Grid item container spacing={6}>
         <Grid item xs={12}>
+          {/* eslint-disable-next-line no-nested-ternary */}
           {summaryIsLoading ? (
             <LinearProgress />
+          ) : basicInfo.basicDataLoadError ? (
+            <Skeleton height={100} />
           ) : (
             <SummaryPanel
               totalNetContributions={summaryContributions}
@@ -218,26 +234,35 @@ const BIAccountsPage = () => {
           )}
         </Grid>
 
-        {accountsTableData.length > 0 && (
+        {basicInfo.basicDataLoadError ? (
           <Grid item xs={12}>
-            <MainCard
-              title="My Accounts"
-              renderActionEl={() => (
-                <DisabledComponent arrow placement="top" title="Coming soon">
-                  <Button variant="outlined" startIcon={<Icon name="plus" />}>
-                    Open an account
-                  </Button>
-                </DisabledComponent>
-              )}
-            >
-              <Spacer y={2.5} />
-              <AccountsTable
-                period={performanceDataPeriod}
-                headerRow={AccountsTableHeader(humanizedDataPeriod)}
-                dataRow={accountsTableData}
-              />
+            <MainCard title="My Accounts">
+              <Skeleton height={300} />
             </MainCard>
           </Grid>
+        ) : (
+          accountsTableData.length > 0 && (
+            <Grid item xs={12}>
+              <MainCard
+                title="My Accounts"
+                renderActionEl={() => (
+                  <DisabledComponent arrow placement="top" title="Coming soon">
+                    <Button variant="outlined" startIcon={<Icon name="plus" />}>
+                      Open an account
+                    </Button>
+                  </DisabledComponent>
+                )}
+              >
+                <Spacer y={2.5} />
+
+                <AccountsTable
+                  period={performanceDataPeriod}
+                  headerRow={AccountsTableHeader(humanizedDataPeriod)}
+                  dataRow={accountsTableData}
+                />
+              </MainCard>
+            </Grid>
+          )
         )}
 
         {linkedAccountsTableData.length > 0 && (
@@ -253,6 +278,7 @@ const BIAccountsPage = () => {
               )}
             >
               <Spacer y={2.5} />
+
               <AccountsTable
                 period={performanceDataPeriod}
                 headerRow={AccountsTableHeader(humanizedDataPeriod)}
@@ -266,7 +292,9 @@ const BIAccountsPage = () => {
           <Typography variant="h3" color="primary" colorShade="dark2">
             Performance chart
           </Typography>
+
           <Spacer y={3} />
+
           <MainCard>
             {/* eslint-disable-next-line no-nested-ternary */}
             {hasDataForPerformanceChart ? (
@@ -289,6 +317,7 @@ const BIAccountsPage = () => {
               <Skeleton height={performanceChartDimension.height} />
             )}
           </MainCard>
+
           <Box p={2} pl={4}>
             <Typography variant="b3" color="grey" colorShade="dark1">
               <i>

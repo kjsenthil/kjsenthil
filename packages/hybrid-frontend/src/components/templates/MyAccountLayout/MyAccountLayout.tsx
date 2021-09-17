@@ -18,6 +18,7 @@ import {
   UpsellCard,
   Button,
   ButtonProps,
+  ErrorBar,
 } from '@tswdts/react-components';
 import { BasicInfo, useCoachImages, useFeatureFlagToggle, useStickyRef } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
@@ -204,36 +205,43 @@ const MyAccountLayout = ({
         {basicInfo.isLoading || isLoading ? (
           <LinearProgress color="primary" />
         ) : (
-          <Box px={isMobile ? 3 : 10} py={9}>
-            {(!!heading && (
-              <>
-                <Heading {...heading} />
-                <Spacer y={6} />
-              </>
-            )) || <div ref={stickyRef} />}
+          <>
+            {basicInfo.basicDataLoadError && (
+              <ErrorBar errorMessage={basicInfo.basicDataLoadError} />
+            )}
 
-            {children}
+            <Box px={isMobile ? 3 : 10} py={9}>
+              {(!!heading && (
+                <>
+                  <Heading {...heading} />
 
-            <Spacer y={5} />
+                  <Spacer y={6} />
+                </>
+              )) || <div ref={stickyRef} />}
 
-            <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle-overlay">
-              <Typography color="white" fontWeight="600" variant="b2">
-                Not sure about putting your plan into action? Don&apos;t worry.
-                <br />
-                Our experienced, friendly coaches can talk through your goal with you and take a
-                look at your different options.
-              </Typography>
-              <Button wrap="nowrap" color="white" variant="contained" {...upsellButtonProps}>
-                Book appointment
-              </Button>
-            </UpsellCard>
+              {children}
 
-            <Spacer y={3} />
+              <Spacer y={5} />
 
-            <Divider y={6} />
+              <UpsellCard title="Speak to a coach" respondTo="sm" background="triangle-overlay">
+                <Typography color="white" fontWeight="600" variant="b2">
+                  Not sure about putting your plan into action? Don&apos;t worry.
+                  <br />
+                  Our experienced, friendly coaches can talk through your goal with you and take a
+                  look at your different options.
+                </Typography>
+                <Button wrap="nowrap" color="white" variant="contained" {...upsellButtonProps}>
+                  Book appointment
+                </Button>
+              </UpsellCard>
 
-            <Footer />
-          </Box>
+              <Spacer y={3} />
+
+              <Divider y={6} />
+
+              <Footer />
+            </Box>
+          </>
         )}
       </LayoutContainer>
 
