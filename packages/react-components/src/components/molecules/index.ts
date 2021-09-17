@@ -62,6 +62,7 @@ export { default as SignpostModal } from './SignpostModal';
 export { default as ReceiptCard } from './ReceiptCard';
 export { default as ConfirmationModal } from './ConfirmationModal';
 export { default as DateTime } from './DateTime';
+export { default as ConfirmationModalWithImage } from './ConfirmationModalWithImage';
 export { default as RadioFormInput } from './RadioFormInput';
 
 /* material-ui molecules */
