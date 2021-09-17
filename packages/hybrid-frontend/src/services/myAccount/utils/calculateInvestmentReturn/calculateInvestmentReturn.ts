@@ -11,18 +11,23 @@ const calculateInvestmentReturn = (
     if (!sortedPerformanceData.length || !sortedContributionData.length) {
       return { value: 0, percent: 0 };
     }
-    const firstPerformanceData = sortedPerformanceData[0];
+
+    // get first non zero value
+    const firstNonZeroIndex = sortedPerformanceData.findIndex((x) => x.value !== 0);
+
+    const firstPerformanceValue =
+      firstNonZeroIndex === -1 ? 0 : sortedPerformanceData[firstNonZeroIndex].value;
+    const firstContributionValue =
+      firstNonZeroIndex === -1 ? 0 : sortedContributionData[firstNonZeroIndex].value;
+
     const lastPerformanceData = sortedPerformanceData[sortedPerformanceData.length - 1];
-    const firstContributionData = sortedContributionData[0];
     const lastContributionData = sortedContributionData[sortedContributionData.length - 1];
 
     const lastTotalReturn = lastPerformanceData.value - lastContributionData.value;
 
-    const firstTotalReturn = firstPerformanceData.value - firstContributionData.value;
-
+    const firstTotalReturn = firstPerformanceValue - firstContributionValue;
     value = lastTotalReturn - firstTotalReturn;
-
-    percent = !firstPerformanceData.value ? 0 : value / firstPerformanceData.value;
+    percent = !firstPerformanceValue ? 0 : value / firstPerformanceValue;
   }
 
   return { value, percent };
