@@ -1,0 +1,115 @@
+{
+  "assetModels": [
+    {
+      "id": 1,
+      "riskModel": "TAA1",
+      "erValue": 0.022,
+      "volatility": 0.0575,
+      "zScores": {
+        "MoreLikelyLB": -0.053855486492308,
+        "MoreLikelyUB": 0.096334740881002,
+        "LessLikelyLB": -0.082922932045877,
+        "LessLikelyUB": 0.11695998920423
+      }
+    },
+    {
+      "id": 2,
+      "riskModel": "TAA2",
+      "erValue": 0.0272,
+      "volatility": 0.0799,
+      "zScores": {
+        "MoreLikelyLB": -0.07599672796948,
+        "MoreLikelyUB": 0.130298185790262,
+        "LessLikelyLB": -0.122301313875304,
+        "LessLikelyUB": 0.156101017108818
+      }
+    },
+    {
+      "id": 8,
+      "riskModel": "TAA3",
+      "erValue": 0.0293,
+      "volatility": 0.1007,
+      "zScores": {
+        "MoreLikelyLB": -0.100605387101175,
+        "MoreLikelyUB": 0.155949073359354,
+        "LessLikelyLB": -0.158385846599923,
+        "LessLikelyUB": 0.189218939001585
+      }
+    },
+    {
+      "id": 4,
+      "riskModel": "TAA4",
+      "erValue": 0.0326,
+      "volatility": 0.1075,
+      "zScores": {
+        "MoreLikelyLB": -0.107982025788715,
+        "MoreLikelyUB": 0.169426522864396,
+        "LessLikelyLB": -0.169718154880174,
+        "LessLikelyUB": 0.203446039026051
+      }
+    },
+    {
+      "id": 5,
+      "riskModel": "TAA5",
+      "erValue": 0.0354,
+      "volatility": 0.1234,
+      "zScores": {
+        "MoreLikelyLB": -0.127748866832042,
+        "MoreLikelyUB": 0.192541974228056,
+        "LessLikelyLB": -0.197538755802628,
+        "LessLikelyUB": 0.231769033240172
+      }
+    },
+    {
+      "id": 6,
+      "riskModel": "TAA6",
+      "erValue": 0.038,
+      "volatility": 0.1378,
+      "zScores": {
+        "MoreLikelyLB": -0.146063525212556,
+        "MoreLikelyUB": 0.213960063645181,
+        "LessLikelyLB": -0.223141153558959,
+        "LessLikelyUB": 0.257801381328737
+      }
+    },
+    {
+      "id": 7,
+      "riskModel": "TAA7",
+      "erValue": 0.043,
+      "volatility": 0.1637,
+      "zScores": {
+        "MoreLikelyLB": -0.178098032864498,
+        "MoreLikelyUB": 0.250119361538717,
+        "LessLikelyLB": -0.272032975999516,
+        "LessLikelyUB": 0.301941013128566
+      }
+    }
+  ],
+  "timeHorizonToProject": 516,
+  "feesPercentage": 0.4,
+  "upfrontContribution": 0,
+  "monthlyContribution": 0,
+  "currentNetContribution": 18069.79,
+  "currentPortfolioValue": 40874.401241,
+  "includeGoal": true,
+  "drawdownType": "Retirement",
+  "drawdownRetirement": {
+    "regularDrawdown": 208,
+    "startDate": "2029-02-12",
+    "endDate": "2051-02-12",
+    "remainingAmount": 0,
+    "statePensionAmount": 0
+  },
+  "preGoal": {
+    "expectedReturnPercentage": 3.54,
+    "volatilityPercentage": 12.34,
+    "ZScoreLowerBound": -0.127748866832042,
+    "ZScoreUpperBound": 0.192541974228056
+  },
+  "postGoal": {
+    "expectedReturnPercentage": 3.54,
+    "volatilityPercentage": 12.34,
+    "ZScoreLowerBound": -0.127748866832042,
+    "ZScoreUpperBound": 0.192541974228056
+  }
+}

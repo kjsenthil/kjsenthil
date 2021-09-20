@@ -8,7 +8,8 @@
     "copy-zip": "cp ./dist/projections.zip ../../../function-app-zips/",
     "install-only": "yarn workspaces focus",
     "start": "yarn build && func start",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "yarn g:typecheck"
   },
   "devDependencies": {
     "@azure/functions": "^1.2.3",

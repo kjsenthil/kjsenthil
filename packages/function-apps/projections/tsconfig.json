@@ -7,6 +7,21 @@
     "outDir": "dist"
   },
   "files": [
+    "shared-code/is-number/is-number.ts",
+    "shared-code/is-object/is-object.ts",
+    "shared-code/value-validation/index.ts",
+    "shared-code/value-validation/types.ts",
+    "shared-code/value-validation/validate-property.ts",
+    "shared-code/value-validation/validator-factories/index.ts",
+    "shared-code/value-validation/validator-factories/is-array-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/is-boolean-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/is-date-string-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/is-number-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/is-object-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/is-string-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/must-exist-validator-factory.ts",
+    "shared-code/value-validation/validator-factories/types.ts",
+    "shared-code/types.ts",
     "portfolio-asset-allocation/index.ts",
     "portfolio-asset-allocation/function.json",
     "portfolio-risk-profile/index.ts",
@@ -22,5 +37,9 @@
     "simulate-projection/index.ts",
     "simulate-projection/types.ts",
     "simulate-projection/function.json",
+    "goal-risk-profile/find-risk-model/types.ts",
+    "goal-risk-profile/validations/validate-asset-models.ts",
+    "goal-risk-profile/validations/validate-inbound-payload.ts",
+    "goal-risk-profile/types.ts"
   ]
 }
