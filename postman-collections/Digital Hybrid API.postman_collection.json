@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a14c81fa-07ac-4e09-8739-49dc466bc28f",
+		"_postman_id": "fded7478-5a27-4bf3-9493-df6fb87d25b3",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -957,6 +957,105 @@
 							],
 							"cookie": [],
 							"body": "{\r\n  \"Data\": [\r\n    {\r\n      \"Type\": \"monthly-savings\",\r\n      \"Id\": \"1751903\",\r\n      \"Attributes\": {\r\n        \"MonthlySavingId\": 1751903,\r\n        \"AccountId\": 157760,\r\n        \"AssetId\": 19909,\r\n        \"Sedol\": \"BYX8KR5\",\r\n        \"AssetName\": \"TILNEY GROWTH PORTFOLIO CLEAN Acc\",\r\n        \"Amount\": 0.00,\r\n        \"ReInvest\": false,\r\n        \"IsStandingOrder\": false\r\n      },\r\n      \"Links\": {\r\n        \"self\": \"https://myaccountsapi.demo2.bestinvest.co.uk/api/monthly-savings/1751903\"\r\n      },\r\n      \"Relationships\": null\r\n    }\r\n  ],\r\n  \"Included\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "account/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/accounts/:id?include=cash-position,asset-info&filter[asset-info.isin]=GB00BH4HKS39",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"myaccount",
+								"accounts",
+								":id"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "cash-position,asset-info"
+								},
+								{
+									"key": "filter[asset-info.isin]",
+									"value": "GB00BH4HKS39"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{myAccounts.firstAccountId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/myaccount/accounts/:id?include=cash-position,asset-info&filter[asset-info.isin]=GB00BH4HKS39",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"myaccount",
+										"accounts",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "cash-position,asset-info"
+										},
+										{
+											"key": "filter[asset-info.isin]",
+											"value": "GB00BH4HKS39"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{myAccounts.firstAccountId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "1656"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Sep 2021 16:19:39 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"Data\": {\r\n    \"Type\": \"accounts\",\r\n    \"Id\": \"63811\",\r\n    \"Attributes\": {\r\n      \"AccountId\": 63811,\r\n      \"AccountName\": \"\",\r\n      \"AccountNumber\": \"BI638110\",\r\n      \"AccountStatus\": \"Open\",\r\n      \"AccountStatusId\": 2,\r\n      \"BestInvestAccount\": \"GIA\",\r\n      \"CapacityType\": \"Execution Only\",\r\n      \"CapacityTypeId\": 3,\r\n      \"DDMandateId\": null,\r\n      \"HasIncomeAccount\": false\r\n    },\r\n    \"Links\": {\r\n      \"self\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/accounts/63811\"\r\n    },\r\n    \"Relationships\": {\r\n      \"monthly-savings\": {\r\n        \"Links\": {\r\n          \"related\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/accounts/63811/monthly-savings\"\r\n        },\r\n        \"Data\": []\r\n      },\r\n      \"investments\": {\r\n        \"Links\": {\r\n          \"related\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/accounts/63811/investments\"\r\n        },\r\n        \"Data\": []\r\n      },\r\n      \"cash-position\": {\r\n        \"Links\": {\r\n          \"related\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/accounts/63811/cash-position\"\r\n        },\r\n        \"Data\": {\r\n          \"Type\": \"cash-position\",\r\n          \"Id\": \"63811\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"Included\": [\r\n    {\r\n      \"Type\": \"cash-position\",\r\n      \"Id\": \"63811\",\r\n      \"Attributes\": {\r\n        \"CashOnAccount\": 0.000,\r\n        \"CashAvailableToInvest\": 0.000,\r\n        \"CashAvailableToInvestInEquity\": 0.0,\r\n        \"CashAvailableToWithdraw\": 0.000,\r\n        \"CashOnAccountIncome\": 0.0\r\n      },\r\n      \"Links\": {\r\n        \"self\": \"https://myaccountsapi.test3.bestinvest.co.uk/api/cash-position/63811\"\r\n      },\r\n      \"Relationships\": null\r\n    }\r\n  ]\r\n}"
 						}
 					]
 				},

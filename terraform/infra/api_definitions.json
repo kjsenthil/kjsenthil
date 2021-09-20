@@ -546,6 +546,21 @@
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/self-portfolio/{id}"
       }
+    },
+    {
+      "operation_id": "myaccount-accounts",
+      "display_name": "Myaccount Accounts",
+      "url_template": "/myaccount/Accounts/{id}",
+      "description": "This lets the user to get  investment and asset info (indicative price and time) for the given account",
+      "path_params": ["id"],
+      "policy": {
+        "cors": {
+          "method": "GET",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_id": "bestinvest-myaccounts-api",
+        "rewrite_url": "/Accounts/{id}"
+      }
     }
   ]
 }
