@@ -63,11 +63,11 @@ export default function SummaryPanel({
 }: SummaryPanelProps) {
   const { isMobile } = useBreakpoint();
 
-  const renderVerticalDivider = (
+  const renderVerticalDivider = (spaceAround: boolean) => (
     <>
-      <Spacer x={3} />
-      <Divider orientation="vertical" y={4} />
-      <Spacer x={3} />
+      {spaceAround && <Spacer x={10} />}
+      <Divider orientation="vertical" y={4} marginY={1} />
+      {spaceAround ? <Spacer x={10} /> : <Spacer x={5} />}
     </>
   );
 
@@ -76,7 +76,7 @@ export default function SummaryPanel({
       {...legendProps.annualisedReturn}
       value={annualisedReturnPercentage}
       valueFormatter={percentFormatterWithSign}
-      valueSizeVariant="h5"
+      valueSizeVariant="h4"
     />
   );
 
@@ -85,7 +85,7 @@ export default function SummaryPanel({
       {...legendProps.netContribution}
       value={totalNetContributions}
       valueFormatter={currencyFormatter}
-      valueSizeVariant="h5"
+      valueSizeVariant="h4"
     />
   );
 
@@ -94,7 +94,7 @@ export default function SummaryPanel({
       {...legendProps.lifetimeReturn}
       value={lifetimeReturn}
       valueFormatter={currencyFormatterWithSign}
-      valueSizeVariant="h5"
+      valueSizeVariant="h4"
       percentageChange={lifetimeReturnPercentage}
       percentageFormatter={percentFormatterWithSign}
       percentageNewLine={isMobile}
@@ -103,13 +103,13 @@ export default function SummaryPanel({
 
   const renderPeriodBasedReturn = periodBasedReturn && (
     <>
-      {isMobile || renderVerticalDivider}
+      {isMobile || renderVerticalDivider(false)}
       <Legend
         title={`LAST ${periodBasedReturn.dataPeriod.toUpperCase()} RETURN`}
         value={periodBasedReturn.value}
         tooltip={DataPeriodTooltip(periodBasedReturn.dataPeriod)}
         valueFormatter={currencyFormatterWithSign}
-        valueSizeVariant="h5"
+        valueSizeVariant="h4"
         percentageChange={periodBasedReturn.percent}
         percentageFormatter={percentFormatterWithSign}
         percentageNewLine={isMobile}
@@ -143,11 +143,11 @@ export default function SummaryPanel({
             <Grid container justifyContent="flex-start">
               <Grid item>{renderNetContributions}</Grid>
 
-              <Grid item>{renderVerticalDivider}</Grid>
+              <Grid item>{renderVerticalDivider(true)}</Grid>
 
               <Grid item>{renderLifetimeReturn}</Grid>
 
-              <Grid item>{renderVerticalDivider}</Grid>
+              <Grid item>{renderVerticalDivider(true)}</Grid>
 
               <Grid item>{renderAnnualisedReturn}</Grid>
             </Grid>

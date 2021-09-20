@@ -338,6 +338,10 @@ Object {
                             LUMP SUM
                           </h6>
                           <div
+                            class="MuiBox-root MuiBox-root-7"
+                            data-testid="Spacer"
+                          />
+                          <div
                             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
                             <div
@@ -369,6 +373,10 @@ Object {
                           >
                             FROM AGE 67 - 89
                           </h6>
+                          <div
+                            class="MuiBox-root MuiBox-root-8"
+                            data-testid="Spacer"
+                          />
                           <div
                             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
@@ -402,6 +410,10 @@ Object {
                             REMAINING
                           </h6>
                           <div
+                            class="MuiBox-root MuiBox-root-9"
+                            data-testid="Spacer"
+                          />
+                          <div
                             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                           >
                             <div
@@ -428,11 +440,11 @@ Object {
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
             >
               <div
-                class="MuiBox-root MuiBox-root-7"
+                class="MuiBox-root MuiBox-root-10"
                 data-testid="Spacer"
               />
               <div
-                class="MuiBox-root MuiBox-root-8"
+                class="MuiBox-root MuiBox-root-11"
                 data-testid="Spacer"
               >
                 <div
@@ -440,7 +452,7 @@ Object {
                 />
               </div>
               <div
-                class="MuiBox-root MuiBox-root-9"
+                class="MuiBox-root MuiBox-root-12"
                 data-testid="Spacer"
               />
             </div>
@@ -454,7 +466,7 @@ Object {
                   class="MuiGrid-root MuiGrid-item"
                 >
                   <div
-                    class="MuiBox-root MuiBox-root-10"
+                    class="MuiBox-root MuiBox-root-13"
                     data-testid="Spacer"
                   />
                 </div>
@@ -472,7 +484,7 @@ Object {
                     89
                     .
                     <div
-                      class="MuiBox-root MuiBox-root-11"
+                      class="MuiBox-root MuiBox-root-14"
                       data-testid="Spacer"
                     />
                     <span
@@ -497,7 +509,7 @@ Object {
                     </span>
                   </div>
                   <div
-                    class="MuiBox-root MuiBox-root-12"
+                    class="MuiBox-root MuiBox-root-15"
                     data-testid="Spacer"
                   />
                 </div>
@@ -654,6 +666,10 @@ Object {
                           LUMP SUM
                         </h6>
                         <div
+                          class="MuiBox-root MuiBox-root-7"
+                          data-testid="Spacer"
+                        />
+                        <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
                           <div
@@ -685,6 +701,10 @@ Object {
                         >
                           FROM AGE 67 - 89
                         </h6>
+                        <div
+                          class="MuiBox-root MuiBox-root-8"
+                          data-testid="Spacer"
+                        />
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
@@ -718,6 +738,10 @@ Object {
                           REMAINING
                         </h6>
                         <div
+                          class="MuiBox-root MuiBox-root-9"
+                          data-testid="Spacer"
+                        />
+                        <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                         >
                           <div
@@ -744,11 +768,11 @@ Object {
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="MuiBox-root MuiBox-root-7"
+              class="MuiBox-root MuiBox-root-10"
               data-testid="Spacer"
             />
             <div
-              class="MuiBox-root MuiBox-root-8"
+              class="MuiBox-root MuiBox-root-11"
               data-testid="Spacer"
             >
               <div
@@ -756,7 +780,7 @@ Object {
               />
             </div>
             <div
-              class="MuiBox-root MuiBox-root-9"
+              class="MuiBox-root MuiBox-root-12"
               data-testid="Spacer"
             />
           </div>
@@ -770,7 +794,7 @@ Object {
                 class="MuiGrid-root MuiGrid-item"
               >
                 <div
-                  class="MuiBox-root MuiBox-root-10"
+                  class="MuiBox-root MuiBox-root-13"
                   data-testid="Spacer"
                 />
               </div>
@@ -788,7 +812,7 @@ Object {
                   89
                   .
                   <div
-                    class="MuiBox-root MuiBox-root-11"
+                    class="MuiBox-root MuiBox-root-14"
                     data-testid="Spacer"
                   />
                   <span
@@ -813,7 +837,7 @@ Object {
                   </span>
                 </div>
                 <div
-                  class="MuiBox-root MuiBox-root-12"
+                  class="MuiBox-root MuiBox-root-15"
                   data-testid="Spacer"
                 />
               </div>

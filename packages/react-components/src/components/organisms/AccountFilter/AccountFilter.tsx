@@ -1,6 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useBreakpoint } from '../../../hooks';
-import { Button, Divider, Grid, Icon, PillProps, TabProps } from '../../atoms';
+import { Button, Divider, Grid, Icon, PillProps, TabProps, Theme } from '../../atoms';
 import Select from '../../atoms/Select';
 import {
   DisabledComponent,
@@ -52,6 +53,14 @@ const CreatePortfolioPill: React.FC<PillProps & TabProps> = (props) => (
     <PillNavigationCreatorTabComponent {...props} />
   </DisabledComponent>
 );
+
+export const StyledDivider = styled(Divider)`
+  ${({ theme }: { theme: Theme }) => `
+    div {
+      background-color: ${theme.palette.grey['200']};
+    }
+  `}
+`;
 
 const AccountFilter = ({
   hasLinkedAccounts,
@@ -106,7 +115,7 @@ const AccountFilter = ({
         />
       ))}
 
-      <Divider orientation="vertical" y={4} />
+      <StyledDivider orientation="vertical" y={4} />
 
       <PillsNavigationTab
         component={CreatePortfolioPill}

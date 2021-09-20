@@ -1,17 +1,27 @@
 import styled, { css } from 'styled-components';
-import { Icon } from '../../atoms';
-import { TableCell, TableHead, TableFooter, TableRow } from '../../molecules';
+import { Icon, IconButton } from '../../atoms';
+import { TableContainer, TableCell, TableHead, TableFooter, TableRow } from '../../molecules';
+
+export const AccountsTableContainer = styled(TableContainer)`
+  ${({ theme }) => css`
+    overflow: hidden;
+    border-radius: ${theme.spacing(1.5)}px;
+    border: 1px solid ${theme.palette.grey.light2};
+  `}
+`;
 
 export const AccountsTableHead = styled(TableHead)`
   ${({ theme }) => css`
     background: ${theme.palette.grey.light2};
+    align-items: right;
   `}
 `;
 
 export const AccountsTableRow = styled(TableRow)`
   ${({ theme }) => css`
-    &:first-of-type .MuiTableCell-body {
-      padding-top: ${theme.spacing(3.75)}px;
+    background-color: ${theme.palette.background.default};
+    &:nth-child(even) {
+      background-color: ${theme.palette.primary.light3};
     }
   `}
 `;
@@ -26,6 +36,13 @@ export const StyledActionIcon = styled(Icon)`
   margin-left: auto;
 `;
 
+export const AccountsIconButton = styled(IconButton)`
+  &.MuiIconButton-root {
+    &:hover {
+      background-color: unset;
+    }
+  }
+`;
 export const AccountsTableCell = styled(TableCell)`
   ${({ theme }) => {
     const {
@@ -33,8 +50,8 @@ export const AccountsTableCell = styled(TableCell)`
     } = theme;
     return css`
       border: none;
-      padding: ${theme.spacing(2.75)}px ${theme.spacing(2)}px;
-
+      padding: ${theme.spacing(2.25)}px ${theme.spacing(2)}px;
+      overflow: hidden;
       &.MuiTableCell-head {
         height: ${pxToRem(46)};
         line-height: 1.14;
@@ -42,11 +59,11 @@ export const AccountsTableCell = styled(TableCell)`
         padding-bottom: 0;
 
         &:first-of-type {
-          border-radius: ${theme.spacing(1)}px 0 0 ${theme.spacing(1)}px;
+          border-radius: ${theme.spacing(1)}px 0 0 0;
         }
 
         &:last-of-type {
-          border-radius: 0 ${theme.spacing(1)}px ${theme.spacing(1)}px 0;
+          border-radius: 0 ${theme.spacing(1)}px 0 0;
         }
       }
     `;

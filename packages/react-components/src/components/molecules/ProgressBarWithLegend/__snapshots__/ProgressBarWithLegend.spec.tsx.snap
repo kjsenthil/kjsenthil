@@ -179,6 +179,10 @@ Object {
                   LUMP SUM
                 </h6>
                 <div
+                  class="MuiBox-root MuiBox-root-2"
+                  data-testid="Spacer"
+                />
+                <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                 >
                   <div
@@ -211,6 +215,10 @@ Object {
                   FROM AGE 67 - 89
                 </h6>
                 <div
+                  class="MuiBox-root MuiBox-root-3"
+                  data-testid="Spacer"
+                />
+                <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                 >
                   <div
@@ -242,6 +250,10 @@ Object {
                 >
                   REMAINING
                 </h6>
+                <div
+                  class="MuiBox-root MuiBox-root-4"
+                  data-testid="Spacer"
+                />
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                 >
@@ -304,6 +316,10 @@ Object {
                 LUMP SUM
               </h6>
               <div
+                class="MuiBox-root MuiBox-root-2"
+                data-testid="Spacer"
+              />
+              <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
                 <div
@@ -336,6 +352,10 @@ Object {
                 FROM AGE 67 - 89
               </h6>
               <div
+                class="MuiBox-root MuiBox-root-3"
+                data-testid="Spacer"
+              />
+              <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
                 <div
@@ -367,6 +387,10 @@ Object {
               >
                 REMAINING
               </h6>
+              <div
+                class="MuiBox-root MuiBox-root-4"
+                data-testid="Spacer"
+              />
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >

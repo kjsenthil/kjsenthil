@@ -5,7 +5,7 @@ import { ActionElementContainer, CardContainer } from './MainCard.styles';
 type FunctionAsChild = (isMobile: boolean) => React.ReactNode;
 
 export interface MainCardProps {
-  title?: string;
+  title?: string | React.ReactNode;
   children: React.ReactNode | FunctionAsChild;
   isLoading?: boolean;
   respondTo?: 'xs' | 'sm';
@@ -31,7 +31,8 @@ const MainCard = ({
         <Grid item xs={12}>
           {!isLoading && (
             <Box display="flex" justifyContent="space-between" alignItems="center">
-              {title && <Typography variant="h4">{title}</Typography>}
+              {title &&
+                (title === 'string' ? <Typography variant="h4">{title}</Typography> : title)}
               {!isMobile && renderActionEl && (
                 <ActionElementContainer>{renderActionEl(false)}</ActionElementContainer>
               )}

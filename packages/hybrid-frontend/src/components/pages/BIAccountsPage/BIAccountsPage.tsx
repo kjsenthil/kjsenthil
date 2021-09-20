@@ -4,13 +4,11 @@ import {
   AccountFilterSelection,
   AccountsTable,
   AccountsTableHeader,
-  axisBottomConfig,
   Box,
   Button,
   ChartPeriodSelection,
   CurrencyPresentationVariant,
   DisabledComponent,
-  formatCurrency,
   Grid,
   humanizePeriodLabel,
   Icon,
@@ -20,11 +18,15 @@ import {
   PerformanceDataPeriod,
   Spacer,
   SummaryPanel,
+  Theme,
   Typography,
+  axisBottomConfig,
+  formatCurrency,
   usePerformanceChartDimension,
 } from '@tswdts/react-components';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled, { css } from 'styled-components';
 import { FeatureFlagNames } from '../../../constants';
 import {
   useAccountIds,
@@ -134,6 +136,24 @@ const BIAccountsPage = () => {
 
   const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
 
+  // ---------- Components ---------- //
+
+  const StyledAccountsCard = styled(({ theme, ...props }) => <MainCard {...props} />)`
+    ${({ theme }: { background: string; theme: Theme }) => css`
+      box-shadow: none;
+      background-color: ${theme.palette.background.layout};
+      padding: 2px 0;
+    `}
+  `;
+
+  const StyledPerformanceChartCard = styled(({ theme, ...props }) => <MainCard {...props} />)`
+    ${({ theme }: { background: string; theme: Theme }) => css`
+      box-shadow: none;
+      border: 1px solid ${theme.palette.grey['200']};
+      padding: 16px 23px 23px;
+    `}
+  `;
+
   const stickyHeaderChildComponent = !basicInfo.basicDataLoadError && (
     <Grid
       container
@@ -194,7 +214,7 @@ const BIAccountsPage = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={6} sm={3}>
+        <Grid item xs={12} sm={3}>
           {basicInfo.basicDataLoadError ? (
             <Skeleton height={100} />
           ) : (
@@ -232,6 +252,7 @@ const BIAccountsPage = () => {
               }
             />
           )}
+          <Spacer y={0.75} />
         </Grid>
 
         {basicInfo.basicDataLoadError ? (
@@ -243,59 +264,57 @@ const BIAccountsPage = () => {
         ) : (
           accountsTableData.length > 0 && (
             <Grid item xs={12}>
-              <MainCard
-                title="My Accounts"
+              <StyledAccountsCard
+                title={<Typography variant="h4">My accounts</Typography>}
                 renderActionEl={() => (
                   <DisabledComponent arrow placement="top" title="Coming soon">
-                    <Button variant="outlined" startIcon={<Icon name="plus" />}>
-                      Open an account
+                    <Button variant="contained" color="white" startIcon={<Icon name="plus" />}>
+                      Open a new account
                     </Button>
                   </DisabledComponent>
                 )}
               >
-                <Spacer y={2.5} />
-
+                <Spacer y={1.5} />
                 <AccountsTable
                   period={performanceDataPeriod}
                   headerRow={AccountsTableHeader(humanizedDataPeriod)}
                   dataRow={accountsTableData}
                 />
-              </MainCard>
+              </StyledAccountsCard>
             </Grid>
           )
         )}
 
         {linkedAccountsTableData.length > 0 && (
           <Grid item xs={12}>
-            <MainCard
-              title="Linked Accounts"
+            <StyledAccountsCard
+              title={<Typography variant="h4">Linked accounts</Typography>}
               renderActionEl={() => (
                 <DisabledComponent arrow placement="top" title="Coming soon">
-                  <Button variant="outlined" startIcon={<Icon name="plus" />}>
+                  <Button variant="contained" color="white" startIcon={<Icon name="plus" />}>
                     Link an account
                   </Button>
                 </DisabledComponent>
               )}
             >
-              <Spacer y={2.5} />
-
+              <Spacer y={1.5} />
               <AccountsTable
                 period={performanceDataPeriod}
                 headerRow={AccountsTableHeader(humanizedDataPeriod)}
                 dataRow={linkedAccountsTableData}
               />
-            </MainCard>
+            </StyledAccountsCard>
           </Grid>
         )}
 
         <Grid item xs={12}>
-          <Typography variant="h3" color="primary" colorShade="dark2">
+          <Spacer y={0.75} />
+          <Typography variant="h4" color="primary" colorShade="dark2">
             Performance chart
           </Typography>
 
           <Spacer y={3} />
-
-          <MainCard>
+          <StyledPerformanceChartCard>
             {/* eslint-disable-next-line no-nested-ternary */}
             {hasDataForPerformanceChart ? (
               <Box p={2}>
@@ -316,10 +335,9 @@ const BIAccountsPage = () => {
             ) : (
               <Skeleton height={performanceChartDimension.height} />
             )}
-          </MainCard>
-
-          <Box p={2} pl={4}>
-            <Typography variant="b3" color="grey" colorShade="dark1">
+          </StyledPerformanceChartCard>
+          <Box p={2} pl={2.5} pb={2.5}>
+            <Typography variant="b4" color="grey" colorShade="dark1">
               <i>
                 Performance figures are shown net of ongoing charges and include any income
                 reinvested net of any taxes taken at source

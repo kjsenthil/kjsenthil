@@ -24,7 +24,8 @@ export const SummaryCard = styled(Card)`
   ${({ isMobile, theme }: StyleProps) => css`
     padding: ${theme.spacing(3)}px ${theme.spacing(isMobile ? 3 : 5)}px;
     background-color: ${theme.palette.background.paper};
-    box-shadow: 1px 2px 44px 0 rgba(139, 139, 139, 0.26);
+    border: solid 1px ${theme.palette.grey[200]};
+    box-shadow: none;
     border-radius: 16px;
   `}
 `;

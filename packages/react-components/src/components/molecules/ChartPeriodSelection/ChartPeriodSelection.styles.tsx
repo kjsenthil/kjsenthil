@@ -20,10 +20,12 @@ export interface PeriodSelectionButtonProps extends ButtonProps {
   children?: React.ReactNode;
 }
 
+// Overriding button font size
 export const StyledPeriodSelectionButton = styled(Button)`
   ${({ theme }: PeriodSelectionButtonProps & { theme: Theme }) => `
     min-width: ${theme.spacing(3)}px;
     padding: 5px 10px 5px 9px;
     border-radius: 8px;
+    font-size: 15px;
   `}
 `;

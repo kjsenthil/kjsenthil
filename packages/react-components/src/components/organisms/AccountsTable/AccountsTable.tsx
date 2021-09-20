@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   AccountReturn,
+  AccountsIconButton,
+  AccountsTableContainer,
   AccountsTableCell,
   AccountsTableFooter,
   AccountsTableHead,
@@ -15,8 +17,8 @@ import {
   formatPercent,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { IconButton, Grid, Spacer, Tooltip, Typography } from '../../atoms';
-import { Table, TableBody, TableContainer, TableRow, TagBox } from '../../molecules';
+import { Grid, Spacer, Tooltip, Typography } from '../../atoms';
+import { Table, TableBody, TableRow, TagBox } from '../../molecules';
 
 export interface AccountsHeaderCell {
   value: string;
@@ -56,7 +58,7 @@ const percentFormatterWithSign = (val: number) =>
   });
 
 const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableProps) => (
-  <TableContainer>
+  <AccountsTableContainer>
     <Table aria-label="accounts table">
       <AccountsTableHead>
         <TableRow>
@@ -64,19 +66,20 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
             headerRow.map((headerRowItem: AccountsHeaderCell) => (
               <AccountsTableCell key={`${headerRowItem.value}-key`}>
                 <Grid container wrap="nowrap">
-                  <Grid container item>
+                  <Grid container item wrap="nowrap">
                     <Typography variant="sh3" display="inline">
                       {headerRowItem.value}
                     </Typography>
-                  </Grid>
-                  <Grid container item xs={8}>
                     {headerRowItem.tooltip && (
                       <>
-                        <Spacer x={0.5} inline />
+                        <Spacer x={0.6} inline />
                         <Tooltip title={headerRowItem.tooltip}>
-                          <IconButton aria-label={`${headerRowItem.value} Info`} size="small">
+                          <AccountsIconButton
+                            aria-label={`${headerRowItem.value} Info`}
+                            size="small"
+                          >
                             <AccountsTableHeaderInfo name="infoCircleIcon" />
-                          </IconButton>
+                          </AccountsIconButton>
                         </Tooltip>
                       </>
                     )}
@@ -96,7 +99,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
               {row.accountInvestments !== undefined && (
                 <AccountsTableCell>
-                  <Typography variant="b2" color="primary" colorShade="dark2">
+                  <Typography variant="b4" color="primary" colorShade="dark2">
                     {formatCurrency(
                       row.accountInvestments,
                       CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -108,7 +111,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.accountCash !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
-                    <Typography variant="b2" color="primary" colorShade="dark2">
+                    <Typography variant="b4" color="primary" colorShade="dark2">
                       {formatCurrency(row.accountCash, CurrencyPresentationVariant.ACTUAL_TOPLINE)}
                     </Typography>
                   </Grid>
@@ -117,7 +120,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
               {row.accountTotalHoldings !== undefined && (
                 <AccountsTableCell>
-                  <Typography variant="b2" color="primary" colorShade="dark2">
+                  <Typography variant="b4" color="primary" colorShade="dark2">
                     {formatCurrency(
                       row.accountTotalHoldings,
                       CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -129,7 +132,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.monthlyInvestment !== undefined && (
                 <AccountsTableCell>
                   <Grid container alignItems="center">
-                    <Typography variant="b2" color="primary" colorShade="dark2">
+                    <Typography variant="b4" color="primary" colorShade="dark2">
                       {formatCurrency(
                         row.monthlyInvestment,
                         CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -142,7 +145,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.accountLifetimeReturn !== undefined && (
                 <AccountsTableCell>
                   <AccountReturn>
-                    <Typography variant="b2" color="primary" colorShade="dark2">
+                    <Typography variant="b4" color="primary" colorShade="dark2">
                       {formatCurrency(
                         row.accountLifetimeReturn.value,
                         CurrencyPresentationVariant.ACTUAL_TOPLINE
@@ -161,7 +164,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                 <AccountsTableCell>
                   <Grid container justifyContent="flex-start" alignItems="center">
                     <Grid item>
-                      <Typography variant="b2" color="primary" colorShade="dark2">
+                      <Typography variant="b4" color="primary" colorShade="dark2">
                         {row?.annualisedReturn !== 0
                           ? percentFormatterWithSign(row?.annualisedReturn / 100)
                           : `0%`}
@@ -174,7 +177,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
               {row.periodReturn && row.periodReturn[period] !== undefined && (
                 <AccountsTableCell>
                   <AccountReturn>
-                    <Typography variant="b2" color="primary" colorShade="dark2" noWrap>
+                    <Typography variant="b4" color="primary" colorShade="dark2" noWrap>
                       {formatCurrency(
                         row.periodReturn[period].value,
                         CurrencyPresentationVariant.ACTUAL_TOPLINE,
@@ -210,7 +213,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
         </AccountsTableFooter>
       )}
     </Table>
-  </TableContainer>
+  </AccountsTableContainer>
 );
 
 export default AccountsTable;

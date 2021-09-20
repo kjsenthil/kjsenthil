@@ -119,6 +119,7 @@ const Legend = ({ title, chartIndicatorProps, tooltip, ...props }: LegendProps) 
         {title.toUpperCase()}
         {tooltip && <LegendTooltip tooltip={tooltip} />}
       </Typography>
+      <Spacer y={0.5} />
       {typeof props.value !== 'undefined' && <LegendValue {...props} value={props.value} />}
     </div>
   </LegendContainer>
