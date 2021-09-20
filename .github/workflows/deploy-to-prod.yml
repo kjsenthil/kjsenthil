@@ -480,67 +480,6 @@ jobs:
               --account-name "${{needs.deploy_staging_rg_terraform.outputs.artifact_storage_account_name}}" \
               --destination-path "${{github.sha}}/videos/"
 
-  wdio_mock_ui_test_staging:
-    name: "wdio mock ui test"
-    environment: development
-    runs-on: ubuntu-latest
-    needs:
-      [
-        build_cache,
-        deploy_staging_rg_terraform,
-        deploy_staging_terraform,
-        open_staging_storage_account_firewalls,
-        deploy_staging_frontend,
-      ]
-    strategy:
-      matrix:
-        browser: [chrome]
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v2
-
-      - name: "Use Node.js 14.x"
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-
-      - name: "Get yarn cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.yarn-path }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: "Get node modules cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.modules-path }}
-          restore-keys: |
-            ${{ runner.os }}-modules-
-
-      - name: "Update webdriver-manager"
-        run: npx webdriver-manager update
-
-      - name: "Wait for UI response"
-        uses: emilioschepis/wait-for-endpoint@v1.0.2
-        with:
-          url: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
-          method: GET
-          expected-status: 200
-          timeout: 600000
-          interval: 1000
-
-  #      - name: "Run wdio mock UI tests"
-  #        run: yarn test:mock-ui
-  #        env:
-  #          BROWSER: ${{matrix.browser}}
-  #          URL: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}
-  #          API_BASE_URL: ${{ needs.deploy_staging_terraform.outputs.api_base_url }}
-  #          STG_UI_USERNAME: ${{ secrets.DH_TEST_USER_NAME }}
-  #          STG_UI_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
-
   close_staging_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
     environment: staging
@@ -551,7 +490,6 @@ jobs:
         deploy_staging_terraform,
         deploy_staging_frontend,
         end_to_end_test_staging,
-        wdio_mock_ui_test_staging,
       ]
     steps:
       - name: "Login to Azure"
@@ -592,7 +530,7 @@ jobs:
   deploy_production_rg_terraform:
     name: "Deploy prod Resource Group"
     environment: prod
-    needs: [end_to_end_test_staging, wdio_mock_ui_test_staging]
+    needs: [end_to_end_test_staging]
     runs-on: ubuntu-latest
     concurrency: prod_rg_terraform_deployment
 
@@ -651,7 +589,6 @@ jobs:
     needs:
       [
         end_to_end_test_staging,
-        wdio_mock_ui_test_staging,
         deploy_production_rg_terraform,
       ]
     runs-on: ubuntu-latest
@@ -731,7 +668,6 @@ jobs:
         deploy_production_rg_terraform,
         deploy_production_apim_terraform,
         end_to_end_test_staging,
-        wdio_mock_ui_test_staging,
         package_function_apps,
       ]
     runs-on: ubuntu-latest
@@ -1090,7 +1026,6 @@ jobs:
         deploy_staging_terraform,
         deploy_staging_frontend,
         end_to_end_test_staging,
-        wdio_mock_ui_test_staging,
         deploy_production_rg_terraform,
         deploy_production_apim_terraform,
         deploy_production_terraform,
@@ -1114,13 +1049,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.wdio_mock_ui_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
+                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.wdio_mock_ui_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -1159,7 +1094,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.wdio_mock_ui_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
                     }
                   },
                   {
@@ -1219,13 +1154,6 @@ jobs:
                     "text": {
                       "type": "mrkdwn",
                       "text": '${{ needs.end_to_end_test_staging.result }}' === 'success' ? ':heavy-check-mark:   E2E Tests - Staging' : '${{ needs.end_to_end_test_staging.result }}' === 'failure' ? ':heavy-cross-mark:   E2E Tests - Staging' : ':heavy-minus-sign:   E2E Tests - Staging'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.wdio_mock_ui_test_staging.result }}' === 'success' ? ':heavy-check-mark:   Wdio Mock Ui Tests - Staging' : '${{ needs.wdio_mock_ui_test_staging.result }}' === 'failure' ? ':heavy-cross-mark:   Wdio Mock Ui Tests - Staging' : ':heavy-minus-sign:   Wdio Mock Ui Tests - Staging'
                     }
                   },
                   {
