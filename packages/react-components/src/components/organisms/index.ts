@@ -7,7 +7,6 @@ export * from './PerformanceProjectionsChart';
 
 export type { AccountsTableProps } from './AccountsTable';
 export type { HeaderMenuProps } from './HeaderMenu';
-export type { OldHeaderMenuProps } from './HeaderMenu/OldHeaderMenu/OldHeaderMenu';
 export type { CoachingPopoverProps } from './CoachingPopover';
 
 export { default as AccountSummaryPanel } from './AccountSummaryPanel';
@@ -26,7 +25,6 @@ export { default as GoalSetUpNewCard } from './GoalSetUpNewCard';
 export { default as GoalStartModal } from './GoalStartModal';
 export { default as GoalTrackingWidget } from './GoalTrackingWidget';
 export { default as HeaderMenu } from './HeaderMenu';
-export { default as OldHeaderMenu } from './HeaderMenu/OldHeaderMenu/OldHeaderMenu';
 export { default as LoginForm } from './LoginForm';
 export { default as PerformanceChart } from './PerformanceChart/PerformanceChart';
 export { default as PinLogin } from './PinLogin';
