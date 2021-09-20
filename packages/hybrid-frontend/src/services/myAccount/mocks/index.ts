@@ -52,7 +52,7 @@ const periodReturn: PeriodReturn = {
 
 const accountLifetimeReturn: InvestmentAccountLifetimeReturnAndPercentage = {
   value: 543.26,
-  percentage: 54,
+  percent: 54,
 };
 
 export const mockInvestmentAccounts: InvestmentAccount[] = [

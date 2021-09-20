@@ -8,7 +8,7 @@ export interface InvestmentAccountReturnAndPercentage {
 
 export interface InvestmentAccountLifetimeReturnAndPercentage {
   value: number;
-  percentage: number;
+  percent: number;
 }
 
 export type PeriodReturn = {

@@ -6,6 +6,7 @@ import { getMonthlySavingsAmount } from '../api';
 import { ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
 import { extractClientAccounts } from '../utils';
 import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
+import calculateLifetimeReturn from '../utils/calculateLifetimeReturn';
 
 const fetchInvestmentAccounts = createAsyncThunk(
   'client/fetchInvestmentAccounts',
@@ -43,11 +44,6 @@ const fetchInvestmentAccounts = createAsyncThunk(
         const performanceResponse = await getPerformanceAccountsAggregated(
           Number(investSummaryItem.id)
         );
-
-        const accountLifetimeReturn = performanceResponse?.data.attributes.performance ?? {
-          value: 0,
-          percentage: 0,
-        };
 
         const monthlyInvestment = await getMonthlySavingsAmount(investSummaryItem.id);
 
@@ -91,6 +87,11 @@ const fetchInvestmentAccounts = createAsyncThunk(
           netContributions && netContributions.length > 0
             ? netContributions[netContributions.length - 1].netContributionsToDate
             : 0;
+
+        const accountLifetimeReturn = calculateLifetimeReturn(
+          accountTotalHoldings,
+          netContributionToDate
+        );
 
         return {
           id: investSummaryItem.id,

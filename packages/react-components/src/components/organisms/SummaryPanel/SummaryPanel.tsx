@@ -46,6 +46,14 @@ const percentFormatterWithSign = (val: number) =>
     injectSpaceAfterPlusMinus: true,
   });
 
+const percentFormatterWithSignElseHyphen = (val: number) =>
+  val === 0
+    ? '-'
+    : formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE, {
+        displayPlus: true,
+        injectSpaceAfterPlusMinus: true,
+      });
+
 const currencyFormatter = (val: number) =>
   formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE);
 const currencyFormatterWithSign = (val: number) =>
@@ -96,7 +104,7 @@ export default function SummaryPanel({
       valueFormatter={currencyFormatterWithSign}
       valueSizeVariant="h4"
       percentageChange={lifetimeReturnPercentage}
-      percentageFormatter={percentFormatterWithSign}
+      percentageFormatter={percentFormatterWithSignElseHyphen}
       percentageNewLine={isMobile}
     />
   );

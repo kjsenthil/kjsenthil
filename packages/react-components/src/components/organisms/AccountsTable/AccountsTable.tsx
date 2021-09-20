@@ -57,6 +57,9 @@ const percentFormatterWithSign = (val: number) =>
     injectSpaceAfterPlusMinus: true,
   });
 
+const formatPercentActualToplineElseHyphen = (val: number) =>
+  val === 0 ? '-' : formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE);
+
 const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableProps) => (
   <AccountsTableContainer>
     <Table aria-label="accounts table">
@@ -153,8 +156,8 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
                     </Typography>
 
                     <Spacer x={2} />
-                    <TagBox variant="percentage" formatter={formatPercentActualTopline}>
-                      {row.accountLifetimeReturn.percentage / 100}
+                    <TagBox variant="percentage" formatter={formatPercentActualToplineElseHyphen}>
+                      {row.accountLifetimeReturn.percent / 100}
                     </TagBox>
                   </AccountReturn>
                 </AccountsTableCell>

@@ -38,7 +38,7 @@ import {
   usePerformanceDataPeriod,
   useSummaryValues,
 } from '../../../hooks';
-import { calculateInvestmentReturn } from '../../../services/myAccount';
+import { calculateInvestmentReturn, calculateLifetimeReturn } from '../../../services/myAccount';
 import {
   fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
@@ -135,6 +135,10 @@ const BIAccountsPage = () => {
   };
 
   const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
+  const lifetimeReturn = calculateLifetimeReturn(
+    accountsSummary.totalInvested,
+    summaryContributions
+  );
 
   // ---------- Components ---------- //
 
@@ -240,8 +244,8 @@ const BIAccountsPage = () => {
           ) : (
             <SummaryPanel
               totalNetContributions={summaryContributions}
-              lifetimeReturn={accountsSummary?.totalGainLoss}
-              lifetimeReturnPercentage={(accountsSummary?.totalGainLossPercentage || 0) / 100}
+              lifetimeReturn={lifetimeReturn.value}
+              lifetimeReturnPercentage={lifetimeReturn.percent}
               periodBasedReturn={{
                 value: investmentReturn.value,
                 percent: investmentReturn.percent,

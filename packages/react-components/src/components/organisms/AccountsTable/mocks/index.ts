@@ -45,7 +45,7 @@ export const mockInvestmentAccountsTableData = [
     accountInvestments: 123.23,
     accountLifetimeReturn: {
       value: 345.45,
-      percentage: 340,
+      percent: 340,
     },
     periodReturn: {
       ...periodReturn,
@@ -67,7 +67,7 @@ export const mockInvestmentAccountsTableData = [
     accountInvestments: 12.23,
     accountLifetimeReturn: {
       value: 34.45,
-      percentage: 34,
+      percent: 34,
     },
     periodReturn: {
       ...periodReturn,
@@ -89,7 +89,7 @@ export const mockInvestmentAccountsTableData = [
     accountInvestments: 1.23,
     accountLifetimeReturn: {
       value: 3.45,
-      percentage: 3,
+      percent: 3,
     },
     periodReturn: {
       ...periodReturn,
