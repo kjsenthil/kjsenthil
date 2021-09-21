@@ -86,7 +86,7 @@ module "api_management_policy_xplan" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [var.environment_prefix != "prod" ? "http://localhost:8000" : "", var.environment_prefix != "prod" ? module.front_end.web_endpoint : "", coalesce(format("https://%s", module.front_end.website_cname_record[0]), ""), var.environment_prefix != "prod" && var.environment_prefix != "stage" ?  format("https://%s", module.front_end.web_host) : ""]),
+      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [var.environment_prefix != "prod" ? "http://localhost:8000" : "", var.environment_prefix != "prod" ? module.front_end.web_endpoint : "", coalesce(format("https://%s", module.front_end.website_cname_record[0]), ""), var.environment_prefix != "prod" && var.environment_prefix != "stage" ? format("https://%s", module.front_end.web_host) : ""]),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
@@ -236,4 +236,22 @@ module "function_app_returns" {
   subnet_id                        = data.azurerm_subnet.apim_subnet.id
   app_insights_instrumentation_key = data.azurerm_application_insights.app_insights.instrumentation_key
   tags                             = local.default_tags
+}
+
+resource "azurerm_dashboard" "application_metrics_dashboard" {
+  count               = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? 1 : 0
+  name                = "${var.environment_prefix}-${var.app_name}-application-metrics-dashboard"
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  location            = data.azurerm_resource_group.resource_group.location
+  tags                = local.default_tags
+  dashboard_properties = templatefile("../modules/dashboard_schema/dashboard-schema.json",
+    {
+      apim_name      = data.azurerm_api_management.apim.name,
+      apim_id        = data.azurerm_api_management.apim.id,
+      ai_id          = data.azurerm_application_insights.app_insights.id,
+      ai_name        = data.azurerm_application_insights.app_insights.name,
+      cdn_web_id     = data.azurerm_cdn_profile.cdn_profile_website.id
+      cdn_web_name   = var.cdn_profile_website_name
+      dashboard_name = "${var.environment_prefix}-${var.app_name}-application-metrics-dashboard"
+  })
 }

@@ -3,6 +3,13 @@ locals {
     uksouth = "uks"
     ukwest  = "ukw"
   }
+
+  log_retention = {
+    dev     = 30
+    staging = 30
+    prod    = 365 # Revisit when producion log retention requirements are ready!
+  }
+
   short_location = lookup(local.location_map, lower(replace(var.location, "/\\s/", "")))
 
   default_tags = {

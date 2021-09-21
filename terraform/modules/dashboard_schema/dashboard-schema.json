@@ -1,0 +1,451 @@
+{
+    "lenses": {
+        "0": {
+            "order": 0,
+            "parts": {
+                "0": {
+                    "position": {
+                        "x": 0,
+                        "y": 0,
+                        "colSpan": 23,
+                        "rowSpan": 7
+                    },
+                    "metadata": {
+                        "inputs": [
+                            {
+                                "name": "sharedTimeRange",
+                                "isOptional": true
+                            },
+                            {
+                                "name": "options",
+                                "value": {
+                                    "chart": {
+                                        "filterCollection": {
+                                            "filters": [
+                                                {
+                                                    "key": "BackendResponseCode",
+                                                    "operator": 1,
+                                                    "values": [
+                                                        "0"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "grouping": {
+                                            "dimension": "BackendResponseCode",
+                                            "sort": 2,
+                                            "top": 10
+                                        },
+                                        "metrics": [
+                                            {
+                                                "aggregationType": 1,
+                                                "metricVisualization": {
+                                                    "displayName": "Requests"
+                                                },
+                                                "name": "Requests",
+                                                "namespace": "microsoft.apimanagement/service",
+                                                "resourceMetadata": {
+                                                    "id": "${apim_id}"
+                                                }
+                                            }
+                                        ],
+                                        "timespan": {
+                                            "grain": 1,
+                                            "relative": {
+                                                "duration": 86400000
+                                            },
+                                            "showUTCTime": false
+                                        },
+                                        "title": "Sum Requests for ${apim_name} by Backend Response Code",
+                                        "titleKind": 2,
+                                        "visualization": {
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "axisType": 2,
+                                                    "isVisible": true
+                                                },
+                                                "y": {
+                                                    "axisType": 1,
+                                                    "isVisible": true
+                                                }
+                                            },
+                                            "chartType": 2,
+                                            "legendVisualization": {
+                                                "hideSubtitle": false,
+                                                "isVisible": true,
+                                                "position": 2
+                                            }
+                                        }
+                                    }
+                                },
+                                "isOptional": true
+                            }
+                        ],
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "settings": {
+                            "content": {
+                                "options": {
+                                    "chart": {
+                                        "grouping": {
+                                            "dimension": "BackendResponseCode",
+                                            "sort": 2,
+                                            "top": 10
+                                        },
+                                        "metrics": [
+                                            {
+                                                "aggregationType": 1,
+                                                "metricVisualization": {
+                                                    "displayName": "Requests"
+                                                },
+                                                "name": "Requests",
+                                                "namespace": "microsoft.apimanagement/service",
+                                                "resourceMetadata": {
+                                                    "id": "${apim_id}"
+                                                }
+                                            }
+                                        ],
+                                        "title": "Sum Requests for ${apim_name} by Backend Response Code",
+                                        "titleKind": 2,
+                                        "visualization": {
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "axisType": 2,
+                                                    "isVisible": true
+                                                },
+                                                "y": {
+                                                    "axisType": 1,
+                                                    "isVisible": true
+                                                }
+                                            },
+                                            "chartType": 2,
+                                            "disablePinning": true,
+                                            "legendVisualization": {
+                                                "hideSubtitle": false,
+                                                "isVisible": true,
+                                                "position": 2
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "filters": {
+                            "BackendResponseCode": {
+                                "model": {
+                                    "operator": "notEquals",
+                                    "values": [
+                                        "0"
+                                    ]
+                                }
+                            },
+                            "MsPortalFx_TimeRange": {
+                                "model": {
+                                    "format": "local",
+                                    "granularity": "auto",
+                                    "relative": "1440m"
+                                }
+                            }
+                        }
+                    }
+                },
+                "1": {
+                    "position": {
+                        "x": 0,
+                        "y": 7,
+                        "colSpan": 6,
+                        "rowSpan": 4
+                    },
+                    "metadata": {
+                        "inputs": [
+                            {
+                                "name": "options",
+                                "value": {
+                                    "chart": {
+                                        "metrics": [
+                                            {
+                                                "aggregationType": 4,
+                                                "metricVisualization": {
+                                                    "color": "#54A300",
+                                                    "displayName": "Availability",
+                                                    "resourceDisplayName": "${ai_name}"
+                                                },
+                                                "name": "availabilityResults/availabilityPercentage",
+                                                "namespace": "microsoft.insights/components",
+                                                "resourceMetadata": {
+                                                    "id": "${ai_id}"
+                                                }
+                                            }
+                                        ],
+                                        "openBladeOnClick": {
+                                            "destinationBlade": {
+                                                "bladeName": "ResourceMenuBlade",
+                                                "extensionName": "HubsExtension",
+                                                "options": {
+                                                    "parameters": {
+                                                        "id": "${ai_id}",
+                                                        "menuid": "availability"
+                                                    }
+                                                },
+                                                "parameters": {
+                                                    "id": "${ai_id}",
+                                                    "menuid": "availability"
+                                                }
+                                            },
+                                            "openBlade": true
+                                        },
+                                        "title": "Availability",
+                                        "titleKind": 2,
+                                        "visualization": {
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "isVisible": true
+                                                },
+                                                "y": {
+                                                    "isVisible": true,
+                                                    "max": 100,
+                                                    "min": 0
+                                                }
+                                            },
+                                            "chartType": 2
+                                        }
+                                    }
+                                },
+                                "isOptional": true
+                            },
+                            {
+                                "name": "sharedTimeRange",
+                                "isOptional": true
+                            }
+                        ],
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "settings": {
+                            "content": {
+                                "options": {
+                                    "chart": {
+                                        "metrics": [
+                                            {
+                                                "aggregationType": 4,
+                                                "metricVisualization": {
+                                                    "color": "#54A300",
+                                                    "displayName": "Availability",
+                                                    "resourceDisplayName": "${ai_name}"
+                                                },
+                                                "name": "availabilityResults/availabilityPercentage",
+                                                "namespace": "microsoft.insights/components",
+                                                "resourceMetadata": {
+                                                    "id": "${ai_id}"
+                                                }
+                                            }
+                                        ],
+                                        "openBladeOnClick": {
+                                            "destinationBlade": {
+                                                "bladeName": "ResourceMenuBlade",
+                                                "extensionName": "HubsExtension",
+                                                "options": {
+                                                    "parameters": {
+                                                        "id": "${ai_id}",
+                                                        "menuid": "availability"
+                                                    }
+                                                },
+                                                "parameters": {
+                                                    "id": "${ai_id}",
+                                                    "menuid": "availability"
+                                                }
+                                            },
+                                            "openBlade": true
+                                        },
+                                        "title": "Availability",
+                                        "titleKind": 2,
+                                        "visualization": {
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "isVisible": true
+                                                },
+                                                "y": {
+                                                    "isVisible": true,
+                                                    "max": 100,
+                                                    "min": 0
+                                                }
+                                            },
+                                            "chartType": 2,
+                                            "disablePinning": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "filters": {
+                            "MsPortalFx_TimeRange": {
+                                "model": {
+                                    "format": "local",
+                                    "granularity": "auto",
+                                    "relative": "60m"
+                                }
+                            }
+                        }
+                    }
+                },
+                "2": {
+                    "position": {
+                        "x": 6,
+                        "y": 7,
+                        "colSpan": 8,
+                        "rowSpan": 4
+                    },
+                    "metadata": {
+                        "inputs": [
+                            {
+                                "name": "options",
+                                "value": {
+                                    "chart": {
+                                        "metrics": [
+                                            {
+                                                "resourceMetadata": {
+                                                    "id": "${cdn_web_id}"
+                                                },
+                                                "name": "ResponseSize",
+                                                "aggregationType": 1,
+                                                "namespace": "microsoft.cdn/profiles",
+                                                "metricVisualization": {
+                                                    "displayName": "Response Size"
+                                                }
+                                            }
+                                        ],
+                                        "title": "Sum Response Size for ${cdn_web_name}",
+                                        "titleKind": 1,
+                                        "visualization": {
+                                            "chartType": 2,
+                                            "legendVisualization": {
+                                                "isVisible": true,
+                                                "position": 2,
+                                                "hideSubtitle": false
+                                            },
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "isVisible": true,
+                                                    "axisType": 2
+                                                },
+                                                "y": {
+                                                    "isVisible": true,
+                                                    "axisType": 1
+                                                }
+                                            }
+                                        },
+                                        "timespan": {
+                                            "relative": {
+                                                "duration": 86400000
+                                            },
+                                            "showUTCTime": false,
+                                            "grain": 1
+                                        }
+                                    }
+                                },
+                                "isOptional": true
+                            },
+                            {
+                                "name": "sharedTimeRange",
+                                "isOptional": true
+                            }
+                        ],
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "settings": {
+                            "content": {
+                                "options": {
+                                    "chart": {
+                                        "metrics": [
+                                            {
+                                                "resourceMetadata": {
+                                                    "id": "${cdn_web_id}"
+                                                },
+                                                "name": "ResponseSize",
+                                                "aggregationType": 1,
+                                                "namespace": "microsoft.cdn/profiles",
+                                                "metricVisualization": {
+                                                    "displayName": "Response Size"
+                                                }
+                                            }
+                                        ],
+                                        "title": "Sum Response Size for ${cdn_web_name}",
+                                        "titleKind": 1,
+                                        "visualization": {
+                                            "chartType": 2,
+                                            "legendVisualization": {
+                                                "isVisible": true,
+                                                "position": 2,
+                                                "hideSubtitle": false
+                                            },
+                                            "axisVisualization": {
+                                                "x": {
+                                                    "isVisible": true,
+                                                    "axisType": 2
+                                                },
+                                                "y": {
+                                                    "isVisible": true,
+                                                    "axisType": 1
+                                                }
+                                            },
+                                            "disablePinning": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "filters": {
+                            "MsPortalFx_TimeRange": {
+                                "model": {
+                                    "format": "local",
+                                    "granularity": "auto",
+                                    "relative": "1440m"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "metadata": {
+        "model": {
+            "timeRange": {
+                "value": {
+                    "relative": {
+                        "duration": 24,
+                        "timeUnit": 1
+                    }
+                },
+                "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+            },
+            "filterLocale": {
+                "value": "en-us"
+            },
+            "filters": {
+                "value": {
+                    "MsPortalFx_TimeRange": {
+                        "model": {
+                            "format": "utc",
+                            "granularity": "auto",
+                            "relative": "24h"
+                        },
+                        "displayCache": {
+                            "name": "UTC Time",
+                            "value": "Past 24 hours"
+                        },
+                        "filteredPartIds": [
+                            "StartboardPart-MonitorChartPart-be8f667d-7ded-4261-9e1c-b53bb45eb46d",
+                            "StartboardPart-MonitorChartPart-be8f667d-7ded-4261-9e1c-b53bb45eb46f",
+                            "StartboardPart-MonitorChartPart-be8f667d-7ded-4261-9e1c-b53bb45eb471",
+                            "StartboardPart-MonitorChartPart-be8f667d-7ded-4261-9e1c-b53bb45eb473"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "name": "${dashboard_name}",
+    "type": "Microsoft.Portal/dashboards",
+    "location": "INSERT LOCATION",
+    "tags": {
+        "hidden-title": "${dashboard_name}"
+    },
+    "apiVersion": "2015-08-01-preview"
+}

@@ -75,12 +75,12 @@ resource "azurerm_dns_cname_record" "cdn" {
 //----------------------------------------------------------------------------//
 
 resource "azurerm_cdn_endpoint_custom_domain" "friendly_dns" {
-//To mitigate intermittent failures where CNAME record was not created
+  //To mitigate intermittent failures where CNAME record was not created
   depends_on = [
     azurerm_dns_cname_record.cdn,
   ]
-  count = var.public_dns_cname == "preview" ? 1 : 0
-  name = "cdn-gbl-${var.public_dns_cname}-custom-domain"
+  count           = var.public_dns_cname == "preview" ? 1 : 0
+  name            = "cdn-gbl-${var.public_dns_cname}-custom-domain"
   cdn_endpoint_id = module.cdn.cdn_id
-  host_name = "${var.public_dns_cname}.${var.public_dns_zone_name}"
+  host_name       = "${var.public_dns_cname}.${var.public_dns_zone_name}"
 }
