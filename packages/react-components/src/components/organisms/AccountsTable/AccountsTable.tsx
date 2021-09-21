@@ -157,7 +157,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
                     <Spacer x={2} />
                     <TagBox variant="percentage" formatter={formatPercentActualToplineElseHyphen}>
-                      {row.accountLifetimeReturn.percent / 100}
+                      {row.accountLifetimeReturn.percent}
                     </TagBox>
                   </AccountReturn>
                 </AccountsTableCell>
