@@ -7,8 +7,11 @@
     "outDir": "dist"
   },
   "files": [
+    "shared-code/date-helpers/helpers.ts",
     "shared-code/is-number/is-number.ts",
     "shared-code/is-object/is-object.ts",
+    "shared-code/simulation/goal-retirement/goal-retirement.ts",
+    "shared-code/simulation/types.ts",
     "shared-code/value-validation/index.ts",
     "shared-code/value-validation/types.ts",
     "shared-code/value-validation/validate-property.ts",
@@ -34,12 +37,17 @@
     "current-projection/types.ts",
     "validate-goal-request/index.ts",
     "validate-goal-request/function.json",
+    "simulate-projection/goal-retirement.ts",
     "simulate-projection/index.ts",
     "simulate-projection/types.ts",
     "simulate-projection/function.json",
     "goal-risk-profile/find-risk-model/types.ts",
+    "goal-risk-profile/find-risk-model/index.ts",
+    "goal-risk-profile/prepare-input-values/prepare-input-values-drawdown-retirement.ts",
     "goal-risk-profile/validations/validate-asset-models.ts",
     "goal-risk-profile/validations/validate-inbound-payload.ts",
+    "goal-risk-profile/function.json",
+    "goal-risk-profile/index.ts",
     "goal-risk-profile/types.ts"
   ]
 }

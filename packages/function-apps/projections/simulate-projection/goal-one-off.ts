@@ -1,4 +1,4 @@
-import { monthsDiff, parseDate } from "./helpers";
+import { monthsDiff, parseDate } from "../shared-code/date-helpers/helpers";
 import { RequestPayload } from "./types";
 
 function calculateOnTrackPercentage(inboundPayload: RequestPayload, today: Date): number {

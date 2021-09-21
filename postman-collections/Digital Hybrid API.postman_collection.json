@@ -3512,6 +3512,108 @@
 					]
 				},
 				{
+					"name": "Goal Risk Profile",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//calculate months to age to 100\r",
+									"var moment = require('moment');\r",
+									"\r",
+									"var today = moment();\r",
+									"var dob = pm.environment.get('myAccounts.DateOfBirth');\r",
+									"\r",
+									"var dateOfBirth = moment(dob,\"YYYY-MM-DD\");\r",
+									"console.log(dateOfBirth);\r",
+									"var dateTo100String = (dateOfBirth.year()+100).toString() + '-' + (\"0\" + (dateOfBirth.month()+1).toString()).slice(-2)+ '-' + (\"0\" +dateOfBirth.date().toString()).slice(-2);\r",
+									"var dateTo100 = moment(dateTo100String,\"YYYY-MM-DD\");\r",
+									"var timeHorizon= dateTo100.diff(today, 'months');\r",
+									"pm.environment.set('timeHorizon',timeHorizon );\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"assetModels\": [\r\n    {\r\n      \"id\": 1,\r\n      \"riskModel\": \"TAA1\",\r\n      \"erValue\": 0.022,\r\n      \"volatility\": 0.0575,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.053855486492308,\r\n        \"MoreLikelyUB\": 0.096334740881002,\r\n        \"LessLikelyLB\": -0.082922932045877,\r\n        \"LessLikelyUB\": 0.11695998920423\r\n      }\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"riskModel\": \"TAA2\",\r\n      \"erValue\": 0.0272,\r\n      \"volatility\": 0.0799,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.07599672796948,\r\n        \"MoreLikelyUB\": 0.130298185790262,\r\n        \"LessLikelyLB\": -0.122301313875304,\r\n        \"LessLikelyUB\": 0.156101017108818\r\n      }\r\n    },\r\n    {\r\n      \"id\": 8,\r\n      \"riskModel\": \"TAA3\",\r\n      \"erValue\": 0.0293,\r\n      \"volatility\": 0.1007,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.100605387101175,\r\n        \"MoreLikelyUB\": 0.155949073359354,\r\n        \"LessLikelyLB\": -0.158385846599923,\r\n        \"LessLikelyUB\": 0.189218939001585\r\n      }\r\n    },\r\n    {\r\n      \"id\": 4,\r\n      \"riskModel\": \"TAA4\",\r\n      \"erValue\": 0.0326,\r\n      \"volatility\": 0.1075,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.107982025788715,\r\n        \"MoreLikelyUB\": 0.169426522864396,\r\n        \"LessLikelyLB\": -0.169718154880174,\r\n        \"LessLikelyUB\": 0.203446039026051\r\n      }\r\n    },\r\n    {\r\n      \"id\": 5,\r\n      \"riskModel\": \"TAA5\",\r\n      \"erValue\": 0.0354,\r\n      \"volatility\": 0.1234,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.127748866832042,\r\n        \"MoreLikelyUB\": 0.192541974228056,\r\n        \"LessLikelyLB\": -0.197538755802628,\r\n        \"LessLikelyUB\": 0.231769033240172\r\n      }\r\n    },\r\n    {\r\n      \"id\": 6,\r\n      \"riskModel\": \"TAA6\",\r\n      \"erValue\": 0.038,\r\n      \"volatility\": 0.1378,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.146063525212556,\r\n        \"MoreLikelyUB\": 0.213960063645181,\r\n        \"LessLikelyLB\": -0.223141153558959,\r\n        \"LessLikelyUB\": 0.257801381328737\r\n      }\r\n    },\r\n    {\r\n      \"id\": 7,\r\n      \"riskModel\": \"TAA7\",\r\n      \"erValue\": 0.043,\r\n      \"volatility\": 0.1637,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.178098032864498,\r\n        \"MoreLikelyUB\": 0.250119361538717,\r\n        \"LessLikelyLB\": -0.272032975999516,\r\n        \"LessLikelyUB\": 0.301941013128566\r\n      }\r\n    }\r\n  ],\r\n  \"timeHorizonToProject\": 1080,\r\n  \"feesPercentage\": 0,\r\n  \"upfrontContribution\": 0,\r\n  \"monthlyContribution\": 0,\r\n  \"currentNetContribution\": 3656.83,\r\n  \"currentPortfolioValue\": 7320.1655200000005,\r\n  \"includeGoal\": true,\r\n  \"drawdownType\": \"Retirement\",\r\n  \"drawdownRetirement\": {\r\n    \"regularDrawdown\": 500,\r\n    \"startDate\": \"2076-03-27\",\r\n    \"endDate\": \"2098-03-27\",\r\n    \"remainingAmount\": 0,\r\n    \"statePensionAmount\": 0\r\n  },\r\n  \"preGoal\": {\r\n    \"expectedReturnPercentage\": 4.3,\r\n    \"volatilityPercentage\": 16.37,\r\n    \"ZScoreLowerBound\": -0.272032975999516,\r\n    \"ZScoreUpperBound\": 0.301941013128566\r\n  },\r\n  \"postGoal\": {\r\n    \"expectedReturnPercentage\": 4.3,\r\n    \"volatilityPercentage\": 16.37,\r\n    \"ZScoreLowerBound\": -0.178098032864498,\r\n    \"ZScoreUpperBound\": 0.250119361538717\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/projections/goal-risk-profile",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"projections",
+								"goal-risk-profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"assetModels\": [\r\n    {\r\n      \"id\": 1,\r\n      \"riskModel\": \"TAA1\",\r\n      \"erValue\": 0.022,\r\n      \"volatility\": 0.0575,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.053855486492308,\r\n        \"MoreLikelyUB\": 0.096334740881002,\r\n        \"LessLikelyLB\": -0.082922932045877,\r\n        \"LessLikelyUB\": 0.11695998920423\r\n      }\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"riskModel\": \"TAA2\",\r\n      \"erValue\": 0.0272,\r\n      \"volatility\": 0.0799,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.07599672796948,\r\n        \"MoreLikelyUB\": 0.130298185790262,\r\n        \"LessLikelyLB\": -0.122301313875304,\r\n        \"LessLikelyUB\": 0.156101017108818\r\n      }\r\n    },\r\n    {\r\n      \"id\": 8,\r\n      \"riskModel\": \"TAA3\",\r\n      \"erValue\": 0.0293,\r\n      \"volatility\": 0.1007,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.100605387101175,\r\n        \"MoreLikelyUB\": 0.155949073359354,\r\n        \"LessLikelyLB\": -0.158385846599923,\r\n        \"LessLikelyUB\": 0.189218939001585\r\n      }\r\n    },\r\n    {\r\n      \"id\": 4,\r\n      \"riskModel\": \"TAA4\",\r\n      \"erValue\": 0.0326,\r\n      \"volatility\": 0.1075,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.107982025788715,\r\n        \"MoreLikelyUB\": 0.169426522864396,\r\n        \"LessLikelyLB\": -0.169718154880174,\r\n        \"LessLikelyUB\": 0.203446039026051\r\n      }\r\n    },\r\n    {\r\n      \"id\": 5,\r\n      \"riskModel\": \"TAA5\",\r\n      \"erValue\": 0.0354,\r\n      \"volatility\": 0.1234,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.127748866832042,\r\n        \"MoreLikelyUB\": 0.192541974228056,\r\n        \"LessLikelyLB\": -0.197538755802628,\r\n        \"LessLikelyUB\": 0.231769033240172\r\n      }\r\n    },\r\n    {\r\n      \"id\": 6,\r\n      \"riskModel\": \"TAA6\",\r\n      \"erValue\": 0.038,\r\n      \"volatility\": 0.1378,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.146063525212556,\r\n        \"MoreLikelyUB\": 0.213960063645181,\r\n        \"LessLikelyLB\": -0.223141153558959,\r\n        \"LessLikelyUB\": 0.257801381328737\r\n      }\r\n    },\r\n    {\r\n      \"id\": 7,\r\n      \"riskModel\": \"TAA7\",\r\n      \"erValue\": 0.043,\r\n      \"volatility\": 0.1637,\r\n      \"zScores\": {\r\n        \"MoreLikelyLB\": -0.178098032864498,\r\n        \"MoreLikelyUB\": 0.250119361538717,\r\n        \"LessLikelyLB\": -0.272032975999516,\r\n        \"LessLikelyUB\": 0.301941013128566\r\n      }\r\n    }\r\n  ],\r\n  \"timeHorizonToProject\": 1080,\r\n  \"feesPercentage\": 0,\r\n  \"upfrontContribution\": 0,\r\n  \"monthlyContribution\": 0,\r\n  \"currentNetContribution\": 3656.83,\r\n  \"currentPortfolioValue\": 7320.1655200000005,\r\n  \"includeGoal\": true,\r\n  \"drawdownType\": \"Retirement\",\r\n  \"drawdownRetirement\": {\r\n    \"regularDrawdown\": 500,\r\n    \"startDate\": \"2076-03-27\",\r\n    \"endDate\": \"2098-03-27\",\r\n    \"remainingAmount\": 0,\r\n    \"statePensionAmount\": 0\r\n  },\r\n  \"preGoal\": {\r\n    \"expectedReturnPercentage\": 4.3,\r\n    \"volatilityPercentage\": 16.37,\r\n    \"ZScoreLowerBound\": -0.272032975999516,\r\n    \"ZScoreUpperBound\": 0.301941013128566\r\n  },\r\n  \"postGoal\": {\r\n    \"expectedReturnPercentage\": 4.3,\r\n    \"volatilityPercentage\": 16.37,\r\n    \"ZScoreLowerBound\": -0.178098032864498,\r\n    \"ZScoreUpperBound\": 0.250119361538717\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/projections/goal-risk-profile",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"projections",
+										"goal-risk-profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Sep 2021 12:55:50 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"maxOnTrackPercentage\": 0.8372840881347656,\n  \"maxOnTrackPercentageRiskModel\": \"TAA7\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Target Projection",
 					"event": [
 						{

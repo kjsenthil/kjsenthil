@@ -392,6 +392,20 @@
       }
     },
     {
+      "operation_id": "projections-goal-risk-profile",
+      "display_name": "Projections - Get optimal risk profile",
+      "url_template": "/projections/goal-risk-profile",
+      "description": "Connects to the goal-risk-profile function app and returns the risk profile that allows at least 100%-on-track for a goal, or the % on-track achieved by the most risky risk profile",
+      "policy": {
+        "cors": {
+          "method": "POST",
+          "headers": ["Content-Type", "Origin", "Authorization"]
+        },
+        "backend_url": "projections_function_app",
+        "rewrite_url": "/goal-risk-profile"
+      }
+    },
+    {
       "operation_id": "returns-annualised-return",
       "display_name": "Returns - Get annualised return",
       "url_template": "/returns/annualised-return",
