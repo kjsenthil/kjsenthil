@@ -506,6 +506,7 @@ jobs:
 
   purge_staging_frontend_cdn_cache:
     name: "Purge staging frontend CDN cache"
+    if: needs.deploy_staging_frontend.result == 'success'
     environment: staging
     runs-on: ubuntu-latest
     needs:
@@ -957,6 +958,7 @@ jobs:
 
   purge_prod_frontend_cdn_cache:
     name: "Purge prod frontend CDN cache"
+    if: needs.deploy_production_frontend.result == 'success'
     environment: prod
     runs-on: ubuntu-latest
     needs:
@@ -979,6 +981,7 @@ jobs:
 
   purge_prod_storybook_cdn_cache:
     name: "Purge prod storybook CDN cache"
+    if: needs.deploy_storybook_prod.result == 'success'
     environment: prod
     runs-on: ubuntu-latest
     needs:
