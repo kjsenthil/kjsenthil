@@ -15,6 +15,8 @@ import { RootState } from '../../../store';
 import { InputFieldsKeys } from '../../../services/goal/machines/lifePlan';
 import { GoalCategory, GoalDefaults } from '../../../services/goal';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
+import { cleanGoalSimulateProjections } from '../../../services/projections';
+
 import {
   useLifePlanMachine,
   useProjectionsChartData,
@@ -52,6 +54,9 @@ const LifePlanManagementPage = () => {
 
   service.onTransition(({ done }) => {
     if (done) {
+      if (goalSimulateProjections) {
+        dispatch(cleanGoalSimulateProjections());
+      }
       goToLifePlanPage();
     }
   });
@@ -148,6 +153,10 @@ const LifePlanManagementPage = () => {
   const monthlyContributionsRequiredToFundDrawdown =
     (goalSimulateProjections?.goal.onTrack.monthlyContributionsToReach ?? 0) -
     (monthlyContributions ?? 0);
+
+  const onCancelHandler = () => {
+    handlers.handleCancellation();
+  };
 
   const renderContentSide = () =>
     doesGoalExist ? (
@@ -254,7 +263,7 @@ const LifePlanManagementPage = () => {
     <GoalCreationLayout
       iconAlt="goal image"
       iconSrc="/goal-graphic.png"
-      onCancelHandler={goToLifePlanPage}
+      onCancelHandler={onCancelHandler}
       onDeleteHandler={doesGoalExist ? handlers.handleGoalDelete : undefined}
       progressButtonTitle={isMobile && !isLastStep ? 'Next' : 'Save'}
       isLoading={isLoading}

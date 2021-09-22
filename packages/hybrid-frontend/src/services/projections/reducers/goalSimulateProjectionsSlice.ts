@@ -12,10 +12,12 @@ const initialState: GoalSimulateProjectionsState = {
   status: 'idle',
 };
 
-const GoalSimulateProjectionsSlice = createSlice({
+const goalSimulateProjectionsSlice = createSlice({
   name: 'goalSimulateProjections',
   initialState,
-  reducers: {},
+  reducers: {
+    cleanGoalSimulateProjections: () => initialState,
+  },
   extraReducers: commonActionReducerMapBuilder<
     { data: GoalSimulateProjectionsResponse },
     GoalSimulateProjectionsState,
@@ -24,4 +26,6 @@ const GoalSimulateProjectionsSlice = createSlice({
 });
 
 export { fetchGoalSimulateProjections };
-export default GoalSimulateProjectionsSlice.reducer;
+export const { cleanGoalSimulateProjections } = goalSimulateProjectionsSlice.actions;
+
+export default goalSimulateProjectionsSlice.reducer;

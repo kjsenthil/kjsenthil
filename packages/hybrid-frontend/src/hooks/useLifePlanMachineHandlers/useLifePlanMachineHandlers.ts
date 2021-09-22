@@ -8,7 +8,7 @@ import useUpdateSimulateProjectionsPrerequisites from '../useUpdateSimulateProje
 
 export type InputEvent = React.ChangeEvent<HTMLInputElement>;
 type InputEventFunction = (event: InputEvent) => void;
-type BasicHandlers = 'handleGoalSave' | 'handleGoalDelete';
+type BasicHandlers = 'handleGoalSave' | 'handleGoalDelete' | 'handleCancellation';
 
 type EventHandlers =
   | 'handleToAgeChange'
@@ -143,6 +143,10 @@ const useLifePlanMachineHandlers = ({
     send('DELETE');
   };
 
+  const handleCancellation = () => {
+    send('CANCEL');
+  };
+
   const handleGoalSave = () => {
     send('SAVE', { payload: projectionsPrerequisitesPayload });
   };
@@ -165,6 +169,7 @@ const useLifePlanMachineHandlers = ({
     handleRemainingAmountChange,
     handleAdditionalMonthlyContributions,
     handleUpfrontContribution,
+    handleCancellation,
   };
 };
 

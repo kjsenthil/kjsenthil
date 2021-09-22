@@ -169,6 +169,7 @@ export type LifePlanMachineEvents =
   | SwitchToToFlanning
   | { type: 'SAVE'; payload?: undefined }
   | { type: 'DELETE'; payload?: undefined }
+  | { type: 'CANCEL'; payload?: undefined }
   | {
       type: 'FETCH_PROJETIONS';
       payload: Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'>;

@@ -184,4 +184,9 @@ describe('useLifePlanMachineHandlers', () => {
       payload: { data: 'somedata', ...prerequisites },
     });
   });
+
+  it('calls send with CANCEL on handleCustomEvent', () => {
+    handlers.handleCancellation();
+    expect(mockSend).toHaveBeenCalledWith('CANCEL');
+  });
 });

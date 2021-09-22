@@ -72,6 +72,9 @@ const lifePlanConfig: MachineConfig<
     'calculateDrawdownPeriodLength',
     'calcuateLumpSumDate',
   ],
+  on: {
+    CANCEL: '#lifePlan.finished',
+  },
   context,
   states: {
     planningYourRetirement: {
