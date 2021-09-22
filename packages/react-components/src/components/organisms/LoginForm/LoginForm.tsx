@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { LoginFormData } from '../../../services/auth';
+import React, { useEffect, useState } from 'react';
+import { LoginFormData } from '../../../services';
 import {
   Button,
   Typography,
@@ -20,6 +20,8 @@ export interface LoginFormProps {
 }
 
 const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) => {
+  const [submitEnabled, setSubmitEnabled] = useState(false);
+
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -29,6 +31,11 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) =
     event.persist();
     setInputs((currentInputs) => ({ ...currentInputs, [name]: event.target.value }));
   };
+
+  useEffect(() => {
+    setSubmitEnabled(inputs.username !== '' && inputs.password !== '');
+  }, [inputs.username, inputs.password]);
+
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await onSubmit(inputs);
@@ -93,6 +100,7 @@ const LoginForm = ({ errorMessage, successMessage, onSubmit }: LoginFormProps) =
                     color="gradient"
                     type="submit"
                     fullWidth
+                    disabled={!submitEnabled}
                   >
                     Log in
                   </Button>

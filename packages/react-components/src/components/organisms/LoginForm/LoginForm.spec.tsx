@@ -35,6 +35,18 @@ describe('LoginForm', () => {
     });
   });
 
+  it('should not be able to submit with empty username', async () => {
+    fireEvent.change(passwordField, { target: { value: 'secret' } });
+    const submitButton = await screen.findByRole('button');
+    expect(submitButton).toBeDisabled();
+  });
+
+  it('should not be able to submit with empty password', async () => {
+    fireEvent.change(usernameField, { target: { value: 'user1' } });
+    const submitButton = await screen.findByRole('button');
+    expect(submitButton).toBeDisabled();
+  });
+
   test('Renders an error message', () => {
     const errorMessage = 'Some error message';
     renderWithTheme(
