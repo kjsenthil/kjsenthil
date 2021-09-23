@@ -69,5 +69,6 @@ output "gtm_env_preview" {
 }
 
 output "app_conf_keys" {
-  value = azurerm_app_configuration.app_config.primary_read_key
+  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? azurerm_app_configuration.app_config[0].primary_read_key : null
+  description = "Azure app configuration read key for either staging or prod"
 }

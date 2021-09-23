@@ -204,6 +204,7 @@ module "function_app_projections" {
 }
 
 module "function_app_features" {
+  count                            = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? 1 : 0
   source                           = "../modules/function_app_node"
   resource_group_name              = data.azurerm_resource_group.resource_group.name
   location                         = data.azurerm_resource_group.resource_group.location
@@ -216,9 +217,9 @@ module "function_app_features" {
   subnet_id                        = data.azurerm_subnet.apim_subnet.id
   app_insights_instrumentation_key = data.azurerm_application_insights.app_insights.instrumentation_key
   app_settings = {
-    APP_CONFIG_INSTANCE_URL     = azurerm_app_configuration.app_config.endpoint
-    APP_CONFIG_READ_ONLY_KEY_ID = azurerm_app_configuration.app_config.primary_read_key[0].id
-    APP_CONFIG_READ_ONLY_SECRET = azurerm_app_configuration.app_config.primary_read_key[0].secret
+    APP_CONFIG_INSTANCE_URL     = azurerm_app_configuration.app_config[0].endpoint
+    APP_CONFIG_READ_ONLY_KEY_ID = azurerm_app_configuration.app_config[0].primary_read_key[0].id
+    APP_CONFIG_READ_ONLY_SECRET = azurerm_app_configuration.app_config[0].primary_read_key[0].secret
   }
   tags = local.default_tags
 }

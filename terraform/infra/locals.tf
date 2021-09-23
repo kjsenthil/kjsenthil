@@ -26,7 +26,7 @@ locals {
 
   api_backends = {
     projections_function_app = "https://${module.function_app_projections.url}/api/"
-    features_function_app    = "https://${module.function_app_features.url}/api/"
+    features_function_app    = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? "https://${module.function_app_features[0].url}/api/" : null
     returns_function_app     = "https://${module.function_app_returns.url}/api/"
   }
 
