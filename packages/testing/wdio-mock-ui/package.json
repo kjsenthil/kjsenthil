@@ -16,6 +16,7 @@
     "@wdio/spec-reporter": "^7.7.3",
     "chai": "^4.3.4",
     "chromedriver": "^92.0.1",
+    "msedgedriver": "^91.0.0",
     "ts-node": "^10.0.0",
     "wdio-chromedriver-service": "^7.1.0",
     "webdriverio": "^7.7.4"

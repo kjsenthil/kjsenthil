@@ -2,13 +2,10 @@ import { expect } from 'chai'
 import { Mock } from 'webdriverio'
 import {
   addCashBtn,
-  cashToInvestAmount,
-  cashToInvestLabel,
   investmentMenuBtn,
   investmentMenuLabel,
   investBtn,
   lifePlanMenuBtn,
-  lifePlanMenuLabel,
   logoBtn,
   myAccountsLoginBtn,
   myAccountsLoginText,
@@ -17,11 +14,12 @@ import {
   bottomNoteLabel,
   cookiePolicy,
   infoLabel,
-  keyFactsAndTerms,
-  ourRegisteredDetails,
-  pastPerformanceLabel,
-  riskWarnings,
   websiteConditions,
+  riskWarnings,
+  pastPerformanceParagraph,
+  privacyNotice,
+  accessibility,
+  keepingYourAccountSecure,
 } from '../components/footer/footer.locators'
 import { lHeader } from '../components/investment/investment.locators'
 import { performLogin } from '../components/login/login.actions'
@@ -100,17 +98,15 @@ describe('Check common elements from header, footer area', () => {
   describe('Header scenarios', () => {
     it('should load header links', async () => {
       // assert
-      const elemLogoBtn = expect(
-        await (await logoBtn()).waitForClickable(),
-        'Expected result not matching'
-      ).to.be.true
+      const elemLogoBtn = expect(await (await logoBtn()).waitForClickable(), 'No match found').to.be
+        .true
       console.info('Logo is displayed:', elemLogoBtn)
 
       // act
       const textInvestmentBtn = await (await investmentMenuLabel()).getText()
       console.info('"Investment" menu is displayed:', textInvestmentBtn)
       // assert
-      expect(textInvestmentBtn).to.equal('Investment', 'Expected result not matching')
+      expect(textInvestmentBtn).to.equal('Investments', 'No match found')
 
       // act
       await (await investmentMenuBtn()).waitForClickable()
@@ -123,10 +119,10 @@ describe('Check common elements from header, footer area', () => {
         .true
 
       // act
-      const textLifePlanBtn = await (await lifePlanMenuLabel()).getText()
+      const textLifePlanBtn = await (await lifePlanMenuBtn()).getText()
       console.info('"Life plan" menu is displayed:', textLifePlanBtn)
       // assert
-      expect(textLifePlanBtn).to.equal('Life plan', 'Expected result not matching')
+      expect(textLifePlanBtn).to.equal('Life plan', 'No match found')
 
       // act
       await (await lifePlanMenuBtn()).waitForClickable()
@@ -138,10 +134,7 @@ describe('Check common elements from header, footer area', () => {
         new RegExp('[a-z]*.azureedge.net/my-account/life-plan').test(currentUrl),
         'URL does not match'
       ).true
-      expect(await (await logoBtn()).waitForClickable()).to.equal(
-        true,
-        'Expected result not matching'
-      )
+      expect(await (await logoBtn()).waitForClickable()).to.equal(true, 'No match found')
 
       // act
       await (await logoBtn()).click()
@@ -152,38 +145,20 @@ describe('Check common elements from header, footer area', () => {
         .true
 
       // assert
-      // cash to invest
-      const elemCashToInvestAmount = await (await cashToInvestAmount()).waitForClickable()
-      console.info('MyAccountsLogin is displayed:', elemCashToInvestAmount)
-      expect(elemCashToInvestAmount).to.equal(true, 'Expected result not matching')
-      const elemCashToInvestLabel = await (await cashToInvestLabel()).waitForClickable()
-      console.info('MyAccountsLogin is displayed:', elemCashToInvestLabel)
-      expect(elemCashToInvestLabel).to.equal(true, 'Expected result not matching')
+      expect(await (await addCashBtn()).waitForClickable()).to.be.true
 
       // assert
-      // addCash
-      const elemAddCashBtn = await (await addCashBtn()).waitForClickable()
-      console.info('MyAccountsLogin is displayed:', elemAddCashBtn)
-      expect(elemAddCashBtn).to.equal(true, 'Expected result not matching')
+      expect(await (await investBtn()).waitForClickable()).to.be.true
 
       // assert
-      // invest
-      const elemInvestBtn = await (await investBtn()).waitForClickable()
-      console.info('MyAccountsLogin is displayed:', elemInvestBtn)
-      expect(elemInvestBtn).to.equal(true, 'Expected result not matching')
-
-      // assert
-      // ma
-      const elemMyAccountsLogin = await (await myAccountsLoginText()).waitForClickable()
-      console.info('MyAccountsLogin is displayed:', elemMyAccountsLogin)
-      expect(elemMyAccountsLogin).to.equal(true, 'Expected result not matching')
+      expect(await (await myAccountsLoginText()).waitForClickable()).to.be.true
       const textMyAccountsLogin = await (await myAccountsLoginText()).getText()
-      expect(textMyAccountsLogin).to.equal('My Accounts Login', 'Expected result not matching')
+      expect(textMyAccountsLogin).to.equal('My Accounts Login', 'No match found')
       const hrefMyAccountsLogin = await (await myAccountsLoginBtn()).getAttribute('href')
       console.info('href:', hrefMyAccountsLogin)
       expect(hrefMyAccountsLogin).to.equal(
         'https://my.demo2.bestinvest.co.uk/dashboard',
-        'Items do not match'
+        'No match found'
       )
     })
   })
@@ -195,54 +170,53 @@ describe('Check common elements from header, footer area', () => {
       console.info('H6 text is displayed:', infoText)
       expect(infoText).to.equal(
         'The value of your investment can go down as well as up, and you can get back less than your originally invested.',
-        'Expected result not matching'
+        'No match found'
       )
 
       // assert
-      const pastPerformanceText = await (await pastPerformanceLabel()).getText()
+      const pastPerformanceText = await (await pastPerformanceParagraph()).getText()
       console.info('Paragraph text is displayed:', pastPerformanceText)
       expect(pastPerformanceText).to.equal(
-        'Past performance or any yields quoted should not be considered reliable indicators of future returns. Restricted advice can be provided as part of other services offered by Bestinvest, upon request and on a fee basis. Before investing in funds please check the specific risk factors on the key features document or refer to our risk warning notice as some funds can be high risk or complex; they may also have risks relating to the geographical area, industry sector and/or underlying assets in which they invest. Prevailing tax rates and relief are dependent in your individual circumstances and are subject to change.',
-        'Expected result not matching'
+        'Past performance or any yields quoted should not be considered reliable indicators of future returns. Restricted advice can be provided as part of other services offered by Bestinvest, upon request and on a fee basis. Before investing in funds please check the specific risk factors on the key features document or refer to our risk warning notice as some funds can be high risk or complex; they may also have risks relating to the geographical area, industry sector and/or underlying assets in which they invest. Tax legislation is that prevailing at the time, is subject to change without notice and depends on individual circumstances. Clients should always seek appropriate tax advice before making decisions.',
+        'No match found'
       )
 
       // assert
-      const websiteConditionsText = await (await websiteConditions()).getText()
+      const websiteConditionsText = await (await accessibility()).getText()
       console.info('Paragraph text is displayed:', websiteConditionsText)
-      expect(websiteConditionsText).to.equal('Website Conditions', 'Expected result not matching')
+      expect(websiteConditionsText).to.equal('Accessibility', 'No match found')
 
       // assert
       const cookiePolicyText = await (await cookiePolicy()).getText()
       console.info('Paragraph text is displayed:', cookiePolicyText)
-      expect(cookiePolicyText).to.equal('Cookie Policy', 'Expected result not matching')
+      expect(cookiePolicyText).to.equal('Cookie Policy', 'No match found')
 
       // assert
-      const keyFactsAndTermsText = await (await keyFactsAndTerms()).getText()
+      const keyFactsAndTermsText = await (await websiteConditions()).getText()
       console.info('Paragraph text is displayed:', keyFactsAndTermsText)
-      expect(keyFactsAndTermsText).to.equal(
-        'Key Facts and terms of business',
-        'Expected result not matching'
-      )
+      expect(keyFactsAndTermsText).to.equal('Website conditions', 'No match found')
 
       // assert
-      const riskWarningsText = await (await riskWarnings()).getText()
+      const riskWarningsText = await (await privacyNotice()).getText()
       console.info('Paragraph text is displayed:', riskWarningsText)
-      expect(riskWarningsText).to.equal('Risk Warnings', 'Expected result not matching')
+      expect(riskWarningsText).to.equal('Privacy notice', 'No match found')
 
       // assert
-      const ourRegisteredDetailsText = await (await ourRegisteredDetails()).getText()
+      const ourRegisteredDetailsText = await (await riskWarnings()).getText()
       console.info('Paragraph text is displayed:', ourRegisteredDetailsText)
-      expect(ourRegisteredDetailsText).to.equal(
-        'Our registered Details',
-        'Expected result not matching'
-      )
+      expect(ourRegisteredDetailsText).to.equal('Risk Warnings', 'No match found')
+
+      // assert
+      const keepingYourAccountSecureText = await (await keepingYourAccountSecure()).getText()
+      console.info('Paragraph text is displayed:', keepingYourAccountSecureText)
+      expect(keepingYourAccountSecureText).to.equal('Keeping your account secure', 'No match found')
 
       // assert
       const bottomNoteText = await (await bottomNoteLabel()).getText()
       console.info('Paragraph text is displayed:', bottomNoteText)
       expect(bottomNoteText).to.equal(
-        'The Tilney Bestinvest Group of Companies comprises the firms Bestinvest (Brokers) Ltd (Reg. No. 2830297), Tilney Investment Management (reg. No. 02010520), Bestinvest (Consultants) Ltd (Reg. No. 1550116) and HW Financial Services Ltd (Reg. No. 02030706) all of which are authorised and regulated by the Financial Conduct Authority. Registered office: 6 Chesterfield Gardens, Mayfair, W1J 5BO.',
-        'Expected result not matching'
+        'Issued by Tilney Investment Management Services Limited, (Reg. No: 2830297). Authorised and regulated by the Financial Conduct Authority. Financial services are provided by Tilney Investment Management Services Limited and other companies in the Tilney Smith & Williamson Group, further details of which are available here. This site is for UK investors only. © Tilney Smith & Williamson Limited 2021.',
+        'No match found'
       )
     })
   })

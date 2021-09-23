@@ -1,41 +1,20 @@
 export const addCashBtn = () =>
   $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-flex-end:nth-child(2) div.MuiGrid-root.MuiGrid-item:nth-child(2) > button'
+    '[data-testid="add cash"]'
   )
-export const cashToInvestAmount = () =>
-  $(
-    '.MuiGrid-justify-xs-flex-end div.MuiGrid-root.MuiGrid-item div > h6.MuiTypography-root.MuiTypography-body1'
-  )
-export const cashToInvestLabel = () =>
-  $('.MuiGrid-root.MuiGrid-item div p.MuiTypography-root.MuiTypography-body1:nth-child(2)')
 export const investBtn = () =>
   $(
-    '.MuiGrid-root.MuiGrid-item:nth-child(3) > button.MuiButton-disableElevation'
+    '[data-testid="invest"]'
   )
-export const investmentMenuBtn = () =>
-  $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap div.MuiGrid-root.MuiGrid-item:nth-child(1) > button.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiLink-button.MuiTypography-colorPrimary'
-  )
-export const investmentMenuLabel = () =>
-  $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap:nth-child(1) div.MuiGrid-root.MuiGrid-item:nth-child(1) button.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiLink-button.MuiTypography-colorPrimary h6'
-  )
+export const investmentMenuBtn = () => $('div.MuiListItem-button')
+export const investmentMenuLabel = () => $('.MuiListItem-button .MuiLink-underlineHover')
 export const lifePlanMenuBtn = () =>
-  $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap div.MuiGrid-root.MuiGrid-item:nth-child(2) > button.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiLink-button.MuiTypography-colorPrimary'
-  )
-export const lifePlanMenuLabel = () =>
-  $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-item.MuiGrid-wrap-xs-nowrap:nth-child(1) div.MuiGrid-root.MuiGrid-item:nth-child(2) button.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiLink-button.MuiTypography-colorPrimary h6'
-  )
-export const logoBtn = () =>
-  $(
-    '.MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-space-between > div > button'
-  )
+  $('div.MuiGrid-item:nth-child(2) > div:nth-of-type(1)> .MuiLink-button')
+export const logoBtn = () => $('div[data-testid="header"] .MuiGrid-grid-xs-2 button')
 export const myAccountsLoginBtn = () =>
-  $('.MuiGrid-root.MuiGrid-container div.MuiGrid-root.MuiGrid-item a')
+  $('[data-testid="header-menu"] .MuiToolbar-regular .MuiButton-text')
 export const myAccountsLoginText = () =>
-  $('.MuiGrid-root.MuiGrid-container div.MuiGrid-root.MuiGrid-item a span.MuiButton-label')
+  $('[data-testid="header-menu"] .MuiToolbar-regular .MuiButton-text .MuiButton-label')
 
 //headings
 export const h1Label = () =>

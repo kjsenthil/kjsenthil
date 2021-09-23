@@ -33,16 +33,27 @@ export const getChartPeriodOptionLocator = async (period: string) => {
       index = '6'
       break
   }
-  const locator = $('.fKhQRz > button:nth-child(' + index + ')')
-  return locator
+  return $('[data-testid="chart period selection"] button:nth-child(' + index + ')')
 }
 
-export const checkChartPeriodIs = async (period: Period) => {
+export const checkChartPeriodIs5years = async () => {
   expect(await (await chartPeriodSwitch()).waitForClickable()).to.be.true
-  const element = await getChartPeriodOptionLocator(period)
+  const element = await getChartPeriodOptionLocator(Period.FiveYears)
   expect(await element.waitForClickable()).to.be.true
-  const attribute = await element.getAttribute('class')
-  return expect(attribute).to.contain('cjTDOR')
+  const value = await element.getAttribute('class')
+  const subString1 = value.substring(80, 86)
+  const secondElement = await getChartPeriodOptionLocator(Period.OneWeek)
+  const value2 = await secondElement.getAttribute('class')
+  const subString2 = value2.substring(80, 86)
+  const thirdElement = await getChartPeriodOptionLocator(Period.OneMonth)
+  const value3 = await thirdElement.getAttribute('class')
+  const subString3 = value3.substring(80, 86)
+  console.log('Class id: ', subString1)
+  console.log('Class id: ', subString2)
+  console.log('Class id: ', subString3)
+  expect(subString1).not.to.equal(subString2)
+  expect(subString2).to.equal(subString3)
+  return expect(subString1).not.to.equal(subString3)
 }
 
 export const setChartPeriodTo = async (period: Period) => {

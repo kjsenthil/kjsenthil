@@ -20,6 +20,7 @@ export default function ChartPeriodSelection<T = string>({
     <Container>
       {Object.values(performanceDataPeriod).map((period) => (
         <StyledPeriodSelectionButton
+          data-testid="chart period selection"
           key={String(period)}
           onClick={() => {
             setCurrentPeriod(period);

@@ -86,12 +86,6 @@ const props: HeaderMenuProps = {
 };
 
 describe('HeaderMenu in desktop view', () => {
-  it('renders the header menu (with experimental features)', () => {
-    const { result } = renderWithTheme(<HeaderMenu {...props} isExpFeatureFlagEnabled />);
-
-    expect(result.container).toMatchSnapshot();
-  });
-
   it('should not display child links of Nav Links', () => {
     const { result } = renderWithTheme(
       <HeaderMenu myAccountsUrl="https://google.com" {...props} />

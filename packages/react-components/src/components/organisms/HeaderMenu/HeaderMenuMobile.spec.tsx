@@ -99,12 +99,6 @@ describe('Header Menu in Mobile', () => {
     (useMediaQuery as jest.Mock).mockReturnValue('sm');
   });
 
-  it('renders the header menu (with experimental features)', () => {
-    const { result } = renderWithTheme(<HeaderMenu {...props} isExpFeatureFlagEnabled />);
-
-    expect(result.container).toMatchSnapshot();
-  });
-
   test('The link back to MyAccounts should be visible in the subheader', () => {
     const { result } = renderWithTheme(
       <HeaderMenu myAccountsUrl="https://google.com" isExpFeatureFlagEnabled {...props} />

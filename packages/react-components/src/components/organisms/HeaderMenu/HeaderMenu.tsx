@@ -355,6 +355,7 @@ const HeaderMenu = ({
             <Grid item>
               <DisabledComponent title="Coming soon">
                 <Button
+                  data-testid="add cash"
                   color="primary"
                   wrap="nowrap"
                   startIcon={isMobile ? null : <Icon name="plus" />}
@@ -368,6 +369,7 @@ const HeaderMenu = ({
             <CashAndInvestGrid isMobile={isMobile} {...(isMobile ? { item: true, xs: 9 } : {})}>
               <DisabledComponent title="Coming soon">
                 <InvestButton
+                  data-testid="invest"
                   color="gradient"
                   variant="contained"
                   {...(isMobile

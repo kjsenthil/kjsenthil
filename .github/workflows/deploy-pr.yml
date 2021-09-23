@@ -661,19 +661,20 @@ jobs:
 
   ui_test:
     name: "UI tests"
+    if: ${{ needs.deploy_gatsby.result == 'success' }}
     environment: development
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs:
-      - detect_changes
       - build_cache
       - get_pr_terraform_outputs
-      - unit_test
       - deploy_gatsby
-      - deploy_storybook
     strategy:
       matrix:
-        browser: [chrome]
+        browser: [chrome, edge]
     steps:
+      - name: "Enable long paths"
+        run: git config --system core.longpaths true
+
       - name: "Checkout"
         uses: actions/checkout@v2
 

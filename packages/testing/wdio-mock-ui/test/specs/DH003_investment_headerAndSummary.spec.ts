@@ -1,10 +1,5 @@
 import {
-  headingUserLabel,
-  headingTitleLabel,
   headingTotalLabel,
-  totalTitle,
-  totalTooltip,
-  totalValue,
   netContributionTitle,
   netContributionTooltip,
   netContributionValue,
@@ -16,8 +11,11 @@ import {
   lastPeriodReturnTooltip,
   lastPeriodReturnValue,
   lastPeriodReturnRating,
+  annualisedTitle,
+  annualisedTooltip,
+  annualisedValue,
 } from '../components/investment/investment.locators'
-import { checkChartPeriodIs, Period } from '../components/investment/investment.actions'
+import { checkChartPeriodIs5years } from '../components/investment/investment.actions'
 import accountsMockResponse from '../fixtures/accounts'
 import investmentSummaryMockResponse from '../fixtures/investmentSummary'
 import loginMockResponse from '../fixtures/login'
@@ -94,31 +92,26 @@ describe('Investment page scenarios', () => {
   })
 
   describe('Header scenarios', () => {
-    it('should load text for the headers', async () => {
+    it('should load headers', async () => {
       // assert
-      await checkTextEquals(headingTitleLabel, "FirstName's")
-      await checkTextEquals(headingUserLabel, 'Investments')
       await checkTextContains(headingTotalLabel, 'Total Value:')
       await checkTextContains(headingTotalLabel, '£811,546')
-      await checkChartPeriodIs(Period.FiveYears)
+      await checkChartPeriodIs5years()
     })
   })
 
   describe('Summary card scenarios', () => {
-    it('should load totals', async () => {
-      //todo remove this when last 5 years return is not 0 on first load: https://tilneygroup.atlassian.net/browse/DH-721
+    it('should load net contribution', async () => {
+      //todo remove this when net contribution is not 0 on first load
       await browser.refresh()
-      // assert
-      await checkTextEquals(totalTitle, 'TOTAL VALUE')
-      await checkTitle(totalTooltip, 'Total value = Investments plus cash')
-      await checkTextEquals(totalValue, '£811,546')
-    })
 
-    it('should load contributions', async () => {
       // assert
-      await checkTextEquals(netContributionTitle, 'NET CONTRIBUTIONS')
-      await checkTitle(netContributionTooltip, 'Contributions minus withdrawals')
-      await checkTextEquals(netContributionValue, '-£203,219')
+      await checkTextEquals(netContributionTitle, 'NET CONTRIBUTION')
+      await checkTitle(
+        netContributionTooltip,
+        'Your total contributions minus any withdrawals you may have made.'
+      )
+      await checkTextContains(netContributionValue, '£')
     })
 
     it('should load lifetime return', async () => {
@@ -126,21 +119,31 @@ describe('Investment page scenarios', () => {
       await checkTextEquals(lifetimeReturnTitle, 'LIFETIME RETURN')
       await checkTitle(
         lifetimeReturnTooltip,
-        'Lifetime return shows how well your investments have performed since you have held them on Bestinvest. This includes both growth and income returns.'
+        'This shows how well your investments have performed since you first held them with Bestinvest. It includes returns from both growth and income, minus any fees.'
       )
-      await checkTextEquals(lifetimeReturnValue, '+ £99,820')
-      await checkTextEquals(lifetimeReturnRating, '+ 1,083.0%')
+      await checkTextContains(lifetimeReturnValue, '£')
+      await checkTextContains(lifetimeReturnRating, '%')
+    })
+
+    it('should load annualised return', async () => {
+      // assert
+      await checkTextEquals(annualisedTitle, 'ANNUALISED RETURN')
+      await checkTitle(
+        annualisedTooltip,
+        'This shows the average return per year on each pound over the period it has been invested. So for example, a figure of 5% would mean that on average, every pound you have invested has grown by 5p per year. This is also known as the "money-weighted rate of return".'
+      )
+      await checkTextContains(annualisedValue, '%')
     })
 
     it('should load last <chartPeriod> return', async () => {
       // assert
-      await checkTextEquals(lastPeriodReturnTitle, 'LAST 5 YEARS RETURN')
+      await checkTextEquals(lastPeriodReturnTitle, "LAST 5 YEAR'S RETURN")
       await checkTitle(
         lastPeriodReturnTooltip,
-        'Return figure relates to the gain or loss over the specified period including the impact of fees'
+        "The profit or loss you in the last 5 year's, minus any fees."
       )
-      await checkTextEquals(lastPeriodReturnValue, '+ £367,325')
-      await checkTextEquals(lastPeriodReturnRating, '+ 56.4%')
+      await checkTextContains(lastPeriodReturnValue, '£')
+      await checkTextContains(lastPeriodReturnRating, '%')
     })
   })
 })
