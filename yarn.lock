@@ -5246,6 +5246,7 @@ __metadata:
     "@wdio/spec-reporter": ^7.7.3
     chai: ^4.3.4
     chromedriver: ^92.0.1
+    msedgedriver: ^91.0.0
     ts-node: ^10.0.0
     wdio-chromedriver-service: ^7.1.0
     webdriverio: ^7.7.4
@@ -11995,6 +11996,8 @@ __metadata:
 "digital-hybrid@workspace:.":
   version: 0.0.0-use.local
   resolution: "digital-hybrid@workspace:."
+  dependencies:
+    react-calendly: ^2.2.2
   languageName: unknown
   linkType: soft
 
@@ -13760,7 +13763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:^1.7.0":
+"extract-zip@npm:^1.6.7, extract-zip@npm:^1.7.0":
   version: 1.7.0
   resolution: "extract-zip@npm:1.7.0"
   dependencies:
@@ -21347,6 +21350,21 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"msedgedriver@npm:^91.0.0":
+  version: 91.0.0
+  resolution: "msedgedriver@npm:91.0.0"
+  dependencies:
+    del: ^4.1.1
+    extract-zip: ^1.6.7
+    mkdirp: ^0.5.1
+    request: ^2.88.0
+    tcp-port-used: ^1.0.1
+  bin:
+    msedgedriver: ./bin/msedgedriver
+  checksum: b8855457b83b27844d12717f28096d87b9353d6d485d29d678f022ebb89776d21682b18008fb9a340fd640d2bfb1dbe4fc1041bed02f4aa577693d09b9efbf8c
+  languageName: node
+  linkType: hard
+
 "multicast-dns-service-types@npm:^1.1.0":
   version: 1.1.0
   resolution: "multicast-dns-service-types@npm:1.1.0"
@@ -24459,6 +24477,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-calendly@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "react-calendly@npm:2.2.2"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 5d5a97265f1b52b8f3d6870d4c21fc3a34d53c9f08ae63d69f6f4b8823ec148875fa02dd4220744450ff6b5f5cc4e67756d55bc86d49d45ba734b840f5cf228c
+  languageName: node
+  linkType: hard
+
 "react-colorful@npm:^5.1.2":
   version: 5.3.0
   resolution: "react-colorful@npm:5.3.0"
@@ -25433,6 +25461,34 @@ fsevents@^1.2.7:
   dependencies:
     throttleit: ^1.0.0
   checksum: 6ea1761dcc8a8b7b5894afd478c0286aa31bd69438d7050294bd4fd0d0b3e09b5cde417d38deef9c49809039c337d8744e4bb49d8632b0c3e4ffa5e8a687e0fd
+  languageName: node
+  linkType: hard
+
+"request@npm:^2.88.0":
+  version: 2.88.2
+  resolution: "request@npm:2.88.2"
+  dependencies:
+    aws-sign2: ~0.7.0
+    aws4: ^1.8.0
+    caseless: ~0.12.0
+    combined-stream: ~1.0.6
+    extend: ~3.0.2
+    forever-agent: ~0.6.1
+    form-data: ~2.3.2
+    har-validator: ~5.1.3
+    http-signature: ~1.2.0
+    is-typedarray: ~1.0.0
+    isstream: ~0.1.2
+    json-stringify-safe: ~5.0.1
+    mime-types: ~2.1.19
+    oauth-sign: ~0.9.0
+    performance-now: ^2.1.0
+    qs: ~6.5.2
+    safe-buffer: ^5.1.2
+    tough-cookie: ~2.5.0
+    tunnel-agent: ^0.6.0
+    uuid: ^3.3.2
+  checksum: 4e112c087f6eabe7327869da2417e9d28fcd0910419edd2eb17b6acfc4bfa1dad61954525949c228705805882d8a98a86a0ea12d7f739c01ee92af7062996983
   languageName: node
   linkType: hard
 

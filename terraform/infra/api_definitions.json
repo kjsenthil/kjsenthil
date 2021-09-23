@@ -29,7 +29,9 @@
       "display_name": "Get Asset details",
       "url_template": "/Assets/assetdetail/{sedol}",
       "description": "This will return the asset details based on sedol number.",
-      "path_params": ["sedol"],
+      "path_params": [
+        "sedol"
+      ],
       "policy": {
         "cors": {
           "method": "GET"
@@ -42,7 +44,9 @@
       "display_name": "Get Asset Allocation Breakdown",
       "url_template": "/Assets/assetallocation/{sedol}",
       "description": "This will return the asset allocation breakdown based on sedol number.",
-      "path_params": ["sedol"],
+      "path_params": [
+        "sedol"
+      ],
       "policy": {
         "cors": {
           "method": "GET"
@@ -58,7 +62,10 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-online-api"
       }
@@ -68,11 +75,40 @@
       "display_name": "tilney-asset-model",
       "url_template": "/Assets/tilney-asset-model/{riskName}",
       "description": "This returns the TAA values like Expected return, Volatility, ZScores for the given TAA /Risk name",
-      "path_params": ["riskName"],
+      "path_params": [
+        "riskName"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Authorization"
+          ]
+        },
+        "backend_id": "bestinvest-online-api"
+      }
+    },
+    {
+      "operation_id": "find-all-addresses",
+      "display_name": "Find all Addresses",
+      "url_template": "/Address/find",
+      "description": "This endpoint takes searchTerm and lastId as query params, and returns a list of addresses.",
+      "policy": {
+        "cors": {
+          "method": "GET"
+        },
+        "backend_id": "bestinvest-online-api"
+      }
+    },
+    {
+      "operation_id": "retrieve-addresses",
+      "display_name": "Retrieve addresses",
+      "url_template": "/Address/retrieve",
+      "description": "This endpoint takes the ID returned from the find all addresses endpoint as a query param and returns the addresses under the given ID.",
+      "policy": {
+        "cors": {
+          "method": "GET"
         },
         "backend_id": "bestinvest-online-api"
       }
@@ -85,7 +121,9 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type"]
+          "headers": [
+            "Content-Type"
+          ]
         },
         "backend_id": "bestinvest-identity-api"
       }
@@ -98,7 +136,9 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type"]
+          "headers": [
+            "Content-Type"
+          ]
         },
         "backend_id": "bestinvest-identity-api"
       }
@@ -111,7 +151,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/portfolio-asset-allocation"
@@ -125,7 +169,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/portfolio-risk-profile"
@@ -139,7 +187,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/current-projection"
@@ -153,7 +205,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/target-projection"
@@ -167,7 +223,9 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type"]
+          "headers": [
+            "Content-Type"
+          ]
         },
         "backend_id": "bestinvest-identity-api"
       }
@@ -177,11 +235,17 @@
       "display_name": "Myaccount get clients details",
       "url_template": "/myaccount/clients/{id}",
       "description": "This lets the user to get client details",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/clients/{id}"
@@ -192,11 +256,17 @@
       "display_name": "Myaccount get performance contact",
       "url_template": "/myaccount/performance-contact/{id}",
       "description": "This lets the user to get performance",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/performance-contact/{id}"
@@ -207,11 +277,17 @@
       "display_name": "Myaccount investment summary account",
       "url_template": "/myaccount/investment-summary-account/{id}",
       "description": "This lets the user to investment summary for given account",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/investment-summary-account/{id}"
@@ -225,7 +301,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/investment-summary-account"
@@ -236,11 +316,17 @@
       "display_name": "Myaccount breakdown allocation",
       "url_template": "/myaccount/breakdown-allocation/{id}",
       "description": "This lets the user to get breakdown of allocation for a given account",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/breakdown-allocation/{id}"
@@ -251,11 +337,17 @@
       "display_name": "Myaccount account monthly savings",
       "url_template": "/myaccount/accounts/{id}/monthly-savings",
       "description": "This lets the user to get account monthly savings",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/accounts/{id}/monthly-savings"
@@ -266,11 +358,17 @@
       "display_name": "Myaccount account contributions",
       "url_template": "/myaccount/contribution-account/{id}",
       "description": "This lets the user to get contributions a given account",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/contribution-account/{id}"
@@ -281,11 +379,17 @@
       "display_name": "Myaccount ISA contributions",
       "url_template": "/myaccount/isa-contributions/{id}",
       "description": "This lets the user to get ISA contributions for the given contact",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/isa-contributions/{id}"
@@ -296,11 +400,17 @@
       "display_name": "Myaccount investments",
       "url_template": "/myaccount/Accounts/{id}/investments",
       "description": "This lets the user to get investments for the given account",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/Accounts/{id}/investments"
@@ -314,7 +424,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/Aggregated-breakdown-allocation"
@@ -328,7 +442,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/performance-accounts-aggregated"
@@ -342,7 +460,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/netcontribution-accounts-aggregated"
@@ -356,7 +478,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "features_function_app",
         "rewrite_url": "/features"
@@ -367,11 +493,17 @@
       "display_name": "Feature Toggles - Get features by user id",
       "url_template": "/features/{id}",
       "description": "Queries for by user ID all feature toggles which are held inside Azure App Config",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "features_function_app",
         "rewrite_url": "/features/{id}"
@@ -385,7 +517,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/simulate-projection"
@@ -399,7 +535,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "projections_function_app",
         "rewrite_url": "/goal-risk-profile"
@@ -413,7 +553,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_url": "returns_function_app",
         "rewrite_url": "/annualised-return"
@@ -427,7 +571,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/market-open"
@@ -441,7 +589,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/share-quote"
@@ -455,7 +607,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/share-quote-status"
@@ -469,7 +625,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/limit-cost"
@@ -483,7 +643,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/share-order"
@@ -497,7 +661,11 @@
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/share-order-status"
@@ -508,11 +676,17 @@
       "display_name": "Myaccount get Portfolios",
       "url_template": "/myaccount/self-portfolio/{contactId}",
       "description": "This lets the user to get portfolios",
-      "path_params": ["contactId"],
+      "path_params": [
+        "contactId"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/self-portfolio/{contactId}"
@@ -526,7 +700,11 @@
       "policy": {
         "cors": {
           "method": "POST",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/self-portfolio"
@@ -540,7 +718,11 @@
       "policy": {
         "cors": {
           "method": "PATCH",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/self-portfolio"
@@ -551,11 +733,17 @@
       "display_name": "Myaccount delete self Portfolios",
       "url_template": "/myaccount/self-portfolio/{id}",
       "description": "This lets the user to delete portfolios",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "DELETE",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/self-portfolio/{id}"
@@ -566,11 +754,17 @@
       "display_name": "Myaccount Accounts",
       "url_template": "/myaccount/Accounts/{id}",
       "description": "This lets the user to get  investment and asset info (indicative price and time) for the given account",
-      "path_params": ["id"],
+      "path_params": [
+        "id"
+      ],
       "policy": {
         "cors": {
           "method": "GET",
-          "headers": ["Content-Type", "Origin", "Authorization"]
+          "headers": [
+            "Content-Type",
+            "Origin",
+            "Authorization"
+          ]
         },
         "backend_id": "bestinvest-myaccounts-api",
         "rewrite_url": "/Accounts/{id}"
