@@ -65,7 +65,9 @@ describe('AddCashPage', () => {
   });
 
   test('renders the add cash card', () => {
-    expect(screen.getByText('Use a personal debit card to add cash to your')).toBeInTheDocument();
-    expect(screen.getByText('Transfer cash from another provider')).toBeInTheDocument();
+    expect(
+      screen.getByText('Use a personal debit card to add cash to your ISA account.')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Transfer an account')).toBeInTheDocument();
   });
 });

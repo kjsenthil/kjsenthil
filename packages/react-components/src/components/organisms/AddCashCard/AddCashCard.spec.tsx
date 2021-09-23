@@ -14,7 +14,7 @@ jest.mock('../../atoms/Tooltip', () => ({
 
 describe('AddCashCard', () => {
   const defaultAddCashCardProps: AddCashCardProps = {
-    selectedAccountName: 'isa',
+    selectedAccountName: 'ISA',
     openModal: () => false,
   };
 
@@ -22,8 +22,8 @@ describe('AddCashCard', () => {
     renderWithTheme(<AddCashCard {...defaultAddCashCardProps} />);
     const expectedTexts = [
       'Use a personal debit card to add cash to your',
-      'isa account',
-      'Transfer cash from another provider',
+      'ISA account',
+      'Transfer an account',
     ];
     expectedTexts.forEach((expectedString) =>
       expect(screen.getByText(expectedString, { exact: false })).toBeVisible()

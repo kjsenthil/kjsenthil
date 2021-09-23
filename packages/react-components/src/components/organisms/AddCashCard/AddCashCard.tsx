@@ -1,7 +1,7 @@
 import React from 'react';
-import { MainCard } from '../../molecules';
-import { Button, Grid, Typography, Link, Icon } from '../../atoms';
+import { Button, Grid, Typography, Icon, Spacer } from '../../atoms';
 import { useBreakpoint } from '../../../hooks';
+import { StyledMainCard, StyledLink } from './AddCashCard.styles';
 
 export interface AddCashCardProps {
   selectedAccountName: string;
@@ -12,11 +12,17 @@ export interface AddCashCardProps {
 const AddCashCard = ({ selectedAccountName = '', openModal }: AddCashCardProps) => {
   const { isMobile } = useBreakpoint();
   return (
-    <MainCard title="Add Cash">
+    <StyledMainCard isMobile={isMobile}>
       <Grid container item xs={12} spacing={2}>
         <Grid item xs={isMobile ? 12 : 8}>
-          <Typography variant="b2">Use a personal debit card to add cash to your</Typography>
-          <Typography variant="b2">{selectedAccountName} account</Typography>
+          <Typography variant="h3" color="primary" colorShade="dark2">
+            Add Cash
+          </Typography>
+          <Spacer y={isMobile ? 1 : 1.5} />
+          <Typography variant="b2" color="primary" colorShade="dark2">
+            Use a personal debit card to add cash to your {selectedAccountName.toUpperCase()}{' '}
+            account.
+          </Typography>
         </Grid>
         <Grid container item xs={isMobile ? 12 : 4} direction="column" alignItems="center">
           <Button
@@ -30,10 +36,12 @@ const AddCashCard = ({ selectedAccountName = '', openModal }: AddCashCardProps) 
             Add Cash
           </Button>
           <p>or</p>
-          <Link special>Transfer cash from another provider</Link>
+          <StyledLink special variant="sh4">
+            Transfer an account
+          </StyledLink>
         </Grid>
       </Grid>
-    </MainCard>
+    </StyledMainCard>
   );
 };
 
