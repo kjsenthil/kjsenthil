@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { renderWithTheme } from '@tsw/test-util';
+import { renderWithTheme, screen } from '@tsw/test-util';
 import { formatCurrency, CurrencyPresentationVariant } from '../../../utils/formatters';
 import ProgressBarWithLegend from './ProgressBarWithLegend';
 
@@ -24,7 +24,10 @@ const props = {
 };
 
 describe('PrgoressBarWithLegend', () => {
-  it('matches snapshot', () => {
-    expect(renderWithTheme(<ProgressBarWithLegend {...props} />)).toMatchSnapshot();
+  it('renders correctly', () => {
+    renderWithTheme(<ProgressBarWithLegend {...props} />);
+    progressBarData.forEach((datum) => {
+      expect(screen.getByText(datum.legendProps.title.toUpperCase())).toBeVisible();
+    });
   });
 });

@@ -1,62 +1,8 @@
-import * as React from 'react';
 import MockDate from 'mockdate';
-import { renderWithTheme } from '@tsw/test-util';
-import PerformanceProjectionsChartTickComponentBottomAxis, {
-  getAgeText,
-  PerformanceProjectionsChartTickComponentBottomAxisProps,
-} from './PerformanceProjectionsChartTickComponentBottomAxis';
-import { useChartStyles } from '../../../../hooks';
+import { getAgeText } from './PerformanceProjectionsChartTickComponentBottomAxis';
 
 describe('PerformanceProjectionsChartTickComponentBottomAxis', () => {
   MockDate.set('2020-01-01');
-
-  describe('PerformanceProjectionsChartTickComponentBottomAxis component', () => {
-    const todayYear = new Date().getFullYear();
-    const nextYear = todayYear + 1;
-    const todayAge = 30;
-
-    // The TickComponent needs to receive chartStyles as a prop
-    const ComponentWithChartStyles = (
-      props: Pick<
-        PerformanceProjectionsChartTickComponentBottomAxisProps,
-        'displayMode' | 'formattedValue'
-      >
-    ) => {
-      const chartStyles = useChartStyles();
-
-      return (
-        <PerformanceProjectionsChartTickComponentBottomAxis
-          chartStyles={chartStyles}
-          x={0}
-          y={0}
-          todayAge={todayAge}
-          {...props}
-        />
-      );
-    };
-
-    test("The tick component renders correctly for display mode 'default'", () => {
-      expect(
-        renderWithTheme(
-          <svg>
-            <ComponentWithChartStyles displayMode="default" formattedValue={`${todayYear}`} />
-            <ComponentWithChartStyles displayMode="default" formattedValue={`${nextYear}`} />
-          </svg>
-        )
-      ).toMatchSnapshot();
-    });
-
-    test("The tick component renders correctly for display mode 'simplified'", () => {
-      expect(
-        renderWithTheme(
-          <svg>
-            <ComponentWithChartStyles displayMode="simplified" formattedValue={`${todayYear}`} />
-            <ComponentWithChartStyles displayMode="simplified" formattedValue={`${nextYear}`} />
-          </svg>
-        )
-      ).toMatchSnapshot();
-    });
-  });
 
   describe('getAgeText function', () => {
     const getAgeTextCases: Array<[number | undefined, number, string]> = [
