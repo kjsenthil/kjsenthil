@@ -88,7 +88,7 @@ const LifePlanManagementPage = () => {
 
   React.useEffect(() => {
     if (!hasFetchedProjections && matches('planningYourRetirement.normal')) {
-      handlers.handleCustomEvent('FETCH_PROJETIONS');
+      handlers.handleCustomEvent('FETCH_PROJECTIONS');
     }
   }, [hasFetchedProjections, matches('planningYourRetirement.normal')]);
 

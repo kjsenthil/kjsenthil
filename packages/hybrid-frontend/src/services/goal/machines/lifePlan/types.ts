@@ -58,6 +58,7 @@ export interface LifePlanMachineSchema {
         preInputProcessing: {};
         validateDrawdownAges: {};
         validateLumpSumAge: {};
+        updateLocalGoalData: {};
         normal: {};
         invalid: {};
         inputProcessing: {};
@@ -171,7 +172,7 @@ export type LifePlanMachineEvents =
   | { type: 'DELETE'; payload?: undefined }
   | { type: 'CANCEL'; payload?: undefined }
   | {
-      type: 'FETCH_PROJETIONS';
+      type: 'FETCH_PROJECTIONS';
       payload: Omit<SimulateProjectionsPrerequisitePayload, 'riskProfile'>;
     };
 

@@ -18,6 +18,7 @@ import {
   PostGoalParams,
   fetchGoals,
   GoalCategory,
+  setBiRetirementLumpSumDate,
 } from '../../services/goal';
 
 import { IS_PRODUCTION } from '../../config';
@@ -112,6 +113,13 @@ const useLifePlanMachine = (): {
     return { index: result.index };
   });
 
+  const updateLocalGoalData = lifePlanMachineServices.upsertGoal(async (context) => {
+    const { lumpSumDate } = context;
+    if (lumpSumDate) {
+      dispatch(setBiRetirementLumpSumDate(lumpSumDate.toString()));
+    }
+  });
+
   const deleteGoal = lifePlanMachineServices.deleteGoal(({ index }: LifePlanMachineContext) =>
     cancelGoal(Number(index))
   );
@@ -125,6 +133,7 @@ const useLifePlanMachine = (): {
           bootstrap,
           updateSimulateProjections,
           upsertGoal,
+          updateLocalGoalData,
           deleteGoal,
         },
       })

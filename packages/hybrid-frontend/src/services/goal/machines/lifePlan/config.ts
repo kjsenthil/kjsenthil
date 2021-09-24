@@ -130,7 +130,7 @@ const lifePlanConfig: MachineConfig<
             'calculateRetirementPotValue',
           ],
         },
-        FETCH_PROJETIONS: {
+        FETCH_PROJECTIONS: {
           target: '.inputProcessing',
           cond: 'shouldFetchProjections',
         },
@@ -177,11 +177,20 @@ const lifePlanConfig: MachineConfig<
           after: {
             5: [
               {
-                target: 'normal',
+                target: 'updateLocalGoalData',
                 cond: 'isLumpSumDateValid',
               },
               { target: 'invalid', actions: ['resetErrors', 'validateLumpSumAge'] },
             ],
+          },
+        },
+        updateLocalGoalData: {
+          invoke: {
+            id: 'updateLocalGoalData',
+            src: 'updateLocalGoalData',
+            onDone: {
+              target: 'normal',
+            },
           },
         },
         inputProcessing: createinputProcessingState(),
