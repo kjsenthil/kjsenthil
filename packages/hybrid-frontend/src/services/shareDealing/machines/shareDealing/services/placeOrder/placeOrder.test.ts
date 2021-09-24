@@ -8,10 +8,9 @@ const quoteId = '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3';
 const context: ShareDealingContext = {
   ...defaultContext,
   isin: 'IE00B42P0H75',
-  orderMethod: 'limit',
+  executionType: 'limit',
   orderType: 'Buy',
   accountId: 1111111,
-  updatedBy: 'first name',
   orderShareAmount: 10000,
   orderShareUnits: 0,
   limitOrderChangeInPrice: 100,
@@ -66,8 +65,8 @@ const orderStatusResponse: GetShareOrderStatusResponse = {
       orderId: orderDetails.orderId,
       order: {
         ...orderDetails,
-        transactionTime: date,
         orderPlacedDate: date,
+        transactionTime: date,
       },
     },
   },
@@ -81,7 +80,7 @@ describe('placeOrder', () => {
   });
 
   describe('when api resource is Complete', () => {
-    let result: OrderDetails;
+    let result: { order: OrderDetails };
 
     beforeEach(async () => {
       postGetShareOrderStatus.mockResolvedValue(orderStatusResponse);
@@ -91,7 +90,6 @@ describe('placeOrder', () => {
     it('places an order', () => {
       expect(mockPostCreateShareOrder).toHaveBeenNthCalledWith(1, {
         accountId: Number(context.accountId),
-        updatedBy: String(context.updatedBy),
         quoteId,
         order: {
           isin: String(context.isin),
@@ -99,7 +97,7 @@ describe('placeOrder', () => {
           units: context.orderShareUnits || 0,
           orderSizeType: 'Amount',
           orderType: context.orderType || 'Buy',
-          executionType: context.orderMethod ? context.orderMethod : 'market',
+          executionType: context.executionType === 'limit' ? 'limit' : 'quoteanddeal',
           limitOrderCalendarDaysToExpiry: context.limitOrderExpiryDays || 0,
           limitPrice: context.limitOrderChangeInPrice || 0,
         },
@@ -111,7 +109,7 @@ describe('placeOrder', () => {
     });
 
     it('returns normalised orderDetails', () => {
-      expect(result).toStrictEqual(orderDetails);
+      expect(result).toStrictEqual({ order: orderDetails });
     });
   });
 
@@ -120,7 +118,7 @@ describe('placeOrder', () => {
       orderStatusResponse.data.attributes.apiResourceStatus = 'Pending';
       postGetShareOrderStatus.mockResolvedValue(orderStatusResponse);
       await expect(placeOrder(context)).rejects.toStrictEqual({
-        placingOrder: 'Order is still pending',
+        errors: { placingOrder: 'Order is still pending' },
       });
     });
   });

@@ -7,7 +7,7 @@ export enum MonthlySavingsErrors {
 }
 
 const getMonthlySavings = async (accountId: string): Promise<MonthlySavingsResponse> => {
-  const path = API_ENDPOINTS.MYACCOUNT_MONTHLY_SAVINGS.replace(/\{id\}/, accountId);
+  const path = API_ENDPOINTS.MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS.replace(/\{id\}/, accountId);
 
   try {
     const response = await api.get<MonthlySavingsResponse>(path);

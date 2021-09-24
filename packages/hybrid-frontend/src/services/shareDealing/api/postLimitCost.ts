@@ -2,7 +2,9 @@ import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 import { PostLimitCostRequest, PostLimitCostResponse } from './types';
 
-const postLimitCost = async (params: PostLimitCostRequest['data']['attributes']) => {
+const postLimitCost = async (
+  params: PostLimitCostRequest['data']['attributes']
+): Promise<PostLimitCostResponse> => {
   const url = API_ENDPOINTS.GET_LIMIT_COST;
 
   const payload = {

@@ -2,7 +2,9 @@ import api from '../../api';
 import { API_ENDPOINTS } from '../../../config';
 import { PostShareOrderRequest, PostShareOrderResponse } from './types';
 
-const postCreateShareOrder = async (params: PostShareOrderRequest['data']['attributes']) => {
+const postCreateShareOrder = async (
+  params: PostShareOrderRequest['data']['attributes']
+): Promise<PostShareOrderResponse> => {
   const createShareOrderUrl = API_ENDPOINTS.CREATE_SHARE_ORDER;
 
   const payload = {

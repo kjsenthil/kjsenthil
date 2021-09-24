@@ -22,10 +22,9 @@ jest.mock('../../../../api', () => ({
 const context: ShareDealingContext = {
   ...defaultContext,
   isin: 'IE00B42P0H75',
-  orderMethod: 'limit',
+  executionType: 'limit',
   orderType: 'Buy',
   accountId: 1111111,
-  updatedBy: 'first name',
   orderShareAmount: 10000,
   orderShareUnits: 0,
   limitOrderChangeInPrice: 100,
@@ -44,6 +43,7 @@ const mockGetMarketQuoteStatus = api.getMarketQuoteStatus as jest.Mock<
 
 const date = '2021-08-26T13:33:34.309';
 const quoteId = '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3';
+const quoteRequestId = '236803ae-19f3-4f7c-a29c-66a6c0ad3bc2';
 
 const limitSpecificDetails = {
   limitOrderCalendarDaysToExpiry: Number(context.limitOrderExpiryDays),
@@ -53,7 +53,9 @@ const limitSpecificDetails = {
 const quoteSpecificDetails = {
   quotedPrice: 10,
   quoteId,
+  quoteRequestId,
   quoteExpiryDateTime: new Date(date),
+  adjustedExpiryTimeEpoch: new Date(date).getTime(),
 };
 
 const commonDetails: Omit<QuoteDetails, 'quotedPrice' | 'quoteId' | 'quoteExpiryDateTime'> = {
@@ -73,6 +75,7 @@ const quoteStatusResponse: GetMarketQuoteStatusResponse = {
     attributes: {
       apiResourceStatus: 'Completed',
       quoteId,
+      quoteRequestId,
       quoteRejectReason: 0,
       quoteRejectReasonText: null,
       order: {
@@ -86,13 +89,12 @@ const quoteStatusResponse: GetMarketQuoteStatusResponse = {
 
 describe('placeOrder', () => {
   describe('when creating a limit order', () => {
-    let result: QuoteDetails;
+    let result: { quote: QuoteDetails };
 
     beforeEach(async () => {
       mockPostLimitCost.mockResolvedValue({
         data: {
           attributes: {
-            updatedBy: String(context.updatedBy),
             accountId: Number(context.accountId),
             order: {
               ...commonDetails,
@@ -105,14 +107,13 @@ describe('placeOrder', () => {
           },
         },
       });
-      result = await quoteOrder({ ...context, orderMethod: 'limit' });
+      result = await quoteOrder({ ...context, executionType: 'limit' });
     });
 
     it('creates a quote', () => {
       expect(mockPostLimitCost).toHaveBeenCalledTimes(1);
       expect(mockPostLimitCost).toHaveBeenCalledWith({
         accountId: Number(context.accountId),
-        updatedBy: String(context.updatedBy),
         order: {
           isin: context.isin,
           amount: context.orderShareAmount,
@@ -131,25 +132,26 @@ describe('placeOrder', () => {
     });
 
     it('returns normalised limit cost details', () => {
-      expect(result).toStrictEqual({ ...commonDetails, ...limitSpecificDetails });
+      expect(result).toStrictEqual({ quote: { ...commonDetails, ...limitSpecificDetails } });
     });
   });
 
   describe('when creating a market order', () => {
-    let result: QuoteDetails;
+    let result: { quote: QuoteDetails };
 
     beforeEach(() => {
       mockPostCreateMarketQuote.mockResolvedValue({
-        data: { attributes: { quoteGuid: quoteId } },
+        data: { attributes: { quoteRequestId: quoteId } },
       });
     });
+
     describe('when api resource is Complete', () => {
       beforeEach(async () => {
         mockGetMarketQuoteStatus.mockResolvedValue(quoteStatusResponse);
 
         result = await quoteOrder({
           ...context,
-          orderMethod: 'market',
+          executionType: 'market',
           limitOrderChangeInPrice: null,
           limitOrderExpiryDays: null,
         });
@@ -158,7 +160,6 @@ describe('placeOrder', () => {
       it('creates a quote request', () => {
         expect(mockPostCreateMarketQuote).toHaveBeenNthCalledWith(1, {
           accountId: Number(context.accountId),
-          updatedBy: String(context.updatedBy),
           order: {
             isin: String(context.isin),
             amount: context.orderShareAmount || 0,
@@ -175,10 +176,12 @@ describe('placeOrder', () => {
 
       it('returns normalised quote details', () => {
         expect(result).toStrictEqual({
-          ...commonDetails,
-          ...quoteSpecificDetails,
-          limitOrderCalendarDaysToExpiry: 0,
-          limitPrice: 0,
+          quote: {
+            ...commonDetails,
+            ...quoteSpecificDetails,
+            limitOrderCalendarDaysToExpiry: 0,
+            limitPrice: 0,
+          },
         });
       });
     });
@@ -188,8 +191,8 @@ describe('placeOrder', () => {
         quoteStatusResponse.data.attributes.apiResourceStatus = 'Pending';
         mockGetMarketQuoteStatus.mockResolvedValue(quoteStatusResponse);
 
-        await expect(quoteOrder({ ...context, orderMethod: 'market' })).rejects.toStrictEqual({
-          quotingOrder: 'Quote is still pending',
+        await expect(quoteOrder({ ...context, executionType: 'market' })).rejects.toStrictEqual({
+          errors: { quotingOrder: 'Quote is still pending' },
         });
       });
     });

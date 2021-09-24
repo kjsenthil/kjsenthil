@@ -51,8 +51,8 @@ const setCanGetQuote = assign<ShareDealingContext>({
 
     return (
       hasNoErrors &&
-      ((ctx.orderMethod === 'market' && hasSelectedDesiredAmountOrUnits) ||
-        (ctx.orderMethod === 'limit' &&
+      ((ctx.executionType === 'market' && hasSelectedDesiredAmountOrUnits) ||
+        (ctx.executionType === 'limit' &&
           hasSelectedDesiredAmountOrUnits &&
           !!ctx.limitOrderChangeInPrice &&
           !!ctx.limitOrderExpiryDays))
@@ -60,9 +60,9 @@ const setCanGetQuote = assign<ShareDealingContext>({
   },
 });
 
-const setMarketOrder = assign<ShareDealingContext>({ orderMethod: 'market' });
+const setMarketOrder = assign<ShareDealingContext>({ executionType: 'market' });
 
-const setLimitOrder = assign<ShareDealingContext>({ orderMethod: 'limit' });
+const setLimitOrder = assign<ShareDealingContext>({ executionType: 'limit' });
 
 const setLimitOrderChangeInPrice = assign<ShareDealingContext, SetLimitOrderChangeInPriceEvent>(
   (ctx, event) => ({
@@ -90,8 +90,8 @@ const resetQuoteDetails = assign<ShareDealingContext>({ quote: null });
 
 const calculateQuoteExpiryInMs = assign<ShareDealingContext>((ctx) => ({
   quoteExpiryInMs:
-    ctx.quote && (ctx.quote as MarketQuoteDetails).quoteExpiryDateTime
-      ? calculateRemainingTimeInMs((ctx.quote as MarketQuoteDetails).quoteExpiryDateTime)
+    ctx.quote && (ctx.quote as MarketQuoteDetails).adjustedExpiryTimeEpoch
+      ? calculateRemainingTimeInMs((ctx.quote as MarketQuoteDetails).adjustedExpiryTimeEpoch)
       : constants.DEFAULT_QUOTE_EXPIRY_IN_MS,
 }));
 

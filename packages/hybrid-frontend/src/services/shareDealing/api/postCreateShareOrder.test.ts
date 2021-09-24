@@ -17,7 +17,6 @@ describe('postCreateShareOrder', () => {
         id: null,
         attributes: {
           accountId: 12345678,
-          updatedBy: 'First name',
           quoteId,
           order: {
             isin: 'GB00BH4HKS39',

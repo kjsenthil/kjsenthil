@@ -6,7 +6,7 @@ import getMonthlySavings, { MonthlySavingsErrors } from './getMonthlySavings';
 
 const mockAxios = new MockAdapter(axios);
 const accountId = '12345678';
-const url = API_ENDPOINTS.MYACCOUNT_MONTHLY_SAVINGS.replace(/\{id\}/, accountId);
+const url = API_ENDPOINTS.MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS.replace(/\{id\}/, accountId);
 
 describe('getMonthlySavings', () => {
   it(`makes a call to ${url}`, async () => {

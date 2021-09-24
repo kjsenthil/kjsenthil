@@ -5127,6 +5127,7 @@ __metadata:
     "@types/styled-components": ^5.1.7
     "@types/testing-library__cypress": ^5.0.8
     "@typescript-eslint/eslint-plugin": ^4.22.0
+    "@xstate/inspect": ^0.5.0
     "@xstate/react": ^1.3.4
     axios: ^0.21.1
     axios-mock-adapter: ^1.19.0
@@ -5164,6 +5165,7 @@ __metadata:
     lint-staged: ^10.5.3
     mockdate: ^3.0.5
     pluralize: ^8.0.0
+    qs: ^6.10.1
     react: ^16.12.0
     react-dom: ^16.12.0
     react-error-boundary: ^3.1.1
@@ -7109,6 +7111,17 @@ __metadata:
     "@webassemblyjs/wast-parser": 1.9.0
     "@xtuc/long": 4.2.2
   checksum: 3d1e1b2e84745a963f69acd1c02425b321dd2e608e11dabc467cae0c9a808962bc769ec9afc46fbcea7188cc1e47d72370da762d258f716fb367cb1a7865c54b
+  languageName: node
+  linkType: hard
+
+"@xstate/inspect@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@xstate/inspect@npm:0.5.0"
+  dependencies:
+    fast-safe-stringify: ^2.0.7
+  peerDependencies:
+    ws: ^7.3.1
+  checksum: 5588751ccc318b7a42ef0f65a1633135104e64d5571c4a9845ede00b331d5216f94a8552ab3695534233e1e3b692c49cb237e4f1d5d0fa0c4915277808843c89
   languageName: node
   linkType: hard
 
@@ -13864,6 +13877,13 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
+  languageName: node
+  linkType: hard
+
+"fast-safe-stringify@npm:^2.0.7":
+  version: 2.1.1
+  resolution: "fast-safe-stringify@npm:2.1.1"
+  checksum: a851cbddc451745662f8f00ddb622d6766f9bd97642dabfd9a405fb0d646d69fc0b9a1243cbf67f5f18a39f40f6fa821737651ff1bceeba06c9992ca2dc5bd3d
   languageName: node
   linkType: hard
 
@@ -24265,7 +24285,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.10.0, qs@npm:^6.9.4":
+"qs@npm:^6.10.0, qs@npm:^6.10.1, qs@npm:^6.9.4":
   version: 6.10.1
   resolution: "qs@npm:6.10.1"
   dependencies:

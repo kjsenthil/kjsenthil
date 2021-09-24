@@ -30,7 +30,7 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
           invoke: {
             src: 'fetchShareDetails',
             onDone: {
-              target: 'creatingOrder.decidingOrderMethod',
+              target: 'creatingOrder.decidingExecutionType',
               actions: ['setShareDetails'],
             },
             onError: {
@@ -42,6 +42,10 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
         creatingOrder: {
           id: 'creatingOrder',
           initial: 'marketOrder',
+          always: {
+            target: '#shareDealing.failure',
+            cond: 'isFatalError',
+          },
           on: {
             SET_ORDER_SHARE_UNITS: {
               actions: ['setNumOfUnits', 'setCanGetQuote'],
@@ -65,7 +69,7 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
               type: 'history',
               history: 'shallow',
             },
-            decidingOrderMethod: {
+            decidingExecutionType: {
               always: [
                 {
                   target: 'marketOrder',
@@ -92,21 +96,27 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
         },
         quotingOrder: {
           id: 'quotingOrder',
+          entry: ['resetErrors'],
           invoke: {
             src: 'quoteOrder',
             onDone: {
               target: 'previewingQuote',
               actions: ['setQuoteDetails', 'calculateQuoteExpiryInMs'],
             },
-            onError: {
-              target: 'creatingOrder.hist',
-              actions: ['resetQuoteDetails', 'setErrors'],
-            },
+            onError: [
+              {
+                target: 'creatingOrder.hist',
+                actions: ['resetQuoteDetails', 'setErrors'],
+              },
+            ],
           },
         },
         previewingQuote: {
           id: 'previewingQuote',
           exit: ['resetQuoteDetails'],
+          on: {
+            EDIT_ORDER: '#shareDealing.ordering.creatingOrder.hist',
+          },
           initial: 'validatingQuote',
           states: {
             validatingQuote: {
@@ -159,12 +169,13 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
     cancelling: {
       on: {
         CONFIRM_CANCELLATION: 'finished',
-        CANCEL_CANCELLATION: { target: 'ordering.hist' },
+        CANCEL_CANCELLATION: { target: 'ordering.creatingOrder.hist' },
       },
     },
     success: {
       on: {
         FINISH: 'finished',
+        PLACE_ANOTHER_ORDER: '#shareDealing.ordering',
       },
     },
     failure: {

@@ -1,12 +1,18 @@
 import fetchShareDetails from './fetchShareDetails';
 import defaultContext from '../../context';
 import * as api from '../../../../api';
+import * as myAccountApi from '../../../../../myAccount';
+import { mockInvestmentAccountDetails } from '../../../../../myAccount/mocks';
+
 import { ShareDealingContext } from '../../types';
-import { GetMarketOpenReponse, GetShareIndicativePriceResponse } from '../../../../api/types';
+import { GetMarketOpenReponse } from '../../../../api/types';
 
 jest.mock('../../../../api', () => ({
   getMarketOpen: jest.fn(),
-  getShareIndicativePrice: jest.fn(),
+}));
+
+jest.mock('../../../../../myAccount', () => ({
+  getInvestmentAccountDetails: jest.fn(),
 }));
 
 const context: ShareDealingContext = {
@@ -15,29 +21,15 @@ const context: ShareDealingContext = {
 };
 
 const mockGetMarketOpen = api.getMarketOpen as jest.Mock<Promise<GetMarketOpenReponse>>;
-const mockGetShareIndicativePrice = api.getShareIndicativePrice as jest.Mock<
-  Promise<GetShareIndicativePriceResponse>
->;
-
-const priceDateTime = '2019-12-17 11:40:00';
-const price = '2.29500000';
-const assetName = 'J Sainsbury PLC';
+const mockGetInvestmentAccountDetails = myAccountApi.getInvestmentAccountDetails as jest.Mock;
 
 const shareDetails = {
   isMarketOpen: true,
-  indicativePrice: Number(price),
-  indicativePriceDate: new Date(priceDateTime),
-  shareName: assetName,
-};
-
-const shareIndicativePriceAttributes = {
-  assetId: '3988',
-  assetName,
-  isin: 'GB00B019KW72',
-  sedol: 'B019KW7',
-  epic: 'SBRY',
-  price,
-  priceDateTime,
+  indicativePrice: 1.4832,
+  indicativePriceDate: new Date('2021-08-26T13:33:34.309'),
+  shareName: 'VODAFONE GROUP',
+  accountName: 'ISA',
+  availableCash: 2288.86,
 };
 
 describe('fetchShareDetails', () => {
@@ -48,16 +40,14 @@ describe('fetchShareDetails', () => {
 
   beforeEach(async () => {
     mockGetMarketOpen.mockResolvedValue({ data: { attributes: { marketOpen: true } } });
-    mockGetShareIndicativePrice.mockResolvedValue({
-      data: { attributes: shareIndicativePriceAttributes },
-    });
+    mockGetInvestmentAccountDetails.mockResolvedValue(mockInvestmentAccountDetails);
 
     result = await fetchShareDetails(context);
   });
 
   it('fetches market status and share indicative data', () => {
     expect(mockGetMarketOpen).toHaveBeenCalledTimes(1);
-    expect(mockGetShareIndicativePrice).toHaveBeenCalledTimes(1);
+    expect(mockGetInvestmentAccountDetails).toHaveBeenCalledTimes(1);
   });
 
   it('returns shareDetails for context', () => {

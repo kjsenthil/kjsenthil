@@ -22,7 +22,7 @@ describe('useShareDealingMachine', () => {
 
   it('returns state, send, service', () => {
     const { result } = renderHook(() =>
-      useShareDealingMachine({ firstName: 'First name', accountId: 1111111, isin: 'GB00BH4HKS39' })
+      useShareDealingMachine({ accountId: 1111111, isin: 'GB00BH4HKS39' })
     );
     expect(result.current.state).toMatchObject(state);
     expect(result.current.service).toMatchObject(service);

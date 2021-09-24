@@ -34,22 +34,10 @@ export interface CommonQuoteData {
   orderType: 'Buy' | 'Sell';
 }
 
-export type GetShareIndicativePriceResponse = GenericResponsePayload<
-  {
-    assetId: string;
-    assetName: string;
-    isin: string;
-    sedol: string;
-    epic: string;
-    price: string;
-    priceDateTime: string;
-  },
-  'share-indicative-price'
->;
-
 export type GetMarketQuoteStatusResponse = GenericRequestPayload<
   {
     quoteId: string;
+    quoteRequestId: string;
     apiResourceStatus: ApiResourceStatus;
     quoteRejectReason: number;
     quoteRejectReasonText: string | null;
@@ -58,6 +46,7 @@ export type GetMarketQuoteStatusResponse = GenericRequestPayload<
       estimatedTotalOrder: number;
       quotedPrice: number;
       quoteExpiryDateTime: string;
+      adjustedExpiryTimeEpoch: number;
       cost: OrderCost;
     };
   },
@@ -86,7 +75,6 @@ export type GetShareOrderStatusResponse = GenericRequestPayload<
 export type PostLimitCostResponse = GenericRequestPayload<
   {
     accountId: number;
-    updatedBy: string;
     order: CommonQuoteData &
       OrderFields & {
         orderSizeType: OrderSizeType;
@@ -108,7 +96,6 @@ export type GetMarketOpenReponse = GenericResponsePayload<
 export type PostMarketQuoteRequest = GenericRequestPayload<
   {
     accountId: number;
-    updatedBy: string;
     order: Pick<OrderFields, 'amount' | 'units'> &
       CommonQuoteData & {
         orderSizeType: OrderSizeType;
@@ -117,12 +104,14 @@ export type PostMarketQuoteRequest = GenericRequestPayload<
   'share-quote'
 >;
 
-export type PostMarketQuoteResponse = GenericResponsePayload<{ quoteGuid: string }, 'share-quote'>;
+export type PostMarketQuoteResponse = GenericResponsePayload<
+  { quoteRequestId: string },
+  'share-quote'
+>;
 
 export type PostLimitCostRequest = GenericRequestPayload<
   {
     accountId: number;
-    updatedBy: string;
     order: OrderFields &
       CommonQuoteData & {
         orderSizeType: OrderSizeType;
@@ -134,12 +123,11 @@ export type PostLimitCostRequest = GenericRequestPayload<
 export type PostShareOrderRequest = GenericRequestPayload<
   {
     accountId: number;
-    updatedBy: string;
     quoteId: string;
     order: OrderFields &
       CommonQuoteData & {
         orderSizeType: OrderSizeType;
-        executionType: 'limit' | 'market';
+        executionType: 'limit' | 'quoteanddeal';
       };
   },
   'share-order'

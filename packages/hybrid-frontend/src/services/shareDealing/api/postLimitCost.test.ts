@@ -16,7 +16,6 @@ describe('postLimitCost', () => {
         id: null,
         attributes: {
           accountId: 20329,
-          updatedBy: 'user-name',
           order: {
             isin: 'GB00BH4HKS39',
             amount: 0,
@@ -36,7 +35,6 @@ describe('postLimitCost', () => {
         id: null,
         attributes: {
           accountId: 20329,
-          updatedBy: 'first-name',
           order: {
             isin: 'GB00BH4HKS39',
             amount: 0.0,

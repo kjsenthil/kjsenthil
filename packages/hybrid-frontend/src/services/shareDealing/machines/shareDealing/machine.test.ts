@@ -8,6 +8,7 @@ import {
   QuoteDetails,
   OrderDetails,
 } from './types';
+import defaultContext from './context';
 import ShareDealingMachine from './machine';
 import actions from './actions';
 import delays from './delays';
@@ -28,10 +29,10 @@ const config = {
   delays,
 };
 
-const interpreter = (context?: ShareDealingContext) => {
+const interpreter = (context?: Partial<ShareDealingContext>) => {
   let machine = ShareDealingMachine.withConfig(config);
   if (context) {
-    machine = machine.withContext(context);
+    machine = machine.withContext({ ...defaultContext, ...context });
   }
   return interpret(machine);
 };
@@ -46,7 +47,9 @@ const shareDetails = {
 const quote: QuoteDetails = {
   isin: 'GB00BH4HKS39',
   quoteId: '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3',
+  quoteRequestId: '236803ae-19f3-4f7c-a29c-66a6c0ad3bc2',
   quoteExpiryDateTime: new Date('2021-12-21T00:00:00.100'), // expecting quote expiry to be in 100 ms
+  adjustedExpiryTimeEpoch: 1640044800100,
   orderType: 'Buy',
   quotedPrice: 1.0,
   numberOfUnits: 1,
@@ -503,6 +506,17 @@ describe('Share Dealing State Machine Config', () => {
         expect(service.state.context.errors.orderShareAmount).not.toBeUndefined();
         service.send('SET_ORDER_SHARE_AMOUNT', { payload: { orderShareAmount: 1000 } });
         expect(service.state.context.errors.orderShareAmount).toBeUndefined();
+      });
+    });
+
+    describe('when context.errors has a fatal error', () => {
+      it('goes into failure state', async () => {
+        service = interpreter({ errors: { fatal: 'Internal Server Error' } }).start();
+
+        service.send('START_BUYING_ORDER');
+
+        await wait(0);
+        expect(service.state.value).toStrictEqual('failure');
       });
     });
   });

@@ -7,6 +7,7 @@ import {
 } from '@tswdts/react-components';
 import { ClientAccountTypes } from '../../types';
 import {
+  InvestmentAccountDetailsResponse,
   BreakdownAllocationResponse,
   ClientResponse,
   NetContributionResponse,
@@ -388,4 +389,52 @@ export const mockIsaContribution: IsaContributionResponse = {
       contributions: 1000,
     },
   },
+};
+
+export const mockInvestmentAccountDetails: InvestmentAccountDetailsResponse = {
+  data: {
+    type: 'accounts',
+    id: '20500',
+    attributes: {
+      accountId: 20500,
+      accountName: 'ISA',
+      accountNumber: 'BI205006',
+      accountStatus: 'Open',
+      accountStatusId: 2,
+      bestInvestAccount: 'ISA',
+      capacityType: 'Execution Only',
+      capacityTypeId: 3,
+      dDMandateId: 68826,
+      hasIncomeAccount: false,
+    },
+    links: {
+      self: 'https://localhost:44313/api/accounts/20500',
+    },
+  },
+  included: [
+    {
+      type: 'cash-position',
+      id: '20500',
+      attributes: {
+        cashOnAccount: 3006.86,
+        cashAvailableToInvest: 2288.86,
+        cashAvailableToInvestInEquity: 0.0,
+        cashAvailableToWithdraw: 1240.36,
+        cashOnAccountIncome: 0.0,
+      },
+    },
+    {
+      type: 'asset-info',
+      id: 'GB00BH4HKS39',
+      attributes: {
+        assetId: 16184,
+        assetName: 'VODAFONE GROUP',
+        isin: 'GB00BH4HKS39',
+        sedol: 'BH4HKS3',
+        epic: 'VOD',
+        price: 1.4832,
+        priceDateTime: '2021-08-26T13:33:34.309',
+      },
+    },
+  ],
 };

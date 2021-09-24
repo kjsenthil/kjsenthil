@@ -1,4 +1,5 @@
 import { SedolCode, InvestmentAccount } from '@tswdts/react-components';
+import { GenericApiPayload, GenericResponsePayload } from '../api/types';
 import { ClientAccountTypes, CommonState } from '../types';
 
 export interface BasicInvestmentSummary {
@@ -192,7 +193,49 @@ export interface IsaContribution {
   };
   relationships?: null;
 }
+
 export interface IsaContributionResponse {
   data: IsaContribution;
   included?: null;
 }
+
+export type CashPositionResponse = GenericApiPayload<
+  {
+    cashOnAccount: number;
+    cashAvailableToInvest: number;
+    cashAvailableToInvestInEquity: number;
+    cashAvailableToWithdraw: number;
+    cashOnAccountIncome: number;
+  },
+  'cash-position'
+>['data'];
+
+export type AssetInfoResponse = GenericApiPayload<
+  {
+    assetId: number;
+    assetName: string;
+    isin: string;
+    sedol: string;
+    epic: string;
+    price: number;
+    priceDateTime: string;
+  },
+  'asset-info'
+>['data'];
+
+export type InvestmentAccountDetailsResponse = GenericResponsePayload<
+  {
+    accountId: number;
+    accountName: string;
+    accountNumber: string;
+    accountStatus: 'Pre-Open' | 'Open' | 'Pre-Close' | 'Closed' | 'Setup';
+    accountStatusId: number;
+    bestInvestAccount: 'ISA' | 'GIA' | 'JISA' | 'SIPP';
+    capacityType: string;
+    capacityTypeId: number;
+    dDMandateId: number;
+    hasIncomeAccount: boolean;
+  },
+  'accounts',
+  Array<CashPositionResponse | AssetInfoResponse>
+>;

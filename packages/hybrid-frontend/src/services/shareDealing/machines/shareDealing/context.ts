@@ -3,7 +3,7 @@ import constants from './constants';
 
 const context: ShareDealingContext = {
   accountId: null,
-  updatedBy: null,
+  accountName: null,
   isin: null,
   shareName: null,
   indicativePrice: 0,
@@ -12,7 +12,7 @@ const context: ShareDealingContext = {
   quoteExpiryInMs: constants.DEFAULT_QUOTE_EXPIRY_IN_MS,
   isMarketOpen: false,
   orderType: null,
-  orderMethod: null,
+  executionType: null,
   orderShareUnits: null,
   orderShareAmount: null,
   limitOrderChangeInPrice: null,

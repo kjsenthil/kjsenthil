@@ -8,7 +8,7 @@ export interface OrderCostDetails {
 
 export interface CommonOrderDetails {
   isin: string;
-  orderType: 'Buy' | 'Sell';
+  orderType: OrderType;
   numberOfUnits: number;
   estimatedTotalOrder: number;
   cost: OrderCostDetails;
@@ -26,7 +26,9 @@ export interface OrderDetails extends CommonOrderDetails {
 
 export interface MarketQuoteDetails extends CommonOrderDetails {
   quoteId: string;
+  quoteRequestId: string;
   quoteExpiryDateTime: Date;
+  adjustedExpiryTimeEpoch: number;
   quotedPrice: number;
 }
 
@@ -37,17 +39,20 @@ export interface LimitQuoteDetails extends CommonOrderDetails {
   limitPrice: number;
 }
 
+export type ExecutionType = 'limit' | 'market';
+export type OrderType = 'Buy' | 'Sell';
+
 export interface ShareDealingContext {
-  updatedBy: string | null;
   accountId: number | null;
+  accountName: string | null;
   isin: string | null;
   shareName: string | null;
   indicativePrice: number;
   indicativePriceDate: null | Date;
   availableCash: number;
   isMarketOpen: boolean;
-  orderType: null | 'Buy' | 'Sell';
-  orderMethod: null | 'limit' | 'market';
+  orderType: null | OrderType;
+  executionType: null | ExecutionType;
   orderShareUnits: number | null;
   orderShareAmount: number | null;
   limitOrderChangeInPrice: number | null;
@@ -56,13 +61,17 @@ export interface ShareDealingContext {
   canGetQuote: boolean;
   order: OrderDetails | null;
   quote: QuoteDetails | null;
-  errors: Partial<Record<ErrorKeys, string>>;
+  errors: Partial<Record<ErrorKeys, string> & { original: Record<string, string>; fatal: unknown }>;
 }
 
-export type ErrorKeys = keyof Pick<
-  ShareDealingContext,
-  'orderShareUnits' | 'orderShareAmount' | 'limitOrderChangeInPrice' | 'limitOrderExpiryDays'
->;
+export type ErrorKeys =
+  | keyof Pick<
+      ShareDealingContext,
+      'orderShareUnits' | 'orderShareAmount' | 'limitOrderChangeInPrice' | 'limitOrderExpiryDays'
+    >
+  | 'quotingOrder'
+  | 'placingOrder';
+
 export interface ShareDealingSchema {
   states: {
     idle: {};
@@ -71,7 +80,7 @@ export interface ShareDealingSchema {
         fetchingShareDetails: {};
         creatingOrder: {
           states: {
-            decidingOrderMethod: {};
+            decidingExecutionType: {};
             marketOrder: {};
             limitOrder: {};
             hist: {};
@@ -100,7 +109,7 @@ export type SetShareDetailsEvent = {
   type: 'done.invoke.fetchingShareDetails';
   data: Pick<
     ShareDealingContext,
-    'indicativePrice' | 'indicativePriceDate' | 'availableCash' | 'accountId' | 'updatedBy' | 'isin'
+    'indicativePrice' | 'indicativePriceDate' | 'availableCash' | 'accountId' | 'isin'
   >;
 };
 export type StartBuyingOrderEvent = { type: 'START_BUYING_ORDER' };
@@ -130,8 +139,10 @@ export type SetLimitOrderExpiryDaysEvent = {
 };
 export type ConfirmOrderEvent = { type: 'CONFIRM_ORDER' };
 export type RequoteOrderEvent = { type: 'REQUOTE_ORDER' };
+export type EditOrderEvent = { type: 'EDIT_ORDER' };
 export type FinishEvent = { type: 'FINISH' };
 export type CancelOrderEvent = { type: 'CANCEL_ORDER' };
+export type PlaceAnotherOrderEvent = { type: 'PLACE_ANOTHER_ORDER' };
 export type ConfirmCancellationEvent = { type: 'CONFIRM_CANCELLATION' };
 export type CancelCancellationEvent = { type: 'CANCEL_CANCELLATION' };
 export type SetQuoteDoneEvent = {
@@ -166,4 +177,6 @@ export type ShareDealingEvents =
   | SetQuoteErrorsEvent
   | SetOrderDoneEvent
   | SetShareDetailsEvent
+  | PlaceAnotherOrderEvent
+  | EditOrderEvent
   | FinishEvent;

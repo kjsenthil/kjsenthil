@@ -1,4 +1,5 @@
 import { useMachine } from '@xstate/react';
+import { inspect } from '@xstate/inspect';
 import { Interpreter, State } from 'xstate';
 import { IS_PRODUCTION } from '../../config';
 
@@ -11,20 +12,37 @@ import {
   ShareDealingContext,
   ShareDealingEvents,
   ShareDealingSchema,
+  shareDealingDelays,
 } from '../../services/shareDealing/machines/shareDealing';
 
+if (typeof window !== 'undefined' && !IS_PRODUCTION) {
+  inspect({
+    iframe: false,
+  });
+}
+
+export type SendEvent = Interpreter<
+  ShareDealingContext,
+  ShareDealingSchema,
+  ShareDealingEvents
+>['send'];
+export type MachineService = Interpreter<
+  ShareDealingContext,
+  ShareDealingSchema,
+  ShareDealingEvents
+>;
+export type MachineState = State<ShareDealingContext, ShareDealingEvents>;
+
 const useShareDealingMachine = ({
-  firstName,
   accountId,
   isin,
 }: {
-  firstName: string;
   accountId: number;
   isin: string;
 }): {
-  state: State<ShareDealingContext, ShareDealingEvents>;
-  send: Interpreter<ShareDealingContext, ShareDealingSchema, ShareDealingEvents>['send'];
-  service: Interpreter<ShareDealingContext, ShareDealingSchema, ShareDealingEvents>;
+  state: MachineState;
+  send: SendEvent;
+  service: MachineService;
   isLoading: boolean;
 } => {
   const [state, send, service] = useMachine(
@@ -33,10 +51,10 @@ const useShareDealingMachine = ({
         actions: shareDealingActions,
         guards: shareDealingGuards,
         services: shareDealingServices,
+        delays: shareDealingDelays,
       })
       .withContext({
         ...shareDealingContext,
-        updatedBy: firstName,
         accountId,
         isin,
       }),
@@ -47,7 +65,7 @@ const useShareDealingMachine = ({
     'ordering.fetchingShareDetails',
     'ordering.quotingOrder',
     'ordering.placingOrder',
-    'ordering.creatingOrder.decidingOrderMethod',
+    'ordering.creatingOrder.decidingExecutionType',
     'ordering.previewingQuote.validatingQuote',
   ].some(state.matches);
 

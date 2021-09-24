@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 import {
   ShareDealingContext,
   MarketQuoteDetails,
@@ -11,11 +12,11 @@ import {
 } from '../../../../api/types';
 import { postLimitCost, getMarketQuoteStatus, postCreateMarketQuote } from '../../../../api';
 import tryGettingStatus from '../tryGettingStatus';
+import handleErrors from '../handleErrors';
 
-const quoteOrder = async (ctx: ShareDealingContext): Promise<QuoteDetails> => {
+const quoteOrder = async (ctx: ShareDealingContext): Promise<{ quote: QuoteDetails }> => {
   const payload: PostMarketQuoteRequest['data']['attributes'] = {
-    accountId: ctx.accountId!,
-    updatedBy: ctx.updatedBy!,
+    accountId: Number(ctx.accountId!),
     order: {
       isin: ctx.isin!,
       amount: ctx.orderShareAmount || 0,
@@ -27,7 +28,10 @@ const quoteOrder = async (ctx: ShareDealingContext): Promise<QuoteDetails> => {
 
   let response: GetMarketQuoteStatusResponse | PostLimitCostResponse;
   let quoteDetails:
-    | Pick<MarketQuoteDetails, 'quoteId' | 'quotedPrice' | 'quoteExpiryDateTime'>
+    | Pick<
+        MarketQuoteDetails,
+        'quoteId' | 'quotedPrice' | 'quoteExpiryDateTime' | 'adjustedExpiryTimeEpoch'
+      >
     | {} = {};
 
   const limitDetails: Pick<LimitQuoteDetails, 'limitPrice' | 'limitOrderCalendarDaysToExpiry'> = {
@@ -37,23 +41,31 @@ const quoteOrder = async (ctx: ShareDealingContext): Promise<QuoteDetails> => {
 
   let isStillPending = false;
 
-  if (ctx.orderMethod === 'limit') {
-    response = await postLimitCost({
-      ...payload,
-      order: {
-        ...payload.order,
-        ...limitDetails,
-      },
-    });
+  if (ctx.executionType === 'limit') {
+    const limitCostResult = await handleErrors(() =>
+      postLimitCost({
+        ...payload,
+        order: {
+          ...payload.order,
+          ...limitDetails,
+        },
+      })
+    );
+
+    if (!limitCostResult.response && limitCostResult.errors) {
+      return Promise.reject({ errors: limitCostResult.errors });
+    }
+
+    response = limitCostResult.response;
   } else {
-    const {
-      data: {
-        attributes: { quoteGuid },
-      },
-    } = await postCreateMarketQuote(payload);
+    const marketQuoteResponse = await handleErrors(() => postCreateMarketQuote(payload));
+
+    if (!marketQuoteResponse.response && marketQuoteResponse.errors) {
+      return Promise.reject({ errors: marketQuoteResponse.errors });
+    }
 
     response = await tryGettingStatus<GetMarketQuoteStatusResponse>(() =>
-      getMarketQuoteStatus(quoteGuid)
+      getMarketQuoteStatus(marketQuoteResponse.response.data.attributes.quoteRequestId)
     );
 
     if (response.data.attributes.apiResourceStatus === 'Pending') {
@@ -62,23 +74,23 @@ const quoteOrder = async (ctx: ShareDealingContext): Promise<QuoteDetails> => {
       const quoteResponse = response as GetMarketQuoteStatusResponse;
 
       quoteDetails = {
-        quoteId: quoteGuid,
+        quoteId: quoteResponse.data.attributes.quoteId,
+        quoteRequestId: quoteResponse.data.attributes.quoteRequestId,
         quotedPrice: quoteResponse.data.attributes.order.quotedPrice,
         quoteExpiryDateTime: new Date(quoteResponse.data.attributes.order.quoteExpiryDateTime),
+        adjustedExpiryTimeEpoch: quoteResponse.data.attributes.order.adjustedExpiryTimeEpoch,
       };
     }
   }
 
   const { orderType, numberOfUnits, estimatedTotalOrder, cost } = response.data.attributes.order;
 
-  return new Promise((resolve, reject) => {
-    if (isStillPending) {
-      // eslint-disable-next-line prefer-promise-reject-errors
-      reject({ quotingOrder: 'Quote is still pending' });
-      return;
-    }
+  if (isStillPending) {
+    return Promise.reject({ errors: { quotingOrder: 'Quote is still pending' } });
+  }
 
-    resolve({
+  return Promise.resolve({
+    quote: {
       isin: String(ctx.isin),
       orderType,
       numberOfUnits,
@@ -86,7 +98,7 @@ const quoteOrder = async (ctx: ShareDealingContext): Promise<QuoteDetails> => {
       cost,
       ...quoteDetails,
       ...limitDetails,
-    });
+    },
   });
 };
 

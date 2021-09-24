@@ -54,7 +54,8 @@ const defaultEndpoints = {
   MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS: '/myaccount/investment-summary-account',
   ISA_CONTRIBUTIONS: '/myaccount/isa-contributions/{id}',
   MYACCOUNT_CONTRIBUTION: '/myaccount/contribution-account/{id}',
-  MYACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',
+  MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',
+  MYACCOUNT_ACCOUNT: '/myaccount/accounts/{id}',
   RETURNS_ANNUALISED_RETURN: '/returns/annualised-return',
   TILNEY_ASSET_MODEL: '/Assets/tilney-asset-model/{riskName}',
   GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
@@ -75,13 +76,12 @@ const defaultEndpoints = {
   CREATE_OBJECTIVE: '/resourceful/entity/client-v4/objectives',
   LINK_GOAL_TO_OBJECTIVE: '/resourceful/entity/client-v4/goals/{objective-index}/objective_link',
   PROJECTIONS_SIMULATE_PROJECTION: '/projections/simulate-projection',
-  MARKET_OPEN: '/market-open',
-  CREATE_SHARE_QUOTE: '/share-quote',
-  GET_SHARE_QUOTE_STATUS: '/share-quote-status',
-  GET_LIMIT_COST: '/limit-cost',
-  CREATE_SHARE_ORDER: '/share-order',
-  GET_SHARE_ORDER_STATUS: '/share-order-status',
-  GET_SHARE_INDICATIVE_PRICE: '/share-indicative-price',
+  MARKET_OPEN: '/myaccount/market-open',
+  CREATE_SHARE_QUOTE: '/myaccount/share-quote',
+  GET_SHARE_QUOTE_STATUS: '/myaccount/share-quote-status',
+  CREATE_SHARE_ORDER: '/myaccount/share-order',
+  GET_LIMIT_COST: '/myaccount/limit-cost',
+  GET_SHARE_ORDER_STATUS: '/myaccount/share-order-status',
 };
 
 export const API_BASE_URL = env.get('API_BASE_URL').required(isRequired).asUrlString();
@@ -114,6 +114,7 @@ export const AUTH_ENDPOINTS = [
 export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION,
   API_ENDPOINTS.MYACCOUNT_CLIENTS,
+  API_ENDPOINTS.MYACCOUNT_ACCOUNT,
   API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS,
   API_ENDPOINTS.ISA_CONTRIBUTIONS,
   API_ENDPOINTS.MYACCOUNT_CONTRIBUTION,
@@ -142,5 +143,4 @@ export const ACCESS_TOKEN_REQUIRED_ENDPOINTS = [
   API_ENDPOINTS.GET_LIMIT_COST,
   API_ENDPOINTS.CREATE_SHARE_ORDER,
   API_ENDPOINTS.GET_SHARE_ORDER_STATUS,
-  API_ENDPOINTS.GET_SHARE_INDICATIVE_PRICE,
 ];

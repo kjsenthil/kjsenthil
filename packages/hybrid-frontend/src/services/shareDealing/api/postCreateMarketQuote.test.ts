@@ -16,7 +16,6 @@ describe('postCreateMarketOrderShareQuote', () => {
         id: null,
         attributes: {
           accountId: 12345678,
-          updatedBy: 'First name',
           order: {
             isin: 'GB00BH4HKS39',
             amount: 14676984,
@@ -33,7 +32,7 @@ describe('postCreateMarketOrderShareQuote', () => {
         type: 'share-quote',
         id: null,
         attributes: {
-          quoteGuid: '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3',
+          quoteRequestId: '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3',
         },
         links: {
           self: 'https://localhost:44313/api/share-quote/',
