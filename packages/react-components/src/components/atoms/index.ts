@@ -51,6 +51,7 @@ export { default as Checkbox } from './Checkbox';
 export { default as Slider } from './Slider';
 export { default as Tooltip } from './Tooltip';
 export { default as Link } from './Link';
+export { default as NumberedProgress } from './NumberedProgress';
 export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './TextField';
 
 /* material-ui atoms */
