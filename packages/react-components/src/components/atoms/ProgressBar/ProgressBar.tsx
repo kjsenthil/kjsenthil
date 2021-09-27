@@ -11,6 +11,7 @@ export interface ProgressBarProps {
   borderRadius?: number;
   height?: number;
   animationDuration?: number;
+  reverseAnimation?: boolean;
   isAnimationLinear?: boolean;
   // This allows parent components to override bar background colours, if
   // necessary
@@ -22,6 +23,7 @@ export default function ProgressBar({
   height = 8,
   progress,
   animationDuration,
+  reverseAnimation,
   barBackgrounds: barBackgroundsFromProps,
   isAnimationLinear,
 }: ProgressBarProps) {
@@ -96,6 +98,7 @@ export default function ProgressBar({
       barHeight={height}
       role="progressbar"
       aria-valuenow={progressValueNow}
+      reverse={reverseAnimation}
     >
       <ProgressBarInnerBorder borderRadius={borderRadius} isMultiValue={isMultiValue} />
       {renderProgressBars()}

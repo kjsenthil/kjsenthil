@@ -14,7 +14,7 @@ const defaultArgs: Partial<ShareOrderFormProps> = {
 
   isMarketOpen: true,
 
-  orderMethod: 'market',
+  executionType: 'market',
 
   desiredValue: '',
   desiredValueError: '',
@@ -32,9 +32,11 @@ const defaultArgs: Partial<ShareOrderFormProps> = {
 };
 
 const Template: Story<ShareOrderFormProps> = ({ ...args }) => {
-  const [orderMethod, setOrderMethod] = React.useState<'market' | 'limit'>('market');
+  const [executionType, setExecutionType] = React.useState<'market' | 'limit'>('market');
 
-  return <ShareOrderForm {...args} orderMethod={orderMethod} setOrderMethod={setOrderMethod} />;
+  return (
+    <ShareOrderForm {...args} executionType={executionType} setExecutionType={setExecutionType} />
+  );
 };
 
 export const Buy = Template.bind({});

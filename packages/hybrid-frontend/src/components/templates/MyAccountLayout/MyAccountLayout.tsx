@@ -22,8 +22,8 @@ import {
 } from '@tswdts/react-components';
 import { BasicInfo, useCoachImages, useFeatureFlagToggle, useStickyRef } from '../../../hooks';
 import LayoutContainer from '../LayoutContainer';
-import { NavPaths } from '../../../config/paths';
 import {
+  NavPaths,
   ACTIVE_ENV,
   BESTINVEST_PLUS_URL,
   CALENDLY_URL,

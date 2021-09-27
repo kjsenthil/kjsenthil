@@ -123,7 +123,8 @@ export type PostLimitCostRequest = GenericRequestPayload<
 export type PostShareOrderRequest = GenericRequestPayload<
   {
     accountId: number;
-    quoteId: string;
+    quoteId?: string;
+    quoteRequestId?: string;
     order: OrderFields &
       CommonQuoteData & {
         orderSizeType: OrderSizeType;

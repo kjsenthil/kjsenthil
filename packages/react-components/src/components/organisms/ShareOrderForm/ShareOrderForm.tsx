@@ -1,39 +1,41 @@
 import * as React from 'react';
-import { Button, Pill, Grid, Typography, Box, Spacer } from '../../atoms';
-import { FormInput, ExpandableBulletList, RadioGroup, RadioFormInput } from '../../molecules';
+import { Pill, Grid, Typography, Spacer } from '../../atoms';
 import {
-  ShareOrderFormStyledCard,
-  StyledRadioGroup,
-  StyledContactBox,
-  StyledIcon,
-} from './ShareOrderForm.styles';
+  FormInput,
+  ExpandableBulletList,
+  RadioGroup,
+  RadioFormInput,
+  Banner,
+} from '../../molecules';
+import { StyledRadioGroup, StyledContactBox, StyledIcon } from './ShareOrderForm.styles';
+import useBreakpoint from '../../../hooks/useBreakpoint';
 
-type OrderMethod = 'market' | 'limit';
+type ExecutionType = 'market' | 'limit';
 type OrderType = 'Buy' | 'Sell';
 
 export interface ShareOrderFormProps {
   numOfUnits: string;
   numOfUnitsError: string;
-  handleNumOfUnitsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleNumOfUnitsChange: (orderShareUnits: number) => void;
 
   orderType: OrderType;
 
   isMarketOpen: boolean;
 
-  setOrderMethod: (method: OrderMethod) => void;
-  orderMethod: OrderMethod;
+  setExecutionType: (method: ExecutionType) => void;
+  executionType: ExecutionType;
 
   desiredValue: string;
   desiredValueError: string;
-  handleDesiredValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleDesiredValueChange: (orderShareAmount: number) => void;
 
   amountInPence: string;
   amountInPenceError: string;
-  handleAmountInPenceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAmountInPenceChange: (limitOrderChangeInPrice: number) => void;
 
   numberOfDays: string;
   numberOfDaysError: string;
-  handleExpireAfterDaysChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleExpireAfterDaysChange: (limitOrderExpiryDays: number) => void;
 
   maxCashAvailable: string;
 }
@@ -59,8 +61,8 @@ const ShareOrderForm = ({
   handleNumOfUnitsChange,
   orderType,
   isMarketOpen,
-  setOrderMethod,
-  orderMethod,
+  setExecutionType,
+  executionType,
   desiredValue,
   desiredValueError,
   handleDesiredValueChange,
@@ -113,7 +115,7 @@ const ShareOrderForm = ({
         error={amountInPenceError}
         hideNumberSpinButton
         fullWidth
-        onChange={handleAmountInPenceChange}
+        onChange={(e) => handleAmountInPenceChange(Number(e.target.value))}
       />
 
       <Spacer y={2} />
@@ -130,43 +132,49 @@ const ShareOrderForm = ({
         error={numberOfDaysError}
         hideNumberSpinButton
         fullWidth
-        onChange={handleExpireAfterDaysChange}
+        onChange={(e) => handleExpireAfterDaysChange(Number(e.target.value))}
       />
       <Spacer y={2} />
     </>
   );
 
+  const { isMobile } = useBreakpoint();
   return (
-    <ShareOrderFormStyledCard>
-      <Box display="flex">
-        <Pill
-          title="marketOrder"
-          variant={orderMethod === 'market' ? 'selected' : 'selectable'}
-          disabled={!isMarketOpen}
-          wrap="nowrap"
-          onClick={() => setOrderMethod('market')}
-          role="button"
-        >
-          {orderType} now (Quote &amp; Deal)
-        </Pill>
-        <Spacer x={1} />
-        <Pill
-          title="limitOrder"
-          variant={orderMethod === 'limit' || !isMarketOpen ? 'selected' : 'selectable'}
-          wrap="nowrap"
-          onClick={() => setOrderMethod('limit')}
-          role="button"
-        >
-          {orderType} via limit order
-        </Pill>
-      </Box>
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={isMobile ? 12 : undefined}>
+          <Pill
+            title="marketOrder"
+            variant={executionType === 'market' ? 'selected' : 'selectable'}
+            disabled={!isMarketOpen}
+            wrap="nowrap"
+            onClick={() => setExecutionType('market')}
+            role="button"
+          >
+            {orderType} now (Quote &amp; Deal)
+          </Pill>
+        </Grid>
+        <Grid item xs={isMobile ? 12 : undefined}>
+          <Pill
+            title="limitOrder"
+            variant={executionType === 'limit' || !isMarketOpen ? 'selected' : 'selectable'}
+            wrap="nowrap"
+            onClick={() => setExecutionType('limit')}
+            role="button"
+          >
+            {orderType} via limit order
+          </Pill>
+        </Grid>
+      </Grid>
+
       <Spacer y={2} />
 
-      {orderMethod === 'market'
+      {executionType === 'market'
         ? bulletList(marketOrderBulletList)
         : bulletList(limitOrderBulletList)}
 
       <Spacer y={2} />
+
       <Typography variant="sh2" gutterBottom>
         Enter a specific number of shares or a cash amount
       </Typography>
@@ -174,8 +182,10 @@ const ShareOrderForm = ({
         Please enter whole numbers only, without commas or full stops. (e.g 5000).
       </Typography>
 
+      <Spacer y={1} />
+
       <StyledRadioGroup>
-        <RadioGroup defaultValue="numOfUnits">
+        <RadioGroup defaultValue={Number(desiredValue) > 0 ? 'desiredValue' : 'numOfUnits'}>
           <RadioFormInput
             radioValue="numOfUnits"
             radioLabel="Specific number of units/shares"
@@ -185,51 +195,57 @@ const ShareOrderForm = ({
               isCurrency: false,
               value: numOfUnits,
               error: numOfUnitsError,
-              onChange: handleNumOfUnitsChange,
+              onChange: (e) => handleNumOfUnitsChange(Number(e.target.value)),
             }}
           />
           <Spacer y={2} />
           <RadioFormInput
             radioValue="desiredValue"
-            radioLabel={`Specific value* (maximum £${String(maxCashAvailable)})`}
+            radioLabel={`Specific value* (maximum ${maxCashAvailable})`}
             inputProps={{
               name: '',
               label: 'Value',
               isCurrency: true,
               value: desiredValue,
               error: desiredValueError,
-              onChange: handleDesiredValueChange,
+              onChange: (e) => handleDesiredValueChange(Number(e.target.value)),
             }}
+            renderDetails={
+              !!desiredValueError && (
+                <>
+                  <Spacer y={1} />
+                  <Banner
+                    title="Insufficient cash to pay for the purchase"
+                    paragraph="The size of the order exceeds your available cash on account. Please add more cash to your account or reduce the order size."
+                  />
+                </>
+              )
+            }
           />
         </RadioGroup>
       </StyledRadioGroup>
 
-      {orderMethod === 'market' ? null : limitOrderAdditionalFields}
+      <Spacer y={1} />
 
+      {executionType === 'market' ? null : limitOrderAdditionalFields}
+
+      <Spacer y={3} />
       <StyledContactBox>
         <StyledIcon name="phone" color="primary" />
+        <Spacer x={2} />
         <Grid item container>
           <Typography variant="b5" gutterBottom>
             If you require further information on the risks or features of this fund then please
             contact us on
           </Typography>
 
-          <Typography variant="sh1" color="primary" colorShade="dark2" gutterBottom>
+          <Typography variant="h5" color="primary" colorShade="dark2" gutterBottom>
             <Spacer y={1} />
             0207 189 2400
           </Typography>
         </Grid>
       </StyledContactBox>
-      <Spacer y={1} />
-
-      <Grid item xs={12}>
-        <Grid container justifyContent="center">
-          <Button variant="contained" type="submit" fullWidth>
-            Continue
-          </Button>
-        </Grid>
-      </Grid>
-    </ShareOrderFormStyledCard>
+    </>
   );
 };
 

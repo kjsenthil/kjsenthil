@@ -41,5 +41,7 @@ export { default as SuccessModal } from './SuccessModal';
 export { default as GoalDeleteModal } from './GoalDeleteModal';
 export { default as CalendlyModal } from './CalendlyModal';
 export { default as CoachingPopover } from './CoachingPopover';
+export { default as ShareDetails } from './ShareDetails';
+export { default as ShareOrderForm } from './ShareOrderForm';
 
 export type { GoalProgressCardProps, GoalSelectionProps };

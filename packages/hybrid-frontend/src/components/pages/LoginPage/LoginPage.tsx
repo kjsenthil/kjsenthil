@@ -15,7 +15,7 @@ import Cookies from 'js-cookie';
 import { credLogin, pinLogin } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import { ApiAppName } from '../../../constants';
 
 export const LoginGrid = styled(Grid)`

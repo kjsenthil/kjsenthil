@@ -1,4 +1,5 @@
 import { BasicInfo } from './useBasicInfo';
+import { SendEvent, MachineService, MachineState } from './useShareDealingMachine';
 
 export { default as useGoals } from './useGoals';
 export { default as useBasicInfo } from './useBasicInfo';
@@ -16,6 +17,7 @@ export { default as useDispatchThunkOnRender } from './useDispatchThunkOnRender'
 export { default as usePerformanceDataPeriod } from './usePerformanceDataPeriod';
 export { default as useLifePlanMachine } from './useLifePlanMachine';
 export { default as useLifePlanMachineHandlers } from './useLifePlanMachineHandlers';
+export { default as useShareDealingMachine } from './useShareDealingMachine';
 export { default as useSimulatedProjectionsData } from './useSimulatedProjectionsData';
 export { default as useGoalPotTrackerProgressBarData } from './useGoalPotTrackerProgressBarData';
 export { default as useHistoricalDataForProjectionsChart } from './useHistoricalDataForProjectionsChart';
@@ -29,4 +31,4 @@ export { default as useAnnualisedReturnSummary } from './useAnnualisedReturnSumm
 export { default as useCoachImages } from './useCoachImages';
 export { default as useSummaryValues } from './useSummaryValues';
 
-export type { BasicInfo };
+export type { BasicInfo, SendEvent, MachineService, MachineState };

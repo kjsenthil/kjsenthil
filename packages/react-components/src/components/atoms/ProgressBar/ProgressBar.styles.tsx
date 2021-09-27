@@ -7,11 +7,13 @@ export const ProgressBarContainer = styled.div`
     theme,
     borderRadius,
     barHeight,
+    reverse,
   }: {
     isMultiValue: boolean;
     theme: Theme;
     borderRadius: number;
     barHeight: number;
+    reverse?: boolean;
   }) => css`
     position: relative;
 
@@ -21,6 +23,7 @@ export const ProgressBarContainer = styled.div`
 
     overflow: hidden;
 
+    transform: rotate(${reverse ? 180 : 0}deg);
     background: ${isMultiValue ? theme.palette.background.default : theme.palette.grey['100']};
   `}
 `;

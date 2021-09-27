@@ -1,5 +1,4 @@
 import { useMachine } from '@xstate/react';
-import { inspect } from '@xstate/inspect';
 import { Interpreter, State } from 'xstate';
 import { IS_PRODUCTION } from '../../config';
 
@@ -14,12 +13,6 @@ import {
   ShareDealingSchema,
   shareDealingDelays,
 } from '../../services/shareDealing/machines/shareDealing';
-
-if (typeof window !== 'undefined' && !IS_PRODUCTION) {
-  inspect({
-    iframe: false,
-  });
-}
 
 export type SendEvent = Interpreter<
   ShareDealingContext,

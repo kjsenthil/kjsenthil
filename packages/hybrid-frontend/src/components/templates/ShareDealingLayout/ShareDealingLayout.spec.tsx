@@ -3,7 +3,7 @@ import { renderWithTheme, screen, fireEvent } from '@tsw/test-util';
 import ShareDealingLayout from './ShareDealingLayout';
 
 const onClose = jest.fn();
-const onPrimaryAtionClick = jest.fn();
+const onPrimaryActionClick = jest.fn();
 const onSecondaryActionClick = jest.fn();
 
 const props = {
@@ -11,10 +11,14 @@ const props = {
   titleText: 'Title Text',
   titleSubText: 'Sub Title Text',
   onClose,
-  onPrimaryAtionClick,
-  onSecondaryActionClick,
-  primaryActionText: 'Continue',
-  secondaryActionText: 'Cancel',
+  primaryActionProps: {
+    children: 'Continue',
+    onClick: onPrimaryActionClick,
+  },
+  secondaryActionProps: {
+    children: 'Cancel',
+    onClick: onSecondaryActionClick,
+  },
 };
 
 describe('ShareDealingLayout', () => {
@@ -43,7 +47,7 @@ describe('ShareDealingLayout', () => {
     const primary = screen.getByTestId('share-dealing-primary-action');
     fireEvent.click(primary);
 
-    expect(onPrimaryAtionClick).toHaveBeenCalledTimes(1);
+    expect(onPrimaryActionClick).toHaveBeenCalledTimes(1);
   });
 
   it('calls onSecondaryActionClick when secondary button is clicked', () => {

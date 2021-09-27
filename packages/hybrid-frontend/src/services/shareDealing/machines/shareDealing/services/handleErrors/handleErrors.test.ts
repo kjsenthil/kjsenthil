@@ -21,6 +21,34 @@ describe('handleErrors', () => {
     expect(response).toStrictEqual(result);
   });
 
+  it('throws an error if not an axios error', async () => {
+    mockIsAxiosError.mockReturnValue(false);
+    const error = 'Some error occured';
+    service.mockRejectedValue(error);
+
+    await expect(handleErrors(service)).rejects.toStrictEqual(error);
+  });
+
+  it('returns an object with 500 error', async () => {
+    mockIsAxiosError.mockReturnValue(true);
+
+    const resultErrors = {
+      response: {
+        status: 500,
+        data: {
+          Errors: 'Internal Server Error',
+        },
+      },
+    };
+    service.mockRejectedValue(resultErrors);
+
+    const { response, errors } = await handleErrors(service);
+
+    expect(response).toBeUndefined();
+
+    expect(errors).toStrictEqual({ fatal: resultErrors.response });
+  });
+
   it('returns errors from the API assigned to specific object keys', async () => {
     mockIsAxiosError.mockReturnValue(true);
 

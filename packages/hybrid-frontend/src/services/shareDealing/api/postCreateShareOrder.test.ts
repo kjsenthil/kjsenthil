@@ -7,6 +7,7 @@ import { PostShareOrderRequest, PostShareOrderResponse } from './types';
 const mockAxios = new MockAdapter(axios);
 
 const url = API_ENDPOINTS.CREATE_SHARE_ORDER;
+const quoteRequestId = '236803ae-19f3-4f7c-a29c-66a6c0ad3bc2';
 const quoteId = '236803ae-19f3-4f7c-a29c-66a6c0ad3bc3';
 
 describe('postCreateShareOrder', () => {
@@ -17,6 +18,7 @@ describe('postCreateShareOrder', () => {
         id: null,
         attributes: {
           accountId: 12345678,
+          quoteRequestId,
           quoteId,
           order: {
             isin: 'GB00BH4HKS39',

@@ -113,7 +113,6 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
         },
         previewingQuote: {
           id: 'previewingQuote',
-          exit: ['resetQuoteDetails'],
           on: {
             EDIT_ORDER: '#shareDealing.ordering.creatingOrder.hist',
           },
@@ -141,7 +140,10 @@ const shareDealing: MachineConfig<ShareDealingContext, ShareDealingSchema, Share
             },
             expiredQuote: {
               on: {
-                REQUOTE_ORDER: '#shareDealing.ordering.quotingOrder',
+                REQUOTE_ORDER: {
+                  target: '#shareDealing.ordering.quotingOrder',
+                  actions: ['resetQuoteDetails'],
+                },
               },
             },
           },

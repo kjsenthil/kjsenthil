@@ -465,7 +465,7 @@ describe("test myaccount endpoints", () => {
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(
-        API_ENDPOINTS.MYACCOUNT_MONTHLY_SAVINGS.replace("{id}", firstAccountId)
+        API_ENDPOINTS.MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS.replace("{id}", firstAccountId)
       );
     const expectedSchema = object({});
     // Act
@@ -556,7 +556,7 @@ describe("test myaccount endpoints", () => {
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(
-        API_ENDPOINTS.MYACCOUNT_INVESTMENTS.replace("{id}", firstAccountId)
+        API_ENDPOINTS.MYACCOUNT_ACCOUNT_INVESTMENTS.replace("{id}", firstAccountId)
       );
     const expectedSchema = object({
       Data: array(

@@ -1,12 +1,10 @@
 import FakeTimers from '@sinonjs/fake-timers';
-import tryGettingStatus from './tryGettingStatus';
+import tryGettingStatus, { DEFAULT_DELAY_IN_MS, DEFAULT_NUM_OF_ATTEMPTS } from './tryGettingStatus';
 import { ApiResourceStatus } from '../../../../api/types';
 import { GenericResponseData } from '../../../../../api/types';
 
 const clock = FakeTimers.install();
 const getStatus = jest.fn();
-
-const DEFAULT_NUM_OF_ATTEMPTS = 10;
 
 describe('tryGettingStatus', () => {
   afterAll(() => {
@@ -36,7 +34,7 @@ describe('tryGettingStatus', () => {
     getStatus.mockResolvedValueOnce(completedResponse);
 
     const response = tryGettingStatus(getStatus);
-    await clock.tickAsync(1000 * actualAttempts);
+    await clock.tickAsync(DEFAULT_DELAY_IN_MS * actualAttempts);
 
     expect(await response).toStrictEqual(completedResponse);
   });
@@ -45,7 +43,7 @@ describe('tryGettingStatus', () => {
     getStatus.mockResolvedValue(pendingResponse);
 
     const response = tryGettingStatus(getStatus);
-    await clock.tickAsync(1000 * DEFAULT_NUM_OF_ATTEMPTS);
+    await clock.tickAsync(DEFAULT_DELAY_IN_MS * DEFAULT_NUM_OF_ATTEMPTS);
 
     expect(await response).toStrictEqual(pendingResponse);
   });

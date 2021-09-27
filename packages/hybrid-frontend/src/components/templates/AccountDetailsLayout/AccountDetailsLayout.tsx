@@ -9,7 +9,7 @@ import {
   useBreakpoint,
   DropdownToggle,
 } from '@tswdts/react-components';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import { BasicInfo } from '../../../hooks';
 import { RootState } from '../../../store';
 import { MyAccountLayout } from '..';

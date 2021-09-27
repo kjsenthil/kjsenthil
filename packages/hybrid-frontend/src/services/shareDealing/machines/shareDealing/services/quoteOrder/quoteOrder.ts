@@ -75,7 +75,7 @@ const quoteOrder = async (ctx: ShareDealingContext): Promise<{ quote: QuoteDetai
 
       quoteDetails = {
         quoteId: quoteResponse.data.attributes.quoteId,
-        quoteRequestId: quoteResponse.data.attributes.quoteRequestId,
+        quoteRequestId: marketQuoteResponse.response.data.attributes.quoteRequestId,
         quotedPrice: quoteResponse.data.attributes.order.quotedPrice,
         quoteExpiryDateTime: new Date(quoteResponse.data.attributes.order.quoteExpiryDateTime),
         adjustedExpiryTimeEpoch: quoteResponse.data.attributes.order.adjustedExpiryTimeEpoch,

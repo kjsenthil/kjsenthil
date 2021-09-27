@@ -14,8 +14,9 @@ export const API_ENDPOINTS = {
   MYACCOUNT_BREAKDOWN_ALLOCATION: "/myaccount/breakdown-allocation/{id}",
   MYACCOUNT_AGGREGATED_BREAKDOWN_ALLOCATION:
     "/myaccount/aggregated-breakdown-allocation",
-  MYACCOUNT_MONTHLY_SAVINGS: "/myaccount/accounts/{id}/monthly-savings",
-  MYACCOUNT_INVESTMENTS: "/myaccount/accounts/{id}/investments",
+  MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS: "/myaccount/accounts/{id}/monthly-savings",
+  MYACCOUNT_ACCOUNT_INVESTMENTS: "/myaccount/accounts/{id}/investments",
+  MYACCOUNT_ACCOUNT: "/myaccount/account/{id}",
   CREATE_GOAL_ADDITIONAL_FIELDS: "/resourceful/entity/client/goals",
   CREATE_GOAL_LESS_FIELDS: "/resourceful/entity/client-v4/goals",
   CREATE_OBJECTIVE: "/resourceful/entity/client-v4/objectives",

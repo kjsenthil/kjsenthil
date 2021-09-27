@@ -1,5 +1,5 @@
 import { GoalSelectionTile } from '@tswdts/react-components/src/components/organisms/GoalSelection/types';
-import { NavPaths } from '../../../../config/paths';
+import { NavPaths } from '../../../../config';
 import { GoalCategory } from '../../../../services/goal';
 
 export type GoalCreationLimits = Partial<Record<GoalCategory, number>>;

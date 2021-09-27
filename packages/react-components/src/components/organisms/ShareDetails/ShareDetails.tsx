@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Typography, Grid, Icon, IconProps, Divider, Spacer, LinkProps } from '../../atoms';
-import { DateTime } from '../../molecules';
+import { Typography, Grid, Divider, Spacer } from '../../atoms';
+import { DateTime, LinkWithIcon } from '../../molecules';
 import { useBreakpoint } from '../../../hooks';
-import { ItemContainer, ItemValue, LinkWithIcon, IconStyle } from './ShareDetails.styles';
+import { ItemContainer, ItemValue } from './ShareDetails.styles';
 
 export interface ShareDetailsProps {
   indicativePrice: string;
@@ -12,23 +12,6 @@ export interface ShareDetailsProps {
   keyInvestorInformationDocumentRef: string;
   onCostAndChargesClick: () => void;
 }
-
-const Link = ({
-  text,
-  iconName,
-  ...linkProps
-}: {
-  text: string;
-  iconName: IconProps['name'];
-} & LinkProps) => (
-  <LinkWithIcon {...linkProps} variant="sh4">
-    <IconStyle>
-      <Icon name={iconName} fontSize="inherit" />
-    </IconStyle>
-    <Spacer x={1} />
-    <span>{text}</span>
-  </LinkWithIcon>
-);
 
 const ShareDetails = ({
   indicativePrice,
@@ -93,7 +76,9 @@ const ShareDetails = ({
           investment.
         </Typography>
         <Spacer y={2} />
-        <Link text="Risk Warning Notice" href={riskWarningNoticeHref} iconName="link" />
+        <LinkWithIcon href={riskWarningNoticeHref} iconName="link">
+          Risk Warning Notice
+        </LinkWithIcon>
         <Spacer y={2} />
         <Typography variant="b4" color="primary" colorShade="dark2">
           Where required, we have provided the Key Investor Information Document and cost and
@@ -102,15 +87,15 @@ const ShareDetails = ({
           investing.
         </Typography>
         <Spacer y={2} />
-        <Link
-          text="Key Investor Information Document"
-          href={keyInvestorInformationDocumentRef}
-          iconName="book"
-        />
+        <LinkWithIcon href={keyInvestorInformationDocumentRef} iconName="book">
+          Key Investor Information Document
+        </LinkWithIcon>
         <Spacer y={2} />
         <Divider x={35} />
         <Spacer y={2} />
-        <Link text="Cost and Charges disclosure" onClick={onCostAndChargesClick} iconName="link" />
+        <LinkWithIcon onClick={onCostAndChargesClick} iconName="link">
+          Cost and Charges disclosure
+        </LinkWithIcon>
       </Grid>
     </Grid>
   );

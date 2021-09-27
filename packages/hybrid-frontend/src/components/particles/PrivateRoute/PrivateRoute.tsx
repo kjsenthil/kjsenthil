@@ -4,13 +4,14 @@ import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { RootState } from '../../../store';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import { ApiAppName } from '../../../constants';
 import { setAccessTokensFromCookie } from '../../../services/auth';
 
-interface PrivateRouteProps extends RouteComponentProps {
+export interface PrivateRouteProps extends RouteComponentProps {
   Component: ComponentType<RouteComponentProps>;
 }
+
 const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
   const loginPath = NavPaths.ROOT_PAGE;
   const myAccountsAccessToken = Cookies.get(ApiAppName.myAccounts);
@@ -35,6 +36,7 @@ const PrivateRoute = ({ Component, ...rest }: PrivateRouteProps) => {
   }, [myAccountsAccessToken, oisToken, accessTokens]);
 
   const isLoggedIn = React.useMemo(() => accessTokens.length > 0, [accessTokens]);
+
   useEffect(() => {
     /* eslint-disable-next-line no-console */
     if (!isLoggedIn && rest.location?.pathname !== loginPath) {

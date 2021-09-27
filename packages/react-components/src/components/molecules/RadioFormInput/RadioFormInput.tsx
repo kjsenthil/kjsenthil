@@ -7,13 +7,19 @@ export interface RadioFormInputProps {
   radioLabel: string;
   radioValue: string;
   inputProps: FormInputProps;
+  renderDetails?: React.ReactNode;
 }
 
 interface MyRadioInputProps extends React.HTMLAttributes<HTMLDivElement> {
   'data-testid'?: string;
 }
 
-const RadioFormInput = ({ radioLabel, radioValue, inputProps }: RadioFormInputProps) => {
+const RadioFormInput = ({
+  radioLabel,
+  radioValue,
+  inputProps,
+  renderDetails,
+}: RadioFormInputProps) => {
   const inputRef = React.useRef<HTMLInputElement | undefined>();
   const radioRef = React.useRef<HTMLInputElement | undefined>();
   const { name, label, isCurrency, value, error, onChange } = inputProps;
@@ -32,26 +38,29 @@ const RadioFormInput = ({ radioLabel, radioValue, inputProps }: RadioFormInputPr
         />
       }
       label={
-        <StyledGrid>
-          <Typography variant="b4" color="primary" colorShade="dark2">
-            {radioLabel}
-          </Typography>
-          <Spacer y={1} />
-          <FormInput
-            inputRef={inputRef}
-            type="number"
-            hideNumberSpinButton
-            fullWidth
-            isCurrency={isCurrency}
-            name={name}
-            label={label}
-            hideLabel
-            value={value}
-            error={error}
-            onFocus={onFocus}
-            onChange={onChange}
-          />
-        </StyledGrid>
+        <>
+          <StyledGrid>
+            <Typography variant="b4" color="primary" colorShade="dark2">
+              {radioLabel}
+            </Typography>
+            <Spacer y={1} />
+            <FormInput
+              inputRef={inputRef}
+              type="number"
+              hideNumberSpinButton
+              fullWidth
+              isCurrency={isCurrency}
+              name={name}
+              label={label}
+              hideLabel
+              value={value}
+              error={error}
+              onFocus={onFocus}
+              onChange={onChange}
+            />
+          </StyledGrid>
+          {renderDetails || null}
+        </>
       }
     />
   );

@@ -6,7 +6,7 @@ import { Action, Store } from 'redux';
 import Cookies from 'js-cookie';
 import LogoutPage from './LogoutPage';
 import * as reducer from '../../../services/auth/reducers';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import { AuthState } from '../../../services/auth';
 import { ApiAppName } from '../../../constants';
 

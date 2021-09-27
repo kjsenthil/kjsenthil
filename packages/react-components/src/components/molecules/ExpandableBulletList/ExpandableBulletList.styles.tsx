@@ -1,3 +1,4 @@
+import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { Icon, Theme, Button } from '../../atoms';
 
@@ -62,7 +63,7 @@ export const BulletList = styled.ul`
 `}
 `;
 
-export const StyledIcon = styled(Icon)`
+export const StyledIcon = styled(({ listExpanded, ...props }) => <Icon {...props} />)`
   ${({ theme, listExpanded }: { theme: Theme; listExpanded: boolean }) => css`
     color: ${theme.palette.primary.main};
     transform: rotate(${listExpanded ? '180deg' : '0'});

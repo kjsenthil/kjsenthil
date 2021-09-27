@@ -1,8 +1,14 @@
 import React from 'react';
 import { ProvisionalLayout } from './src/components/templates';
+
 import { StoreProvider } from './src/components/particles';
 import { AI_CONNECTION_STRING } from './src/config';
-import { setUpTelemetry, telemetryReactPlugin, TelemetryErrorBoundary, TelemetryContext } from '@tsw/telemetry';
+import {
+  setUpTelemetry,
+  telemetryReactPlugin,
+  TelemetryErrorBoundary,
+  TelemetryContext,
+} from '@tsw/telemetry';
 import ErrorPage from './src/pages/404';
 
 export const onInitialClientRender = () => {

@@ -11,6 +11,7 @@ export enum NavPaths {
   SOMETHING_ELSE_MANAGEMENT = '/my-account/goals/something-else-management',
   ADD_CASH_PAGE = '/my-account/add-cash',
   WITHDRAW_CASH_PAGE = '/my-account/withdraw-cash',
+  SHARE_DEALING_PAGE = '/my-account/share-dealing',
 }
 
 export const goalCreationPaths: Record<string, { name: string; path?: NavPaths }> = {

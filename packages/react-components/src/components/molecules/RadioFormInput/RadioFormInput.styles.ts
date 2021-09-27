@@ -21,9 +21,11 @@ export const StyledRadioFormInput = styled(FormControlLabel)`
     border: solid ${theme.spacing(0.2)}px ${theme.palette.grey[200]};
     padding: 6px 15px 16px 8px;
     min-width: 295px;
-
+    margin: 0;
+    
     .MuiFormControlLabel-label {
       flex-grow: 1;
+      width: 100%;
     }
   `}
 `;

@@ -2,11 +2,13 @@ import * as React from 'react';
 import { renderWithTheme, screen, fireEvent } from '@tsw/test-util';
 import ShareOrderForm, { ShareOrderFormProps } from './ShareOrderForm';
 
-type Props = Omit<ShareOrderFormProps, 'setOrderMethod' | 'orderMethod'>;
+type Props = Omit<ShareOrderFormProps, 'setExecutionType' | 'executionType'>;
 
 const ShareOrderPage = (props: Props) => {
-  const [orderMethod, setOrderMethod] = React.useState<'market' | 'limit'>('market');
-  return <ShareOrderForm {...props} setOrderMethod={setOrderMethod} orderMethod={orderMethod} />;
+  const [executionType, setExecutionType] = React.useState<'market' | 'limit'>('market');
+  return (
+    <ShareOrderForm {...props} setExecutionType={setExecutionType} executionType={executionType} />
+  );
 };
 
 describe('ShareOrderForm', () => {
@@ -29,7 +31,7 @@ describe('ShareOrderForm', () => {
     numberOfDaysError: '',
     handleExpireAfterDaysChange: () => {},
 
-    maxCashAvailable: '1200',
+    maxCashAvailable: '£1200',
   };
 
   describe('ShareOrderForm', () => {

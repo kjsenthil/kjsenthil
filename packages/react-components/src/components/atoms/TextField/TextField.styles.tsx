@@ -50,9 +50,9 @@ const getCurrencyStyles = (hasError: boolean, disabled: boolean, theme) => {
   `;
 };
 
-const StyledTextField = styled(({ hasError, isCurrency, hideNumberSpinButton, ...props }) => (
-  <MUIInputBase {...props} />
-))`
+const StyledTextField = styled(
+  ({ hasError, isCurrency, hideNumberSpinButton, error, ...props }) => <MUIInputBase {...props} />
+)`
   ${({
     disabled,
     hasError,

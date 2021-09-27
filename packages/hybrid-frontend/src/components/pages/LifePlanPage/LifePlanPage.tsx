@@ -16,7 +16,7 @@ import {
   goalCreationLimits,
   goalSelectionTilesConfig,
 } from './GoalSelection/config';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import { GoalCategory, GoalDefaults } from '../../../services/goal';
 import {
   fetchGoalSimulateProjections,

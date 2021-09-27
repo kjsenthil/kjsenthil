@@ -10,6 +10,7 @@ const placeOrder = async (ctx: ShareDealingContext): Promise<{ order: OrderDetai
     },
   } = await postCreateShareOrder({
     accountId: Number(ctx.accountId!),
+    quoteRequestId: (ctx.quote as MarketQuoteDetails)?.quoteRequestId,
     quoteId: (ctx.quote as MarketQuoteDetails)?.quoteId,
     order: {
       isin: ctx.isin!,
@@ -23,7 +24,10 @@ const placeOrder = async (ctx: ShareDealingContext): Promise<{ order: OrderDetai
     },
   });
 
-  const response = await tryGettingStatus(() => getShareOrderStatus(orderId));
+  const response = await tryGettingStatus(() => getShareOrderStatus(orderId), {
+    numOfAttempts: 30,
+    delayInMs: 2000,
+  });
 
   return new Promise((resolve, reject) => {
     if (response.data.attributes.apiResourceStatus === 'Pending') {

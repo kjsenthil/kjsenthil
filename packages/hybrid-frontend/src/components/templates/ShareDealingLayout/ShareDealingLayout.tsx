@@ -2,8 +2,8 @@ import React from 'react';
 import {
   Grid,
   Spacer,
-  Icon,
   ModalProps,
+  ButtonProps,
   DialogProps,
   Button,
   useBreakpoint,
@@ -15,12 +15,12 @@ export interface ShareDealingLayoutProps extends DialogProps {
   children: React.ReactNode;
   titleText: string;
   titleSubText: string;
-  onPrimaryAtionClick: () => void;
+  primaryActionProps?: ButtonProps;
+  secondaryActionProps?: ButtonProps;
+  renderSecondaryAction?: React.ReactElement;
   onClose: () => void;
-  onSecondaryActionClick?: () => void;
+  shouldDisablePrimaryAction?: boolean;
   secondaryIsCancel?: boolean;
-  primaryActionText: string;
-  secondaryActionText?: string;
   isEndState?: boolean;
 }
 
@@ -29,10 +29,8 @@ const ShareDealingLayout = ({
   titleText,
   titleSubText,
   onClose,
-  onPrimaryAtionClick,
-  onSecondaryActionClick,
-  primaryActionText,
-  secondaryActionText,
+  primaryActionProps,
+  secondaryActionProps,
   secondaryIsCancel,
   isEndState = false,
   ...props
@@ -43,41 +41,38 @@ const ShareDealingLayout = ({
     <Grid container>
       <Grid item xs={12}>
         {children}
-        <Spacer y={isMobile ? 2 : 4} />
+        <Spacer y={isMobile ? 2 : 3} />
       </Grid>
-      <Grid item xs={12}>
-        <Grid
-          container
-          direction={isMobile ? 'column-reverse' : 'row'}
-          spacing={isMobile || isEndState ? 2 : 0}
-          justifyContent="center"
-        >
-          {secondaryActionText && onSecondaryActionClick && (
+      {!!primaryActionProps && (
+        <Grid item xs={12}>
+          <Grid
+            container
+            direction={isMobile ? 'column-reverse' : 'row'}
+            spacing={isMobile || isEndState ? 2 : 0}
+            justifyContent="center"
+          >
             <Grid item sm={12} md={isEndState ? 5 : 8}>
-              <Button
-                onClick={onSecondaryActionClick}
-                color="primary"
-                variant="outlined"
-                fullWidth={isMobile || isEndState}
-                startIcon={secondaryIsCancel && <Icon name="cross" />}
-                data-testid="share-dealing-secondary-action"
-              >
-                {secondaryActionText}
-              </Button>
+              {!!secondaryActionProps && (
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  fullWidth={isMobile || isEndState}
+                  data-testid="share-dealing-secondary-action"
+                  {...secondaryActionProps}
+                />
+              )}
             </Grid>
-          )}
-          <Grid item sm={12} md={isEndState ? 7 : 4}>
-            <Button
-              onClick={onPrimaryAtionClick}
-              color="primary"
-              fullWidth
-              data-testid="share-dealing-primary-action"
-            >
-              {primaryActionText}
-            </Button>
+            <Grid item sm={12} md={isEndState ? 7 : 4}>
+              <Button
+                color="primary"
+                fullWidth
+                data-testid="share-dealing-primary-action"
+                {...primaryActionProps}
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </Grid>
   );
 

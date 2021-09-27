@@ -17,6 +17,7 @@ const Bottom = () => {
     },
     [color]
   );
+
   return (
     <Grid container>
       <Grid item xs={12}>

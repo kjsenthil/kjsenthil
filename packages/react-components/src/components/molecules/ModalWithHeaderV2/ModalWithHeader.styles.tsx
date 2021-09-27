@@ -47,7 +47,7 @@ export const StyledDialogContainer = styled(({ showLogoBackground, isMobile, ...
         showLogoBackground
           ? `
           background-color: ${palette.background.layout};
-          background-image:url(./logo-background.png);
+          background-image:url(/logo-background.png);
           background-repeat: no-repeat;
           background-size: auto;
         `

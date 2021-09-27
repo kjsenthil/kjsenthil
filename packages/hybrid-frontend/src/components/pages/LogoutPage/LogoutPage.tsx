@@ -2,12 +2,11 @@ import Cookies from 'js-cookie';
 import { navigate } from '@reach/router';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths, COOKIE_DOMAIN } from '../../../config';
 import { logout } from '../../../services/auth';
 import { RootState } from '../../../store';
 import { LayoutContainer } from '../../templates';
 import { ApiAppName } from '../../../constants';
-import { COOKIE_DOMAIN } from '../../../config';
 
 interface LogoutPageProps {
   path?: string;

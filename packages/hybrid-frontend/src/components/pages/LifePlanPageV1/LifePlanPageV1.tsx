@@ -42,7 +42,7 @@ import {
 } from '../../../services/goal';
 import { calculateDateAfterYears } from '../../../utils/date';
 import { fetchPerformanceAccountsAggregated } from '../../../services/performance';
-import { goalCreationPaths } from '../../../config/paths';
+import { goalCreationPaths } from '../../../config';
 import {
   fetchSimulatedProjections,
   fetchGoalSimulateProjections,

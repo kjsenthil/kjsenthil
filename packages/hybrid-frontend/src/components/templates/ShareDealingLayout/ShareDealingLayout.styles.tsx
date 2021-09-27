@@ -24,6 +24,6 @@ export const ShareDealingContent = styled(({ isMobile, isEndState, ...props }) =
         ? `${pxToRem(0)} ${pxToRem(40)} ${pxToRem(40)} ${pxToRem(40)};`
         : `${pxToRem(40)} ${pxToRem(104)}`
     };
-    ${isMobile ? `padding: ${pxToRem(0)} ${pxToRem(16)} ${pxToRem(16)} ${pxToRem(16)};` : ''}
+    ${isMobile ? `padding: ${pxToRem(20)} ${pxToRem(16)} ${pxToRem(16)} ${pxToRem(16)};` : ''}
   `}
 `;

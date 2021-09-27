@@ -5,7 +5,7 @@ import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { Button, Icon, Spacer, Typography } from '@tswdts/react-components';
 import { LayoutContainer } from '../../templates';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 
 export const NotFoundStyle = styled.div`
   ${({ theme }: { theme: Theme }) => `

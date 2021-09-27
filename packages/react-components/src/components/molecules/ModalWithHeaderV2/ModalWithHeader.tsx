@@ -76,7 +76,6 @@ const ModalWithHeader = ({
               showHeaderBoxShadow: false,
               setSlightlyRight: false,
             })}
-
             <StyledDialogContentProcessHeader>{children}</StyledDialogContentProcessHeader>
           </>
         );

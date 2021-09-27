@@ -25,7 +25,7 @@ import {
   useGoalPotTrackerProgressBarData,
   useUpdateSimulateProjectionsPrerequisites,
 } from '../../../hooks';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 import PlanningSubPage from './PlanningSubPage/PlanningSubPage';
 import GoalCreationFundingSubPage from './FundingSubPage/GoalCreationFundingSubPage';
 import { GoalCreationLayout } from '../../templates';

@@ -141,7 +141,7 @@ describe('placeOrder', () => {
 
     beforeEach(() => {
       mockPostCreateMarketQuote.mockResolvedValue({
-        data: { attributes: { quoteRequestId: quoteId } },
+        data: { attributes: { quoteRequestId } },
       });
     });
 
@@ -171,7 +171,7 @@ describe('placeOrder', () => {
       });
 
       it('requests quote status', () => {
-        expect(mockGetMarketQuoteStatus).toHaveBeenNthCalledWith(1, quoteId);
+        expect(mockGetMarketQuoteStatus).toHaveBeenNthCalledWith(1, quoteRequestId);
       });
 
       it('returns normalised quote details', () => {

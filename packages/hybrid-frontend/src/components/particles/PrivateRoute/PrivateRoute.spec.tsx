@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import { authSlice, pinLogin } from '../../../services/auth';
 import * as api from '../../../services/auth/api';
 import { tokens } from '../../../services/auth/mocks';
-import { NavPaths } from '../../../config/paths';
+import { NavPaths } from '../../../config';
 
 jest.mock('../../../services/auth/api', () => ({
   postPin: jest.fn(),

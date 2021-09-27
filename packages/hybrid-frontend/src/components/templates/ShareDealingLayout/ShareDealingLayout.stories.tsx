@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { TagBox, ReceiptCard, Typography } from '@tswdts/react-components';
+import { Icon, TagBox, ReceiptCard, Typography } from '@tswdts/react-components';
 import ShareDealingLayout, { ShareDealingLayoutProps } from './ShareDealingLayout';
 
 export default {
@@ -46,9 +46,13 @@ Default.args = {
   children: <ReceiptCard {...receiptCardProps} />,
   titleText: 'Beowulf mining',
   titleSubText: 'Stocks & shares ISA',
-  primaryActionText: 'Continue',
-  secondaryActionText: 'Cancel',
-  secondaryIsCancel: true,
+  primaryActionProps: {
+    children: 'Continue',
+  },
+  secondaryActionProps: {
+    children: 'Cancel',
+    startIcon: <Icon name="cross" />,
+  },
 };
 
 export const EndState = Template.bind({});
@@ -57,7 +61,11 @@ EndState.args = {
   isEndState: true,
   titleText: 'Success!',
   titleSubText: "We've received your request to buy shares.",
-  secondaryActionText: 'Place another order',
-  primaryActionText: 'View transactions',
+  primaryActionProps: {
+    children: 'View transactions',
+  },
+  secondaryActionProps: {
+    children: 'Place another order',
+  },
   children: <ReceiptCard {...receiptCardProps} cardHeader={cardHeader} listHeader={undefined} />,
 };

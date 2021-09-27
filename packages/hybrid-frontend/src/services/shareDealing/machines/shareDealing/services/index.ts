@@ -1,3 +1,9 @@
-export { default as fetchShareDetails } from './fetchShareDetails';
-export { default as quoteOrder } from './quoteOrder';
-export { default as placeOrder } from './placeOrder';
+import fetchShareDetails from './fetchShareDetails';
+import quoteOrder from './quoteOrder';
+import placeOrder from './placeOrder';
+
+export default {
+  fetchShareDetails,
+  quoteOrder,
+  placeOrder,
+};

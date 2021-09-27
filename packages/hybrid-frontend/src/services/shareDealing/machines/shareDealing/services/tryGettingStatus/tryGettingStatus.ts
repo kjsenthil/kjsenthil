@@ -1,8 +1,8 @@
 import { GenericResponseData } from '../../../../../api/types';
 import { ApiResourceStatus } from '../../../../api/types';
 
-const DEFAULT_NUM_OF_ATTEMPTS = 10;
-const DEFAULT_DELAY_IN_MS = 1000;
+export const DEFAULT_NUM_OF_ATTEMPTS = 10;
+export const DEFAULT_DELAY_IN_MS = 1000;
 
 const delay = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 

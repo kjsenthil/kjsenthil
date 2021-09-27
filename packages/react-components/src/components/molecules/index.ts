@@ -70,6 +70,7 @@ export { default as ErrorBar } from './ErrorBar';
 export { default as ConfirmationModalWithImage } from './ConfirmationModalWithImage';
 export { default as RadioFormInput } from './RadioFormInput';
 export { default as CheckboxAccountSelector } from './CheckboxAccountSelector';
+export { default as LinkWithIcon } from './LinkWithIcon';
 
 /* material-ui molecules */
 export {
