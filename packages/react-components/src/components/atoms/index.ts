@@ -101,6 +101,8 @@ export {
   useMediaQuery,
 } from '@material-ui/core';
 
+export { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+
 /* material-ui atoms - types */
 export type {
   BoxProps,
@@ -113,6 +115,8 @@ export type {
   TabsProps,
   ToolbarProps,
 } from '@material-ui/core';
+
+export type { ToggleButtonProps, ToggleButtonGroupProps } from '@material-ui/lab';
 
 // At some point we might need to create an Icon wrapper as an atom
 // that dynamically imports each icon by a given name like <Icon name"menu" />
