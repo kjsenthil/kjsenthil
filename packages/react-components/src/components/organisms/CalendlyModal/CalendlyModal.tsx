@@ -26,6 +26,7 @@ const CalendlyModal = ({ calendlyUrl, prefill, open, onClose }: CalendlyModalPro
       open={open}
       onClose={onClose}
       isMobile={isMobile}
+      iconName="infoCircleIcon"
     >
       <InlineWidget
         prefill={prefill}

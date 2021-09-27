@@ -17,6 +17,7 @@ import { FormSelectProps } from './FormSelect';
 import { ConfirmationModalProps } from './ConfirmationModal';
 import { PillWithDropdownProps } from './PillWithDropdown';
 import { ModalProps } from './ModalWithHeaderV2';
+import { CheckboxAccountSelectorProps } from './CheckboxAccountSelector';
 
 export { default as Alert } from './Alert';
 export { default as Banner } from './Banner';
@@ -65,6 +66,7 @@ export { default as DateTime } from './DateTime';
 export { default as ErrorBar } from './ErrorBar';
 export { default as ConfirmationModalWithImage } from './ConfirmationModalWithImage';
 export { default as RadioFormInput } from './RadioFormInput';
+export { default as CheckboxAccountSelector } from './CheckboxAccountSelector';
 
 /* material-ui molecules */
 export {
@@ -94,4 +96,5 @@ export type {
   ProgressBarWithLegendProps,
   PillNavigationOnChangeProps,
   SimplifiedPortfolioTileProps,
+  CheckboxAccountSelectorProps,
 };

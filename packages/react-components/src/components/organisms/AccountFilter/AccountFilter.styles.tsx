@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { Grid } from '../../atoms';
+import { PillsNavigationTab } from '../../..';
 
 export const FilterContainer = styled(({ ...props }) => <Grid {...props} />)`
   ${({ theme }) => css`
@@ -39,4 +40,16 @@ export const ScrollWrapper = styled(({ ...props }) => <Grid {...props} />)`
       border-radius: ${theme.spacing(1)}px;
     }
   `}
+`;
+
+export const StyledPillsNavigationTab = styled(({ ...props }) => <PillsNavigationTab {...props} />)`
+  .MuiTab-wrapper {
+    display: unset;
+    margin-top: -5px;
+  }
+  &.MuiTab-labelIcon .MuiTab-wrapper > *:first-child {
+    margin-bottom: -8px;
+    margin-left: -9px;
+    margin-right: 4px;
+  }
 `;

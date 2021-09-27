@@ -3,6 +3,8 @@ export const StaticTooltips = {
   totalValue: 'The total value of your investments and cash.',
   lifetimeReturn:
     'This shows how well your investments have performed since you first held them with Bestinvest. It includes returns from both growth and income, minus any fees.',
+  linkedAccount:
+    'These are accounts where someone else has given you view-only access. You can find out more about linked account in our FAQs.',
   annualisedReturn:
     'This shows the average return per year on each pound over the period it has been invested. So for example, a figure of 5% would mean that on average, every pound you have invested has grown by 5p per year. This is also known as the "money-weighted rate of return".',
   netContribution: 'Your total contributions minus any withdrawals you may have made.',

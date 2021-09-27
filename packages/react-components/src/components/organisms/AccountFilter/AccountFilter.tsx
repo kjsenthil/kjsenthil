@@ -12,6 +12,8 @@ import {
   PillsNavigationTab,
 } from '../../molecules';
 
+import { StyledPillsNavigationTab } from './AccountFilter.styles';
+
 interface AccountFilterOption {
   label: string;
   value: AccountFilterSelection;
@@ -117,7 +119,8 @@ const AccountFilter = ({
 
       <StyledDivider orientation="vertical" y={4} />
 
-      <PillsNavigationTab
+      <StyledPillsNavigationTab
+        icon={<Icon name="plus" />}
         component={CreatePortfolioPill}
         label="Create a portfolio"
         value={CREATE_PORTFOLIO}

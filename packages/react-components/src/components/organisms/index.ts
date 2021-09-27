@@ -28,6 +28,7 @@ export { default as HeaderMenu } from './HeaderMenu';
 export { default as LoginForm } from './LoginForm';
 export { default as PerformanceChart } from './PerformanceChart/PerformanceChart';
 export { default as PinLogin } from './PinLogin';
+export { default as PortfolioModal } from './PortfolioModal';
 export { default as ProjectionCalculateModal } from './ProjectionCalculateModalContent';
 export { default as RiskAppetiteCard } from './RiskAppetiteCard';
 export { default as SimulationForm } from './SimulationForm';

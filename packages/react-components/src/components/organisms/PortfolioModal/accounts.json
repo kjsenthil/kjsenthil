@@ -1,0 +1,56 @@
+{
+  "data": {
+    "name": "Test person",
+    "relationships": {
+      "accounts": [
+        { "id": "12345", "account": "Stocks & Shares ISA", "balance": "19,994", "linked": false },
+        {
+          "id": "23456",
+          "account": "Self-invested Personal Pension",
+          "balance": "19,994",
+          "linked": false
+        },
+        { "id": "34567", "account": "Investment accounts", "balance": "19,994", "linked": false }
+      ],
+      "linked-accounts": [
+        {
+          "id": "45678",
+          "account": "Stocks & Shares ISA",
+          "balance": "19,994",
+          "linked": true
+        },
+        {
+          "id": "56789",
+          "account": "Self-invested Personal Pension",
+          "balance": "19,994",
+          "linked": true
+        },
+        {
+          "id": "67890",
+          "account": "Investment accounts",
+          "balance": "19,994",
+          "linked": true
+        }
+      ],
+      "portfolios": [
+        {
+          "name": "Test portfolio",
+          "accounts": [
+            {
+              "id": "12345",
+              "account": "Stocks & Shares ISA",
+              "balance": "19,994",
+              "linked": false
+            },
+            {
+              "id": "23456",
+              "account": "Self-invested Personal Pension",
+              "balance": "19,994",
+              "linked": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

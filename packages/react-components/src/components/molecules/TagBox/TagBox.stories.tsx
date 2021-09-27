@@ -35,3 +35,9 @@ Badge.args = {
   variant: 'badge',
   children: 'Archive',
 };
+
+export const Account = Template.bind({});
+Account.args = {
+  variant: 'account',
+  children: 'linked',
+};

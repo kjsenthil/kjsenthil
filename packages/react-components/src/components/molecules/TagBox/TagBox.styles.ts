@@ -26,6 +26,16 @@ export const PercentageTag = styled.div`
   `}
 `;
 
+export const AccountTag = styled.div`
+  ${({ theme }: { theme: Theme }) => `
+    display: inline-block;
+    padding: 0 ${theme.spacing(0.5)}px ${theme.spacing(1 / 8)}px;
+    height: ${theme.typography.pxToRem(16.8)};
+    border-radius: 2px;
+    background-color: ${theme.palette.grey['300']};
+  `}
+`;
+
 export const LabelTag = styled.div`
   ${({ theme }: { theme: Theme }) => `
     ${sharedTagStyle({ theme })}

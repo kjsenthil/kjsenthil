@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Typography } from '../../atoms';
-import { PercentageTag, LabelTag, BadgeTag } from './TagBox.styles';
+import { PercentageTag, LabelTag, BadgeTag, AccountTag } from './TagBox.styles';
 import { Counter } from '../../particles';
 
 export interface TagBoxProps {
-  variant: 'percentage' | 'label' | 'badge';
+  variant: 'percentage' | 'label' | 'badge' | 'account';
   children: string | number;
   formatter?: (num: number) => string;
   shouldAnimate?: boolean;
@@ -30,6 +30,14 @@ const TagBox = ({ variant, children, formatter, shouldAnimate = false }: TagBoxP
         <LabelTag>
           <Typography variant="sh4">{value}</Typography>
         </LabelTag>
+      );
+    case 'account':
+      return (
+        <AccountTag>
+          <Typography variant="sh4" color="white">
+            {value}
+          </Typography>
+        </AccountTag>
       );
     case 'badge':
       return (
