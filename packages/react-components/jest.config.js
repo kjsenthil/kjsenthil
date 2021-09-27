@@ -19,10 +19,17 @@ module.exports = {
   globals: {
     __PATH_PREFIX__: ``,
   },
+  moduleNameMapper: {
+    '^.+\\.(css)$': '<rootDir>/test-utils/stubCSS.js',
+  },
   resetMocks: true,
   setupFiles: ['<rootDir>/test-utils/loadershim.js'],
-  setupFilesAfterEnv: ['<rootDir>/test-utils/setup-test-env.js', 'jest-extended'],
-  testPathIgnorePatterns: ['node_modules', '\\.cache', '<rootDir>.*/public' ],
+  setupFilesAfterEnv: [
+    '<rootDir>/test-utils/setup-test-env.js',
+    'jest-extended',
+    '<rootDir>/test-utils/matchMedia.js',
+  ],
+  testPathIgnorePatterns: ['node_modules', '\\.cache', '<rootDir>.*/public'],
   testURL: 'http://localhost',
   transform: {
     '^.+\\.[jt]sx?$': '<rootDir>/test-utils/jest-preprocess.js',

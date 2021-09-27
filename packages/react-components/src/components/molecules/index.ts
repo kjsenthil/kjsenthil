@@ -1,5 +1,7 @@
 /* custom molecules */
 import { ChartPeriodSelectionProps } from './ChartPeriodSelection';
+import { CarouselProps } from './Carousel';
+
 import { TypographyWithTooltipProps } from './TypographyWithTooltip';
 import { LegendProps } from './Legend';
 import { ProgressBarWithLegendProps } from './ProgressBarWithLegend';
@@ -23,6 +25,7 @@ export { default as Alert } from './Alert';
 export { default as Banner } from './Banner';
 export { default as ButtonWithDropdown } from './ButtonWithDropdown';
 export { default as ChartPeriodSelection } from './ChartPeriodSelection';
+export { default as Carousel } from './Carousel';
 export { default as ComponentsWithCaption } from './ComponentsWithCaption';
 export { default as DropdownToggle } from './DropdownToggle';
 export { default as DigitalCoachBox } from './DigitalCoachBox';
@@ -80,6 +83,7 @@ export {
 } from '@material-ui/core';
 
 export type {
+  CarouselProps,
   ModalProps,
   LegendProps,
   FormSelectProps,
