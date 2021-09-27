@@ -6,10 +6,11 @@ import {
   CurrencyPresentationVariant,
   PercentPresentationVariant,
 } from '../../../utils/formatters';
-import { Divider, Spacer, Grid } from '../../atoms';
-import { Legend, LegendProps } from '../../molecules';
-import { SummaryCard } from './SummaryPanel.styles';
+import { Box, Divider, Spacer, Grid, Typography } from '../../atoms';
+import { Legend } from '../../molecules';
+import { SummaryCard, SummaryCardCell, SummaryCardContent } from './SummaryPanel.styles';
 import { DataPeriodTooltip, StaticTooltips } from '../../../constants/tooltips';
+import { formatDate } from '../../../utils/date';
 
 export interface SummaryPanelProps {
   totalNetContributions: number;
@@ -22,23 +23,8 @@ export interface SummaryPanelProps {
     percent: number;
     dataPeriod: string;
   };
+  mobileFooterChildren?: React.ReactNode;
 }
-
-const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
-  netContribution: {
-    title: 'NET CONTRIBUTION',
-    tooltip: StaticTooltips.netContribution,
-  },
-  lifetimeReturn: {
-    title: 'LIFETIME RETURN',
-    tooltip: StaticTooltips.lifetimeReturn,
-  },
-  annualisedReturn: {
-    title: 'ANNUALISED RETURN',
-    tooltip: StaticTooltips.annualisedReturn,
-  },
-  // Period based return calculated inline due to being dynamic for selected period
-};
 
 const percentFormatterWithSign = (val: number) =>
   formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE, {
@@ -68,6 +54,7 @@ export default function SummaryPanel({
   lifetimeReturnPercentage,
   annualisedReturnPercentage,
   periodBasedReturn,
+  mobileFooterChildren,
 }: SummaryPanelProps) {
   const { isMobile } = useBreakpoint();
 
@@ -81,31 +68,37 @@ export default function SummaryPanel({
 
   const renderAnnualisedReturn = (
     <Legend
-      {...legendProps.annualisedReturn}
+      title="ANNUALISED RETURN"
+      tooltip={isMobile ? undefined : StaticTooltips.annualisedReturn}
       value={annualisedReturnPercentage}
       valueFormatter={percentFormatterWithSign}
       valueSizeVariant="h4"
+      spaceNoWrap={false}
     />
   );
 
   const renderNetContributions = (
     <Legend
-      {...legendProps.netContribution}
+      title="NET CONTRIBUTION"
+      tooltip={isMobile ? undefined : StaticTooltips.netContribution}
       value={totalNetContributions}
       valueFormatter={currencyFormatter}
       valueSizeVariant="h4"
+      spaceNoWrap={false}
     />
   );
 
   const renderLifetimeReturn = (
     <Legend
-      {...legendProps.lifetimeReturn}
+      title="LIFETIME RETURN"
+      tooltip={isMobile ? undefined : StaticTooltips.lifetimeReturn}
       value={lifetimeReturn}
       valueFormatter={currencyFormatterWithSign}
       valueSizeVariant="h4"
       percentageChange={lifetimeReturnPercentage}
       percentageFormatter={percentFormatterWithSignElseHyphen}
       percentageNewLine={isMobile}
+      spaceNoWrap={false}
     />
   );
 
@@ -115,57 +108,77 @@ export default function SummaryPanel({
       <Legend
         title={`LAST ${periodBasedReturn.dataPeriod.toUpperCase()} RETURN`}
         value={periodBasedReturn.value}
-        tooltip={DataPeriodTooltip(periodBasedReturn.dataPeriod)}
+        tooltip={isMobile ? undefined : DataPeriodTooltip(periodBasedReturn.dataPeriod)}
         valueFormatter={currencyFormatterWithSign}
         valueSizeVariant="h4"
         percentageChange={periodBasedReturn.percent}
         percentageFormatter={percentFormatterWithSign}
         percentageNewLine={isMobile}
+        spaceNoWrap={false}
       />
     </>
   );
 
   return (
-    <SummaryCard>
-      {isMobile ? (
-        <Grid container spacing={3} justifyContent="space-evenly">
-          <Grid item xs={6}>
-            {renderNetContributions}
-          </Grid>
+    <>
+      <SummaryCard isMobile={isMobile}>
+        {isMobile ? (
+          <SummaryCardContent container xs={12} justifyContent="space-between">
+            <SummaryCardCell item xs={6}>
+              {renderNetContributions}
+            </SummaryCardCell>
 
-          <Grid item xs={6}>
-            {renderLifetimeReturn}
-          </Grid>
+            <SummaryCardCell item xs={6}>
+              {renderLifetimeReturn}
+            </SummaryCardCell>
 
-          <Grid item xs={6}>
-            {renderAnnualisedReturn}
-          </Grid>
+            <SummaryCardCell item xs={6}>
+              {renderAnnualisedReturn}
+            </SummaryCardCell>
 
-          <Grid item xs={6}>
-            {renderPeriodBasedReturn}
-          </Grid>
-        </Grid>
-      ) : (
-        <Grid container justifyContent="space-between" alignContent="center">
-          <Grid item xs={8}>
-            <Grid container justifyContent="flex-start">
-              <Grid item>{renderNetContributions}</Grid>
+            <SummaryCardCell item xs={6}>
+              {renderPeriodBasedReturn}
+            </SummaryCardCell>
 
-              <Grid item>{renderVerticalDivider(true)}</Grid>
+            {mobileFooterChildren !== undefined && (
+              <SummaryCardCell item xs={12}>
+                <Divider orientation="horizontal" />
+                <Spacer y={1} />
+                {mobileFooterChildren}
+                <Spacer y={1} />
+              </SummaryCardCell>
+            )}
+          </SummaryCardContent>
+        ) : (
+          <Grid container justifyContent="space-between" alignContent="center">
+            <Grid item xs={8}>
+              <Grid container justifyContent="flex-start">
+                <Grid item>{renderNetContributions}</Grid>
 
-              <Grid item>{renderLifetimeReturn}</Grid>
+                <Grid item>{renderVerticalDivider(true)}</Grid>
 
-              <Grid item>{renderVerticalDivider(true)}</Grid>
+                <Grid item>{renderLifetimeReturn}</Grid>
 
-              <Grid item>{renderAnnualisedReturn}</Grid>
+                <Grid item>{renderVerticalDivider(true)}</Grid>
+
+                <Grid item>{renderAnnualisedReturn}</Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={4} container justifyContent="flex-end" alignItems="center" wrap="nowrap">
+              {renderPeriodBasedReturn}
             </Grid>
           </Grid>
-
-          <Grid item xs={4} container justifyContent="flex-end" alignItems="center" wrap="nowrap">
-            {renderPeriodBasedReturn}
-          </Grid>
-        </Grid>
+        )}
+      </SummaryCard>
+      {isMobile && (
+        <Box px={1.25} pt={1}>
+          <Typography fontStyle="italic" variant="i1" color="grey" colorShade="dark1">
+            Fund values as at {formatDate(new Date(), 'DD/MM/YYYY')}, based on mid price, 15 minutes
+            delayed pricing for listed securities.
+          </Typography>
+        </Box>
       )}
-    </SummaryCard>
+    </>
   );
 }

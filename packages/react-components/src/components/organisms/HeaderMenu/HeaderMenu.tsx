@@ -203,7 +203,7 @@ const HeaderMenu = ({
   const renderMyAccountsLink = () => (
     <MyAccountsContainer>
       <RotatedIcon name="upload" />
-      <Link color="white" special href={myAccountsUrl}>
+      <Link color="white" href={myAccountsUrl}>
         Back to old Bestinvest
       </Link>
     </MyAccountsContainer>

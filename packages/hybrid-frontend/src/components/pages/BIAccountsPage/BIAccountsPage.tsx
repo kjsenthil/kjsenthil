@@ -3,9 +3,11 @@ import {
   AccountFilter,
   AccountFilterSelection,
   AccountsTable,
+  AccountsCard,
   AccountsTableHeader,
   Box,
   Button,
+  ButtonBase,
   ChartPeriodSelection,
   CurrencyPresentationVariant,
   DisabledComponent,
@@ -18,15 +20,20 @@ import {
   PerformanceDataPeriod,
   Spacer,
   SummaryPanel,
-  Theme,
   Typography,
   axisBottomConfig,
   formatCurrency,
+  useBreakpoint,
   usePerformanceChartDimension,
+  Divider,
+  formatPercent,
+  PercentPresentationVariant,
+  TagBox,
+  Modal,
+  TypographyWithTooltip,
 } from '@tswdts/react-components';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled, { css } from 'styled-components';
 import { FeatureFlagNames } from '../../../constants';
 import {
   useAccountIds,
@@ -45,8 +52,10 @@ import {
 } from '../../../services/performance';
 import { RootState } from '../../../store';
 import { MyAccountLayout } from '../../templates';
+import { StyledAccountsTableCard, StyledPerformanceChartCard } from './BIAccountsPage.styles';
 
 const BIAccountsPage = () => {
+  const { isMobile } = useBreakpoint();
   const expFeatureFlag = useFeatureFlagToggle(FeatureFlagNames.EXP_FEATURE);
 
   const {
@@ -77,6 +86,10 @@ const BIAccountsPage = () => {
   const hasAccountIds = accountIds && accountIds.length > 0;
 
   const dispatch = useDispatch();
+
+  const [isYourFiguresModalOpen, setIsYourFiguresModalOpen] = React.useState(false);
+  const yourFiguresModalOpenHandler = () => setIsYourFiguresModalOpen(true);
+  const yourFiguresModalCloseHandler = () => setIsYourFiguresModalOpen(false);
 
   // Historical performance data
   const performanceData = usePerformanceData();
@@ -110,6 +123,7 @@ const BIAccountsPage = () => {
       accountCash,
       accountTotalHoldings,
       accountLifetimeReturn,
+      accountTotalNetContribution,
       annualisedReturn,
       periodReturn,
     }) => ({
@@ -119,6 +133,7 @@ const BIAccountsPage = () => {
       accountCash,
       accountTotalHoldings,
       accountLifetimeReturn,
+      accountTotalNetContribution,
       annualisedReturn,
       periodReturn,
     })
@@ -139,24 +154,6 @@ const BIAccountsPage = () => {
     accountsSummary.totalInvested,
     summaryContributions
   );
-
-  // ---------- Components ---------- //
-
-  const StyledAccountsCard = styled(({ theme, ...props }) => <MainCard {...props} />)`
-    ${({ theme }: { background: string; theme: Theme }) => css`
-      box-shadow: none;
-      background-color: ${theme.palette.background.layout};
-      padding: 2px 0;
-    `}
-  `;
-
-  const StyledPerformanceChartCard = styled(({ theme, ...props }) => <MainCard {...props} />)`
-    ${({ theme }: { background: string; theme: Theme }) => css`
-      box-shadow: none;
-      border: 1px solid ${theme.palette.grey['200']};
-      padding: 16px 23px 23px;
-    `}
-  `;
 
   const stickyHeaderChildComponent = !basicInfo.basicDataLoadError && (
     <Grid
@@ -187,6 +184,195 @@ const BIAccountsPage = () => {
     </Grid>
   );
 
+  const renderYourFiguresExplainedTooltip = () => (
+    <ButtonBase onClick={yourFiguresModalOpenHandler}>
+      <TypographyWithTooltip
+        tooltip=""
+        typographyProps={{ variant: 'b4' }}
+        iconProps={{ color: 'primary' }}
+      >
+        Your figures explained
+      </TypographyWithTooltip>
+    </ButtonBase>
+  );
+
+  const renderPerformanceChartDisclaimer = () => (
+    <Box pt={isMobile ? 1 : 1.5} pl={isMobile ? 1 : 2.5}>
+      <Typography fontStyle="italic" variant="i1" color="grey" colorShade="dark1">
+        Performance figures are shown net of ongoing charges and include any income reinvested net
+        of any taxes taken at source
+      </Typography>
+    </Box>
+  );
+
+  const renderDesktopAccountsTable = (title: string, buttonText: string, data) => (
+    <Grid item xs={12}>
+      <StyledAccountsTableCard
+        title={<Typography variant="h4">{title}</Typography>}
+        renderActionEl={() => (
+          <DisabledComponent arrow placement="top" title="Coming soon">
+            <Button variant="contained" color="white" startIcon={<Icon name="plus" />}>
+              {buttonText}
+            </Button>
+          </DisabledComponent>
+        )}
+      >
+        <Spacer y={1.5} />
+        <AccountsTable
+          period={performanceDataPeriod}
+          headerRow={AccountsTableHeader(humanizedDataPeriod)}
+          dataRow={data}
+        />
+      </StyledAccountsTableCard>
+    </Grid>
+  );
+
+  const renderMobileAccountsCard = (title: string, data) => (
+    <Grid item xs={12}>
+      <Grid container item alignItems="center" justifyContent="space-between">
+        <Typography variant="h4" color="primary" colorShade="dark2">
+          {title}
+        </Typography>
+        <Icon name="plus" color="primary" />
+      </Grid>
+      <Spacer y={3} />
+      <AccountsCard data={data} footerChildren={renderYourFiguresExplainedTooltip()} />
+    </Grid>
+  );
+
+  const renderDesktopPerformanceChart = () => (
+    <Grid item xs={12}>
+      <Spacer y={0.75} />
+      <Typography variant="h4" color="primary" colorShade="dark2">
+        Performance chart
+      </Typography>
+
+      <Spacer y={3} />
+      <StyledPerformanceChartCard isMobile={isMobile}>
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {hasDataForPerformanceChart ? (
+          <Box p={2}>
+            <PerformanceChart
+              performanceData={performanceData}
+              contributionsData={contributionsData}
+              periodSelectionProps={{
+                performanceDataPeriod: PerformanceDataPeriod,
+                currentPeriod: performanceDataPeriod,
+                setCurrentPeriod: (newPeriod: PerformanceDataPeriod) =>
+                  dispatch(setPerformanceDataPeriod(newPeriod)),
+              }}
+              axisBottomConfig={axisBottomConfig}
+            />
+          </Box>
+        ) : performanceFetchMaxRetriesHit && performanceError ? (
+          <Typography>{performanceError}</Typography>
+        ) : (
+          <Skeleton height={performanceChartDimension.height} />
+        )}
+      </StyledPerformanceChartCard>
+      {renderPerformanceChartDisclaimer()}
+    </Grid>
+  );
+
+  const renderYourFiguresExplainedModal = () => (
+    <Modal
+      modalTitle="Your Figures Explained"
+      open={isYourFiguresModalOpen}
+      onClose={yourFiguresModalCloseHandler}
+    >
+      {AccountsTableHeader(humanizedDataPeriod).map(
+        (headerWithTooltip) =>
+          headerWithTooltip.tooltip !== undefined && (
+            <>
+              <Typography variant="sh3" color="primary">
+                {headerWithTooltip.value}
+              </Typography>
+              <Typography variant="b4">{headerWithTooltip.tooltip}</Typography>
+              <br />
+            </>
+          )
+      )}
+    </Modal>
+  );
+
+  const renderMobilePerformanceChart = () => (
+    <Grid item xs={12}>
+      <Typography variant="h4" color="primary" colorShade="dark2">
+        Performance chart
+      </Typography>
+
+      <Spacer y={3} />
+
+      <StyledPerformanceChartCard isMobile={isMobile}>
+        <Grid container justifyContent="space-between">
+          <Typography variant="sh4" color="primary" colorShade="dark2">
+            LIFETIME RETURN
+          </Typography>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Typography variant="sh3" color="primary" colorShade="dark2">
+              {formatCurrency(lifetimeReturn.value, CurrencyPresentationVariant.ACTUAL_TOPLINE)}
+            </Typography>
+            <Spacer x={0.5} />
+            <TagBox
+              variant="percentage"
+              formatter={(val: number) =>
+                formatPercent(val, PercentPresentationVariant.ACTUAL_TOPLINE)
+              }
+            >
+              {lifetimeReturn.percent}
+            </TagBox>
+          </Box>
+        </Grid>
+
+        <Spacer y={1.5} />
+        <Divider />
+        <Spacer y={1.5} />
+
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {hasDataForPerformanceChart ? (
+          <Grid container>
+            <PerformanceChart
+              data-testid="performance-chart"
+              performanceData={performanceData}
+              contributionsData={contributionsData}
+              axisBottomConfig={axisBottomConfig}
+              legendProps={{
+                totalValue: {
+                  title: 'TOTAL VALUE',
+                },
+                netContributed: {
+                  title: 'NET CONTRIBUTION',
+                },
+              }}
+              periodSelectionProps={{
+                performanceDataPeriod: PerformanceDataPeriod,
+                currentPeriod: performanceDataPeriod,
+                setCurrentPeriod: (newPeriod: PerformanceDataPeriod) =>
+                  dispatch(setPerformanceDataPeriod(newPeriod)),
+              }}
+            />
+          </Grid>
+        ) : performanceFetchMaxRetriesHit && performanceError ? (
+          <Typography>{performanceError}</Typography>
+        ) : (
+          <Skeleton height={performanceChartDimension.height} />
+        )}
+
+        <Spacer y={2} />
+        <Divider orientation="horizontal" color="grey" />
+        <Spacer y={1} />
+        {renderYourFiguresExplainedTooltip()}
+      </StyledPerformanceChartCard>
+      {renderPerformanceChartDisclaimer()}
+    </Grid>
+  );
+
   return (
     <MyAccountLayout basicInfo={basicInfo} stickyHeaderChildComponent={stickyHeaderChildComponent}>
       {expFeatureFlag?.isEnabled && (
@@ -207,9 +393,16 @@ const BIAccountsPage = () => {
         </Box>
       )}
 
-      <Grid item container xs={12} spacing={1} justifyContent="flex-end">
-        <Grid item xs={12} sm={9}>
-          <Typography variant="h2" color="primary" colorShade="dark2">
+      <Grid
+        item
+        container
+        xs={12}
+        spacing={1}
+        direction={isMobile ? 'column' : 'row'}
+        justifyContent="flex-end"
+      >
+        <Grid item xs={12} sm={isMobile ? 12 : 9}>
+          <Typography variant={isMobile ? 'h4' : 'h2'} color="primary" colorShade="dark2">
             Total Value:{' '}
             {formatCurrency(
               accountsSummary.totalInvested,
@@ -218,7 +411,9 @@ const BIAccountsPage = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={12} sm={3}>
+        <Spacer y={isMobile ? 3 : 0} />
+
+        <Grid item xs={12} sm={isMobile ? 12 : 3}>
           {basicInfo.basicDataLoadError ? (
             <Skeleton height={100} />
           ) : (
@@ -232,9 +427,9 @@ const BIAccountsPage = () => {
         </Grid>
       </Grid>
 
-      <Spacer y={7} />
+      <Spacer y={isMobile ? 3 : 7} />
 
-      <Grid item container spacing={6}>
+      <Grid item container spacing={isMobile ? 5 : 6}>
         <Grid item xs={12}>
           {/* eslint-disable-next-line no-nested-ternary */}
           {summaryIsLoading ? (
@@ -246,6 +441,7 @@ const BIAccountsPage = () => {
               totalNetContributions={summaryContributions}
               lifetimeReturn={lifetimeReturn.value}
               lifetimeReturnPercentage={lifetimeReturn.percent}
+              mobileFooterChildren={renderYourFiguresExplainedTooltip()}
               periodBasedReturn={{
                 value: investmentReturn.value,
                 percent: investmentReturn.percent,
@@ -266,89 +462,26 @@ const BIAccountsPage = () => {
             </MainCard>
           </Grid>
         ) : (
-          accountsTableData.length > 0 && (
-            <Grid item xs={12}>
-              <StyledAccountsCard
-                title={<Typography variant="h4">My accounts</Typography>}
-                renderActionEl={() => (
-                  <DisabledComponent arrow placement="top" title="Coming soon">
-                    <Button variant="contained" color="white" startIcon={<Icon name="plus" />}>
-                      Open a new account
-                    </Button>
-                  </DisabledComponent>
-                )}
-              >
-                <Spacer y={1.5} />
-                <AccountsTable
-                  period={performanceDataPeriod}
-                  headerRow={AccountsTableHeader(humanizedDataPeriod)}
-                  dataRow={accountsTableData}
-                />
-              </StyledAccountsCard>
-            </Grid>
-          )
+          accountsTableData.length > 0 &&
+          (isMobile
+            ? renderMobileAccountsCard('My Accounts', accountsTableData)
+            : renderDesktopAccountsTable('My Accounts', 'Open a new account', accountsTableData))
         )}
 
-        {linkedAccountsTableData.length > 0 && (
-          <Grid item xs={12}>
-            <StyledAccountsCard
-              title={<Typography variant="h4">Linked accounts</Typography>}
-              renderActionEl={() => (
-                <DisabledComponent arrow placement="top" title="Coming soon">
-                  <Button variant="contained" color="white" startIcon={<Icon name="plus" />}>
-                    Link an account
-                  </Button>
-                </DisabledComponent>
-              )}
-            >
-              <Spacer y={1.5} />
-              <AccountsTable
-                period={performanceDataPeriod}
-                headerRow={AccountsTableHeader(humanizedDataPeriod)}
-                dataRow={linkedAccountsTableData}
-              />
-            </StyledAccountsCard>
-          </Grid>
-        )}
+        {linkedAccountsTableData.length > 0 &&
+          (isMobile
+            ? renderMobileAccountsCard('Linked Accounts', linkedAccountsTableData)
+            : renderDesktopAccountsTable(
+                'Linked Accounts',
+                'Link an account',
+                linkedAccountsTableData
+              ))}
 
-        <Grid item xs={12}>
-          <Spacer y={0.75} />
-          <Typography variant="h4" color="primary" colorShade="dark2">
-            Performance chart
-          </Typography>
+        {isMobile ? renderMobilePerformanceChart() : renderDesktopPerformanceChart()}
 
-          <Spacer y={3} />
-          <StyledPerformanceChartCard>
-            {/* eslint-disable-next-line no-nested-ternary */}
-            {hasDataForPerformanceChart ? (
-              <Box p={2}>
-                <PerformanceChart
-                  performanceData={performanceData}
-                  contributionsData={contributionsData}
-                  periodSelectionProps={{
-                    performanceDataPeriod: PerformanceDataPeriod,
-                    currentPeriod: performanceDataPeriod,
-                    setCurrentPeriod: (newPeriod: PerformanceDataPeriod) =>
-                      dispatch(setPerformanceDataPeriod(newPeriod)),
-                  }}
-                  axisBottomConfig={axisBottomConfig}
-                />
-              </Box>
-            ) : performanceFetchMaxRetriesHit && performanceError ? (
-              <Typography>{performanceError}</Typography>
-            ) : (
-              <Skeleton height={performanceChartDimension.height} />
-            )}
-          </StyledPerformanceChartCard>
-          <Box p={2} pl={2.5} pb={2.5}>
-            <Typography variant="b4" color="grey" colorShade="dark1">
-              <i>
-                Performance figures are shown net of ongoing charges and include any income
-                reinvested net of any taxes taken at source
-              </i>
-            </Typography>
-          </Box>
-        </Grid>
+        {renderYourFiguresExplainedModal()}
+
+        <Spacer y={5} />
       </Grid>
     </MyAccountLayout>
   );

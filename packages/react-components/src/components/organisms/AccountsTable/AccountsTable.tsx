@@ -19,6 +19,7 @@ import {
 } from '../../../utils/formatters';
 import { Grid, Spacer, Tooltip, Typography } from '../../atoms';
 import { Table, TableBody, TableRow, TagBox } from '../../molecules';
+import { PartialPick } from '../../../utils/common';
 
 export interface AccountsHeaderCell {
   value: string;
@@ -26,10 +27,6 @@ export interface AccountsHeaderCell {
 }
 
 export type AccountsFooterCell = string;
-
-type PartialPick<T, K extends keyof T> = {
-  [P in K]?: T[P];
-};
 
 export interface AccountsTableProps {
   headerRow: AccountsHeaderCell[];

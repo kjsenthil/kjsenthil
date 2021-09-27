@@ -210,7 +210,7 @@ const MyAccountLayout = ({
               <ErrorBar errorMessage={basicInfo.basicDataLoadError} />
             )}
 
-            <Box px={isMobile ? 3 : '100px'} py={9}>
+            <Box px={isMobile ? 3 : '100px'} py={isMobile ? 5 : 9}>
               {(!!heading && (
                 <>
                   <Heading {...heading} />

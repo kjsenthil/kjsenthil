@@ -25,3 +25,7 @@ export function TypedReactMemo<C extends React.ComponentType<any>>(
  * Like Required<T> but to mark specific fields as required.
  */
 export type Require<T, K extends keyof T> = Pick<Required<T>, K> & Omit<T, K>;
+
+export type PartialPick<T, K extends keyof T> = {
+  [P in K]?: T[P];
+};

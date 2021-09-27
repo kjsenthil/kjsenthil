@@ -10,6 +10,7 @@ export type { HeaderMenuProps } from './HeaderMenu';
 export type { CoachingPopoverProps } from './CoachingPopover';
 
 export { default as AccountSummaryPanel } from './AccountSummaryPanel';
+export { default as AccountsCard } from './AccountsCard';
 export { default as AccountsTable } from './AccountsTable';
 export { default as AddCashCard } from './AddCashCard';
 export { default as AddCashModal } from './AddCashModal';

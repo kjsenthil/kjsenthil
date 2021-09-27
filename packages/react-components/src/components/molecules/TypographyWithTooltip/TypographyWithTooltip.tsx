@@ -20,13 +20,13 @@ export interface TypographyWithTooltipProps extends StyleableComponent {
 
   typographyProps?: TypographyProps;
   tooltipProps?: TooltipProps;
-  iconProps?: IconProps;
+  iconProps?: Pick<IconProps, 'color'>;
   spacerProps?: SpacerProps;
 }
 
 const IconWrapper = styled.span`
   ${({ theme }: { theme: Theme }) => `
-    vertical-align: sub;
+    vertical-align: text-top;
     color: ${theme.palette.grey['300']};
   `}
 `;

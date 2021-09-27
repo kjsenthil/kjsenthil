@@ -10,6 +10,8 @@ import {
 import { StaticTooltips } from '../../../../constants/tooltips';
 
 export interface PerformanceChartSummaryPanelProps {
+  legendProps?: Record<string, Pick<LegendProps, 'title' | 'tooltip'>>;
+
   totalPerformance: number;
   totalNetContributions: number;
 
@@ -17,7 +19,7 @@ export interface PerformanceChartSummaryPanelProps {
   totalReturnPercentage: number;
 }
 
-const legendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
+const defaultLegendProps: Record<string, Pick<LegendProps, 'title' | 'tooltip'>> = {
   totalValue: {
     title: 'TOTAL VALUE',
     tooltip: StaticTooltips.totalValue,
@@ -40,30 +42,37 @@ export default function PerformanceChartSummaryPanel({
   totalNetContributions,
   totalReturn,
   totalReturnPercentage,
+  legendProps = defaultLegendProps,
 }: PerformanceChartSummaryPanelProps) {
   return (
     <Container>
-      <Legend
-        {...legendProps.totalValue}
-        value={totalPerformance}
-        valueFormatter={currencyFormatter}
-        chartIndicatorProps={{ variant: 'solid' }}
-      />
+      {legendProps.totalValue !== undefined && (
+        <Legend
+          {...legendProps.totalValue}
+          value={totalPerformance}
+          valueFormatter={currencyFormatter}
+          chartIndicatorProps={{ variant: 'solid' }}
+        />
+      )}
 
-      <Legend
-        {...legendProps.netContributed}
-        value={totalNetContributions}
-        valueFormatter={currencyFormatter}
-        chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
-      />
+      {legendProps.netContributed !== undefined && (
+        <Legend
+          {...legendProps.netContributed}
+          value={totalNetContributions}
+          valueFormatter={currencyFormatter}
+          chartIndicatorProps={{ variant: 'dashed-4', color: 'secondary' }}
+        />
+      )}
 
-      <Legend
-        {...legendProps.lifetimeReturn}
-        value={totalReturn}
-        valueFormatter={currencyFormatter}
-        percentageChange={totalReturnPercentage}
-        percentageFormatter={percentFormatter}
-      />
+      {legendProps.lifetimeReturn !== undefined && (
+        <Legend
+          {...legendProps.lifetimeReturn}
+          value={totalReturn}
+          valueFormatter={currencyFormatter}
+          percentageChange={totalReturnPercentage}
+          percentageFormatter={percentFormatter}
+        />
+      )}
     </Container>
   );
 }

@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import styled from 'styled-components';
 import TextField from '../TextField';
 
-const StyledTextField = styled(MUISelect)`
+const StyledSelect = styled(MUISelect)`
   ${({ theme, fullWidth }) => `
     background-color: ${theme.palette.common.white};
     min-width: ${theme.typography.pxToRem(182)};
@@ -21,7 +21,7 @@ export interface SelectProps extends Omit<MUISelectProps, 'color' | 'variant' | 
 }
 
 const Select = ({ hasError, ...props }: SelectProps) => (
-  <StyledTextField
+  <StyledSelect
     native
     IconComponent={KeyboardArrowDownIcon}
     {...props}

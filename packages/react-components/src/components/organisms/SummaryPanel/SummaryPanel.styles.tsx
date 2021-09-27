@@ -20,13 +20,27 @@ export const SummaryOfTotalsWrapper = styled(({ isMobile, ...props }) => <Grid {
   `}
 `;
 
-export const SummaryCard = styled(Card)`
+export const SummaryCard = styled(({ isMobile, ...props }) => <Card {...props} />)`
   ${({ isMobile, theme }: StyleProps) => css`
-    padding: ${theme.spacing(3)}px ${theme.spacing(isMobile ? 3 : 5)}px;
+    padding: ${theme.spacing(isMobile ? 0 : 3)}px ${theme.spacing(isMobile ? 2.5 : 5)}px;
     background-color: ${theme.palette.background.paper};
     border: solid 1px ${theme.palette.grey[200]};
     box-shadow: none;
     border-radius: 16px;
+  `}
+`;
+
+export const SummaryCardContent = styled(({ ...props }) => <Grid {...props} />)`
+  ${({ theme }: StyleProps) => css`
+    padding-top: ${theme.spacing(0)}px;
+    padding-bottom: ${theme.spacing(0)}px;
+  `}
+`;
+
+export const SummaryCardCell = styled(({ ...props }) => <Grid {...props} />)`
+  ${({ theme }: StyleProps) => css`
+    padding-top: ${theme.spacing(1.5)}px;
+    padding-bottom: ${theme.spacing(0)}px;
   `}
 `;
 

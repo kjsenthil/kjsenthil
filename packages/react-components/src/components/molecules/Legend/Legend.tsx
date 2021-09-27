@@ -30,6 +30,7 @@ export interface LegendProps {
   counterProps?: Omit<CounterProps, 'valueFormatter' | 'value'>;
   tooltip?: string;
   percentageNewLine?: boolean;
+  spaceNoWrap?: boolean;
 }
 
 const LegendValue = ({
@@ -80,7 +81,7 @@ const LegendValue = ({
       </Grid>
       <Grid item xs={percentageNewLine ? 12 : 'auto'}>
         {percentageChange !== undefined && (
-          <Box marginLeft={1}>
+          <Box marginLeft={percentageNewLine ? 0 : 1}>
             <TagBox
               variant="percentage"
               formatter={percentageFormatter}
@@ -111,11 +112,17 @@ const LegendTooltip = ({ tooltip }) => (
   </>
 );
 
-const Legend = ({ title, chartIndicatorProps, tooltip, ...props }: LegendProps) => (
+const Legend = ({
+  title,
+  chartIndicatorProps,
+  tooltip,
+  spaceNoWrap = true,
+  ...props
+}: LegendProps) => (
   <LegendContainer>
     {chartIndicatorProps && <ChartIndicator {...chartIndicatorProps} />}
     <div>
-      <Typography variant="sh4" color="grey" colorShade="dark1" spaceNoWrap>
+      <Typography variant="sh4" color="grey" colorShade="dark1" spaceNoWrap={spaceNoWrap}>
         {title.toUpperCase()}
         {tooltip && <LegendTooltip tooltip={tooltip} />}
       </Typography>

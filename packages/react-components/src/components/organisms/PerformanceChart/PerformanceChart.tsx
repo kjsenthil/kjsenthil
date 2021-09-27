@@ -19,7 +19,7 @@ import usePerformanceChartTooltip, {
 import { ContributionDatum, PerformanceDatum } from './performanceData';
 import { PerformanceChartAxisBottom, PerformanceChartAxisLeft } from './PerformanceChartAxes';
 import PerformanceChartSummaryPanel from './PerformanceChartSummaryPanel/PerformanceChartSummaryPanel';
-import { ChartPeriodSelectionProps } from '../../molecules';
+import { ChartPeriodSelectionProps, LegendProps } from '../../molecules';
 import {
   normalizeTimeSeriesData,
   timeSeriesDateAccessor,
@@ -35,6 +35,7 @@ export interface PerformanceChartProps extends WithParentSizeProps, WithParentSi
   contributionsData: ContributionDatum[];
   periodSelectionProps: ChartPeriodSelectionProps<PerformanceDataPeriod>;
 
+  legendProps?: Record<string, Pick<LegendProps, 'title' | 'tooltip'>>;
   axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;
 }
 
@@ -70,6 +71,7 @@ function PerformanceChart({
   periodSelectionProps,
   axisBottomConfig,
   parentWidth = 0,
+  legendProps,
 }: PerformanceChartProps) {
   // ----- Stylings ----- //
 
@@ -206,6 +208,7 @@ function PerformanceChart({
           totalNetContributions={totalNetContributions}
           totalReturn={totalReturn}
           totalReturnPercentage={totalReturnPercentage}
+          legendProps={legendProps}
         />
       </ControlPanelContainer>
 

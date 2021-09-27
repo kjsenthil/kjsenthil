@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import {
   Theme,
   SimplePaletteColorOptions,
@@ -10,6 +10,7 @@ import styled from 'styled-components';
 export type ColorShade = keyof SimplePaletteColorOptions;
 export type Color = 'primary' | 'secondary' | 'tertiary' | 'white' | 'black' | 'grey' | 'error';
 export type Variant = keyof typeof variantComponentMap;
+export type FontStyle = CSSProperties['fontStyle'];
 
 export interface TypographyProps extends Omit<MUITypographyProps, 'color' | 'variant'> {
   color?: Color | 'inherit';
@@ -17,6 +18,7 @@ export interface TypographyProps extends Omit<MUITypographyProps, 'color' | 'var
   variant?: Variant;
   spaceNoWrap?: boolean;
   fontWeight?: string;
+  fontStyle?: FontStyle;
   component?: React.ElementType;
 }
 
@@ -57,11 +59,13 @@ const sizes = {
   b4: { fontSize: 12, lineHeight: 20, letterSpacing: 0.3, fontWeight: 'normal' },
   b5: { fontSize: 11, lineHeight: 16, letterSpacing: 0.3, fontWeight: 'normal' },
   link: { fontSize: 13, lineHeight: 16, letterSpacing: 0.2, fontWeight: 600 },
+  i1: { fontSize: 12, lineHeight: 'normal', letterSpacing: 0.09, fontWeight: 'normal' },
 };
 
 export const typographyCss = ({
   colorShade,
   variant = 'b3',
+  fontStyle = 'normal',
   color,
   fontWeight: customFontWeight,
   spaceNoWrap,
@@ -73,6 +77,7 @@ export const typographyCss = ({
   const { fontSize, lineHeight, letterSpacing, fontWeight = customFontWeight } = sizes[variant];
   return `
     font-size: ${pxToRem(fontSize)};
+    font-style: ${fontStyle};
     line-height: ${lineHeight === 'normal' ? lineHeight : pxToRem(Number(lineHeight))};
     letter-spacing: ${pxToRem(letterSpacing)};
     font-weight: ${fontWeight};
@@ -102,6 +107,7 @@ export const variantComponentMap = {
   b4: 'p',
   b5: 'p',
   link: 'a',
+  i1: 'i1',
 };
 
 const Typography = ({ variant = 'b5', ...props }: TypographyProps) => (
