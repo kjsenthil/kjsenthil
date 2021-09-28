@@ -26,7 +26,7 @@
                 <when condition="@(!context.Variables.ContainsKey("guest-password"))">
                     <!-- call  Key Vault  and retrieve password -->
                     <send-request mode="new" response-variable-name="guest-password-json" timeout="20" ignore-error="false">
-                        <set-url>{{keyvault-baseurl}}secrets/guest-password/?api-version=7.0</set-url>
+                        <set-url>{{keyvault-baseurl}}secrets/myaccount-guest-password/?api-version=7.0</set-url>
                         <set-method>GET</set-method>
                         <authentication-managed-identity resource="https://vault.azure.net" />
                     </send-request>
