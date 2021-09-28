@@ -51,6 +51,7 @@ export {
   PillNavigationCreatorTabComponent,
 } from './PillsNavigation';
 export { default as PillWithDropdown } from './PillWithDropdown';
+export { default as UnorderedToggleButtonGroup } from './UnorderedToggleButtonGroup';
 
 export { default as ProgressBarWithLegend } from './ProgressBarWithLegend';
 export { default as RadioGroup } from './RadioGroup';
