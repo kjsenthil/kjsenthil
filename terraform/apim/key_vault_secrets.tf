@@ -18,3 +18,17 @@ resource "azurerm_key_vault_secret" "xplan_password" {
   content_type = "password"
   key_vault_id = module.key_vault.id
 }
+
+resource "azurerm_key_vault_secret" "myaccount_guest_username" {
+  name         = "myaccount-guest-username"
+  value        = var.myaccount_guest_username
+  content_type = "username"
+  key_vault_id = module.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "myaccount_guest_password" {
+  name         = "myaccount-guest-password"
+  value        = var.myaccount_guest_password
+  content_type = "password"
+  key_vault_id = module.key_vault.id
+}

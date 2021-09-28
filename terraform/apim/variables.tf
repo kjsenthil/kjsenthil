@@ -59,6 +59,18 @@ variable "xplan_password" {
   sensitive   = true
 }
 
+variable "myaccount_guest_username" {
+  type        = string
+  description = "myaccount guest username used for anonymous logins."
+  sensitive   = true
+}
+
+variable "myaccount_guest_password" {
+  type        = string
+  description = "myaccount guest password used for anonymous logins."
+  sensitive   = true
+}
+
 variable "private_dns_zone" {
   type        = string
   description = "The private DNS Zone for the APIM."

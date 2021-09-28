@@ -101,6 +101,40 @@ module "api_management_policy_xplan" {
   depends_on = [module.api_operation, module.function_app_projections]
 }
 
+module "myaccounts_apis_requiring_guest_login" {
+  source              = "../modules/api_operation"
+  for_each            = local.myaccount_endpoints_requiring_guest_auth
+  apima_name          = module.apima.name
+  apim_name           = data.azurerm_api_management.apim.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  operation_id        = lookup(each.value, "operation_id", null)
+  display_name        = lookup(each.value, "display_name", null)
+  method              = lookup(each.value.policy.cors, "method", null)
+  url_template        = lookup(each.value, "url_template", null)
+  description         = lookup(each.value, "description", null)
+  path_params         = lookup(each.value, "path_params", [])
+  is_mock             = false
+}
+
+
+module "myaccounts_apis_requiring_guest_login_policy" {
+  source              = "../modules/api_management_policy"
+  for_each            = local.myaccount_endpoints_requiring_guest_auth
+  apima_name          = module.apima.name
+  apim_name           = data.azurerm_api_management.apim.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  operation_id        = lookup(each.value, "operation_id", null)
+  xml_policy_file = templatefile("../modules/policy_documents/myaccount_guest_auth_flow.xml", {
+    config = {
+      backend_url = lookup(local.api_backends, lookup(each.value.policy, "backend_url", ""), null),
+      backend_id  = lookup(each.value.policy, "backend_id", null),
+      rewrite_uri = lookup(each.value, "url_template", null),
+      auth_url    = "${local.apim_base_url}/Auth/token"
+    }
+  })
+  depends_on = [module.myaccounts_apis_requiring_guest_login]
+}
+
 //----------------------------------------------------------------------------//
 //          !!!!!!! IMPORTANT - Changes to front_end module !!!!!!!!          //
 //                                                                            //

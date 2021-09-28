@@ -247,6 +247,8 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
+          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
@@ -257,6 +259,8 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
+          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
@@ -933,6 +937,8 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
+          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
@@ -1109,6 +1115,8 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
+          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
@@ -1129,6 +1137,8 @@ jobs:
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
           TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
           TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
+          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
+          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
           TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
           TF_VAR_cdn_profile_website_name: ${{ needs.get_prod_apim_outputs.outputs.cdn_profile_website_name }}
           TF_VAR_cdn_profile_storybook_name: ${{ needs.get_prod_apim_outputs.outputs.cdn_profile_storybook_name }}

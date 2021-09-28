@@ -1,0 +1,28 @@
+{
+    "api_definitions": [
+        {
+            "operation_id": "myaccount-countries-list",
+            "display_name": "MyAccount Countries List",
+            "url_template": "/AccountSetup/standing/data",
+            "description": "This API returns a list of countries.",
+            "policy": {
+                "cors": {
+                    "method": "GET"
+                },
+                "backend_id": "bestinvest-online-api"
+            }
+        },
+        {
+            "operation_id": "myaccount-unique-username-checker",
+            "display_name": "MyAccount Unique Username Checker",
+            "url_template": "/AccountSetup/checkusernameexists",
+            "description": "This API take the username as userName in body to check and returns a boolean.",
+            "policy": {
+                "cors": {
+                    "method": "POST"
+                },
+                "backend_id": "bestinvest-online-api"
+            }
+        }
+    ]
+}

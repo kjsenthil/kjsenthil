@@ -24,6 +24,14 @@ locals {
     v["operation_id"] => v
   }
 
+  myaccount_endpoints_requiring_guest_auth = {
+    for k, v in
+    tomap(jsondecode(file("${path.module}/myaccounts_apis_with_guest_login.json")))["api_definitions"] :
+    v["operation_id"] => v
+  }
+
+  apim_base_url = "${data.azurerm_api_management.apim.gateway_url}/${module.apima.path}"
+
   api_backends = {
     projections_function_app = "https://${module.function_app_projections.url}/api/"
     features_function_app    = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? "https://${module.function_app_features[0].url}/api/" : null

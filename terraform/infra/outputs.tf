@@ -49,7 +49,7 @@ output "api_endpoints" {
 }
 
 output "api_base_url" {
-  value       = "${data.azurerm_api_management.apim.gateway_url}/${module.apima.path}"
+  value       = local.apim_base_url
   description = "A concat of the APIM gateway URL and the API path."
 }
 
