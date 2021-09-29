@@ -10,6 +10,7 @@ export interface CarouselProps {
 const Carousel = ({ children, settings }: CarouselProps) => {
   const defaultSettings = {
     dots: true,
+    arrows: false,
   };
   const carouselSettings = { ...defaultSettings, ...settings };
   return <StyledSlider {...carouselSettings}>{children}</StyledSlider>;

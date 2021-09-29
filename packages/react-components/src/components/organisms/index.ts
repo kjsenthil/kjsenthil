@@ -16,6 +16,7 @@ export { default as AddCashCard } from './AddCashCard';
 export { default as AddCashModal } from './AddCashModal';
 export { default as AccountFilter, AccountFilterSelection } from './AccountFilter';
 export { default as AssetDetails } from './AssetDetails';
+export { default as CoachHowDoesItWork } from './CoachHowDoesItWork';
 export { default as Footer } from './Footer';
 export { default as GoalInputCard } from './GoalInputCard';
 export { default as GoalMainCardPlaceholder } from './GoalMainCardPlaceholder';
