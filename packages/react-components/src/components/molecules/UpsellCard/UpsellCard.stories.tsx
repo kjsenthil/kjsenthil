@@ -11,7 +11,7 @@ export default {
       control: {
         type: 'radio',
       },
-      options: [undefined, 'triangle overlay'],
+      options: [undefined, 'triangle-overlay'],
     },
   },
 } as Meta;

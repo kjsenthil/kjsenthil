@@ -26,7 +26,7 @@ export const StyledBox = styled(Box)`
   `}
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(({ isMobile, ...props }) => <Button {...props} />)`
   ${({ isMobile }: { isMobile: boolean }) => css`
     ${isMobile &&
     `
@@ -54,7 +54,7 @@ export const StyledDialogContainer = styled(
   `}
 `;
 
-export const StyledDialogContent = styled(DialogContent)`
+export const StyledDialogContent = styled(({ isMobile, ...props }) => <DialogContent {...props} />)`
   ${({ theme, isMobile }: { isMobile: boolean; theme: Theme }) => css`
     padding: ${theme.spacing(1.25)}px ${isMobile ? theme.spacing(2.5) : theme.spacing(5)}px
       ${theme.spacing(5)}px;

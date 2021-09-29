@@ -31,6 +31,6 @@ const Template: Story<LinkWithIconProps> = (args) => <LinkWithIcon {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   children: 'Link with Icon',
-  onClick: () => alert('Clicked'),
+  onClick: () => {},
   iconName: 'book',
 };

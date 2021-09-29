@@ -44,6 +44,7 @@ export { default as ModalWithHeader } from './ModalWithHeader';
 export { default as NavLink } from './NavLink';
 export { default as NavLinkWithDropDown } from './NavLinkWithDropDown';
 export { default as PillsNavigation } from './PillsNavigation';
+export { default as SplashHeader } from './SplashHeader';
 export { default as StickyHeader } from './StickyHeader';
 export {
   PillsNavigationTab,

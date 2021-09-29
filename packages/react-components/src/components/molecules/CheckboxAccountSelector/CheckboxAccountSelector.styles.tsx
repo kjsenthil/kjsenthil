@@ -1,7 +1,8 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Grid, Theme, FormControlLabel, Typography, Checkbox } from '../../atoms';
 
-export const StyledGrid = styled(Grid)`
+export const StyledGrid = styled(({ isMobile, ...props }) => <Grid {...props} />)`
   ${({ theme }: { theme: Theme }) => `
     padding: ${theme.spacing(1.25)}px ${theme.spacing(1)}px ${theme.spacing(
     1.25
@@ -27,13 +28,15 @@ export const StyledContainer = styled.div`
   `}
 `;
 
-export const StyledInnerGrid = styled(Grid)`
+export const StyledInnerGrid = styled(({ isMobile, ...props }) => <Grid {...props} />)`
   ${({ theme, isMobile }: { theme: Theme; isMobile: boolean }) => `
     height: ${isMobile ? 'unset' : `${theme.spacing(2)}px`}
   `}
 `;
 
-export const StyledRadioFormInput = styled(FormControlLabel)`
+export const StyledRadioFormInput = styled(({ isMobile, ...props }) => (
+  <FormControlLabel {...props} />
+))`
   ${({ theme, isMobile }: { theme: Theme; isMobile: boolean }) => `
     border-radius: ${theme.spacing(1.5)}px;
     border: solid ${theme.spacing(0.2)}px ${theme.palette.grey[200]};
