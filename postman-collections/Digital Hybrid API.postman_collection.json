@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "fded7478-5a27-4bf3-9493-df6fb87d25b3",
+		"_postman_id": "a7d65624-bd92-417b-a25e-d4b233c403b3",
 		"name": "Digital Hybrid API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "myaccount",
+			"name": "My Account",
 			"item": [
 				{
 					"name": "clients/:id",
@@ -4358,6 +4358,767 @@
 			]
 		},
 		{
+			"name": "Digital Fact find",
+			"item": [
+				{
+					"name": "Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/categories",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedBestInvestPlus",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPluss/categories",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedBestInvestPluss",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 13:03:43 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"IsSuccess\": true,\n    \"ReturnMessage\": null,\n    \"Data\": {\n        \"categories\": [\n            {\n                \"id\": 1,\n                \"categoryName\": \"About you\",\n                \"categoryText\": \"About you\",\n                \"categoryKey\": \"ABOUT_YOU\"\n            },\n            {\n                \"id\": 2,\n                \"categoryName\": \"Investments and goals\",\n                \"categoryText\": \"How would you like to invest?\",\n                \"categoryKey\": \"INVESTMENTS_AND_GOALS\"\n            },\n            {\n                \"id\": 3,\n                \"categoryName\": \"Income and expenditure\",\n                \"categoryText\": \"Your income and expenditure\",\n                \"categoryKey\": \"INCOME_AND_EXPENDITURE\"\n            },\n            {\n                \"id\": 4,\n                \"categoryName\": \"Existing investments\",\n                \"categoryText\": \"Your savings and other assets\",\n                \"categoryKey\": \"EXISTING_INVESTMENTS\"\n            },\n            {\n                \"id\": 5,\n                \"categoryName\": \"Investment knowledge\",\n                \"categoryText\": \"Your investment knowledge and experience\",\n                \"categoryKey\": \"INVESTMENT_KNOWLEDGE\"\n            },\n            {\n                \"id\": 6,\n                \"categoryName\": \"Risk\",\n                \"categoryText\": \"Your risk tolerance\",\n                \"categoryKey\": \"RISK\"\n            },\n            {\n                \"id\": 7,\n                \"categoryName\": \"Book an appointment\",\n                \"categoryText\": \"Book an appointment\",\n                \"categoryKey\": \"BOOK_AN_APPOINTMENT\"\n            },\n            {\n                \"id\": 8,\n                \"categoryName\": \"Account setup\",\n                \"categoryText\": \"Account setup\",\n                \"categoryKey\": \"ACCOUNT_SETUP\"\n            },\n            {\n                \"id\": 9,\n                \"categoryName\": \"Thank you\",\n                \"categoryText\": \"Thank you\",\n                \"categoryKey\": \"THANK_YOU\"\n            },\n            {\n                \"id\": 10,\n                \"categoryName\": \"Aml\",\n                \"categoryText\": \"Aml\",\n                \"categoryKey\": \"AML\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Category Questions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/category/:categoryId/questions",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedBestInvestPlus",
+								"category",
+								":categoryId",
+								"questions"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/category/:categoryId/questions",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedBestInvestPlus",
+										"category",
+										":categoryId",
+										"questions"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 12:58:30 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"IsSuccess\":true,\"ReturnMessage\":null,\"Data\":{\"questions\":[{\"id\":6,\"question\":\"Employment status\",\"questionKey\":\"INCOME_AND_EXPENDITURE_EMPLOYMENT_STATUS\",\"order\":1},{\"id\":7,\"question\":\"What is your monthly income after tax?\",\"questionKey\":\"INCOME_AND_EXPENDITURE_INCOME\",\"order\":2},{\"id\":8,\"question\":\"What is your total monthly expenditure?\",\"questionKey\":\"INCOME_AND_EXPENDITURE_EXPENDITURE\",\"order\":3}],\"categoryId\":3}}"
+						}
+					]
+				},
+				{
+					"name": "Save Category Answers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactId\": {{myAccounts.contactId}},\r\n    \"answers\": [\r\n        {\r\n            \"questionId\": 6,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_EMPLOYMENT_STATUS\",\r\n            \"answer\": \"Employed\"\r\n        },\r\n        {\r\n            \"questionId\": 7,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_INCOME\",\r\n            \"answer\": \"1000\"\r\n        },\r\n        {\r\n            \"questionId\": 8,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_EXPENDITURE\",\r\n            \"answer\": \"500\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/category/:categoryId/questions",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedBestInvestPlus",
+								"category",
+								":categoryId",
+								"questions"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"contactId\": {{myAccounts.contactId}},\r\n    \"answers\": [\r\n        {\r\n            \"questionId\": 6,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_EMPLOYMENT_STATUS\",\r\n            \"answer\": \"Employed\"\r\n        },\r\n        {\r\n            \"questionId\": 7,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_INCOME\",\r\n            \"answer\": \"1000\"\r\n        },\r\n        {\r\n            \"questionId\": 8,\r\n            \"questionKey\": \"INCOME_AND_EXPENDITURE_EXPENDITURE\",\r\n            \"answer\": \"500\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/category/:categoryId/questions",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedBestInvestPlus",
+										"category",
+										":categoryId",
+										"questions"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 12:55:27 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"IsSuccess\":true,\"ReturnMessage\":null,\"Data\":true}"
+						}
+					]
+				},
+				{
+					"name": "Progress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/progress/:contactid",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedBestInvestPlus",
+								"progress",
+								":contactid"
+							],
+							"variable": [
+								{
+									"key": "contactid",
+									"value": "{{myAccounts.contactId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/progress/:contactid",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedBestInvestPlus",
+										"progress",
+										":contactid"
+									],
+									"variable": [
+										{
+											"key": "contactid",
+											"value": "{{myAccounts.contactId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 13:07:56 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"IsSuccess\": true,\n    \"ReturnMessage\": null,\n    \"Data\": [\n        {\n            \"categoryId\": 1,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"About you\",\n            \"categoryKey\": \"ABOUT_YOU\"\n        },\n        {\n            \"categoryId\": 2,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"How would you like to invest?\",\n            \"categoryKey\": \"INVESTMENTS_AND_GOALS\"\n        },\n        {\n            \"categoryId\": 3,\n            \"status\": \"COMPLETE\",\n            \"categoryText\": \"Your income and expenditure\",\n            \"categoryKey\": \"INCOME_AND_EXPENDITURE\"\n        },\n        {\n            \"categoryId\": 4,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Your savings and other assets\",\n            \"categoryKey\": \"EXISTING_INVESTMENTS\"\n        },\n        {\n            \"categoryId\": 5,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Your investment knowledge and experience\",\n            \"categoryKey\": \"INVESTMENT_KNOWLEDGE\"\n        },\n        {\n            \"categoryId\": 6,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Your risk tolerance\",\n            \"categoryKey\": \"RISK\"\n        },\n        {\n            \"categoryId\": 7,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Book an appointment\",\n            \"categoryKey\": \"BOOK_AN_APPOINTMENT\"\n        },\n        {\n            \"categoryId\": 8,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Account setup\",\n            \"categoryKey\": \"ACCOUNT_SETUP\"\n        },\n        {\n            \"categoryId\": 9,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Thank you\",\n            \"categoryKey\": \"THANK_YOU\"\n        },\n        {\n            \"categoryId\": 10,\n            \"status\": \"NOT STARTED\",\n            \"categoryText\": \"Aml\",\n            \"categoryKey\": \"AML\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Category questions and Answers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/contact/:contactId/category/:categoryId/questionsAnswers",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedBestInvestPlus",
+								"contact",
+								":contactId",
+								"category",
+								":categoryId",
+								"questionsAnswers"
+							],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "{{myAccounts.contactId}}"
+								},
+								{
+									"key": "categoryId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedBestInvestPlus/contact/:contactId/category/:categoryId/questionsAnswers",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedBestInvestPlus",
+										"contact",
+										":contactId",
+										"category",
+										":categoryId",
+										"questionsAnswers"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{myAccounts.contactId}}"
+										},
+										{
+											"key": "categoryId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 13:09:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"IsSuccess\":true,\"ReturnMessage\":null,\"Data\":{\"questions\":[{\"id\":6,\"question\":\"Employment status\",\"questionKey\":\"INCOME_AND_EXPENDITURE_EMPLOYMENT_STATUS\",\"answer\":\"Employed\",\"order\":1},{\"id\":7,\"question\":\"What is your monthly income after tax?\",\"questionKey\":\"INCOME_AND_EXPENDITURE_INCOME\",\"answer\":\"1000\",\"order\":2},{\"id\":8,\"question\":\"What is your total monthly expenditure?\",\"questionKey\":\"INCOME_AND_EXPENDITURE_EXPENDITURE\",\"answer\":\"500\",\"order\":3}],\"categoryId\":3,\"contactId\":34640}}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{onlineApi.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Oxford risk",
+			"item": [
+				{
+					"name": "Questions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedOxfordRisk/questions",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedOxfordRisk",
+								"questions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedOxfordRisk/questions",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedOxfordRisk",
+										"questions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 13:09:30 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"IsSuccess\":true,\"ReturnMessage\":null,\"Data\":{\"instrumentId\":11,\"questions\":[{\"text\":\"I am comfortable with the possibility of ending up with less than I expect, for the chance of ending up with more than I expect.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"11\",\"id\":801},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"12\",\"id\":802},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"13\",\"id\":803},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"14\",\"id\":804},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"15\",\"id\":805}],\"refId\":\"RT8\",\"id\":161},{\"text\":\"The possibility of investment losses makes me uneasy.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":806},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":807},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":808},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":809},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":810}],\"refId\":\"COMP4\",\"id\":162},{\"text\":\"I expect higher investment growth and I am willing to accept a higher possibility of large losses.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":811},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":812},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":813},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":814},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":815}],\"refId\":\"RT5\",\"id\":163},{\"text\":\"If there is a chance of making better long-term returns, I am prepared to take higher investment risks.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":816},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":817},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":818},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":819},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":820}],\"refId\":\"RT2\",\"id\":164},{\"text\":\"I am comfortable with uncertainty when investing my money\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"36\",\"id\":821},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"37\",\"id\":822},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"38\",\"id\":823},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"39\",\"id\":824},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"40\",\"id\":825}],\"refId\":\"RT12\",\"id\":165},{\"text\":\"I would be happy to risk losses to get potentially greater long-term gains.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":826},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":827},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":828},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":829},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":830}],\"refId\":\"RT1\",\"id\":166},{\"text\":\"I am prepared to participate in market downturns and upswings rather than receive more consistent annual returns.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"31\",\"id\":831},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"32\",\"id\":832},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"33\",\"id\":833},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"34\",\"id\":834},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"35\",\"id\":835}],\"refId\":\"RT11\",\"id\":167},{\"text\":\"I am more prepared to take investment risks than other people.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":836},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":837},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":838},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":839},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":840}],\"refId\":\"RT4\",\"id\":168},{\"text\":\"I am an experienced investor.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":841},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":842},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":843},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":844},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":845}],\"refId\":\"CONF1\",\"id\":169},{\"text\":\"I am well informed about investing.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":846},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":847},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":848},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":849},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":850}],\"refId\":\"CONF2\",\"id\":170},{\"text\":\"The idea of taking risk with my money scares me.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":851},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":852},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":853},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":854},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":855}],\"refId\":\"COMP3\",\"id\":171},{\"text\":\"I am willing to put a significant part of my wealth in high-risk investments.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"21\",\"id\":856},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"22\",\"id\":857},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"23\",\"id\":858},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"24\",\"id\":859},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"25\",\"id\":860}],\"refId\":\"RT9\",\"id\":172},{\"text\":\"I am very aware of how markets have been performing.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":861},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":862},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":863},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":864},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":865}],\"refId\":\"CONF3\",\"id\":173},{\"text\":\"I would worry about my investments frequently fluctuating in value.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":866},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":867},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":868},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":869},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":870}],\"refId\":\"COMP5\",\"id\":174},{\"text\":\"I would worry about losing money on financial markets.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"1\",\"id\":871},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"2\",\"id\":872},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"3\",\"id\":873},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"4\",\"id\":874},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"5\",\"id\":875}],\"refId\":\"COMP1\",\"id\":175},{\"text\":\"I get worried when my investments drop in value.\",\"answerValues\":[{\"label\":\"Strongly Disagree\",\"value\":\"1\",\"order\":1,\"refId\":\"6\",\"id\":876},{\"label\":\"Disagree\",\"value\":\"2\",\"order\":2,\"refId\":\"7\",\"id\":877},{\"label\":\"Neutral\",\"value\":\"3\",\"order\":3,\"refId\":\"8\",\"id\":878},{\"label\":\"Agree\",\"value\":\"4\",\"order\":4,\"refId\":\"9\",\"id\":879},{\"label\":\"Strongly Agree\",\"value\":\"5\",\"order\":5,\"refId\":\"10\",\"id\":880}],\"refId\":\"COMP2\",\"id\":176}]}}"
+						}
+					]
+				},
+				{
+					"name": "Save Answers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instrumentId\": 11,\r\n    \"contactId\": {{myAccounts.contactId}},\r\n    \"answers\": [\r\n            {\r\n                \"questionRefid\": \"RT8\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP4\",\r\n                \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT5\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT2\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT12\",\r\n                \"value\": \"2\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT1\",\r\n                  \"value\": \"2\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT11\",\r\n                 \"value\": \"3\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT4\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF1\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF2\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP3\",\r\n               \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT9\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF3\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP5\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP1\",\r\n                 \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP2\",\r\n                \"value\": \"4\"\r\n            }\r\n        ],\r\n    \"caller\": \"BestInvest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedOxfordRisk/answers",
+							"host": [
+								"{{digitalHybrid.baseUrl}}"
+							],
+							"path": [
+								"{{apiPath}}",
+								"AuthorisedOxfordRisk",
+								"answers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"instrumentId\": 11,\r\n    \"contactId\": {{myAccounts.contactId}},\r\n    \"answers\": [\r\n            {\r\n                \"questionRefid\": \"RT8\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP4\",\r\n                \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT5\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT2\",\r\n                 \"value\": \"1\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT12\",\r\n                \"value\": \"2\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT1\",\r\n                  \"value\": \"2\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT11\",\r\n                 \"value\": \"3\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT4\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF1\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF2\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP3\",\r\n               \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"RT9\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"CONF3\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP5\",\r\n                \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP1\",\r\n                 \"value\": \"4\"\r\n            },\r\n            {\r\n                \"questionRefid\": \"COMP2\",\r\n                \"value\": \"4\"\r\n            }\r\n        ],\r\n    \"caller\": \"BestInvest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{digitalHybrid.baseUrl}}/{{apiPath}}/AuthorisedOxfordRisk/answers",
+									"host": [
+										"{{digitalHybrid.baseUrl}}"
+									],
+									"path": [
+										"{{apiPath}}",
+										"AuthorisedOxfordRisk",
+										"answers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "X-UA-Compatible",
+									"value": "IE=edge"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Request-Context",
+									"value": "appId=cid-v1:9584aee6-0cf9-4ee3-92ab-49d9583584a4"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Sep 2021 13:09:54 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\"IsSuccess\":true,\"ReturnMessage\":null,\"Data\":{\"riskScore\":2,\"consistencyScore\":2}}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{onlineApi.accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Xplan",
 			"item": [
 				{
@@ -5891,6 +6652,11 @@
 							"    const oisApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"OisApi\");\r",
 							"    pm.expect(oisApiToken.accessToken).to.be.not.empty;\r",
 							"    pm.environment.set(\"oisApi.accessToken\", oisApiToken.accessToken);\r",
+							"\r",
+							"    const onlineApiToken = jsonData.data.attributes.tokens.find(m => m.application === \"OnlineApi\");\r",
+							"    pm.expect(oisApiToken.accessToken).to.be.not.empty;\r",
+							"    pm.environment.set(\"onlineApi.accessToken\", onlineApiToken.accessToken);\r",
+							"\r",
 							"    //store whole token  object\r",
 							"    let tokensResponse = jsonData.data.attributes.tokens\r",
 							"    pm.environment.set(\"tokens\", JSON.stringify(tokensResponse));\r",
@@ -5947,7 +6713,7 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "text",
+					"_postman_previewlanguage": "json",
 					"header": [
 						{
 							"key": "Content-Type",
@@ -5955,7 +6721,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\r\n    \"data\": {\r\n        \"uri\": \"pin\",\r\n        \"type\": \"pin\",\r\n        \"id\": null,\r\n        \"attributes\": {\r\n            \"id\": null,\r\n            \"contactId\": 216009,\r\n            \"tokens\": [\r\n                {\r\n                    \"application\": \"MyAccountsApi\",\r\n                    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiIwOWEyODhmZS0wNWQxLTQyNTYtYTlkOS1jNzZhYTM2ZDYwYWEiLCJjb250YWN0IjoiMjE2MDA5IiwiYWNjb3VudHMiOiIxNTc3NjAsMTU3NzYxIiwibGlua2FjY291bnRzIjoiIiwieHBsYW5faWQiOiI2MTIyOTI1IiwiYXVkIjoibXlhY2NvdW50c2FwaS5iZXN0aW52ZXN0LmNvLnVrIiwiZXhwIjoxNjIyMTEzMjg0LCJpc3MiOiJpZGVudGl0eWFwaS5iZXN0aW52ZXN0LmNvLnVrIn0.Sh2oltjVtEdNYl15VjZXRmpbZ4r4C5Hh3PGDHGo-PpI\",\r\n                    \"refreshToken\": \"35704d45-526c-46d1-ba4f-d77822d165c6\",\r\n                    \"sessionId\": \"09a288fe-05d1-4256-a9d9-c76aa36d60aa\"\r\n                },\r\n                {\r\n                    \"application\": \"OisApi\",\r\n                    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiIwOWEyODhmZS0wNWQxLTQyNTYtYTlkOS1jNzZhYTM2ZDYwYWEiLCJjb250YWN0IjoiMjE2MDA5IiwiYWNjb3VudHMiOiIxNTc3NjAsMTU3NzYxIiwibGlua2FjY291bnRzIjoiIiwieHBsYW5faWQiOiI2MTIyOTI1IiwiYXVkIjoib2lzYXBpLmJlc3RpbnZlc3QuY28udWsiLCJleHAiOjE2MjIxMTMyODQsImlzcyI6ImlkZW50aXR5YXBpLmJlc3RpbnZlc3QuY28udWsifQ.GqOV7QtXWxGbQyq5G-CKo41pB8bnRGnO2Y5sKIDpl04\",\r\n                    \"refreshToken\": \"d59ca19c-f6a1-48c9-add6-044db5e9867d\",\r\n                    \"sessionId\": \"09a288fe-05d1-4256-a9d9-c76aa36d60aa\"\r\n                }\r\n            ]\r\n        },\r\n        \"links\": {\r\n            \"self\": \"https://identityapi.demo2.bestinvest.co.uk/api/pin/\"\r\n        },\r\n        \"relationships\": null\r\n    },\r\n    \"included\": null\r\n}"
+					"body": "{\n    \"data\": {\n        \"uri\": \"pin\",\n        \"type\": \"pin\",\n        \"id\": null,\n        \"attributes\": {\n            \"id\": null,\n            \"contactId\": 34640,\n            \"tokens\": [\n                {\n                    \"application\": \"MyAccountsApi\",\n                    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiI0NjQ4MDA4YS1kMDFmLTRhMTEtOWEwYS0yNmJlYWRjMDBlYTYiLCJjb250YWN0IjoiMzQ2NDAiLCJhY2NvdW50cyI6IjYzODExLDYzODEzLDE0Mjc4MCIsImxpbmthY2NvdW50cyI6IjU4NTc0LDY3MzU4IiwieHBsYW5faWQiOiI0OTE3OTIzIiwiYXVkIjoibXlhY2NvdW50c2FwaS5iZXN0aW52ZXN0LmNvLnVrIiwiZXhwIjoxNjMyODM2MzIxLCJpc3MiOiJpZGVudGl0eWFwaS5iZXN0aW52ZXN0LmNvLnVrIn0.mRIRAX8Uls5ct-WNPrCQGObphbxq5NkrHKYKRoTK8fU\",\n                    \"refreshToken\": \"be4c02eb-3753-40e0-b04b-ba3b7a964085\",\n                    \"sessionId\": \"4648008a-d01f-4a11-9a0a-26beadc00ea6\"\n                },\n                {\n                    \"application\": \"OisApi\",\n                    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiI0NjQ4MDA4YS1kMDFmLTRhMTEtOWEwYS0yNmJlYWRjMDBlYTYiLCJjb250YWN0IjoiMzQ2NDAiLCJhY2NvdW50cyI6IjYzODExLDYzODEzLDE0Mjc4MCIsImxpbmthY2NvdW50cyI6IjU4NTc0LDY3MzU4IiwieHBsYW5faWQiOiI0OTE3OTIzIiwiYXVkIjoib2lzYXBpLmJlc3RpbnZlc3QuY28udWsiLCJleHAiOjE2MzI4MzYzMjEsImlzcyI6ImlkZW50aXR5YXBpLmJlc3RpbnZlc3QuY28udWsifQ.znPmPOvWMIHjYxg3hTM8uCAkbOYzrgGO3K4idNc2R5k\",\n                    \"refreshToken\": \"020f2266-ced9-4f3e-9919-8a43b32f4bff\",\n                    \"sessionId\": \"4648008a-d01f-4a11-9a0a-26beadc00ea6\"\n                },\n                {\n                    \"application\": \"OnlineApi\",\n                    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiI0NjQ4MDA4YS1kMDFmLTRhMTEtOWEwYS0yNmJlYWRjMDBlYTYiLCJjb250YWN0IjoiMzQ2NDAiLCJhY2NvdW50cyI6IjYzODExLDYzODEzLDE0Mjc4MCIsImxpbmthY2NvdW50cyI6IjU4NTc0LDY3MzU4IiwieHBsYW5faWQiOiI0OTE3OTIzIiwiYXVkIjoib25saW5lYXBpLmJlc3RpbnZlc3QuY28udWsiLCJleHAiOjE2MzI4MzYzMjEsImlzcyI6ImlkZW50aXR5YXBpLmJlc3RpbnZlc3QuY28udWsifQ.xt8oFNFR-Hp9hXqFPSMHPVwGQ_wvgTWqWx9nvQOuYs8\",\n                    \"refreshToken\": \"194e6cd9-3953-43b9-a958-d73f0e5e3cb8\",\n                    \"sessionId\": \"4648008a-d01f-4a11-9a0a-26beadc00ea6\"\n                }\n            ]\n        },\n        \"links\": {\n            \"self\": \"https://identityapi.test3.bestinvest.co.uk/api/pin/\"\n        },\n        \"relationships\": null\n    },\n    \"included\": null\n}"
 				},
 				{
 					"name": "Bad Request",
