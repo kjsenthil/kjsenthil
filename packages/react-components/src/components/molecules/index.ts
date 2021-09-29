@@ -72,6 +72,7 @@ export { default as ConfirmationModalWithImage } from './ConfirmationModalWithIm
 export { default as RadioFormInput } from './RadioFormInput';
 export { default as CheckboxAccountSelector } from './CheckboxAccountSelector';
 export { default as LinkWithIcon } from './LinkWithIcon';
+export { default as LinkWithInfo } from './LinkWithInfo';
 
 /* material-ui molecules */
 export {
