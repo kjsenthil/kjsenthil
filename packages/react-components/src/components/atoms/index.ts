@@ -56,6 +56,7 @@ export { FormattedTextFieldControlled, FormattedTextFieldUncontrolled } from './
 
 /* material-ui atoms */
 export {
+  Avatar,
   List,
   ListItem,
   ListItemText,

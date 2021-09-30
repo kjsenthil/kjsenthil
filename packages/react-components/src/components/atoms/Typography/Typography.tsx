@@ -107,7 +107,7 @@ export const variantComponentMap = {
   b4: 'p',
   b5: 'p',
   link: 'a',
-  i1: 'i1',
+  i1: 'p',
 };
 
 const Typography = ({ variant = 'b5', ...props }: TypographyProps) => (

@@ -46,5 +46,6 @@ export { default as CoachingPopover } from './CoachingPopover';
 export { default as ShareDetails } from './ShareDetails';
 export { default as ShareOrderForm } from './ShareOrderForm';
 export { default as DirectDebitGuarantee } from './DirectDebitGuarantee';
+export { default as TodoCard } from './TodoCard';
 
 export type { GoalProgressCardProps, GoalSelectionProps };
