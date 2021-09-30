@@ -253,7 +253,7 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
           </Typography>
         </Totals>
         <Description
-          variant="b2"
+          variant="b4"
           color="primary"
           colorShade="dark2"
           $isMobile={isMobile}

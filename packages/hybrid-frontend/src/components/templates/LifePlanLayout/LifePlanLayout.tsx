@@ -58,6 +58,9 @@ export default function LifePlanLayout({
 }: LifePlanLayoutProps) {
   const { isMobile } = useBreakpoint();
 
+  // all retirement goals should appear with the name Retirement
+  const getGoalName = (goal: LifePlanGoalsData) => (goal.category === 5 ? 'Retirement' : goal.name);
+
   const renderMainContent = () => {
     const hasGoals = goalsData && goalsData.length > 0;
 
@@ -67,7 +70,7 @@ export default function LifePlanLayout({
     // To avoid having to use the non-null assertion operator everywhere else
     goalsData = goalsData!;
 
-    const selectedGoal = goalsData.find((goal) => currentView === goal.name);
+    const selectedGoal = goalsData.find((goal) => currentView === getGoalName(goal));
 
     if (!selectedGoal) {
       // We're in the "All goal" view
@@ -76,7 +79,7 @@ export default function LifePlanLayout({
         <>
           <ViewSelection
             currentView={currentView}
-            views={goalsData.map((goal) => goal.name)}
+            views={goalsData.map((goal) => getGoalName(goal))}
             goToAllGoalsView={goToAllGoalsView}
             goToSingleGoalView={goToSingleGoalView}
             goToCreateGoalView={goToCreateGoalView}
@@ -93,6 +96,7 @@ export default function LifePlanLayout({
                     key={goalData.name}
                     style={GoalProgressCardStyle.simple}
                     {...goalData}
+                    name={getGoalName(goalData)}
                   />
                 )
             )}
@@ -108,7 +112,7 @@ export default function LifePlanLayout({
       <>
         <ViewSelection
           currentView={currentView}
-          views={goalsData.map((goal) => goal.name)}
+          views={goalsData.map((goal) => getGoalName(goal))}
           goToAllGoalsView={goToAllGoalsView}
           goToSingleGoalView={goToSingleGoalView}
           goToCreateGoalView={goToCreateGoalView}
@@ -121,7 +125,7 @@ export default function LifePlanLayout({
           onTrackAmountMarketUnderperform={selectedGoal.affordableAmountUnderperform}
         />
         <Spacer y={5} />
-        <GoalProgressCardDetailed {...selectedGoal} />
+        <GoalProgressCardDetailed {...selectedGoal} name={getGoalName(selectedGoal)} />
         <Spacer y={7.5} />
         <SectionHeading text="Your projections" />
         <Spacer y={3} />

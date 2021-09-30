@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  DisabledComponent,
   Icon,
   PillNavigationCreatorTabComponent,
   PillsNavigation,
@@ -8,6 +9,7 @@ import {
 } from '@tswdts/react-components';
 import EditThisGoalLinkTabComponent from './EditThisGoalLinkTabComponent/EditThisGoalLinkTabComponent';
 import { DefaultViewSelectionValue } from '../../../pages/LifePlanPage/GoalSelection/config';
+import StyledDivider from './ViewSelection.styles';
 
 export interface ViewSelectionProps {
   currentView: string;
@@ -55,6 +57,7 @@ export default function ViewSelection({
       <PillsNavigationTab
         component={PillsNavigationSelectableTabComponent}
         label={DefaultViewSelectionValue.ALL_GOALS}
+        selectedColor="tertiary"
         value={DefaultViewSelectionValue.ALL_GOALS}
       />
       {views.map((view) => (
@@ -66,12 +69,15 @@ export default function ViewSelection({
           selectedColor="tertiary"
         />
       ))}
-      <PillsNavigationTab
-        component={PillNavigationCreatorTabComponent}
-        label={DefaultViewSelectionValue.CREATE_GOAL}
-        value={DefaultViewSelectionValue.CREATE_GOAL}
-        startIcon={<Icon name="plus" />}
-      />
+      <StyledDivider orientation="vertical" y={4} />
+      <DisabledComponent title="Coming soon">
+        <PillsNavigationTab
+          component={PillNavigationCreatorTabComponent}
+          label={DefaultViewSelectionValue.CREATE_GOAL}
+          value={DefaultViewSelectionValue.CREATE_GOAL}
+          startIcon={<Icon name="plus" />}
+        />
+      </DisabledComponent>
       {currentView !== DefaultViewSelectionValue.ALL_GOALS && (
         <PillsNavigationTab
           component={EditThisGoalLinkTabComponent}

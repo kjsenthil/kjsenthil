@@ -6,7 +6,7 @@ import LifePlanLayout, { LifePlanGoalsData } from './LifePlanLayout';
 import { DefaultViewSelectionValue } from '../../pages/LifePlanPage/GoalSelection/config';
 
 enum GoalName {
-  RETIREMENT = 'Retirement',
+  RETIREMENT = 'Some retirement goal',
   BUYING_A_HOME = 'Buying a home',
   CHILD_EDUCATION = "My child's education",
   SOMETHING_ELSE = 'Something else',
@@ -14,16 +14,16 @@ enum GoalName {
 }
 
 const mockGoalCategories = {
-  [GoalName.RETIREMENT]: 1,
+  [GoalName.GROW_MY_MONEY]: 1,
   [GoalName.BUYING_A_HOME]: 2,
   [GoalName.CHILD_EDUCATION]: 3,
   [GoalName.SOMETHING_ELSE]: 4,
-  [GoalName.GROW_MY_MONEY]: 5,
+  [GoalName.RETIREMENT]: 5,
 };
 
 const goalSelectionTiles: GoalSelectionProps['tiles'] = [
   {
-    name: GoalName.RETIREMENT,
+    name: 'Retirement',
     iconSrc: '/goals/retirement.webp',
   },
   {
@@ -48,10 +48,16 @@ const goalSelectionTiles: GoalSelectionProps['tiles'] = [
   },
 ];
 
-const goalsData: LifePlanGoalsData[] = [
+// with additional property to test different display name for retirement goals
+type MockLifePlanGoalsData = LifePlanGoalsData & {
+  displayName: string;
+};
+
+const goalsData: MockLifePlanGoalsData[] = [
   {
     name: GoalName.RETIREMENT,
     category: mockGoalCategories[GoalName.RETIREMENT],
+    displayName: 'Retirement',
     iconSrc: 'test.jpg',
     lumpSumDate: dayjs().subtract(1, 'year').toDate(),
     startDate: dayjs().add(9, 'year').toDate(),
@@ -72,6 +78,7 @@ const goalsData: LifePlanGoalsData[] = [
   {
     name: GoalName.BUYING_A_HOME,
     category: mockGoalCategories[GoalName.BUYING_A_HOME],
+    displayName: GoalName.BUYING_A_HOME,
     iconSrc: 'test.jpg',
     lumpSumDate: undefined,
     startDate: undefined,
@@ -91,6 +98,7 @@ const goalsData: LifePlanGoalsData[] = [
   {
     name: GoalName.CHILD_EDUCATION,
     category: mockGoalCategories[GoalName.CHILD_EDUCATION],
+    displayName: GoalName.CHILD_EDUCATION,
     iconSrc: 'test.jpg',
     lumpSumDate: undefined,
     startDate: dayjs().subtract(1, 'year').toDate(),
@@ -118,7 +126,7 @@ function assertCommonElements() {
   // We expect common elements in the GoalSelection section to be present.
   expect(screen.getByText("What's important to you?")).toBeVisible();
   expect(
-    screen.getByText('Achieve your investment goals by adding them to your life plan.')
+    screen.getByText('Get started with your investment goals by adding them to your life plan.')
   ).toBeVisible();
 }
 
@@ -195,7 +203,7 @@ describe('LifePlanLayout', () => {
       // - A Goal Progress Card
       // - A goal creation button
       goalsData.forEach((goal) => {
-        const goalElements = screen.getAllByText(goal.name);
+        const goalElements = screen.getAllByText(goal.displayName);
         expect(goalElements.length).toBe(3);
         goalElements.forEach((goalElement) => {
           expect(goalElement).toBeVisible();
@@ -215,7 +223,7 @@ describe('LifePlanLayout', () => {
     it('renders correctly in Single goal view', () => {
       renderWithTheme(
         <LifePlanLayout
-          currentView={GoalName.RETIREMENT}
+          currentView="Retirement"
           goalSelectionTiles={goalSelectionTiles}
           goToAllGoalsView={goToAllGoalsView}
           goToCreateGoalView={goToCreateGoalView}
@@ -238,7 +246,7 @@ describe('LifePlanLayout', () => {
       // - A goal creation button
       const selectedGoal = goalsData.find((goal) => GoalName.RETIREMENT === goal.name);
       if (!selectedGoal) fail(`Goal ${GoalName.RETIREMENT} could not be found in provided goals`);
-      const goalElements = screen.getAllByText(selectedGoal.name);
+      const goalElements = screen.getAllByText(selectedGoal.displayName);
       expect(goalElements.length).toBe(3);
       goalElements.forEach((goalElement) => {
         expect(goalElement).toBeVisible();
@@ -289,7 +297,7 @@ describe('LifePlanLayout', () => {
 
       // Now let's navigate to the "Single goal" - retirement view
 
-      const retirementGoalNavigationButton = screen.getAllByText(GoalName.RETIREMENT)[0];
+      const retirementGoalNavigationButton = screen.getAllByText('Retirement')[0];
       fireEvent.click(retirementGoalNavigationButton);
 
       expect(screen.getByText('Projection chart')).toBeVisible();
