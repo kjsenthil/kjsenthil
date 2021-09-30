@@ -76,6 +76,7 @@ export { default as CheckboxAccountSelector } from './CheckboxAccountSelector';
 export { default as LinkWithIcon } from './LinkWithIcon';
 export { default as Label } from './Label';
 export { default as LinkWithInfo } from './LinkWithInfo';
+export { default as StepProgress } from './StepProgress';
 
 /* material-ui molecules */
 export {

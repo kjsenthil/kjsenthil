@@ -13,7 +13,7 @@ import {
 } from '../../atoms';
 
 export const StyledBox = styled(Box)`
-  ${({ theme }) => css`
+  ${({ theme }: { theme: Theme }) => css`
     padding-top: ${theme.spacing(5)}px;
     padding-left: ${theme.spacing(5)}px;
     padding-right: ${theme.spacing(3.5)}px;
@@ -28,10 +28,7 @@ export const StyledBox = styled(Box)`
 
 export const StyledButton = styled(({ isMobile, ...props }) => <Button {...props} />)`
   ${({ isMobile }: { isMobile: boolean }) => css`
-    ${isMobile &&
-    `
-      margin-top: 20px;
-      `}
+    ${isMobile && `margin-top: 20px;`}
   `}
 `;
 
@@ -47,9 +44,7 @@ export const StyledDialogContainer = styled(
 
     .MuiDialog-paperWidthMd {
       border-radius: 12px;
-      ${!isMobile &&
-      `
-        max-width: 610px`}
+      ${!isMobile && `max-width: 610px`}
     }
   `}
 `;
