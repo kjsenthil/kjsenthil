@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from '@reach/router';
 import {
@@ -123,7 +124,7 @@ const AccountDetailsLayout = ({ basicInfo, children }: AccountDetailsLayoutProps
                     {links.map((item) => (
                       <StyledLink
                         key={`navlink-${item.name}`}
-                        to={item.path}
+                        onClick={() => navigate(item.path)}
                         selected={item.path === currentUrl}
                       >
                         {item.icon}
