@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from '../../atoms';
-import { Alert, FormInput } from '../../molecules';
+import React from 'react';
 import { PinLoginItem } from '../../../services';
 import { convertToOrdinal } from '../../../utils/string';
-import randomPinIndices from '../../../services/auth/utils/randomPinIndices';
+import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from '../../atoms';
+import { Alert, FormInput } from '../../molecules';
+import { usePinInputs } from './hooks';
 
 export interface PinLoginProps {
   errorMessage?: string;
@@ -12,25 +12,35 @@ export interface PinLoginProps {
 }
 
 const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) => {
-  const theme = useTheme();
+  const { inputs, setInputValue, focusInput } = usePinInputs();
 
-  const [inputs, setInputs] = useState<PinLoginItem[]>(randomPinIndices());
-  const handleChange = (posIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    // TODO: remove this when we upgrade to React 17
-    event.persist();
-    setInputs((currInputs) => {
-      const newCurrInputs = currInputs.map((input) => ({ ...input }));
-      newCurrInputs[posIndex].value = Number(event.target.value);
-      return newCurrInputs;
-    });
+  const handleKeyDown = (index: number) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const inputValue = (event.target as any).value;
+    if (event.key === 'Backspace' && index !== 0 && !inputValue) {
+      event.preventDefault();
+      focusInput(index - 1);
+    } else if (event.key.length === 1 && Number.isNaN(Number(event.key))) {
+      event.preventDefault();
+    }
+  };
+
+  const handleChange = (index: number) => ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(index, Number(value));
+    const nextIndex = index + 1;
+    if (nextIndex < inputs.length && value) {
+      focusInput(nextIndex);
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const resp = await onPinSubmit(inputs);
+    const resp = await onPinSubmit(inputs.map(({ position, value }) => ({ position, value })));
     return resp;
   };
 
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
@@ -43,14 +53,16 @@ const PinLogin = ({ errorMessage, successMessage, onPinSubmit }: PinLoginProps) 
       <form onSubmit={onSubmit}>
         <Box maxWidth={600} m="auto">
           <Grid container spacing={2} justifyContent="center">
-            {inputs.map((pinField, index) => (
-              <Grid item xs={isMobile ? 9 : undefined} key={String(pinField.position)}>
+            {inputs.map(({ value, position, ref }, index) => (
+              <Grid item xs={isMobile ? 9 : undefined} key={String(position)}>
                 <FormInput
-                  data-testid="pin-login-form"
                   type="password"
                   name={`pin-${index + 1}`}
-                  value={pinField.value ? String(pinField.value) : ''}
-                  label={`${convertToOrdinal(pinField.position)}`}
+                  value={value ? String(value) : ''}
+                  label={`${convertToOrdinal(position)}`}
+                  inputProps={{ maxLength: 1, inputMode: 'numeric' }}
+                  inputRef={ref}
+                  onKeyDown={handleKeyDown(index)}
                   onChange={handleChange(index)}
                   fullWidth={isMobile}
                 />
