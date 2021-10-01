@@ -132,7 +132,7 @@ jobs:
 
   package_function_apps:
     name: "Package Function Apps"
-    if: always()
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -207,7 +207,7 @@ jobs:
 
   get_dev_rg_outputs:
     name: "Get dev resource group outputs"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - deploy_rg_terraform
@@ -310,7 +310,7 @@ jobs:
 
   get_dev_apim_outputs:
     name: "Get dev APIM outputs"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - deploy_apim_terraform
@@ -361,7 +361,7 @@ jobs:
   # Deploys terraform PR contents.
   deploy_pr_terraform:
     name: "Deploy PR Infrastructure"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - deploy_rg_terraform
@@ -438,7 +438,7 @@ jobs:
 
   get_pr_terraform_outputs:
     name: "Get PR Terraform outputs"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - derive_environment_prefix
@@ -501,7 +501,7 @@ jobs:
 
   open_storage_account_firewalls:
     name: "Open storage account firewalls for uploads"
-    if: always()
+    if: ${{ always() }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -523,7 +523,7 @@ jobs:
 
   clear_storybook_storage_account:
     name: "Clear storybook storage account"
-    if: always()
+    if: ${{ always() }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -584,13 +584,13 @@ jobs:
         run: yarn all:lint
 
       - name: "Login to Azure"
-        if: always()
+        if: ${{ always() }}
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: "Deploy ESLint Report"
-        if: always()
+        if: ${{ always() }}
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -640,13 +640,13 @@ jobs:
           yarn components test:coverage
 
       - name: "Login to Azure"
-        if: always()
+        if: ${{ always() }}
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: "Deploy Jest Reports"
-        if: always()
+        if: ${{ always() }}
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -771,7 +771,7 @@ jobs:
   # Deploys frontend pr contents
   deploy_gatsby:
     name: "Build & Deploy Gatsby"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - build_cache
@@ -837,7 +837,7 @@ jobs:
 
   get_staging_rg_outputs:
     name: "Get staging resource group outputs"
-    if: always()
+    if: ${{ always() }}
     environment: staging
     needs:
       - detect_changes
@@ -877,7 +877,7 @@ jobs:
 
   get_staging_apim_outputs:
     name: "Get staging APIM outputs"
-    if: always()
+    if: ${{ always() }}
     environment: staging
     needs:
       - detect_changes
@@ -928,7 +928,7 @@ jobs:
 
   plan_staging:
     name: "Terraform plan Staging"
-    if: always()
+    if: ${{ always() }}
     environment: staging
     needs:
       - detect_changes
@@ -1016,7 +1016,7 @@ jobs:
 
   get_prod_rg_outputs:
     name: "Get prod resource group outputs"
-    if: always()
+    if: ${{ always() }}
     environment: prod
     needs:
       - detect_changes
@@ -1056,7 +1056,7 @@ jobs:
 
   get_prod_apim_outputs:
     name: "Get prod APIM outputs"
-    if: always()
+    if: ${{ always() }}
     environment: prod
     needs:
       - detect_changes
@@ -1106,7 +1106,7 @@ jobs:
 
   plan_prod:
     name: "Terraform plan Prod"
-    if: always()
+    if: ${{ always() }}
     environment: prod
     needs:
       - detect_changes
@@ -1200,7 +1200,7 @@ jobs:
   # Deploys storybook.
   deploy_storybook:
     name: "Build & deploy Storybook"
-    if: always()
+    if: ${{ always() }}
     environment: development
     needs:
       - build_cache
@@ -1265,7 +1265,7 @@ jobs:
 
   close_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
-    if: always()
+    if: ${{ always() }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -1294,7 +1294,7 @@ jobs:
 
   purge_frontend_cdn_cache:
     name: "Purge frontend CDN cache"
-    if: needs.deploy_gatsby.result == 'success'
+    if: ${{ needs.deploy_gatsby.result == 'success' }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -1317,7 +1317,7 @@ jobs:
 
   purge_storybook_cdn_cache:
     name: "Purge storybook CDN cache"
-    if: needs.deploy_storybook.result == 'success'
+    if: ${{ needs.deploy_storybook.result == 'success' }}
     environment: development
     runs-on: ubuntu-latest
     needs:
@@ -1340,7 +1340,7 @@ jobs:
 
   publish_results:
     name: "Publish results"
-    if: always()
+    if: ${{ always() }}
     needs:
       - linting
       - unit_test
@@ -1428,7 +1428,7 @@ jobs:
             })
 
   post-to-slack:
-    if: always()
+    if: ${{ always() }}
     environment: development
     name: "Post to Slack"
     needs:
