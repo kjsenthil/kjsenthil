@@ -2,6 +2,7 @@
 import { ChartPeriodSelectionProps } from './ChartPeriodSelection';
 import { CheckboxAccountSelectorProps } from './CheckboxAccountSelector';
 import { CarouselProps } from './Carousel';
+import { InfoCardProps } from './InfoCard';
 
 import { TypographyWithTooltipProps } from './TypographyWithTooltip';
 import { LabelProps } from './Label';
@@ -43,6 +44,7 @@ export { default as FormSelect } from './FormSelect';
 export { default as GoalLifePlanCard } from './GoalLifePlanCard';
 export { default as GoalProgress } from './GoalProgress';
 export { default as GoalTile } from './GoalTile';
+export { default as InfoCard } from './InfoCard';
 export { default as Label } from './Label';
 export { default as Legend } from './Legend';
 export { default as LinkWithIcon } from './LinkWithIcon';
@@ -91,6 +93,7 @@ export {
 
 export type {
   CarouselProps,
+  InfoCardProps,
   ModalProps,
   LegendProps,
   FormSelectProps,
