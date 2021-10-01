@@ -43,7 +43,18 @@ module "api_management_policy" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [var.environment_prefix == "prod" ? "https://my.bestinvest.co.uk" : "", var.environment_prefix == "staging" ? "https://my.demo2.bestinvest.co.uk" : "", var.environment_prefix != "prod" ? "http://localhost:8000" : "", var.environment_prefix != "prod" ? module.front_end.web_endpoint : "", coalesce(format("https://%s", module.front_end.website_cname_record[0]), ""), var.environment_prefix != "prod" && var.environment_prefix != "stage" ? format("https://%s", module.front_end.web_host) : ""]),
+      cors_allowed_origins = coalescelist(
+        lookup(each.value.policy.cors, "allowed_origins", []),
+        [
+          var.environment_prefix == "prod" ? "https://my.bestinvest.co.uk" : "",
+          var.environment_prefix == "staging" ? "https://my.demo2.bestinvest.co.uk" : "",
+          var.environment_prefix != "prod" ? "http://localhost:8000" : "",
+          var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
+          format("https://${module.front_end.website_cname_record[0]}"),
+          var.environment_prefix != "prod" && var.environment_prefix != "stage" ? "https://${module.front_end.web_host}" : "",
+          var.environment_prefix == "prod" || var.environment_prefix == "stage" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+        ]
+      ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),
@@ -53,7 +64,6 @@ module "api_management_policy" {
     }
   })
   depends_on = [module.api_operation, module.function_app_projections]
-
 }
 
 
@@ -86,7 +96,16 @@ module "api_management_policy_xplan" {
       cors_allowed_method  = lookup(each.value.policy.cors, "method", null),
       cors_allowed_headers = lookup(each.value.policy.cors, "headers", null),
       cors_exposed_headers = lookup(each.value.policy.cors, "expose_headers", null),
-      cors_allowed_origins = coalescelist(lookup(each.value.policy.cors, "allowed_origins", []), [var.environment_prefix != "prod" ? "http://localhost:8000" : "", var.environment_prefix != "prod" ? module.front_end.web_endpoint : "", coalesce(format("https://%s", module.front_end.website_cname_record[0]), ""), var.environment_prefix != "prod" && var.environment_prefix != "stage" ? format("https://%s", module.front_end.web_host) : ""]),
+      cors_allowed_origins = coalescelist(
+        lookup(each.value.policy.cors, "allowed_origins", []),
+        [
+          var.environment_prefix != "prod" ? "http://localhost:8000" : "",
+          var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
+          "https://${module.front_end.website_cname_record[0]}",
+          var.environment_prefix != "prod" && var.environment_prefix != "stage" ? "https://${module.front_end.web_host}" : "",
+          var.environment_prefix == "prod" || var.environment_prefix == "stage" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+        ]
+      ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
       headers              = lookup(each.value.policy, "set_header", null),
       outbound_headers     = lookup(each.value.policy, "outbound_headers", null),

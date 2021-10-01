@@ -14,12 +14,17 @@ output "frontend_cdn_endpoint_name" {
 }
 
 output "frontend_web_cname" {
-  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? coalesce(format("https://%s", trimsuffix(module.front_end.website_cname_record[0], ".")), "") : null
+  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? coalesce("https://${trimsuffix(module.front_end.website_cname_record[0], ".")}", "") : null
   description = "The Gatsby App CNAME record."
 }
 
+output "frontend_web_host" {
+  value       = module.front_end.web_host
+  description = "The Gatsby app static web hostname"
+}
+
 output "frontend_static_web_url" {
-  value       = format("https://%s", module.front_end.web_host)
+  value       = "https://${module.front_end.web_host}"
   description = "The Gatsby App static web url."
 }
 

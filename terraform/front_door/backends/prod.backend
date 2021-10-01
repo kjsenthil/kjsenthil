@@ -1,0 +1,4 @@
+resource_group_name = "rg-uks-prod-tfstates-dh"
+storage_account_name = "stukstswprodtfstatesdh"
+container_name = "prod"
+key = "front_door/terraform.tfstate"

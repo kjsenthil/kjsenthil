@@ -1,0 +1,4 @@
+resource_group_name = "rg-uks-staging-tfstates-dh"
+storage_account_name = "stukstswstgtfstatesdh"
+container_name = "staging"
+key = "front_door/terraform.tfstate"
