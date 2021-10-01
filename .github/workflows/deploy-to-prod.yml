@@ -472,6 +472,10 @@ jobs:
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
         run: terraform plan
+        env:
+          TF_VAR_environment_prefix: staging
+          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
+          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_staging_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
@@ -948,6 +952,10 @@ jobs:
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
         run: terraform plan
+        env:
+          TF_VAR_environment_prefix: prod
+          TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
+          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_production_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
