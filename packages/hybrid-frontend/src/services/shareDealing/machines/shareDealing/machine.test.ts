@@ -1,6 +1,7 @@
 import { Interpreter } from 'xstate/lib/interpreter';
 import { interpret } from 'xstate';
 import MockDate from 'mockdate';
+import delay from 'delay';
 import {
   ShareDealingContext,
   ShareDealingSchema,
@@ -13,8 +14,6 @@ import ShareDealingMachine from './machine';
 import actions from './actions';
 import delays from './delays';
 import guards from './guards';
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const services = {
   quoteOrder: jest.fn(),
@@ -139,7 +138,7 @@ describe('Share Dealing State Machine Config', () => {
         });
 
         it('fetches share details and transitions to creatingOrder.marketOrder setting share details in context', async () => {
-          await wait(0);
+          await delay(0);
           expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'marketOrder' } });
 
           expect(service.state.context.availableCash).toBe(shareDetails.availableCash);
@@ -177,7 +176,7 @@ describe('Share Dealing State Machine Config', () => {
             ordering: 'quotingOrder',
           });
 
-          await wait(0);
+          await delay(0);
 
           expect(service.state.context.quote).toStrictEqual(quote);
           expect(service.state.value).toStrictEqual({
@@ -193,7 +192,7 @@ describe('Share Dealing State Machine Config', () => {
         });
 
         it('goes into expiredQuote after QUOTE_EXPIRY wait', async () => {
-          await wait(200);
+          await delay(200);
 
           expect(service.state.value).toStrictEqual({
             ordering: { previewingQuote: 'expiredQuote' },
@@ -216,7 +215,7 @@ describe('Share Dealing State Machine Config', () => {
         });
 
         it('resolves quote again setting hasQuote to true and going to previewingQuote', async () => {
-          await wait(0);
+          await delay(0);
 
           expect(service.state.value).toStrictEqual({
             ordering: { previewingQuote: 'validQuote' },
@@ -242,7 +241,7 @@ describe('Share Dealing State Machine Config', () => {
             ordering: 'placingOrder',
           });
 
-          await wait(0);
+          await delay(0);
 
           expect(service.state.value).toStrictEqual('success');
         });
@@ -271,7 +270,7 @@ describe('Share Dealing State Machine Config', () => {
         it('goes into ordering.creatingOrder.marketOrder on START_BUYING_ORDER event', async () => {
           service.send('START_BUYING_ORDER');
           expect(service.state.value).toStrictEqual({ ordering: 'fetchingShareDetails' });
-          await wait(0);
+          await delay(0);
           expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'marketOrder' } });
           expect(service.state.context.orderType).toStrictEqual('Buy');
           expect(service.state.context.orderShareUnits).toBeNull();
@@ -346,7 +345,7 @@ describe('Share Dealing State Machine Config', () => {
       it('goes back to marketOrder after requesting a quote and service fails and sets errors in context', async () => {
         service.send('START_BUYING_ORDER');
         expect(service.state.value).toStrictEqual({ ordering: 'fetchingShareDetails' });
-        await wait(0);
+        await delay(0);
 
         expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'marketOrder' } });
 
@@ -355,7 +354,7 @@ describe('Share Dealing State Machine Config', () => {
         expect(service.state.context.errors).toStrictEqual({});
         expect(service.state.value).toStrictEqual({ ordering: 'quotingOrder' });
 
-        await wait(0);
+        await delay(0);
 
         expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'marketOrder' } });
         expect(service.state.context.errors).toStrictEqual(errors);
@@ -392,7 +391,7 @@ describe('Share Dealing State Machine Config', () => {
 
       expect(service.state.value).toStrictEqual({ ordering: 'fetchingShareDetails' });
 
-      await wait(0);
+      await delay(0);
 
       expect(service.state.value).toStrictEqual({ ordering: { creatingOrder: 'limitOrder' } });
     });
@@ -449,7 +448,7 @@ describe('Share Dealing State Machine Config', () => {
         });
 
         service.send('GET_QUOTE');
-        await wait(0);
+        await delay(0);
 
         expect(service.state.context.errors.orderShareUnits).not.toBeUndefined();
         expect(service.state.context.errors.limitOrderChangeInPrice).not.toBeUndefined();
@@ -502,7 +501,7 @@ describe('Share Dealing State Machine Config', () => {
         expect(service.state.context.errors.orderShareAmount).toBeUndefined();
 
         service.send('GET_QUOTE');
-        await wait(0);
+        await delay(0);
         expect(service.state.context.errors.orderShareAmount).not.toBeUndefined();
         service.send('SET_ORDER_SHARE_AMOUNT', { payload: { orderShareAmount: 1000 } });
         expect(service.state.context.errors.orderShareAmount).toBeUndefined();
@@ -515,7 +514,7 @@ describe('Share Dealing State Machine Config', () => {
 
         service.send('START_BUYING_ORDER');
 
-        await wait(0);
+        await delay(0);
         expect(service.state.value).toStrictEqual('failure');
       });
     });

@@ -1,10 +1,9 @@
+import delay from 'delay';
 import { GenericResponseData } from '../../../../../api/types';
 import { ApiResourceStatus } from '../../../../api/types';
 
 export const DEFAULT_NUM_OF_ATTEMPTS = 10;
 export const DEFAULT_DELAY_IN_MS = 1000;
-
-const delay = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 const tryGettingStatus = async <
   T extends GenericResponseData<{ apiResourceStatus: ApiResourceStatus }>

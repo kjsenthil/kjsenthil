@@ -1,6 +1,6 @@
 import { PerformanceDataPeriod } from '@tswdts/react-components';
 import { ReducersMapObject } from 'redux';
-import { DeepPartial } from '../../../utils/common';
+import { DeepPartial } from '../../../types';
 import { AuthState } from '../../auth';
 import { ClientState } from '../../myAccount';
 import getStoreAndStateHistory from '../../utils/getStoreAndStateHistory';

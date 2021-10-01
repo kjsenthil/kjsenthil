@@ -208,4 +208,6 @@ export const ReceiptItemTitle = styled(Grid)``;
 
 export const ReceiptItemValue = styled(Grid)`
   text-align: right;
+  text-align: -moz-right;
+  text-align: -webkit-right;
 `;

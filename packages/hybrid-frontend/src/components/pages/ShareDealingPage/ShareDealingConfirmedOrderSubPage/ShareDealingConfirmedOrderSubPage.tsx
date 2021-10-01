@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Label,
   DateTime,
   Typography,
   ReceiptCard,
@@ -29,7 +30,15 @@ const ShareDealingMarketQuoteSubPage = ({
       { key: 'Order Reference No.', value: order.orderId },
       { key: 'Order Placed on', value: <DateTime date={order.orderPlacedDate} /> },
       { key: 'Order Expiry Date', value: 'N/A' },
-      { key: 'Order Status', value: order.orderStatus },
+      {
+        key: 'Order Status',
+        value: (
+          <Label
+            text={order.orderStatus}
+            color={order.orderStatus === 'Filled' ? 'success' : 'gold'}
+          />
+        ),
+      },
       { key: 'Order Type', value: executionType === 'limit' ? 'Limit Order' : 'Market Order' },
       { key: 'Epic Code', value: order.epicCode },
       { key: 'Shares', value: order.numberOfUnits },
