@@ -12,7 +12,7 @@ describe('QuestionAnswerToggle', () => {
         updateAnswer={() => undefined}
         question={question}
         answers={answers}
-        initialAnswerValue={answers[0]}
+        selected={answers[0]}
       />
     );
   });

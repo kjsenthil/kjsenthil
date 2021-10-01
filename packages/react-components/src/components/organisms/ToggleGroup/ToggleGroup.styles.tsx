@@ -1,12 +1,31 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { typographyCss } from '../../atoms/Typography';
-import { Theme, ToggleButtonGroup } from '../../atoms';
+import { Theme, ToggleButtonGroup, ToggleButtonGroupProps } from '../../atoms';
 
-export const StyledToggleButtonGroup = styled(({ isMobile, ...props }) => (
-  <ToggleButtonGroup {...props} />
-))`
-  ${({ theme, isMobile }: { theme: Theme; isMobile: boolean }) => css`
+export interface ToggleGroupProps extends ToggleButtonGroupProps {
+  theme: Theme;
+  isMobile: boolean;
+}
+
+export const StyledDescriptiveToggleButtonGroup = styled(
+  ({ isMobile, ...props }: ToggleGroupProps) => <ToggleButtonGroup {...props} />
+)`
+  ${({ theme, isMobile }: ToggleGroupProps) => `
+    &.MuiToggleButtonGroup-vertical {
+      gap: ${isMobile ? theme.spacing(3) : theme.spacing(2.5)}px;
+    }
+    
+    & .MuiToggleButtonGroup-groupedVertical {
+      border-radius: 12px;
+    }
+  `}
+`;
+
+export const StyledUnorderedToggleButtonGroup = styled(
+  ({ isMobile, ...props }: ToggleGroupProps) => <ToggleButtonGroup {...props} />
+)`
+  ${({ theme, isMobile }: ToggleGroupProps) => `
     white-space: wrap;
 
     &.MuiToggleButtonGroup-root {
@@ -31,7 +50,7 @@ export const StyledToggleButtonGroup = styled(({ isMobile, ...props }) => (
   `}
 `;
 
-export const StyledContainer = styled(({ isMobile, ...props }) => <div {...props} />)`
+export const StyledUnorderedGroupContainer = styled(({ isMobile, ...props }) => <div {...props} />)`
   ${({ isMobile }: { isMobile: boolean }) => css`
     max-width: ${isMobile ? '350px' : '500px'};
   `}

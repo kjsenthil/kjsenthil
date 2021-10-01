@@ -18,8 +18,9 @@ export interface CheckboxAccountSelectorProps {
   label: string;
   funds: string;
   linked?: boolean;
+  isChecked?: boolean;
   updatePortfolioIds: (a: string) => void;
-  portfolioIds: Array<string>;
+  portfolioIds: string[];
 }
 
 const CheckboxAccountSelector = ({
@@ -27,6 +28,7 @@ const CheckboxAccountSelector = ({
   label,
   funds,
   linked,
+  isChecked,
   updatePortfolioIds,
 }: CheckboxAccountSelectorProps) => {
   const { isMobile } = useBreakpoint();
@@ -40,7 +42,9 @@ const CheckboxAccountSelector = ({
     <StyledRadioFormInput
       isMobile={isMobile}
       value={accountId}
-      control={<StyledCheckbox name={accountId} onChange={checkHandler} />}
+      control={
+        <StyledCheckbox name={accountId} onChange={checkHandler} defaultChecked={isChecked} />
+      }
       label={
         <StyledGrid>
           <Typography variant="sh3" color="primary" colorShade="dark2">

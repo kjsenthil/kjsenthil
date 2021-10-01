@@ -19,11 +19,16 @@ export interface AccountData {
   linked?: boolean;
 }
 
+export interface PortfolioAccountData {
+  name: string;
+  accounts: AccountData[];
+}
+
 export interface PortfolioModalProps extends Require<DialogProps, 'onClose'> {
   onSubmit: (event: {}) => void;
   type: 'create' | 'edit';
   allAccounts: AccountData[];
-  portfolioAccounts?: AccountData[];
+  portfolioAccounts?: PortfolioAccountData;
   name?: string;
 }
 
@@ -38,8 +43,16 @@ const PortfolioModal = ({
 }: PortfolioModalProps) => {
   const { isMobile } = useBreakpoint();
 
-  const [portfolioName, setPortfolioName] = useState('');
-  const [portfolioIds, setPortfolioIds] = useState<string[]>([]);
+  const initialAccountIds =
+    type === 'edit' && portfolioAccounts
+      ? portfolioAccounts.accounts.map((account) => account.id)
+      : [];
+
+  const [portfolioName, setPortfolioName] = useState(
+    type === 'edit' ? portfolioAccounts?.name : ''
+  );
+
+  const [portfolioIds, setPortfolioIds] = useState<string[]>(initialAccountIds);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPortfolioName(e.target.value);
@@ -68,7 +81,11 @@ const PortfolioModal = ({
     arrayOne.filter(({ id: id1 }) => !arrayTwo.some(({ id: id2 }) => id2 === id1));
 
   // determines whether to render all accounts or all accounts minus selected accounts
-  const renderCheckboxAccountSelectors = (accounts: AccountData[], selected: boolean) => {
+  const renderCheckboxAccountSelectors = (
+    accounts: AccountData[],
+    selected: boolean,
+    checkedAccount: boolean
+  ) => {
     const filteredAccounts = removeDuplicateObjects(allAccounts, accounts);
 
     return (selected ? filteredAccounts : accounts).map((account) => (
@@ -80,6 +97,7 @@ const PortfolioModal = ({
         linked={account.linked}
         accountId={account.id}
         updatePortfolioIds={updatePortfolioIds}
+        isChecked={checkedAccount}
       />
     ));
   };
@@ -87,7 +105,7 @@ const PortfolioModal = ({
   return (
     <Grid container alignItems="center" justifyContent="space-between">
       <StyledDialogContainer maxWidth="md" isMobile={isMobile} {...props}>
-        <StyledBox display="flex" alignItems="flex-start">
+        <StyledBox display="flex" alignItems="flex-start" isMobile={isMobile}>
           <Grid item xs={10} container alignItems="center">
             {type === 'create' ? (
               <>
@@ -132,7 +150,8 @@ const PortfolioModal = ({
                 </Typography>
               </Box>
               <Spacer y={2} />
-              {renderCheckboxAccountSelectors(portfolioAccounts!, false)}
+              {portfolioAccounts &&
+                renderCheckboxAccountSelectors(portfolioAccounts.accounts, false, true)}
             </>
           )}
           <Box display="flex" alignItems="flex-start">
@@ -141,9 +160,9 @@ const PortfolioModal = ({
             </Typography>
           </Box>
           <Spacer y={2} />
-          {type === 'edit'
-            ? renderCheckboxAccountSelectors(portfolioAccounts!, true)
-            : renderCheckboxAccountSelectors(allAccounts, false)}
+          {type === 'edit' && portfolioAccounts
+            ? renderCheckboxAccountSelectors(portfolioAccounts.accounts, true, false)
+            : renderCheckboxAccountSelectors(allAccounts, false, false)}
 
           {!isMobile && <Spacer y={4} />}
 
@@ -168,7 +187,12 @@ const PortfolioModal = ({
                 </Grid>
                 <Grid>
                   <form onSubmit={handlePortfolioSubmit} method="POST">
-                    <StyledButton isMobile={isMobile} variant="contained" color="primary">
+                    <StyledButton
+                      isMobile={isMobile}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                    >
                       Create my portfolio
                     </StyledButton>
                   </form>
@@ -192,7 +216,7 @@ const PortfolioModal = ({
                       isMobile={isMobile}
                       variant="contained"
                       color="primary"
-                      onClick={onClose as () => void}
+                      type="submit"
                     >
                       Save
                     </StyledButton>

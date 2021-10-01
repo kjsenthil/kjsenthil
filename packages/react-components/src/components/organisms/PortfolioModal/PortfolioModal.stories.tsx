@@ -1,6 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import PortfolioModal, { PortfolioModalProps, AccountData } from './PortfolioModal';
+import PortfolioModal, {
+  PortfolioModalProps,
+  AccountData,
+  PortfolioAccountData,
+} from './PortfolioModal';
 import mockAccountData from './accounts.json';
 
 export default {
@@ -13,8 +17,8 @@ const Template: Story<PortfolioModalProps> = (args) => <PortfolioModal {...args}
 const mockData: AccountData[] = mockAccountData.data.relationships.accounts.concat(
   mockAccountData.data.relationships['linked-accounts']
 );
-const mockPortfolioAccounts: AccountData[] =
-  mockAccountData.data.relationships.portfolios[0].accounts;
+const mockPortfolioAccounts: PortfolioAccountData =
+  mockAccountData.data.relationships.portfolios[0];
 
 export const Default = Template.bind({});
 Default.args = {

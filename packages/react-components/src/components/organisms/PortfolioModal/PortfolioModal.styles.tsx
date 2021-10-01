@@ -12,10 +12,10 @@ import {
   Theme,
 } from '../../atoms';
 
-export const StyledBox = styled(Box)`
-  ${({ theme }: { theme: Theme }) => css`
+export const StyledBox = styled(({ isMobile, ...props }) => <Box {...props} />)`
+  ${({ isMobile, theme }: { isMobile: boolean; theme: Theme }) => css`
     padding-top: ${theme.spacing(5)}px;
-    padding-left: ${theme.spacing(5)}px;
+    padding-left: ${isMobile ? theme.spacing(2.5) : theme.spacing(5)}px;
     padding-right: ${theme.spacing(3.5)}px;
 
     button {

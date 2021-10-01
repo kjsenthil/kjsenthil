@@ -4,10 +4,8 @@ import { Theme, ToggleButton, ToggleButtonProps } from '../../atoms';
 export const DescriptiveToggleButton = styled(ToggleButton)`
   ${({ theme }: { theme: Theme } & ToggleButtonProps) => `
     padding: ${theme.spacing(2.5)}px;
-    
     border: none;
     border-radius: 12px;
-    
     text-transform: none;
     
     &.MuiButtonBase-root {
