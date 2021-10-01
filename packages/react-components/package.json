@@ -63,7 +63,8 @@
     "react-disable": "^0.1.0",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

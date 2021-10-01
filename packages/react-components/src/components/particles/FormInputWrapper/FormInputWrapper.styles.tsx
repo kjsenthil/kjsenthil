@@ -66,6 +66,21 @@ export const StyledFormControl = styled(
         }
       }
 
+      .MuiInputBase-root {
+        &.MuiInputBase-adornedEnd {
+          .MuiInputAdornment-positionEnd {
+            position: absolute;
+            margin-right: 0;
+            right: ${pxToRem(12)};
+            color: ${hasError ? palette.error.main : palette.primary.main}
+          }
+        }
+
+        .MuiInputBase-inputAdornedEnd {
+          padding-left: ${pxToRem(48)};
+        }
+      }
+
       .MuiInputLabel-root {
         margin-top: -10px;
         ${typographyCss({ variant: 'sh4', theme })}
@@ -85,13 +100,21 @@ export const StyledFormControl = styled(
   }}
 `;
 
+export const FormInputInfo = styled((props) => (
+  <Typography {...props} variant="b4" color="primary" />
+))`
+  font-style: italic;
+  line-height: 1.67;
+  letterspacing: normal;
+`;
+
 export const FormInputError = styled((props) => <Typography {...props} color="error" />)`
   ${({
     theme: {
       typography: { pxToRem },
     },
   }) => `
-    font-size: ${pxToRem(12)};
+    font-size: ${pxToRem(14)};
     font-style: italic;
     line-height: 1.67;
     letterSpacing: normal;

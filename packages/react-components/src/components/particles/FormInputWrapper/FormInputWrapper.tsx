@@ -1,10 +1,11 @@
 import React from 'react';
 import { InputLabel } from '../../atoms';
-import { FormInputError, StyledFormControl } from './FormInputWrapper.styles';
+import { FormInputInfo, FormInputError, StyledFormControl } from './FormInputWrapper.styles';
 
 export interface FormInputWrapperProps {
   id: string;
   label: string;
+  info?: string;
   error?: string;
   hasValue: boolean;
   hasLeadingIcon: boolean;
@@ -14,6 +15,7 @@ export interface FormInputWrapperProps {
 
 const FormInputWrapper: React.FC<FormInputWrapperProps> = ({
   id,
+  info,
   error,
   label,
   hasValue,
@@ -32,6 +34,7 @@ const FormInputWrapper: React.FC<FormInputWrapperProps> = ({
       {label}
     </InputLabel>
     {children}
+    {info && <FormInputInfo>{info}</FormInputInfo>}
     {error && <FormInputError>{error}</FormInputError>}
   </StyledFormControl>
 );

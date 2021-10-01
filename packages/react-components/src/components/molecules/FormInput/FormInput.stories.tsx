@@ -31,6 +31,7 @@ const Template: Story<FormInputProps> = (args) => {
   const handleOnChange: FormInputProps['onChange'] = (e) => {
     setValue(e.target.value);
   };
+
   return <FormInput {...args} value={value} onChange={handleOnChange} name="input-name" />;
 };
 
@@ -57,6 +58,25 @@ TextInputWithStartIcon.args = {
       <Icon name="account" />
     </InputAdornment>
   ),
+};
+
+export const TextInputWithPasswordIcon = Template.bind({});
+TextInputWithPasswordIcon.args = {
+  label: 'Password',
+  startAdornment: (
+    <InputAdornment position="start">
+      <Icon name="passwordLockIcon" />
+    </InputAdornment>
+  ),
+  fullWidth: true,
+  hideLabel: true,
+  isPassword: true,
+  info:
+    'Your password must be 12-24 characters long, without spaces and should contain 3 of the following: lowercase letter, uppercase letter, number, symbol',
+  inputProps: {
+    maxLength: 24,
+  },
+  validationArgs: { minLength: 12, numDifferentTypes: 3 },
 };
 
 export const TextInputWithCurrencyIcon = Template.bind({});

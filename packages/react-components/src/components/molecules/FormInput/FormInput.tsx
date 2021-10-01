@@ -1,30 +1,49 @@
 import React from 'react';
-import { Icon, InputAdornment, TextField, TextFieldProps } from '../../atoms';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Icon, InputAdornment, TextField, TextFieldProps, IconButton } from '../../atoms';
 import { FormInputWrapper } from '../../particles';
+import validatePassword, { ValidatePasswordProps } from '../../../utils/validators';
 
 export interface FormInputProps extends TextFieldProps {
   name: string;
   value?: string;
   label: string;
+  info?: string;
   error?: string;
   isCurrency?: boolean;
+  isPassword?: boolean;
   shouldDelayOnChange?: boolean;
   hideLabel?: boolean;
   hideNumberSpinButton?: boolean;
+  validationArgs?: ValidatePasswordProps;
 }
 
 const FormInput = ({
   isCurrency,
+  isPassword,
   value,
   shouldDelayOnChange,
   hideLabel,
   hideNumberSpinButton,
+  validationArgs,
   onChange,
   ...props
 }: FormInputProps) => {
-  const { id, name, error, startAdornment, type, label, placeholder, fullWidth } = props;
+  const {
+    id,
+    name,
+    info,
+    error,
+    startAdornment,
+    endAdornment,
+    type,
+    label,
+    placeholder,
+    fullWidth,
+  } = props;
 
   const [val, setValue] = React.useState<string | undefined>(undefined);
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [changeStarted, setChangeStarted] = React.useState(false);
   const timeoutId = React.useRef<number>(0);
 
@@ -57,6 +76,18 @@ const FormInput = ({
     </InputAdornment>
   );
 
+  const passwordAdornment = (
+    <InputAdornment position="end">
+      <IconButton
+        aria-label="toggle password visibility"
+        onClick={() => setShowPassword(!showPassword)}
+        name="toggle password visibility"
+      >
+        {showPassword ? <Visibility color="primary" /> : <VisibilityOff />}
+      </IconButton>
+    </InputAdornment>
+  );
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (shouldDelayOnChange) {
@@ -67,10 +98,16 @@ const FormInput = ({
     }
   };
 
+  const passwordType = showPassword ? 'text' : 'password';
+  /* eslint-disable no-nested-ternary */
+  const inputType = isCurrency ? 'number' : isPassword ? passwordType : type;
+  const validPassword = val ? validatePassword(val, { ...validationArgs }) : true;
+
   return (
     <FormInputWrapper
       label={label}
       hideLabel={hideLabel || isCurrency}
+      info={!validPassword ? info : undefined}
       error={error}
       id={id || name}
       hasValue={!!value}
@@ -88,7 +125,8 @@ const FormInput = ({
         isCurrency={isCurrency}
         onChange={handleOnChange}
         startAdornment={isCurrency ? currencyAdornment : startAdornment}
-        type={isCurrency ? 'number' : type}
+        endAdornment={isPassword ? passwordAdornment : endAdornment}
+        type={inputType}
         hideNumberSpinButton={hideNumberSpinButton || isCurrency}
       />
     </FormInputWrapper>
