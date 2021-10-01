@@ -73,6 +73,50 @@ jobs:
       yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
       modules-path: ${{ steps.cache-meta.outputs.modules-path }}
 
+  build_windows_cache:
+    name: "Build windows caches"
+    runs-on: windows-latest
+    steps:
+      - name: "Enable long paths"
+        run: git config --system core.longpaths true
+
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Set cache metadata"
+        id: cache-meta
+        run: |
+          echo "::set-output name=key::${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          echo "::set-output name=yarn-path::$(yarn config get cacheFolder)"
+          echo "::set-output name=modules-path::**/node_modules"
+
+      - name: "Check for existing yarn cache"
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Check for existing node modules cache"
+        uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Install missing dependencies"
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
+        run: yarn install
+
+    outputs:
+      key: ${{ steps.cache-meta.outputs.key }}
+      yarn-path: ${{ steps.cache-meta.outputs.yarn-path }}
+      modules-path: ${{ steps.cache-meta.outputs.modules-path }}
+
   derive_environment_prefix:
     name: "Derive environment prefix"
     runs-on: ubuntu-latest
@@ -669,7 +713,7 @@ jobs:
     environment: development
     runs-on: windows-latest
     needs:
-      - build_cache
+      - build_windows_cache
       - get_pr_terraform_outputs
       - deploy_gatsby
     strategy:
@@ -690,39 +734,39 @@ jobs:
       - name: "Get yarn cache"
         uses: actions/cache@v2
         with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.yarn-path }}
+          key: ${{ needs.build_windows_cache.outputs.key }}
+          path: ${{ needs.build_windows_cache.outputs.yarn-path }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       - name: "Get node modules cache"
         uses: actions/cache@v2
         with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.modules-path }}
+          key: ${{ needs.build_windows_cache.outputs.key }}
+          path: ${{ needs.build_windows_cache.outputs.modules-path }}
           restore-keys: |
             ${{ runner.os }}-modules-
 
-      - name: "Update webdriver-manager"
-        run: npx webdriver-manager update
+      # - name: "Update webdriver-manager"
+      #   run: yarn webdriver-manager update
 
-      - name: "Wait for UI response"
-        uses: emilioschepis/wait-for-endpoint@v1.0.2
-        with:
-          url: ${{ needs.get_pr_terraform_outputs.outputs.frontend_static_web_url }}
-          method: GET
-          expected-status: 200
-          timeout: 600000
-          interval: 1000
+      # - name: "Wait for UI response"
+      #   uses: emilioschepis/wait-for-endpoint@v1.0.2
+      #   with:
+      #     url: ${{ needs.get_pr_terraform_outputs.outputs.frontend_static_web_url }}
+      #     method: GET
+      #     expected-status: 200
+      #     timeout: 600000
+      #     interval: 1000
 
-      - name: "Run UI tests"
-        run: yarn test:mock-ui --spec=DH001_login.spec.ts
-        env:
-          BROWSER: ${{ matrix.browser }}
-          URL: ${{ needs.get_pr_terraform_outputs.outputs.frontend_static_web_url }}
-          API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
-          UI_USER_NAME: ${{ secrets.DH_TEST_USER_NAME }}
-          UI_USER_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
+      # - name: "Run UI tests"
+      #   run: yarn test:mock-ui --spec=DH001_login.spec.ts
+      #   env:
+      #     BROWSER: ${{ matrix.browser }}
+      #     URL: ${{ needs.get_pr_terraform_outputs.outputs.frontend_static_web_url }}
+      #     API_BASE_URL: ${{ needs.get_pr_terraform_outputs.outputs.api_base_url }}
+      #     UI_USER_NAME: ${{ secrets.DH_TEST_USER_NAME }}
+      #     UI_USER_PASSWORD: ${{ secrets.DH_TEST_USER_PASSWORD }}
 
   # Deploys frontend pr contents
   deploy_gatsby:

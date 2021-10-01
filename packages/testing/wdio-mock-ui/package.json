@@ -3,7 +3,8 @@
   "version": "1.2.0",
   "description": "Runs webdriver io mock ui tests",
   "scripts": {
-    "test:ui": "wdio run ./wdio.conf.ts"
+    "test:ui": "wdio run ./wdio.conf.ts",
+    "webdriver-manager": "webdriver-manager"
   },
   "dependencies": {
     "@tsw/eslint-config": "workspace:packages/shared-config/eslint",
@@ -15,10 +16,11 @@
     "@wdio/mocha-framework": "^7.7.4",
     "@wdio/spec-reporter": "^7.7.3",
     "chai": "^4.3.4",
-    "chromedriver": "^92.0.1",
+    "chromedriver": "^94.0.0",
     "msedgedriver": "^91.0.0",
     "ts-node": "^10.0.0",
     "wdio-chromedriver-service": "^7.1.0",
+    "webdriver-manager": "^12.1.8",
     "webdriverio": "^7.7.4"
   }
 }

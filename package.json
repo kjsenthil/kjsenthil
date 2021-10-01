@@ -35,7 +35,8 @@
     "components": "yarn workspace @tswdts/react-components",
     "cmp": "yarn workspace @tswdts/react-components",
     "test:api": "yarn workspace @tsw/axios-api run test:api",
-    "test:mock-ui": "yarn workspace @tsw/wdio-mock-ui run test:ui"
+    "test:mock-ui": "yarn workspace @tsw/wdio-mock-ui run test:ui",
+    "webdriver-manager": "yarn workspace @tsw/wdio-mock-ui run webdriver-manager"
   },
   "dependencies": {
     "react-calendly": "^2.2.2"
