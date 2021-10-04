@@ -14,6 +14,7 @@ import { SpacerProps } from './Spacer/Spacer';
 import { IconProps } from './Icon';
 import { PillProps } from './Button/Pill/Pill';
 import { LinkProps } from './Link';
+import { SliderProps } from './Slider';
 
 export {
   Button,
@@ -39,6 +40,7 @@ export type {
   TextFieldProps,
   TooltipProps,
   TypographyProps,
+  SliderProps,
 };
 
 export { default as Pill } from './Button/Pill';

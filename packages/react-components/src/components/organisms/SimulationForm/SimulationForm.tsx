@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ProjectionRequest } from '../../../services/projections/types';
+import { ProjectionRequest } from '../../../services';
 import { Button } from '../../atoms';
-import SliderWithInput from '../../molecules/SliderWithInput';
+import SliderWithInput from '../SliderWithInput';
 
 export interface SimulationFormProps {
   projInputStateVals?: ProjectionRequest;
@@ -20,10 +20,6 @@ const SimulationForm = ({
 }: SimulationFormProps) => {
   const [inputs, setInputs] = useState(projInputStateVals);
 
-  const handleSliderChange = (name: string, newValue: number | '') => {
-    setInputs((currentInputs) => ({ ...currentInputs, [name]: newValue }));
-  };
-
   return (
     <>
       <SliderWithInput
@@ -32,7 +28,12 @@ const SimulationForm = ({
         min={0}
         max={20000}
         name="upfrontInvestment"
-        onChange={handleSliderChange}
+        setValue={(newValue) =>
+          setInputs((currentInputs) => ({
+            ...currentInputs,
+            upfrontInvestment: newValue,
+          }))
+        }
         step={100}
         value={inputs.upfrontInvestment}
       />
@@ -42,7 +43,12 @@ const SimulationForm = ({
         min={0}
         max={2500}
         name="monthlyInvestment"
-        onChange={handleSliderChange}
+        setValue={(newValue) =>
+          setInputs((currentInputs) => ({
+            ...currentInputs,
+            monthlyInvestment: newValue,
+          }))
+        }
         step={100}
         value={inputs.monthlyInvestment}
       />
@@ -51,7 +57,12 @@ const SimulationForm = ({
         min={0}
         max={50}
         name="investmentPeriod"
-        onChange={handleSliderChange}
+        setValue={(newValue) =>
+          setInputs((currentInputs) => ({
+            ...currentInputs,
+            investmentPeriod: newValue,
+          }))
+        }
         step={1}
         value={inputs.investmentPeriod}
       />

@@ -2,6 +2,7 @@
 import { ChartPeriodSelectionProps } from './ChartPeriodSelection';
 import { CheckboxAccountSelectorProps } from './CheckboxAccountSelector';
 import { CarouselProps } from './Carousel';
+import { FormInputProps } from './FormInput';
 import { InfoCardProps } from './InfoCard';
 
 import { TypographyWithTooltipProps } from './TypographyWithTooltip';
@@ -70,7 +71,6 @@ export { default as ReceiptCard } from './ReceiptCard';
 export { default as SignpostModal } from './SignpostModal';
 export { default as SimplifiedPortfolioTile } from './SimplifiedPortfolioTile';
 export { default as SliderLabelled } from './SliderLabelled';
-export { default as SliderWithInput } from './SliderWithInput';
 export { default as SplashHeader } from './SplashHeader';
 export { default as StickyHeader } from './StickyHeader';
 export { default as StepProgress } from './StepProgress';
@@ -95,6 +95,7 @@ export type {
   CarouselProps,
   InfoCardProps,
   ModalProps,
+  FormInputProps,
   LegendProps,
   FormSelectProps,
   TabsNavigationProps,

@@ -49,4 +49,7 @@ export { default as TodoCard } from './TodoCard';
 export { default as ToggleGroup } from './ToggleGroup';
 export { default as WithDrawCashCard } from './WithDrawCashCard';
 
+export { default as SliderWithInput } from './SliderWithInput';
+export type { SliderWithInputProps } from './SliderWithInput';
+
 export type { GoalProgressCardProps, GoalSelectionProps };

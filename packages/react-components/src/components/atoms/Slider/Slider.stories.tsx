@@ -7,7 +7,7 @@ export default {
   component: Slider,
   argTypes: {
     size: {
-      contorl: {
+      control: {
         type: 'radio',
       },
       options: [undefined, 'small', 'large'],
@@ -21,7 +21,7 @@ const Template: Story<SliderProps> = ({ value: defaultValue, ...args }) => {
   return (
     <Slider
       {...args}
-      onChange={((_, newValue: number) => setValue(newValue)) as any}
+      onChange={(_, newValue: number | number[]) => setValue(newValue)}
       value={value}
     />
   );
@@ -30,7 +30,6 @@ const Template: Story<SliderProps> = ({ value: defaultValue, ...args }) => {
 const defaultArgs: SliderProps = {
   max: 20000,
   min: 0,
-  onChange: () => {},
   step: 100,
   value: 1000,
 };

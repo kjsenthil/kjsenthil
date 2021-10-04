@@ -1,10 +1,23 @@
 import * as React from 'react';
-import { Slider as MUISlider, SliderProps as MUISliderProps, Theme } from '@material-ui/core';
+import {
+  Slider as MUISlider,
+  SliderProps as MUISliderProps,
+  SliderTypeMap as MUISliderTypeMap,
+  Theme,
+} from '@material-ui/core';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import styled from 'styled-components';
 
-export interface SliderProps extends Omit<MUISliderProps, 'color'> {
+// There is an issue with the how MUI Slider's onChange handler's event object
+// is typed. Looks like this issue is fixed in MUI v5+ but for now, we do some
+// funky typings. See more below:
+// https://github.com/mui-org/material-ui/issues/20191#issuecomment-924733880
+
+export interface SliderProps extends Omit<MUISliderProps, 'color' | 'onChange'> {
   size?: 'small' | 'large';
 }
+
+type SliderComponent = OverridableComponent<MUISliderTypeMap<SliderProps, 'span'>>;
 
 const StyledSlider = styled(MUISlider)`
   ${({
@@ -35,6 +48,8 @@ const StyledSlider = styled(MUISlider)`
   }}
 `;
 
-const Slider = ({ ...props }: SliderProps) => <StyledSlider size="large" {...props} />;
+const Slider: SliderComponent = ({ ...props }: SliderProps) => (
+  <StyledSlider size="large" {...props} />
+);
 
 export default Slider;
