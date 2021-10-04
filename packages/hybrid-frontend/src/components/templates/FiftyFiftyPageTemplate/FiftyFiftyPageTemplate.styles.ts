@@ -6,7 +6,7 @@ export const PageContainer = styled.div`
 `;
 
 export const LeftContainer = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100vh;
 `;
 

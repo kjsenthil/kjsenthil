@@ -26,80 +26,72 @@ const LeftContentContainer = styled.div`
 `;
 
 const defaultArgs: FiftyFiftyPageTemplateProps = {
-  contentLeft: {
-    children: (
-      <LeftContentContainer>
-        <h2>Left content</h2>
-        <Typography variant="b2" color="primary">
-          The content to be displayed on the left. The content to be displayed on the left. The
-          content to be displayed on the left. The content to be displayed on the left. The content
-          to be displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left. The content to be
-          displayed on the left. The content to be displayed on the left.
-        </Typography>
-      </LeftContentContainer>
-    ),
-  },
+  contentLeft: (
+    <LeftContentContainer>
+      <h2>Left content</h2>
+      <Typography variant="b2" color="primary">
+        The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left. The content to be displayed on the left. The content to be
+        displayed on the left. The content to be displayed on the left. The content to be displayed
+        on the left. The content to be displayed on the left. The content to be displayed on the
+        left. The content to be displayed on the left. The content to be displayed on the left. The
+        content to be displayed on the left. The content to be displayed on the left. The content to
+        be displayed on the left.
+      </Typography>
+    </LeftContentContainer>
+  ),
 
-  contentRight: {
-    children: (
-      <RightContentContainer>
-        <MainCard>
-          <h2>Right content</h2>
-          <Typography variant="b2" color="primary">
-            The content to be displayed on the right
-          </Typography>
-        </MainCard>
-      </RightContentContainer>
-    ),
-  },
+  contentRight: (
+    <RightContentContainer>
+      <MainCard>
+        <h2>Right content</h2>
+        <Typography variant="b2" color="primary">
+          The content to be displayed on the right
+        </Typography>
+      </MainCard>
+    </RightContentContainer>
+  ),
 };
 
 export const Default = Template.bind({});

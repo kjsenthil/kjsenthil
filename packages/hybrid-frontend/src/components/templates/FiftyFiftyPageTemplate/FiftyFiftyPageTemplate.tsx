@@ -3,13 +3,9 @@ import { Grid } from '@material-ui/core';
 import { useBreakpoint } from '@tswdts/react-components/src';
 import { LeftContainer, PageContainer, RightContainer } from './FiftyFiftyPageTemplate.styles';
 
-export interface HalfPageContent {
-  children: React.ReactNode;
-}
-
 export interface FiftyFiftyPageTemplateProps {
-  contentLeft: HalfPageContent;
-  contentRight: HalfPageContent;
+  contentLeft: React.ReactNode;
+  contentRight: React.ReactNode;
 }
 
 const FiftyFiftyPageTemplate = ({ contentLeft, contentRight }: FiftyFiftyPageTemplateProps) => {
@@ -18,11 +14,11 @@ const FiftyFiftyPageTemplate = ({ contentLeft, contentRight }: FiftyFiftyPageTem
     <PageContainer>
       <Grid container>
         <Grid item xs={12} md={6}>
-          <LeftContainer>{contentLeft.children}</LeftContainer>
+          <LeftContainer>{contentLeft}</LeftContainer>
         </Grid>
         {!isMobile && (
           <Grid item md={6}>
-            <RightContainer>{contentRight.children}</RightContainer>
+            <RightContainer>{contentRight}</RightContainer>
           </Grid>
         )}
       </Grid>

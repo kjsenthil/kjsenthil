@@ -26,7 +26,7 @@ const NotFoundPage: React.FC<RouteComponentProps> = () => {
   return (
     <LayoutContainer maxWidth={false} disableGutters>
       <NotFoundStyle>
-        <Icon name="checkmarkCircle" />
+        <Icon name="warningSymbolCircle" />
 
         <Typography variant="h1" color="primary" colorShade="dark2">
           Error 404
