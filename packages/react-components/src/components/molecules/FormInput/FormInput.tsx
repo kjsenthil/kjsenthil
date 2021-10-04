@@ -2,7 +2,12 @@ import React from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { Icon, InputAdornment, TextField, TextFieldProps, IconButton } from '../../atoms';
 import { FormInputWrapper } from '../../particles';
-import validatePassword, { ValidatePasswordProps } from '../../../utils/validators';
+import {
+  validatePassword,
+  ValidatePasswordProps,
+  validateEmail,
+  ValidateEmailProps,
+} from '../../../utils/validators';
 
 export interface FormInputProps extends TextFieldProps {
   name: string;
@@ -12,20 +17,24 @@ export interface FormInputProps extends TextFieldProps {
   error?: string;
   isCurrency?: boolean;
   isPassword?: boolean;
+  isEmail?: boolean;
   shouldDelayOnChange?: boolean;
   hideLabel?: boolean;
   hideNumberSpinButton?: boolean;
-  validationArgs?: ValidatePasswordProps;
+  validationPasswordArgs?: ValidatePasswordProps;
+  validationEmailArgs?: ValidateEmailProps;
 }
 
 const FormInput = ({
   isCurrency,
   isPassword,
+  isEmail,
   value,
   shouldDelayOnChange,
   hideLabel,
   hideNumberSpinButton,
-  validationArgs,
+  validationPasswordArgs,
+  validationEmailArgs,
   onChange,
   ...props
 }: FormInputProps) => {
@@ -101,13 +110,15 @@ const FormInput = ({
   const passwordType = showPassword ? 'text' : 'password';
   /* eslint-disable no-nested-ternary */
   const inputType = isCurrency ? 'number' : isPassword ? passwordType : type;
-  const validPassword = val ? validatePassword(val, { ...validationArgs }) : true;
+  const validPassword = val ? validatePassword(val, { ...validationPasswordArgs }) : true;
+  const validEmail = val ? validateEmail(val, { ...validationEmailArgs }) : true;
+  const infoText = (isPassword && validPassword) || (isEmail && validEmail) ? '' : info;
 
   return (
     <FormInputWrapper
       label={label}
       hideLabel={hideLabel || isCurrency}
-      info={!validPassword ? info : undefined}
+      info={infoText || undefined}
       error={error}
       id={id || name}
       hasValue={!!value}

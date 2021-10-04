@@ -71,12 +71,21 @@ TextInputWithPasswordIcon.args = {
   fullWidth: true,
   hideLabel: true,
   isPassword: true,
-  info:
-    'Your password must be 12-24 characters long, without spaces and should contain 3 of the following: lowercase letter, uppercase letter, number, symbol',
   inputProps: {
     maxLength: 24,
   },
-  validationArgs: { minLength: 12, numDifferentTypes: 3 },
+  validationPasswordArgs: { minLength: 12, numDifferentTypes: 3 },
+  info:
+    'Your password must be 12-24 characters long, without spaces and should contain 3 of the following: lowercase letter, uppercase letter, number, symbol',
+};
+
+export const TextInputWithEmail = Template.bind({});
+TextInputWithEmail.args = {
+  label: 'Email',
+  fullWidth: true,
+  hideLabel: true,
+  isEmail: true,
+  info: 'Please enter a valid email address',
 };
 
 export const TextInputWithCurrencyIcon = Template.bind({});

@@ -1,4 +1,5 @@
-import validatePassword, { ValidatePasswordProps } from './validatePassword';
+export { default as validateEmail } from './validateEmail';
+export type { ValidateEmailProps } from './validateEmail';
 
-export type { ValidatePasswordProps };
-export default validatePassword;
+export { default as validatePassword } from './validatePassword';
+export type { ValidatePasswordProps } from './validatePassword';

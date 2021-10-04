@@ -68,4 +68,33 @@ describe('FormInput', () => {
       expect(screen.queryByText('invalid')).toBeNull();
     });
   });
+
+  describe('Form input as email field', () => {
+    it('renders an email field', () => {
+      renderWithTheme(<FormInput isEmail label="Email" name="email" />);
+      expect(screen.getByPlaceholderText('Email')).toBeVisible();
+    });
+
+    it('invalid email renders info text', () => {
+      renderWithTheme(<FormInput isEmail label="email" name="email" info="invalid" />);
+      const component = screen.getByPlaceholderText('email');
+      fireEvent.change(component, {
+        target: {
+          value: 'test',
+        },
+      });
+      expect(screen.queryByText('invalid')).toBeVisible();
+    });
+
+    it('valid email does not render info text', () => {
+      renderWithTheme(<FormInput isEmail label="email" name="email" info="invalid" />);
+      const component = screen.getByPlaceholderText('email');
+      fireEvent.change(component, {
+        target: {
+          value: 'test@test.com',
+        },
+      });
+      expect(screen.queryByText('invalid')).toBeNull();
+    });
+  });
 });
