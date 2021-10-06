@@ -40,7 +40,7 @@ describe('PerformanceChartAxes', () => {
     } = renderWithTheme(
       <svg width={300} height={300}>
         <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-        <PerformanceChartAxisBottom chartDimension={chartDimension} scale={xScale} />
+        <PerformanceChartAxisBottom chartDimension={chartDimension} scale={xScale} numTicks={12} />
       </svg>
     );
 

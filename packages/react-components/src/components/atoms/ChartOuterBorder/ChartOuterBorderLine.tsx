@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { Line } from '@visx/shape';
-import { useChartStyles } from '../../../../hooks';
+import { useChartStyles } from '../../../hooks';
 
-type PerformanceProjectionsChartOuterBorderLineProps = React.ComponentProps<typeof Line>;
+type ChartOuterBorderLineProps = React.ComponentProps<typeof Line>;
 
-export default function PerformanceProjectionsChartOuterBorderLine(
-  props: PerformanceProjectionsChartOuterBorderLineProps
-) {
+export default function ChartOuterBorderLine(props: ChartOuterBorderLineProps) {
   const chartStyles = useChartStyles();
 
   return (

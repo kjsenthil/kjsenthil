@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AxisLeft, AxisScale, SharedAxisProps } from '@visx/axis';
-import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
+import PerformanceChartTickComponentLeftAxis from '../PerformanceChartTickComponent/PerformanceChartTickComponentLeftAxis';
 import { d3ValueFormatter } from '../../../../utils/formatters';
 import { ChartDimension } from '../../../../config/chart';
 import { useChartStyles } from '../../../../hooks';
@@ -22,14 +22,13 @@ export default function PerformanceChartAxisLeft({
     <AxisLeft
       scale={scale}
       left={chartDimension.margin.left}
-      hideZero
       hideAxisLine
-      numTicks={5}
-      tickLength={20}
+      hideZero
+      tickLength={0}
       tickStroke="transparent"
       tickFormat={d3ValueFormatter}
       tickComponent={(tickRendererProps) => (
-        <PerformanceChartTickComponent chartStyles={chartStyles} {...tickRendererProps} />
+        <PerformanceChartTickComponentLeftAxis chartStyles={chartStyles} {...tickRendererProps} />
       )}
       {...props}
     />

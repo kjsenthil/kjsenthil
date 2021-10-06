@@ -1,6 +1,8 @@
 /* custom atoms */
 import Button, { ButtonProps } from './Button';
+import ChartDotIndicator, { ChartDotIndicatorProps } from './ChartDotIndicator';
 import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
+import ChartOuterBorder, { ChartOuterBorderProps } from './ChartOuterBorder';
 import LinearProgress, { LinearProgressProps } from './LinearProgress';
 import ProgressBar, { ProgressBarProps } from './ProgressBar';
 import Typography, { TypographyProps, typographyCss } from './Typography';
@@ -21,14 +23,18 @@ export {
   LinearProgress,
   TextField,
   Typography,
+  ChartDotIndicator,
   ChartIndicator,
+  ChartOuterBorder,
   ProgressBar,
   typographyCss,
 };
 
 export type {
   ButtonProps,
+  ChartDotIndicatorProps,
   ChartIndicatorProps,
+  ChartOuterBorderProps,
   FormattedTextFieldControlledProps,
   FormattedTextFieldUncontrolledProps,
   IconProps,

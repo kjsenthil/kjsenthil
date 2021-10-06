@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import PerformanceChart, { PerformanceChartProps } from './PerformanceChart';
-import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response.json';
+import getPerformanceContactMockResponseData from '../../../services/performance/mocks/mock-get-performance-contact-success-response-temp';
 import { mapContributionsData, mapPerformanceData, PerformanceDataPeriod } from '../../../services';
-import { axisBottomConfig } from '../../../config/chart';
 import { findDateByPeriod } from '../../../utils/date';
 
 export default {
@@ -23,7 +22,7 @@ type TemplateProps = Omit<PerformanceChartProps, 'periodSelectionProps'>;
 
 const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ...rest }) => {
   const [currentPeriod, setCurrentPeriod] = React.useState<PerformanceDataPeriod>(
-    PerformanceDataPeriod['5Y']
+    PerformanceDataPeriod['1Y']
   );
 
   const date = findDateByPeriod(
@@ -43,7 +42,6 @@ const Template: Story<TemplateProps> = ({ performanceData, contributionsData, ..
         setCurrentPeriod,
         performanceDataPeriod: PerformanceDataPeriod,
       }}
-      axisBottomConfig={axisBottomConfig}
       {...rest}
     />
   );

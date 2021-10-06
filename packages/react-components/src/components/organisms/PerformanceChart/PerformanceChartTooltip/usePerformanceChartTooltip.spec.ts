@@ -19,7 +19,6 @@ describe('usePerformanceChartTooltip', () => {
 
   test("The hook doesn't call showTooltip() when there is no data", () => {
     const {
-      chartDimension,
       contributionsData,
       performanceData,
       xScale,
@@ -28,7 +27,6 @@ describe('usePerformanceChartTooltip', () => {
 
     const { result } = renderHook(() =>
       usePerformanceChartTooltip({
-        chartDimension,
         performanceData,
         contributionsData,
         xScale,
@@ -53,14 +51,13 @@ describe('usePerformanceChartTooltip', () => {
 
   test('The hook calls showTooltip() correctly when there is data', () => {
     const mockMousePos = {
-      x: 100,
+      x: 60,
       y: 100,
     };
 
     (visxEvent.localPoint as jest.Mock).mockImplementation(() => mockMousePos);
 
     const {
-      chartDimension,
       contributionsData,
       performanceData,
       xScale,
@@ -69,7 +66,6 @@ describe('usePerformanceChartTooltip', () => {
 
     const { result } = renderHook(() =>
       usePerformanceChartTooltip({
-        chartDimension,
         performanceData,
         contributionsData,
         xScale,
@@ -93,18 +89,18 @@ describe('usePerformanceChartTooltip', () => {
       data: performanceData,
       xScale,
       dateAccessor: timeSeriesDateAccessor,
-      posX: mockMousePos.x - chartDimension.margin.left,
+      posX: mockMousePos.x,
     });
     const contributionDatum = getDatumAtPosX<ContributionDatum>({
       data: performanceData,
       xScale,
       dateAccessor: timeSeriesDateAccessor,
-      posX: mockMousePos.x - chartDimension.margin.left,
+      posX: mockMousePos.x,
     });
 
     expect(showTooltipSpy).toHaveBeenCalledTimes(1);
     expect(showTooltipSpy).toHaveBeenCalledWith({
-      tooltipLeft: mockMousePos.x - chartDimension.margin.left,
+      tooltipLeft: mockMousePos.x,
       tooltipTop: yScale(timeSeriesValueAccessor(performanceDatum)),
       tooltipData: {
         performance: performanceDatum,

@@ -7,7 +7,7 @@ export const d3Locale = formatLocale({
   currency: ['£', ''],
 });
 
-const d3ValueFormatterDefault = d3Locale.format('$.4~s');
+const d3ValueFormatterDefault = d3Locale.format('$.2~s');
 
 // By default, the 's' option provides SI suffixes, so billions will be
 // shortened to 'G' (for 'Giga'). We want billions to be shortened to 'B', hence

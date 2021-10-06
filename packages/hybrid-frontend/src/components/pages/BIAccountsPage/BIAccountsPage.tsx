@@ -21,7 +21,6 @@ import {
   Spacer,
   SummaryPanel,
   Typography,
-  axisBottomConfig,
   formatCurrency,
   useBreakpoint,
   usePerformanceChartDimension,
@@ -261,7 +260,6 @@ const BIAccountsPage = () => {
                 setCurrentPeriod: (newPeriod: PerformanceDataPeriod) =>
                   dispatch(setPerformanceDataPeriod(newPeriod)),
               }}
-              axisBottomConfig={axisBottomConfig}
             />
           </Box>
         ) : performanceFetchMaxRetriesHit && performanceError ? (
@@ -341,7 +339,6 @@ const BIAccountsPage = () => {
               data-testid="performance-chart"
               performanceData={performanceData}
               contributionsData={contributionsData}
-              axisBottomConfig={axisBottomConfig}
               legendProps={{
                 totalValue: {
                   title: 'TOTAL VALUE',

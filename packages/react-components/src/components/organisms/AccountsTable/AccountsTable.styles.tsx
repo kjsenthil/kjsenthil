@@ -29,11 +29,13 @@ export const AccountsTableRow = styled(TableRow)`
 export const AccountReturn = styled.div`
   align-items: center;
   display: flex;
+  justify-content: flex-end;
 `;
 
 export const StyledActionIcon = styled(Icon)`
   display: flex;
-  margin-left: auto;
+  margin-left: 4px;
+  margin-right: -8px;
 `;
 
 export const AccountsIconButton = styled(IconButton)`
@@ -41,6 +43,9 @@ export const AccountsIconButton = styled(IconButton)`
     &:hover {
       background-color: unset;
     }
+  }
+  &.MuiIconButton-sizeSmall {
+    padding-right: 0;
   }
 `;
 export const AccountsTableCell = styled(TableCell)`
@@ -52,6 +57,7 @@ export const AccountsTableCell = styled(TableCell)`
       border: none;
       padding: ${theme.spacing(2.25)}px ${theme.spacing(2)}px;
       overflow: hidden;
+      text-align: right;
       &.MuiTableCell-head {
         height: ${pxToRem(46)};
         line-height: 1.14;

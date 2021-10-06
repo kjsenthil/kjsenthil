@@ -3,13 +3,11 @@ import { localPoint } from '@visx/event';
 import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { ContributionDatum, PerformanceDatum } from '../performanceData';
-import { ChartDimension } from '../../../../config/chart';
+
 import { getDatumAtPosX } from '../../../../utils/chart';
 import { TimeSeriesDatum } from '../../../../utils/data';
 
 export interface UsePerformanceChartTooltipProps {
-  chartDimension: ChartDimension;
-
   performanceData: PerformanceDatum[];
   contributionsData: ContributionDatum[];
 
@@ -28,7 +26,6 @@ export interface TooltipData {
 }
 
 export default function usePerformanceChartTooltip({
-  chartDimension,
   performanceData,
   contributionsData,
   xAccessor,
@@ -72,18 +69,15 @@ export default function usePerformanceChartTooltip({
       // is what containerRef is set to.
       const { x: mouseX } = localPoint(e) ?? { x: 0, y: 0 };
 
-      // Adjust the x-position for margins
-      const adjMouseX = mouseX - chartDimension.margin.left;
-
       const performanceDatumAtPosX = getDatumAtPosX<PerformanceDatum>({
         data: performanceData,
-        posX: adjMouseX,
+        posX: mouseX,
         xScale,
         dateAccessor: xAccessor,
       });
       const contributionDatumAtPosX = getDatumAtPosX<ContributionDatum>({
         data: contributionsData,
-        posX: adjMouseX,
+        posX: mouseX,
         xScale,
         dateAccessor: xAccessor,
       });
@@ -95,7 +89,7 @@ export default function usePerformanceChartTooltip({
         );
 
         tooltip.showTooltip({
-          tooltipLeft: adjMouseX,
+          tooltipLeft: mouseX,
           tooltipTop: yScale(tooltipTopValue),
           tooltipData: {
             performance: performanceDatumAtPosX,

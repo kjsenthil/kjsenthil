@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Circle } from '@visx/shape';
-import { useChartStyles } from '../../../../hooks';
+import { useChartStyles } from '../../../hooks';
 
-export interface PerformanceProjectionsChartDotIndicatorProps {
+export interface ChartDotIndicatorProps {
   // These props match their counterpart props in visx's <Circle />
   cx: number | undefined;
   cy: number | undefined;
@@ -11,12 +11,7 @@ export interface PerformanceProjectionsChartDotIndicatorProps {
   filter?: string;
 }
 
-export default function PerformanceProjectionsChartDotIndicator({
-  cx,
-  cy,
-  color,
-  filter,
-}: PerformanceProjectionsChartDotIndicatorProps) {
+export default function ChartDotIndicator({ cx, cy, color, filter }: ChartDotIndicatorProps) {
   const chartStyles = useChartStyles();
 
   return (

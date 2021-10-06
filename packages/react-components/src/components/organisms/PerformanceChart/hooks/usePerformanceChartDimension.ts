@@ -5,12 +5,12 @@ import { useScreenSize } from '../../../../hooks';
 
 const basePerformanceChartDimension: ChartDimension = {
   width: 0,
-  height: 290,
+  height: 240,
   margin: {
-    top: 10,
-    right: 20,
+    top: 0,
+    right: 0,
     bottom: 30,
-    left: 30,
+    left: 60,
   },
 };
 

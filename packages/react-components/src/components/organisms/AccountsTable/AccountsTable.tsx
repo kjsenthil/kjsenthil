@@ -66,13 +66,18 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
             headerRow.map((headerRowItem: AccountsHeaderCell) => (
               <AccountsTableCell key={`${headerRowItem.value}-key`}>
                 <Grid container wrap="nowrap">
-                  <Grid container item wrap="nowrap">
+                  <Grid
+                    container
+                    item
+                    wrap="nowrap"
+                    {...(headerRowItem.value !== 'ACCOUNT' ? { justifyContent: 'flex-end' } : {})}
+                  >
                     <Typography variant="sh3" display="inline">
                       {headerRowItem.value}
                     </Typography>
                     {headerRowItem.tooltip && (
                       <>
-                        <Spacer x={0.6} inline />
+                        <Spacer x={0.3} inline />
                         <Tooltip title={headerRowItem.tooltip}>
                           <AccountsIconButton
                             aria-label={`${headerRowItem.value} Info`}
@@ -93,7 +98,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
         {dataRow &&
           dataRow.map((row) => (
             <AccountsTableRow key={row.id}>
-              <AccountsTableCell>
+              <AccountsTableCell style={{ textAlign: 'left' }}>
                 <Typography variant="sh3">{row.accountName}</Typography>
               </AccountsTableCell>
 
@@ -110,7 +115,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
               {row.accountCash !== undefined && (
                 <AccountsTableCell>
-                  <Grid container alignItems="center">
+                  <Grid container alignItems="center" justifyContent="flex-end">
                     <Typography variant="b4" color="primary" colorShade="dark2">
                       {formatCurrency(row.accountCash, CurrencyPresentationVariant.ACTUAL_TOPLINE)}
                     </Typography>
@@ -131,7 +136,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
               {row.monthlyInvestment !== undefined && (
                 <AccountsTableCell>
-                  <Grid container alignItems="center">
+                  <Grid container alignItems="center" justifyContent="flex-end">
                     <Typography variant="b4" color="primary" colorShade="dark2">
                       {formatCurrency(
                         row.monthlyInvestment,
@@ -162,7 +167,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
 
               {row.annualisedReturn !== undefined && (
                 <AccountsTableCell>
-                  <Grid container justifyContent="flex-start" alignItems="center">
+                  <Grid container justifyContent="flex-end" alignItems="center">
                     <Grid item>
                       <Typography variant="b4" color="primary" colorShade="dark2">
                         {row?.annualisedReturn !== 0

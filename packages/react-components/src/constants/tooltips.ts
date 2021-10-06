@@ -1,13 +1,13 @@
 export const StaticTooltips = {
   investments: 'The total current value of your investments.',
-  totalValue: 'The total value of your investments and cash.',
+  totalValue: 'Total value = Investments plus cash',
   lifetimeReturn:
-    'This shows how well your investments have performed since you first held them with Bestinvest. It includes returns from both growth and income, minus any fees.',
+    'Lifetime return shows how well your investments have performed net of fees since you have held them on Bestinvest. This includes both growth and income returns.',
   linkedAccount:
     'These are accounts where someone else has given you view-only access. You can find out more about linked account in our FAQs.',
   annualisedReturn:
     'This shows the average return per year on each pound over the period it has been invested. So for example, a figure of 5% would mean that on average, every pound you have invested has grown by 5p per year. This is also known as the "money-weighted rate of return".',
-  netContribution: 'Your total contributions minus any withdrawals you may have made.',
+  netContribution: 'Contributions minus withdrawals',
   retirementLength:
     'By the time you retire, the average UK life expectancy is predicted to be around 87 years of age. Most people retire at 65, giving an overall retirement of 22 years.',
   inflationRate:

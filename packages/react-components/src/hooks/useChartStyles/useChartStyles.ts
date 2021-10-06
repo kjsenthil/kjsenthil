@@ -26,7 +26,7 @@ export default function useChartStyles() {
     },
 
     TEXT_SIZE: {
-      AXES: 12,
+      AXES: 11,
     },
 
     TEXT_COLOR: {
@@ -71,7 +71,7 @@ export default function useChartStyles() {
       DOT_INDICATOR_INNER: 0,
       DOT_INDICATOR_OUTER: 0,
 
-      PERFORMANCE_GRAPH: 4,
+      PERFORMANCE_GRAPH: 2,
       CONTRIBUTION_GRAPH: 2,
       PROJECTIONS_GRAPH: 4,
       GOAL_NOT_MET_GRAPH: 2,

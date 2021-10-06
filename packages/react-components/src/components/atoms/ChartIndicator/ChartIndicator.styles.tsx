@@ -23,7 +23,7 @@ export const SolidIndicator = styled(Div)`
     colorShade = 'main',
   }: StyleProps) => `
     width: ${pxToRem(3)};
-    min-height: ${pxToRem(24)};
+    min-height: ${pxToRem(32)};
     border-radius: 1.5px;
     background-color: ${palette[color][colorShade]};
   `}
@@ -55,7 +55,7 @@ export const DashedIndicatorContainer = styled.div`
     thick: boolean;
     theme: Theme;
   }) => `
-    height: ${pxToRem(24)};
+    height: ${pxToRem(32)};
     width: ${thick ? pxToRem(4) : pxToRem(3)};
     display: flex;
     flex-direction: column;

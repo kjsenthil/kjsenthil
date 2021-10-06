@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import ChardIndicator, { ChartIndicatorProps } from './ChartIndicator';
+import ChartIndicator, { ChartIndicatorProps } from './ChartIndicator';
 
 export default {
   title: 'Digital Hybrid/Atoms/Chart Indicator',
-  component: ChardIndicator,
+  component: ChartIndicator,
   argTypes: {
     variant: {
       control: {
@@ -27,7 +27,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<ChartIndicatorProps> = (args) => <ChardIndicator {...args} />;
+const Template: Story<ChartIndicatorProps> = (args) => <ChartIndicator {...args} />;
 
 const defaultArgs: ChartIndicatorProps = {
   variant: 'solid',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AxisBottom, AxisScale, SharedAxisProps } from '@visx/axis';
-import PerformanceChartTickComponent from '../PerformanceChartTickComponent/PerformanceChartTickComponent';
+import PerformanceChartTickComponentBottomAxis from '../PerformanceChartTickComponent/PerformanceChartTickComponentBottomAxis';
 import { ChartDimensionWithExtras } from '../../../../config/chart';
 import { useChartStyles } from '../../../../hooks';
 
@@ -10,6 +10,7 @@ export interface PerformanceChartAxisBottomProps extends SharedAxisProps<AxisSca
 
 export default function PerformanceChartAxisBottom({
   scale,
+  numTicks,
   chartDimension,
   ...props
 }: PerformanceChartAxisBottomProps) {
@@ -20,12 +21,12 @@ export default function PerformanceChartAxisBottom({
   return (
     <AxisBottom
       scale={scale}
-      hideAxisLine
       top={chartDimension.innerHeight}
-      tickLength={12}
+      hideAxisLine
+      tickLength={0}
       tickStroke="transparent"
       tickComponent={(tickRendererProps) => (
-        <PerformanceChartTickComponent chartStyles={chartStyles} {...tickRendererProps} />
+        <PerformanceChartTickComponentBottomAxis chartStyles={chartStyles} {...tickRendererProps} />
       )}
       {...props}
     />

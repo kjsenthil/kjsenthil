@@ -21,7 +21,7 @@ export interface UseTimeValueScalesProps {
   maxValueBuffer?: number;
 }
 
-const DEFAULT_MAX_VALUE_BUFFER = 0.1;
+const DEFAULT_MAX_VALUE_BUFFER = 0;
 
 // This domain is used when either minDate or maxDate is undefined
 const DEFAULT_TIME_DOMAIN = [new Date(0), new Date(0)];
@@ -76,8 +76,6 @@ export default function useTimeValueScales({
             [minValue!, maxValue! * (1 + maxValueBuffer) || DEFAULT_VALUE_DOMAIN[1]]
           : DEFAULT_VALUE_DOMAIN,
         range: yScaleRange,
-
-        nice: true,
       }),
     [yScaleRange[0], yScaleRange[1], minValue, maxValue, maxValueBuffer]
   );

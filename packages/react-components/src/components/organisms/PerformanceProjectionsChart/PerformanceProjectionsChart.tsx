@@ -11,7 +11,7 @@ import { max as d3ArrayMax, min as d3ArrayMin } from 'd3-array';
 import styled from 'styled-components';
 import { curveBasis } from '@visx/curve';
 import { GridRows } from '@visx/grid';
-import { Theme, Typography } from '../../atoms';
+import { ChartDotIndicator, ChartOuterBorder, Theme, Typography } from '../../atoms';
 import { useBreakpoint, useChartStyles, useTimeValueScales } from '../../../hooks';
 import {
   PerformanceProjectionsChartAxisBottom,
@@ -44,8 +44,6 @@ import {
 } from '../../../services';
 import contributionsDefined from './performanceProjectionsData/utils/contributionsDefined';
 import usePerformanceProjectionsChartDimension from './hooks/usePerformanceProjectionsChartDimension';
-import PerformanceProjectionsChartDotIndicator from './PerformanceProjectionsChartDotIndicator/PerformanceProjectionsChartDotIndicator';
-import PerformanceProjectionsChartOuterBorder from './PerformanceProjectionsChartOuterBorder/PerformanceProjectionsChartOuterBorder';
 import { SvgAndGoalIndicatorsContainer } from './PerformanceProjectionsChart.styles';
 import PerformanceProjectionsChartAxisBottomLabelMobile from './PerformanceProjectionsChartAxes/PerformanceProjectionsChartAxisBottomLabelMobile';
 import getPerformanceProjectionsChartSummaryPanelValues from './PerformanceProjectionsChartSummaryPanel/getPerformanceProjectionsChartSummaryPanelValues';
@@ -444,7 +442,7 @@ function PerformanceProjectionsChart({
 
             {/* ----- Outer border ----- */}
 
-            <PerformanceProjectionsChartOuterBorder chartDimension={chartDimension} />
+            <ChartOuterBorder chartDimension={chartDimension} />
 
             {/* ----- Grids ----- */}
 
@@ -634,7 +632,7 @@ function PerformanceProjectionsChart({
                   pointerEvents="none"
                 />
                 {hasProjectionsTargetData && tooltipData?.goalNotMetIndicatorPosY !== undefined && (
-                  <PerformanceProjectionsChartDotIndicator
+                  <ChartDotIndicator
                     cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
                     cy={
                       tooltipData
@@ -645,7 +643,7 @@ function PerformanceProjectionsChart({
                     filter="url(#dot-indicator-drop-shadow)"
                   />
                 )}
-                <PerformanceProjectionsChartDotIndicator
+                <ChartDotIndicator
                   cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
                   cy={
                     tooltipData
@@ -655,7 +653,7 @@ function PerformanceProjectionsChart({
                   color={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
                   filter="url(#dot-indicator-drop-shadow)"
                 />
-                <PerformanceProjectionsChartDotIndicator
+                <ChartDotIndicator
                   cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
                   cy={
                     tooltipData

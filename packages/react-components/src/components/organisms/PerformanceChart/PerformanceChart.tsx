@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { withParentSize } from '@visx/responsive';
-import { AreaClosed, Bar, Circle, Line, LinePath } from '@visx/shape';
+import { AreaClosed, Bar, Line, LinePath } from '@visx/shape';
 import { LinearGradient } from '@visx/gradient';
-import { GridRows } from '@visx/grid';
+import { GridColumns, GridRows } from '@visx/grid';
 import { curveBasis } from '@visx/curve';
 import { Group } from '@visx/group';
 import {
@@ -10,7 +10,8 @@ import {
   WithParentSizeProvidedProps,
 } from '@visx/responsive/lib/enhancers/withParentSize';
 import styled from 'styled-components';
-import { Theme } from '../../atoms';
+import dayjs from 'dayjs';
+import { ChartDotIndicator, ChartOuterBorder, Theme } from '../../atoms';
 import { useChartStyles, useTimeValueScales } from '../../../hooks';
 import PerformanceChartTooltip from './PerformanceChartTooltip/PerformanceChartTooltip';
 import usePerformanceChartTooltip, {
@@ -27,8 +28,11 @@ import {
 } from '../../../utils/chart';
 import getTimeSeriesMinMax from '../../../utils/chart/getTimeSeriesMinMax';
 import { usePerformanceChartDimension } from './hooks';
-import { d3TimeFormatter, D3TimeFormatterType } from '../../../utils/formatters';
 import { PerformanceDataPeriod } from '../../../services';
+import { xScaleConfig } from '../../../config/chart/performanceChart';
+import PerformanceChartAxisTick from './PerformanceChartTickComponent/PerformanceChartAxisTick';
+import { d3ValueFormatter } from '../../../utils/formatters';
+import getPerformanceChartAxisLeftTickValues from './PerformanceChartAxes/getPerformanceChartAxisLeftTickValues';
 
 export interface PerformanceChartProps extends WithParentSizeProps, WithParentSizeProvidedProps {
   performanceData: PerformanceDatum[];
@@ -36,13 +40,14 @@ export interface PerformanceChartProps extends WithParentSizeProps, WithParentSi
   periodSelectionProps: ChartPeriodSelectionProps<PerformanceDataPeriod>;
 
   legendProps?: Record<string, Pick<LegendProps, 'title' | 'tooltip'>>;
-  axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;
+  // axisBottomConfig?: Record<string, { numTicks: number; tickFormatterType: D3TimeFormatterType }>;
 }
 
 // ---------- Utilities ---------- //
 
 const MemoizedGridRows = React.memo(GridRows);
-
+const MemoizedGridColumns = React.memo(GridColumns);
+const MemoizedBar = React.memo(Bar);
 const MemoizedAreaClosed = React.memo(AreaClosed);
 const MemoizedLinePath = React.memo(LinePath);
 
@@ -69,7 +74,6 @@ function PerformanceChart({
   performanceData: preNormalizationPerformanceData,
   contributionsData: preNormalizationContributionsData,
   periodSelectionProps,
-  axisBottomConfig,
   parentWidth = 0,
   legendProps,
 }: PerformanceChartProps) {
@@ -88,34 +92,114 @@ function PerformanceChart({
 
   const chartDimension = usePerformanceChartDimension(parentWidth);
 
-  const {
-    minDate: minContributionsDate,
-    maxDate: maxContributionsDate,
-    maxValue: maxContributionsValue,
-    minValue: minContributionsValue,
-  } = getTimeSeriesMinMax(performanceData);
-  const {
-    minDate: minValuationsDate,
-    maxDate: maxValuationsDate,
-    maxValue: maxValuationsValue,
-    minValue: minValuationsValue,
-  } = getTimeSeriesMinMax(contributionsData);
+  // x-axis (dates) tick values
+  // Rather than letting d3 determines the tick values automatically, we make
+  // them static depending on the current viewing period.
 
-  const minChartDate = Math.min(minContributionsDate.getTime(), minValuationsDate.getTime());
-  const maxChartDate = Math.max(maxContributionsDate.getTime(), maxValuationsDate.getTime());
+  const { datesGenerator, columnsCount, formatter } = xScaleConfig[
+    periodSelectionProps.currentPeriod
+  ];
+
+  const axisBottomDates = datesGenerator(performanceData[performanceData.length - 1].date);
+  const axisBottomColumnWidth = (parentWidth - chartDimension.margin.left) / columnsCount;
+
+  // y-axis (portfolio valuation) tick values
+  // Rather than letting d3 determines the tick values automatically, we choose
+  // them based on the portfolio's valuation.
+
+  const { maxValue: maxContributionsValue, minValue: minContributionsValue } = getTimeSeriesMinMax(
+    performanceData
+  );
+  const { maxValue: maxValuationsValue, minValue: minValuationsValue } = getTimeSeriesMinMax(
+    contributionsData
+  );
+
   const maxChartValue = Math.max(maxContributionsValue, maxValuationsValue);
   const minChartValue = Math.min(
     Math.max(minContributionsValue, 0),
     Math.max(minValuationsValue, 0)
   );
 
+  const axisLeftTickValues = getPerformanceChartAxisLeftTickValues({
+    minChartValue,
+    maxChartValue,
+    bandsCount: 4,
+  });
+
+  // time-value scale
+
   const { xScale, yScale } = useTimeValueScales({
-    xScaleRange: [chartDimension.margin.left, chartDimension.innerWidth],
+    xScaleRange: [chartDimension.margin.left, chartDimension.width - chartDimension.margin.right],
     yScaleRange: [chartDimension.innerHeight, chartDimension.margin.top],
-    minDate: new Date(minChartDate),
-    maxDate: new Date(maxChartDate),
-    maxValue: maxChartValue,
-    minValue: minChartValue,
+    minDate: axisBottomDates[axisBottomDates.length - 1],
+    maxDate: axisBottomDates[0],
+    maxValue: axisLeftTickValues[axisLeftTickValues.length - 1],
+    minValue: axisLeftTickValues[0],
+  });
+
+  // ----- Chart axis labels ----- //
+
+  // y-axis tick labels
+
+  const leftAxisTickLabels = axisLeftTickValues.map((tickValue) => (
+    <PerformanceChartAxisTick
+      key={tickValue}
+      x={chartDimension.margin.left - 5}
+      y={yScale(tickValue) - 15}
+      chartStyles={chartStyles}
+      textAnchor="end"
+      text={d3ValueFormatter(tickValue)}
+    />
+  ));
+
+  // x-axis tick labels
+
+  const bottomAxisTickLabels = axisBottomDates.map((date) => {
+    const formattedDate = formatter(dayjs(date));
+
+    return (
+      <PerformanceChartAxisTick
+        key={`${date}`}
+        x={xScale(date) + axisBottomColumnWidth / 2}
+        y={chartDimension.height - chartDimension.margin.bottom + 10}
+        chartStyles={chartStyles}
+        textAnchor="middle"
+        text={formattedDate}
+      />
+    );
+  });
+
+  // ----- Lines for axis bar area ----- //
+
+  const axisLeftBarLines = axisLeftTickValues.map((tickValue) => {
+    const y = yScale(tickValue);
+
+    return (
+      <Line
+        key={tickValue}
+        from={{ x: 0, y }}
+        to={{ x: chartDimension.margin.left, y }}
+        stroke={chartStyles.STROKE_COLOR.GRID}
+        strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+        strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+      />
+    );
+  });
+
+  const axisBottomBarLines = axisBottomDates.map((date) => {
+    const x = xScale(date);
+
+    return (
+      <Line
+        key={`${date}`}
+        from={{ x, y: chartDimension.height }}
+        to={{ x, y: chartDimension.height - chartDimension.margin.bottom }}
+        stroke={chartStyles.STROKE_COLOR.GRID}
+        strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+        strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+        pointerEvents="none"
+      />
+    );
   });
 
   // ----- Chart accessor ----- //
@@ -125,17 +209,12 @@ function PerformanceChart({
     yScale,
   ]);
 
-  // ----- Chart axis bottom ----- //
-
-  const { numTicks: axisBottomNumTicks, tickFormatterType: axisBottomTickFormatterType } =
-    axisBottomConfig && axisBottomConfig[periodSelectionProps.currentPeriod]
-      ? axisBottomConfig[periodSelectionProps.currentPeriod]
-      : {
-          numTicks: 4,
-          tickFormatterType: D3TimeFormatterType.DATE_AND_MONTH,
-        };
-
   // ----- Chart tooltip ----- //
+
+  // Determine the dimension of the tooltip hover area
+  const tooltipHoverAreaX = Math.max(xScale(performanceData[0].date), chartDimension.margin.left);
+  const tooltipHoverAreaWidth =
+    xScale(performanceData[performanceData.length - 1].date) - tooltipHoverAreaX;
 
   const {
     tooltip: { hideTooltip, tooltipLeft = 0, tooltipTop = 0, tooltipOpen, tooltipData },
@@ -143,7 +222,6 @@ function PerformanceChart({
     tooltipStyles,
     handleShowContributionsTooltip,
   } = usePerformanceChartTooltip({
-    chartDimension,
     performanceData,
     contributionsData,
     xAccessor: timeSeriesDateAccessor,
@@ -151,9 +229,6 @@ function PerformanceChart({
     xScale,
     yScale,
   });
-
-  // When the chart is not hovered on, we show the tooltip and indicator at the
-  // last (latest) data point
 
   // When the chart is not hovered on, we show the tooltip and indicator at the
   // last (latest) data point
@@ -173,7 +248,7 @@ function PerformanceChart({
     lastPerformanceDataPoint = performanceData[performanceData.length - 1];
     lastContributionsDataPoint = contributionsData[contributionsData.length - 1];
 
-    defaultTooltipLeft = chartDimension.innerWidth;
+    defaultTooltipLeft = xScale(performanceData[performanceData.length - 1].date);
     defaultTooltipTop = yScale(timeSeriesValueAccessor(lastPerformanceDataPoint));
     defaultTooltipData = {
       performance: lastPerformanceDataPoint,
@@ -228,19 +303,33 @@ function PerformanceChart({
           toOpacity={chartStyles.GRADIENT.PERFORMANCE_GRAPH.toOpacity}
         />
 
+        {/* ***** Grids ***** */}
+
+        <MemoizedGridRows
+          scale={yScale}
+          width={chartDimension.width}
+          height={chartDimension.innerHeight}
+          tickValues={axisLeftTickValues}
+          stroke={chartStyles.STROKE_COLOR.GRID}
+          strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+          strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+          pointerEvents="none"
+        />
+
+        <MemoizedGridColumns
+          scale={xScale}
+          width={chartDimension.width}
+          height={chartDimension.height}
+          tickValues={axisBottomDates}
+          stroke={chartStyles.STROKE_COLOR.GRID}
+          strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+          strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+          pointerEvents="none"
+        />
+
         {/* Main chart */}
 
-        <Group left={chartDimension.margin.left} top={chartDimension.margin.top}>
-          {/* Axes */}
-
-          <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} />
-          <PerformanceChartAxisBottom
-            chartDimension={chartDimension}
-            scale={xScale}
-            numTicks={axisBottomNumTicks}
-            tickFormat={d3TimeFormatter[axisBottomTickFormatterType]}
-          />
-
+        <Group>
           {/* ***** Graph paths ***** */}
 
           {hasData && (
@@ -283,29 +372,14 @@ function PerformanceChart({
 
           {/* This is the chart's tooltip hover detection area */}
           <Bar
-            x={chartDimension.margin.left}
-            width={chartDimension.innerWidth - chartDimension.margin.left}
+            x={tooltipHoverAreaX}
+            width={tooltipHoverAreaWidth}
             height={chartDimension.innerHeight}
             fill="transparent"
             onTouchStart={handleShowContributionsTooltip}
             onTouchMove={handleShowContributionsTooltip}
             onMouseMove={handleShowContributionsTooltip}
             onMouseLeave={() => hideTooltip()}
-          />
-
-          {/* ***** Grids ***** */}
-
-          <MemoizedGridRows
-            scale={yScale}
-            left={chartDimension.margin.left}
-            width={chartDimension.innerWidth - chartDimension.margin.left}
-            height={chartDimension.innerHeight}
-            numTicks={4}
-            stroke={chartStyles.STROKE_COLOR.GRID}
-            strokeWidth={chartStyles.STROKE_WIDTH.GRID}
-            strokeDasharray={chartStyles.STROKE_DASHARRAY.GRID}
-            strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
-            pointerEvents="none"
           />
 
           {/* ***** Line & dot indicators ***** */}
@@ -325,36 +399,28 @@ function PerformanceChart({
                 strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_LINE}
                 pointerEvents="none"
               />
-              <Circle
-                cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
-                cy={
-                  tooltipData
-                    ? tooltipData.performanceIndicatorPosY
-                    : defaultTooltipData.performanceIndicatorPosY
-                }
-                r={chartStyles.RADIUS.INDICATOR}
-                fill={chartStyles.FILL.INDICATOR}
-                stroke={chartStyles.STROKE_COLOR.INDICATOR}
-                strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_CIRCLE}
-                pointerEvents="none"
-              />
-              <Circle
+              <ChartDotIndicator
                 cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
                 cy={
                   tooltipData
                     ? tooltipData.contributionIndicatorPosY
                     : defaultTooltipData.contributionIndicatorPosY
                 }
-                r={chartStyles.RADIUS.INDICATOR}
-                fill={chartStyles.FILL.INDICATOR}
-                stroke={chartStyles.STROKE_COLOR.INDICATOR}
-                strokeWidth={chartStyles.STROKE_WIDTH.INDICATOR_CIRCLE}
-                pointerEvents="none"
+                color={chartStyles.STROKE_COLOR.CONTRIBUTION_GRAPH}
+              />
+              <ChartDotIndicator
+                cx={tooltipData ? tooltipLeft : defaultTooltipLeft}
+                cy={
+                  tooltipData
+                    ? tooltipData.performanceIndicatorPosY
+                    : defaultTooltipData.performanceIndicatorPosY
+                }
+                color={chartStyles.STROKE_COLOR.PERFORMANCE_GRAPH}
               />
             </Group>
           )}
 
-          {/* Tooltip */}
+          {/* ***** Tooltip ***** */}
 
           {hasData && (
             <TooltipInPortal
@@ -362,7 +428,6 @@ function PerformanceChart({
               top={chartDimension.innerHeight + 6}
               left={tooltipOpen && tooltipData ? tooltipLeft : defaultTooltipLeft}
               style={tooltipStyles}
-              offsetLeft={chartDimension.margin.left}
             >
               <PerformanceChartTooltip
                 date={
@@ -374,6 +439,59 @@ function PerformanceChart({
             </TooltipInPortal>
           )}
         </Group>
+
+        {/* ***** Axis bars ***** */}
+        {/* These bars act as the background color for the axes tick areas */}
+
+        <MemoizedBar
+          height={chartDimension.height}
+          width={chartDimension.margin.left}
+          fill={chartStyles.FILL.AXIS_TICK_AREA}
+        />
+        {axisLeftBarLines}
+
+        <MemoizedBar
+          y={chartDimension.height - chartDimension.margin.bottom}
+          height={chartDimension.margin.bottom}
+          width={chartDimension.width}
+          fill={chartStyles.FILL.AXIS_TICK_AREA}
+        />
+        {axisBottomBarLines}
+
+        {/* ***** Axes ***** */}
+        {/* We provide the axes with custom tick values and labels */}
+
+        <PerformanceChartAxisLeft chartDimension={chartDimension} scale={yScale} tickValues={[]} />
+        {leftAxisTickLabels}
+
+        <PerformanceChartAxisBottom
+          chartDimension={chartDimension}
+          scale={xScale}
+          tickValues={[]}
+        />
+        {bottomAxisTickLabels}
+
+        {/*  ***** Outer border  ***** */}
+
+        <ChartOuterBorder chartDimension={chartDimension} />
+
+        {/* This line separates the y-axis tick area and the actual chart */}
+        <Line
+          from={{ x: chartDimension.margin.left, y: 0 }}
+          to={{ x: chartDimension.margin.left, y: chartDimension.height }}
+          stroke={chartStyles.STROKE_COLOR.GRID}
+          strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+          strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+        />
+
+        {/* This line separates the x-axis tick area and the actual chart */}
+        <Line
+          from={{ x: 0, y: chartDimension.height - chartDimension.margin.bottom }}
+          to={{ x: chartDimension.width, y: chartDimension.height - chartDimension.margin.bottom }}
+          stroke={chartStyles.STROKE_COLOR.GRID}
+          strokeWidth={chartStyles.STROKE_WIDTH.GRID}
+          strokeOpacity={chartStyles.STROKE_OPACITY.GRID}
+        />
       </svg>
     </Container>
   );

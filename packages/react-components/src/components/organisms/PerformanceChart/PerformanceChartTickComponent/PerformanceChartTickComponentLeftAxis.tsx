@@ -3,9 +3,9 @@ import { TickRendererProps } from '@visx/axis';
 import { Text } from '@visx/text';
 import { useChartStyles } from '../../../../hooks';
 
-export interface PerformanceChartTickComponentProps extends TickRendererProps {
+export interface PerformanceChartTickComponentLeftAxisProps extends TickRendererProps {
   // Note: we have to pass chartStyles as a prop rather than having
-  // PerformanceChartTickComponent uses useChartStyles() directly. Otherwise we
+  // PerformanceChartTickComponentLeftAxis uses useChartStyles() directly. Otherwise we
   // will run into the mismatched hook call order error when the chart period
   // changes.
   // The cause for this is likely due to how d3 is handling the showing / hiding
@@ -14,17 +14,18 @@ export interface PerformanceChartTickComponentProps extends TickRendererProps {
   chartStyles: ReturnType<typeof useChartStyles>;
 }
 
-export default function PerformanceChartTickComponent({
+export default function PerformanceChartTickComponentLeftAxis({
   chartStyles,
   x,
   y,
   formattedValue,
   ...tickLabelProps
-}: PerformanceChartTickComponentProps) {
+}: PerformanceChartTickComponentLeftAxisProps) {
   return (
     <Text
-      x={x}
-      y={y}
+      x={x + 15}
+      // This negative y offset brings the tick label to above the grid line
+      y={y - 10}
       {...tickLabelProps}
       fill={chartStyles.TEXT_COLOR.AXES}
       fontFamily={chartStyles.TEXT_FONT.COMMON}
