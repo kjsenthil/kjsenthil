@@ -104,6 +104,7 @@ const LifePlanPage = () => {
         drawdownEndDate: calculateDrawdownEndDate(),
         monthlyIncome: Number(retirementGoal?.fields?.regularDrawdown?.val?.value?.val),
         lumpSum: retirementGoal?.fields.biRetirementLumpSum || 0,
+        lumpSumDate: dateOrUndefined(retirementGoal?.fields.biRetirementLumpSumDate?.val),
         laterLifeLeftOver: retirementGoal?.fields.biRetirementRemainingAmount || 0,
         shouldIncludeStatePension: !!retirementGoal?.fields.biStatePensionAmount,
         fees: 0,

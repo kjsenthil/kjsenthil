@@ -26,12 +26,12 @@ export const LegendsContainer = styled.div.withConfig<{ isMobile: boolean; theme
     isMobile
       ? `
     display: grid;
+    gap: ${theme.spacing(2)}px;
     grid: auto / 1fr 1fr;
     justify-content: space-between;
-    gap: ${theme.spacing(2)}px;
   `
       : `
     display: flex;
-    gap: ${theme.spacing(6)}px;
+    gap: ${theme.spacing(2)}px;
   `}
 `;

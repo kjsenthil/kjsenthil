@@ -21,7 +21,7 @@ describe('Goal progress card', () => {
       iconSrc: 'goals/large/my-childs-education.png',
       ageAtStartDate: 41,
       ageAtEndDate: 45,
-      affordableAmount: 180_000,
+      affordableAmount: 180_250,
       targetAmount: 220_000,
       shortfall: -40_000,
       onTrackPercentage: 0.8181818,

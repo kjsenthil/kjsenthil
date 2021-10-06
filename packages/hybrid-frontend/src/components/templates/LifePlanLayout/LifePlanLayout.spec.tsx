@@ -252,6 +252,8 @@ describe('LifePlanLayout', () => {
         expect(goalElement).toBeVisible();
       });
 
+      expect(screen.getByText('ISA + SIPP + GIA')).toBeVisible();
+
       // We expect the title to be visible and properly formatted
       expect(
         screen.getByText(

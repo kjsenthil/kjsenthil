@@ -44,6 +44,7 @@ export interface GoalProgressCardDetailedProps {
   shortfall: number;
   onTrackPercentage: number;
   lumpSum?: number;
+  onClick?: (value?: any) => void;
   totalAffordableDrawdown?: number;
   remainingAmount?: number;
   accounts?: string[];
@@ -186,6 +187,7 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
   affordableAmountUnderperform,
   targetAmount,
   shortfall,
+  onClick,
   onTrackPercentage,
   lumpSum,
   totalAffordableDrawdown,
@@ -197,13 +199,17 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
 
   const currencyFormatter = (val: number) =>
     formatCurrency(val, CurrencyPresentationVariant.ACTUAL_TOPLINE);
+
+  const currencyFormatterProjected = (val: number) =>
+    formatCurrency(val, CurrencyPresentationVariant.PROJECTION);
+
   const percentageFormatter = (val: number) =>
     formatPercent(val, PercentPresentationVariant.PROJECTION);
 
   const startDateForStatus = lumpSumDate || startDate;
   const goalState = determineGoalState(startDateForStatus, endDate);
   const startingAgeForStatus = ageAtLumpSumDate || ageAtStartDate;
-  const affordableAmountFormatted = currencyFormatter(affordableAmount);
+  const affordableAmountFormatted = currencyFormatterProjected(affordableAmount);
   const targetAmountFormatted = currencyFormatter(targetAmount);
 
   const progressBarData = getProgressBarData({
@@ -227,7 +233,7 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
   const width = style === GoalProgressCardStyle.simple ? '604px' : undefined;
 
   return (
-    <Layout isMobile={isMobile} goalState={goalState} {...{ width }}>
+    <Layout isMobile={isMobile} goalState={goalState} {...{ width }} onClick={onClick}>
       <IconContainer isMobile={isMobile} iconSrc={iconSrc} />
       <GoalDetailsContainer isMobile={isMobile} cardStyle={style}>
         <HeaderRow>
@@ -263,7 +269,7 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
             goalState,
             onTrackPercentage,
             percentageFormatter,
-            currencyFormatter,
+            currencyFormatterProjected,
             shortfall,
             affordableAmount,
             affordableAmountUnderperform

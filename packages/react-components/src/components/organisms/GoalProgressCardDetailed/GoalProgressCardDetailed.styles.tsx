@@ -14,11 +14,13 @@ export const Layout = styled.div`
     theme,
     isMobile,
     goalState,
+    onClick,
     width = '100%',
   }: {
     theme: Theme;
     isMobile: boolean;
     goalState: GoalState;
+    onClick?: (value?: any) => void;
     width?: string;
   }) => {
     const borderColor =
@@ -33,6 +35,7 @@ export const Layout = styled.div`
       background: ${theme.palette.background.default};
       border: 1px solid ${borderColor};
       border-radius: 12px;
+      cursor: ${onClick ? 'pointer' : 'auto'};
     `;
   }}
 `;

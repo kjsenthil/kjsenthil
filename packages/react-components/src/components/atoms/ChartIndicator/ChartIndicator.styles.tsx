@@ -39,7 +39,7 @@ export const IndicatorDash = styled(Div)`
     colorShade = 'main',
   }: StyleProps) => `
     max-width: ${pxToRem(3)};
-    height: 100%; 
+    height: ${pxToRem(32)};
     border-radius: 1.5px;
     background-color: ${palette[color][colorShade]};
   `}
@@ -75,7 +75,7 @@ export const RectangleIndicator = styled(Div)`
     colorShade = 'light1',
   }: StyleProps) => `
     width: ${pxToRem(16)};
-    height: ${pxToRem(24)};
+    height: ${pxToRem(32)};
     border-radius: 2px;
     background-color: ${palette[color][colorShade]};
   `}

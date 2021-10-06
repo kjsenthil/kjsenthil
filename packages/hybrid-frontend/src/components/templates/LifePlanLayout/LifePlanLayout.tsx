@@ -5,10 +5,19 @@ import {
   GoalProgressCardStyle,
   GoalSelection,
   GoalSelectionProps,
+  Link,
+  Modal,
+  ProjectionCalculateModal,
   Spacer,
+  Typography,
   useBreakpoint,
 } from '@tswdts/react-components';
-import { GoalProgressCardsContainer, LifePlanLayoutContainer } from './LifePlanLayout.styles';
+import {
+  ProjectionChartCard,
+  GoalProgressCardsContainer,
+  LifePlanLayoutContainer,
+  Disclaimer,
+} from './LifePlanLayout.styles';
 import Title from './Title/Title';
 import SectionHeading from './SectionHeading/SectionHeading';
 import ViewSelection from './ViewSelection/ViewSelection';
@@ -61,6 +70,17 @@ export default function LifePlanLayout({
   // all retirement goals should appear with the name Retirement
   const getGoalName = (goal: LifePlanGoalsData) => (goal.category === 5 ? 'Retirement' : goal.name);
 
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const linkClickHandler = () => setIsModalOpen(true);
+  const modalCloseHandler = () => setIsModalOpen(false);
+
+  const renderAccounts = (accounts: string[]) => {
+    let accountsText = accounts.slice(0, 3).join(' + ');
+    if (accounts.length > 3) accountsText += ` + ${accounts.length - 3}`;
+    return accountsText;
+  };
+
   const renderMainContent = () => {
     const hasGoals = goalsData && goalsData.length > 0;
 
@@ -89,17 +109,21 @@ export default function LifePlanLayout({
           <Title onTrackPercentage={allGoalsOnTrackPercentage} />
           <Spacer y={5} />
           <GoalProgressCardsContainer isMobile={isMobile}>
-            {Object.values(goalsData).map(
-              (goalData) =>
+            {Object.values(goalsData).map((goalData) => {
+              const goalDisplayName = getGoalName(goalData);
+
+              return (
                 goalData && (
                   <GoalProgressCardDetailed
                     key={goalData.name}
                     style={GoalProgressCardStyle.simple}
                     {...goalData}
-                    name={getGoalName(goalData)}
+                    name={goalDisplayName}
+                    onClick={() => goToSingleGoalView(goalDisplayName)}
                   />
                 )
-            )}
+              );
+            })}
           </GoalProgressCardsContainer>
           <Spacer y={7.5} />
         </>
@@ -118,7 +142,13 @@ export default function LifePlanLayout({
           goToCreateGoalView={goToCreateGoalView}
           goToEditGoalView={goToCreateGoalView}
         />
-        <Spacer y={5} />
+        <Spacer y={4.5} />
+        {selectedGoal.accounts && (
+          <Typography variant="sh3" color="primary" colorShade="light1">
+            {renderAccounts(selectedGoal.accounts)}
+          </Typography>
+        )}
+        <Spacer y={1.5} />
         <Title
           onTrackPercentage={selectedGoal.onTrackPercentage}
           onTrackAmount={selectedGoal.affordableAmount}
@@ -129,8 +159,32 @@ export default function LifePlanLayout({
         <Spacer y={7.5} />
         <SectionHeading text="Your projections" />
         <Spacer y={3} />
-        {projectionChart}
+        <ProjectionChartCard>{projectionChart}</ProjectionChartCard>
+        <Spacer y={1.75} />
+        <Disclaimer>
+          <Typography
+            display="inline"
+            fontStyle="italic"
+            variant="b4"
+            color="grey"
+            colorShade="dark1"
+          >
+            Such forecasts are not a reliable indicator of future performance
+          </Typography>
+          <Link special variant="link" onClick={linkClickHandler}>
+            Tell me more
+          </Link>
+        </Disclaimer>
         <Spacer y={7.5} />
+        <Modal
+          maxWidth="md"
+          fullWidth
+          open={isModalOpen}
+          onClose={modalCloseHandler}
+          modalTitle="How was this projection calculated?"
+        >
+          <ProjectionCalculateModal />
+        </Modal>
       </>
     );
   };

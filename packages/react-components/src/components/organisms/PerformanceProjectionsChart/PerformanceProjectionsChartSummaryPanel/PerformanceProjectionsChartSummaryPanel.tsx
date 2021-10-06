@@ -28,6 +28,8 @@ export interface PerformanceProjectionsChartSummaryPanelProps {
 }
 
 const currencyFormatter = (val: number) => formatCurrency(val, CurrencyPresentationVariant.CHART);
+const projectionCurrencyFormatter = (val: number) =>
+  formatCurrency(val, CurrencyPresentationVariant.PROJECTION);
 
 export default function PerformanceProjectionsChartSummaryPanel({
   performance,
@@ -48,7 +50,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
         <Legend
           title="Projected value"
           value={noHover ? undefined : performance}
-          valueFormatter={currencyFormatter}
+          valueFormatter={projectionCurrencyFormatter}
           chartIndicatorProps={{ variant: 'solid', color: 'tertiary' }}
         />
 
@@ -56,7 +58,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
           <Legend
             title="Net contribution"
             value={noHover ? undefined : contributions}
-            valueFormatter={currencyFormatter}
+            valueFormatter={projectionCurrencyFormatter}
             chartIndicatorProps={{
               variant: isMobile ? 'dashed-2' : 'dashed-4',
               color: 'secondary',
@@ -80,7 +82,7 @@ export default function PerformanceProjectionsChartSummaryPanel({
             <Legend
               title="Likely range"
               value={noHover ? undefined : [performanceLowEnd, performanceHighEnd]}
-              valueFormatter={currencyFormatter}
+              valueFormatter={projectionCurrencyFormatter}
               chartIndicatorProps={{ variant: 'solid', color: 'tertiary', colorShade: 'light2' }}
               tooltip="The future is uncertain, so ‘likely range’ shows a spectrum of possible outcomes for how much money you could have over time. There’s a 10% chance you could end up with less but there’s also a 10% chance you could end up with more."
             />
