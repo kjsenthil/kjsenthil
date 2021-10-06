@@ -156,10 +156,10 @@ jobs:
 
       - name: "Terraform Plan"
         id: rg-plan
-        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
+        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color -out="staging-rg-plan.tfplan"
 
       - name: "Terraform Apply"
-        run: terraform apply -var-file="./var-files/staging.tfvars" -auto-approve
+        run: terraform apply -auto-approve staging-rg-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -206,7 +206,7 @@ jobs:
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
-        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
+        run: terraform plan -no-color -var-file="./var-files/staging.tfvars" -out="staging-apim-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
@@ -218,16 +218,7 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve -var-file="./var-files/staging.tfvars"
-        env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
-          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
-          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
-          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
-          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
-          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
-          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
+        run: terraform apply -auto-approve staging-apim-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -238,6 +229,7 @@ jobs:
           echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_website_name.value )
           echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_storybook_name.value )
           echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
+
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
@@ -289,7 +281,7 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/infra
-        run: terraform plan -var-file="./var-files/staging.tfvars"
+        run: terraform plan -var-file="./var-files/staging.tfvars" -out="staging-infra-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
@@ -302,16 +294,7 @@ jobs:
 
       - name: "Terraform Apply"
         working-directory: ./terraform/infra
-        run: terraform apply -var-file="./var-files/staging.tfvars" -auto-approve
-        env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
-          TF_VAR_apim_vnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_vnet_name }}
-          TF_VAR_apim_subnet_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_website_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_website_name }}
-          TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_storybook_name }}
-          TF_VAR_app_insights_name: ${{ needs.deploy_staging_apim_terraform.outputs.app_insights_name }}
-          TF_VAR_git_branch_name: ${{ github.head_ref }}
+        run: terraform apply -auto-approve staging-infra-plan.tfplan
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -319,6 +302,7 @@ jobs:
         run: |
           terraform output -json > staging-infra-outputs.json
           echo ::set-output name=frontend-storage-account-name::$( jq -r .frontend_storage_account_name.value staging-infra-outputs.json )
+          echo ::set-output name=frontend-web-host::$( jq -r .frontend_web_host.value staging-infra-outputs.json )
           echo ::set-output name=website-endpoint::$( jq -r .frontend_web_endpoint.value staging-infra-outputs.json )
           echo ::set-output name=website-cdn-endpoint-name::$( jq -r .frontend_cdn_endpoint_name.value staging-infra-outputs.json )
           echo ::set-output name=website-cname::$( jq -r .frontend_web_cname.value staging-infra-outputs.json )
@@ -333,6 +317,7 @@ jobs:
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
+      frontend_web_host: ${{ steps.get-terraform-outputs.frontend-web-host }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
@@ -471,19 +456,14 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
-        run: terraform plan
+        run: terraform plan -var-file="./var-files/staging.tfvars" -out="staging-fd-plan.tfplan"
         env:
-          TF_VAR_environment_prefix: staging
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_staging_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
+          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_staging_terraform.outputs.frontend_web_host }}
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
-        run: terraform apply -auto-approve
-        env:
-          TF_VAR_environment_prefix: staging
-          TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_staging_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
+        run: terraform apply -auto-approve staging-fd-plan.tfplan
 
   end_to_end_test_staging:
     name: "E2E test (Staging)"
@@ -635,10 +615,10 @@ jobs:
 
       - name: "Terraform Plan"
         id: rg-plan
-        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
+        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color -out="prod-rg-plan.tfplan"
 
       - name: "Terraform Apply"
-        run: terraform apply -var-file="./var-files/prod.tfvars" -auto-approve
+        run: terraform apply -auto-approve prod-rg-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -647,6 +627,7 @@ jobs:
           echo ::set-output name=artifact-storage-account-name::$( terraform output -json | jq -r .artifact_storage_account_name.value )
           echo ::set-output name=artifact-container-name::$( terraform output -json | jq -r .artifact_container_name.value )
           echo ::set-output name=test-artifacts-container-name::$( terraform output -json | jq -r .test_artifacts_container_name.value )
+
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
       artifact_storage_account_name: ${{ steps.set-terraform-outputs.outputs.artifact-storage-account-name }}
@@ -685,7 +666,7 @@ jobs:
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
-        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
+        run: terraform plan -no-color -var-file="./var-files/prod.tfvars" -out="prod-apim-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
@@ -697,16 +678,7 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve -var-file="./var-files/prod.tfvars"
-        env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
-          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME}}
-          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD}}
-          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME}}
-          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD}}
-          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID}}
-          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
+        run: terraform apply -auto-approve prod-apim-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -769,7 +741,7 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/infra
-        run: terraform plan -var-file="./var-files/prod.tfvars"
+        run: terraform plan -var-file="./var-files/prod.tfvars" -out="prod-infra-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
@@ -782,16 +754,7 @@ jobs:
 
       - name: "Terraform Apply"
         working-directory: ./terraform/infra
-        run: terraform apply -var-file="./var-files/prod.tfvars" -auto-approve
-        env:
-          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
-          TF_VAR_apim_vnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_vnet_name }}
-          TF_VAR_apim_subnet_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_subnet_name }}
-          TF_VAR_cdn_profile_website_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_website_name }}
-          TF_VAR_cdn_profile_storybook_name: ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_storybook_name }}
-          TF_VAR_app_insights_name: ${{ needs.deploy_production_apim_terraform.outputs.app_insights_name }}
-          TF_VAR_git_branch_name: ${{ github.head_ref }}
+        run: terraform apply -auto-approve prod-infra-plan.tfplan
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -799,6 +762,7 @@ jobs:
         run: |
           terraform output -json > prod-infra-outputs.json
           echo ::set-output name=frontend-storage-account-name::$( jq -r .frontend_storage_account_name.value prod-infra-outputs.json )
+          echo ::set-output name=frontend-web-host::$( jq -r .frontend_web_host.value prod-infra-outputs.json )
           echo ::set-output name=website-endpoint::$( jq -r .frontend_web_endpoint.value prod-infra-outputs.json )
           echo ::set-output name=website-cdn-endpoint-name::$( jq -r .frontend_cdn_endpoint_name.value prod-infra-outputs.json )
           echo ::set-output name=website-cname::$( jq -r .frontend_web_cname.value prod-infra-outputs.json )
@@ -812,6 +776,7 @@ jobs:
           echo ::set-output name=gtm-env-preview::$( jq -r .gtm_env_preview.value prod-infra-outputs.json )
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
+      frontend_web_host: ${{ steps.get-terraform-outputs.outputs.frontend-web-host }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
@@ -951,19 +916,14 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
-        run: terraform plan
+        run: terraform plan -var-file="var-files/prod.tfvars" -out="prod-fd-plan.tfplan"
         env:
-          TF_VAR_environment_prefix: prod
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_production_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
+          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_production_terraform.outputs.frontend_web_host }}
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
-        run: terraform apply -auto-approve
-        env:
-          TF_VAR_environment_prefix: prod
-          TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
-          TF_VAR_cdn_endpoint_host: ${{ needs.deploy_production_terraform.outputs.website_cdn_endpoint_name }}.azureedge.net
+        run: terraform apply -auto-approve prod-fd-plan.tfplan
 
   deploy_storybook_prod:
     name: "Deploy Storybook"
@@ -1137,10 +1097,28 @@ jobs:
       - output_website_urls
     runs-on: ubuntu-latest
     steps:
-      - name: "Get current timestamp"
-        id: get-current-timestamp
+      - name: "Set variables"
+        id: set-variables
         run: |
           echo ::set-output name=current-timestamp::$( date +%s )
+          if [[
+            "${{
+              needs.build_cache.result == 'success' &&
+              needs.deploy_staging_terraform.result == 'success' &&
+              needs.deploy_staging_front_door.result == 'success' &&
+              needs.deploy_staging_frontend.result == 'success' &&
+              needs.end_to_end_test_staging.result == 'success' &&
+              needs.deploy_production_terraform.result == 'success' &&
+              needs.deploy_production_front_door.result == 'success' &&
+              needs.deploy_production_frontend.result == 'success' &&
+              needs.deploy_storybook_prod.result == 'success' &&
+              needs.output_website_urls.result == 'success'
+            }}" == "true"
+          ]]; then
+            echo ::set-output name=deployment-status::success
+          else
+            echo ::set-output name=deployment-status::failure
+          fi
 
       - name: "Post to slack"
         uses: 8398a7/action-slack@v3
@@ -1151,13 +1129,13 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                "color": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_front_door.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_front_door.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? '#009933' : '#cc0000',
+                "color": '${{ steps.set-variables.outputs.deployment-status }}' === 'success' ? '#009933' : '#cc0000',
                 "blocks": [
                   {
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
+                      "text": '${{ steps.set-variables.outputs.deployment-status }}' === 'success' ? 'Deployment Success :rocket:' : 'Deployment Failed :rotating_light:',
                       "emoji": true
                     }
                   },
@@ -1196,7 +1174,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.build_cache.result }}' === 'success' && '${{ needs.deploy_staging_terraform.result }}' === 'success' && '${{ needs.deploy_staging_frontend.result }}' === 'success' && '${{ needs.end_to_end_test_staging.result }}' === 'success' && '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_production_frontend.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' && '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
+                      "text": '${{ steps.set-variables.outputs.deployment-status }}' === 'success' ? ':heavy-check-mark:   *Deployment Status*: Success' : ':heavy-cross-mark:   *Deployment Status*: Failure'
                     }
                   },
                   {
@@ -1421,7 +1399,7 @@ jobs:
                     "elements": [
                       {
                         "type": "mrkdwn",
-                        "text": ":airplane_arriving: *<!date^${{ steps.get-current-timestamp.outputs.current-timestamp }}^Posted on {date_long} at {time_secs}|Date and Time of this message when it was posted.>*"
+                        "text": ":airplane_arriving: *<!date^${{ steps.set-variables.outputs.current-timestamp }}^Posted on {date_long} at {time_secs}|Date and Time of this message when it was posted.>*"
                       }
                     ]
                   }

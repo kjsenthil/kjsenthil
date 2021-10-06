@@ -50,9 +50,9 @@ module "api_management_policy" {
           var.environment_prefix == "staging" ? "https://my.demo2.bestinvest.co.uk" : "",
           var.environment_prefix != "prod" ? "http://localhost:8000" : "",
           var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
-          format("https://${module.front_end.website_cname_record[0]}"),
-          var.environment_prefix != "prod" && var.environment_prefix != "stage" ? "https://${module.front_end.web_host}" : "",
-          var.environment_prefix == "prod" || var.environment_prefix == "stage" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+          "https://${local.website_hostname}",
+          var.environment_prefix != "prod" && var.environment_prefix != "staging" ? "https://${module.front_end.web_host}" : "",
+          var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
         ]
       ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
@@ -101,9 +101,9 @@ module "api_management_policy_xplan" {
         [
           var.environment_prefix != "prod" ? "http://localhost:8000" : "",
           var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
-          "https://${module.front_end.website_cname_record[0]}",
-          var.environment_prefix != "prod" && var.environment_prefix != "stage" ? "https://${module.front_end.web_host}" : "",
-          var.environment_prefix == "prod" || var.environment_prefix == "stage" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+          "https://${local.website_hostname}",
+          var.environment_prefix != "prod" && var.environment_prefix != "staging" ? "https://${module.front_end.web_host}" : "",
+          var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
         ]
       ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
@@ -154,19 +154,6 @@ module "myaccounts_apis_requiring_guest_login_policy" {
   depends_on = [module.myaccounts_apis_requiring_guest_login]
 }
 
-//----------------------------------------------------------------------------//
-//          !!!!!!! IMPORTANT - Changes to front_end module !!!!!!!!          //
-//                                                                            //
-//    Currently the resource azurerm_cdn_endpoint_custom_domain doesnt        //
-//    support enabling HTTPS so this has been turned on manually for          //
-//    staging and production, if this resource is deleted and recreated       //
-//    through changing var.public_dns_zone_name or public_dns_cname HTTPS     //
-//    will need to be manually re-enabled through the Azure portal            //
-//                                                                            //
-//   Functionality is being worked on under below GH issue:                   //
-//   https://github.com/hashicorp/terraform-provider-azurerm/issues/398       //
-//----------------------------------------------------------------------------//
-
 module "front_end" {
   source                   = "../modules/static_website_with_cdn"
   storage_account_name     = "st${local.short_location}tsw${var.environment_prefix}dh"
@@ -176,8 +163,6 @@ module "front_end" {
   account_replication_type = "GRS"
   account_tier             = "Standard"
   cdn_profile_name         = var.cdn_profile_website_name
-  public_dns_zone_name     = var.public_dns_zone_name
-  public_dns_cname         = var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "preview" : var.environment_prefix
   dns_resource_group_name  = var.dns_resource_group_name
 
   csp_allowed_script_sources = "'self' 'unsafe-inline' *.tiqcdn.com *.tealiumiq.com *.googletagmanager.com *.hotjar.com *.google-analytics.com"

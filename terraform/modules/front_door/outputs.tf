@@ -1,7 +1,7 @@
-output "host" {
-  value = azurerm_frontdoor.this.cname
+output "frontend_endpoints" {
+  value = azurerm_frontdoor.this.frontend_endpoints
 }
 
-output "name" {
-  value = azurerm_frontdoor.this.name
+output "id" {
+  value = azurerm_frontdoor.this.id
 }

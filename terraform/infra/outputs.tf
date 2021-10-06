@@ -14,7 +14,7 @@ output "frontend_cdn_endpoint_name" {
 }
 
 output "frontend_web_cname" {
-  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? coalesce("https://${trimsuffix(module.front_end.website_cname_record[0], ".")}", "") : null
+  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? "https://${local.website_hostname}" : null
   description = "The Gatsby App CNAME record."
 }
 

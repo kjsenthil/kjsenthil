@@ -12,15 +12,13 @@ variable "cache_enabled" {
   default     = false
 }
 
-variable "custom_domain" {
-  type        = string
-  description = "Optional custom domain for the Front Door. Must have a CNAME pointing to outputs.host"
-  default     = ""
-}
-
-variable "environment_prefix" {
-  type        = string
-  description = "Environment prefix to include in resource name"
+variable "custom_frontend" {
+  type = object({
+    name      = string,
+    host_name = string
+  })
+  description = "Optional custom frontend for the Front Door"
+  default     = null
 }
 
 variable "health_check_interval" {
@@ -51,6 +49,11 @@ variable "health_check_success_samples" {
   type        = number
   description = "Number of health checks in a sample that must succeed for the backend to be considered healthy"
   default     = 2
+}
+
+variable "name" {
+  type        = string
+  description = "Name of the Front Door to create"
 }
 
 variable "resource_group" {

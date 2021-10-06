@@ -1,4 +1,6 @@
 locals {
+  front_door_name      = "fd-gbl-${var.environment_prefix}-dh"
+  custom_frontend_name = "preview"
   default_tags = {
     "CostCode"            = "934"
     "Department"          = "Financial Services"

@@ -1,6 +1,6 @@
 resource "azurerm_frontdoor" "this" {
   enforce_backend_pools_certificate_name_check = true
-  name                                         = local.front_door_name
+  name                                         = var.name
   resource_group_name                          = var.resource_group
 
   backend_pool {

@@ -11,6 +11,7 @@ locals {
 
   api_endpoints = merge(local.operation_endpoints, local.xplan_operation_endpoints)
 
+  website_hostname = "preview.${var.public_dns_zone_name}"
 
   api_definitions = {
     for k, v in
