@@ -115,8 +115,10 @@ describe('Check common elements from header, footer area', () => {
       // assert
       let currentUrl = await browser.getUrl()
       console.info('Current URL:', currentUrl)
-      expect(new RegExp('[a-z]*.azureedge.net/my-account').test(currentUrl), 'URL does not match')
-        .true
+      expect(
+        new RegExp(`https?:\/\/.(.*)?\/?(.*)\/?(.*).net/my-account`).test(currentUrl),
+        'URL does not match'
+      ).true
 
       // act
       const textLifePlanBtn = await (await lifePlanMenuBtn()).getText()
@@ -131,7 +133,7 @@ describe('Check common elements from header, footer area', () => {
       console.info('Current URL:', currentUrl)
       // assert
       expect(
-        new RegExp('[a-z]*.azureedge.net/my-account/life-plan').test(currentUrl),
+        new RegExp(`https?:\/\/.(.*)?\/?(.*)\/?(.*).net/my-account/life-plan`).test(currentUrl),
         'URL does not match'
       ).true
       expect(await (await logoBtn()).waitForClickable()).to.equal(true, 'No match found')
@@ -141,14 +143,16 @@ describe('Check common elements from header, footer area', () => {
       currentUrl = await browser.getUrl()
       console.info('Current URL:', currentUrl)
       // assert
-      expect(new RegExp('[a-z]*.azureedge.net/my-account').test(currentUrl), 'URL does not match')
-        .true
+      expect(
+        new RegExp(`https?:\/\/.(.*)?\/?(.*)\/?(.*).net/my-account`).test(currentUrl),
+        'URL does not match'
+      ).true
 
       // assert
-      expect(await (await addCashBtn()).waitForClickable()).to.be.true
+      expect(await (await addCashBtn()).waitForDisplayed()).to.be.true
 
       // assert
-      expect(await (await investBtn()).waitForClickable()).to.be.true
+      expect(await (await investBtn()).waitForDisplayed()).to.be.true
 
       // assert
       expect(await (await myAccountsLoginText()).waitForClickable()).to.be.true

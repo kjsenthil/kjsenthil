@@ -14,384 +14,199 @@ export enum Period {
 export const headingTotalLabel = () => $('.MuiGrid-grid-sm-9 > h2')
 
 // period domain switch
-export const chartPeriodSwitch = () =>
-  $('.MuiGrid-grid-xs-12 .MuiGrid-grid-xs-6.MuiGrid-grid-sm-3 > div')
+export const chartPeriodSwitch = () => $('.MuiGrid-grid-xs-12 .MuiGrid-grid-xs-6.MuiGrid-grid-sm-3 > div')
 export const chartPeriodSwitchBtn = (index) =>
-  $(
-    '.MuiGrid-grid-xs-12 .MuiGrid-grid-xs-6.MuiGrid-grid-sm-3 > div > button:nth-child(' +
-      index +
-      ')'
-  )
+  $('.MuiGrid-grid-xs-12 .MuiGrid-grid-xs-6.MuiGrid-grid-sm-3 > div > button:nth-child(' + index + ')')
 
 // cards
 // #region summary
 export const netContributionTitle = () =>
   $('.MuiGrid-grid-xs-8:nth-child(1) .MuiGrid-item:nth-child(1) div div h6.MuiTypography-body1')
 export const netContributionTooltip = () =>
-  $(
-    '.MuiGrid-grid-xs-8:nth-child(1) .MuiGrid-item:nth-child(1) div div h6.MuiTypography-body1 > span'
-  )
+  $('.MuiGrid-grid-xs-8:nth-child(1) .MuiGrid-item:nth-child(1) div div h6.MuiTypography-body1 > span')
 export const netContributionValue = () =>
   $('.MuiGrid-grid-xs-8:nth-child(1) .MuiGrid-item:nth-child(1) div div h5.MuiTypography-body1')
-export const lifetimeReturnTitle = () =>
-  $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) > div > div > h6')
+export const lifetimeReturnTitle = () => $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) > div > div > h6')
 export const lifetimeReturnTooltip = () =>
   $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) > div > div > h6 > span')
-export const lifetimeReturnValue = () =>
-  $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) div > h5')
+export const lifetimeReturnValue = () => $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) div > h5')
 export const lifetimeReturnRating = () =>
   $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(3) > div div > div h6')
-export const annualisedTitle = () =>
-  $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(5) > div > div > h6')
+export const annualisedTitle = () => $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(5) > div > div > h6')
 export const annualisedTooltip = () =>
   $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(5) > div > div > h6 > span')
-export const annualisedValue = () =>
-  $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(5) div > h5')
+export const annualisedValue = () => $('.MuiGrid-grid-xs-8 .MuiGrid-container div:nth-of-type(5) div > h5')
 export const lastPeriodReturnTitle = () =>
-  $(
-    '.MuiGrid-item:nth-child(2) div:nth-child(4) > div:nth-child(1) > h6.MuiTypography-root.MuiTypography-body1'
-  )
+  $('.MuiGrid-item:nth-child(2) div:nth-child(4) > div:nth-child(1) > h6.MuiTypography-root.MuiTypography-body1')
 export const lastPeriodReturnTooltip = () =>
-  $(
-    '.MuiGrid-item:nth-child(2) div:nth-child(4) > div:nth-child(1) > h6.MuiTypography-root.MuiTypography-body1 > span'
-  )
-export const lastPeriodReturnValue = () =>
-  $('.MuiGrid-grid-xs-4 .MuiGrid-align-items-xs-center > div > h5')
-export const lastPeriodReturnRating = () =>
-  $('.MuiGrid-grid-xs-4 .MuiGrid-align-items-xs-center > div div > h6')
+  $('.MuiGrid-item:nth-child(2) div:nth-child(4) > div:nth-child(1) > h6.MuiTypography-root.MuiTypography-body1 > span')
+export const lastPeriodReturnValue = () => $('.MuiGrid-grid-xs-4 .MuiGrid-align-items-xs-center > div > h5')
+export const lastPeriodReturnRating = () => $('.MuiGrid-grid-xs-4 .MuiGrid-align-items-xs-center > div div > h6')
 // #endregion
 
 // cards
 // #region your accounts
 // header
-export const yHeader = () =>
-  $(
-    '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(2) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root > h4'
-  )
-export const yOpenAnAcc = () =>
-  $(
-    '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(2) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root > div button'
-  )
-export const yOpenAnAccTooltip = () =>
-  $(
-    '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(2) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root div[title="Coming soon"]'
-  )
-export const yAccountTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(1) > h6'
-  )
-export const yHoldingsTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(2) > h6'
-  )
-export const yHoldingsTableHeaderTooltip = () =>
-  $(
-    'div.MuiBox-root:nth-child(2) div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6.MuiGrid-item:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiIconButton-sizeSmall[aria-label="TOTAL HOLDINGS Info"]'
-  )
-export const yNetContributionTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(3) > h6'
-  )
-export const yNetContributionsTableHeaderTooltip = () =>
-  $(
-    'div.MuiBox-root:nth-child(2) div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6.MuiGrid-item:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiIconButton-sizeSmall[aria-label="NET CONTRIBUTIONS Info"]'
-  )
-export const yCashTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(4) > h6'
-  )
-export const yLastPeriodReturnTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(5) > h6'
-  )
-export const yLastPeriodReturnTableHeaderTooltip = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(2) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(5) > button'
-  )
+
+const tableHeader = (index1: number, index2: number) => {
+  const headerIndex = `[${index1}]`
+  return $(`//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"]${headerIndex}`).$('thead').$('tr').$$('th')[
+    index2
+  ]
+}
+const acctHeader = (index: number) => {
+  const acctName = `[${index}]`
+  return $(`//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"]${acctName}/div//div/div/h4`)
+}
+const toolTip = (index: number) => {
+  const tableHeaderIndex = `[${index}]`
+  return $(`//div//thead/tr/th${tableHeaderIndex}//div//div/button`)
+}
+
+export const myAccountHeader = () => acctHeader(2)
+export const myOpenAnAcc = () =>
+  $('//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][2]/div//div//div/div//div/div')
+export const myAccountTableHeader = () => tableHeader(2, 0)
+export const myInvestmentsTableHeader = () => tableHeader(2, 1)
+export const myCashTableHeader = () => tableHeader(2, 2)
+export const myTotaValueTableHeader = () => tableHeader(2, 3)
+export const myLifeTimeHeader = () => tableHeader(2, 4)
+export const myAnnulisedTableHeader = () => tableHeader(2, 5)
+export const myLast5yReturnTableHeader = () => tableHeader(2, 6)
+
+export const InvestmentsToolTip = () => toolTip(2)
+export const TotalValueTooltip = () => toolTip(4)
+export const LifetimeReturnTooltip = () => toolTip(5)
+export const AnnualisedReturnTooltip = () => toolTip(6)
+export const Last5yReturnTooltip = () => toolTip(7)
 
 // investment account
-export const yAccount1 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(2) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(1) td > h6'
-  )
-export const yHoldingsAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(2) > p'
-  )
-export const yNetContributionsAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(3) > p'
-  )
-export const yCashAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(4) > div > p'
-  )
-export const yLastPeriodReturnAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(5) > div > p'
-  )
-export const yLastPeriodReturnRatingAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(5) div > h6'
-  )
+const myGIAAccount1Rows = (index: number) => {
+  return $('.MuiTableBody-root').$$('tr')[0]?.$$('td')[index]?.$('p')
+}
+export const myAccountItem = () => {
+  return $('.MuiTableBody-root').$$('tr')[0]?.$('h6')
+}
+
+export const myAccount1 = () => $('.MuiTableBody-root').$$('tr')[0]?.$('h6')
+export const myInvestmentAccount1 = () => myGIAAccount1Rows(1)
+export const myCashAccount1 = () => myGIAAccount1Rows(2)
+export const myTotalValue = () => myGIAAccount1Rows(3)
+export const myLifeTimeReturn = () => myGIAAccount1Rows(4)
+export const myAnnualisedReturn = () => myGIAAccount1Rows(5)
+export const myLast5yReturn = () => myGIAAccount1Rows(6)
+export const myLast5yReturnRatingAccount1 = () => $('.MuiTableBody-root').$$('tr')[0]?.$$('td')[6]?.$('h6')
 
 // ISA
-export const yAccount2 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(2) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(2) td > h6'
-  )
-export const yHoldingsAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(2) > p'
-  )
-export const yNetContributionsAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(3) > p'
-  )
-export const yCashAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(4) > div > p'
-  )
-export const yLastPeriodReturnAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(5) > div > p'
-  )
-export const yLastPeriodReturnRatingAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(5) div > h6'
-  )
+const myISAAccount2Rows = (index: number) => {
+  return $('.MuiTableBody-root').$$('tr')[1]?.$$('td')[index]?.$('p')
+}
+
+export const myAccount2 = () => $('.MuiTableBody-root').$$('tr')[1]?.$('h6')
+export const myInvestmentAccount2 = () => myISAAccount2Rows(1)
+export const myCashAccount2 = () => myISAAccount2Rows(2)
+export const myTotalValue2 = () => myISAAccount2Rows(3)
+export const myLifeTimeReturn2 = () => myISAAccount2Rows(4)
+export const myAnnualisedReturn2 = () => myISAAccount2Rows(5)
+export const myLast5yReturn2 = () => myISAAccount2Rows(6)
+export const myLast5yReturnRatingAccount2 = () => $('.MuiTableBody-root').$$('tr')[1]?.$$('td')[6]?.$('h6')
 
 // SIPP
-export const yAccount3 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(2) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(3) td > h6'
-  )
-export const yHoldingsAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(2) > p'
-  )
-export const yNetContributionsAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(3) > p'
-  )
-export const yCashAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(4) > div > p'
-  )
-export const yLastPeriodReturnAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(5) > div > p'
-  )
-export const yLastPeriodReturnRatingAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(2) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(5) div > h6'
-  )
+const mySIPPAccount3Rows = (index: number) => {
+  return $('.MuiTableBody-root').$$('tr')[2]?.$$('td')[index]?.$('p')
+}
+
+export const myAccount3 = () => $('.MuiTableBody-root').$$('tr')[2]?.$('h6')
+export const myInvestmentAccount3 = () => mySIPPAccount3Rows(1)
+export const myCashAccount3 = () => mySIPPAccount3Rows(2)
+export const myTotalValue3 = () => mySIPPAccount3Rows(3)
+export const myLifeTimeReturn3 = () => mySIPPAccount3Rows(4)
+export const myAnnualisedReturn3 = () => mySIPPAccount3Rows(5)
+export const myLast5yReturn3 = () => mySIPPAccount3Rows(6)
+export const myLast5yReturnRatingAccount3 = () => $('.MuiTableBody-root').$$('tr')[2]?.$$('td')[6]?.$('h6')
+
 // #endregion
 
 // cards
 // #region linked accounts
 // header
-export const lHeader = () => $('.MuiGrid-grid-xs-12:nth-child(3) div > h4')
-export const lLinkAnAcc = () =>
-  $(
-    '.MuiContainer-disableGutters .MuiContainer-maxWidthLg .MuiBox-root:nth-child(2) .MuiGrid-item:nth-child(5) .MuiGrid-item:nth-child(3) .MuiPaper-rounded .MuiGrid-container .MuiGrid-item:nth-child(1) .MuiBox-root > div button'
-  )
-export const lLinkAnAccTooltip = () =>
-  $('.MuiGrid-grid-xs-12:nth-child(3) div[title="Coming soon"] button')
-export const lAccountTableHeader = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-of-type(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(1) div h6'
-  )
-export const lHoldingsTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(2) > h6'
-  )
-export const lHoldingsTableHeaderTooltip = () =>
-  $(
-    '.MuiBox-root:nth-child(2) div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6.MuiGrid-item:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiIconButton-sizeSmall[aria-label="TOTAL HOLDINGS Info"]'
-  )
-export const lNetContributionTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(3) > h6'
-  )
-export const lNetContributionsTableHeaderTooltip = () =>
-  $(
-    '.MuiBox-root:nth-child(2) div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6.MuiGrid-item:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiIconButton-sizeSmall[aria-label="NET CONTRIBUTIONS Info"]'
-  )
-export const lCashTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(4) > h6'
-  )
-export const lLastPeriodReturnTableHeader = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(5) > h6'
-  )
-export const lLastPeriodReturnTableHeaderTooltip = () =>
-  $(
-    '.MuiGrid-spacing-xs-6 > .MuiGrid-grid-xs-12:nth-child(3) table[aria-label="accounts table"] .MuiTableRow-head > th:nth-child(5) > button'
-  )
+const lLinkAccounts = (index: number) => {
+  const tableIndex = `[${index}]`
+  return $(`//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][3]//tbody/tr${tableIndex}//h6`)
+}
+
+const lLinkAcc = (index: number) => {
+  const itemIndex = `[${index}]`
+  return $(`//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"]${itemIndex}/div//div/div/div//div/div`)
+}
+
+const lAccountRows = (index1: number, index2: number) => {
+  const tableIndex1 = `[${index1}]`
+  const tableIndex2 = `[${index2}]`
+  return $(
+    `//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][3]//tbody//tr${tableIndex1}//td${tableIndex2}`
+  ).$('p')
+}
+
+export const lHeader = () => acctHeader(3)
+export const lLinkAnAcct = () => lLinkAcc(3)
+export const lAccountTableHeader = () => tableHeader(3, 0)
+export const lInvestmentsTableHeader = () => tableHeader(3, 1)
+export const lCashTableHeader = () => tableHeader(3, 2)
+export const lTotaValueTableHeader = () => tableHeader(3, 3)
+export const lLifeTimeReturnTableHeader = () => tableHeader(3, 4)
+export const lAnnulisedTableHeader = () => tableHeader(3, 5)
+export const lLast5yReturnTableHeader = () => tableHeader(3, 6)
 
 // account 1
-export const lAccount1 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(3) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(1) td > h6'
-  )
-export const lHoldingsAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(1) td:nth-child(2) > p'
-  )
-export const lNetContributionsAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(1) td:nth-child(3) > p'
-  )
-export const lCashAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(1) td:nth-child(4) > div > p'
-  )
-export const lLastPeriodReturnAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(5) > div > p'
-  )
-export const lLastPeriodReturnRatingAccount1 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(1) td:nth-child(5) div > h6'
-  )
+export const lAccount1 = () => lLinkAccounts(1)
+export const lGIAInvestments = () => lAccountRows(1, 2)
+export const lGIACash = () => lAccountRows(1, 3)
+export const lGIATotalValue = () => lAccountRows(1, 4)
+export const lGIALifeTimeReturn = () => lAccountRows(1, 5)
+export const lGIAAnnulisedReturn = () => lAccountRows(1, 6)
+export const lGIALast5yReturn = () => lAccountRows(1, 7)
 
 // account 2
-export const lAccount2 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(3) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(2) td > h6'
-  )
-export const lHoldingsAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(2) td:nth-child(2) > p'
-  )
-export const lNetContributionsAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(2) td:nth-child(3) > p'
-  )
-export const lCashAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(2) td:nth-child(4) > div > p'
-  )
-export const lLastPeriodReturnAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(5) > div > p'
-  )
-export const lLastPeriodReturnRatingAccount2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(2) td:nth-child(5) div > h6'
-  )
+export const lAccount2 = () => lLinkAccounts(2)
+export const lISAInvestments = () => lAccountRows(2, 2)
+export const lISACash = () => lAccountRows(2, 3)
+export const lISATotalValue = () => lAccountRows(2, 4)
+export const lISALifeTimeReturn = () => lAccountRows(2, 5)
+export const lISAAnnulisedReturn = () => lAccountRows(2, 6)
+export const lISALast5yReturn = () => lAccountRows(2, 7)
 
-// account 3
-export const lAccount3 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(3) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(3) td > h6'
-  )
-export const lHoldingsAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(3) td:nth-child(2) > p'
-  )
-export const lNetContributionsAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(3) td:nth-child(3) > p'
-  )
-export const lCashAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(3) td:nth-child(4) > div > p'
-  )
-export const lLastPeriodReturnAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(5) > div > p'
-  )
-export const lLastPeriodReturnRatingAccount3 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(3) td:nth-child(5) div > h6'
-  )
-
-// account 4
-export const lAccount4 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(3) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(4) td > h6'
-  )
-export const lHoldingsAccount4 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(4) td:nth-child(2) > p'
-  )
-export const lNetContributionsAccount4 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(4) td:nth-child(3) > p'
-  )
-export const lCashAccount4 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(4) td:nth-child(4) > div > p'
-  )
-export const lLastPeriodReturnAccount4 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(4) td:nth-child(5) > div > p'
-  )
-export const lLastPeriodReturnRatingAccount4 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(4) td:nth-child(5) div > h6'
-  )
-
-// account 5
-export const lISA2 = () =>
-  $(
-    '.MuiGrid-grid-xs-12:nth-child(3) > .MuiPaper-rounded table[aria-label="accounts table"] tr:nth-child(5) td > h6'
-  )
-export const lHoldingsISA2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(5) td:nth-child(2) > p'
-  )
-export const lNetContributionsISA2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(5) td:nth-child(3) > p'
-  )
-export const lCashISA2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root .MuiTableBody-root tr:nth-child(5) td:nth-child(4) > div > p'
-  )
-export const lLastPeriodReturnISA2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(5) td:nth-child(5) > div > p'
-  )
-export const lLastPeriodReturnRatingISA2 = () =>
-  $(
-    '.MuiBox-root:nth-child(2) .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(3) .MuiPaper-rounded .MuiGrid-spacing-xs-1 .MuiGrid-grid-xs-12:nth-child(2) .MuiTableContainer-root table.MuiTable-root tbody.MuiTableBody-root tr:nth-child(5) td:nth-child(5) div > h6'
-  )
 // #endregion
 
 // card
 // #region performance chart
-export const pTotalValueTitle = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(1) > div:nth-child(2) > h6'
+
+const pChartItemsTitles = (titleIndex: number) => {
+  const tableIndex1 = `[${titleIndex}]`
+  return $(
+    `//*[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][4]//div//div[2]/div/div/div/div/*/div${tableIndex1}/div/h6`
   )
-export const pTotalValue = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-child(1) > div:nth-child(2) > div > div > h6'
+}
+
+const pChartItemsValues = (itemIndex: number) => {
+  const tableIndex1 = `[${itemIndex}]`
+  return $(
+    `//*[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][4]//div//div[2]/div/div/div/div/*/div${tableIndex1}/*/div/div/h6`
   )
-export const pNetContributedTitle = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(2) > div:nth-child(2) > h6'
-  )
-export const pNetContributedValue = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(2) > div:nth-child(2) > div > div > h6'
-  )
-export const pTotalReturnTitle = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > h6'
-  )
-export const pTotalReturnValue = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > div > div > h6'
-  )
-export const pTotalReturnRating = () =>
-  $(
-    '.MuiBox-root .MuiGrid-spacing-xs-6:nth-child(5) .MuiGrid-grid-xs-12:nth-child(4) .MuiPaper-rounded .MuiGrid-grid-xs-12:nth-child(2) .MuiBox-root div div:nth-child(1) div div:nth-of-type(3) > div > div > div > div h6'
-  )
+}
+
+const pChartItemsRatings = () =>
+  $('//*[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][4]//div//div[2]/div/div/div/div/*/div/*/div/div/div')
+
+export const pHeader = () => $('//div[@class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"][4]//h4')
+
+export const pTotalValueTitle = () => pChartItemsTitles(1)
+export const pTotalValue = () => pChartItemsValues(1)
+export const pNetContributionTitle = () => pChartItemsTitles(2)
+export const pNetContributionValue = () => pChartItemsValues(2)
+export const pLifeTimeReturnTitle = () => pChartItemsTitles(3)
+export const pLifeTimeReturnValue = () => pChartItemsValues(3)
+export const pLifeTimeReturnRating = () => pChartItemsRatings()
 
 // X axis
 export const pChartXLevel1 = () => $('.visx-group .visx-axis-left g:nth-child(1) tspan')
@@ -409,14 +224,11 @@ export const pChartYLevel4 = () => $('.visx-group .visx-axis-bottom g:nth-child(
 export const pChartYLevel5 = () => $('.visx-group .visx-axis-bottom g:nth-child(5) tspan')
 
 // line path
-export const pChartLineTotalValue = () =>
-  $('.visx-group .visx-group > .visx-linepath[stroke-width="4"]')
-export const pChartLineNetContributed = () =>
-  $('.visx-group .visx-group > .visx-linepath[stroke-width="2"]')
+export const pChartLineTotalValue = () => $('.visx-group .visx-group > .visx-linepath[stroke-width="4"]')
+export const pChartLineNetContributed = () => $('.visx-group .visx-group > .visx-linepath[stroke-width="2"]')
 
 // marker line
-export const pChartMarkerLine = () =>
-  $('svg >.visx-group:nth-of-type(1) > .visx-group:nth-of-type(5) > .visx-line')
+export const pChartMarkerLine = () => $('svg >.visx-group:nth-of-type(1) > .visx-group:nth-of-type(5) > .visx-line')
 export const pChartMarkerCircleTotalValue = () =>
   $('.visx-group .visx-group > .visx-circle[pointer-events="none"]:nth-of-type(1)')
 export const pChartMarkerCircleNetContributed = () =>
