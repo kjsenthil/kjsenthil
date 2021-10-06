@@ -5,11 +5,12 @@ import OxfordRiskQuestionnaireLayout from './OxfordRiskQuestionnaireLayout';
 const handleNext = jest.fn();
 const handleBack = jest.fn();
 const handleSubmit = jest.fn();
+const handleExit = jest.fn();
 
 describe('Oxford Risk Questionnaire Layout', () => {
   const questionnaire = <></>;
 
-  describe('Questionnaire start variant', () => {
+  describe('Start variant', () => {
     beforeEach(() => {
       renderWithTheme(
         <OxfordRiskQuestionnaireLayout
@@ -29,13 +30,13 @@ describe('Oxford Risk Questionnaire Layout', () => {
       expect(screen.getByRole('button', { name: 'Next' })).toBeVisible();
     });
 
-    test('Calls the next page handler when the next button is clicked', () => {
+    it('Calls the next page handler when the next button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Next' }));
       expect(handleNext).toHaveBeenCalled();
     });
   });
 
-  describe('Questionnaire in progress variant', () => {
+  describe('In progress variant', () => {
     beforeEach(() => {
       renderWithTheme(
         <OxfordRiskQuestionnaireLayout
@@ -43,6 +44,7 @@ describe('Oxford Risk Questionnaire Layout', () => {
           questionnaire={questionnaire}
           handleNext={handleNext}
           handleBack={handleBack}
+          handleExit={handleExit}
         />
       );
     });
@@ -52,35 +54,66 @@ describe('Oxford Risk Questionnaire Layout', () => {
       expect(screen.getByRole('button', { name: 'Back' })).toBeVisible();
     });
 
-    test('Calls the next page handler when the next button is clicked', () => {
+    it('Calls the next page handler when the next button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Next' }));
       expect(handleNext).toHaveBeenCalled();
     });
 
-    test('Calls the back handler when the back button is clicked', () => {
+    it('Calls the back handler when the back button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Back' }));
       expect(handleBack).toHaveBeenCalled();
     });
+
+    it('Renders an exit link', () => {
+      expect(screen.getByText('Exit')).toBeVisible();
+    });
+
+    it('Calls the exit handler when the exit link is clicked', () => {
+      fireEvent.click(screen.getByText('Exit'));
+      expect(handleExit).toHaveBeenCalled();
+    });
   });
 
-  describe('Questionnaire complete variant', () => {
+  describe('Final question variant', () => {
     beforeEach(() => {
       renderWithTheme(
         <OxfordRiskQuestionnaireLayout
-          variant="complete"
+          variant="finalQuestion"
           questionnaire={questionnaire}
           handleSubmit={handleSubmit}
         />
       );
     });
 
-    it('Renders a submit button', () => {
+    it('Renders a back button and a submit button', () => {
+      expect(screen.getByRole('button', { name: 'Back' })).toBeVisible();
       expect(screen.getByRole('button', { name: 'Submit' })).toBeVisible();
     });
 
-    test('Calls the submit handler when the submit button is clicked', () => {
+    it('Calls the submit handler when the submit button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
       expect(handleSubmit).toHaveBeenCalled();
+    });
+  });
+
+  describe('Complete variant', () => {
+    beforeEach(() => {
+      renderWithTheme(
+        <OxfordRiskQuestionnaireLayout
+          variant="complete"
+          questionnaire={questionnaire}
+          handleExit={handleExit}
+        />
+      );
+    });
+
+    it('Renders a Back to Coaching button', () => {
+      expect(screen.getByRole('button', { name: 'Back to Coaching' })).toBeVisible();
+    });
+
+    it('Calls the exit handler when the Back to Coaching button is clicked', () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Back to Coaching' }));
+      expect(handleExit).toHaveBeenCalled();
     });
   });
 });

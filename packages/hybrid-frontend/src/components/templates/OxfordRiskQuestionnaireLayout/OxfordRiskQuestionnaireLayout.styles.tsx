@@ -130,12 +130,12 @@ export const CardContainer = styled.div`
   z-index: 1;
 `;
 
-export const SaveAndExitLink = styled(({ theme, isMobile, ...props }) => <Link {...props} />)`
+export const ExitLink = styled(({ theme, isMobile, ...props }) => <Link {...props} />)`
   ${({ theme, isMobile }: { theme: Theme; isMobile: boolean }) => css`
     color: ${isMobile ? theme.palette.primary.light1 : 'white'};
     position: ${isMobile ? 'relative' : 'absolute'};
     bottom: ${isMobile ? '-5%' : '90.6%'};
-    left: ${isMobile ? '34%' : '85.7%'};
+    left: ${isMobile ? '46%' : '91%'};
   `}
 `;
 

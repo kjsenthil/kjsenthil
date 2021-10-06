@@ -7,6 +7,7 @@ export const PageContainer = styled.div`
 
 export const LeftContainer = styled.div`
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
 `;
 

@@ -15,8 +15,8 @@ const Template: Story<OxfordRiskQuestionnaireLayoutProps> = (args) => (
   <OxfordRiskQuestionnaireLayout {...args} />
 );
 
-export const QuestionnaireStartScreen = Template.bind({});
-QuestionnaireStartScreen.args = {
+export const StartScreen = Template.bind({});
+StartScreen.args = {
   variant: 'start',
   questionnaire: (
     <>
@@ -50,12 +50,12 @@ QuestionnaireStartScreen.args = {
     </>
   ),
 };
-QuestionnaireStartScreen.parameters = {
+StartScreen.parameters = {
   layout: 'fullscreen',
 };
 
-export const QuestionnaireInProgressScreen = Template.bind({});
-QuestionnaireInProgressScreen.args = {
+export const InProgressScreen = Template.bind({});
+InProgressScreen.args = {
   variant: 'inProgress',
   questionnaire: (
     <>
@@ -65,11 +65,9 @@ QuestionnaireInProgressScreen.args = {
         Before we can help with your investing, it’s important that we understand your attitude to
         risk.
       </p>
-      <h4>The possibility of investment losses makes me uneasy.</h4>
       <div>
         <QuestionAnswerToggle
-          question="I am comfortable with the possibility of ending up with less than I expect, for the chance
-        of ending up with more than I expect."
+          question="The possibility of investment losses makes me uneasy."
           answers={['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']}
           selected="Strongly disagree"
           updateAnswer={() => null}
@@ -78,12 +76,38 @@ QuestionnaireInProgressScreen.args = {
     </>
   ),
 };
-QuestionnaireInProgressScreen.parameters = {
+InProgressScreen.parameters = {
   layout: 'fullscreen',
 };
 
-export const QuestionnaireCompleteScreen = Template.bind({});
-QuestionnaireCompleteScreen.args = {
+export const FinalQuestionScreen = Template.bind({});
+FinalQuestionScreen.args = {
+  variant: 'finalQuestion',
+  questionnaire: (
+    <>
+      <h3>Your risk tolerance</h3>
+      <p>16 of 16</p>
+      <p>
+        Before we can help with your investing, it’s important that we understand your attitude to
+        risk.
+      </p>
+      <div>
+        <QuestionAnswerToggle
+          question="I get worried when my investments drop in value."
+          answers={['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']}
+          selected="Strongly disagree"
+          updateAnswer={() => null}
+        />
+      </div>
+    </>
+  ),
+};
+FinalQuestionScreen.parameters = {
+  layout: 'fullscreen',
+};
+
+export const CompleteScreen = Template.bind({});
+CompleteScreen.args = {
   variant: 'complete',
   questionnaire: (
     <>
@@ -101,6 +125,6 @@ QuestionnaireCompleteScreen.args = {
     </>
   ),
 };
-QuestionnaireCompleteScreen.parameters = {
+CompleteScreen.parameters = {
   layout: 'fullscreen',
 };

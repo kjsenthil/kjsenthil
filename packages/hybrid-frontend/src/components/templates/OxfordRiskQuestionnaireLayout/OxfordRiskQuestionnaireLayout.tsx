@@ -10,18 +10,19 @@ import {
   OverlayDotPattern,
   OverlayTriangle,
   RightContentContainer,
-  SaveAndExitLink,
+  ExitLink,
   StyledButton,
   TickContainer,
 } from './OxfordRiskQuestionnaireLayout.styles';
 
 export interface OxfordRiskQuestionnaireLayoutProps {
-  variant: 'start' | 'inProgress' | 'complete';
+  variant: 'start' | 'inProgress' | 'finalQuestion' | 'complete';
   questionnaire: React.ReactNode;
   cardContent?: React.ReactNode;
   handleNext?: () => void;
   handleBack?: () => void;
   handleSubmit?: () => void;
+  handleExit?: () => void;
 }
 
 const OxfordRiskQuestionnaireLayout = ({
@@ -31,13 +32,14 @@ const OxfordRiskQuestionnaireLayout = ({
   handleNext,
   handleBack,
   handleSubmit,
+  handleExit,
 }: OxfordRiskQuestionnaireLayoutProps) => {
   const { isMobile } = useBreakpoint();
 
   const saveAndExitLink = (
-    <SaveAndExitLink special isMobile={isMobile}>
-      Save and exit
-    </SaveAndExitLink>
+    <ExitLink special isMobile={isMobile} onClick={handleExit}>
+      Exit
+    </ExitLink>
   );
 
   const questionnaireCompleteTick = (
@@ -65,6 +67,7 @@ const OxfordRiskQuestionnaireLayout = ({
           </>
         );
       case 'inProgress':
+      case 'finalQuestion':
         return (
           <>
             <OverlayDotPattern height="33.5%" width="19%" top="0" right="0.5%" />
@@ -119,11 +122,27 @@ const OxfordRiskQuestionnaireLayout = ({
             {isMobile && saveAndExitLink}
           </>
         );
+      case 'finalQuestion':
+        return (
+          <ButtonContainer isMobile={isMobile} arrangement="space-between">
+            <StyledButton
+              onClick={handleBack}
+              variant="outlined"
+              startIcon={<Icon name="arrowHeadLeft" />}
+              width={isMobile ? 310 : 100}
+            >
+              Back
+            </StyledButton>
+            <StyledButton onClick={handleSubmit} width={310}>
+              Submit
+            </StyledButton>
+          </ButtonContainer>
+        );
       case 'complete':
         return (
           <ButtonContainer isMobile={isMobile}>
-            <StyledButton onClick={handleSubmit} width={isMobile ? 335 : 556}>
-              Submit
+            <StyledButton onClick={handleExit} width={isMobile ? 335 : 556}>
+              Back to Coaching
             </StyledButton>
           </ButtonContainer>
         );

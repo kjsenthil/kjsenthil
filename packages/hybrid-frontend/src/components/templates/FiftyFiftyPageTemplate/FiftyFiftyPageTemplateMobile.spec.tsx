@@ -8,7 +8,7 @@ jest.mock('@material-ui/core', () => ({
 }));
 
 describe('50/50 Page Template mobile view', () => {
-  test('Only renders the left section', () => {
+  it('Only renders the left section', () => {
     const contentLeft = <p>The content to be displayed on the left</p>;
     const contentRight = <p>The content to be displayed on the right</p>;
 
