@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Dialog, DialogContent, DialogTitle, Icon, IconButton } from '../../atoms';
+import { Dialog, DialogContent, DialogTitle, Icon, IconButton, Theme } from '../../atoms';
 
 export const StyledDialogContainer = styled(
   ({
@@ -21,7 +21,7 @@ export const StyledDialogContainer = styled(
     isMobile,
     theme,
   }: {
-    theme: any;
+    theme: Theme;
     modalBackgroundImgSrc: string;
     headerBackgroundColor: string;
     withHeader: boolean;
@@ -45,7 +45,7 @@ export const StyledDialogContainer = styled(
     .MuiDialog-paper {
         border-radius: ${theme.spacing(2)}px;
         max-height: 100%;
-        background-color: #f9fafc;
+        background-color: ${theme.palette.background.layout};
         ${modalBackgroundImgSrc ? `background-image:url('${modalBackgroundImgSrc}');` : ``}
         margin: ${isMobile ? 0 : ''};
         width: ${isMobile ? theme.typography.pxToRem(335) : theme.typography.pxToRem(682)};
@@ -65,19 +65,19 @@ export const StyledDialogContainer = styled(
     }
 
     *::-webkit-scrollbar-track {
-        background-color: ${theme.palette.grey.light2};
+        background-color: ${theme.palette.grey[100]};
         border-radius: ${theme.spacing(1)}px;
         padding: ${theme.spacing(2)}px;
 
     }
 
     *::-webkit-scrollbar-thumb {
-        background-color: ${theme.palette.grey.main};
+        background-color: ${theme.palette.grey[300]};
         border-radius: ${theme.spacing(1)}px;
     }
 
     *::-webkit-scrollbar-thumb:hover, *::-webkit-scrollbar-thumb:active {
-        background-color: ${theme.palette.grey.light1};
+        background-color: ${theme.palette.grey[200]};
         border-radius: ${theme.spacing(1)}px;
     }
   `}

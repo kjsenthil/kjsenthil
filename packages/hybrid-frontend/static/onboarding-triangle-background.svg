@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="749px" height="838px" viewBox="0 0 749 838" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>triangle-graphic</title>
+    <g id="Open-an-account" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.1">
+        <g id="verification/bank-details" transform="translate(-535.000000, -122.000000)" fill="#CFADFF">
+            <g id="triangle-graphic" transform="translate(509.000000, 120.000000)">
+                <path d="M574.403307,-41.0093169 L927.858865,661.663779 C935.30423,676.465236 929.340938,694.499849 914.539481,701.945214 C910.292243,704.08164 905.598058,705.178041 900.843882,705.144037 L203.902694,700.159073 C187.334575,700.040567 173.999529,686.513385 174.118035,669.945267 C174.150381,665.422939 175.204745,660.966443 177.202275,656.909059 L520.687906,-40.7790732 C528.00611,-55.6438127 545.988939,-61.7614881 560.853679,-54.4432836 C566.711849,-51.5591912 571.469101,-46.8425471 574.403307,-41.0093169 Z" id="Triangle" transform="translate(552.992243, 305.316197) rotate(36.000000) translate(-552.992243, -305.316197) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
