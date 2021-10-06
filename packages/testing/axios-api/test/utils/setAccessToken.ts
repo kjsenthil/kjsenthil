@@ -1,13 +1,12 @@
-import axios from "axios";
-import { loginCredentials, pinLoginCredentials } from "../environments/env";
-import { loginApiUrl, pinApiUrl } from "../environments/env";
+import axios from 'axios';
+import { loginCredentials, pinLoginCredentials, loginApiUrl, pinApiUrl } from '../environments/env';
 
 const getTwoStepAuthCode = async () => {
   const { username, password } = loginCredentials;
   const loginPayload = {
     data: {
       attributes: {
-        apiClientId: "myaccounts-spa",
+        apiClientId: 'myaccounts-spa',
         username: username.toString(),
         password: password.toString(),
       },
@@ -22,7 +21,7 @@ const getAccessToken = async (twoStepAuthCode) => {
   const pinLoginPayload = {
     data: {
       attributes: {
-        apiClientId: "myaccounts-spa",
+        apiClientId: 'myaccounts-spa',
         pin: [
           { position: 2, value: Number(pinLoginCredentials.pin_position_2) },
           { position: 4, value: Number(pinLoginCredentials.pin_position_4) },

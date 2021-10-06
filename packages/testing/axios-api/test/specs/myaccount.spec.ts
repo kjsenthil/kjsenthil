@@ -1,20 +1,11 @@
-import axios from "axios";
-import { expect } from "chai";
-import {
-  assert,
-  object,
-  number,
-  string,
-  boolean,
-  array,
-  nullable,
-} from "superstruct";
-import { accountIds } from "../environments/env";
-import { apiEndpoint } from "../utils/apiBuilder";
-import { API_ENDPOINTS } from "../utils/apiEndPoints";
-import { loginCredentials } from "../environments/env";
+import axios from 'axios';
+import { expect } from 'chai';
+import { assert, object, number, string, boolean, array, nullable } from 'superstruct';
+import { accountIds, loginCredentials } from '../environments/env';
+import apiEndpoint from '../utils/apiBuilder';
+import API_ENDPOINTS from '../utils/apiEndPoints';
 
-describe("test myaccount endpoints", () => {
+describe('Myaccount endpoints scenarios', () => {
   let headers: object;
   let contactId: string;
 
@@ -25,17 +16,17 @@ describe("test myaccount endpoints", () => {
 
   before(() => {
     headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     };
     contactId = process.env.CONTACT_ID as string;
   });
 
-  it("get client", async () => {
-    // Arrange
+  it('should get client', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(API_ENDPOINTS.MYACCOUNT_CLIENTS.replace("{id}", contactId));
+      .path(API_ENDPOINTS.MYACCOUNT_CLIENTS.replace('{id}', contactId));
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -60,13 +51,13 @@ describe("test myaccount endpoints", () => {
           self: string(),
         }),
         Relationships: object({
-          "contact-links": object({
+          'contact-links': object({
             Links: object({
               related: string(),
             }),
             Data: nullable(array()),
           }),
-          "investment-summary": object({
+          'investment-summary': object({
             Links: object({
               related: string(),
             }),
@@ -96,19 +87,19 @@ describe("test myaccount endpoints", () => {
             }),
             Data: nullable(array()),
           }),
-          "linked-accounts": object({
+          'linked-accounts': object({
             Links: object({
               related: string(),
             }),
             Data: nullable(array()),
           }),
-          "contact-settings": object({
+          'contact-settings': object({
             Links: object({
               related: string(),
             }),
             Data: nullable(array()),
           }),
-          "user-basket": object({
+          'user-basket': object({
             Links: object({
               related: string(),
             }),
@@ -151,24 +142,22 @@ describe("test myaccount endpoints", () => {
         })
       ),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { include: "accounts" },
+        params: { include: 'accounts' },
       },
     });
-    // Assert
+    // assert
     const { Data } = response.data;
     // const { Included } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("contact");
+    expect(Data.Type).to.equal('contact');
     expect(Data.Id).to.equal(contactId);
-    expect(Data.Attributes.ClientNumber).to.equal(
-      String(loginCredentials.username)
-    );
-    expect(Data.Attributes.ContactStatus).to.equal("Hybrid");
-    expect(Data.Attributes.ClientType).to.equal("Individual");
+    expect(Data.Attributes.ClientNumber).to.equal(String(loginCredentials.username));
+    expect(Data.Attributes.ContactStatus).to.equal('Hybrid');
+    expect(Data.Attributes.ClientType).to.equal('Individual');
 
     // const giaAccount = Included.filter((account) => {
     //   return account.Id === giaAccountId;
@@ -198,13 +187,11 @@ describe("test myaccount endpoints", () => {
     assert(response.data, expectedSchema);
   });
 
-  it("get performance contact", async () => {
-    // Arrange
+  it('should get performance contact', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.MYACCOUNT_PERFORMANCE_CONTACT.replace("{id}", contactId)
-      );
+      .path(API_ENDPOINTS.MYACCOUNT_PERFORMANCE_CONTACT.replace('{id}', contactId));
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -257,36 +244,31 @@ describe("test myaccount endpoints", () => {
         })
       ),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { include: "contributions" },
+        params: { include: 'contributions' },
       },
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     const { Included } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("performance");
+    expect(Data.Type).to.equal('performance');
     expect(Data.Id).to.equal(contactId);
 
-    expect(Included[0].Type).to.equal("contributions");
+    expect(Included[0].Type).to.equal('contributions');
     expect(Included[0].Id).to.equal(contactId);
     assert(response.data, expectedSchema);
   });
 
-  it("get breakdown allocation", async () => {
-    // Arrange
+  it('should get breakdown allocation', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION.replace(
-          "{id}",
-          isaAccountId
-        )
-      );
+      .path(API_ENDPOINTS.MYACCOUNT_BREAKDOWN_ALLOCATION.replace('{id}', isaAccountId));
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -306,28 +288,28 @@ describe("test myaccount endpoints", () => {
       }),
       Included: nullable(array()),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("breakdown-allocation");
+    expect(Data.Type).to.equal('breakdown-allocation');
     expect(Data.Id).to.equal(isaAccountId);
-    expect(Data.Attributes.Breakdown[0].Name).to.equal("Equity");
-    expect(Data.Attributes.Breakdown[1].Name).to.equal("Quality Bonds");
-    expect(Data.Attributes.Breakdown[2].Name).to.equal("High Yield Bonds");
-    expect(Data.Attributes.Breakdown[3].Name).to.equal("Property");
-    expect(Data.Attributes.Breakdown[4].Name).to.equal("Commodities");
-    expect(Data.Attributes.Breakdown[5].Name).to.equal("Hedge");
-    expect(Data.Attributes.Breakdown[6].Name).to.equal("Fund Cash");
-    expect(Data.Attributes.Breakdown[7].Name).to.equal("Uninvested Cash");
+    expect(Data.Attributes.Breakdown[0].Name).to.equal('Equity');
+    expect(Data.Attributes.Breakdown[1].Name).to.equal('Quality Bonds');
+    expect(Data.Attributes.Breakdown[2].Name).to.equal('High Yield Bonds');
+    expect(Data.Attributes.Breakdown[3].Name).to.equal('Property');
+    expect(Data.Attributes.Breakdown[4].Name).to.equal('Commodities');
+    expect(Data.Attributes.Breakdown[5].Name).to.equal('Hedge');
+    expect(Data.Attributes.Breakdown[6].Name).to.equal('Fund Cash');
+    expect(Data.Attributes.Breakdown[7].Name).to.equal('Uninvested Cash');
     assert(response.data, expectedSchema);
   });
 
-  it("get aggregated breakdown allocation", async () => {
-    // Arrange
+  it('should get aggregated breakdown allocation', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.MYACCOUNT_AGGREGATED_BREAKDOWN_ALLOCATION);
@@ -350,37 +332,35 @@ describe("test myaccount endpoints", () => {
       }),
       Included: nullable(array()),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { "filter[id]": `${`${giaAccountId},${isaAccountId}`}` },
+        params: { 'filter[id]': `${`${giaAccountId},${isaAccountId}`}` },
       },
     });
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("breakdown-allocation");
-    expect(Data.Id).to.equal("");
-    expect(Data.Attributes.Breakdown[0].Name).to.equal("Equity");
-    expect(Data.Attributes.Breakdown[1].Name).to.equal("Quality Bonds");
-    expect(Data.Attributes.Breakdown[2].Name).to.equal("High Yield Bonds");
-    expect(Data.Attributes.Breakdown[3].Name).to.equal("Property");
-    expect(Data.Attributes.Breakdown[4].Name).to.equal("Commodities");
-    expect(Data.Attributes.Breakdown[5].Name).to.equal("Hedge");
-    expect(Data.Attributes.Breakdown[6].Name).to.equal("Fund Cash");
-    expect(Data.Attributes.Breakdown[7].Name).to.equal("Uninvested Cash");
+    expect(Data.Type).to.equal('breakdown-allocation');
+    expect(Data.Id).to.equal('');
+    expect(Data.Attributes.Breakdown[0].Name).to.equal('Equity');
+    expect(Data.Attributes.Breakdown[1].Name).to.equal('Quality Bonds');
+    expect(Data.Attributes.Breakdown[2].Name).to.equal('High Yield Bonds');
+    expect(Data.Attributes.Breakdown[3].Name).to.equal('Property');
+    expect(Data.Attributes.Breakdown[4].Name).to.equal('Commodities');
+    expect(Data.Attributes.Breakdown[5].Name).to.equal('Hedge');
+    expect(Data.Attributes.Breakdown[6].Name).to.equal('Fund Cash');
+    expect(Data.Attributes.Breakdown[7].Name).to.equal('Uninvested Cash');
     assert(response.data, expectedSchema);
   });
 
-  it("get investment summary account", async () => {
-    // Arrange
-    const firstAccountId = allAccountIds.split(",")[0];
+  it('should get investment summary account', async () => {
+    // arrange
+    const firstAccountId = allAccountIds.split(',')[0];
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        `${API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS}/${firstAccountId}`
-      );
+      .path(`${API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS}/${firstAccountId}`);
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -401,20 +381,20 @@ describe("test myaccount endpoints", () => {
       }),
       Included: nullable(array()),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("investment-summary");
+    expect(Data.Type).to.equal('investment-summary');
     expect(Data.Id).to.equal(giaAccountId);
     assert(response.data, expectedSchema);
   });
 
-  it("get aggregated investment summary account", async () => {
-    // Arrange
+  it('should get aggregated investment summary account', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.MYACCOUNT_INVESTMENT_SUMMARY_ACCOUNTS);
@@ -440,48 +420,47 @@ describe("test myaccount endpoints", () => {
       ),
       Included: nullable(array()),
     });
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { "filter[id]": `${allAccountIds}` },
+        params: { 'filter[id]': `${allAccountIds}` },
       },
     });
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data[0].Type).to.equal("investment-summary");
+    expect(Data[0].Type).to.equal('investment-summary');
     expect(Data[0].Id).to.equal(giaAccountId);
-    expect(Data[1].Type).to.equal("investment-summary");
+    expect(Data[1].Type).to.equal('investment-summary');
     expect(Data[1].Id).to.equal(isaAccountId);
-    expect(Data[2].Type).to.equal("investment-summary");
+    expect(Data[2].Type).to.equal('investment-summary');
     expect(Data[2].Id).to.equal(sippAccountId);
     assert(response.data, expectedSchema);
   });
 
-  it.skip("get monthly savings", async () => {
-    // Arrange
-    const firstAccountId = allAccountIds.split(",")[0];
+  it.skip('should get monthly savings', async () => {
+    // arrange
+    const firstAccountId = allAccountIds.split(',')[0];
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.MYACCOUNT_ACCOUNT_MONTHLY_SAVINGS.replace("{id}", firstAccountId)
-      );
+      .path(API_ENDPOINTS.MYACCOUNT_MONTHLY_SAVINGS.replace('{id}', firstAccountId));
+
     const expectedSchema = object({});
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
-    // Assert
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });
 
-  it("get contribution account", async () => {
-    // Arrange
+  it('should get contribution account', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(API_ENDPOINTS.MYACCOUNT_CONTRIBUTION.replace("{id}", isaAccountId));
+      .path(API_ENDPOINTS.MYACCOUNT_CONTRIBUTION.replace('{id}', isaAccountId));
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -503,24 +482,25 @@ describe("test myaccount endpoints", () => {
       Included: nullable(array()),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("contributions");
+    expect(Data.Type).to.equal('contributions');
     expect(Data.Id).to.equal(isaAccountId);
     assert(response.data, expectedSchema);
   });
 
-  it("get isa contributions", async () => {
-    // Arrange
+  it('should get isa contributions', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(API_ENDPOINTS.ISA_CONTRIBUTIONS.replace("{id}", contactId));
+      .path(API_ENDPOINTS.MYACCOUNT_ISA_CONTRIBUTIONS.replace('{id}', contactId));
+
     const expectedSchema = object({
       Data: object({
         Type: string(),
@@ -537,27 +517,26 @@ describe("test myaccount endpoints", () => {
       Included: nullable(array()),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("isa-contributions");
+    expect(Data.Type).to.equal('isa-contributions');
     expect(Data.Id).to.equal(contactId);
     assert(response.data, expectedSchema);
   });
 
-  it("get investments", async () => {
-    // Arrange
-    const firstAccountId = allAccountIds.split(",")[0];
+  it('should get investments', async () => {
+    // arrange
+    const firstAccountId = allAccountIds.split(',')[0];
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.MYACCOUNT_ACCOUNT_INVESTMENTS.replace("{id}", firstAccountId)
-      );
+      .path(API_ENDPOINTS.MYACCOUNT_INVESTMENTS.replace('{id}', firstAccountId));
+
     const expectedSchema = object({
       Data: array(
         object({
@@ -590,20 +569,20 @@ describe("test myaccount endpoints", () => {
       Included: nullable(array()),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data[0].Type).to.equal("investments");
+    expect(Data[0].Type).to.equal('investments');
     assert(response.data, expectedSchema);
   });
 
-  it("get net contribution accounts aggregated", async () => {
-    // Arrange
+  it('should get net contribution accounts aggregated', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.MYACCOUNT_AGGREGATED_NET_CONTRIBUTIONS);
@@ -627,23 +606,23 @@ describe("test myaccount endpoints", () => {
       Included: nullable(array()),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { "filter[id]": `${allAccountIds}` },
+        params: { 'filter[id]': `${allAccountIds}` },
       },
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("net-contributions");
+    expect(Data.Type).to.equal('net-contributions');
     assert(response.data, expectedSchema);
   });
 
-  it("get performance accounts aggregated", async () => {
-    // Arrange
+  it('should get performance accounts aggregated', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.MYACCOUNT_AGGREGATED_PERFORMANCE_ACCOUNTS);
@@ -671,23 +650,23 @@ describe("test myaccount endpoints", () => {
       Included: nullable(array()),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
-        params: { "filter[id]": `${allAccountIds}` },
+        params: { 'filter[id]': `${allAccountIds}` },
       },
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("performance-accounts-aggregated");
+    expect(Data.Type).to.equal('performance-accounts-aggregated');
     assert(response.data, expectedSchema);
   });
 
-  it("get performance accounts aggregated with net contribution", async () => {
-    // Arrange
+  it('should get performance accounts aggregated with net contribution', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.MYACCOUNT_AGGREGATED_PERFORMANCE_ACCOUNTS);
@@ -733,23 +712,23 @@ describe("test myaccount endpoints", () => {
       ),
     });
 
-    // Act
+    // act
     const response = await axios.get(apiUrl, {
       headers,
       ...{
         params: {
-          "filter[id]": `${allAccountIds}`,
-          include: "netcontribution-accounts-aggregated",
+          'filter[id]': `${allAccountIds}`,
+          include: 'netcontribution-accounts-aggregated',
         },
       },
     });
 
-    // Assert
+    // assert
     const { Data } = response.data;
     const { Included } = response.data;
     expect(response.status).to.equal(200);
-    expect(Data.Type).to.equal("performance-accounts-aggregated");
-    expect(Included[0].Type).to.equal("netcontribution-accounts-aggregated");
+    expect(Data.Type).to.equal('performance-accounts-aggregated');
+    expect(Included[0].Type).to.equal('netcontribution-accounts-aggregated');
     assert(response.data, expectedSchema);
   });
 });

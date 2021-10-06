@@ -18,7 +18,7 @@ module.exports = {
           '**/*.spec.tsx',
           '**/*.stories.tsx',
           '**/*.test.ts',
-          '**/*.test.tsx',
+          '**/*.test.tsx'
         ],
       },
     ],

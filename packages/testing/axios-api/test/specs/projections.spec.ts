@@ -1,73 +1,65 @@
-import axios from "axios";
-import { expect } from "chai";
-import {
-  assert,
-  object,
-  number,
-  string,
-  array,
-} from "superstruct";
-import { apiEndpoint } from "../utils/apiBuilder";
-import { API_ENDPOINTS } from "../utils/apiEndPoints";
-import assetsPayload from '../payloads/projections/assets'
-import portfolioRiskProfilePayload from '../payloads/projections/portfolioRiskProfile'
-import portfolioAssetAllocationPayload from '../payloads/projections/portfolioAssetAllocation'
+import axios from 'axios';
+import { expect } from 'chai';
+import { assert, object, number, string, array, any } from 'superstruct';
+import apiEndpoint from '../utils/apiBuilder';
+import API_ENDPOINTS from '../utils/apiEndPoints';
+import assetsPayload from '../payloads/projections/assets';
+import portfolioRiskProfilePayload from '../payloads/projections/portfolioRiskProfile';
+import portfolioAssetAllocationPayload from '../payloads/projections/portfolioAssetAllocation';
 
-describe("test projections endpoints", () => {
+describe('Projections endpoints scenarios', () => {
   let headers: object;
 
   before(() => {
     headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     };
   });
 
-  it("asset projections", async () => {
-    // Arrange
-    const apiUrl = apiEndpoint
-      .getBaseUrl()
-      .path(API_ENDPOINTS.POST_PROJECTIONS);
+  it('should return the expected schema for asset projections', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.POST_PROJECTIONS);
     const expectedSchema = object({
       contributions: number(),
-      projections: array(object({
-        year: number(),
-        low: number(),
-        medium: number(),
-        high: number(),
-        actual: number()
-      })),
-    })
-    // Act
-    const response = await axios.post(apiUrl, assetsPayload, {
-      headers
+      projections: array(
+        object({
+          year: number(),
+          low: number(),
+          medium: number(),
+          high: number(),
+          actual: number(),
+        })
+      ),
     });
-    // Assert
+    // act
+    const response = await axios.post(apiUrl, assetsPayload, {
+      headers,
+    });
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });
 
-  it("portfolio risk profile", async () => {
-    // Arrange
-    const apiUrl = apiEndpoint
-      .getBaseUrl()
-      .path(API_ENDPOINTS.PROJECTIONS_PORTFOLIO_RISK_PROFILE);
+  it('should return the expected schema for portfolio risk profile', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.PROJECTIONS_PORTFOLIO_RISK_PROFILE);
     const expectedSchema = object({
       riskModel: string(),
       sedol: string(),
-    })
-    // Act
-    const response = await axios.post(apiUrl, portfolioRiskProfilePayload, {
-      headers
     });
-    // Assert
+    // act
+    const response = await axios.post(apiUrl, portfolioRiskProfilePayload, {
+      headers,
+    });
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });
 
-  it("tilney asset model", async () => {
-    // Arrange
-    const riskName = 'TAA7'
+  it('should return the expected schema for tilney asset model', async () => {
+    // arrange
+    const riskName = 'TAA7';
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.TILNEY_ASSET_MODEL.replace('{riskName}', riskName));
@@ -82,30 +74,95 @@ describe("test projections endpoints", () => {
         LessLikleyLB: number(),
         LessLikelyUB: number(),
       }),
-    })
-    // Act
-    const response = await axios.get(apiUrl, {
-      headers
     });
-    // Assert
+    // act
+    const response = await axios.get(apiUrl, {
+      headers,
+    });
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });
 
-  it.skip("portfolio asset allocation", async () => {
-    // Arrange
+  it('should return the expected schema for portfolio asset allocation', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
       .path(API_ENDPOINTS.PROJECTIONS_PORTFOLIO_ASSET_ALLOCATION);
     const expectedSchema = object({
       portfolioEquityPercentage: number(),
-      portfolioCashPercentage: number()
-    })
-    // Act
-    const response = await axios.post(apiUrl, portfolioAssetAllocationPayload, {
-      headers
+      portfolioCashPercentage: number(),
     });
-    // Assert
+    // act
+    const response = await axios.post(apiUrl, portfolioAssetAllocationPayload, {
+      headers,
+    });
+    // assert
+    expect(response.status).to.equal(200);
+    assert(response.data, expectedSchema);
+  });
+
+  it('should return the expected schema for standing data', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.GET_STANDING_DATA);
+    const expectedSchema = object({
+      tilneyStandingData: array(
+        object({
+          id: number(),
+          sedol: string(),
+          category: string(),
+          taamodel: string(),
+          unitType: string(),
+          investmentCodeName: string(),
+          minimumInvestmentAmount: number(),
+        })
+      ),
+      contributionsSettings: array(
+        object({
+          name: string(),
+          value: string(),
+        })
+      ),
+    });
+    // act
+    const response = await axios.get(apiUrl, {
+      headers,
+    });
+    // assert
+    expect(response.status).to.equal(200);
+    assert(response.data, expectedSchema);
+  });
+
+  it('should return the expected schema for Asset Allocation', async () => {
+    // arrange
+    const sedol = 'BYX8KL9';
+    const apiUrl = apiEndpoint
+      .getBaseUrl()
+      .path(API_ENDPOINTS.GET_ASSET_ALLOCATION_BREAKDOWN.replace('{sedol}', sedol));
+
+    const expectedSchema = array(
+      object({
+        assetallocation: array(
+          object({
+            name: string(),
+            proportion: number(),
+          })
+        ),
+        toptenholdings: any(),
+        performance: object({
+          year1: number(),
+          year2: number(),
+          year3: number(),
+          year4: number(),
+          year5: any(),
+        }),
+      })
+    );
+    // act
+    const response = await axios.get(apiUrl, {
+      headers,
+    });
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });

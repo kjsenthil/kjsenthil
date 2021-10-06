@@ -1,38 +1,28 @@
-import axios from "axios";
-import { expect } from "chai";
-import {
-  assert,
-  object,
-  number,
-  string,
-  boolean,
-  array,
-  nullable,
-} from "superstruct";
-import goalWithLessFieldsPayload from "../payloads/xplan/createGoalWithLessFields";
-import goalWithAdditionalFieldsPayload from "../payloads/xplan/createGoalWithAdditionalFields";
-import updateGoalPayload from "../payloads/xplan/updateGoal";
-import createObjectivePayload from "../payloads/xplan/createObjective";
-import updateObjectivePayload from "../payloads/xplan/updateObjective";
-import { apiEndpoint } from "../utils/apiBuilder";
-import { API_ENDPOINTS } from "../utils/apiEndPoints";
+import axios from 'axios';
+import { expect } from 'chai';
+import { assert, object, number, string, boolean, array, nullable } from 'superstruct';
+import goalWithLessFieldsPayload from '../payloads/xplan/createGoalWithLessFields';
+import goalWithAdditionalFieldsPayload from '../payloads/xplan/createGoalWithAdditionalFields';
+import updateGoalPayload from '../payloads/xplan/updateGoal';
+import createObjectivePayload from '../payloads/xplan/createObjective';
+import updateObjectivePayload from '../payloads/xplan/updateObjective';
+import apiEndpoint from '../utils/apiBuilder';
+import API_ENDPOINTS from '../utils/apiEndPoints';
 
-describe("test xplan endpoints", () => {
+describe('Xplan endpoints scenarios', () => {
   let headers;
   let goalIndex;
   let objectiveIndex;
   before(() => {
     headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     };
   });
 
-  it("create a goal with less fields", async () => {
-    // Arrange
-    const apiUrl = apiEndpoint
-      .getBaseUrl()
-      .path(API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS);
+  it('should create a goal with less fields', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.CREATE_GOAL_LESS_FIELDS);
     const expectedSchema = object({
       fields: object({
         status: string(),
@@ -49,21 +39,19 @@ describe("test xplan endpoints", () => {
       allow_multiple_account_associates: boolean(),
       index: number(),
     });
-    // Act
+    // act
     const response = await axios.post(apiUrl, goalWithLessFieldsPayload, {
       headers,
     });
-    // Assert
+    // assert
     expect(response.status).to.equal(201);
     expect(response.data).to.deep.include(goalWithLessFieldsPayload);
     assert(response.data, expectedSchema);
   });
 
-  it.skip("create a goal with additional fields", async () => {
-    // Arrange
-    const apiUrl = apiEndpoint
-      .getBaseUrl()
-      .path(API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS);
+  it.skip('should create a goal with additional fields', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.CREATE_GOAL_ADDITIONAL_FIELDS);
     const expectedSchema = object({
       fields: object({
         status: string(),
@@ -93,34 +81,34 @@ describe("test xplan endpoints", () => {
       allow_multiple_account_associates: boolean(),
       index: number(),
     });
-    // Act
+    // act
     const response = await axios.post(apiUrl, goalWithAdditionalFieldsPayload, {
       headers,
     });
     goalIndex = response.data.index;
-    // Assert
+    // assert
     expect(response.status).to.equal(201);
     expect(response.data).to.deep.include(goalWithAdditionalFieldsPayload);
     assert(response.data, expectedSchema);
   });
 
-  it.skip("update a goal", async () => {
+  it.skip('should update a goal', async () => {
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(API_ENDPOINTS.UPDATE_GOAL.replace("{goal-index}", `${goalIndex}`));
+      .path(API_ENDPOINTS.UPDATE_GOAL.replace('{goal-index}', `${goalIndex}`));
     await axios.patch(apiUrl, updateGoalPayload, {
       headers,
     });
   });
 
-  it("get all goals", async () => {
-    // Arrange
+  it('should get all goals', async () => {
+    // arrange
     const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.GET_GOALS);
     const params = {
-      "fields.0": "description",
-      "fields.1": "category",
-      "fields.2": "present_value",
-      "fields.3": "target_amount",
+      'fields.0': 'description',
+      'fields.1': 'category',
+      'fields.2': 'present_value',
+      'fields.3': 'target_amount',
     };
     const expectedSchema = array(
       object({
@@ -144,18 +132,16 @@ describe("test xplan endpoints", () => {
         index: number(),
       })
     );
-    // Act
+    // act
     const response = await axios.get(apiUrl, { ...{ params }, ...{ headers } });
-    // Assert
+    // assert
     expect(response.status).to.equal(200);
     assert(response.data, expectedSchema);
   });
 
-  it("create an objective", async () => {
-    // Arrange
-    const apiUrl = apiEndpoint
-      .getBaseUrl()
-      .path(API_ENDPOINTS.CREATE_OBJECTIVE);
+  it('should create an objective', async () => {
+    // arrange
+    const apiUrl = apiEndpoint.getBaseUrl().path(API_ENDPOINTS.CREATE_OBJECTIVE);
     const expectedSchema = object({
       fields: object({
         owner: string(),
@@ -179,27 +165,22 @@ describe("test xplan endpoints", () => {
       allow_multiple_account_associates: boolean(),
       index: number(),
     });
-    // Act
+    // act
     const response = await axios.post(apiUrl, createObjectivePayload, {
       headers,
     });
     objectiveIndex = response.data.index;
-    // Assert
+    // assert
     expect(response.status).to.equal(201);
     expect(response.data).to.deep.include(createObjectivePayload);
     assert(response.data, expectedSchema);
   });
 
-  it("update an objective", async () => {
-    // Arrange
+  it('should update an objective', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.UPDATE_OBJECTIVE.replace(
-          "{objective-index}",
-          `${objectiveIndex}`
-        )
-      );
+      .path(API_ENDPOINTS.UPDATE_OBJECTIVE.replace('{objective-index}', `${objectiveIndex}`));
     const expectedSchema = object({
       fields: object({
         owner: string(),
@@ -223,33 +204,28 @@ describe("test xplan endpoints", () => {
       allow_multiple_account_associates: boolean(),
       index: number(),
     });
-    // Act
+    // act
     const response = await axios.patch(apiUrl, updateObjectivePayload, {
       headers,
     });
-    // Assert
+    // assert
     expect(response.status).to.equal(200);
     expect(response.data).to.deep.include(updateObjectivePayload);
     assert(response.data, expectedSchema);
   });
 
-  it("link a goal with an objective", async () => {
-    // Arrange
+  it('should link a goal with an objective', async () => {
+    // arrange
     const apiUrl = apiEndpoint
       .getBaseUrl()
-      .path(
-        API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE.replace(
-          "{objective-index}",
-          `${objectiveIndex}`
-        )
-      );
+      .path(API_ENDPOINTS.LINK_GOAL_TO_OBJECTIVE.replace('{objective-index}', `${objectiveIndex}`));
     const payload = {
       objective_obj_index: objectiveIndex,
     };
     const params = {
       objective_obj_index: objectiveIndex,
       Target_Amount: 100000,
-      Owner: "client",
+      Owner: 'client',
     };
     const expectedSchema = object({
       list_obj_name: string(),
@@ -259,16 +235,16 @@ describe("test xplan endpoints", () => {
       list_obj_index: number(),
     });
 
-    // Act
+    // act
     const response = await axios.post(apiUrl, payload, {
       ...{ params },
       ...{ headers },
     });
 
-    // Assert
+    // assert
     expect(response.status).to.equal(201);
-    expect(response.data.list_obj_name).to.equal("goals");
-    expect(response.data.linked_obj_name).to.equal("objectives");
+    expect(response.data.list_obj_name).to.equal('goals');
+    expect(response.data.linked_obj_name).to.equal('objectives');
     assert(response.data, expectedSchema);
   });
 });

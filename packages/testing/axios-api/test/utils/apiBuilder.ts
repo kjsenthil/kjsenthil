@@ -1,15 +1,13 @@
-import { apiBaseUrl } from '../environments/env'
+import { apiBaseUrl } from '../environments/env';
 
 let BASE_URL = '';
-export const apiEndpoint =  {
+const apiEndpoint = {
+  getBaseUrl: () => {
+    BASE_URL = apiBaseUrl;
+    return apiEndpoint;
+  },
 
-    getBaseUrl: () => {
-        BASE_URL = apiBaseUrl
-        return apiEndpoint
-    }, 
+  path: (path) => `${BASE_URL}${path}`,
+};
 
-    path: (path) => {
-        return `${BASE_URL}${path}`
-    }
-}
-
+export { apiEndpoint as default };
