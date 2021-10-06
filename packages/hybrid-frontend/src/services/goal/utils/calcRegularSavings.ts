@@ -1,9 +1,8 @@
 import { monthDifference } from '@tswdts/react-components';
 import { CaptureGoalData } from '../types';
 
-// Needs unit tests
 const calcRegularSavings = (inputs: CaptureGoalData): number => {
-  const currDate = new Date();
+  const currDate = new Date(Date.now());
   const currDateFormat = currDate.toISOString().split('T')[0];
 
   const monthsVal = monthDifference(inputs?.targetDate, currDateFormat);
