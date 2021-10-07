@@ -13,7 +13,7 @@ module "front_door" {
   health_check_success_samples = 1
   custom_frontend = {
     name      = local.custom_frontend_name,
-    host_name = azurerm_dns_cname_record.front_door.fqdn
+    host_name = trimsuffix(azurerm_dns_cname_record.front_door.fqdn, ".")
   }
 
   tags       = merge(var.tags, local.default_tags)
