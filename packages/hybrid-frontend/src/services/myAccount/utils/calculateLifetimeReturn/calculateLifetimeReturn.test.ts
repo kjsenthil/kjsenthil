@@ -36,7 +36,7 @@ describe('calculateInvestmentReturn', () => {
     const netContributions = 5000;
 
     expect(calculateLifetimeReturn(totalValue, netContributions)).toStrictEqual({
-      value: 0,
+      value: -644,
       percent: 0,
     });
   });
