@@ -317,7 +317,7 @@ jobs:
 
     outputs:
       frontend_storage_account_name: ${{ steps.get-terraform-outputs.outputs.frontend-storage-account-name }}
-      frontend_web_host: ${{ steps.get-terraform-outputs.frontend-web-host }}
+      frontend_web_host: ${{ steps.get-terraform-outputs.outputs.frontend-web-host }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
