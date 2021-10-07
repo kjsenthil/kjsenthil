@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { InvestmentAccount } from '@tswdts/react-components';
+import { InvestmentAccount, periodDifference } from '@tswdts/react-components';
 import { getPerformanceAccountsAggregated, NetContributionValueWithDate } from '../../performance';
 import { AnnualisedReturnsResponse, postAnnualisedReturns } from '../../returns';
 import { ClientAccountTypes } from '../../types';
@@ -100,6 +100,21 @@ const fetchInvestmentAccounts = createAsyncThunk(
           netContributionToDate
         );
 
+        const periodReturn = calculateInvestmentReturnForAllPeriods(
+          performanceResponse?.data?.attributes?.values ?? [],
+          performanceResponse?.included[0]?.attributes?.netContributions ?? []
+        );
+
+        Object.keys(periodReturn).forEach((period) => {
+          const firstPerfDate = performanceResponse?.data?.attributes?.values[0]?.date;
+          const periodDiff =
+            typeof firstPerfDate === 'string' && periodDifference(firstPerfDate, period);
+          // use lifetime return when initial perf date is more recent than the initial period date
+          if (typeof periodDiff === 'number' && periodDiff < 0) {
+            periodReturn[period] = accountLifetimeReturn;
+          }
+        });
+
         return {
           id: investSummaryItem.id,
           accountName,
@@ -112,10 +127,7 @@ const fetchInvestmentAccounts = createAsyncThunk(
           accountReturnPercentage: investSummaryItem.attributes.gainLossPercent,
           accountInvestments,
           accountLifetimeReturn,
-          periodReturn: calculateInvestmentReturnForAllPeriods(
-            performanceResponse?.data?.attributes?.values ?? [],
-            performanceResponse?.included[0]?.attributes?.netContributions ?? []
-          ),
+          periodReturn,
           annualisedReturn: annualisedReturnSummaryAmount?.annualisedReturnValue ?? 0,
           monthlyInvestment,
         };
