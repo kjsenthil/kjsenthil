@@ -9,7 +9,7 @@ const contactId = 12345678;
 const url = `${API_ENDPOINTS.MYACCOUNT_CLIENTS.replace(
   /\{id\}/,
   String(contactId)
-)}?include=accounts,linked-accounts`;
+)}?include=accounts,linked-accounts,emails,addresses`;
 
 describe('getClient', () => {
   it(`makes a call to ${url}`, async () => {

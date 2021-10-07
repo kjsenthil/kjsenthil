@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from '../../../config';
 import { ClientResponse } from '../types';
 
 const getClient = async (contactId: number): Promise<ClientResponse> => {
-  const includeParamText = '?include=accounts,linked-accounts';
+  const includeParamText = '?include=accounts,linked-accounts,emails,addresses';
 
   const url = `${API_ENDPOINTS.MYACCOUNT_CLIENTS.replace(
     /\{id\}/,

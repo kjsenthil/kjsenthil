@@ -26,7 +26,7 @@ export interface IsaContributionState
   extends CommonState<IsaContributionResponse['data'], IsaContributionResponse['included']> {}
 
 export interface ClientAccount {
-  type: ClientAccountTypes;
+  type: ClientAccountTypes.accounts | ClientAccountTypes.linkedAccounts;
   id: string;
   attributes: {
     accountId: number;
@@ -39,6 +39,52 @@ export interface ClientAccount {
     capacityTypeId: number;
     ddMandateId: number | null;
     hasIncomeAccount: boolean;
+  };
+  links: {
+    self: string;
+  };
+  relationships: Record<string, DataRelationship>[] | null;
+}
+
+export interface ClientEmail {
+  type: ClientAccountTypes.emails;
+  id: string;
+  attributes: {
+    contactId: number;
+    emailId: number;
+    emailAddress: string;
+    emailTypeId: number;
+    emailType: string;
+    principal: boolean;
+    defaultEmail: boolean;
+    updateBy: string;
+  };
+  links: {
+    self: string;
+  };
+  relationships: Record<string, DataRelationship>[] | null;
+}
+
+export interface ClientAddress {
+  type: ClientAccountTypes.addresses;
+  id: string;
+  attributes: {
+    contactId: number;
+    addressId: number;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    addressLine4: string;
+    addressLine5: string;
+    town: string;
+    county: string;
+    postCode: string;
+    countryId: number;
+    countryCode: string;
+    country: string;
+    addressTypeId: Number;
+    addressType: string;
+    principal: boolean;
   };
   links: {
     self: string;
@@ -116,7 +162,7 @@ export interface ClientResponse {
       'user-basket'?: DataRelationship;
     };
   };
-  included: ClientAccount[];
+  included: Array<ClientAccount | ClientEmail | ClientAddress>;
 }
 
 export interface InvestmentSummary {

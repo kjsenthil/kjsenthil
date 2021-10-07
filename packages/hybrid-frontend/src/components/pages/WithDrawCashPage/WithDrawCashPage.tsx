@@ -10,6 +10,8 @@ import { AccountDetailsLayout } from '../../templates';
 import { useBasicInfo } from '../../../hooks';
 import { RootState } from '../../../store';
 import useInvestmentSummary from '../../../hooks/useInvestmentSummary';
+import { ClientAccountTypes } from '../../../services/types';
+import { ClientAccount } from '../../../services/myAccount';
 
 const WithDrawCashPage = () => {
   const basicInfo = useBasicInfo();
@@ -20,7 +22,9 @@ const WithDrawCashPage = () => {
   }));
 
   const { clientAccounts } = useSelector((state: RootState) => ({
-    clientAccounts: state.client.included,
+    clientAccounts: state.client?.included?.filter<ClientAccount>(
+      (props): props is ClientAccount => props.type === ClientAccountTypes.accounts
+    ),
   }));
 
   const hasMoreThanOneAccount: boolean = !!investmentAccounts && investmentAccounts.length > 1;

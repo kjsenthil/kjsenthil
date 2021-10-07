@@ -11,6 +11,7 @@ import performanceReducer, {
   fetchPerformanceAccountsAggregated,
   setPerformanceDataPeriod,
 } from './performanceSlice';
+import { ClientAccountTypes } from '../../types';
 
 jest.mock('../api');
 
@@ -26,7 +27,9 @@ function getPerformanceStoreAndStateHistory({
 }: GetPerformanceStoreAndStateHistoryProps = {}) {
   return getStoreAndStateHistory<StateMap, ReducersMapObject>({
     client: (): DeepPartial<ClientState> => ({
-      included: noAccountIds ? undefined : [{ attributes: { accountId: 12345678 } }],
+      included: noAccountIds
+        ? undefined
+        : [{ type: ClientAccountTypes.accounts, id: '20500', attributes: { accountId: 12345678 } }],
       status: noAccountIds ? 'idle' : 'success',
     }),
     performance: performanceReducer,
@@ -98,7 +101,7 @@ describe('performanceSlice', () => {
         (api.getPerformanceAccountsAggregated as jest.Mock).mockResolvedValue(
           mockPerformanceAccountsAggregatedResponse
         );
-        const accountIds = [87654321, 12345678];
+        const accountIds = [12345678];
 
         const { store } = getPerformanceStoreAndStateHistory();
         await store.dispatch(fetchPerformanceAccountsAggregated(accountIds));

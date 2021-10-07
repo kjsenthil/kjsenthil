@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { ClientAccountTypes } from '../../services/types';
 
 export default function useAccountIds(): string[] | undefined {
   const {
@@ -8,5 +9,9 @@ export default function useAccountIds(): string[] | undefined {
 
   if (!included) return undefined;
 
-  return included.map(({ id }) => id);
+  const filteredAccounts = included.filter(
+    ({ type }) => type === ClientAccountTypes.accounts || type === ClientAccountTypes.linkedAccounts
+  );
+
+  return filteredAccounts.map(({ id }) => id);
 }

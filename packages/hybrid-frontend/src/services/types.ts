@@ -10,4 +10,6 @@ export enum ClientAccountTypes {
   linkedAccounts = 'linked-accounts',
   contactSettings = 'contact-settings',
   userBasket = 'user-basket',
+  emails = 'emails',
+  addresses = 'addresses',
 }

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { InvestmentAccountData, RiskModel } from '@tswdts/react-components';
 
 import {
+  ClientAccount,
   extractClientAccounts,
   extractInvestmentAccountDataByAccounts,
 } from '../../services/myAccount';
@@ -17,6 +18,7 @@ import {
 } from '../../services/projections';
 import useAllAssets from '../../services/assets/hooks/useAllAssets';
 import { RootState } from '../../store';
+import { ClientAccountTypes } from '../../services/types';
 
 const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjectionsPrerequisitePayload> => {
   const { client, investmentSummary, investmentAccounts } = useSelector(
@@ -56,7 +58,13 @@ const useUpdateSimulateProjectionsPrerequisites = (): Partial<SimulateProjection
   useEffect(() => {
     (async () => {
       if (investmentSummary.data && investmentAccounts.data && client.included && !accountTotals) {
-        const clientAccounts = extractClientAccounts(client.included);
+        const clientAccounts = extractClientAccounts(
+          client.included?.filter<ClientAccount>(
+            (props): props is ClientAccount =>
+              props.type === ClientAccountTypes.accounts ||
+              props.type === ClientAccountTypes.linkedAccounts
+          )
+        );
         setAccountTotals(
           await extractInvestmentAccountDataByAccounts(
             investmentSummary.data,

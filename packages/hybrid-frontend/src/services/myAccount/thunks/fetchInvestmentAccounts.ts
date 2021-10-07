@@ -2,8 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { InvestmentAccount } from '@tswdts/react-components';
 import { getPerformanceAccountsAggregated, NetContributionValueWithDate } from '../../performance';
 import { AnnualisedReturnsResponse, postAnnualisedReturns } from '../../returns';
+import { ClientAccountTypes } from '../../types';
 import { getMonthlySavingsAmount } from '../api';
-import { ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
+import { ClientAccount, ClientState, InvestmentSummary, InvestmentSummaryState } from '../types';
 import { extractClientAccounts } from '../utils';
 import calculateInvestmentReturnForAllPeriods from '../utils/calculateInvestmentReturnForAllPeriods';
 import calculateLifetimeReturn from '../utils/calculateLifetimeReturn';
@@ -24,7 +25,13 @@ const fetchInvestmentAccounts = createAsyncThunk(
       throw new Error('Could not find investment summary data.');
     }
 
-    const extractedClientAccounts = extractClientAccounts(client.included);
+    const extractedClientAccounts = extractClientAccounts(
+      client.included?.filter<ClientAccount>(
+        (props): props is ClientAccount =>
+          props.type === ClientAccountTypes.accounts ||
+          props.type === ClientAccountTypes.linkedAccounts
+      )
+    );
 
     const investmentAccountsPromises = investmentSummary.data.map(
       async (investSummaryItem: InvestmentSummary) => {
