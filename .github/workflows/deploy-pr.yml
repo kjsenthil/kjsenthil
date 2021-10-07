@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - detect_changes
-    concurrency: dev_rg_terraform_deployment
+
     defaults:
       run:
         working-directory: ./terraform/resource_group
@@ -189,17 +189,28 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/dev.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/dev.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
         id: rg-plan
-        run: terraform plan -var-file="./var-files/dev.tfvars" -no-color
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/dev.tfvars" \
+            -out="dev-rg-plan.tfplan"
 
       - name: "Terraform Apply"
-        run: terraform apply -var-file="./var-files/dev.tfvars" -auto-approve
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            dev-rg-plan.tfplan
 
   get_dev_rg_outputs:
     name: "Get dev resource group outputs"
@@ -228,12 +239,16 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/dev.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/dev.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+          terraform output -json > dev-rg-outputs.json
+          echo ::set-output name=resource-group-name::$( jq -r .resource_group_name.value dev-rg-outputs.json)
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
@@ -247,7 +262,7 @@ jobs:
       - deploy_rg_terraform
       - get_dev_rg_outputs
     runs-on: ubuntu-latest
-    concurrency: dev_apim_terraform_deployment
+
     defaults:
       run:
         working-directory: ./terraform/apim
@@ -268,13 +283,20 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/dev.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/dev.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
-        run: terraform plan -no-color -var-file="./var-files/dev.tfvars"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/dev.tfvars" \
+            -out="dev-apim-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
@@ -286,16 +308,11 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve -var-file="./var-files/dev.tfvars"
-        env:
-          TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
-          TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
-          TF_VAR_xplan_username: ${{ secrets.XPLAN_USERNAME }}
-          TF_VAR_xplan_password: ${{ secrets.XPLAN_PASSWORD }}
-          TF_VAR_myaccount_guest_username: ${{ secrets.MYACCOUNT_GUEST_USERNAME }}
-          TF_VAR_myaccount_guest_password: ${{ secrets.MYACCOUNT_GUEST_PASSWORD }}
-          TF_VAR_xplan_app_id: ${{ secrets.XPLAN_APP_ID }}
-          TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            dev-apim-plan.tfplan
 
   get_dev_apim_outputs:
     name: "Get dev APIM outputs"
@@ -324,7 +341,10 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/dev.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/dev.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -357,7 +377,7 @@ jobs:
       - derive_environment_prefix
       - package_function_apps
     runs-on: ubuntu-latest
-    concurrency: dev_infra_terraform_deployment
+
     defaults:
       run:
         working-directory: ./terraform/infra
@@ -385,7 +405,11 @@ jobs:
 
       - name: "Terraform Init"
         id: pr-init
-        run: terraform init -backend-config="./backends/pr.backend" -backend-config="key=${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/pr.backend" \
+            -backend-config="key=${{ needs.derive_environment_prefix.outputs.prefix }}/terraform.tfstate"
 
       - name: "Terraform Validate"
         id: pr-validate
@@ -393,7 +417,11 @@ jobs:
 
       - name: "Terraform Plan"
         id: plan
-        run: terraform plan -no-color -var-file="./var-files/dev.tfvars" -out="dev-infra-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/dev.tfvars" \
+            -out="dev-infra-plan.tfplan"
         env:
           TF_VAR_environment_prefix: ${{ needs.derive_environment_prefix.outputs.prefix }}
           TF_VAR_resource_group_name: ${{ needs.get_dev_rg_outputs.outputs.resource_group_name }}
@@ -407,7 +435,11 @@ jobs:
 
       - name: "Terraform Apply"
         id: pr-apply
-        run: terraform apply -auto-approve dev-infra-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            dev-infra-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -800,12 +832,16 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+          terraform output -json > staging-rg-outputs.json
+          echo ::set-output name=resource-group-name::$( jq -r .resource_group_name.value staging-rg-outputs.json)
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
@@ -835,7 +871,10 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -865,7 +904,6 @@ jobs:
       - get_staging_rg_outputs
       - get_staging_apim_outputs
     runs-on: ubuntu-latest
-    concurrency: staging_infra_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -888,22 +926,36 @@ jobs:
           terraform_version: 0.14.7
 
       - name: "Terraform Resource Group Init"
-        run: terraform init -backend-config="./backends/staging.backend"
         working-directory: ./terraform/resource_group
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Resource Group Plan"
-        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
-        id: plan-rg
         working-directory: ./terraform/resource_group
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -no-color
+        id: plan-rg
 
       - name: "Terraform APIM Init"
-        run: terraform init -backend-config="./backends/staging.backend"
         working-directory: ./terraform/apim
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform APIM Plan"
-        run: terraform plan -no-color -var-file="./var-files/staging.tfvars"
         id: plan-apim
         working-directory: ./terraform/apim
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_staging_rg_outputs.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY }}
@@ -915,13 +967,20 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Infra Init"
-        run: terraform init -backend-config="./backends/staging.backend"
         working-directory: ./terraform/infra
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Infra Plan"
         id: plan-infra
-        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
         working-directory: ./terraform/infra
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_staging_rg_outputs.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.get_staging_apim_outputs.outputs.apim_name }}
@@ -940,12 +999,19 @@ jobs:
 
       - name: "Terraform Front Door Init"
         working-directory: ./terraform/front_door
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Front Door Plan"
         id: plan-front-door
         working-directory: ./terraform/front_door
-        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_staging_rg_outputs.outputs.resource_group_name }}
           TF_VAR_cdn_endpoint_host: ${{ steps.outputs-infra.outputs.frontend-web-host }}
@@ -985,12 +1051,16 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
+          terraform output -json > prod-rg-outputs.json
+          echo ::set-output name=resource-group-name::$( jq -r .resource_group_name.value prod-rg-outputs.json)
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
@@ -1020,7 +1090,10 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
@@ -1050,7 +1123,6 @@ jobs:
       - get_prod_rg_outputs
       - get_prod_apim_outputs
     runs-on: ubuntu-latest
-    concurrency: prod_infra_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -1073,22 +1145,36 @@ jobs:
           terraform_version: 0.14.7
 
       - name: "Terraform Resource Group Init"
-        run: terraform init -backend-config="./backends/prod.backend"
         working-directory: ./terraform/resource_group
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Resource Group Plan"
-        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
         id: plan-rg
         working-directory: ./terraform/resource_group
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -no-color
 
       - name: "Terraform APIM Init"
-        run: terraform init -backend-config="./backends/prod.backend"
         working-directory: ./terraform/apim
+        run: |
+          terraform init \
+          -lock-timeout=15m \
+          -backend-config="./backends/prod.backend"
 
       - name: "Terraform APIM Plan"
-        run: terraform plan -no-color -var-file="./var-files/prod.tfvars"
         id: plan-apim
         working-directory: ./terraform/apim
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY }}
@@ -1100,13 +1186,20 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Infra Init"
-        run: terraform init -backend-config="./backends/prod.backend"
         working-directory: ./terraform/infra
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Infra Plan"
         id: plan-infra
-        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
         working-directory: ./terraform/infra
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.get_prod_apim_outputs.outputs.apim_name }}
@@ -1130,12 +1223,19 @@ jobs:
 
       - name: "Terraform Front Door Init"
         working-directory: ./terraform/front_door
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Front Door Plan"
         id: plan-front-door
         working-directory: ./terraform/front_door
-        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -no-color
         env:
           TF_VAR_resource_group_name: ${{ needs.get_prod_rg_outputs.outputs.resource_group_name }}
           TF_VAR_cdn_endpoint_host: ${{ steps.outputs-infra.outputs.frontend-web-host }}

@@ -128,7 +128,6 @@ jobs:
     name: "Deploy Staging Resource Group"
     environment: staging
     runs-on: ubuntu-latest
-    concurrency: staging_rg_terraform_deployment
     defaults:
       run:
         working-directory: ./terraform/resource_group
@@ -149,25 +148,37 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
         id: rg-plan
-        run: terraform plan -var-file="./var-files/staging.tfvars" -no-color -out="staging-rg-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -out="staging-rg-plan.tfplan"
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve staging-rg-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            staging-rg-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
-          echo ::set-output name=artifact-storage-account-name::$( terraform output -json | jq -r .artifact_storage_account_name.value )
-          echo ::set-output name=artifact-container-name::$( terraform output -json | jq -r .artifact_container_name.value )
-          echo ::set-output name=test-artifacts-container-name::$( terraform output -json | jq -r .test_artifacts_container_name.value )
+          terraform output -json > staging-rg-outputs.json
+          echo ::set-output name=resource-group-name::$( jq -r .resource_group_name.value staging-rg-outputs.json )
+          echo ::set-output name=artifact-storage-account-name::$( jq -r .artifact_storage_account_name.value staging-rg-outputs.json )
+          echo ::set-output name=artifact-container-name::$( jq -r .artifact_container_name.value staging-rg-outputs.json )
+          echo ::set-output name=test-artifacts-container-name::$( jq -r .test_artifacts_container_name.value staging-rg-outputs.json )
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
       artifact_storage_account_name: ${{ steps.set-terraform-outputs.outputs.artifact-storage-account-name }}
@@ -179,7 +190,6 @@ jobs:
     environment: staging
     needs: [deploy_staging_rg_terraform]
     runs-on: ubuntu-latest
-    concurrency: staging_apim_terraform_deployment
     defaults:
       run:
         working-directory: ./terraform/apim
@@ -200,13 +210,20 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
-        run: terraform plan -no-color -var-file="./var-files/staging.tfvars" -out="staging-apim-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -out="staging-apim-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
@@ -218,17 +235,22 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve staging-apim-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            staging-apim-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
-          echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
-          echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
-          echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_website_name.value )
-          echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_storybook_name.value )
-          echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
+          terraform output -json > staging-apim-outputs.json
+          echo ::set-output name=apim-name::$( jq -r .apim_name.value staging-apim-outputs.json )
+          echo ::set-output name=apim-vnet-name::$( jq -r .apim_vnet_name.value staging-apim-outputs.json )
+          echo ::set-output name=apim-subnet-name::$( jq -r .apim_subnet_name.value staging-apim-outputs.json )
+          echo ::set-output name=cdn-profile-website-name::$( jq -r .cdn_profile_website_name.value staging-apim-outputs.json )
+          echo ::set-output name=cdn-profile-storybook-name::$( jq -r .cdn_profile_storybook_name.value staging-apim-outputs.json )
+          echo ::set-output name=app-insights-name::$( jq -r .app_insights_name.value staging-apim-outputs.json )
 
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
@@ -248,7 +270,6 @@ jobs:
         package_function_apps,
       ]
     runs-on: ubuntu-latest
-    concurrency: staging_infra_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -273,7 +294,10 @@ jobs:
 
       - name: "Terraform Init"
         working-directory: ./terraform/infra
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Validate"
         working-directory: ./terraform/infra
@@ -281,7 +305,11 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/infra
-        run: terraform plan -var-file="./var-files/staging.tfvars" -out="staging-infra-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
+            -out="staging-infra-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.deploy_staging_apim_terraform.outputs.apim_name }}
@@ -294,7 +322,11 @@ jobs:
 
       - name: "Terraform Apply"
         working-directory: ./terraform/infra
-        run: terraform apply -auto-approve staging-infra-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            staging-infra-plan.tfplan
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -433,7 +465,6 @@ jobs:
       - deploy_staging_terraform
       - deploy_staging_frontend
     runs-on: ubuntu-latest
-    concurrency: staging_front_door_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -452,18 +483,28 @@ jobs:
 
       - name: "Terraform Init"
         working-directory: ./terraform/front_door
-        run: terraform init -backend-config="./backends/staging.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/staging.backend"
 
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
-        run: terraform plan -var-file="./var-files/staging.tfvars" -out="staging-fd-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -out="staging-fd-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
           TF_VAR_cdn_endpoint_host: ${{ needs.deploy_staging_terraform.outputs.frontend_web_host }}
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
-        run: terraform apply -auto-approve staging-fd-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            staging-fd-plan.tfplan
 
   close_staging_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
@@ -516,7 +557,6 @@ jobs:
     environment: prod
     needs: [deploy_staging_frontend]
     runs-on: ubuntu-latest
-    concurrency: prod_rg_terraform_deployment
     defaults:
       run:
         working-directory: ./terraform/resource_group
@@ -537,25 +577,37 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
         id: rg-plan
-        run: terraform plan -var-file="./var-files/prod.tfvars" -no-color -out="prod-rg-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -out="prod-rg-plan.tfplan"
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve prod-rg-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            prod-rg-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=resource-group-name::$( terraform output -json | jq -r .resource_group_name.value )
-          echo ::set-output name=artifact-storage-account-name::$( terraform output -json | jq -r .artifact_storage_account_name.value )
-          echo ::set-output name=artifact-container-name::$( terraform output -json | jq -r .artifact_container_name.value )
-          echo ::set-output name=test-artifacts-container-name::$( terraform output -json | jq -r .test_artifacts_container_name.value )
+          terraform output -json > prod-rg-outputs.json
+          echo ::set-output name=resource-group-name::$( jq -r .resource_group_name.value prod-rg-outputs.json )
+          echo ::set-output name=artifact-storage-account-name::$( jq -r .artifact_storage_account_name.value prod-rg-outputs.json )
+          echo ::set-output name=artifact-container-name::$(  jq -r .artifact_container_name.value prod-rg-outputs.json )
+          echo ::set-output name=test-artifacts-container-name::$( jq -r .test_artifacts_container_name.value prod-rg-outputs.json )
 
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
@@ -568,7 +620,6 @@ jobs:
     environment: prod
     needs: [deploy_production_rg_terraform]
     runs-on: ubuntu-latest
-    concurrency: prod_rg_terraform_deployment
     defaults:
       run:
         working-directory: ./terraform/apim
@@ -589,13 +640,20 @@ jobs:
           terraform_wrapper: false
 
       - name: "Terraform Init"
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Validate"
         run: terraform validate -no-color
 
       - name: "Terraform Plan"
-        run: terraform plan -no-color -var-file="./var-files/prod.tfvars" -out="prod-apim-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -out="prod-apim-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_myaccount_signing_key: ${{ secrets.MYACCOUNTS_SIGNING_KEY}}
@@ -607,17 +665,22 @@ jobs:
           TF_VAR_slack_security_alert_webhook_url: ${{ secrets.SLACK_SECURITY_ALERT_WEBHOOK_URL }}
 
       - name: "Terraform Apply"
-        run: terraform apply -auto-approve prod-apim-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            prod-apim-plan.tfplan
 
       - name: "Set Terraform Outputs"
         id: set-terraform-outputs
         run: |
-          echo ::set-output name=apim-name::$( terraform output -json | jq -r .apim_name.value )
-          echo ::set-output name=apim-vnet-name::$( terraform output -json | jq -r .apim_vnet_name.value )
-          echo ::set-output name=apim-subnet-name::$( terraform output -json | jq -r .apim_subnet_name.value )
-          echo ::set-output name=cdn-profile-website-name::$( terraform output -json | jq -r .cdn_profile_website_name.value )
-          echo ::set-output name=cdn-profile-storybook-name::$( terraform output -json | jq -r .cdn_profile_storybook_name.value )
-          echo ::set-output name=app-insights-name::$( terraform output -json | jq -r .app_insights_name.value )
+          terraform output -json > prod-apim-outputs.json
+          echo ::set-output name=apim-name::$( jq -r .apim_name.value prod-apim-outputs.json )
+          echo ::set-output name=apim-vnet-name::$( jq -r .apim_vnet_name.value prod-apim-outputs.json )
+          echo ::set-output name=apim-subnet-name::$( jq -r .apim_subnet_name.value prod-apim-outputs.json )
+          echo ::set-output name=cdn-profile-website-name::$( jq -r .cdn_profile_website_name.value prod-apim-outputs.json )
+          echo ::set-output name=cdn-profile-storybook-name::$( jq -r .cdn_profile_storybook_name.value prod-apim-outputs.json )
+          echo ::set-output name=app-insights-name::$( jq -r .app_insights_name.value prod-apim-outputs.json )
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
@@ -636,7 +699,6 @@ jobs:
         package_function_apps,
       ]
     runs-on: ubuntu-latest
-    concurrency: prod_infra_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -661,7 +723,10 @@ jobs:
 
       - name: "Terraform Init"
         working-directory: ./terraform/infra
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Validate"
         working-directory: ./terraform/infra
@@ -669,7 +734,11 @@ jobs:
 
       - name: "Terraform Plan"
         working-directory: ./terraform/infra
-        run: terraform plan -var-file="./var-files/prod.tfvars" -out="prod-infra-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
+            -out="prod-infra-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_apim_name: ${{ needs.deploy_production_apim_terraform.outputs.apim_name }}
@@ -682,7 +751,11 @@ jobs:
 
       - name: "Terraform Apply"
         working-directory: ./terraform/infra
-        run: terraform apply -auto-approve prod-infra-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            prod-infra-plan.tfplan
 
       - name: "Get Terraform Outputs"
         id: get-terraform-outputs
@@ -821,7 +894,6 @@ jobs:
       - deploy_production_terraform
       - deploy_production_frontend
     runs-on: ubuntu-latest
-    concurrency: prod_front_door_terraform_deployment
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -840,18 +912,28 @@ jobs:
 
       - name: "Terraform Init"
         working-directory: ./terraform/front_door
-        run: terraform init -backend-config="./backends/prod.backend"
+        run: |
+          terraform init \
+            -lock-timeout=15m \
+            -backend-config="./backends/prod.backend"
 
       - name: "Terraform Plan"
         working-directory: ./terraform/front_door
-        run: terraform plan -var-file="var-files/prod.tfvars" -out="prod-fd-plan.tfplan"
+        run: |
+          terraform plan \
+            -lock-timeout=15m \
+            -out="prod-fd-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
           TF_VAR_cdn_endpoint_host: ${{ needs.deploy_production_terraform.outputs.frontend_web_host }}
 
       - name: "Terraform Apply"
         working-directory: ./terraform/front_door
-        run: terraform apply -auto-approve prod-fd-plan.tfplan
+        run: |
+          terraform apply \
+            -lock-timeout=15m \
+            -auto-approve \
+            prod-fd-plan.tfplan
 
   deploy_storybook_prod:
     name: "Deploy Storybook"
@@ -1009,18 +1091,25 @@ jobs:
     environment: prod
     needs:
       - build_cache
+      - build_windows_cache
       - package_function_apps
       - deploy_staging_rg_terraform
       - deploy_staging_apim_terraform
       - deploy_staging_terraform
-      - deploy_staging_front_door
+      - open_staging_storage_account_firewalls
       - deploy_staging_frontend
+      - deploy_staging_front_door
+      - close_staging_storage_account_firewalls
       - deploy_production_rg_terraform
       - deploy_production_apim_terraform
       - deploy_production_terraform
-      - deploy_production_front_door
+      - open_prod_storage_account_firewalls
       - deploy_production_frontend
+      - deploy_production_front_door
       - deploy_storybook_prod
+      - close_prod_storage_account_firewalls
+      - purge_prod_frontend_cdn_cache
+      - purge_prod_storybook_cdn_cache
       - output_website_urls
     runs-on: ubuntu-latest
     steps:
@@ -1031,13 +1120,25 @@ jobs:
           if [[
             "${{
               needs.build_cache.result == 'success' &&
+              needs.build_windows_cache.result == 'success' &&
+              needs.package_function_apps.result == 'success' &&
+              needs.deploy_staging_rg_terraform.result == 'success' &&
+              needs.deploy_staging_apim_terraform.result == 'success' &&
               needs.deploy_staging_terraform.result == 'success' &&
-              needs.deploy_staging_front_door.result == 'success' &&
+              needs.open_staging_storage_account_firewalls.result == 'success' &&
               needs.deploy_staging_frontend.result == 'success' &&
+              needs.deploy_staging_front_door.result == 'success' &&
+              needs.close_staging_storage_account_firewalls.result == 'success' &&
+              needs.deploy_production_rg_terraform.result == 'success' &&
+              needs.deploy_production_apim_terraform.result == 'success' &&
               needs.deploy_production_terraform.result == 'success' &&
-              needs.deploy_production_front_door.result == 'success' &&
+              needs.open_prod_storage_account_firewalls.result == 'success' &&
               needs.deploy_production_frontend.result == 'success' &&
+              needs.deploy_production_front_door.result == 'success' &&
               needs.deploy_storybook_prod.result == 'success' &&
+              needs.close_prod_storage_account_firewalls.result == 'success' &&
+              needs.purge_prod_frontend_cdn_cache.result == 'success' &&
+              needs.purge_prod_storybook_cdn_cache.result == 'success' &&
               needs.output_website_urls.result == 'success'
             }}" == "true"
           ]]; then
@@ -1124,6 +1225,13 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
+                      "text": '${{ needs.build_windows_cache.result }}' === 'success' ? ':heavy-check-mark:   Build Windows Cache' : '${{ needs.build_windows_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Build Windows Cache' : ':heavy-minus-sign:   Build Windows Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
                       "text": '${{ needs.package_function_apps.result }}' === 'success' ? ':heavy-check-mark:   Package Function Apps' : '${{ needs.package_function_apps.result }}' === 'failure' ? ':heavy-cross-mark:   Package Function Apps' : ':heavy-minus-sign:   Package Function Apps'
                     }
                   },
@@ -1145,14 +1253,14 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_staging_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Infrastructure' : '${{ needs.deploy_staging_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Infrastructure' : ':heavy-minus-sign:   Deploy Staging Infrastructure'
+                      "text": '${{ needs.deploy_staging_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Terraform' : '${{ needs.deploy_staging_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Terraform' : ':heavy-minus-sign:   Deploy Staging Terraform'
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_staging_front_door.result }}' === 'success' ? ':heavy-check-mark:   Deploy Staging Infrastructure' : '${{ needs.deploy_staging_front_door.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Staging Front Door' : ':heavy-minus-sign:   Deploy Staging Front Door'
+                      "text": '${{ needs.open_staging_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Open Staging Storage Account Firewalls' : '${{ needs.open_staging_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Open Staging Storage Account Firewalls' : ':heavy-minus-sign:   Open Staging Storage Account Firewalls'
                     }
                   },
                   {
@@ -1173,21 +1281,35 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_production_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production APIM' : '${{ needs.deploy_production_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production APIM' : ':heavy-minus-sign:   Deploy Production APIM'
+                      "text": '${{ needs.close_staging_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Staging Storage Account Firewalls' : '${{ needs.close_staging_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Staging Storage Account Firewalls' : ':heavy-minus-sign:   Close Staging Storage Account Firewalls'
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_production_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Infrastructure' : '${{ needs.deploy_production_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Infrastructure' : ':heavy-minus-sign:   Deploy Production Infrastructure'
+                      "text": '${{ needs.deploy_production_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production RG Terraform' : '${{ needs.deploy_production_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production RG Terraform' : ':heavy-minus-sign:   Deploy Production RG Terraform'
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_production_front_door.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Infrastructure' : '${{ needs.deploy_production_front_door.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Front Door' : ':heavy-minus-sign:   Deploy Production Front Door'
+                      "text": '${{ needs.deploy_production_apim_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production APIM Terraform' : '${{ needs.deploy_production_apim_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production APIM Terraform' : ':heavy-minus-sign:   Deploy Production APIM Terraform'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.deploy_production_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Terraform' : '${{ needs.deploy_production_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Terraform' : ':heavy-minus-sign:   Deploy Production Terraform'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.open_prod_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Open Prod Storage Account Firewalls' : '${{ needs.open_prod_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Open Prod Storage Account Firewalls' : ':heavy-minus-sign:   Open Prod Storage Account Firewalls'
                     }
                   },
                   {
@@ -1201,14 +1323,42 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_storybook_prod.result }}' === 'success' ? ':heavy-check-mark:   Build &amp; Deploy Storybook - Production' : '${{ needs.deploy_storybook_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Build &amp; Deploy Storybook - Production' : ':heavy-minus-sign:   Build &amp; Deploy Storybook - Production'
+                      "text": '${{ needs.deploy_production_front_door.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Front Door' : '${{ needs.deploy_production_front_door.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Front Door' : ':heavy-minus-sign:   Deploy Production Front Door'
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   Output Website URLs' : '${{ needs.output_website_urls.result }}' === 'failure' ? ':heavy-cross-mark:   Output Website URLs' : ':heavy-minus-sign:   Output Website URLs'
+                      "text": '${{ needs.deploy_storybook_prod.result }}' === 'success' ? ':heavy-check-mark:   Deploy Storybook Prod' : '${{ needs.deploy_storybook_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Storybook Prod' : ':heavy-minus-sign:   Deploy Storybook Prod'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.close_prod_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Prod Storage Account Firewalls' : '${{ needs.close_prod_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Prod Storage Account Firewalls' : ':heavy-minus-sign:   Close Prod Storage Account Firewalls'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.purge_prod_frontend_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Prod Frontend CDN Cache' : '${{ needs.purge_prod_frontend_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Prod Frontend CDN Cache' : ':heavy-minus-sign:   Purge Prod Frontend CDN Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.purge_prod_storybook_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Prod Storybook CDN Cache' : '${{ needs.purge_prod_storybook_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Prod Storybook CDN Cache' : ':heavy-minus-sign:   Purge Prod Storybook CDN Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.output_website_urls.result }}' === 'success' ? ':heavy-check-mark:   Output Website Urls' : '${{ needs.output_website_urls.result }}' === 'failure' ? ':heavy-cross-mark:   Output Website Urls' : ':heavy-minus-sign:   Output Website Urls'
                     }
                   },
                   {
