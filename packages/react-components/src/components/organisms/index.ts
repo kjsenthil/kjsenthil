@@ -18,6 +18,7 @@ export { default as AccountFilter, AccountFilterSelection } from './AccountFilte
 export { default as AssetDetails } from './AssetDetails';
 export { default as CalendlyModal } from './CalendlyModal';
 export { default as CoachHowDoesItWork } from './CoachHowDoesItWork';
+export { default as CoachMeetTheCoaches } from './CoachMeetTheCoaches';
 export { default as CoachingPopover } from './CoachingPopover';
 export { default as DirectDebitGuarantee } from './DirectDebitGuarantee';
 export { default as Footer } from './Footer';

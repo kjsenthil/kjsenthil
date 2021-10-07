@@ -281,13 +281,13 @@ const BIAccountsPage = () => {
       {AccountsTableHeader(humanizedDataPeriod).map(
         (headerWithTooltip) =>
           headerWithTooltip.tooltip !== undefined && (
-            <>
+            <div key={headerWithTooltip.value}>
               <Typography variant="sh3" color="primary">
                 {headerWithTooltip.value}
               </Typography>
               <Typography variant="b4">{headerWithTooltip.tooltip}</Typography>
               <br />
-            </>
+            </div>
           )
       )}
     </Modal>

@@ -22,8 +22,10 @@ export const UpsellCardContainer = styled(({ isLoading, isMobile, theme, ...prop
     theme: Theme;
   }) => css`
     position: relative;
-    min-height: ${isMobile ? 292 : 205}px;
-    max-width: ${isMobile ? 335 : 1240}px;
+    ${!isMobile &&
+    `
+    max-width: 1240px;
+    min-height: 205px;`}
     padding: ${theme.spacing(isMobile ? 2.5 : 3)}px ${theme.spacing(isMobile ? 2.5 : 5)}px;
     padding-right: ${isMobile && 47}px;
     box-shadow: 1px 2px 44px 0 rgba(139, 139, 139, 0.26);

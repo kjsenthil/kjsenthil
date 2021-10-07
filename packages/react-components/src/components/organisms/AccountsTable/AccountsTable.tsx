@@ -97,7 +97,7 @@ const AccountsTable = ({ headerRow, dataRow, period, footerRow }: AccountsTableP
       <TableBody>
         {dataRow &&
           dataRow.map((row) => (
-            <AccountsTableRow key={row.id}>
+            <AccountsTableRow key={row.accountName}>
               <AccountsTableCell style={{ textAlign: 'left' }}>
                 <Typography variant="sh3">{row.accountName}</Typography>
               </AccountsTableCell>
