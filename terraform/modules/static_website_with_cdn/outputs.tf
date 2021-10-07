@@ -1,5 +1,5 @@
 output "web_host" {
-  value       = azurerm_storage_account.this.primary_web_host
+  value       = module.cdn.host_name
   description = "Hostname for the CDN which fronts the storage account"
 }
 
