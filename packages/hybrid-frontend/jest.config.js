@@ -29,7 +29,7 @@ module.exports = {
     'jest-extended',
     '<rootDir>/test-utils/matchMedia.js',
   ],
-  testPathIgnorePatterns: ['node_modules', '\\.cache', '<rootDir>.*/public', 'cypress'],
+  testPathIgnorePatterns: ['node_modules', '\\.cache', '<rootDir>.*/public'],
   testURL: 'http://localhost',
   transform: {
     '^.+\\.[jt]sx?$': '<rootDir>/test-utils/jest-preprocess.js',

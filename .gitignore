@@ -88,10 +88,6 @@ public
 # Mac files
 .DS_Store
 
-# cypress videos directories
-/cypress/videos/
-/cypress/screenshots/
-
 # Storybook build
 storybook-static
 

@@ -24,7 +24,6 @@
     "all:test:coverage": "yarn workspaces foreach -ptv run test:coverage",
     "all:lint": "yarn workspaces foreach -ptv run lint",
     "all:typecheck": "yarn workspaces foreach -ptv run typecheck",
-    "all:test:e2e": "yarn workspaces foreach -ptv run test:e2e",
     "all:fa:install": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run install-only",
     "all:fa:build": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build",
     "all:fa:build:zip": "yarn workspaces foreach -ptv --include '@tsw/function-app*' run build:zip",

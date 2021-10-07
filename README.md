@@ -76,7 +76,6 @@ Once again, some commonly used `foreach` scripts have been provided as shortcuts
 | Build        | Runs build commands                                 | `yarn all:build`        |
 | Build        | Creates zip packages for workspaces, where required | `yarn all:build:zip`    |
 | Test         | Runs test commands                                  | `yarn all:test`         |
-| Test         | Runs E2E test commands                              | `yarn all:test:e2e`     |
 | Function App | Builds all function apps                            | `yarn all:fa:build`     |
 | Function App | Builds and zips all function apps                   | `yarn all:fa:build:zip` |
 | Function App | Copies function app zips to common folder           | `yarn all:fa:copy-zip`  |
@@ -108,10 +107,6 @@ Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
 Runs tests for all workspaces.
 
 For front-end, this will launch the unit test runner - see [testing React components with Gatsby](https://www.gatsbyjs.com/docs/how-to/testing/testing-react-components/) for more information.
-
-#### `yarn all:test:e2e`
-
-Launches the [Cypress](https://www.cypress.io/) test runner for end-to-end UI tests.
 
 #### `yarn all:format`
 
