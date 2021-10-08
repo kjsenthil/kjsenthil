@@ -34,6 +34,13 @@ describe('setTokensInCookies', () => {
         refreshToken: '14dbdb50-6eab-45eb-a1c9-a72f67f45468',
         sessionId: '219076b3-bc7d-4934-a3e8-66e90894e1e8',
       },
+      {
+        application: 'OnlineApi',
+        accessToken:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ8.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiIyMTkwNzZiMy1iYzdkLTQ5MzQtYTNlOC02NmU5MDg5NGUxZTgiLCJjb250YWN0IjoiMjgzNzMyIiwiYWNjb3VudHMiOiIyMDQ5OSwyMDUwMCwyMDg3MSIsImxpbmthY2NvdW50cyI6IisImF1ZCI6Im9pc2FwaS5iZXN0aW52ZXN0LmNvLnVrIiwiZXhwIjoxNjIwMTMzNTE2LCJpc3MiOiJpZGVudGl0eWFwaS5iZXN0aW52ZXN0LmNvLnVrIn0.khk9W85PR3E83MQeC9Vpqz4LHEcDmwm_DLtLpKKv6oE',
+        refreshToken: '14dbdb50-6eab-45eb-a1c9-a72f67f45468',
+        sessionId: '219076b3-bc7d-4934-a3e8-66e90894e1e8',
+      },
     ];
     setTokensInCookies(tokens, { cookieDomain: domain });
 
@@ -53,6 +60,14 @@ describe('setTokensInCookies', () => {
         domain,
       }
     );
-    expect(mockSetCookie).toBeCalledTimes(2);
+    expect(mockSetCookie).toHaveBeenCalledWith(
+      ApiAppName.online,
+      JSON.stringify({ accessToken: tokens[2].accessToken, refreshToken: tokens[2].refreshToken }),
+      {
+        expires: jasmine.any(Object),
+        domain,
+      }
+    );
+    expect(mockSetCookie).toBeCalledTimes(3);
   });
 });

@@ -30,6 +30,7 @@ const LogoutPage = (_: LogoutPageProps) => {
 
     Cookies.remove(ApiAppName.myAccounts, cookieOptions);
     Cookies.remove(ApiAppName.ois, cookieOptions);
+    Cookies.remove(ApiAppName.online, cookieOptions);
     dispatch(logout());
   }, []);
 

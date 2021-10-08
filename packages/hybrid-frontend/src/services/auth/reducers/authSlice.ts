@@ -34,11 +34,15 @@ const authSlice = createSlice({
     },
     setAccessTokensFromCookie: (
       state,
-      action: { type: string; payload: { myAccounts: TokenItem; ois: TokenItem } }
+      action: {
+        type: string;
+        payload: { myAccounts: TokenItem; ois: TokenItem; online: TokenItem };
+      }
     ) => {
       state.accessTokens = [
         { ...action.payload.myAccounts, application: ApiAppName.myAccounts },
         { ...action.payload.ois, application: ApiAppName.ois },
+        { ...action.payload.online, application: ApiAppName.online },
       ];
       const jwtDecoded = jwt_decode(action.payload.myAccounts.accessToken) as JwtPayload;
       state.contactId = jwtDecoded.contact;

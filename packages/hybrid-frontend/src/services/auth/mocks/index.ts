@@ -16,4 +16,11 @@ export const tokens: TokenItem[] = [
     refreshToken: '14dbdb50-6eab-45eb-a1c9-a72f67f45468',
     sessionId: '219076b3-bc7d-4934-a3e8-66e90894e1e8',
   },
+  {
+    application: 'OnlineApi',
+    accessToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZSIsInJvbGUiOiJyb2xlIiwic3ViIjoic3ViamVjdCIsImFwaV9jbGllbnRfaWQiOiJteWFjY291bnRzLXNwYSIsInNlc3Npb24iOiJlMjljNjU2Ni1kYTgxLTQ3MWQtYTUyMy0wMWQ2NjgzMmI5MGIiLCJjb250YWN0IjoiMjI1Nzg4OSIsImFjY291bnRzIjoiMTM2OTMwLDE0MTM3MCIsImxpbmthY2NvdW50cyI6IjEzNzMwNCwxMzczMDcsMTU3ODQzLDE1ODQxMiwxNTkyNjYiLCJ4cGxhbl9pZCI6IjQ1NTg3MjYiLCJhdWQiOiJvbmxpbmVhcGkuYmVzdGludmVzdC5jby51ayIsImV4cCI6MTYzMjkyMTI0MywiaXNzIjoiaWRlbnRpdHlhcGkuYmVzdGludmVzdC5jby51ayJ9.Y7niplxzPdEVyym92ajcwfiLcyqcia8Utu9OZ4gaHls',
+    refreshToken: '14dbdb50-6eab-45eb-a1c9-a72f67f45468',
+    sessionId: '219076b3-bc7d-4934-a3e8-66e90894e1e8',
+  },
 ];

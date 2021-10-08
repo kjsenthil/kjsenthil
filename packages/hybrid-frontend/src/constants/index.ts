@@ -11,6 +11,7 @@ export const UnauthorizedText = '401 Unauthorized';
 export enum ApiAppName {
   myAccounts = 'MyAccountsApi',
   ois = 'OisApi',
+  online = 'OnlineApi',
 }
 
 export enum DrawdownType {
