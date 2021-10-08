@@ -19,7 +19,7 @@ export interface LabelProps {
 
 const Label = ({ text, color, colorShade = 'main' }: LabelProps) => (
   <StyledLabel bgColor={color} bgColorShade={colorShade}>
-    <Typography variant="sh4" color="white">
+    <Typography variant="sh5" color="white">
       {text}
     </Typography>
   </StyledLabel>

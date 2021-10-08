@@ -90,7 +90,7 @@ export const StyledFormControl = styled(
         }
 
         &.Mui-focused, &.MuiInputLabel-shrink {
-          transform: translate(-${pxToRem(hasLeadingIcon ? 40 : 8)}, -${pxToRem(14)}) scale(0.75);
+          transform: translate(-${pxToRem(hasLeadingIcon ? 40 : 8)}, -${pxToRem(14)});
           color: ${hasError ? palette.error.main : palette.primary.main};
         }
 

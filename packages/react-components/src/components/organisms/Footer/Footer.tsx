@@ -6,8 +6,8 @@ const Footer = () => (
     <Grid item xs={12}>
       <Grid container alignContent="center">
         <Typography variant="sh2" color="primary" colorShade="dark1" display="inline" gutterBottom>
-          The value of your investment can go down as well as up, and you can get back less than
-          your originally invested.
+          The value of your investment can go down as well as up, and you can get back less than you
+          originally invested.
         </Typography>
       </Grid>
     </Grid>
@@ -28,42 +28,42 @@ const Footer = () => (
       <Grid container spacing={2} justifyContent="flex-start">
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" gutterBottom>
+            <Typography variant="sh5" color="primary" gutterBottom>
               Accessibility
             </Typography>
           </Link>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" gutterBottom>
+            <Typography variant="sh5" color="primary" gutterBottom>
               Cookie Policy
             </Typography>
           </Link>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" noWrap gutterBottom>
+            <Typography variant="sh5" color="primary" noWrap gutterBottom>
               Website conditions
             </Typography>
           </Link>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" gutterBottom>
+            <Typography variant="sh5" color="primary" gutterBottom>
               Privacy notice
             </Typography>
           </Link>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" gutterBottom>
+            <Typography variant="sh5" color="primary" gutterBottom>
               Risk Warnings
             </Typography>
           </Link>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Link href="#">
-            <Typography variant="sh4" color="primary" noWrap gutterBottom>
+            <Typography variant="sh5" color="primary" noWrap gutterBottom>
               Keeping your account secure
             </Typography>
           </Link>

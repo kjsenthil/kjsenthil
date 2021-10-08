@@ -36,7 +36,7 @@ interface TargetLegendProps {
 
 const TargetLegend: FunctionComponent<TargetLegendProps> = ({ title, value, valueFormatter }) => (
   <TargetLegendContainer>
-    <Typography variant="sh4" color="primary" colorShade="dark2" spaceNoWrap>
+    <Typography variant="sh5" color="primary" colorShade="dark2" spaceNoWrap>
       {title.toUpperCase()}
     </Typography>
     <Typography variant="sh3" color="primary" colorShade="dark2" spaceNoWrap>

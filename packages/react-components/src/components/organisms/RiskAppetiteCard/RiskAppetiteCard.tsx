@@ -71,11 +71,7 @@ const RiskAppetiteCard = ({
         showMarks={showMarks}
       />
 
-      <Modal
-        open={isModalOpen}
-        onClose={modalCloseHandler}
-        modalTitle="How was this projection calculated?"
-      >
+      <Modal open={isModalOpen} onClose={modalCloseHandler} modalTitle="About this projection">
         <ProjectionCalculateModalContent />
       </Modal>
     </RiskAppetiteStyledCard>

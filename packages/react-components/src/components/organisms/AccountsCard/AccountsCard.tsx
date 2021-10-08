@@ -48,7 +48,7 @@ const renderAccountItem = (title, value) => (
   <AccountsCardTableCell container item xs={6}>
     <Grid container item xs justifyContent="space-between" direction="column">
       <Grid item>
-        <Typography variant="sh4" color="primary" colorShade="dark2">
+        <Typography variant="sh5" color="primary" colorShade="dark2">
           {title}
         </Typography>
       </Grid>
@@ -63,11 +63,11 @@ const renderAccountItem = (title, value) => (
 
 const renderLifetimeReturn = (title, value, percentage) => (
   <AccountsCardTableCell item xs={6}>
-    <Typography variant="sh4" color="primary" colorShade="dark2">
+    <Typography variant="sh5" color="primary" colorShade="dark2">
       {title}
     </Typography>
     <AccountReturn>
-      <Typography variant="sh4" color="primary" colorShade="dark2">
+      <Typography variant="sh5" color="primary" colorShade="dark2">
         {formatCurrency(value, CurrencyPresentationVariant.ACTUAL_TOPLINE)}
       </Typography>
 

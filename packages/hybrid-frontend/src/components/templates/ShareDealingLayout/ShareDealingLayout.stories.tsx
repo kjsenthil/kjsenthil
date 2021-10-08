@@ -29,7 +29,7 @@ const receiptCardProps = {
 
 const cardHeader = (
   <>
-    <Typography variant="sh4" color="grey" colorShade="dark1">
+    <Typography variant="sh5" color="grey" colorShade="dark1">
       STOCKS & SHARES ISA
     </Typography>
     <Typography variant="h3">Beowul mining</Typography>

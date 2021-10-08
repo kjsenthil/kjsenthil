@@ -24,7 +24,7 @@ describe('AccountsTable', () => {
       '£38,382',
       'LIFETIME RETURN',
       '£345',
-      "LAST 5 YEAR'S RETURN",
+      "LAST 5 YEARS' RETURN",
       '+£6,837',
       mockInvestmentAccountsTableData[0].accountName ?? '',
     ];

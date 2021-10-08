@@ -8,7 +8,7 @@ export interface IconProps extends SvgIconProps {
 }
 
 const Icon = ({ name, color, ...props }: IconProps) => (
-  <SvgIcon {...props} color={color as SvgIconProps['color']}>
+  <SvgIcon {...props} color={color as SvgIconProps['color']} style={{ pointerEvents: 'none' }}>
     <title>{name}</title>
     <path d={icons[name]} fillRule="evenodd" />
   </SvgIcon>

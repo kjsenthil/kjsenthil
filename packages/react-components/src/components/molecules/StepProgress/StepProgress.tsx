@@ -38,13 +38,13 @@ const StepProgress = ({ currentStep, progress, stepNames }: StepProgressProps) =
         </Grid>
 
         <Grid item>
-          <Typography variant="sh4" component="span">
+          <Typography variant="sh5" component="span">
             &middot;
           </Typography>
         </Grid>
 
         <Grid item>
-          <Typography variant="sh4" component="span">
+          <Typography variant="sh5" component="span">
             {currentStepName}
           </Typography>
         </Grid>

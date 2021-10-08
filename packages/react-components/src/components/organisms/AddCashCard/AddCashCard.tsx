@@ -36,7 +36,7 @@ const AddCashCard = ({ selectedAccountName = '', openModal }: AddCashCardProps) 
             Add Cash
           </Button>
           <p>or</p>
-          <StyledLink special variant="sh4">
+          <StyledLink special variant="sh5">
             Transfer an account
           </StyledLink>
         </Grid>

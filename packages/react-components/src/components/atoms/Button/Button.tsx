@@ -134,7 +134,7 @@ const BaseButton = styled(ButtonNoElevation)`
     }
 
     return css`
-      ${typographyCss({ variant: 'sh4', theme })};
+      ${typographyCss({ variant: 'sh5', theme })};
       ${colorStyles};
 
       &.Mui-disabled {

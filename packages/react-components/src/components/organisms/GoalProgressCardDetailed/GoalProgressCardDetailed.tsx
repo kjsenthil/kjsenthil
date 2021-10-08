@@ -52,7 +52,7 @@ export interface GoalProgressCardDetailedProps {
 
 const GoalLink: FunctionComponent<LinkProps> = ({ href, children }) => (
   <Link special href={href}>
-    <Typography variant="sh4" component="span" color="primary" colorShade="light1">
+    <Typography variant="sh5" component="span" color="primary" colorShade="light1">
       {children}
     </Typography>
   </Link>
@@ -64,13 +64,13 @@ const DELETE_GOAL_PATH = '/my-account/goals/life-plan-management';
 const getTooltip = (goalState: GoalState, ageAtStartDate?: number, ageAtEndDate?: number) => {
   switch (goalState) {
     case GoalState.NOT_THERE_YET: {
-      return 'You haven’t yet reached the starting date of your goal. When you get to your chosen date, we’ll assume you start taking money out as planned.';
+      return 'You haven’t reached the starting date of your goal. When you get to your chosen date, we’ll show you your projection as if you start taking money out as planned.';
     }
     case GoalState.ONGOING: {
-      return `You reached the start date you set for your goal when you turned ${ageAtStartDate}. We assume you’re taking your money out as planned. If not, you may like to edit your goal.`;
+      return `You reached the start date you set for your goal when you turned ${ageAtStartDate}. If you’re not taking money out as planned, you may like to edit your goal.`;
     }
     case GoalState.FINISHED: {
-      return `You reached the end date of your goal when you turned ${ageAtEndDate}. We assume you took your money out as planned. If not, you may like to edit your goal. Or you can delete your goal.`;
+      return `You reached the end date of your goal when you turned ${ageAtEndDate}. If you didn’t take your money out as planned, you may like to edit your goal, or you can delete it.`;
     }
     default:
       return '';
@@ -239,7 +239,7 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
         <HeaderRow>
           <Typography variant="h5">{name}</Typography>
           {style === GoalProgressCardStyle.simple && accounts ? (
-            <Typography variant="sh4" color="secondary">
+            <Typography variant="sh5" color="secondary">
               {renderAccounts(accounts)}
             </Typography>
           ) : null}
@@ -277,10 +277,10 @@ export const GoalProgressCardDetailed: FunctionComponent<GoalProgressCardDetaile
         </Description>
         {isMobile && style === GoalProgressCardStyle.detailed && (
           <Target>
-            <Typography variant="sh4" color="grey" colorShade="dark1">
+            <Typography variant="sh5" color="grey" colorShade="dark1">
               Target
             </Typography>
-            <Typography variant="sh4" color="primary" colorShade="dark2">
+            <Typography variant="sh5" color="primary" colorShade="dark2">
               {targetAmountFormatted}
             </Typography>
           </Target>

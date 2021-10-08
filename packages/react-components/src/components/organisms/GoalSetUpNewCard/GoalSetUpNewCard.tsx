@@ -16,7 +16,7 @@ export default function GoalSetUpNewCard({ imgProps }: GoalSetUpNewCardProps) {
           <Typography align="center" variant="b2" color="primary" colorShade="dark2">
             Save for what&#39;s important to you
           </Typography>
-          <Typography align="center" variant="sh4">
+          <Typography align="center" variant="sh5">
             Set up a new goal
           </Typography>
         </CardTextContent>

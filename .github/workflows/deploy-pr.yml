@@ -679,7 +679,7 @@ jobs:
           API_ISA_ACCOUNT_ID: ${{ secrets.DH_TEST_ISA_ACCOUNT_ID }}
           API_GIA_ACCOUNT_ID: ${{ secrets.DH_TEST_GIA_ACCOUNT_ID }}
           API_SIPP_ACCOUNT_ID: ${{ secrets.DH_TEST_SIPP_ACCOUNT_ID }}
-          API_ACCOUNT_IDs: ${{ secrets.DH_TEST_ACCOUNT_IDs }}
+          API_ACCOUNT_IDS: ${{ secrets.DH_TEST_ACCOUNT_IDS }}
 
   deploy_gatsby:
     name: "Build & Deploy Gatsby"

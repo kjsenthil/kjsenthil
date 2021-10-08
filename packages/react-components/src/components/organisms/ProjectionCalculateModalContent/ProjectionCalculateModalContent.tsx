@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '../../atoms';
+import { Typography, Spacer } from '../../atoms';
 
 const ProjectionCalculateModal = () => (
   <>
@@ -21,8 +21,9 @@ const ProjectionCalculateModal = () => (
       </ul>
     </Typography>
     <Typography variant="b2" color="primary" colorShade="dark2" gutterBottom>
-      We’ve also taken into account any fees, charges and fund costs that you need to pay
+      We’ve also taken into account any fees, charges and fund costs that you need to pay.
     </Typography>
+    <Spacer y={2} />
     <Typography variant="b2" color="primary" colorShade="dark2" gutterBottom>
       <b>What is the projected value?</b>
     </Typography>
@@ -35,6 +36,7 @@ const ProjectionCalculateModal = () => (
       There’s a 10% chance your returns could be less than the lower line on the chart. But there’s
       also a 10% chance your returns could be higher than the top line of the chart.
     </Typography>
+    <Spacer y={2} />
     <Typography variant="b2" color="primary" colorShade="dark2" gutterBottom>
       <b>What about inflation and taxes?</b>
     </Typography>

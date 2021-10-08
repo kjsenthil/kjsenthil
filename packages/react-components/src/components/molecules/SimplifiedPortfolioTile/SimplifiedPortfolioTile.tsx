@@ -20,12 +20,12 @@ const SimplifiedPortfolioTile: FunctionComponent<SimplifiedPortfolioTileProps> =
 }) => (
   <SimplifiedPortfolioTileContainer>
     <PortfolioName variant="sh1">{portfolioName}</PortfolioName>
-    <Accounts variant="sh4" color="secondary">
+    <Accounts variant="sh5" color="secondary">
       {abbreviatedAccountTypes.join(' + ')}
     </Accounts>
     <Total variant="h2">{total}</Total>
     <Link special>
-      <Typography variant="sh4" color="primary" colorShade="light1">
+      <Typography variant="sh5" color="primary" colorShade="light1">
         Set a goal
       </Typography>
     </Link>

@@ -145,7 +145,7 @@ const PortfolioModal = ({
           {type === 'edit' && (
             <>
               <Box display="flex" alignItems="flex-start">
-                <Typography variant="sh4" color="grey" colorShade="dark1">
+                <Typography variant="sh5" color="grey" colorShade="dark1">
                   SELECTED ACCOUNTS
                 </Typography>
               </Box>
@@ -155,7 +155,7 @@ const PortfolioModal = ({
             </>
           )}
           <Box display="flex" alignItems="flex-start">
-            <Typography variant="sh4" color="grey" colorShade="dark1">
+            <Typography variant="sh5" color="grey" colorShade="dark1">
               ACCOUNTS
             </Typography>
           </Box>

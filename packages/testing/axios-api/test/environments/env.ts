@@ -7,7 +7,7 @@ const {
   API_ISA_ACCOUNT_ID,
   API_GIA_ACCOUNT_ID,
   API_SIPP_ACCOUNT_ID,
-  API_ACCOUNT_IDs,
+  API_ACCOUNT_IDS,
 } = process.env;
 
 export const loginCredentials = {
@@ -25,7 +25,7 @@ export const accountIds = {
   isa_account_id: API_ISA_ACCOUNT_ID || new Error('isa_account_id not found'),
   gia_account_id: API_GIA_ACCOUNT_ID || new Error('gia_account_id not found'),
   sipp_account_id: API_SIPP_ACCOUNT_ID || new Error('sipp_account_id not found'),
-  all_account_ids: API_ACCOUNT_IDs || new Error('account_ids not found'),
+  all_account_ids: API_ACCOUNT_IDS || new Error('account_ids not found'),
 };
 
 export const apiBaseUrl = `${process.env.API_BASE_URL}`;

@@ -15,7 +15,6 @@ const StyledTooltip = styled(({ className, ...props }) => (
       background-color: ${palette.background.default};
       color: ${palette.primary.dark};
       font-size: ${pxToRem(12)};
-      font-weight: bold;
       border: 1px solid ${palette.grey.light1};
       border-radius: 4px;
       padding: 5px 8px;

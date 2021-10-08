@@ -15,8 +15,6 @@ describe('FundingStepCardOne', () => {
       />
     );
 
-    expect(
-      screen.getByText('Which accounts would you like to contribute to your retirement pot?')
-    ).toBeVisible();
+    expect(screen.getByText('The following accounts will fund your retirement pot')).toBeVisible();
   });
 });

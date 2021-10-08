@@ -16,7 +16,7 @@ const TagBox = ({ variant, children, formatter, shouldAnimate = false }: TagBoxP
     case 'percentage':
       return (
         <PercentageTag color={Number(children) > 0 ? 'success' : 'gold'}>
-          <Typography variant="sh4" color="white">
+          <Typography variant="sh5" color="white">
             {shouldAnimate ? (
               <Counter valueFormatter={formatter} value={Number(children)} />
             ) : (
@@ -28,13 +28,13 @@ const TagBox = ({ variant, children, formatter, shouldAnimate = false }: TagBoxP
     case 'label':
       return (
         <LabelTag>
-          <Typography variant="sh4">{value}</Typography>
+          <Typography variant="sh5">{value}</Typography>
         </LabelTag>
       );
     case 'account':
       return (
         <AccountTag>
-          <Typography variant="sh4" color="white">
+          <Typography variant="sh5" color="white">
             {value}
           </Typography>
         </AccountTag>
@@ -42,7 +42,7 @@ const TagBox = ({ variant, children, formatter, shouldAnimate = false }: TagBoxP
     case 'badge':
       return (
         <BadgeTag>
-          <Typography variant="sh4" color="tertiary">
+          <Typography variant="sh5" color="tertiary">
             {value}
           </Typography>
         </BadgeTag>

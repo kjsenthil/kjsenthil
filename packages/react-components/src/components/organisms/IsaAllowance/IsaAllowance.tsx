@@ -25,7 +25,7 @@ const IsaAllowance = ({ title, totalAllowance, contributions }: IsaAllowanceProp
   return (
     <Grid item xs={isMobile ? 12 : 12}>
       <IsaAllownceContainer>
-        <Typography variant="sh4" color="grey" colorShade="dark1" spaceNoWrap>
+        <Typography variant="sh5" color="grey" colorShade="dark1" spaceNoWrap>
           {title}
         </Typography>
         <Spacer y={1} />

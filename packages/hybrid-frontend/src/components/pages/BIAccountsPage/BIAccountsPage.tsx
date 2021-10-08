@@ -109,7 +109,10 @@ const BIAccountsPage = () => {
 
   const humanizedDataPeriod = humanizePeriodLabel(
     performanceDataPeriod,
-    (humanizedPeriod) => `${humanizedPeriod}'s`,
+    (humanizedPeriod) =>
+      humanizedPeriod === '1 month' || humanizedPeriod === '1 year'
+        ? `${humanizedPeriod.substring(2)}'s`
+        : `${humanizedPeriod}s'`,
     false,
     ''
   );
@@ -303,7 +306,7 @@ const BIAccountsPage = () => {
 
       <StyledPerformanceChartCard isMobile={isMobile}>
         <Grid container justifyContent="space-between">
-          <Typography variant="sh4" color="primary" colorShade="dark2">
+          <Typography variant="sh5" color="primary" colorShade="dark2">
             LIFETIME RETURN
           </Typography>
 

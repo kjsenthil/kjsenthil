@@ -2,7 +2,7 @@ import { AccountsTableHeader } from '../../../../constants';
 import { AccountsFooterCell, AccountsHeaderCell } from '../AccountsTable';
 
 export const mockInvestmentAccountsTableHeader: AccountsHeaderCell[] = AccountsTableHeader(
-  "5 year's"
+  "5 years'"
 );
 
 const periodReturn = {

@@ -43,7 +43,7 @@ const GoalStartModal = ({ onClose, ...props }: GoalStartModalProps) => {
                 accounts, contributions and current investments
               </Typography>
               <Typography variant="b3" color="primary" colorShade="dark2">
-                - Simulate the impact of putting more moeny in or changing how you invest
+                - Simulate the impact of putting more money in or changing how you invest
               </Typography>
               <Typography variant="b3" color="primary" colorShade="dark2">
                 - Make it happen if you like what you see

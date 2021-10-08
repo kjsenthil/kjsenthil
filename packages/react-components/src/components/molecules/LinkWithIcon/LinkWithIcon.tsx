@@ -8,7 +8,7 @@ export interface LinkWithIconProps extends LinkProps {
 }
 
 const LinkWithIcon = ({ children, iconName, ...linkProps }: LinkWithIconProps) => (
-  <FlexLink {...linkProps} variant="sh4">
+  <FlexLink {...linkProps} variant="sh5">
     <IconWrapper>
       <Icon name={iconName} fontSize="inherit" />
     </IconWrapper>

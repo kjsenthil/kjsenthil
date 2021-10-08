@@ -13,6 +13,7 @@ import { RootState } from '../../store';
 import useStateIsAvailable from '../useStateIsAvailable';
 import useStateIsLoading from '../useStateIsLoading';
 import filterAccounts from './filterAccounts';
+import { AccountNames } from '../../config/accounts';
 
 export interface InvestmentAccounts {
   accountsSummary: BasicInvestmentSummary;
@@ -89,11 +90,19 @@ const useInvestmentAccounts = (
     totalGainLossPercentage: performanceData?.performance.percentage || 0,
   };
 
-  const filteredAccounts = filterAccounts(selectedFilter, investmentAccounts);
+  const expandedNameInvestmentAccounts = investmentAccounts?.map((account) => {
+    const convertedName = AccountNames[account.accountName] ?? account.accountName;
+    return {
+      ...account,
+      accountName: convertedName,
+    };
+  });
 
-  const hasLinkedAccounts =
-    (investmentAccounts?.filter((account) => account.accountType === 'linked-accounts')?.length ??
-      0) > 0;
+  const filteredAccounts = filterAccounts(selectedFilter, expandedNameInvestmentAccounts);
+
+  const hasLinkedAccounts: boolean = !!expandedNameInvestmentAccounts?.some(
+    (account) => account.accountType === 'linked-accounts'
+  );
 
   useEffect(() => {
     if (filteredAccounts) {

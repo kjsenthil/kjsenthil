@@ -173,7 +173,7 @@ describe('Check common elements from header, footer area', () => {
       const infoText = await (await infoLabel()).getText()
       console.info('H6 text is displayed:', infoText)
       expect(infoText).to.equal(
-        'The value of your investment can go down as well as up, and you can get back less than your originally invested.',
+        'The value of your investment can go down as well as up, and you can get back less than you originally invested.',
         'No match found'
       )
 

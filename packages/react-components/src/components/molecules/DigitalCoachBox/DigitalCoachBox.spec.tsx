@@ -17,7 +17,7 @@ describe('DigitalCoachBox', () => {
     renderWithTheme(<DigitalCoachBox {...testProps} />);
 
     expect(screen.getByText(testProps.title)).toBeVisible();
-    expect(screen.getByText(testProps.description)).toBeVisible();
+    expect(screen.getByText(testProps.description as string)).toBeVisible();
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe('DigitalCoachBox', () => {
     renderWithTheme(<DigitalCoachBox {...testPropsWithTooltip} />);
 
     expect(screen.getByText(testPropsWithTooltip.title)).toBeVisible();
-    expect(screen.getByText(testPropsWithTooltip.description)).toBeVisible();
+    expect(screen.getByText(testPropsWithTooltip.description as string)).toBeVisible();
     expect(screen.queryByRole('tooltip')).toBeInTheDocument();
   });
 });

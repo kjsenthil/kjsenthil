@@ -35,7 +35,7 @@ export interface LegendProps {
 
 const LegendValue = ({
   value,
-  valueSizeVariant = 'sh4',
+  valueSizeVariant = 'sh5',
   valueFormatter,
   percentageFormatter,
   percentageChange,
@@ -122,7 +122,7 @@ const Legend = ({
   <LegendContainer>
     {chartIndicatorProps && <ChartIndicator {...chartIndicatorProps} />}
     <div>
-      <Typography variant="sh4" color="grey" colorShade="dark1" spaceNoWrap={spaceNoWrap}>
+      <Typography variant="sh5" color="grey" colorShade="dark1" spaceNoWrap={spaceNoWrap}>
         {title.toUpperCase()}
         {tooltip && <LegendTooltip tooltip={tooltip} />}
       </Typography>

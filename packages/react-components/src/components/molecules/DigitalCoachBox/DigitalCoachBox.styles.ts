@@ -3,7 +3,7 @@ import { Icon, Typography } from '../../atoms';
 
 export const DigitalCoachBoxContainer = styled.div`
   ${({ theme }) => css`
-    border: 1px dashed ${theme.palette.secondary.light};
+    border: 2px dashed ${theme.palette.primary.light2};
     border-radius: 0 ${theme.spacing(2)}px ${theme.spacing(2)}px;
     padding: ${theme.spacing(1.5)}px;
   `}
@@ -11,7 +11,7 @@ export const DigitalCoachBoxContainer = styled.div`
 
 export const DigitalCoachIcon = styled(Icon)`
   ${({ theme }) => css`
-    color: ${theme.palette.secondary.light1};
+    color: ${theme.palette.primary.main};
     height: ${theme.spacing(2)}px;
     margin-right: ${theme.spacing(0.5)}px;
     width: ${theme.spacing(2)}px;

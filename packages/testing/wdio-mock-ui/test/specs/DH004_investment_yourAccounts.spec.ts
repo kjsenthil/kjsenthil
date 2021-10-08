@@ -124,7 +124,7 @@ describe('Investment page scenarios', () => {
       await checkTextEquals(myTotaValueTableHeader, `TOTAL VALUE`)
       await checkTextEquals(myLifeTimeHeader, `LIFETIME RETURN`)
       await checkTextEquals(myAnnulisedTableHeader, `ANNUALISED RETURN`)
-      await checkTextEquals(myLast5yReturnTableHeader, `LAST 5 YEAR'S RETURN`)
+      await checkTextEquals(myLast5yReturnTableHeader, `LAST 5 YEARS' RETURN`)
       await checkTitle(InvestmentsToolTip, `The total current value of your investments.`)
       await checkTitle(TotalValueTooltip, `The total value of your investments and cash.`)
       await checkTitle(
@@ -137,7 +137,7 @@ describe('Investment page scenarios', () => {
       )
       await checkTitle(
         Last5yReturnTooltip,
-        `The profit or loss you in the last 5 year's, minus any fees.`
+        `This shows how well your investments have performed in the last 5 years'. It includes returns from both growth and income, minus any fees.`
       )
     })
 

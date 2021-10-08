@@ -20,7 +20,7 @@ export default function PerformanceProjectionsChartGoalIndicator({
       <Typography
         noWrap
         spaceNoWrap
-        variant="sh4"
+        variant="sh5"
         color="primary"
         colorShade="dark2"
         align="center"

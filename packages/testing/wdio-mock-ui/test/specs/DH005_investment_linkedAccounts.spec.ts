@@ -109,7 +109,7 @@ describe('Investment page scenarios', () => {
       await checkTextEquals(lTotaValueTableHeader, `TOTAL VALUE`)
       await checkTextEquals(lLifeTimeReturnTableHeader, `LIFETIME RETURN`)
       await checkTextEquals(lAnnulisedTableHeader, `ANNUALISED RETURN`)
-      await checkTextEquals(lLast5yReturnTableHeader, `LAST 5 YEAR'S RETURN`)
+      await checkTextEquals(lLast5yReturnTableHeader, `LAST 5 YEARS' RETURN`)
     })
 
     it('should load data for account 1', async () => {

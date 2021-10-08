@@ -137,10 +137,10 @@ describe('Investment page scenarios', () => {
 
     it('should load last <chartPeriod> return', async () => {
       // assert
-      await checkTextEquals(lastPeriodReturnTitle, "LAST 5 YEAR'S RETURN")
+      await checkTextEquals(lastPeriodReturnTitle, "LAST 5 YEARS' RETURN")
       await checkTitle(
         lastPeriodReturnTooltip,
-        "The profit or loss you in the last 5 year's, minus any fees."
+        "This shows how well your investments have performed in the last 5 years'. It includes returns from both growth and income, minus any fees."
       )
       await checkTextContains(lastPeriodReturnValue, '£')
       await checkTextContains(lastPeriodReturnRating, '%')

@@ -52,7 +52,9 @@ describe('Simulate projection summary negative scenarios', () => {
       });
       // assert
       expect(result).to.equal(400);
-    } catch (e: unknown) {}
+    } catch (e) {
+      // Filling the empty block statement - to update
+    }
   });
 
   it('should timehorizon 0 should not be accepted', async () => {
@@ -95,7 +97,9 @@ describe('Simulate projection summary negative scenarios', () => {
       });
       // assert
       expect(result).to.equal(400);
-    } catch (e: unknown) {}
+    } catch (e) {
+      // Filling the empty block statement - to update
+    }
   });
 
   it('should lumpsum Date after the end of the retirement date should throw the error  ', async () => {
@@ -138,7 +142,9 @@ describe('Simulate projection summary negative scenarios', () => {
       });
       // assert
       expect(result).to.equal(400);
-    } catch (e: unknown) {}
+    } catch (e) {
+      // Filling the empty block statement  - to update
+    }
   });
 
   it('should retirement End Date before the retirement start date should throw an error  ', async () => {
@@ -181,7 +187,9 @@ describe('Simulate projection summary negative scenarios', () => {
       });
       // assert
       expect(result).to.equal(400);
-    } catch (e: unknown) {}
+    } catch (e) {
+      // Filling the empty block statement - to update
+    }
   });
 
   it('should Retirement start Date in the past should throw an error  ', async () => {
@@ -224,6 +232,8 @@ describe('Simulate projection summary negative scenarios', () => {
       });
       // assert
       expect(result).to.equal(400);
-    } catch (e: unknown) {}
+    } catch (e) {
+      // Filling the empty block statement - to update
+    }
   });
 });

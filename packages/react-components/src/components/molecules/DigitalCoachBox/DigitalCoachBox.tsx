@@ -9,23 +9,23 @@ import {
 } from './DigitalCoachBox.styles';
 
 export interface DigitalCoachBoxProps {
-  description: string;
+  description: string | React.ReactElement;
   title: string;
   tooltip?: string;
 }
 
 const DigitalCoachBox = ({ description, title, tooltip }: DigitalCoachBoxProps) => {
   const descriptionTypographyProps: TypographyProps = {
-    color: 'grey',
-    colorShade: 'dark1',
-    variant: 'b3',
+    color: 'primary',
+    colorShade: 'dark2',
+    variant: 'b5',
   };
 
   return (
     <DigitalCoachBoxContainer>
       <TitleContainer>
         <DigitalCoachIcon name="dogBark" />
-        <Title color="secondary" colorShade="light1" variant="sh4">
+        <Title color="primary" variant="sh4">
           {title}
         </Title>
       </TitleContainer>

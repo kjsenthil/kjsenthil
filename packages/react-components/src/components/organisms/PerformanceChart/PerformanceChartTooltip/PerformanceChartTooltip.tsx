@@ -31,7 +31,7 @@ export default function PerformanceChartTooltip({ date }: PerformanceChartToolti
 
   return (
     <TooltipContainer>
-      <Typography variant="sh4" color="primary" colorShade="dark2">
+      <Typography variant="sh5" color="primary" colorShade="dark2">
         {dateStr.toUpperCase()}
       </Typography>
     </TooltipContainer>

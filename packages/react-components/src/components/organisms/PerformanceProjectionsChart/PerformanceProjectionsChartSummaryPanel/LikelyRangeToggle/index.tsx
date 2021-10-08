@@ -21,7 +21,7 @@ export default function LikelyRangeToggle({
 
   return (
     <LikelyRangeToggleContainer isMobile={isMobile}>
-      <Typography variant="sh4" color="grey" colorShade="dark1">
+      <Typography variant="sh5" color="grey" colorShade="dark1">
         LIKELY RANGE
       </Typography>
 

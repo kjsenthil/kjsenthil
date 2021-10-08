@@ -118,7 +118,7 @@ const GoalProgressCardV1 = ({
           )}
         />
         <Spacer y={0.5} />
-        <Typography color="secondary" variant="sh4" align="right">
+        <Typography color="secondary" variant="sh5" align="right">
           {investmentAccounts.join(' + ')}
         </Typography>
       </CardFooter>

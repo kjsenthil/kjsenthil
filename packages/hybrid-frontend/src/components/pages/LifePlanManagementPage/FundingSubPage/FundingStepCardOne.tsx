@@ -10,7 +10,7 @@ const FundingStepCardOne = React.forwardRef(
     <StepCard
       ref={ref}
       step={1}
-      title="Which accounts would you like to contribute to your retirement pot?"
+      title="The following accounts will fund your retirement pot"
       childrenFullWidth
     >
       <AccountsTable {...accountsTableProps} />

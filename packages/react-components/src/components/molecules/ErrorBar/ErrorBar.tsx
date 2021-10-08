@@ -7,7 +7,7 @@ export interface ErrorBarProps {
 
 const ErrorBar = ({ errorMessage }) => (
   <Box sx={{ bgcolor: 'error.main' }} py={2}>
-    <Typography variant="sh4" color="white" align="center">
+    <Typography variant="sh5" color="white" align="center">
       {errorMessage}
     </Typography>
   </Box>
