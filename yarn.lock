@@ -3778,6 +3778,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@soywod/pin-field@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@soywod/pin-field@npm:0.2.1"
+  checksum: 3f52943d8cd89b18997e5825362948234c3d0b21f79709e7aed3ae0cb8b06b5793f63de6b8840d5bdbc4eb688ae2f526007f50139e74e66686dc05b6fe59ce5b
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:6.3.7, @storybook/addon-actions@npm:^6.1.18":
   version: 6.3.7
   resolution: "@storybook/addon-actions@npm:6.3.7"
@@ -5207,6 +5214,7 @@ __metadata:
     "@material-ui/styles": ^4.11.4
     "@react-spring/web": ^9.2.1
     "@reduxjs/toolkit": ^1.5.1
+    "@soywod/pin-field": ^0.2.1
     "@storybook/addon-actions": ^6.1.18
     "@storybook/addon-essentials": ^6.1.18
     "@storybook/addon-links": ^6.1.18
@@ -5262,6 +5270,7 @@ __metadata:
     react: ^16.12.0
     react-calendly: ^2.2.1
     react-disable: ^0.1.0
+    react-pin-field: ^2.0.0-beta.2
     react-slick: ^0.28.1
     slick-carousel: ^1.8.1
     styled-components: ^5.2.1
@@ -24569,6 +24578,17 @@ fsevents@^1.2.7:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-pin-field@npm:^2.0.0-beta.2":
+  version: 2.0.0-beta.2
+  resolution: "react-pin-field@npm:2.0.0-beta.2"
+  peerDependencies:
+    "@soywod/pin-field": ^0.1.6
+    react: ^16.8 || ^17
+    react-dom: ^16.8 || ^17
+  checksum: 9dc809f4f06fd5caf47417ddf931de8c022225ed6832258f4cfa6a1a7f1d33b1bdcf0a5662b110a053c6f4e1ee7b224f317601adb130372932df5c2d3eb17123
   languageName: node
   linkType: hard
 
