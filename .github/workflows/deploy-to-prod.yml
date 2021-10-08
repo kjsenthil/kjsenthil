@@ -493,6 +493,7 @@ jobs:
         run: |
           terraform plan \
             -lock-timeout=15m \
+            -var-file="./var-files/staging.tfvars" \
             -out="staging-fd-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }}
@@ -922,6 +923,7 @@ jobs:
         run: |
           terraform plan \
             -lock-timeout=15m \
+            -var-file="./var-files/prod.tfvars" \
             -out="prod-fd-plan.tfplan"
         env:
           TF_VAR_resource_group_name: ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }}
