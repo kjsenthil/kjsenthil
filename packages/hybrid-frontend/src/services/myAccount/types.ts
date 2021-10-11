@@ -25,6 +25,12 @@ export interface InvestmentSummaryState
 export interface IsaContributionState
   extends CommonState<IsaContributionResponse['data'], IsaContributionResponse['included']> {}
 
+export interface InvestmentAccountDetailsState
+  extends CommonState<
+    InvestmentAccountDetailsResponse['data'],
+    InvestmentAccountDetailsResponse['included']
+  > {}
+
 export interface ClientAccount {
   type: ClientAccountTypes.accounts | ClientAccountTypes.linkedAccounts;
   id: string;

@@ -17,6 +17,7 @@ import {
   InvestmentSummarySlice as investmentSummaryReducer,
   accountSlice as accountReducer,
   IsaContributionSlice as isaContributionReducer,
+  investmentAccountDetailsSlice as investmentAccountDetailsReducer,
 } from '../services/myAccount/reducers';
 import {
   goalCreationSlice as goalCreationReducer,
@@ -38,6 +39,7 @@ import {
   InvestmentSummaryState,
   AccountState,
   IsaContributionState,
+  InvestmentAccountDetailsState,
 } from '../services/myAccount';
 import { PerformanceState } from '../services/performance';
 import { FeatureToggleState } from '../services/featureToggle';
@@ -57,6 +59,7 @@ export interface RootState {
   goalSimulateProjections: GoalSimulateProjectionsState;
   featureToggle: FeatureToggleState;
   selectedAccount: AccountState;
+  investmentAccounDetails: InvestmentAccountDetailsState;
 }
 
 /*
@@ -96,6 +99,7 @@ const reducersMap: ReducersMapObject = {
   featureToggle: featureToggleReducer,
   selectedAccount: accountReducer,
   goalSimulateProjections: goalSimulateProjectionsReducer,
+  investmentAccountDetails: investmentAccountDetailsReducer,
 };
 
 const reducers = combineReducers(reducersMap);

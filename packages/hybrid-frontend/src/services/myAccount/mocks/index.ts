@@ -16,6 +16,7 @@ import {
   ClientAccountItem,
   BasicInvestmentSummary,
   IsaContributionResponse,
+  AccountState,
 } from '../types';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
@@ -481,4 +482,24 @@ export const mockInvestmentAccountDetails: InvestmentAccountDetailsResponse = {
       },
     },
   ],
+};
+
+export const mockAccountState: AccountState = {
+  account: {
+    id: '20500',
+    accountType: 'isa',
+    accountNumber: 'BI20500',
+    accountTotalNetContribution: 10000,
+    accountLifetimeReturn: {
+      value: 10000,
+      percent: 20,
+    },
+    periodReturn,
+    accountName: '',
+    accountCash: 5000,
+    accountReturn: 1500,
+    accountReturnPercentage: 20,
+    accountTotalHoldings: 5500,
+  },
+  status: 'idle',
 };
