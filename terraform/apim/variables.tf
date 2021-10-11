@@ -123,3 +123,13 @@ variable "api_backends" {
   }))
   description = "list of backend api urls"
 }
+
+variable "apim_routes" {
+  type = list(object({
+    name                   = string
+    address_prefix         = string
+    next_hop_type          = string
+    next_hop_in_ip_address = string
+  }))
+  description = "The environment specific routing rules. Routes specified here are applied at the APIM level."
+}

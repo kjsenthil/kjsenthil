@@ -39,3 +39,18 @@ api_backends = {
     validate_certificate_chain = true
   }
 }
+
+apim_routes = [
+  {
+    name                   = "XplanProd1"
+    address_prefix         = "103.3.199.219/32"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.231.0.182"
+  },
+  {
+    name                   = "XplanProd2"
+    address_prefix         = "103.3.197.219/32"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.231.0.182"
+  }
+]

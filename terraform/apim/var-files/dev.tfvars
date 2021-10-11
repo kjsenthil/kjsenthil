@@ -82,3 +82,12 @@ api_backends = {
     validate_certificate_chain = true
   }
 }
+
+apim_routes = [
+  {
+    name                   = "XplanUAT2"
+    address_prefix         = "103.3.199.215/32"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.231.0.182"
+  }
+]
