@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import apiEndpoint from '../utils/apiBuilder';
 import API_ENDPOINTS from '../utils/apiEndPoints';
 
-describe('Simulate projection summary negative scenarios', () => {
+describe.skip('Simulate projection summary negative scenarios', () => {
   let headers: object;
 
   before(() => {
