@@ -1,0 +1,89 @@
+name: Running Scancode License Analysis
+
+on:
+  push:
+    branches: 
+      - master
+  schedule:
+      - cron: '00 22 * * *'
+
+    
+        
+jobs:
+
+  build_cache:
+      name: "Build caches"
+      runs-on: ubuntu-latest
+      steps:
+       - name: "Checkout"
+         uses: actions/checkout@v2
+
+       - name: "Set cache metadata"
+         id: cache-meta
+         run: |
+           echo "::set-output name=key::${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+           echo "::set-output name=yarn-path::$(yarn config get cacheFolder)"
+           echo "::set-output name=modules-path::**/node_modules"
+
+       - name: "Check for existing yarn cache"
+         uses: actions/cache@v2
+         id: yarn-cache
+         with:
+           key: ${{ steps.cache-meta.outputs.key }}
+           path: ${{ steps.cache-meta.outputs.yarn-path }}
+           restore-keys: |
+             ${{ runner.os }}-yarn-
+
+       - name: "Check for existing node modules cache"
+         uses: actions/cache@v2
+         id: node-modules-cache
+         with:
+          key: ${{ steps.cache-meta.outputs.key }}
+          path: ${{ steps.cache-meta.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+       - name: "Install missing dependencies"
+         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'}}
+         run: yarn install
+        
+  Setup_scancode:      
+     name: "Setup Scancode and Run analysis"
+     needs: build_cache
+     runs-on: ubuntu-latest
+     steps:
+        - name: Set up Python 
+          uses: actions/setup-python@v2
+        
+        
+        - name: Install Scancode
+          run: |
+            python -m pip install --upgrade pip
+            pip install scancode-toolkit
+        
+        - uses: actions/checkout@v2
+          with:
+             fetch-depth: 50
+        
+        - name: License Analysis
+          run: |
+           scancode -clpeui -n 2 --ignore "*.js" --html result.html .  &> output.txt && grep 'Error' output.txt > result.txt
+          
+            
+        - name: Archive Scan results
+          uses: actions/upload-artifact@v2
+          with:
+           name: scan-report
+           path: result.html
+           retention-days: 5
+        
+             
+                
+        - name: set env variable
+          run: |
+            echo "scan_result=$(cat result.txt)" >> $GITHUB_ENV
+        
+        - name: Exit on Failure
+          if: "!contains(env.scan_result, 'Errors count:   0')"
+          run: |
+            exit 1
