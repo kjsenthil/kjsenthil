@@ -30,6 +30,7 @@ import {
   TagBox,
   Modal,
   TypographyWithTooltip,
+  periodDifference,
 } from '@tswdts/react-components';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -151,11 +152,15 @@ const BIAccountsPage = () => {
     dispatch(setPerformanceDataPeriod(period));
   };
 
-  const investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
   const lifetimeReturn = calculateLifetimeReturn(
     accountsSummary.totalInvested,
     summaryContributions
   );
+  let investmentReturn = calculateInvestmentReturn(performanceData, contributionsData);
+  const periodDiff = periodDifference(performanceData[0]?.date, performanceDataPeriod);
+  if (periodDiff && periodDiff < 0) {
+    investmentReturn = lifetimeReturn;
+  }
 
   const stickyHeaderChildComponent = !basicInfo.basicDataLoadError && (
     <Grid

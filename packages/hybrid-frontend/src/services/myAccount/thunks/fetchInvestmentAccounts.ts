@@ -107,10 +107,8 @@ const fetchInvestmentAccounts = createAsyncThunk(
 
         Object.keys(periodReturn).forEach((period) => {
           const firstPerfDate = performanceResponse?.data?.attributes?.values[0]?.date;
-          const periodDiff =
-            typeof firstPerfDate === 'string' && periodDifference(firstPerfDate, period);
-          // use lifetime return when initial perf date is more recent than the initial period date
-          if (typeof periodDiff === 'number' && periodDiff < 0) {
+          const periodDiff = firstPerfDate && periodDifference(firstPerfDate, period);
+          if (periodDiff && periodDiff < 0) {
             periodReturn[period] = accountLifetimeReturn;
           }
         });
