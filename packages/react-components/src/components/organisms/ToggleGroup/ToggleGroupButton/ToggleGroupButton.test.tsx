@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { screen, renderWithTheme } from '@tsw/test-util';
-import DescriptiveToggleButton, { DescriptiveToggleButtonProps } from './DescriptiveToggleButton';
+import ToggleGroupButton, { ToggleGroupButtonProps } from './ToggleGroupButton';
 
-const descriptiveToggleButtonProps: DescriptiveToggleButtonProps = {
+const descriptiveToggleButtonProps: ToggleGroupButtonProps = {
   value: 0,
   idNumber: 1,
   content: 'my content',
 };
 
-describe('DescriptiveToggleButton', () => {
+describe('ToggleGroupButton', () => {
   it('renders correctly', () => {
-    renderWithTheme(<DescriptiveToggleButton {...descriptiveToggleButtonProps} />);
+    renderWithTheme(<ToggleGroupButton {...descriptiveToggleButtonProps} />);
 
     expect(screen.getByText('1')).toBeVisible();
     expect(screen.getByText('my content')).toBeVisible();
