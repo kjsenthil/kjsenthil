@@ -291,3 +291,33 @@ export type InvestmentAccountDetailsResponse = GenericResponsePayload<
   'accounts',
   Array<CashPositionResponse | AssetInfoResponse>
 >;
+
+export interface ClientEmail {
+  type: ClientAccountTypes.emails;
+  id: string;
+  attributes: {
+    contactId: number;
+    emailId: number;
+    emailAddress: string;
+    emailTypeId: number;
+    emailType: string;
+    principal: boolean;
+    defaultEmail: boolean;
+    updateBy: string;
+  };
+  links: {
+    self: string;
+  };
+  relationships: Record<string, DataRelationship>[] | null;
+}
+
+export type BankDetailsResponse = GenericApiPayload<
+  {
+    bankAccountName: string;
+    bankAccountNumber: string;
+    bankSortCode: string;
+    contactId: number;
+    withdrawMoneyAllowed: boolean;
+  },
+  'bank-details'
+>['data'];
