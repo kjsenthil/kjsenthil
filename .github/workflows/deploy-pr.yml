@@ -681,6 +681,21 @@ jobs:
           API_SIPP_ACCOUNT_ID: ${{ secrets.DH_TEST_SIPP_ACCOUNT_ID }}
           API_ACCOUNT_IDS: ${{ secrets.DH_TEST_ACCOUNT_IDS }}
 
+      - name: "Login to Azure"
+        if: always()
+        id: azure-login
+        continue-on-error: true
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy API test reports as static website"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/testing/axios-api/Results -d "\$web/reports/api-test" --account-name "${{ needs.deploy_pr_terraform.outputs.storybook_storage_account_name }}"
+
   deploy_gatsby:
     name: "Build & Deploy Gatsby"
     if: ${{ always() && needs.deploy_pr_terraform.result == 'success' }}
@@ -757,7 +772,7 @@ jobs:
       - deploy_gatsby
     strategy:
       matrix:
-        browser: [ chrome, edge ]
+        browser: [chrome, edge]
     steps:
       - name: "Enable long paths"
         run: git config --system core.longpaths true
@@ -1417,7 +1432,9 @@ jobs:
             **Unit tests reports:**
             *Frontend:* [${{ needs.deploy_storybook.outputs.url }}/fe-jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/fe-jesttestreport/index.html)
             *React-components:* [${{ needs.deploy_storybook.outputs.url }}/cmp-jesttestreport/index.html](${{ needs.deploy_storybook.outputs.url }}/cmp-jesttestreport/index.html)
-            **API tests reports:** [${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html](${{ needs.deploy_storybook.outputs.url }}/reports/ApiTestReport.html)
+            **Automation tests reports:**
+            **API tests reporting:**[${{ needs.deploy_storybook.outputs.url }}/reports/api-test/ApiTestsReports.html](${{ needs.deploy_storybook.outputs.url }}/reports/api-test/ApiTestsReports.html)
+
 
             #### Review URLs
             **Storybook:** [${{ needs.deploy_storybook.outputs.url }}](${{ needs.deploy_storybook.outputs.url }})

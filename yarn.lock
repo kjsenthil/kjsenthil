@@ -4954,6 +4954,7 @@ __metadata:
     axios: ^0.21.4
     chai: ^4.3.4
     mocha: ^9.0.2
+    mochawesome: ^6.3.1
     moment: ^2.29.1
     superstruct: ^0.15.2
     ts-node: ^10.1.0
@@ -11298,6 +11299,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dateformat@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "dateformat@npm:3.0.3"
+  checksum: ca4911148abb09887bd9bdcd632c399b06f3ecad709a18eb594d289a1031982f441e08e281db77ffebcb2cbcbfa1ac578a7cbfbf8743f41009aa5adc1846ed34
+  languageName: node
+  linkType: hard
+
 "dayjs@npm:^1.10.4":
   version: 1.10.6
   resolution: "dayjs@npm:1.10.6"
@@ -12727,7 +12735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-html@npm:~1.0.3":
+"escape-html@npm:^1.0.3, escape-html@npm:~1.0.3":
   version: 1.0.3
   resolution: "escape-html@npm:1.0.3"
   checksum: 6213ca9ae00d0ab8bccb6d8d4e0a98e76237b2410302cf7df70aaa6591d509a2a37ce8998008cbecae8fc8ffaadf3fb0229535e6a145f3ce0b211d060decbb24
@@ -14468,6 +14476,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "fs-extra@npm:7.0.1"
+  dependencies:
+    graceful-fs: ^4.1.2
+    jsonfile: ^4.0.0
+    universalify: ^0.1.0
+  checksum: 141b9dccb23b66a66cefdd81f4cda959ff89282b1d721b98cea19ba08db3dcbe6f862f28841f3cf24bb299e0b7e6c42303908f65093cb7e201708e86ea5a8dcf
+  languageName: node
+  linkType: hard
+
 "fs-extra@npm:^8.1.0":
   version: 8.1.0
   resolution: "fs-extra@npm:8.1.0"
@@ -14573,6 +14592,13 @@ fsevents@^1.2.7:
     mkdirp: ">=0.5 0"
     rimraf: 2
   checksum: e6998651aeb85fd0f0a8a68cec4d05a3ada685ecc4e3f56e0d063d0564a4fc39ad11a856f9020f926daf869fc67f7a90e891def5d48e4cadab875dc313094536
+  languageName: node
+  linkType: hard
+
+"fsu@npm:^1.0.2":
+  version: 1.1.1
+  resolution: "fsu@npm:1.1.1"
+  checksum: 470564b7586fab03ec7bbb13f3b15cf316d51919174b44e31718d4de2f7de4ce07dc180d62b984c144b7ec6e0cca2174c03985a5d8cbef70bd1ec12f1da8968d
   languageName: node
   linkType: hard
 
@@ -19888,6 +19914,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lodash.isfunction@npm:^3.0.8, lodash.isfunction@npm:^3.0.9":
+  version: 3.0.9
+  resolution: "lodash.isfunction@npm:3.0.9"
+  checksum: 99e54c34b1e8a9ba75c034deb39cedbd2aca7af685815e67a2a8ec4f73ec9748cda6ebee5a07d7de4b938e90d421fd280e9c385cc190f903ac217ac8aff30314
+  languageName: node
+  linkType: hard
+
 "lodash.isobject@npm:^3.0.2":
   version: 3.0.2
   resolution: "lodash.isobject@npm:3.0.2"
@@ -19899,6 +19932,13 @@ fsevents@^1.2.7:
   version: 4.0.6
   resolution: "lodash.isplainobject@npm:4.0.6"
   checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
+  languageName: node
+  linkType: hard
+
+"lodash.isstring@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "lodash.isstring@npm:4.0.1"
+  checksum: eaac87ae9636848af08021083d796e2eea3d02e80082ab8a9955309569cb3a463ce97fd281d7dc119e402b2e7d8c54a23914b15d2fc7fff56461511dc8937ba0
   languageName: node
   linkType: hard
 
@@ -21144,6 +21184,48 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"mochawesome-report-generator@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "mochawesome-report-generator@npm:5.2.0"
+  dependencies:
+    chalk: ^2.4.2
+    dateformat: ^3.0.2
+    escape-html: ^1.0.3
+    fs-extra: ^7.0.0
+    fsu: ^1.0.2
+    lodash.isfunction: ^3.0.8
+    opener: ^1.5.2
+    prop-types: ^15.7.2
+    tcomb: ^3.2.17
+    tcomb-validation: ^3.3.0
+    validator: ^10.11.0
+    yargs: ^13.2.2
+  bin:
+    marge: bin/cli.js
+  checksum: dca3693075de16cec7c00fabb67fa5af085cd4c9cbc1d8c68839b7572ddfd3bf85a6307e8514538d92991716a8073f617267742ca5030949dc3ec6f99956cad0
+  languageName: node
+  linkType: hard
+
+"mochawesome@npm:^6.3.1":
+  version: 6.3.1
+  resolution: "mochawesome@npm:6.3.1"
+  dependencies:
+    chalk: ^4.1.0
+    diff: ^5.0.0
+    json-stringify-safe: ^5.0.1
+    lodash.isempty: ^4.4.0
+    lodash.isfunction: ^3.0.9
+    lodash.isobject: ^3.0.2
+    lodash.isstring: ^4.0.1
+    mochawesome-report-generator: ^5.2.0
+    strip-ansi: ^6.0.0
+    uuid: ^8.3.2
+  peerDependencies:
+    mocha: ">=7"
+  checksum: 85d02d280f799a4a34d49bd0d636b4771b922a8eeba4af17594a8a47c3fa195beb0442762b4a3959900bc6ed9d7d905fb930fae0d09a8e767c2731c3ad41e9e9
+  languageName: node
+  linkType: hard
+
 "mockdate@npm:^3.0.5":
   version: 3.0.5
   resolution: "mockdate@npm:3.0.5"
@@ -22050,6 +22132,15 @@ fsevents@^1.2.7:
   bin:
     opencollective-postinstall: index.js
   checksum: 0a68c5cef135e46d11e665d5077398285d1ce5311c948e8327b435791c409744d4a6bb9c55bd6507fb5f2ef34b0ad920565adcdaf974cbdae701aead6f32b396
+  languageName: node
+  linkType: hard
+
+"opener@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "opener@npm:1.5.2"
+  bin:
+    opener: bin/opener-bin.js
+  checksum: 33b620c0d53d5b883f2abc6687dd1c5fd394d270dbe33a6356f2d71e0a2ec85b100d5bac94694198ccf5c30d592da863b2292c5539009c715a9c80c697b4f6cc
   languageName: node
   linkType: hard
 
@@ -27632,6 +27723,22 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"tcomb-validation@npm:^3.3.0":
+  version: 3.4.1
+  resolution: "tcomb-validation@npm:3.4.1"
+  dependencies:
+    tcomb: ^3.0.0
+  checksum: 0b0bc3dab680274aeaadd8bd01528cffc7065e4ebb2b50ee354c3cc99b443530a7a7c9a3c7abf609d8e44927c51036fcef302d1bc743ff670fddbe04e8cc1e53
+  languageName: node
+  linkType: hard
+
+"tcomb@npm:^3.0.0, tcomb@npm:^3.2.17":
+  version: 3.2.29
+  resolution: "tcomb@npm:3.2.29"
+  checksum: 484e39a06ce59f1752b7589cb5fce9a7f58bd34ba11a48045d5d955c7bb7133d5617f8bf2dcf2b27f06df0dffe3734097c15179c86e4f9e5bff224c99c90aa8c
+  languageName: node
+  linkType: hard
+
 "tcp-port-used@npm:^1.0.1":
   version: 1.0.2
   resolution: "tcp-port-used@npm:1.0.2"
@@ -29095,7 +29202,7 @@ typescript@^4.2.4:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.0.0, uuid@npm:^8.3.0":
+"uuid@npm:^8.0.0, uuid@npm:^8.3.0, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -29163,6 +29270,13 @@ typescript@^4.2.4:
   dependencies:
     builtins: ^1.0.3
   checksum: ce4c68207abfb22c05eedb09ff97adbcedc80304a235a0844f5344f1fd5086aa80e4dbec5684d6094e26e35065277b765c1caef68bcea66b9056761eddb22967
+  languageName: node
+  linkType: hard
+
+"validator@npm:^10.11.0":
+  version: 10.11.0
+  resolution: "validator@npm:10.11.0"
+  checksum: b945e5712af888fc5c984312cf9a7736d16a03f989556291d7984e5747efaaee6cdff671f6b0ef2630a6e2866a2728ab0f341877b878a9ffb8ad770dfcad7170
   languageName: node
   linkType: hard
 
@@ -30120,7 +30234,7 @@ typescript@^4.2.4:
   languageName: node
   linkType: hard
 
-"yargs@npm:^13.3.2":
+"yargs@npm:^13.2.2, yargs@npm:^13.3.2":
   version: 13.3.2
   resolution: "yargs@npm:13.3.2"
   dependencies:
