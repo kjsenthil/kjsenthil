@@ -46,13 +46,13 @@ module "api_management_policy" {
       cors_allowed_origins = coalescelist(
         lookup(each.value.policy.cors, "allowed_origins", []),
         [
-          var.environment_prefix == "prod" ? "https://my.bestinvest.co.uk" : "",
-          var.environment_prefix == "staging" ? "https://my.demo2.bestinvest.co.uk" : "",
-          var.environment_prefix != "prod" ? "http://localhost:8000" : "",
-          var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
+          local.is_prod ? "https://my.bestinvest.co.uk" : "",
+          local.is_staging ? "https://my.demo2.bestinvest.co.uk" : "",
+          !local.is_prod ? "http://localhost:8000" : "",
+          !local.is_prod ? module.front_end.web_endpoint : "",
           "https://${local.website_hostname}",
-          var.environment_prefix != "prod" && var.environment_prefix != "staging" ? "https://${module.front_end.web_host}" : "",
-          var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+          local.is_dev ? "https://${module.front_end.web_host}" : "",
+          local.is_not_dev ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
         ]
       ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
@@ -99,11 +99,11 @@ module "api_management_policy_xplan" {
       cors_allowed_origins = coalescelist(
         lookup(each.value.policy.cors, "allowed_origins", []),
         [
-          var.environment_prefix != "prod" ? "http://localhost:8000" : "",
-          var.environment_prefix != "prod" ? module.front_end.web_endpoint : "",
+          !local.is_prod ? "http://localhost:8000" : "",
+          !local.is_prod ? module.front_end.web_endpoint : "",
           "https://${local.website_hostname}",
-          var.environment_prefix != "prod" && var.environment_prefix != "staging" ? "https://${module.front_end.web_host}" : "",
-          var.environment_prefix == "prod" || var.environment_prefix == "staging" ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
+          local.is_dev ? "https://${module.front_end.web_host}" : "",
+          local.is_not_dev ? "https://fd-gbl-${var.environment_prefix}-dh.azurefd.net" : "",
         ]
       ),
       allow-credentials    = lookup(each.value.policy.cors, "allow-credentials", false),
@@ -172,7 +172,7 @@ module "front_end" {
 }
 
 module "storybook" {
-  count                    = var.environment_prefix == "staging" ? 0 : 1
+  count                    = !local.is_prod ? 1 : 0
   source                   = "../modules/static_website_with_cdn"
   storage_account_name     = "st${local.short_location}tsw${var.environment_prefix}dhsb"
   resource_group_name      = data.azurerm_resource_group.resource_group.name
@@ -242,7 +242,7 @@ module "function_app_projections" {
 }
 
 module "function_app_features" {
-  count                            = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? 1 : 0
+  count                            = local.is_not_dev ? 1 : 0
   source                           = "../modules/function_app_node"
   resource_group_name              = data.azurerm_resource_group.resource_group.name
   location                         = data.azurerm_resource_group.resource_group.location
@@ -278,7 +278,7 @@ module "function_app_returns" {
 }
 
 resource "azurerm_dashboard" "application_metrics_dashboard" {
-  count               = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? 1 : 0
+  count               = local.is_not_dev ? 1 : 0
   name                = "${var.environment_prefix}-${var.app_name}-application-metrics-dashboard"
   resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = data.azurerm_resource_group.resource_group.location

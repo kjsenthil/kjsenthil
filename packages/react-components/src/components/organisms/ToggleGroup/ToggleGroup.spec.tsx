@@ -6,9 +6,9 @@ import ToggleGroup from './ToggleGroup';
 describe('ToggleGroup', () => {
   describe('Ordered Toggle Group with no initial value selected', () => {
     const TestComponent = () => {
-      const [selected, setSelected] = React.useState(null);
+      const [selected, setSelected] = React.useState<string | null>(null);
 
-      const handleChange = (_event, newSelected) => {
+      const handleChange = (newSelected: string | null) => {
         setSelected(newSelected);
       };
 
@@ -16,10 +16,10 @@ describe('ToggleGroup', () => {
 
       return (
         <ToggleGroup
-          type="ordered"
+          layout="onePerRow"
           values={values}
-          initialValue={selected}
-          handleChange={handleChange}
+          selectedValue={selected}
+          setSelectedValue={handleChange}
         />
       );
     };
@@ -30,8 +30,8 @@ describe('ToggleGroup', () => {
     beforeEach(() => {
       renderWithTheme(<TestComponent />);
 
-      button1 = screen.getByLabelText('button 1');
-      button2 = screen.getByLabelText('button 2');
+      button1 = screen.getByLabelText('Content One');
+      button2 = screen.getByLabelText('Content Two');
     });
 
     it('renders correctly', () => {
@@ -65,18 +65,18 @@ describe('ToggleGroup', () => {
     const TestComponent = () => {
       const values = ['Content One', 'Content Two'];
 
-      const [selected, setSelected] = React.useState(values[0]);
+      const [selected, setSelected] = React.useState<string | null>(values[0]);
 
-      const handleChange = (e, value) => {
-        setSelected(value);
+      const handleChange = (newSelected: string | null) => {
+        setSelected(newSelected);
       };
 
       return (
         <ToggleGroup
-          type="unordered"
+          layout="dynamic"
           values={values}
-          initialValue={selected}
-          handleChange={handleChange}
+          selectedValue={selected}
+          setSelectedValue={handleChange}
         />
       );
     };

@@ -14,7 +14,7 @@ output "frontend_cdn_endpoint_name" {
 }
 
 output "frontend_web_cname" {
-  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? "https://${local.website_hostname}" : null
+  value       = local.is_not_dev ? "https://${local.website_hostname}" : null
   description = "The Gatsby App CNAME record."
 }
 
@@ -29,12 +29,12 @@ output "frontend_static_web_url" {
 }
 
 output "storybook_web_endpoint" {
-  value       = var.environment_prefix != "staging" ? module.storybook[0].web_endpoint : null
+  value       = !local.is_prod ? module.storybook[0].web_endpoint : null
   description = "The storybook web endpoint."
 }
 
 output "storybook_cdn_endpoint_name" {
-  value       = var.environment_prefix != "staging" ? module.storybook[0].cdn_endpoint_name : null
+  value       = !local.is_prod ? module.storybook[0].cdn_endpoint_name : null
   description = "The storybook CDN endpoint name."
 }
 
@@ -44,7 +44,7 @@ output "frontend_storage_account_name" {
 }
 
 output "storybook_storage_account_name" {
-  value       = var.environment_prefix != "staging" ? module.storybook[0].name : null
+  value       = !local.is_prod ? module.storybook[0].name : null
   description = "Name of the storage account hosting the storybook."
 }
 
@@ -59,7 +59,7 @@ output "api_base_url" {
 }
 
 output "myaccounts_home_url" {
-  value       = var.environment_prefix == "prod" ? "https://my.bestinvest.co.uk/dashboard" : "https://my.demo2.bestinvest.co.uk/dashboard"
+  value       = local.is_prod ? "https://my.bestinvest.co.uk/dashboard" : "https://my.demo2.bestinvest.co.uk/dashboard"
   description = "My Accounts Home Page"
 }
 
@@ -74,6 +74,6 @@ output "gtm_env_preview" {
 }
 
 output "app_conf_keys" {
-  value       = var.environment_prefix == "staging" || var.environment_prefix == "prod" ? azurerm_app_configuration.app_config[0].primary_read_key : null
+  value       = local.is_not_dev ? azurerm_app_configuration.app_config[0].primary_read_key : null
   description = "Azure app configuration read key for either staging or prod"
 }

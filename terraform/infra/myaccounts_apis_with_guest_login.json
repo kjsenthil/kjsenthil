@@ -23,6 +23,19 @@
                 },
                 "backend_id": "bestinvest-online-api"
             }
+        },
+        {
+            "operation_id": "online-nino-duplicate-check",
+            "display_name": "Online NINO duplicate check",
+            "url_template": "/AccountSetup/checkifclientisoisorlegacy/{id}",
+            "description": "This API take the NINO and validates for duplicate on active accounts",
+            "path_params": ["id"],
+            "policy": {
+                "cors": {
+                    "method": "GET"
+                },
+                "backend_id": "bestinvest-online-api"
+            }
         }
     ]
 }

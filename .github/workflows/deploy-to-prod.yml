@@ -95,7 +95,7 @@ jobs:
 
   package_function_apps:
     name: "Package Function Apps"
-    needs: [build_cache]
+    needs: [ build_cache ]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -179,6 +179,7 @@ jobs:
           echo ::set-output name=artifact-storage-account-name::$( jq -r .artifact_storage_account_name.value staging-rg-outputs.json )
           echo ::set-output name=artifact-container-name::$( jq -r .artifact_container_name.value staging-rg-outputs.json )
           echo ::set-output name=test-artifacts-container-name::$( jq -r .test_artifacts_container_name.value staging-rg-outputs.json )
+
     outputs:
       resource_group_name: ${{ steps.set-terraform-outputs.outputs.resource-group-name }}
       artifact_storage_account_name: ${{ steps.set-terraform-outputs.outputs.artifact-storage-account-name }}
@@ -188,7 +189,7 @@ jobs:
   deploy_staging_apim_terraform:
     name: "Deploy Staging APIM"
     environment: staging
-    needs: [deploy_staging_rg_terraform]
+    needs: [ deploy_staging_rg_terraform ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -264,11 +265,9 @@ jobs:
     name: "Deploy Staging Infrastructure."
     environment: staging
     needs:
-      [
-        deploy_staging_rg_terraform,
-        deploy_staging_apim_terraform,
-        package_function_apps,
-      ]
+      - deploy_staging_rg_terraform
+      - deploy_staging_apim_terraform
+      - package_function_apps
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -378,18 +377,17 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Allow
             az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Allow
 
   deploy_staging_frontend:
     name: "Deploy staging front end"
     environment: staging
     needs:
-      [
-        build_cache,
-        deploy_staging_rg_terraform,
-        deploy_staging_terraform,
-        open_staging_storage_account_firewalls,
-      ]
+      - build_cache
+      - deploy_staging_rg_terraform
+      - deploy_staging_terraform
+      - open_staging_storage_account_firewalls
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -457,6 +455,91 @@ jobs:
             az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}" --source '$web'
             az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/hybrid-frontend/public -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }}"
 
+  deploy_storybook:
+    name: "Deploy Storybook"
+    environment: staging
+    needs:
+      - build_cache
+      - deploy_staging_terraform
+      - open_staging_storage_account_firewalls
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Use Node.js 14.x"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: "Get yarn cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.yarn-path }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "Get node modules cache"
+        uses: actions/cache@v2
+        with:
+          key: ${{ needs.build_cache.outputs.key }}
+          path: ${{ needs.build_cache.outputs.modules-path }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - name: "Create env file"
+        working-directory: ./packages/react-components
+        run: |
+          touch .env.production
+          echo 'API_ENDPOINTS=${{ needs.deploy_staging_terraform.outputs.api_endpoints }}' >> .env.production
+          echo 'API_BASE_URL=${{ needs.deploy_staging_terraform.outputs.api_base_url }}' >> .env.production
+          echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_staging_terraform.outputs.myaccounts_home_url }}' >> .env.production
+          echo 'GTM_AUTH=${{ needs.deploy_staging_terraform.outputs.gtm_env_auth }}' >> .env.production
+          echo 'GTM_PREVIEW=${{ needs.deploy_staging_terraform.outputs.gtm_env_preview }}' >> .env.production
+          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.production
+          cat .env.production
+
+      - name: "Build Storybook"
+        run: GATSBY_ACTIVE_ENV=production yarn components build-storybook -o "./storybook-static"
+
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Storybook as static website"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage container create --name '$web' --account-name "${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }}"
+            az storage blob delete-batch --account-name "${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }}" --source '$web'
+            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/storybook-static -d "\$web" --account-name "${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }}"
+
+  purge_storybook_cdn_cache:
+    name: "Purge storybook CDN cache"
+    if: needs.deploy_storybook.result == 'success'
+    environment: staging
+    runs-on: ubuntu-latest
+    needs:
+      - deploy_staging_rg_terraform
+      - deploy_staging_apim_terraform
+      - deploy_staging_terraform
+      - deploy_storybook
+    steps:
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Purge storybook CDN cache"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az cdn endpoint purge --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_staging_terraform.outputs.storybook_cdn_endpoint_name}} --profile-name ${{ needs.deploy_staging_apim_terraform.outputs.cdn_profile_storybook_name }} --content-paths '/*'
+
   deploy_staging_front_door:
     name: "Deploy staging Front Door"
     environment: staging
@@ -512,11 +595,9 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     needs:
-      [
-        deploy_staging_rg_terraform,
-        deploy_staging_terraform,
-        deploy_staging_frontend,
-      ]
+      - deploy_staging_rg_terraform
+      - deploy_staging_terraform
+      - deploy_staging_frontend
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -528,6 +609,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.storybook_storage_account_name }} --default-action Deny
             az storage account update --resource-group ${{ needs.deploy_staging_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_staging_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   purge_staging_frontend_cdn_cache:
@@ -556,7 +638,7 @@ jobs:
   deploy_production_rg_terraform:
     name: "Deploy prod Resource Group"
     environment: prod
-    needs: [deploy_staging_frontend]
+    needs: [ deploy_staging_front_door ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -619,7 +701,7 @@ jobs:
   deploy_production_apim_terraform:
     name: "Deploy prod APIM"
     environment: prod
-    needs: [deploy_production_rg_terraform]
+    needs: [ deploy_production_rg_terraform ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -682,6 +764,7 @@ jobs:
           echo ::set-output name=cdn-profile-website-name::$( jq -r .cdn_profile_website_name.value prod-apim-outputs.json )
           echo ::set-output name=cdn-profile-storybook-name::$( jq -r .cdn_profile_storybook_name.value prod-apim-outputs.json )
           echo ::set-output name=app-insights-name::$( jq -r .app_insights_name.value prod-apim-outputs.json )
+
     outputs:
       apim_name: ${{ steps.set-terraform-outputs.outputs.apim-name }}
       apim_vnet_name: ${{ steps.set-terraform-outputs.outputs.apim-vnet-name }}
@@ -694,11 +777,9 @@ jobs:
     name: "Deploy prod infrastructure."
     environment: prod
     needs:
-      [
-        deploy_production_rg_terraform,
-        deploy_production_apim_terraform,
-        package_function_apps,
-      ]
+      - deploy_production_rg_terraform
+      - deploy_production_apim_terraform
+      - package_function_apps
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -768,9 +849,6 @@ jobs:
           echo ::set-output name=website-endpoint::$( jq -r .frontend_web_endpoint.value prod-infra-outputs.json )
           echo ::set-output name=website-cdn-endpoint-name::$( jq -r .frontend_cdn_endpoint_name.value prod-infra-outputs.json )
           echo ::set-output name=website-cname::$( jq -r .frontend_web_cname.value prod-infra-outputs.json )
-          echo ::set-output name=storybook-web-endpoint::$( jq -r .storybook_web_endpoint.value prod-infra-outputs.json )
-          echo ::set-output name=storybook-cdn-endpoint-name::$( jq -r .storybook_cdn_endpoint_name.value prod-infra-outputs.json )
-          echo ::set-output name=storybook-storage-account-name::$( jq -r .storybook_storage_account_name.value prod-infra-outputs.json )
           echo ::set-output name=api-base-url::$( jq -r .api_base_url.value prod-infra-outputs.json )
           echo ::set-output name=api-endpoints::$( jq -r .api_endpoints.value prod-infra-outputs.json )
           echo ::set-output name=myaccounts-home-url::$( jq -r .myaccounts_home_url.value prod-infra-outputs.json )
@@ -782,9 +860,6 @@ jobs:
       website_endpoint: ${{ steps.get-terraform-outputs.outputs.website-endpoint }}
       website_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.website-cdn-endpoint-name }}
       website_cname: ${{ steps.get-terraform-outputs.outputs.website-cname }}
-      storybook_storage_account_name: ${{ steps.get-terraform-outputs.outputs.storybook-storage-account-name }}
-      storybook_web_endpoint: ${{ steps.get-terraform-outputs.outputs.storybook-web-endpoint }}
-      storybook_cdn_endpoint_name: ${{ steps.get-terraform-outputs.outputs.storybook-cdn-endpoint-name }}
       api_base_url: ${{ steps.get-terraform-outputs.outputs.api-base-url }}
       api_endpoints: ${{ steps.get-terraform-outputs.outputs.api-endpoints }}
       myaccounts_home_url: ${{ steps.get-terraform-outputs.outputs.myaccounts-home-url }}
@@ -795,7 +870,7 @@ jobs:
     name: "Open storage account firewalls for uploads"
     environment: prod
     runs-on: ubuntu-latest
-    needs: [deploy_production_rg_terraform, deploy_production_terraform]
+    needs: [ deploy_production_rg_terraform, deploy_production_terraform ]
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -807,19 +882,16 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Allow
             az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Allow
 
   deploy_production_frontend:
     name: "Deploy production front end"
     environment: prod
     needs:
-      [
-        build_cache,
-        deploy_production_rg_terraform,
-        deploy_production_terraform,
-        open_prod_storage_account_firewalls,
-      ]
+      - build_cache
+      - deploy_production_rg_terraform
+      - deploy_production_terraform
+      - open_prod_storage_account_firewalls
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -937,82 +1009,23 @@ jobs:
             -auto-approve \
             prod-fd-plan.tfplan
 
-  deploy_storybook_prod:
-    name: "Deploy Storybook"
-    environment: prod
-    needs:
-      [
-        build_cache,
-        deploy_production_rg_terraform,
-        deploy_production_terraform,
-        open_prod_storage_account_firewalls,
-      ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v2
-
-      - name: "Use Node.js 14.x"
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-
-      - name: "Get yarn cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.yarn-path }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: "Get node modules cache"
-        uses: actions/cache@v2
-        with:
-          key: ${{ needs.build_cache.outputs.key }}
-          path: ${{ needs.build_cache.outputs.modules-path }}
-          restore-keys: |
-            ${{ runner.os }}-modules-
-
-      - name: "Create env file"
-        working-directory: ./packages/react-components
+      - name: "Get Terraform Outputs"
+        id: get-terraform-outputs
         run: |
-          touch .env.production
-          echo 'API_ENDPOINTS=${{ needs.deploy_production_terraform.outputs.api_endpoints }}' >> .env.production
-          echo 'API_BASE_URL=${{ needs.deploy_production_terraform.outputs.api_base_url }}' >> .env.production
-          echo 'MYACCOUNTS_HOME_URL=${{ needs.deploy_production_terraform.outputs.myaccounts_home_url }}' >> .env.production
-          echo 'GTM_AUTH=${{ needs.deploy_production_terraform.outputs.gtm_env_auth }}' >> .env.production
-          echo 'GTM_PREVIEW=${{ needs.deploy_production_terraform.outputs.gtm_env_preview }}' >> .env.production
-          echo 'AI_CONNECTION_STRING=${{ secrets.AI_CONNECTION_STRING }}' >> .env.production
-          cat .env.production
+          terraform output -json > prod-fd-outputs.json
+          echo ::set-output name=site-url::$( jq -r .site_url.value prod-fd-outputs.json )
 
-      - name: "Build Storybook"
-        run: GATSBY_ACTIVE_ENV=production yarn components build-storybook -o "./storybook-static"
-
-      - name: "Login to Azure"
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: "Deploy Storybook as static website"
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az storage container create --name '$web' --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
-            az storage blob delete-batch --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}" --source '$web'
-            az storage blob upload-batch -s $GITHUB_WORKSPACE/packages/react-components/storybook-static -d "\$web" --account-name "${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }}"
+    outputs:
+      site_url: ${{ steps.get-terraform-outputs.outputs.site-url }}
 
   close_prod_storage_account_firewalls:
     name: "Close storage account firewalls for uploads"
     environment: prod
     runs-on: ubuntu-latest
     needs:
-      [
-        deploy_production_rg_terraform,
-        deploy_production_terraform,
-        deploy_production_frontend,
-        deploy_storybook_prod,
-      ]
+      - deploy_production_rg_terraform
+      - deploy_production_terraform
+      - deploy_production_frontend
     steps:
       - name: "Login to Azure"
         uses: Azure/login@v1
@@ -1024,7 +1037,6 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.storybook_storage_account_name }} --default-action Deny
             az storage account update --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{ needs.deploy_production_terraform.outputs.frontend_storage_account_name }} --default-action Deny
 
   purge_prod_frontend_cdn_cache:
@@ -1050,32 +1062,9 @@ jobs:
           inlineScript: |
             az cdn endpoint purge --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_production_terraform.outputs.website_cdn_endpoint_name}} --profile-name ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_website_name }} --content-paths '/*'
 
-  purge_prod_storybook_cdn_cache:
-    name: "Purge prod storybook CDN cache"
-    if: needs.deploy_storybook_prod.result == 'success'
-    environment: prod
-    runs-on: ubuntu-latest
-    needs:
-      - deploy_production_rg_terraform
-      - deploy_production_apim_terraform
-      - deploy_production_terraform
-      - deploy_storybook_prod
-    steps:
-      - name: "Login to Azure"
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: "Purge storybook CDN cache"
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az cdn endpoint purge --resource-group ${{ needs.deploy_production_rg_terraform.outputs.resource_group_name }} --name ${{needs.deploy_production_terraform.outputs.storybook_cdn_endpoint_name}} --profile-name ${{ needs.deploy_production_apim_terraform.outputs.cdn_profile_storybook_name }} --content-paths '/*'
-
   output_website_urls:
     name: "Output website urls"
-    needs: [deploy_staging_terraform, deploy_production_terraform]
+    needs: [ deploy_staging_terraform, deploy_production_terraform ]
     runs-on: ubuntu-latest
     steps:
       - name: "Get website urls"
@@ -1083,9 +1072,9 @@ jobs:
         run: |
           echo "Staging website endpoint: ${{ needs.deploy_staging_terraform.outputs.website_endpoint }}"
           echo "Staging website cname: ${{ needs.deploy_staging_terraform.outputs.website_cname }}"
+          echo "Staging Storybook endpoint: ${{ needs.deploy_staging_terraform.outputs.storybook_web_endpoint }}"
           echo "Production website endpoint: ${{ needs.deploy_production_terraform.outputs.website_endpoint }}"
           echo "Production website cname: ${{ needs.deploy_production_terraform.outputs.website_cname }}"
-          echo "Production Storybook endpoint: ${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}"
 
   post-to-slack:
     name: "Post to Slack"
@@ -1100,18 +1089,19 @@ jobs:
       - deploy_staging_terraform
       - open_staging_storage_account_firewalls
       - deploy_staging_frontend
+      - deploy_storybook
+      - purge_storybook_cdn_cache
       - deploy_staging_front_door
       - close_staging_storage_account_firewalls
+      - purge_staging_frontend_cdn_cache
       - deploy_production_rg_terraform
       - deploy_production_apim_terraform
       - deploy_production_terraform
       - open_prod_storage_account_firewalls
       - deploy_production_frontend
       - deploy_production_front_door
-      - deploy_storybook_prod
       - close_prod_storage_account_firewalls
       - purge_prod_frontend_cdn_cache
-      - purge_prod_storybook_cdn_cache
       - output_website_urls
     runs-on: ubuntu-latest
     steps:
@@ -1128,19 +1118,20 @@ jobs:
               needs.deploy_staging_apim_terraform.result == 'success' &&
               needs.deploy_staging_terraform.result == 'success' &&
               needs.open_staging_storage_account_firewalls.result == 'success' &&
+              needs.deploy_storybook.result == 'success' &&
               needs.deploy_staging_frontend.result == 'success' &&
+              needs.purge_storybook_cdn_cache.result == 'success' &&
               needs.deploy_staging_front_door.result == 'success' &&
               needs.close_staging_storage_account_firewalls.result == 'success' &&
+              needs.purge_staging_frontend_cdn_cache.result == 'success' &&
               needs.deploy_production_rg_terraform.result == 'success' &&
               needs.deploy_production_apim_terraform.result == 'success' &&
               needs.deploy_production_terraform.result == 'success' &&
               needs.open_prod_storage_account_firewalls.result == 'success' &&
               needs.deploy_production_frontend.result == 'success' &&
               needs.deploy_production_front_door.result == 'success' &&
-              needs.deploy_storybook_prod.result == 'success' &&
               needs.close_prod_storage_account_firewalls.result == 'success' &&
               needs.purge_prod_frontend_cdn_cache.result == 'success' &&
-              needs.purge_prod_storybook_cdn_cache.result == 'success' &&
               needs.output_website_urls.result == 'success'
             }}" == "true"
           ]]; then
@@ -1276,6 +1267,20 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
+                      "text": '${{ needs.deploy_storybook.result }}' === 'success' ? ':heavy-check-mark:   Deploy Storybook' : '${{ needs.deploy_storybook.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Storybook' : ':heavy-minus-sign:   Deploy Storybook'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.purge_storybook_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Storybook CDN Cache' : '${{ needs.purge_storybook_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Storybook CDN Cache' : ':heavy-minus-sign:   Purge Storybook CDN Cache'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
                       "text": '${{ needs.deploy_production_rg_terraform.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Resource Group' : '${{ needs.deploy_production_rg_terraform.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Resource Group' : ':heavy-minus-sign:   Deploy Production Resource Group'
                     }
                   },
@@ -1284,6 +1289,13 @@ jobs:
                     "text": {
                       "type": "mrkdwn",
                       "text": '${{ needs.close_staging_storage_account_firewalls.result }}' === 'success' ? ':heavy-check-mark:   Close Staging Storage Account Firewalls' : '${{ needs.close_staging_storage_account_firewalls.result }}' === 'failure' ? ':heavy-cross-mark:   Close Staging Storage Account Firewalls' : ':heavy-minus-sign:   Close Staging Storage Account Firewalls'
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": '${{ needs.purge_staging_frontend_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Staging Frontend CDN Cache' : '${{ needs.purge_staging_frontend_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Staging Frontend CDN Cache' : ':heavy-minus-sign:   Purge Staging Frontend CDN Cache'
                     }
                   },
                   {
@@ -1325,14 +1337,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": '${{ needs.deploy_production_front_door.result }}' === 'success' ? ':heavy-check-mark:   Deploy Production Front Door' : '${{ needs.deploy_production_front_door.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Production Front Door' : ':heavy-minus-sign:   Deploy Production Front Door'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.deploy_storybook_prod.result }}' === 'success' ? ':heavy-check-mark:   Deploy Storybook Prod' : '${{ needs.deploy_storybook_prod.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Storybook Prod' : ':heavy-minus-sign:   Deploy Storybook Prod'
+                      "text": '${{ needs.deploy_production_front_door.result }}' === 'success' ? ':heavy-check-mark:   Deploy Prod Front Door' : '${{ needs.deploy_production_front_door.result }}' === 'failure' ? ':heavy-cross-mark:   Deploy Prod Front Door' : ':heavy-minus-sign:   Deploy Prod Front Door'
                     }
                   },
                   {
@@ -1347,13 +1352,6 @@ jobs:
                     "text": {
                       "type": "mrkdwn",
                       "text": '${{ needs.purge_prod_frontend_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Prod Frontend CDN Cache' : '${{ needs.purge_prod_frontend_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Prod Frontend CDN Cache' : ':heavy-minus-sign:   Purge Prod Frontend CDN Cache'
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": '${{ needs.purge_prod_storybook_cdn_cache.result }}' === 'success' ? ':heavy-check-mark:   Purge Prod Storybook CDN Cache' : '${{ needs.purge_prod_storybook_cdn_cache.result }}' === 'failure' ? ':heavy-cross-mark:   Purge Prod Storybook CDN Cache' : ':heavy-minus-sign:   Purge Prod Storybook CDN Cache'
                     }
                   },
                   {
@@ -1422,7 +1420,7 @@ jobs:
                         "emoji": true
                       },
                       "value": "Link to Storybook website",
-                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_storybook_prod.result }}' === 'success' ? '${{ needs.deploy_production_terraform.outputs.storybook_web_endpoint }}' : 'https://www.google.com/404.html',
+                      "url": '${{ needs.deploy_production_terraform.result }}' === 'success' && '${{ needs.deploy_storybook.result }}' === 'success' ? '${{ needs.deploy_staging_terraform.outputs.storybook_web_endpoint }}' : 'https://www.google.com/404.html',
                       "action_id": "button-action"
                     }
                   },

@@ -60,7 +60,7 @@
     "gatsby": "^2.26.1",
     "gatsby-image": "^3.11.0",
     "react": "^16.12.0",
-    "react-calendly": "^2.2.1",
+    "react-calendly": "^2.2.2",
     "react-disable": "^0.1.0",
     "react-pin-field": "^2.0.0-beta.2",
     "react-slick": "^0.28.1",

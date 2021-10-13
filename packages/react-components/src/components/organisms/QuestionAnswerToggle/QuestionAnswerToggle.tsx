@@ -20,8 +20,11 @@ const QuestionAnswerToggle = ({
 }: QuestionAnswerToggleProps) => {
   const { isMobile } = useBreakpoint();
 
-  const handleChange = (_event: any, newSelected: React.SetStateAction<string>) => {
-    updateAnswer(newSelected);
+  const setSelectedValue = (newSelected: string | null) => {
+    // There must always be a selected button
+    if (newSelected !== null) {
+      updateAnswer(newSelected);
+    }
   };
 
   return (
@@ -30,10 +33,10 @@ const QuestionAnswerToggle = ({
         <Typography variant="h5">{question}</Typography>
       </StyledQuestionContainer>
       <ToggleGroup
-        type="unordered"
-        handleChange={handleChange}
+        layout="dynamic"
         values={answers}
-        initialValue={selected}
+        selectedValue={selected}
+        setSelectedValue={setSelectedValue}
       />
     </>
   );
