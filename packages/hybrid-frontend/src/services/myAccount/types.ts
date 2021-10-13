@@ -291,27 +291,10 @@ export type InvestmentAccountDetailsResponse = GenericResponsePayload<
   'accounts',
   Array<CashPositionResponse | AssetInfoResponse>
 >;
+export interface BankAccountDetailsState
+  extends CommonState<BankAccountDetailsResponse['data'], BankAccountDetailsResponse['included']> {}
 
-export interface ClientEmail {
-  type: ClientAccountTypes.emails;
-  id: string;
-  attributes: {
-    contactId: number;
-    emailId: number;
-    emailAddress: string;
-    emailTypeId: number;
-    emailType: string;
-    principal: boolean;
-    defaultEmail: boolean;
-    updateBy: string;
-  };
-  links: {
-    self: string;
-  };
-  relationships: Record<string, DataRelationship>[] | null;
-}
-
-export type BankDetailsResponse = GenericApiPayload<
+export type BankAccountDetailsResponse = GenericResponsePayload<
   {
     bankAccountName: string;
     bankAccountNumber: string;
@@ -319,5 +302,6 @@ export type BankDetailsResponse = GenericApiPayload<
     contactId: number;
     withdrawMoneyAllowed: boolean;
   },
-  'bank-details'
->['data'];
+  'bank-details',
+  null
+>;

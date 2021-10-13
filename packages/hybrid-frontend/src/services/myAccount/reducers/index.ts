@@ -4,6 +4,7 @@ export { default as investmentAccountDetailsSlice } from './investmentAccountDet
 export { default as investmentAccountsSlice } from './investmentAccountsSlice';
 export { default as IsaContributionSlice } from './isaContributionSlice';
 export { default as accountSlice } from './accountSlice';
+export { default as bankAccountDetailsSlice } from './bankAccountDetailsSlice';
 export * from './investmentSummarySlice';
 export * from './clientSlice';
 export * from './investmentAccountsSlice';

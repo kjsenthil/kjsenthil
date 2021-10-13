@@ -17,6 +17,7 @@ import {
   BasicInvestmentSummary,
   IsaContributionResponse,
   AccountState,
+  BankAccountDetailsResponse,
 } from '../types';
 
 export const mockBasicInvestmentSummary: BasicInvestmentSummary = {
@@ -502,4 +503,18 @@ export const mockAccountState: AccountState = {
     accountTotalHoldings: 5500,
   },
   status: 'idle',
+};
+
+export const mockBankAccountDetailsResponse: BankAccountDetailsResponse = {
+  data: {
+    type: 'bank-details',
+    id: '20500',
+    attributes: {
+      bankAccountName: 'Mr John Doe',
+      bankAccountNumber: '12345678',
+      bankSortCode: '123456',
+      withdrawMoneyAllowed: true,
+      contactId: 123456,
+    },
+  },
 };

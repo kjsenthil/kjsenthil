@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BankAccountDetailsState, BankAccountDetailsResponse } from '../types';
-import { fetchBankAccountDetails } from '../thunks';
-import commonActionReducerMapBuilder from '../../utils/commonActionReducerMapBuilder';
+import { fetchBankAccountDetails } from '../thunks/fetchBankAccountDetails';
+import { commonActionReducerMapBuilder } from '../../utils';
 
 const initialState: BankAccountDetailsState = {
   status: 'idle',

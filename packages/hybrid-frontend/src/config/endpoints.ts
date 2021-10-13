@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   MYACCOUNT_CONTRIBUTION: '/myaccount/contribution-account/{id}',
   MYACCOUNT_MONTHLY_SAVINGS: '/myaccount/accounts/{id}/monthly-savings',
   MYACCOUNT_ACCOUNT: '/myaccount/accounts/{id}',
+  MYACCOUNT_BANK_DETAILS: '/myaccount/bank-details?filter[contactid]={id}',
   RETURNS_ANNUALISED_RETURN: '/returns/annualised-return',
   TILNEY_ASSET_MODEL: '/Assets/tilney-asset-model/{riskName}',
   GET_ASSET_ALLOCATION_BREAKDOWN: '/Assets/assetallocation/{sedol}',
