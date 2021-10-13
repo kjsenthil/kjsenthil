@@ -8,7 +8,7 @@ locals {
 
   is_staging = var.environment_prefix == "staging"
   is_prod = length(regexall("prod", var.environment_prefix)) > 0
-  is_not_dev = !local.is_staging && !local.is_prod
+  is_not_dev = local.is_staging || local.is_prod
   is_dev = !local.is_not_dev
 
   operation_endpoints       = { for api in module.api_operation : upper(replace(api.operation_id, "-", "_")) => api.url_template }
